@@ -5,3 +5,5 @@ https://www.linkedin.com
 https://www.instagram.com
 # Server routes (Netlify Functions), not static files
 /api/
+# Root-page fragments (/#contact): lychee cannot map the directory root to index.html; tests/seo checks these.
+/dist/client#

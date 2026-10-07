@@ -124,6 +124,26 @@ describe.each(pages.map((p) => [p.route, p] as const))('%s', (_route, p) => {
     })
     expect(broken, `broken links in ${p.route}`).toEqual([])
   })
+  it('has anchors that point at existing fragments', () => {
+    const missing: string[] = []
+    $('a[href*="#"]').each((_, a) => {
+      const href = $(a).attr('href') ?? ''
+      if (/^(https?:)?\/\//.test(href) && !href.startsWith(site.domain)) return
+      const [target, fragment] = href.replace(site.domain, '').split('#')
+      if (!fragment) return
+      // Same-page anchor, or an anchor on another prerendered page (e.g. /#contact from the 404 page).
+      let doc = $
+      if (target && target !== '' && target !== p.route) {
+        const other = pages.find(
+          (q) => q.route === (target === '/' ? '/' : target.replace(/\/$/, '')),
+        )
+        if (!other) return // not ported yet: SmartLink sends it to the legacy site
+        doc = other.$
+      }
+      if (doc(`[id="${fragment}"]`).length === 0) missing.push(href)
+    })
+    expect(missing, `anchors without a target in ${p.route}`).toEqual([])
+  })
   it('is listed in the sitemap unless noindex', () => {
     if (is404(p)) return
     const sitemap = fs.readFileSync(path.join(DIST, 'sitemap.xml'), 'utf8')
