@@ -1,7 +1,10 @@
-# One Netlify site per locale/domain. Each site sets SITE_LOCALE in its environment
-# (Site settings > Environment variables); this file holds the shared build settings.
+# Several Netlify sites are built from this repository with this one file:
+#   - one site per locale/domain:   NETLIFY_TARGET=site (default), SITE_LOCALE=<locale>
+#   - the design system (Storybook): NETLIFY_TARGET=storybook
+# Set those variables per site (Site configuration > Environment variables). Every site gets
+# Deploy Previews on pull requests.
 [build]
-  command = "pnpm build"
+  command = "pnpm build:netlify"
   publish = "dist/client"
 
 [build.environment]

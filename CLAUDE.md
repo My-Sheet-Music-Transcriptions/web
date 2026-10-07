@@ -16,6 +16,7 @@ pnpm test:storybook           # every story through axe (contrast included)
 pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
 pnpm lhci                     # Lighthouse CI thresholds (needs a build; locally set CHROME_PATH to a Chrome/Chromium binary)
 pnpm release-check            # what CI runs, locally
+NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify site publishes (dist/client)
 ```
 
 ## Where things live

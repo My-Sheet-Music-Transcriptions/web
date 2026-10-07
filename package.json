@@ -29,7 +29,8 @@
     "release-check": "pnpm check && pnpm test:storybook && SITE_LOCALE=en pnpm build && pnpm test:seo",
     "prebuild_only": "tsx scripts/prebuild.ts",
     "check:slugs": "tsx scripts/check-slugs.ts",
-    "gen:routes": "tsx scripts/generate-routes.ts"
+    "gen:routes": "tsx scripts/generate-routes.ts",
+    "build:netlify": "tsx scripts/netlify-build.ts"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.3.0",
