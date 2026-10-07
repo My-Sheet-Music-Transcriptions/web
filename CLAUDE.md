@@ -36,17 +36,17 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/components/layout` – TopBar, Header (+MegaMenu, MobileNav), Footer, ConsentBanner, SiteShell.
 - `src/components/templates` – wraps an entry's MDX body (home, page, landing...). Selected by frontmatter.
 - `src/components/blocks/catalogue.ts` – one entry per block (description, defaults, MDX snippet, data source);
-  drives the README table, the artifact docs and the mockup skill. Missing entry = type error.
+  drives the README table, the artifact docs and the `page` skill's previews. Missing entry = type error.
 - `src/i18n/sites/<locale>.ts` – domain, strings, switcher, contact facts per locale. `src/site.ts` exposes the active one.
 - `src/design-system` – `theme-parse.ts` (reads `theme.css` into tokens), `tokens.tsx` (Storybook Foundations),
-  `export/` (browser bundle entry, router shim, cover), `review/` (shell + page template of the HTML mockup
+  `export/` (browser bundle entry, router shim, cover), `review/` (shell + page template of the HTML preview
   artifact), `artifact.json` (the published artifact + asset ids).
-- `mockups/<slug>/sections.html` (+ `img/`) – the approved mockup of a page, the source `new-page` builds from.
+- `mockups/<slug>/sections.html` (+ `img/`) – the approved preview of a page, what the `page` skill publishes from.
 - `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `jsonld.ts`, `og/template.tsx` (Satori).
 - `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG PNGs), `serve-dist.ts`, `lib/content-fs.ts`,
   `design-system/{export,index,lib}.ts` (artifact export).
 - `tests/unit`, `tests/seo` (runs over `dist/client`), `tests/e2e`, `tests/visual` (+ `reference/` captures of the live site).
-- `.claude/skills` – `page-request`, `publish-page`, `publish-design-system`, `release-check`, and stubs for later phases.
+- `.claude/skills` – `page` (request → preview → publish), `publish-design-system`, `release-check`, and stubs for later phases.
 
 ## Rules that CI enforces
 
@@ -66,8 +66,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 3. Put the page's images in its folder (`src/content/<locale>/<collection>/<slug>/`), import them in the MDX
    (`import mascot from './mascot.png?w=240;480&as=picture'`) and pass them to blocks as props; never raw `<img>`.
    Only brand-wide assets (logo, icons, flags, software logos) live in `src/assets/images/`.
-4. Content goes live through `publish-page` (checks, then a commit to `main`); engineering changes go through
-   `pnpm release-check` and a PR with a Netlify preview.
+4. Content goes live through the `page` skill (checks, draft PR + Netlify preview, then auto-merge on acceptance);
+   engineering changes go through `pnpm release-check` and a PR with a Netlify preview.
 
 ## Design tokens
 
@@ -80,17 +80,20 @@ checks names, usage notes and contrast.
 
 ## Design System artifact and the page workflow
 
-Every request about pages, from anyone (also non-technical colleagues, in any language), follows one loop:
+Every request about pages, from anyone (also non-technical colleagues, in any language), goes through the
+single `page` skill, one conversation in three phases:
 
-1. `page-request` skill: a short plain-language conversation (which page/site, what for, what goes on it),
-   then a **preview artifact** rendered with the real components (`mockups/<slug>/sections.html` →
+1. **Understand**: a short plain-language exchange (which page/site, what for, what goes on it).
+2. **Preview**: a preview artifact rendered with the real components (`mockups/<slug>/sections.html` →
    `pnpm ds:review` → HTML artifact with desktop/phone switch, block labels and per-section comments). Iterate
    on the same artifact until the user says it is right, then ask whether to publish. Never publish unasked.
-2. `publish-page` skill, only after an explicit yes: build the approved sections into the page folder
-   (`src/content/<locale>/<collection>/<slug>/index.mdx` + images), build proposed blocks, run every check
-   locally, then **commit straight to `main`** (no PR, no auto-merge; the approved preview is the review).
-   Netlify deploys `main`; confirm to the user when the page is live. Pull requests remain for engineering
-   work (blocks, tooling, CI), never for content a user approved in the preview.
+3. **Build and check the real thing**, only after an explicit yes: build the approved sections into the page
+   folder (`src/content/<locale>/<collection>/<slug>/index.mdx` + images), build proposed blocks, run every check
+   locally, push a **draft PR** and hand the user Netlify's deploy preview of the real page.
+4. **Publish** on their acceptance: mark the PR ready with **auto-merge (squash)** and auto-fix it (watch CI,
+   fix failures, push) until it merges; Netlify deploys `main`; confirm to the user when the page is live.
+   Nothing reaches `main` without the user having seen the real page first. Engineering PRs (blocks, tooling,
+   CI) follow the normal review path.
 
 The Design System artifact (`src/design-system/artifact.json`, title "My Sheet Music Transcriptions") is generated by
 `pnpm ds:export` from `theme.css`, the blocks, `catalogue.ts`, the layout components and the brand assets; it ships

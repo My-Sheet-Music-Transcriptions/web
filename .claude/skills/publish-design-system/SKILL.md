@@ -1,6 +1,6 @@
 ---
 name: publish-design-system
-description: Rebuild the design-system export (tokens, brand book, live component bundle, previews, assets) from the repo and publish it to the Design System artifact that mockups are built from. Use after any change to src/styles/theme.css, a block, the catalogue, layout components or brand assets, and before a mockup if the artifact is behind main.
+description: Rebuild the design-system export (tokens, brand book, live component bundle, previews, assets) from the repo and publish it to the Design System artifact that page previews are built from. Use after any change to src/styles/theme.css, a block, the catalogue, layout components or brand assets, and before a preview if the artifact is behind main.
 ---
 
 # Publish the Design System artifact
@@ -25,9 +25,12 @@ turns `src/styles/theme.css`, `src/components/blocks/*` + `catalogue.ts`, the la
    `{ from, contentType: "text/plain" }`. Only changed files strictly need sending, but sending the whole
    `project/` tree is simplest and idempotent. Never pass `type_url` again (that creates a second artifact)
    and never touch `index.html`, `SKILL.md` or `artifact-type/`.
-5. Set `publishedFrom` in `artifact.json` to the commit you publish from and commit it with the change that
-   motivated the publish. Tell the user the artifact URL and what changed; the artifact is private until
-   they share it.
+5. `pnpm ds:index --published`: records the commit and the hash of every design-system source
+   (`designSystemSources()` in `scripts/design-system/lib.ts`: theme, blocks, primitives, layout, catalogue,
+   export, data, brand assets) in `src/design-system/artifact.json`. `tests/unit/design-system-sync.test.ts`
+   fails `pnpm check` whenever those sources change without a republish, so Storybook (which renders the
+   same files) and the artifact cannot drift. Commit `artifact.json` with the change that motivated the
+   publish. Tell the user the artifact URL and what changed; the artifact is private until they share it.
 
 Format rules the export already enforces (keep them when editing the export): `bundle.js` is one classic
 script assigning `window.MSMT`, line 1 the `@ds-bundle` header, no `</script` or `<!--` inside; previews are
