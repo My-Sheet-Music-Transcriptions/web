@@ -1,0 +1,30 @@
+# Several Netlify sites are built from this repository with this one file:
+#   - one site per locale/domain:   NETLIFY_TARGET=site (default), SITE_LOCALE=<locale>
+#   - the design system (Storybook): NETLIFY_TARGET=storybook
+# Set those variables per site (Site configuration > Environment variables). Every site gets
+# Deploy Previews on pull requests.
+[build]
+  command = "pnpm build:netlify"
+  publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_FLAGS = "--frozen-lockfile"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/og/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

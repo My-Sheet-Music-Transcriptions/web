@@ -1,0 +1,31 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { ColorTokens, TypeScale, Radii, Spacing } from './tokens'
+
+<Meta title="Foundations/Tokens" />
+
+# Design tokens
+
+Every value below is defined once in `src/styles/app.css` (`@theme`) and taken from the live Elementor kit of
+mysheetmusictranscriptions.com. Components use the Tailwind utilities these tokens generate (`bg-primary`,
+`text-ink`, `rounded-card`, ...), never raw hex values.
+
+## Colour
+
+Contrast ratios are computed against white (text use) and show the WCAG AA threshold for body text (4.5:1).
+
+<ColorTokens />
+
+## Typography
+
+Montserrat Variable, self-hosted. Body 16/24. Headings are bold (700), step titles extra-bold (800), buttons
+14px bold uppercase.
+
+<TypeScale />
+
+## Radius, shadow and layout
+
+<Radii />
+
+## Spacing and breakpoints
+
+<Spacing />
