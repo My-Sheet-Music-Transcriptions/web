@@ -1,9 +1,11 @@
-import { Suspense } from 'react'
 import { entryComponent, resolveEntry } from '~/content'
 import { mdxComponents } from '~/content/mdx-components'
 import { templateByName, templates } from './index'
 
-/** Resolves an entry by path and renders it inside the template its frontmatter names. */
+/**
+ * Resolves an entry by path and renders it inside the template its frontmatter names. The body comes from the
+ * cache the route loader filled, so there is no Suspense boundary: the whole page is in the first HTML flush.
+ */
 export function EntryPage({ path }: { path: string }) {
   const entry = resolveEntry(path)
   if (!entry) return null
@@ -11,9 +13,7 @@ export function EntryPage({ path }: { path: string }) {
   const Template = templateByName(templateFor(entry.meta))
   return (
     <Template entry={entry}>
-      <Suspense fallback={null}>
-        <Body components={mdxComponents} />
-      </Suspense>
+      <Body components={mdxComponents} />
     </Template>
   )
 }
