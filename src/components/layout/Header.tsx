@@ -4,7 +4,7 @@ import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { nav } from '~/content/en/data/nav'
 import { cn } from '~/lib/cn'
-import { site } from '~/site'
+import { useSite } from '~/site'
 import { LangSwitcher } from './LangSwitcher'
 import { Logo } from './Logo'
 import { MegaMenu } from './MegaMenu'
@@ -12,6 +12,7 @@ import { MobileNav } from './MobileNav'
 
 /** Sticky white header: logo, main navigation with one mega-menu, orange CTA. */
 export function Header() {
+  const site = useSite()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
@@ -60,7 +61,7 @@ export function Header() {
 
         <div className="hidden lg:block">
           <Button asChild>
-            <a href={site.routes.contactAnchor}>{site.strings.requestCta}</a>
+            <SmartLink href={site.routes.contactAnchor}>{site.strings.requestCta}</SmartLink>
           </Button>
         </div>
 

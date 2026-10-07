@@ -6,6 +6,7 @@ import { WaveDivider } from '~/components/primitives/WaveDivider'
 import { cn } from '~/lib/cn'
 import { contactSchema, formDataToObject } from '~/server/contact'
 import { submitContact } from '~/server/contact.functions'
+import { usePublicPath } from '~/site'
 
 export interface ContactSectionProps {
   title?: string
@@ -73,6 +74,7 @@ export function ContactSection({
   returnTo = '/',
 }: ContactSectionProps) {
   const gift = variant === 'gift-card'
+  const returnPath = usePublicPath(returnTo)
   const uid = useId()
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<Errors>({})
@@ -306,7 +308,7 @@ export function ContactSection({
               </>
             )}
             <input type="hidden" name="kind" value={variant} />
-            <input type="hidden" name="returnTo" value={returnTo} />
+            <input type="hidden" name="returnTo" value={returnPath} />
             <input type="hidden" name="anchor" value={id} />
             <div className="hidden" aria-hidden="true">
               <label htmlFor={`${uid}-website`}>Website</label>

@@ -1,6 +1,7 @@
 import type { MDXComponents } from 'mdx/types'
 import type { ComponentPropsWithoutRef } from 'react'
 import { cn } from '~/lib/cn'
+import { SmartLink } from './SmartLink'
 
 /** Typographic defaults for free MDX prose (blog posts, text pages). Blocks opt out by design. */
 export const prose: MDXComponents = {
@@ -22,8 +23,15 @@ export const prose: MDXComponents = {
   ol: (p: ComponentPropsWithoutRef<'ol'>) => (
     <ol {...p} className={cn('my-4 list-decimal pl-6 space-y-1', p.className)} />
   ),
-  a: (p: ComponentPropsWithoutRef<'a'>) => (
-    <a {...p} className={cn('text-primary underline-offset-2 hover:underline', p.className)} />
+  // Markdown links go through SmartLink: internal ones become router <Link>s (locale prefix + preloading).
+  a: ({ href = '', children, ...p }: ComponentPropsWithoutRef<'a'>) => (
+    <SmartLink
+      {...p}
+      href={href}
+      className={cn('text-primary underline-offset-2 hover:underline', p.className)}
+    >
+      {children}
+    </SmartLink>
   ),
   strong: (p: ComponentPropsWithoutRef<'strong'>) => (
     <strong {...p} className={cn('font-bold', p.className)} />

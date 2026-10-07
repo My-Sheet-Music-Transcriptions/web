@@ -1,9 +1,10 @@
 import montserratWoff2 from '@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url'
 import { resolveEntry } from '~/content'
 import hreflangMap from '~/i18n/hreflang.generated.json'
+import { DEFAULT_LOCALE } from '~/i18n/routing'
 import { sites } from '~/i18n/sites'
 import type { Locale } from '~/i18n/types'
-import { absoluteUrl, site } from '~/site'
+import { absoluteUrl, getSiteConfig, LOCALE_ROUTING, SITE_LOCALE } from '~/site'
 import { entryJsonLd, organizationJsonLd, websiteJsonLd } from './jsonld'
 
 type Meta = Record<string, string>
@@ -16,13 +17,15 @@ export interface HeadResult {
   scripts?: ScriptTag[]
 }
 
-export function pageTitle(title: string): string {
+export function pageTitle(title: string, locale: Locale = SITE_LOCALE): string {
+  const site = getSiteConfig(locale)
   if (title.includes(site.siteName)) return title
   return site.titleTemplate.replace('%s', title)
 }
 
 /** Root <head>: charset, viewport, stylesheet, icons, site-wide JSON-LD. */
-export function rootHead(appCss: string): HeadResult {
+export function rootHead(appCss: string, locale: Locale = SITE_LOCALE): HeadResult {
+  const site = getSiteConfig(locale)
   return {
     meta: [
       { charSet: 'utf-8' },
@@ -44,32 +47,36 @@ export function rootHead(appCss: string): HeadResult {
       { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-      { rel: 'sitemap', type: 'application/xml', href: '/sitemap.xml' },
+      // Path-mode previews have no sitemap (they are not indexed).
+      ...(LOCALE_ROUTING === 'domain'
+        ? [{ rel: 'sitemap', type: 'application/xml', href: '/sitemap.xml' }]
+        : []),
     ],
     scripts: [
-      { type: 'application/ld+json', children: JSON.stringify(organizationJsonLd()) },
-      { type: 'application/ld+json', children: JSON.stringify(websiteJsonLd()) },
+      { type: 'application/ld+json', children: JSON.stringify(organizationJsonLd(locale)) },
+      { type: 'application/ld+json', children: JSON.stringify(websiteJsonLd(locale)) },
     ],
   }
 }
 
 /** Per-entry <head>: title, description, canonical, Open Graph, Twitter, hreflang, JSON-LD. */
-export function entryHead(path: string): HeadResult {
-  const entry = resolveEntry(path)
+export function entryHead(locale: Locale = SITE_LOCALE, path = '/'): HeadResult {
+  const entry = resolveEntry(locale, path)
   if (!entry)
     return {
       meta: [
-        { title: pageTitle(site.strings.notFoundTitle ?? 'Not found') },
+        { title: pageTitle(getSiteConfig(locale).strings.notFoundTitle ?? 'Not found', locale) },
         { name: 'robots', content: 'noindex' },
       ],
       links: [],
     }
   const m = entry.meta
-  const title = pageTitle(m.seoTitle ?? m.title)
-  const canonical = absoluteUrl(entry.path)
-  const ogImage = m.og?.image
-    ? absoluteUrl(m.og.image.src)
-    : absoluteUrl(`/og/${entry.locale}/${entry.collection}/${entry.slug}.png`)
+  const title = pageTitle(m.seoTitle ?? m.title, locale)
+  const canonical = absoluteUrl(locale, entry.path)
+  const ogImage = absoluteUrl(
+    locale,
+    m.og?.image?.src ?? `/og/${entry.locale}/${entry.collection}/${entry.slug}.png`,
+  )
   const meta: Meta[] = [
     { title },
     { name: 'description', content: m.description },
@@ -99,13 +106,15 @@ export function entryHead(path: string): HeadResult {
   }
 }
 
+/** hreflang alternates of a translation: every locale's URL (its TLD in production, /<locale>/... in previews). */
 export function alternatesFor(translationKey: string): { hreflang: string; href: string }[] {
   const map = (hreflangMap as Record<string, Partial<Record<Locale, string>>>)[translationKey] ?? {}
   const out: { hreflang: string; href: string }[] = []
-  for (const [l, href] of Object.entries(map))
-    if (href) out.push({ hreflang: sites[l as Locale].lang, href })
+  for (const [l, path] of Object.entries(map))
+    if (path) out.push({ hreflang: sites[l as Locale].lang, href: absoluteUrl(l as Locale, path) })
   if (out.length < 2) return []
-  if (map.en) out.push({ hreflang: 'x-default', href: map.en })
+  const def = map[DEFAULT_LOCALE]
+  if (def) out.push({ hreflang: 'x-default', href: absoluteUrl(DEFAULT_LOCALE, def) })
   return out
 }
 

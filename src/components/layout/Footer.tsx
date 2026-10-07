@@ -6,7 +6,8 @@ import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { footer } from '~/content/en/data/footer'
 import { sites } from '~/i18n/sites'
-import { site } from '~/site'
+import { localeSwitchHref } from '~/i18n/switch'
+import { useSite } from '~/site'
 
 const flags = import.meta.glob<PictureSource>('../../assets/images/flags/*.png', {
   eager: true,
@@ -30,6 +31,7 @@ const phoneIcon: Record<string, string> = {
 
 /** Dark four-column footer with sitemap, services, contact details, payment, social and legal links. */
 export function Footer() {
+  const site = useSite()
   const s = site.strings
   const languages = site.languageSwitcher.filter((l) => l.locale !== site.locale)
   return (
@@ -80,7 +82,7 @@ export function Footer() {
               return (
                 <li key={locale}>
                   <a
-                    href={`${t.domain}/`}
+                    href={localeSwitchHref(locale)}
                     hrefLang={t.lang}
                     className="inline-flex items-center gap-2 hover:text-white"
                   >

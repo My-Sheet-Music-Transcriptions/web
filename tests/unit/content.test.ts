@@ -13,7 +13,7 @@ describe('content collections', () => {
   })
   it('builds a hreflang map keyed by translationKey', () => {
     const map = buildHreflangMap(all)
-    expect(map.home?.en).toBe('https://www.mysheetmusictranscriptions.com/')
+    expect(map.home?.en).toBe('/')
   })
   it('keeps descriptions within meta-description bounds', () => {
     for (const e of all) {

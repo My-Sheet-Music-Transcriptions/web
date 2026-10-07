@@ -25,7 +25,15 @@ const config: StorybookConfig = {
   staticDirs: ['../public'],
   viteFinal: (cfg) =>
     mergeConfig(cfg, {
-      define: { 'import.meta.env.SITE_LOCALE': JSON.stringify(process.env.SITE_LOCALE ?? 'en') },
+      define: {
+        // Stories render one locale without prefixes (domain mode), whatever SITE_LOCALE says.
+        'import.meta.env.SITE_LOCALE': JSON.stringify(
+          !process.env.SITE_LOCALE || process.env.SITE_LOCALE === 'all'
+            ? 'en'
+            : process.env.SITE_LOCALE,
+        ),
+        'import.meta.env.LOCALE_ROUTING': '"domain"',
+      },
       resolve: {
         tsconfigPaths: true,
         // Server functions need the Start compiler; stories use a local stand-in instead.

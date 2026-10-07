@@ -11,6 +11,12 @@ import {
   pathFor,
   RESERVED_SLUGS,
 } from '../../src/content/schema'
+import {
+  DEFAULT_LOCALE,
+  type LocaleRouting,
+  localeHref,
+  localizePath,
+} from '../../src/i18n/routing'
 import { sites } from '../../src/i18n/sites'
 import { LOCALES, type Locale } from '../../src/i18n/types'
 
@@ -88,7 +94,10 @@ export function checkSlugs(all = readAllEntries()): string[] {
 
 export type HreflangMap = Record<string, Partial<Record<Locale, string>>>
 
-/** translationKey -> locale -> absolute URL, across every locale in the repo. */
+/**
+ * translationKey -> locale -> locale-free public path, across every locale in the repo. The URL is made where
+ * it is used (head.ts, sitemap), for the build's locale routing: the locale's TLD or a /<locale> prefix.
+ */
 export function buildHreflangMap(all = readAllEntries()): HreflangMap {
   const map: HreflangMap = {}
   for (const e of all) {
@@ -96,9 +105,11 @@ export function buildHreflangMap(all = readAllEntries()): HreflangMap {
     const key = e.meta.translationKey
     map[key] ??= {}
     const existing = map[key][e.locale]
-    if (existing && existing !== e.url)
-      throw new Error(`translationKey "${key}" used twice in ${e.locale}: ${existing} and ${e.url}`)
-    map[key][e.locale] = e.url
+    if (existing && existing !== e.path)
+      throw new Error(
+        `translationKey "${key}" used twice in ${e.locale}: ${existing} and ${e.path}`,
+      )
+    map[key][e.locale] = e.path
   }
   return map
 }
@@ -110,16 +121,21 @@ export function writeHreflangMap(outFile = 'src/i18n/hreflang.generated.json'): 
   return map
 }
 
-/** Public paths of the active locale (read by SmartLink to tell ported pages from legacy ones). */
+/** locale -> locale-free public paths (read by SmartLink to tell ported pages from legacy ones). */
 export function writePortedPaths(
-  locale: Locale,
   outFile = 'src/content/paths.generated.json',
-): string[] {
-  const paths = entriesFor(locale)
-    .map((e) => e.path)
-    .sort()
-  fs.writeFileSync(outFile, `${JSON.stringify(paths, null, 2)}\n`)
-  return paths
+): Partial<Record<Locale, string[]>> {
+  const all = readAllEntries().filter((e) => !e.meta.draft)
+  const out: Partial<Record<Locale, string[]>> = {}
+  for (const locale of LOCALES) {
+    const paths = all
+      .filter((e) => e.locale === locale)
+      .map((e) => e.path)
+      .sort()
+    if (paths.length) out[locale] = paths
+  }
+  fs.writeFileSync(outFile, `${JSON.stringify(out, null, 2)}\n`)
+  return out
 }
 
 function gitLastModified(file: string): string | undefined {
@@ -141,22 +157,49 @@ interface PrerenderPage {
   sitemap?: Record<string, unknown>
 }
 
-/** The `pages` option for tanstackStart(): every entry of the locale with sitemap metadata. */
-export function listPrerenderPages(locale: Locale): PrerenderPage[] {
+/**
+ * The `pages` option for tanstackStart(). Domain mode: every entry of the locale with sitemap metadata.
+ * Path mode (previews): every entry of every locale under /<locale>, no sitemap.
+ */
+export function listPrerenderPages(
+  locales: readonly Locale[],
+  mode: LocaleRouting,
+): PrerenderPage[] {
   const problems = checkSlugs()
   if (problems.length) throw new Error(`Content slug problems:\n${problems.join('\n')}`)
   const map = writeHreflangMap()
-  writePortedPaths(locale)
+  writePortedPaths()
+  if (mode === 'path') {
+    const pages: PrerenderPage[] = []
+    for (const locale of locales) {
+      const entries = entriesFor(locale)
+      if (!entries.length) continue
+      for (const e of entries)
+        pages.push({
+          path: localizePath(locale, e.path),
+          prerender: { enabled: true },
+          sitemap: { exclude: true },
+        })
+      pages.push({
+        path: localizePath(locale, '/404'),
+        prerender: { enabled: true, outputPath: `/${locale}/404.html` },
+        sitemap: { exclude: true },
+      })
+    }
+    return pages
+  }
+  const [locale = DEFAULT_LOCALE] = locales
   const site = sites[locale]
   const entries = entriesFor(locale)
   const pages: PrerenderPage[] = entries.map((e) => {
     const alternates = map[e.meta.translationKey] ?? {}
-    const alternateRefs = Object.entries(alternates).map(([l, href]) => ({
+    const alternateRefs = Object.entries(alternates).map(([l, p]) => ({
       hreflang: sites[l as Locale].lang,
-      href: href as string,
+      href: localeHref('domain', l as Locale, p as string),
     }))
-    const def = alternates.en
-    if (def && alternateRefs.length > 1) alternateRefs.push({ hreflang: 'x-default', href: def })
+    const def = alternates[DEFAULT_LOCALE]
+    if (def && alternateRefs.length > 1)
+      alternateRefs.push({ hreflang: 'x-default', href: localeHref('domain', DEFAULT_LOCALE, def) })
     return {
       path: e.path,
       prerender: { enabled: true },

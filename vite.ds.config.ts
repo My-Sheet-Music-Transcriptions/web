@@ -41,6 +41,7 @@ export default defineConfig({
   define: {
     'process.env.NODE_ENV': '"production"',
     'import.meta.env.SITE_LOCALE': '"en"',
+    'import.meta.env.LOCALE_ROUTING': '"domain"',
     'import.meta.env.DEV': 'false',
     __MSMT_VERSION__: JSON.stringify(version()),
   },

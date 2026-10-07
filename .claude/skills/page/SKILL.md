@@ -85,7 +85,7 @@ before anything goes live. Keep the rest out of the conversation.
    `mockups/<slug>/` and any block work ("Add /<slug> (EN)"); push; open a **draft** PR (title "Add /<slug>",
    body: the preview artifact link, what the page contains in plain words, new blocks if any); subscribe to it.
    Netlify posts the deploy preview within a few minutes: wait for its comment (or poll
-   `https://deploy-preview-<n>--msmt-web.netlify.app/<path>` until it answers 200), check that page against
+   `https://deploy-preview-<n>--msmt-web.netlify.app/<locale><path>`, e.g. `/en/gift-card`, `/es/precios`: previews serve every locale under its prefix until it answers 200), check that page against
    the approved preview section by section, then give the user that link in plain words and ask with
    AskUserQuestion: "This is the real page on a test address. Does it look right?" (options: "Yes, put it
    live" / "Something to change"). Changes they ask for now go through the same loop: edit, checks, push,
