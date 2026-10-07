@@ -6,7 +6,7 @@ import { SmartLink } from '~/components/primitives/SmartLink'
 import { pricingTiers } from '~/content/en/data/home'
 import { cn } from '~/lib/cn'
 
-const icons = import.meta.glob<PictureSource>('../../assets/images/icons/pricing-*.png', {
+const icons = import.meta.glob<PictureSource>('../../assets/images/icons/*.png', {
   eager: true,
   import: 'default',
   query: '?w=110;220&as=picture',

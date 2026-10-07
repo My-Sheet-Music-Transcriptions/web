@@ -150,7 +150,7 @@ export const pricingTiers: PricingTier[] = [
     id: 'ensembles',
     title: 'Bands/Ensembles',
     tone: 'blue',
-    icon: 'pricing-ensemble',
+    icon: 'orchestration',
     from: '$30 USD',
     unit: 'per minute of music',
     factors: ['Music length', 'Notation complexity and difficulty of listening', 'Part extraction'],

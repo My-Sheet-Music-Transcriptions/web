@@ -111,6 +111,21 @@ describe.each(pages.map((p) => [p.route, p] as const))('%s', (_route, p) => {
       ).toBeTruthy()
     })
   })
+  it('references only images and sources that exist in dist', () => {
+    // Byte-identical source files make the bundler emit one asset under a single name while the
+    // HTML can still reference the other name; this catches that class of 404.
+    const missing: string[] = []
+    const check = (u: string) => {
+      const clean = u.trim().split(' ')[0] ?? ''
+      if (!clean.startsWith('/') || clean.startsWith('//')) return
+      if (!existsInDist(clean)) missing.push(clean)
+    }
+    $('img[src]').each((_, el) => check($(el).attr('src') ?? ''))
+    $('img[srcset], source[srcset]').each((_, el) => {
+      for (const part of ($(el).attr('srcset') ?? '').split(',')) check(part)
+    })
+    expect(missing, `missing assets in ${p.route}`).toEqual([])
+  })
   it('has no broken internal links', () => {
     const broken: string[] = []
     $('a[href]').each((_, a) => {
