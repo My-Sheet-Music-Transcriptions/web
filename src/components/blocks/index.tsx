@@ -5,12 +5,14 @@ import { FeatureCards } from './FeatureCards'
 import { Hero } from './Hero'
 import { HowItWorks } from './HowItWorks'
 import { ImageStrip } from './ImageStrip'
+import { MediaText } from './MediaText'
 import { PageHero } from './PageHero'
 import { PricingTiers } from './PricingTiers'
 import { ReviewCards } from './ReviewCards'
 import { Section } from './Section'
 import { ServiceGrid } from './ServiceGrid'
 import { StatsBanner } from './StatsBanner'
+import { Steps } from './Steps'
 
 /** The block catalogue: the only components MDX content can render. Documented in README.md. */
 export const blocks = {
@@ -27,6 +29,8 @@ export const blocks = {
   ContactSection,
   PageHero,
   Section,
+  MediaText,
+  Steps,
 }
 
 export type BlockName = keyof typeof blocks

@@ -11,7 +11,12 @@ export interface ContactSectionProps {
   title?: string
   subtitle?: string
   responseTime?: string
+  /** Anchor id of the section (also where the no-JS fallback returns to). */
   id?: string
+  /** `quote` (default): music link, instruments, file, message, phone. `gift-card`: amount, currency, details. */
+  variant?: 'quote' | 'gift-card'
+  /** Path of the page hosting the form, for the no-JS fallback redirect. */
+  returnTo?: string
 }
 
 const prefixes = [
@@ -58,19 +63,22 @@ const prefixes = [
 
 type Errors = Record<string, string>
 
-/** "Contact us": peach section with the quote request form (server function + no-JS fallback). */
+/** "Contact us": peach section with the request form (server function + no-JS fallback); quote or gift-card fields. */
 export function ContactSection({
   title = 'Contact us',
   subtitle = 'Request your sheet music or digital notation services',
   responseTime = 'Average response time: 1-4 hours',
   id = 'contact',
+  variant = 'quote',
+  returnTo = '/',
 }: ContactSectionProps) {
+  const gift = variant === 'gift-card'
   const uid = useId()
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'failed'>('idle')
   const startedAt = useRef(Date.now())
-  // No-JS submissions come back as /?sent=1#contact (see routes/api/contact.ts).
+  // No-JS submissions come back as <returnTo>?sent=1#<id> (see routes/api/contact.ts).
   useEffect(() => {
     const sent = new URLSearchParams(window.location.search).get('sent')
     if (sent === '1') setStatus('sent')
@@ -147,14 +155,16 @@ export function ContactSection({
           >
             <p className="text-h3">Thank you! Your request is on its way.</p>
             <p className="mt-2 text-small">
-              We usually reply within 1–4 hours with a quote and a delivery estimate.
+              {gift
+                ? 'We will email you shortly to arrange the gift card.'
+                : 'We usually reply within 1–4 hours with a quote and a delivery estimate.'}
             </p>
           </output>
         ) : (
           <form
             ref={formRef}
             className="mt-10"
-            aria-label="Request your sheet music"
+            aria-label={gift ? 'Request your gift card' : 'Request your sheet music'}
             method="post"
             action="/api/contact"
             encType="multipart/form-data"
@@ -189,72 +199,115 @@ export function ContactSection({
                 <Err name="email" />
               </div>
             </div>
-            <div className="mt-5">
-              <Label htmlFor={`${uid}-link`}>Where can we listen to the music?</Label>
-              <Textarea
-                {...field('link')}
-                rows={2}
-                placeholder="A Youtube link? Copy paste it here. An audio file? Send us an email or attach it below!"
-              />
-            </div>
-            <div className="mt-5">
-              <Label htmlFor={`${uid}-instruments`}>What instruments?</Label>
-              <Textarea
-                {...field('instruments')}
-                rows={2}
-                placeholder="What instruments is the transcription or arrangement for?"
-              />
-            </div>
-            <div className="mt-5">
-              <Label htmlFor={`${uid}-file`} hint="(audio or pdf)">
-                Upload a file
-              </Label>
-              <input
-                {...field('file')}
-                type="file"
-                accept="audio/*,video/*,.pdf,image/*,.zip"
-                className="block w-full rounded-field bg-white px-3 py-2 text-small file:mr-3 file:rounded-pill file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-[13px] file:font-bold file:text-white"
-              />
-              <Err name="file" />
-            </div>
-            <div className="mt-5">
-              <Label htmlFor={`${uid}-message`} required>
-                Message
-              </Label>
-              <Textarea
-                {...field('message')}
-                rows={8}
-                required
-                placeholder="Do you need a price quote for a transcription? What instruments do you have available? Do you have a deadline?  Send us an email if you wish to upload multiple files."
-              />
-              <Err name="message" />
-            </div>
-            <div className="mt-5 grid grid-cols-[150px_1fr] gap-4">
-              <div>
-                <Label htmlFor={`${uid}-prefix`} hint="(not required)">
-                  Prefix
-                </Label>
-                <select {...field('prefix')} className={inputClass} defaultValue="">
-                  <option value="">—</option>
-                  {prefixes.map((p) => (
-                    <option key={p} value={p}>
-                      {p}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <Label htmlFor={`${uid}-phone`} hint="(not required)">
-                  Phone
-                </Label>
-                <Input
-                  {...field('phone')}
-                  type="tel"
-                  autoComplete="tel-national"
-                  placeholder="Phone"
-                />
-              </div>
-            </div>
+            {gift ? (
+              <>
+                <div className="mt-5 grid gap-5 md:grid-cols-[1fr_200px]">
+                  <div>
+                    <Label htmlFor={`${uid}-amount`} required>
+                      Amount
+                    </Label>
+                    <Input
+                      {...field('amount')}
+                      type="number"
+                      inputMode="decimal"
+                      min={1}
+                      step="1"
+                      placeholder="Write the amount"
+                      required
+                    />
+                    <Err name="amount" />
+                  </div>
+                  <div>
+                    <Label htmlFor={`${uid}-currency`}>Currency</Label>
+                    <select {...field('currency')} className={inputClass} defaultValue="EUR">
+                      <option value="EUR">(€) EUR</option>
+                      <option value="USD">($) US Dollar</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="mt-5">
+                  <Label htmlFor={`${uid}-message`}>Details about the gift card</Label>
+                  <Textarea
+                    {...field('message')}
+                    rows={6}
+                    placeholder="Who is the gift card for? How and when would you like us to contact them? Any special requests?"
+                  />
+                  <Err name="message" />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="mt-5">
+                  <Label htmlFor={`${uid}-link`}>Where can we listen to the music?</Label>
+                  <Textarea
+                    {...field('link')}
+                    rows={2}
+                    placeholder="A Youtube link? Copy paste it here. An audio file? Send us an email or attach it below!"
+                  />
+                </div>
+                <div className="mt-5">
+                  <Label htmlFor={`${uid}-instruments`}>What instruments?</Label>
+                  <Textarea
+                    {...field('instruments')}
+                    rows={2}
+                    placeholder="What instruments is the transcription or arrangement for?"
+                  />
+                </div>
+                <div className="mt-5">
+                  <Label htmlFor={`${uid}-file`} hint="(audio or pdf)">
+                    Upload a file
+                  </Label>
+                  <input
+                    {...field('file')}
+                    type="file"
+                    accept="audio/*,video/*,.pdf,image/*,.zip"
+                    className="block w-full rounded-field bg-white px-3 py-2 text-small file:mr-3 file:rounded-pill file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-[13px] file:font-bold file:text-white"
+                  />
+                  <Err name="file" />
+                </div>
+                <div className="mt-5">
+                  <Label htmlFor={`${uid}-message`} required>
+                    Message
+                  </Label>
+                  <Textarea
+                    {...field('message')}
+                    rows={8}
+                    required
+                    placeholder="Do you need a price quote for a transcription? What instruments do you have available? Do you have a deadline?  Send us an email if you wish to upload multiple files."
+                  />
+                  <Err name="message" />
+                </div>
+                <div className="mt-5 grid grid-cols-[150px_1fr] gap-4">
+                  <div>
+                    <Label htmlFor={`${uid}-prefix`} hint="(not required)">
+                      Prefix
+                    </Label>
+                    <select {...field('prefix')} className={inputClass} defaultValue="">
+                      <option value="">—</option>
+                      {prefixes.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <Label htmlFor={`${uid}-phone`} hint="(not required)">
+                      Phone
+                    </Label>
+                    <Input
+                      {...field('phone')}
+                      type="tel"
+                      autoComplete="tel-national"
+                      placeholder="Phone"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+            <input type="hidden" name="kind" value={variant} />
+            <input type="hidden" name="returnTo" value={returnTo} />
+            <input type="hidden" name="anchor" value={id} />
             <div className="hidden" aria-hidden="true">
               <label htmlFor={`${uid}-website`}>Website</label>
               <input

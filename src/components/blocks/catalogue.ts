@@ -126,12 +126,12 @@ export const catalogue = {
   ContactSection: {
     group: 'Blocks',
     description:
-      'Peach section with the quote request form (name, email, music link, instruments, file, message, phone). Submits to the contact server function; works without JavaScript.',
+      'Peach section with the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
     defaults: {},
-    mdx: '<ContactSection />',
+    mdx: '<ContactSection />\n<ContactSection variant="gift-card" id="gift-card" title="Request your gift card" />',
     previewHeight: 1180,
     guidelines:
-      'One per page, always last. Use `id` to change the anchor and `title`/`subtitle` for context-specific copy.',
+      'One per page, always last. Use `id` to change the anchor and `title`/`subtitle` for context-specific copy; `variant="gift-card"` for the gift-card page.',
   },
   PageHero: {
     group: 'Blocks',
@@ -154,6 +154,60 @@ export const catalogue = {
     children: 'Any prose or layout goes here. Use it for text pages and one-off sections.',
     mdx: '<Section title="…" tone="peach">\n  prose\n</Section>',
     previewHeight: 360,
+  },
+  MediaText: {
+    group: 'Blocks',
+    description:
+      'Prose beside a picture: optional heading, caption under the picture, optional button; picture left or right, white/cream/peach.',
+    defaults: {
+      title: 'Choose the amount you would like to gift',
+      image: 'sample:photo',
+      alt: 'A transcriber at work',
+      imageSide: 'left',
+      imageWidth: 480,
+      tone: 'cream',
+      caption: '* The text on the card can be 100% customized!',
+      cta: { label: 'Request a gift card', href: '#contact' },
+      id: 'demo',
+    },
+    children:
+      "We will work on your friend's favorite music transcription! The receiver of the voucher can redeem it for any transcription worth the value of the voucher.",
+    mdx: '<MediaText image={photo} alt="…" imageSide="right" caption="…">\n  prose\n</MediaText>',
+    previewHeight: 520,
+    guidelines:
+      "The picture lives in the page folder and is imported in the MDX. Keep prose to two or three short paragraphs; use `cta` only for the page's main action.",
+  },
+  Steps: {
+    group: 'Blocks',
+    description:
+      'Numbered vertical timeline: a primary disc with an icon per step, "Step n" eyebrow and one line of text; optional heading.',
+    defaults: {
+      title: 'How it works',
+      id: 'how-it-works',
+      steps: [
+        { icon: 'dollar', text: 'Choose how much you want to gift.' },
+        {
+          icon: 'pen',
+          text: 'Let us know how you would like to customize the card and we will create it for you.',
+        },
+        {
+          icon: 'music',
+          text: 'The receiver of the voucher can redeem it for any transcription worth the value of the voucher!',
+        },
+        {
+          icon: 'chat',
+          text: 'We can get in touch with the receiver of the voucher or they can contact us to arrange the details of the transcription.',
+        },
+        {
+          icon: 'gift',
+          text: "You just gifted a new transcription to a special person! Let's keep music alive!",
+        },
+      ],
+    },
+    mdx: '<Steps title="How it works" steps={[{ icon: "dollar", text: "…" }, { icon: "gift", text: "…" }]} />',
+    previewHeight: 760,
+    guidelines:
+      'Three to six steps, one sentence each. Icons come from the Icon primitive (dollar, pen, music, chat, gift, send, check…).',
   },
 } satisfies Record<BlockName, BlockDoc>
 

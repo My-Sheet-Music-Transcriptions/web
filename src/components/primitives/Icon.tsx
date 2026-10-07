@@ -33,6 +33,10 @@ export type IconName =
   | 'plus'
   | 'minus'
   | 'external'
+  | 'dollar'
+  | 'pen'
+  | 'chat'
+  | 'gift'
 
 const paths: Record<IconName, { d: string; fill?: boolean; viewBox?: string }> = {
   'arrow-right': { d: 'M5 12h14M13 6l6 6-6 6' },
@@ -108,6 +112,14 @@ const paths: Record<IconName, { d: string; fill?: boolean; viewBox?: string }> =
   plus: { d: 'M12 5v14M5 12h14' },
   minus: { d: 'M5 12h14' },
   external: { d: 'M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3' },
+  dollar: {
+    d: 'M12 2v20M17 6.5a4 4 0 0 0-4-2.5H11a3.5 3.5 0 0 0 0 7h2a3.5 3.5 0 0 1 0 7h-2.5a4 4 0 0 1-3.5-2',
+  },
+  pen: { d: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z' },
+  chat: { d: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
+  gift: {
+    d: 'M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z',
+  },
 }
 
 export interface IconProps extends SVGProps<SVGSVGElement> {

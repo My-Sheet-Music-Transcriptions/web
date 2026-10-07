@@ -10,7 +10,10 @@ props, branches or commits. Everything technical happens behind the preview. Rep
 
 ## Phase 1 · Understand (at most a few questions, in one message)
 
-Ask only what you cannot find out yourself, with sensible defaults offered:
+Ask with the **AskUserQuestion** tool, so the answers are clickable: one call, at most four questions, two to
+four options each, the sensible default first and marked "(Recommended)", free text comes for free through
+"Other" (chips render in the Claude Code app; elsewhere, Slack for instance, the same question falls back to
+text). Ask only what you cannot find out yourself:
 - **Which page, which site?** An existing page (name or URL) or a new one; which site/language (English,
   Spanish, French, German, Japanese, Catalan). A language whose site has no content yet
   (`src/content/<locale>` empty): say so and offer the English site or to plan it.
@@ -52,8 +55,9 @@ assumed; what is still a placeholder and what you need. Explain commenting: Desk
 top, hover a section and press Comment, or the comment tool top right; ask them to tell you here when they
 are done (comments do not reach you on their own; read them with the `ArtifactComments` tool when they say
 so). The preview is private until they share it. Iterate: edit `sections.html`, rerun `pnpm ds:review`,
-republish, summarise the change. When they say it is right, ask exactly one question: "Shall I publish this
-to the live site?" naming the site and the address. Only a yes starts Phase 3. Never publish unasked.
+republish, summarise the change. When they say it is right, ask exactly one AskUserQuestion: "Shall I publish
+this to the live site?" (options: "Yes, publish" / "Not yet, more changes"), naming the site and the address in
+the question. Only a yes starts Phase 3. Never publish unasked.
 
 ## Phase 3 · Build and publish (after an explicit yes)
 
@@ -82,9 +86,10 @@ before anything goes live. Keep the rest out of the conversation.
    body: the preview artifact link, what the page contains in plain words, new blocks if any); subscribe to it.
    Netlify posts the deploy preview within a few minutes: wait for its comment (or poll
    `https://deploy-preview-<n>--msmt-web.netlify.app/<path>` until it answers 200), check that page against
-   the approved preview section by section, then give the user that link in plain words: "This is the real
-   page on a test address. If it looks right, say so and I will put it live." Changes they ask for now go
-   through the same loop: edit, checks, push, new preview.
+   the approved preview section by section, then give the user that link in plain words and ask with
+   AskUserQuestion: "This is the real page on a test address. Does it look right?" (options: "Yes, put it
+   live" / "Something to change"). Changes they ask for now go through the same loop: edit, checks, push,
+   new preview.
 6. **Publish on their acceptance.** Mark the PR ready for review and enable **auto-merge (squash)** with the
    GitHub tools (`update_pull_request` draft=false, `enable_pr_auto_merge` SQUASH). From here on auto-fix:
    stay subscribed, and on every CI failure or review-bot finding fix the root cause and push until the PR

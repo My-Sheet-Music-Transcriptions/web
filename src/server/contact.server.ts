@@ -64,17 +64,26 @@ export async function deliverContact(
     }
   }
 
-  const lines = [
-    `Name: ${input.name}`,
-    `Email: ${input.email}`,
-    `Phone: ${[input.prefix, input.phone].filter(Boolean).join(' ') || '—'}`,
-    `Where to listen: ${input.link || '—'}`,
-    `Instruments: ${input.instruments || '—'}`,
-    '',
-    input.message,
-    '',
-    attachmentNote,
-  ]
+  const gift = input.kind === 'gift-card'
+  const lines = gift
+    ? [
+        `Name: ${input.name}`,
+        `Email: ${input.email}`,
+        `Amount: ${input.amount} ${input.currency}`,
+        '',
+        input.message || '(no details given)',
+      ]
+    : [
+        `Name: ${input.name}`,
+        `Email: ${input.email}`,
+        `Phone: ${[input.prefix, input.phone].filter(Boolean).join(' ') || '—'}`,
+        `Where to listen: ${input.link || '—'}`,
+        `Instruments: ${input.instruments || '—'}`,
+        '',
+        input.message,
+        '',
+        attachmentNote,
+      ]
   const text = lines.join('\n')
   const apiKey = process.env.RESEND_API_KEY
   const to = process.env.CONTACT_TO_EMAIL ?? 'info@mysheetmusictranscriptions.com'
@@ -89,7 +98,9 @@ export async function deliverContact(
     from,
     to,
     replyTo: input.email,
-    subject: `New transcription request from ${input.name}`,
+    subject: gift
+      ? `New gift card request from ${input.name}`
+      : `New transcription request from ${input.name}`,
     text,
     attachments:
       attachment && attachment.bytes.byteLength <= 10 * 1024 * 1024
