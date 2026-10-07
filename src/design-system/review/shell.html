@@ -1,7 +1,7 @@
 <title>__TITLE__</title>
 <style>
   /* Layout: a thin review bar on top, then the rendered page in a frame scaled to fit;
-     block labels and comment handles float over each section. Chrome stays neutral so the site's own colours read true. */
+     nothing floats over it until the viewer turns on block labels or comment mode. Chrome stays neutral so the site's own colours read true. */
   :root {
     --bg: #ecebe7;
     --bar: rgba(255, 255, 255, 0.92);
@@ -43,11 +43,12 @@
     padding: 7px 14px; cursor: pointer; min-height: 32px;
   }
   .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
-  .seg button:focus-visible, .toggle:focus-visible, .handle button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .seg button:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
   .toggle input { width: 16px; height: 16px; margin: 0; accent-color: var(--accent); }
-  .hint { color: var(--muted); font-size: 12px; margin-left: auto; max-width: 42ch; }
-  .legend { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .hint { color: var(--muted); font-size: 12px; margin: 0; max-width: 46ch; }
+  .tools { display: inline-flex; align-items: center; gap: 14px; margin-left: auto; }
+  .legend { align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
   .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--new); }
 
   .stage { padding: 24px 16px 48px; overflow-x: hidden; }
@@ -57,28 +58,32 @@
   .anchors { position: absolute; inset: 0; pointer-events: none; }
   .anchor { position: absolute; left: 0; right: 0; box-sizing: border-box; }
   .anchor::before { content: ""; position: absolute; inset: 0; border: 2px solid transparent; transition: border-color 120ms; }
-  .anchor:hover::before, .anchor:focus-within::before { border-color: var(--accent); }
-  .anchor.proposed:hover::before, .anchor.proposed:focus-within::before { border-color: var(--new); }
-  .handle {
-    position: absolute; top: 8px; right: 8px; display: flex; align-items: center; gap: 6px; pointer-events: auto;
-    max-width: calc(100% - 16px);
-  }
+  /* Default view: nothing over the page. Comment mode: sections become click targets with a hover ring. */
+  .commenting .anchor { pointer-events: auto; cursor: pointer; }
+  .commenting .anchor:hover::before, .commenting .anchor:focus-visible::before { border-color: var(--accent); }
+  .commenting .anchor.proposed:hover::before, .commenting .anchor.proposed:focus-visible::before { border-color: var(--new); }
+  .anchor:focus-visible { outline: none; }
   .chip {
-    display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px;
+    position: absolute; top: 8px; right: 8px; display: none; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px;
     background: var(--chip); color: var(--chip-ink); font-family: var(--mono); font-size: 11.5px; line-height: 1;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60vw;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 16px); pointer-events: none;
   }
+  .labels-on .chip { display: inline-flex; }
   .chip b { font-weight: 700; }
   .chip .new { background: var(--new); color: #fff; font-family: var(--font); font-weight: 800; font-size: 10px; letter-spacing: 0.06em; padding: 2px 6px; border-radius: 999px; }
-  .handle button {
-    appearance: none; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
-    font: inherit; font-size: 12px; font-weight: 700; padding: 6px 12px; min-height: 28px; cursor: pointer; white-space: nowrap;
+  .legend, .hint { display: none; }
+  .labels-on .legend { display: inline-flex; }
+  .commenting .hint { display: block; }
+  .btn {
+    appearance: none; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--fg);
+    font: inherit; font-size: 12px; font-weight: 700; padding: 6px 14px; min-height: 32px; cursor: pointer; white-space: nowrap;
   }
-  .handle button[hidden] { display: none; }
-  .labels-off .chip { display: none; }
+  .btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn[hidden] { display: none; }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .status { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30;
     background: var(--chip); color: var(--chip-ink); padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-  @media (max-width: 720px) { .hint { margin-left: 0; } .stage { padding: 12px 8px 32px; } }
+  @media (max-width: 720px) { .tools { margin-left: 0; } .stage { padding: 12px 8px 32px; } }
   @media (prefers-reduced-motion: reduce) { .anchor::before { transition: none; } }
 </style>
 
@@ -92,9 +97,12 @@
     <button type="button" data-w="768" aria-pressed="false">Tablet 768</button>
     <button type="button" data-w="390" aria-pressed="false">Phone 390</button>
   </div>
-  <label class="toggle"><input type="checkbox" id="labels" checked> Block labels</label>
+  <div class="tools">
+    <label class="toggle"><input type="checkbox" id="labels"> Block labels</label>
+    <button type="button" class="btn" id="commentBtn" aria-pressed="false" hidden>Comment</button>
+  </div>
   <span class="legend"><i></i> new block or prop, built on approval</span>
-  <p class="hint" id="hint">Hover a section and press Comment to leave a note on it, or use the comment tool in the top right.</p>
+  <p class="hint" id="hint">Click a section to comment on it. Press Done when you are finished.</p>
 </header>
 
 <main class="stage">
@@ -115,13 +123,15 @@
   var iframe = document.getElementById('page');
   var anchors = document.getElementById('anchors');
   var status = document.getElementById('status');
-  var comments = null, composerOk = true;
+  var labelsBox = document.getElementById('labels');
+  var commentBtn = document.getElementById('commentBtn');
+  var comments = null, commenting = false;
   var sections = [];
 
   try {
     var saved = localStorage.getItem('msmt-review-w');
     if (saved && ['1440', '768', '390'].indexOf(saved) >= 0) W = Number(saved);
-    if (localStorage.getItem('msmt-review-labels') === 'off') { document.getElementById('labels').checked = false; document.body.classList.add('labels-off'); }
+    if (localStorage.getItem('msmt-review-labels') === 'on') { labelsBox.checked = true; document.body.classList.add('labels-on'); }
   } catch (e) {}
 
   function layout() {
@@ -143,23 +153,18 @@
       a.style.height = Math.max(sec.height, 40) + 'px';
       a.setAttribute('data-comment-target', '');
       a.setAttribute('data-section', sec.name);
-      var handle = document.createElement('div');
-      handle.className = 'handle';
+      a.setAttribute('role', 'button');
+      a.setAttribute('aria-label', 'Comment on ' + sec.name);
+      a.tabIndex = commenting ? 0 : -1;
+      a.addEventListener('click', function () { if (commenting) openComposer(a, sec.name); });
+      a.addEventListener('keydown', function (e) { if (commenting && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openComposer(a, sec.name); } });
       var chip = document.createElement('span');
       chip.className = 'chip';
       chip.setAttribute('title', sec.name + (sec.props ? ' ' + sec.props : ''));
       var b = document.createElement('b'); b.textContent = sec.name; chip.appendChild(b);
       if (sec.props) { var p = document.createElement('span'); p.textContent = sec.props; chip.appendChild(p); }
       if (sec.proposed) { var n = document.createElement('span'); n.className = 'new'; n.textContent = 'NEW'; chip.appendChild(n); }
-      handle.appendChild(chip);
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = 'Comment';
-      btn.setAttribute('aria-label', 'Comment on ' + sec.name);
-      btn.hidden = !(comments && composerOk);
-      btn.addEventListener('click', function () { openComposer(a, sec.name); });
-      handle.appendChild(btn);
-      a.appendChild(handle);
+      a.appendChild(chip);
       anchors.appendChild(a);
     });
   }
@@ -169,12 +174,22 @@
     clearTimeout(say.t); say.t = setTimeout(function () { status.hidden = true; }, 3200);
   }
 
+  function setCommenting(on) {
+    commenting = on;
+    document.body.classList.toggle('commenting', on);
+    commentBtn.setAttribute('aria-pressed', String(on));
+    commentBtn.textContent = on ? 'Done' : 'Comment';
+    anchors.querySelectorAll('.anchor').forEach(function (a) { a.tabIndex = on ? 0 : -1; });
+    // Leaving the mode also drops the shell's own comment cursor: focus a neutral element.
+    if (!on) commentBtn.blur();
+  }
+
   function openComposer(el, name) {
     if (!comments) return;
     comments.openComposer({ element: el }).then(function (r) {
-      if (!r.opened) say('The composer did not open. Click inside the page first, then try again.');
+      if (!r.opened) say('The comment box did not open. Click once inside the page, then try again.');
     }).catch(function (err) {
-      if (err && err.code === 'unavailable') { composerOk = false; renderAnchors(); say('Commenting from the page is off here. Use the comment tool in the top right.'); }
+      if (err && err.code === 'unavailable') { comments = null; commentBtn.hidden = true; setCommenting(false); say('Commenting is off here. Use the comment tool in the top right.'); }
       else if (err && err.code === 'rate_limited') say('Slow down a little before opening another comment.');
       else say('Could not open a comment on ' + name + '. Use the comment tool in the top right.');
     });
@@ -199,10 +214,12 @@
   });
   document.querySelectorAll('.seg button').forEach(function (x) { x.setAttribute('aria-pressed', String(Number(x.getAttribute('data-w')) === W)); });
 
-  document.getElementById('labels').addEventListener('change', function (e) {
-    document.body.classList.toggle('labels-off', !e.target.checked);
+  labelsBox.addEventListener('change', function (e) {
+    document.body.classList.toggle('labels-on', e.target.checked);
     try { localStorage.setItem('msmt-review-labels', e.target.checked ? 'on' : 'off'); } catch (e2) {}
   });
+  commentBtn.addEventListener('click', function () { setCommenting(!commenting); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && commenting) setCommenting(false); });
 
   window.addEventListener('resize', layout);
   layout();
@@ -210,8 +227,7 @@
   if (window.claude && window.claude.use) {
     window.claude.use('comments').then(function (ns) {
       comments = ns;
-      if (!comments) document.getElementById('hint').textContent = 'Use the comment tool in the top right to leave notes on any section.';
-      renderAnchors();
+      commentBtn.hidden = !comments;
     }).catch(function () {});
   }
 })();
