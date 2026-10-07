@@ -12,7 +12,7 @@ export const es: SiteConfig = {
   brand: 'Mis Transcripciones Musicales',
   logo: 'es',
   currency: 'EUR',
-  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '#contact' },
+  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
   isDefault: false,
   legacyOrigin: 'https://www.mistranscripcionesmusicales.com',
 }

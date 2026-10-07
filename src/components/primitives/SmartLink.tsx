@@ -37,7 +37,7 @@ export function SmartLink({ href, children, activeProps, activeOptions, ...rest 
       </a>
     )
   }
-  if (href.startsWith('#')) {
+  if (href.startsWith('#') || href.includes('#')) {
     return (
       <a href={href} {...rest}>
         {children}

@@ -12,7 +12,7 @@ export const ca: SiteConfig = {
   brand: 'La Meva Partitura',
   logo: 'ca',
   currency: 'EUR',
-  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '#contact' },
+  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
   isDefault: false,
   legacyOrigin: 'https://lamevapartitura.cat',
 }

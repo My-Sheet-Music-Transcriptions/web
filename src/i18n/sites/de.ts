@@ -12,7 +12,7 @@ export const de: SiteConfig = {
   brand: 'Meine Musiktranskription',
   logo: 'de',
   currency: 'EUR',
-  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '#contact' },
+  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
   isDefault: false,
   legacyOrigin: 'https://meinemusiktranskription.de',
 }

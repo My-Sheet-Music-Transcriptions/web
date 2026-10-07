@@ -16,7 +16,7 @@ export interface HowItWorksProps {
 /** "How does it work?": three numbered steps; one wide illustration on desktop, stacked on mobile. */
 export function HowItWorks({ title = 'How does it work?', id = 'how-it-works' }: HowItWorksProps) {
   return (
-    <section className="scroll-mt-20 pb-16 pt-20 lg:pt-24" aria-labelledby={`${id}-title`}>
+    <section id={id} className="scroll-mt-20 pb-16 pt-20 lg:pt-24" aria-labelledby={`${id}-title`}>
       <div className="container-content">
         <SectionHeading id={`${id}-title`} rule="grey">
           {title}

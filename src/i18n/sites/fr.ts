@@ -12,7 +12,7 @@ export const fr: SiteConfig = {
   brand: 'Ma Partition Sur Mesure',
   logo: 'fr',
   currency: 'EUR',
-  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '#contact' },
+  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
   isDefault: false,
   legacyOrigin: 'https://mapartitionsurmesure.com',
 }
