@@ -1,9 +1,9 @@
 ---
 name: page
-description: Handles any request about the website's pages from anyone, technical or not — a new page or landing page, a translation, a change of text, images, prices or sections, in any of the site's languages. One conversation in three phases — understand the request in plain words, show a preview rendered with the real site components that the user can comment on and iterate until it is right, then (only when they say yes) publish it with a commit straight to main. No pull request, no auto-merge.
+description: Handles any request about the website's pages from anyone, technical or not — a new page or landing page, a translation, a change of text, images, prices or sections, in any of the site's languages. One conversation in three phases — understand the request in plain words, show a preview rendered with the real site components that the user can comment on and iterate until it is right, then (only when they say yes) build it on a draft PR, let them check Netlify's deploy preview of the real page, and on their acceptance mark the PR ready with auto-merge and drive it to green until it is live.
 ---
 
-# Page: request → preview → publish
+# Page: request → preview → build → check the real thing → publish
 
 The person asking may be a colleague who never sees code. Talk about the page, never about blocks, MDX,
 props, branches or commits. Everything technical happens behind the preview. Reply in their language.
@@ -55,9 +55,10 @@ so). The preview is private until they share it. Iterate: edit `sections.html`, 
 republish, summarise the change. When they say it is right, ask exactly one question: "Shall I publish this
 to the live site?" naming the site and the address. Only a yes starts Phase 3. Never publish unasked.
 
-## Phase 3 · Publish (after an explicit yes)
+## Phase 3 · Build and publish (after an explicit yes)
 
-Tell them it takes a few minutes; keep the rest out of the conversation.
+Tell them it takes a few minutes and that they will get a second link, the real page on a test address,
+before anything goes live. Keep the rest out of the conversation.
 1. **Build the page from the approved preview.** Each `data-msmt` element → one MDX block with exactly its
    `data-props` (`children` → MDX prose; `PageHero` → the template's hero in frontmatter when the template
    renders one). Each `data-proposed` element → build it first: component (+ typed props with doc comments),
@@ -73,13 +74,23 @@ Tell them it takes a few minutes; keep the rest out of the conversation.
    shared across languages, `template` or type-specific fields. Structured facts stay in
    `src/content/<locale>/data/*.ts`; add the page to `data/nav.ts` / `data/footer.ts` where the preview shows
    it; drop its slug from any legacy-link list.
-4. **All checks green before anything is pushed:** `pnpm release-check` (lint, types, unit, Storybook axe,
-   build, SEO suite), plus `pnpm test:e2e` when layout changed. Fix failures, never lower a threshold. A page
-   that cannot pass is not published: go back to the user with what is missing, in plain words.
-5. **Publish = commit to main.** `git fetch origin main && git checkout -B publish/<slug> origin/main`, commit
-   the page folder, `mockups/<slug>/` and any block work ("Publish /<slug> (EN)"), `git push origin HEAD:main`.
-   If main moved meanwhile, merge `origin/main` and rerun `pnpm check` first. No PR, no auto-merge: the
-   approved preview is the review. Pull requests remain for engineering work (blocks, tooling, CI).
-6. **Confirm.** Netlify builds and deploys main; poll the live URL until the new page answers 200 with its
-   title (up to ~5 minutes), then tell the user it is live with its address. If the deploy or CI on main
-   fails, say so, fix forward or revert, and report.
+4. **All checks green before pushing:** `pnpm release-check` (lint, types, unit, Storybook axe, build, SEO
+   suite), plus `pnpm test:e2e` when layout changed. Fix failures, never lower a threshold. A page that cannot
+   pass is not pushed: go back to the user with what is missing, in plain words.
+5. **Draft PR with the real page.** Branch `page/<slug>` from `origin/main`; commit the page folder,
+   `mockups/<slug>/` and any block work ("Add /<slug> (EN)"); push; open a **draft** PR (title "Add /<slug>",
+   body: the preview artifact link, what the page contains in plain words, new blocks if any); subscribe to it.
+   Netlify posts the deploy preview within a few minutes: wait for its comment (or poll
+   `https://deploy-preview-<n>--msmt-web.netlify.app/<path>` until it answers 200), check that page against
+   the approved preview section by section, then give the user that link in plain words: "This is the real
+   page on a test address. If it looks right, say so and I will put it live." Changes they ask for now go
+   through the same loop: edit, checks, push, new preview.
+6. **Publish on their acceptance.** Mark the PR ready for review and enable **auto-merge (squash)** with the
+   GitHub tools (`update_pull_request` draft=false, `enable_pr_auto_merge` SQUASH). From here on auto-fix:
+   stay subscribed, and on every CI failure or review-bot finding fix the root cause and push until the PR
+   merges (never skip a test or lower a threshold); if auto-merge is refused, say so: the repository needs
+   "Allow auto-merge" and a branch protection rule on `main` requiring the CI checks, and merge manually once
+   CI is green only if the user asks.
+7. **Confirm.** When the PR merges, Netlify deploys `main`: poll the live URL until the new page answers 200
+   with its title (up to ~5 minutes), then tell the user it is live with its address. If the production
+   deploy or CI on main fails afterwards, say so, fix forward, and report.
