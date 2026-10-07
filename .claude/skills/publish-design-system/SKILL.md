@@ -24,7 +24,10 @@ turns `src/styles/theme.css`, `src/components/blocks/*` + `catalogue.ts`, the la
    `manifest.files` as `"project/<path>": "project/<path>"`; `components/index.d.ts` needs
    `{ from, contentType: "text/plain" }`. Only changed files strictly need sending, but sending the whole
    `project/` tree is simplest and idempotent. Never pass `type_url` again (that creates a second artifact)
-   and never touch `index.html`, `SKILL.md` or `artifact-type/`.
+   and never touch `index.html`, `SKILL.md` or `artifact-type/`. Then verify: list the artifact's files
+   (`action: "list"`, `scope: "files"`) and check that every `manifest.files` path is there as `project/<path>`;
+   send any missing one before step 5. Page previews copy the bundle's images from the artifact by name, so a
+   missing file makes every `ds:review` publish fail.
 5. `pnpm ds:index --published`: records the commit and the hash of every design-system source
    (`designSystemSources()` in `scripts/design-system/lib.ts`: theme, blocks, primitives, layout, catalogue,
    export, data, brand assets) in `src/design-system/artifact.json`. `tests/unit/design-system-sync.test.ts`

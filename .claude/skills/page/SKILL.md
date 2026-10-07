@@ -27,8 +27,9 @@ If the message already answers these, do not ask: state your assumptions and go 
 ## Phase 2 · Preview and iterate
 
 Build (do not narrate this):
-1. Freshness: if `src/styles/theme.css`, a block, `catalogue.ts`, a layout component or a brand asset changed
-   after `src/design-system/artifact.json#publishedFrom`, run `publish-design-system` first.
+1. Freshness: skip it when this session has not touched `src/` (CI's sync test already keeps `main`'s artifact
+   current). Otherwise run `pnpm ds:index --check` (a hash comparison, not the test suite) and, if it fails,
+   `publish-design-system` first.
 2. Read `src/components/blocks/catalogue.ts`. For an existing page start from its `index.mdx` and change only
    what was asked. Compose the page as an ordered list of blocks with catalogue props. A section nothing fits
    becomes a **proposed block** (or a proposed prop): name it and its props as if it existed and draw it as
@@ -49,6 +50,9 @@ Build (do not narrate this):
    Artifact publish: `file_path` = that `index.html` (absolute), `files` = the contents of `files.json`,
    `icon: "page"`, `capabilities: {"comments": {"composer_only": true}}`, a one-sentence `description`.
    Republish the same artifact on every iteration; never a second one for the same page.
+   Do not render or screenshot the preview locally (Playwright, Chromium): the local `page.html` is blank by
+   design, since the component bundle and images only join it in the published artifact. Publishing is the
+   check; open the artifact link instead.
 
 Talk: the link; one short paragraph of what the page shows, top to bottom, in everyday words; what you
 assumed; what is still a placeholder and what you need. Explain commenting: Desktop/Phone switch at the
