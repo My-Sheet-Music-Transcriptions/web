@@ -1,6 +1,6 @@
 ---
 name: publish-design-system
-description: Rebuild the design-system export (tokens, brand book, live component bundle, previews, assets) from the repo and publish it to the Design System artifact that mockups are built from. Use after any change to src/styles/theme.css, a block, the catalogue, layout components or brand assets, and before a mockup if the artifact is behind main.
+description: Rebuild the design-system export (tokens, brand book, live component bundle, previews, assets) from the repo and publish it to the Design System artifact that page previews are built from. Use after any change to src/styles/theme.css, a block, the catalogue, layout components or brand assets, and before a preview if the artifact is behind main.
 ---
 
 # Publish the Design System artifact
