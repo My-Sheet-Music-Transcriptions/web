@@ -164,6 +164,13 @@ export const RESERVED_SLUGS = [
   'robots.txt',
   '404',
   'storybook',
+  // Locale prefixes of path-mode previews (src/i18n/routing.ts).
+  'en',
+  'es',
+  'fr',
+  'de',
+  'ja',
+  'ca',
 ]
 
 /** Public path of an entry. `pages/home` is the site root; FAQs and reviews live under a prefix. */

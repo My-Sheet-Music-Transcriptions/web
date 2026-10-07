@@ -6,10 +6,11 @@ chatting with Claude Code. Read this file before touching anything.
 ## Commands
 
 ```sh
-pnpm dev                      # Vite dev server (http://localhost:3000)
+pnpm dev                      # Vite dev server, every locale under /en, /es... (http://localhost:3000/en)
 pnpm storybook                # design system docs + a11y panel (http://localhost:6006)
 pnpm check                    # biome + tsc + unit tests  (fast, run before every commit)
-SITE_LOCALE=en pnpm build     # prebuild (hreflang, robots, OG images) + prerender + sitemap -> dist/client
+SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemap -> dist/client
+pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemap (what deploy previews ship)
 pnpm serve:dist               # serve dist/client on :4173
 pnpm test:seo                 # SEO conformance over dist/client (needs a build)
 pnpm test:storybook           # every story through axe (contrast included)
@@ -37,7 +38,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/components/templates` – wraps an entry's MDX body (home, page, landing...). Selected by frontmatter.
 - `src/components/blocks/catalogue.ts` – one entry per block (description, defaults, MDX snippet, data source);
   drives the README table, the artifact docs and the `page` skill's previews. Missing entry = type error.
-- `src/i18n/sites/<locale>.ts` – domain, strings, switcher, contact facts per locale. `src/site.ts` exposes the active one.
+- `src/i18n/sites/<locale>.ts` – domain, strings, switcher, contact facts per locale. `src/site.ts` exposes the build's
+  locale routing and `useSite()` / `useLocale()` (the page's locale); `src/i18n/routing.ts` is how locales map to URLs.
 - `src/design-system` – `theme-parse.ts` (reads `theme.css` into tokens), `tokens.tsx` (Storybook Foundations),
   `export/` (browser bundle entry, router shim, cover), `review/` (shell + page template of the HTML preview
   artifact), `artifact.json` (the published artifact + asset ids).
@@ -68,6 +70,21 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
    Only brand-wide assets (logo, icons, flags, software logos) live in `src/assets/images/`.
 4. Content goes live through the `page` skill (checks, draft PR + Netlify preview, then auto-merge on acceptance);
    engineering changes go through `pnpm release-check` and a PR with a Netlify preview.
+
+## Locales and URLs
+
+Production is one build and one Netlify site per locale, each on its own TLD (`SITE_LOCALE=es` → domain mode, no
+prefix). Deploy previews, branch deploys and `pnpm dev` are one build with every locale under `/<locale>` (path
+mode: `SITE_LOCALE` unset or `all`); only the English Netlify site builds previews (`scripts/netlify-ignore.sh`).
+
+- Routes, content paths and hrefs are always locale-free: `<Link to="/pricing">`, `<SmartLink href="/#contact">`,
+  `[text](/gift-card)` in MDX. In path mode the router's URL rewrite (`localePrefixRewrite`) adds the current
+  page's prefix, so links stay TanStack `<Link>`s with preloading. Never hand-write `/es/...` or a TLD.
+- Components read the locale with `useSite()` / `useLocale()`, never a module-level constant; loaders and `head`
+  use `localeOf(location.publicHref)`. Other locales: `siteUrl(locale, path)` (TLD or prefix), absolute URLs:
+  `absoluteUrl(locale, path)`. The language switcher uses `localeSwitchHref` (falls back to the live site for a
+  locale with no pages yet). Locale codes are reserved slugs.
+- `/api`, `/assets` and `/og` are shared and never prefixed.
 
 ## Design tokens
 

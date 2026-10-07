@@ -1,4 +1,5 @@
 import { expect, type Page, test } from '@playwright/test'
+import { pathModeDist } from './dist-mode'
 
 /** Pages are prerendered; interactive checks wait until React has hydrated. */
 async function open(page: Page, path = '/') {
@@ -7,6 +8,7 @@ async function open(page: Page, path = '/') {
 }
 
 test.describe('homepage', () => {
+  test.skip(pathModeDist, 'production (single-locale) build only; see locale-paths.spec.ts')
   test('renders the hero and its call to action', async ({ page }, info) => {
     await open(page)
     await expect(page).toHaveTitle(/My Sheet Music Transcriptions/)

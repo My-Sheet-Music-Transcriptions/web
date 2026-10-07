@@ -1,8 +1,9 @@
 import type { MDXComponents } from 'mdx/types'
 import type { ComponentType } from 'react'
 import { lazy } from 'react'
+import { getSiteConfig } from '~/i18n/sites'
 import type { Locale } from '~/i18n/types'
-import { site } from '~/site'
+import { SITE_LOCALES } from '~/site'
 import { COLLECTIONS, type Collection, type EntryMeta, parseFrontmatter, pathFor } from './schema'
 
 export interface Entry {
@@ -52,22 +53,28 @@ const allEntries: Entry[] = Object.entries(frontmatters)
         `Content file does not match <locale>/<collection>/<slug>/index.mdx (or <slug>.mdx): ${file}`,
       )
     const meta = parseFrontmatter(parsed.collection, fm, file)
-    return { ...parsed, file, meta, path: pathFor(parsed.collection, parsed.slug, site.routes) }
+    return {
+      ...parsed,
+      file,
+      meta,
+      path: pathFor(parsed.collection, parsed.slug, getSiteConfig(parsed.locale).routes),
+    }
   })
   .filter((e) => !e.meta.draft || import.meta.env.DEV)
 
-/** Entries of the active locale only. */
-export const entries: Entry[] = allEntries.filter((e) => e.locale === site.locale)
+/** Entries of the locales this build serves (one in production, all in a path-mode preview). */
+export const entries: Entry[] = allEntries.filter((e) => SITE_LOCALES.includes(e.locale))
 
-const byPath = new Map(entries.map((e) => [e.path, e]))
+const byPath = new Map(entries.map((e) => [`${e.locale}:${e.path}`, e]))
 
-export function resolveEntry(path: string): Entry | undefined {
+/** The entry at a locale-free path ("/", "pricing", "/faqs/piano/") in a locale. */
+export function resolveEntry(locale: Locale, path: string): Entry | undefined {
   const clean = path === '' ? '/' : `/${path.replace(/^\/+|\/+$/g, '')}`
-  return byPath.get(clean)
+  return byPath.get(`${locale}:${clean}`)
 }
 
-export function listEntries<C extends Collection>(collection: C): Entry[] {
-  return entries.filter((e) => e.collection === collection)
+export function listEntries<C extends Collection>(locale: Locale, collection: C): Entry[] {
+  return entries.filter((e) => e.locale === locale && e.collection === collection)
 }
 
 type BodyComponent = ComponentType<{ components?: MDXComponents }>

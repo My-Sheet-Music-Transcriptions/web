@@ -31,6 +31,16 @@ const types: Record<string, string> = {
   '.webmanifest': 'application/manifest+json',
 }
 
+// Exact-path rules of a Netlify _redirects file (path-mode previews write "/  /en  302").
+const redirects = new Map<string, { to: string; status: number }>()
+const redirectsFile = path.join(dir, '_redirects')
+if (fs.existsSync(redirectsFile))
+  for (const line of fs.readFileSync(redirectsFile, 'utf8').split('\n')) {
+    const [from, to, status] = line.trim().split(/\s+/)
+    if (from && to && !line.trim().startsWith('#'))
+      redirects.set(from, { to, status: Number(status) || 301 })
+  }
+
 function resolveFile(urlPath: string): { file: string; status: number } {
   const clean = decodeURIComponent(urlPath.split('?')[0] ?? '/').replace(/\/+$/, '') || '/'
   const candidates =
@@ -40,12 +50,21 @@ function resolveFile(urlPath: string): { file: string; status: number } {
     if (f.startsWith(dir) && fs.existsSync(f) && fs.statSync(f).isFile())
       return { file: f, status: 200 }
   }
+  // Path-mode previews have one 404 page per locale: /<locale>/404.html.
+  const localeNf = path.join(dir, clean.split('/')[1] ?? '', '404.html')
+  if (clean !== '/' && fs.existsSync(localeNf)) return { file: localeNf, status: 404 }
   const nf = path.join(dir, '404', 'index.html')
   return { file: fs.existsSync(nf) ? nf : path.join(dir, '404.html'), status: 404 }
 }
 
 http
   .createServer((req, res) => {
+    const redirect = redirects.get((req.url ?? '/').split('?')[0] ?? '/')
+    if (redirect) {
+      res.writeHead(redirect.status, { location: redirect.to })
+      res.end()
+      return
+    }
     const { file, status } = resolveFile(req.url ?? '/')
     if (!fs.existsSync(file)) {
       res.writeHead(404, { 'content-type': 'text/plain' })

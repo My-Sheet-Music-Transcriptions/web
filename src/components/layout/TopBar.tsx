@@ -1,9 +1,10 @@
 import { Icon } from '~/components/primitives/Icon'
-import { site } from '~/site'
+import { useSite } from '~/site'
 import { LangSwitcher } from './LangSwitcher'
 
 /** Thin grey utility bar above the header: hub login/signup + language switcher. Desktop only. */
 export function TopBar() {
+  const site = useSite()
   const s = site.strings
   return (
     <div className="hidden bg-[#f0f0f0] text-small text-[#242424] lg:block">

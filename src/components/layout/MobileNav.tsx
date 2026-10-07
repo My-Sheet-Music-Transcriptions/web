@@ -4,10 +4,11 @@ import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { nav } from '~/content/en/data/nav'
 import { cn } from '~/lib/cn'
-import { site } from '~/site'
+import { useSite } from '~/site'
 
 /** Full-screen mobile menu (dialog) with collapsible service groups. */
 export function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const site = useSite()
   const panel = useRef<HTMLDivElement>(null)
   const [expanded, setExpanded] = useState<string | null>(null)
 
@@ -134,9 +135,9 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
           </ul>
           <div className="mt-4 flex flex-col gap-3 px-3">
             <Button asChild size="block">
-              <a href={site.routes.contactAnchor} onClick={onClose}>
+              <SmartLink href={site.routes.contactAnchor} onClick={onClose}>
                 {site.strings.requestCta}
-              </a>
+              </SmartLink>
             </Button>
             <div className="flex justify-center gap-6 text-small">
               <a href={site.hub.login} className="inline-flex items-center gap-1.5 text-ink">

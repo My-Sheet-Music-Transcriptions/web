@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { site } from '~/site'
+import { useSite } from '~/site'
 import { ConsentBanner } from './ConsentBanner'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -7,6 +7,7 @@ import { TopBar } from './TopBar'
 
 /** Site chrome around every page: skip link, top bar, sticky header, footer, consent banner. */
 export function SiteShell({ children }: { children: ReactNode }) {
+  const site = useSite()
   return (
     <>
       <a

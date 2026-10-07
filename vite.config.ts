@@ -9,16 +9,22 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import { defineConfig } from 'vite'
 import { imagetools } from 'vite-imagetools'
 import { listPrerenderPages } from './scripts/lib/content-fs'
-import { resolveSiteLocale } from './scripts/lib/site-locale'
+import { resolveLocaleRouting } from './scripts/lib/site-locale'
 import { getSiteConfig } from './src/i18n/sites'
 
-const locale = resolveSiteLocale(process.env.SITE_LOCALE)
+// SITE_LOCALE=<locale>: production build of one locale for its TLD. Unset or "all": every locale under
+// /<locale> (deploy previews, `pnpm dev`). See src/i18n/routing.ts.
+const { mode, locale, locales } = resolveLocaleRouting(process.env.SITE_LOCALE)
 const site = getSiteConfig(locale)
-const pages = listPrerenderPages(locale)
+const pages = listPrerenderPages(locales, mode)
 
 export default defineConfig({
   define: {
     'import.meta.env.SITE_LOCALE': JSON.stringify(locale),
+    'import.meta.env.LOCALE_ROUTING': JSON.stringify(mode),
+    'import.meta.env.PREVIEW_ORIGIN': JSON.stringify(
+      mode === 'path' ? (process.env.DEPLOY_PRIME_URL ?? '') : '',
+    ),
   },
   resolve: { tsconfigPaths: true },
   server: { port: 3000 },
@@ -44,11 +50,13 @@ export default defineConfig({
     tailwindcss(),
     tanstackStart({
       srcDirectory: 'src',
-      sitemap: { enabled: true, host: site.domain, outputPath: 'sitemap.xml' },
+      // Path-mode previews are not indexed: no sitemap.
+      sitemap: { enabled: mode === 'domain', host: site.domain, outputPath: 'sitemap.xml' },
       prerender: {
         enabled: true,
         crawlLinks: true,
-        autoStaticPathsDiscovery: true,
+        // In path mode the bare static routes ("/", "/404") only redirect to /en; the pages list has them.
+        autoStaticPathsDiscovery: mode === 'domain',
         autoSubfolderIndex: true,
         concurrency: 8,
         failOnError: true,

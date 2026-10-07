@@ -8,7 +8,7 @@ Content lives in this repository as MDX and is changed by chatting with Claude C
 
 ```sh
 pnpm install
-pnpm dev                 # http://localhost:3000
+pnpm dev                 # http://localhost:3000/en (every locale under /<locale>)
 pnpm storybook           # http://localhost:6006
 SITE_LOCALE=en pnpm build && pnpm serve:dist
 pnpm release-check       # everything CI runs, locally

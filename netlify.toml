@@ -1,11 +1,14 @@
 # Several Netlify sites are built from this repository with this one file:
 #   - one site per locale/domain:   NETLIFY_TARGET=site (default), SITE_LOCALE=<locale>
 #   - the design system (Storybook): NETLIFY_TARGET=storybook
-# Set those variables per site (Site configuration > Environment variables). Every site gets
-# Deploy Previews on pull requests.
+# Set those variables per site (Site configuration > Environment variables).
+# Deploy Previews: the English site (SITE_LOCALE=en) builds every locale under /en, /es, /ca...
+# (path mode, see src/i18n/routing.ts); the other locale sites skip previews and branch deploys
+# (scripts/netlify-ignore.sh), so a pull request gets one all-languages preview plus Storybook's.
 [build]
   command = "pnpm build:netlify"
   publish = "dist/client"
+  ignore = "sh scripts/netlify-ignore.sh"
 
 [build.environment]
   NODE_VERSION = "22"

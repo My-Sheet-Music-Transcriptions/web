@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button } from '~/components/primitives/Button'
 import { SmartLink } from '~/components/primitives/SmartLink'
-import { site } from '~/site'
+import { useSite } from '~/site'
 
 const KEY = 'msmt-consent'
 
@@ -10,6 +10,7 @@ const KEY = 'msmt-consent'
  * nothing is sent anywhere until the visitor decides.
  */
 export function ConsentBanner() {
+  const site = useSite()
   const [visible, setVisible] = useState(false)
   useEffect(() => {
     try {

@@ -2,6 +2,7 @@ import heroOverlay from '~/assets/images/home/hero.png?w=800;1440;2200&as=pictur
 import { Logo } from '~/components/layout/Logo'
 import { Button } from '~/components/primitives/Button'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
+import { SmartLink } from '~/components/primitives/SmartLink'
 import { ratings } from '~/content/en/data/home'
 import { HeroSlideshow } from './HeroSlideshow'
 import { RatingCard } from './StatsBanner'
@@ -92,7 +93,7 @@ export function Hero({
             </p>
             <div className="mt-8">
               <Button variant="primary" asChild>
-                <a href={ctaHref}>{ctaLabel}</a>
+                <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
               </Button>
             </div>
           </div>

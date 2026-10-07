@@ -1,8 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { Button } from '~/components/primitives/Button'
-import { site } from '~/site'
+import { useSite } from '~/site'
 
 export function NotFound() {
+  const site = useSite()
   const s = site.strings
   return (
     <main id="main" className="container-content py-24 text-center">

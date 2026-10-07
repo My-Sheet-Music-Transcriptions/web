@@ -1,15 +1,18 @@
 import type { Organization, Thing, WebSite, WithContext } from 'schema-dts'
 import type { Entry } from '~/content'
-import { absoluteUrl, site } from '~/site'
+import type { Locale } from '~/i18n/types'
+import { absoluteUrl, getSiteConfig } from '~/site'
 
-export function organizationJsonLd(): WithContext<Organization> {
+export function organizationJsonLd(locale: Locale): WithContext<Organization> {
+  const site = getSiteConfig(locale)
+  const home = absoluteUrl(locale, '/')
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    '@id': `${site.domain}/#organization`,
+    '@id': `${home}#organization`,
     name: site.siteName,
-    url: `${site.domain}/`,
-    logo: absoluteUrl('/apple-touch-icon.png'),
+    url: home,
+    logo: absoluteUrl(locale, '/apple-touch-icon.png'),
     email: site.contact.email,
     sameAs: site.social.map((s) => s.href),
     foundingDate: '2011',
@@ -17,27 +20,31 @@ export function organizationJsonLd(): WithContext<Organization> {
   }
 }
 
-export function websiteJsonLd(): WithContext<WebSite> {
+export function websiteJsonLd(locale: Locale): WithContext<WebSite> {
+  const site = getSiteConfig(locale)
+  const home = absoluteUrl(locale, '/')
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    '@id': `${site.domain}/#website`,
-    url: `${site.domain}/`,
+    '@id': `${home}#website`,
+    url: home,
     name: site.siteName,
     inLanguage: site.lang,
-    publisher: { '@id': `${site.domain}/#organization` },
+    publisher: { '@id': `${home}#organization` },
   }
 }
 
 /** Entry-specific structured data; each template may add more via its blocks. */
 export function entryJsonLd(entry: Entry, canonical: string): WithContext<Thing>[] {
   const m = entry.meta
+  const site = getSiteConfig(entry.locale)
+  const home = absoluteUrl(entry.locale, '/')
   const common = {
     url: canonical,
     name: m.title,
     description: m.description,
     inLanguage: site.lang,
-    isPartOf: { '@id': `${site.domain}/#website` },
+    isPartOf: { '@id': `${home}#website` },
   }
   switch (entry.collection) {
     case 'posts':
@@ -51,7 +58,7 @@ export function entryJsonLd(entry: Entry, canonical: string): WithContext<Thing>
           datePublished: 'date' in m ? m.date : undefined,
           dateModified: m.updated ?? ('date' in m ? m.date : undefined),
           author: { '@type': 'Organization', name: site.siteName },
-          publisher: { '@id': `${site.domain}/#organization` },
+          publisher: { '@id': `${home}#organization` },
           inLanguage: site.lang,
         },
       ]
@@ -61,7 +68,7 @@ export function entryJsonLd(entry: Entry, canonical: string): WithContext<Thing>
           '@context': 'https://schema.org',
           '@type': 'Service',
           ...common,
-          provider: { '@id': `${site.domain}/#organization` },
+          provider: { '@id': `${home}#organization` },
           serviceType: m.title,
         },
       ]

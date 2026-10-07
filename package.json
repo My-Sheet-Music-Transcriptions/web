@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "tsx scripts/prebuild.ts && vite build",
+    "build": "tsx scripts/prebuild.ts && vite build && tsx scripts/postbuild.ts",
     "build:hreflang": "tsx scripts/build-hreflang.ts",
     "preview": "vite preview",
     "serve:dist": "tsx scripts/serve-dist.ts",

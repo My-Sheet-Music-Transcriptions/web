@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import logo from '~/assets/images/brand/logo.svg'
 import { cn } from '~/lib/cn'
-import { site } from '~/site'
+import { useSite } from '~/site'
 
 /** Brand lockup (SVG). Sized by the parent via className; intrinsic ratio 183:50. */
 export function Logo({
@@ -13,6 +13,7 @@ export function Logo({
   width?: number
   priority?: boolean
 }) {
+  const site = useSite()
   const height = Math.round((width * 50) / 183)
   return (
     <Link

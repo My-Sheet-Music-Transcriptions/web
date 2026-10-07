@@ -1,18 +1,25 @@
 import { Fragment } from 'react'
 import { sites } from '~/i18n/sites'
+import { localeSwitchHref } from '~/i18n/switch'
 import { cn } from '~/lib/cn'
-import { site } from '~/site'
+import { useSite } from '~/site'
 
 export interface LangSwitcherProps {
   /** translationKey of the current page: links go to the page's translation when one exists. */
   translationKey?: string
+  /** locale -> locale-free path of this page's translations (from the hreflang map). */
   alternates?: Partial<Record<string, string>>
   className?: string
   tone?: 'dark' | 'light'
 }
 
-/** "EN | ES | FR | DE | JP" cross-domain switcher; the current locale is highlighted in orange. */
+/**
+ * "EN | ES | FR | DE | JP" switcher; the current locale is highlighted in orange. Links go to the other
+ * locale's TLD in production and to /<locale>/... in previews (localeSwitchHref). Plain <a>: changing
+ * language is a full document change (<html lang>, strings), not a client-side navigation.
+ */
 export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: LangSwitcherProps) {
+  const site = useSite()
   return (
     <nav
       aria-label="Language"
@@ -24,7 +31,7 @@ export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: Lang
     >
       {site.languageSwitcher.map(({ locale, label }, i) => {
         const target = sites[locale]
-        const href = alternates[locale] ?? `${target.domain}/`
+        const href = localeSwitchHref(locale, alternates[locale] ?? '/')
         const current = locale === site.locale
         return (
           <Fragment key={locale}>
