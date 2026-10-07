@@ -26,6 +26,10 @@ If the message already answers these, do not ask: state your assumptions and go 
 
 ## Phase 2 · Preview and iterate
 
+Every request gets this preview before anything else: a new page, and every change to an existing one, even a
+single word. What the person sees is always the published HTML artifact, never screenshots, images or a
+description in words.
+
 Build (do not narrate this):
 1. Freshness: skip it when this session has not touched `src/` (CI's sync test already keeps `main`'s artifact
    current). Otherwise run `pnpm ds:index --check` (a hash comparison, not the test suite) and, if it fails,
@@ -52,7 +56,8 @@ Build (do not narrate this):
    Republish the same artifact on every iteration; never a second one for the same page.
    Do not render or screenshot the preview locally (Playwright, Chromium): the local `page.html` is blank by
    design, since the component bundle and images only join it in the published artifact. Publishing is the
-   check; open the artifact link instead.
+   check. If the publish is refused, fix the cause and publish again; never drop files from `files.json`
+   to get it through. A design-system file the artifact lacks means running `publish-design-system` first.
 
 Talk: the link; one short paragraph of what the page shows, top to bottom, in everyday words; what you
 assumed; what is still a placeholder and what you need. Explain commenting: Desktop/Phone switch at the
