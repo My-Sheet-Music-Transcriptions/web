@@ -26,6 +26,10 @@ If the message already answers these, do not ask: state your assumptions and go 
 
 ## Phase 2 · Preview and iterate
 
+Every request gets this preview before anything else: a new page, and every change to an existing one, even a
+single word. What the person sees is always the published HTML artifact, never screenshots, images or a
+description in words.
+
 Build (do not narrate this):
 1. Freshness: skip it when this session has not touched `src/` (CI's sync test already keeps `main`'s artifact
    current). Otherwise run `pnpm ds:index --check` (a hash comparison, not the test suite) and, if it fails,
@@ -52,7 +56,8 @@ Build (do not narrate this):
    Republish the same artifact on every iteration; never a second one for the same page.
    Do not render or screenshot the preview locally (Playwright, Chromium): the local `page.html` is blank by
    design, since the component bundle and images only join it in the published artifact. Publishing is the
-   check; open the artifact link instead.
+   check. If the publish is refused, fix the cause and publish again; never drop files from `files.json`
+   to get it through. A design-system file the artifact lacks means running `publish-design-system` first.
 
 Talk: the link; one short paragraph of what the page shows, top to bottom, in everyday words; what you
 assumed; what is still a placeholder and what you need. Explain commenting: Desktop/Phone switch at the
@@ -90,10 +95,14 @@ before anything goes live. Keep the rest out of the conversation.
    body: the preview artifact link, what the page contains in plain words, new blocks if any); subscribe to it.
    Netlify posts the deploy preview within a few minutes: wait for its comment (or poll
    `https://deploy-preview-<n>--msmt-web.netlify.app/<locale><path>`, e.g. `/en/gift-card`, `/es/precios`: previews serve every locale under its prefix until it answers 200), check that page against
-   the approved preview section by section, then give the user that link in plain words and ask with
-   AskUserQuestion: "This is the real page on a test address. Does it look right?" (options: "Yes, put it
-   live" / "Something to change"). Changes they ask for now go through the same loop: edit, checks, push,
-   new preview.
+   the approved preview section by section, then give the user that link and ask with AskUserQuestion:
+   "This is the real page on a test address. Does it look right?" (options: "Yes, put it live" / "Something
+   to change"). The link is a clickable markdown link straight to the page
+   (`[Open the boom boxes page](https://deploy-preview-12--msmt-web.netlify.app/en/boom-boxes)`), never the
+   preview's home page or the PR. It arrives minutes after they last heard from you, so also send it as a push
+   notification (`PushNotification`, when available) in case they stepped away. Changes they ask for now go
+   through the same loop: edit, checks, push, and when Netlify's comment shows the new commit ready, the
+   link again the same way, saying what changed.
 6. **Publish on their acceptance.** Mark the PR ready for review and enable **auto-merge (squash)** with the
    GitHub tools (`update_pull_request` draft=false, `enable_pr_auto_merge` SQUASH). From here on auto-fix:
    stay subscribed, and on every CI failure or review-bot finding fix the root cause and push until the PR
@@ -101,5 +110,6 @@ before anything goes live. Keep the rest out of the conversation.
    "Allow auto-merge" and a branch protection rule on `main` requiring the CI checks, and merge manually once
    CI is green only if the user asks.
 7. **Confirm.** When the PR merges, Netlify deploys `main`: poll the live URL until the new page answers 200
-   with its title (up to ~5 minutes), then tell the user it is live with its address. If the production
+   with its title (up to ~5 minutes), then tell the user it is live with a clickable link to the live page,
+   in the conversation and as a push notification. If the production
    deploy or CI on main fails afterwards, say so, fix forward, and report.
