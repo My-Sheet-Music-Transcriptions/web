@@ -1,0 +1,36 @@
+<!-- @dsCard height=320 -->
+<!--
+  Derivation
+  blocks: primary 360×100, accent 200×100, navy 150×100, teal 100×100, peach 150×100 — widths 4×section-lg, 4×section, 3×section, 2×section, 3×section; height 2×section; square corners, the band bleeds off top, left and right.
+  arrangement: top-band skeleton (the name is wider than 440px at 64px): one full-width strip of unequal bands, the hero's hard colour/photo split.
+  pattern: "a literal motif → arcs built from radii": the hero and the wave dividers draw concentric sound-wave arcs, the brand's one recurring shape — five peach quarter-arcs over the primary block, centred on its bottom-left corner.
+  scales: section 50px, section-lg 90px; arc radii 2–6 × radius-pill (28px); name 64px Montserrat 800, leading .95, tagline 14px muted; insets one section.
+-->
+<style>
+  .cover { position: relative; width: 960px; height: 320px; overflow: hidden; font-family: var(--font-sans); }
+  .cover svg { position: absolute; inset: 0; display: block; }
+  .primary { fill: var(--primary); }
+  .accent { fill: var(--accent); }
+  .navy { fill: var(--navy); }
+  .teal { fill: var(--teal); }
+  .peach { fill: var(--peach); }
+  .arc { fill: none; stroke: var(--peach); stroke-width: 2; }
+  .name { position: absolute; left: 50px; top: 150px; margin: 0; width: 620px; font-size: 64px; line-height: 0.95; font-weight: 800; letter-spacing: -0.01em; color: var(--ink); }
+  .tagline { position: absolute; left: 50px; top: 286px; margin: 0; width: 440px; font-size: 14px; line-height: 1.2; font-weight: 500; color: var(--muted); }
+</style>
+<div class="cover">
+  <svg width="960" height="320" viewBox="0 0 960 320" aria-hidden="true">
+    <rect class="primary" x="0" y="0" width="360" height="100" />
+    <rect class="accent" x="360" y="0" width="200" height="100" />
+    <rect class="navy" x="560" y="0" width="150" height="100" />
+    <rect class="teal" x="710" y="0" width="100" height="100" />
+    <rect class="peach" x="810" y="0" width="150" height="100" />
+    <path class="arc" d="M0 44 A56 56 0 0 1 56 100" />
+    <path class="arc" d="M0 16 A84 84 0 0 1 84 100" />
+    <path class="arc" d="M12 0 A112 112 0 0 1 112 100" />
+    <path class="arc" d="M40 0 A140 140 0 0 1 140 100" />
+    <path class="arc" d="M68 0 A168 168 0 0 1 168 100" />
+  </svg>
+  <p class="name">My Sheet Music<br>Transcriptions</p>
+  <p class="tagline">Audio in, sheet music out: notation made by hand, by professional transcribers.</p>
+</div>

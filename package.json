@@ -30,7 +30,10 @@
     "prebuild_only": "tsx scripts/prebuild.ts",
     "check:slugs": "tsx scripts/check-slugs.ts",
     "gen:routes": "tsx scripts/generate-routes.ts",
-    "build:netlify": "tsx scripts/netlify-build.ts"
+    "build:netlify": "tsx scripts/netlify-build.ts",
+    "ds:build": "vite build -c vite.ds.config.ts",
+    "ds:export": "tsx scripts/design-system/export.ts",
+    "ds:index": "tsx scripts/design-system/index.ts"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.3.0",
