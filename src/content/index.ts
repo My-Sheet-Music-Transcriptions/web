@@ -20,15 +20,21 @@ type MdxModule = {
 }
 
 // Frontmatter is read eagerly (tiny), bodies lazily (one chunk per page).
+// A page is a folder: <locale>/<collection>/<slug>/index.mdx with its images beside it (co-location).
+// The flat <slug>.mdx form is accepted for pages without assets.
 const frontmatters = import.meta.glob<Record<string, unknown>>(
-  './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*.mdx',
+  [
+    './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/index.mdx',
+    './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*.mdx',
+  ],
   { eager: true, import: 'frontmatter' },
 )
-const bodies = import.meta.glob<MdxModule>(
+const bodies = import.meta.glob<MdxModule>([
+  './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/index.mdx',
   './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*.mdx',
-)
+])
 
-const FILE_RE = /^\.\/([a-z]{2})\/([a-z]+)\/([a-z0-9-]+)\.mdx$/
+const FILE_RE = /^\.\/([a-z]{2})\/([a-z]+)\/([a-z0-9-]+)(?:\/index)?\.mdx$/
 
 function parseFile(file: string): { locale: Locale; collection: Collection; slug: string } | null {
   const m = FILE_RE.exec(file)
@@ -42,7 +48,9 @@ const allEntries: Entry[] = Object.entries(frontmatters)
   .map(([file, fm]) => {
     const parsed = parseFile(file)
     if (!parsed)
-      throw new Error(`Content file does not match <locale>/<collection>/<slug>.mdx: ${file}`)
+      throw new Error(
+        `Content file does not match <locale>/<collection>/<slug>/index.mdx (or <slug>.mdx): ${file}`,
+      )
     const meta = parseFrontmatter(parsed.collection, fm, file)
     return { ...parsed, file, meta, path: pathFor(parsed.collection, parsed.slug, site.routes) }
   })

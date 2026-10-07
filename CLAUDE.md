@@ -23,9 +23,11 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 
 ## Where things live
 
-- `src/content/<locale>/<collection>/<slug>.mdx` – every page. Collections: pages, services, posts, faqs, artists,
-  musicians, partners, reviews. The file name is the URL slug (`pages/home.mdx` is `/`, `faqs/x.mdx` is `/faqs/x`).
-  Frontmatter is validated by `src/content/schema.ts` (zod) at build and in unit tests.
+- `src/content/<locale>/<collection>/<slug>/index.mdx` – every page is a **folder**: the MDX plus every image the
+  page uses, side by side (co-location). Collections: pages, services, posts, faqs, artists, musicians, partners,
+  reviews. The folder name is the URL slug (`pages/home/` is `/`, `faqs/x/` is `/faqs/x`). A flat `<slug>.mdx` is
+  accepted for a page with no assets of its own. Frontmatter is validated by `src/content/schema.ts` (zod) at
+  build and in unit tests.
 - `src/content/<locale>/data/*.ts` – structured data blocks read (nav, footer, pricing, ratings, reviews).
   Numbers that appear in several places (review counts, prices) live here once.
 - `src/components/primitives` – Button, Card, Picture, Stars, Icon, SectionHeading, WaveDivider...
@@ -61,7 +63,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 1. Pick the collection and slug; check `src/content/<locale>/...` for collisions.
 2. Write frontmatter (title, description, translationKey, template/type-specific fields) and compose the body
    from blocks, e.g. `<Hero />`, `<Section title="...">prose</Section>`, `<ReviewCards limit={4} />`.
-3. Put images in `src/assets/images/<collection>/` and import them through blocks (never raw `<img>`).
+3. Put the page's images in its folder (`src/content/<locale>/<collection>/<slug>/`), import them in the MDX
+   (`import mascot from './mascot.png?w=240;480&as=picture'`) and pass them to blocks as props; never raw `<img>`.
+   Only brand-wide assets (logo, icons, flags, software logos) live in `src/assets/images/`.
 4. `pnpm release-check`, open a draft PR; Netlify posts a preview.
 
 ## Design tokens
@@ -94,6 +98,11 @@ artifact by hand. CI: PRs run lint/types/unit (+ `ds:export`), build, SEO, e2e a
 suite runs on `main` only (run `pnpm test:storybook` locally when touching components).
 
 ## Conventions
+
+- **Co-location, no external assets.** Everything a page or component needs sits next to it: a page's images
+  in its folder, a block's story and docs beside the block. Nothing on the site or in the artifacts references a
+  third-party URL at runtime: no hotlinked images, no CDN scripts, no Google Fonts (Montserrat is self-hosted).
+  Images from the old site are downloaded into the repo, never linked.
 
 - TypeScript strict, Biome style (single quotes, no semicolons). Components are function components with typed props.
 - Internal links use the router `<Link>` (preloaded on hover); external ones a plain `<a rel="noopener">`.

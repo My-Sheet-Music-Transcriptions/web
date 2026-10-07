@@ -13,12 +13,14 @@ description: Build an approved mockup into a content page (MDX from the block ca
    in the catalogue.
 2. Decide the collection (`pages` unless it is a service/post/faq/artist/musician/partner/review) and the slug
    (same as the live site when porting). Check collisions: `pnpm exec tsx scripts/check-slugs.ts`.
-3. Write `src/content/<locale>/<collection>/<slug>.mdx`: frontmatter per `src/content/schema.ts` (`title` 30–65
+3. Write `src/content/<locale>/<collection>/<slug>/index.mdx`: frontmatter per `src/content/schema.ts` (`title` 30–65
    chars as the page `<title>`, `description` 50–160, `translationKey`, `template` or type-specific fields);
    body only from blocks in `src/components/blocks/index.tsx` plus Markdown prose. Copy comes from the mockup;
    a `[PLACEHOLDER]` still in it means ask, never invent.
-4. Images: originals into `src/assets/images/<collection>/` (≤ 2000px long side, descriptive names, alt text),
-   imported through blocks and `<Picture>`; never hotlink.
+4. Images live in the page folder (`src/content/<locale>/<collection>/<slug>/`, ≤ 2000px long side, descriptive
+   names): import them at the top of the MDX (`import card from './gift-card.png?w=480;960&as=picture'`) and pass
+   them to blocks as props with alt text. Never hotlink, never reference `wp-content` or any other external URL.
+   Brand-wide assets only (logo, icons, flags) stay in `src/assets/images/`.
 5. Structured facts (prices, counts, nav entries) go in `src/content/<locale>/data/*.ts`. Add the page to
    `data/nav.ts` / `data/footer.ts` where the mockup shows it, and drop its slug from any legacy-link list.
 6. `pnpm release-check` (and `pnpm test:storybook` when a block changed; CI runs it on main only). Fix every
