@@ -30,13 +30,18 @@ export interface FsEntry {
 const ROOT = path.resolve(process.cwd(), 'src/content')
 
 export function readAllEntries(): FsEntry[] {
-  const files = fg.sync('*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*.mdx', {
-    cwd: ROOT,
-  })
+  const files = fg.sync(
+    [
+      '*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/index.mdx',
+      '*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*.mdx',
+    ],
+    { cwd: ROOT },
+  )
   return files.map((rel) => {
     const [locale, collection, name] = rel.split('/') as [Locale, Collection, string]
     if (!LOCALES.includes(locale)) throw new Error(`Unknown locale folder in ${rel}`)
     if (!COLLECTIONS.includes(collection)) throw new Error(`Unknown collection folder in ${rel}`)
+    // <slug>/index.mdx (a page folder with its images) or the flat <slug>.mdx
     const slug = name.replace(/\.mdx$/, '')
     const raw = fs.readFileSync(path.join(ROOT, rel), 'utf8')
     const { data, content } = matter(raw)
@@ -75,7 +80,7 @@ export function checkSlugs(all = readAllEntries()): string[] {
       )
         problems.push(`${locale}: slug "${e.slug}" in ${e.file} is reserved`)
       if (e.collection === 'pages' && e.slug === 'home' && e.meta.translationKey !== 'home')
-        problems.push(`${locale}: pages/home.mdx must have translationKey "home"`)
+        problems.push(`${locale}: pages/home must have translationKey "home"`)
     }
   }
   return problems

@@ -1,0 +1,218 @@
+<title>__TITLE__</title>
+<style>
+  /* Layout: a thin review bar on top, then the rendered page in a frame scaled to fit;
+     block labels and comment handles float over each section. Chrome stays neutral so the site's own colours read true. */
+  :root {
+    --bg: #ecebe7;
+    --bar: rgba(255, 255, 255, 0.92);
+    --fg: #23272b;
+    --muted: #5f666d;
+    --line: #d6d4ce;
+    --accent: #1a7f97;
+    --accent-ink: #ffffff;
+    --new: #b8571c;
+    --chip: rgba(2, 48, 71, 0.88);
+    --chip-ink: #ffffff;
+    --font: "Montserrat", "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1e21; --bar: rgba(32, 34, 38, 0.94); --fg: #e8e6e1; --muted: #a2a7ad; --line: #3a3d42;
+      --accent: #5fc0d6; --accent-ink: #10242a; --new: #f49946; --chip: rgba(236, 235, 231, 0.92); --chip-ink: #10242a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1e21; --bar: rgba(32, 34, 38, 0.94); --fg: #e8e6e1; --muted: #a2a7ad; --line: #3a3d42;
+    --accent: #5fc0d6; --accent-ink: #10242a; --new: #f49946; --chip: rgba(236, 235, 231, 0.92); --chip-ink: #10242a;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 14px; }
+  .bar {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+    padding: 10px 16px; background: var(--bar); border-bottom: 1px solid var(--line); backdrop-filter: blur(8px);
+  }
+  .bar h1 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+  .bar .sub { color: var(--muted); font-size: 12px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: var(--fg); font: inherit; font-size: 12px; font-weight: 600;
+    padding: 7px 14px; cursor: pointer; min-height: 32px;
+  }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .seg button:focus-visible, .toggle:focus-visible, .handle button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .toggle input { width: 16px; height: 16px; margin: 0; accent-color: var(--accent); }
+  .hint { color: var(--muted); font-size: 12px; margin-left: auto; max-width: 42ch; }
+  .legend { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--new); }
+
+  .stage { padding: 24px 16px 48px; overflow-x: hidden; }
+  .stage-inner { position: relative; margin: 0 auto; }
+  .frame { position: absolute; left: 0; top: 0; transform-origin: 0 0; box-shadow: 0 2px 24px rgba(0, 0, 0, 0.18); background: #fff; }
+  .frame iframe { display: block; border: 0; width: 100%; height: 100%; background: #fff; }
+  .anchors { position: absolute; inset: 0; pointer-events: none; }
+  .anchor { position: absolute; left: 0; right: 0; box-sizing: border-box; }
+  .anchor::before { content: ""; position: absolute; inset: 0; border: 2px solid transparent; transition: border-color 120ms; }
+  .anchor:hover::before, .anchor:focus-within::before { border-color: var(--accent); }
+  .anchor.proposed:hover::before, .anchor.proposed:focus-within::before { border-color: var(--new); }
+  .handle {
+    position: absolute; top: 8px; right: 8px; display: flex; align-items: center; gap: 6px; pointer-events: auto;
+    max-width: calc(100% - 16px);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px;
+    background: var(--chip); color: var(--chip-ink); font-family: var(--mono); font-size: 11.5px; line-height: 1;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60vw;
+  }
+  .chip b { font-weight: 700; }
+  .chip .new { background: var(--new); color: #fff; font-family: var(--font); font-weight: 800; font-size: 10px; letter-spacing: 0.06em; padding: 2px 6px; border-radius: 999px; }
+  .handle button {
+    appearance: none; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
+    font: inherit; font-size: 12px; font-weight: 700; padding: 6px 12px; min-height: 28px; cursor: pointer; white-space: nowrap;
+  }
+  .handle button[hidden] { display: none; }
+  .labels-off .chip { display: none; }
+  .status { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30;
+    background: var(--chip); color: var(--chip-ink); padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  @media (max-width: 720px) { .hint { margin-left: 0; } .stage { padding: 12px 8px 32px; } }
+  @media (prefers-reduced-motion: reduce) { .anchor::before { transition: none; } }
+</style>
+
+<header class="bar" data-uncommentable>
+  <div>
+    <h1>__TITLE__</h1>
+    <div class="sub">Mockup of __PATH__, rendered with the site's real components</div>
+  </div>
+  <div class="seg" role="group" aria-label="Viewport width">
+    <button type="button" data-w="1440" aria-pressed="true">Desktop 1440</button>
+    <button type="button" data-w="768" aria-pressed="false">Tablet 768</button>
+    <button type="button" data-w="390" aria-pressed="false">Phone 390</button>
+  </div>
+  <label class="toggle"><input type="checkbox" id="labels" checked> Block labels</label>
+  <span class="legend"><i></i> new block or prop, built on approval</span>
+  <p class="hint" id="hint">Hover a section and press Comment to leave a note on it, or use the comment tool in the top right.</p>
+</header>
+
+<main class="stage">
+  <div class="stage-inner" id="stageInner">
+    <div class="frame" id="frame">
+      <iframe id="page" src="page.html" title="__TITLE__ mockup" scrolling="no" loading="eager"></iframe>
+      <div class="anchors" id="anchors"></div>
+    </div>
+  </div>
+</main>
+<output class="status" id="status" hidden aria-live="polite"></output>
+
+<script>
+(function () {
+  var W = 1440, pageH = 1200;
+  var frame = document.getElementById('frame');
+  var inner = document.getElementById('stageInner');
+  var iframe = document.getElementById('page');
+  var anchors = document.getElementById('anchors');
+  var status = document.getElementById('status');
+  var comments = null, composerOk = true;
+  var sections = [];
+
+  try {
+    var saved = localStorage.getItem('msmt-review-w');
+    if (saved && ['1440', '768', '390'].indexOf(saved) >= 0) W = Number(saved);
+    if (localStorage.getItem('msmt-review-labels') === 'off') { document.getElementById('labels').checked = false; document.body.classList.add('labels-off'); }
+  } catch (e) {}
+
+  function layout() {
+    var avail = inner.parentElement.clientWidth;
+    var s = Math.min(1, avail / W);
+    frame.style.width = W + 'px';
+    frame.style.height = pageH + 'px';
+    frame.style.transform = 'scale(' + s + ')';
+    inner.style.width = Math.round(W * s) + 'px';
+    inner.style.height = Math.round(pageH * s) + 'px';
+  }
+
+  function renderAnchors() {
+    anchors.textContent = '';
+    sections.forEach(function (sec) {
+      var a = document.createElement('div');
+      a.className = 'anchor' + (sec.proposed ? ' proposed' : '');
+      a.style.top = sec.top + 'px';
+      a.style.height = Math.max(sec.height, 40) + 'px';
+      a.setAttribute('data-comment-target', '');
+      a.setAttribute('data-section', sec.name);
+      var handle = document.createElement('div');
+      handle.className = 'handle';
+      var chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.setAttribute('title', sec.name + (sec.props ? ' ' + sec.props : ''));
+      var b = document.createElement('b'); b.textContent = sec.name; chip.appendChild(b);
+      if (sec.props) { var p = document.createElement('span'); p.textContent = sec.props; chip.appendChild(p); }
+      if (sec.proposed) { var n = document.createElement('span'); n.className = 'new'; n.textContent = 'NEW'; chip.appendChild(n); }
+      handle.appendChild(chip);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'Comment';
+      btn.setAttribute('aria-label', 'Comment on ' + sec.name);
+      btn.hidden = !(comments && composerOk);
+      btn.addEventListener('click', function () { openComposer(a, sec.name); });
+      handle.appendChild(btn);
+      a.appendChild(handle);
+      anchors.appendChild(a);
+    });
+  }
+
+  function say(text) {
+    status.textContent = text; status.hidden = false;
+    clearTimeout(say.t); say.t = setTimeout(function () { status.hidden = true; }, 3200);
+  }
+
+  function openComposer(el, name) {
+    if (!comments) return;
+    comments.openComposer({ element: el }).then(function (r) {
+      if (!r.opened) say('The composer did not open. Click inside the page first, then try again.');
+    }).catch(function (err) {
+      if (err && err.code === 'unavailable') { composerOk = false; renderAnchors(); say('Commenting from the page is off here. Use the comment tool in the top right.'); }
+      else if (err && err.code === 'rate_limited') say('Slow down a little before opening another comment.');
+      else say('Could not open a comment on ' + name + '. Use the comment tool in the top right.');
+    });
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.source !== iframe.contentWindow || !e.data || e.data.type !== 'msmt:layout') return;
+    pageH = Math.max(400, Math.round(e.data.height));
+    sections = e.data.sections || [];
+    layout();
+    renderAnchors();
+  });
+
+  document.querySelectorAll('.seg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      W = Number(b.getAttribute('data-w'));
+      document.querySelectorAll('.seg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      try { localStorage.setItem('msmt-review-w', String(W)); } catch (e) {}
+      layout();
+      if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'msmt:measure' }, '*');
+    });
+  });
+  document.querySelectorAll('.seg button').forEach(function (x) { x.setAttribute('aria-pressed', String(Number(x.getAttribute('data-w')) === W)); });
+
+  document.getElementById('labels').addEventListener('change', function (e) {
+    document.body.classList.toggle('labels-off', !e.target.checked);
+    try { localStorage.setItem('msmt-review-labels', e.target.checked ? 'on' : 'off'); } catch (e2) {}
+  });
+
+  window.addEventListener('resize', layout);
+  layout();
+
+  if (window.claude && window.claude.use) {
+    window.claude.use('comments').then(function (ns) {
+      comments = ns;
+      if (!comments) document.getElementById('hint').textContent = 'Use the comment tool in the top right to leave notes on any section.';
+      renderAnchors();
+    }).catch(function () {});
+  }
+})();
+</script>

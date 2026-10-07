@@ -1,0 +1,205 @@
+{
+  "url": "https://claude.ai/artifact/LE9vG3UrotduNzBWbf52yJ",
+  "title": "My Sheet Music Transcriptions",
+  "namespace": "MSMT",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-07T18:25:00Z"
+  },
+  "publishedBy": "Josep Jaume Rey",
+  "publishedFrom": "1589198 (main) + design-system export, 2026-10-07",
+  "assets": {
+    "Brand/logo.svg": {
+      "blob": "7c0b1235a713e45bbb5a9759cca53073",
+      "size": 21166,
+      "type": "image/svg+xml",
+      "sha256": "279449a7c7e4bf6297cbfb2bd397d09bc1ecd4d954540db6851a9b3de9a48f09"
+    },
+    "Brand/favicon.svg": {
+      "blob": "b01f16e9f3766f173f579b019341c857",
+      "size": 1431,
+      "type": "image/svg+xml",
+      "sha256": "a9a787287575bf7c38e3d78f1417531acd14c9406091c0516e9556e26d410c7a"
+    },
+    "Brand/apple-touch-icon.png": {
+      "blob": "5d65580c62053b0073aede7e63b9fef7",
+      "size": 21691,
+      "type": "image/png",
+      "sha256": "411585d99f937f9ff063f500f2f5f837ccb11f3eb7a85bf3b56970ec0e51da2a"
+    },
+    "Instrument icons/drums.png": {
+      "blob": "b655787fd14208be6c0988be3ebf95fc",
+      "size": 61617,
+      "type": "image/png",
+      "sha256": "8100fc95a34e87f711669e6da8ff17b75c7b90ada2a0bde9b91d3448370fe821"
+    },
+    "Instrument icons/guitar.png": {
+      "blob": "3452c67ffeb18cec0449a3c69c3dcfc1",
+      "size": 64448,
+      "type": "image/png",
+      "sha256": "b8d17cf84d36ce6334d7335ff849724b29bee06d1f974f038e306c312ac3f5a0"
+    },
+    "Instrument icons/orchestration.png": {
+      "blob": "43d732c5e6ee92451302a35691c8ab84",
+      "size": 353508,
+      "type": "image/png",
+      "sha256": "84dc983a04a1feb30256925ff9c98eb546d103b49c3c53c05bc2f20834e32707"
+    },
+    "Instrument icons/piano-vocal.png": {
+      "blob": "a2b21d3e4e7c9ea1140e8d6faed4d00c",
+      "size": 44011,
+      "type": "image/png",
+      "sha256": "c62c3620b24dcb7b8834bf3af7ce605e77f29d6db7949bd5b358bdb3898b758b"
+    },
+    "Instrument icons/piano.png": {
+      "blob": "3b13445bafe3dcce257d571cb630c1aa",
+      "size": 28351,
+      "type": "image/png",
+      "sha256": "90b964139d6fb163f82951d7f94205ad5da8beba54d67e348f2a953f7dbfa172"
+    },
+    "Instrument icons/saxophone.png": {
+      "blob": "7bbe3aa3392c74698f4160796f8ec9de",
+      "size": 176241,
+      "type": "image/png",
+      "sha256": "b934184a060e0f7b36b809705f53c4ac5f2858cadb0eef9dfb8fe7428d9501f0"
+    },
+    "Instrument icons/strings.png": {
+      "blob": "6b67b4605714ae5cb972814de4bee314",
+      "size": 212007,
+      "type": "image/png",
+      "sha256": "b9afbe806bf9bacd84621472f7ac189704fc9f3aef91bddae9def17e2716c0d0"
+    },
+    "Instrument icons/trumpet.png": {
+      "blob": "97be420b28134cdf7a624248845e7242",
+      "size": 147578,
+      "type": "image/png",
+      "sha256": "5ff498d03d417b6ee5366542aa836fd17556e868d1d5e72d70ae7a0c0edb9f0c"
+    },
+    "Instrument icons/violin.png": {
+      "blob": "82de58ea4bbe413a521cdbdb488dbf7e",
+      "size": 133630,
+      "type": "image/png",
+      "sha256": "2886147a0ae918f153b4e4e0ece45828f09a7d449e6b87a76f8a991ea3d195b7"
+    },
+    "Instrument icons/vocal-ensemble.png": {
+      "blob": "a546a666462540fef9b94a33b4b74a8d",
+      "size": 62548,
+      "type": "image/png",
+      "sha256": "8ab870c586112c0c2390185654154679295c1ea73ff8f3e427da7ef9d2a3ef50"
+    },
+    "Instrument icons/vocal.png": {
+      "blob": "499187a05efa0b9133a74616834a97f5",
+      "size": 73659,
+      "type": "image/png",
+      "sha256": "1ad3c8dd6388abd344fa20a4970df1291f10190708aed5c4cff63e7cc8419ea8"
+    },
+    "Feature icons/accuracy.png": {
+      "blob": "41187ddd2f6602963c4ac4319c43066e",
+      "size": 17333,
+      "type": "image/png",
+      "sha256": "a25005ecec6cc5f34aef3670370393aee5a31813692a5fad1a71421137b4f6ff"
+    },
+    "Feature icons/formats.png": {
+      "blob": "1b76d2825927c255368d0afac623a6c6",
+      "size": 25533,
+      "type": "image/png",
+      "sha256": "9360d932884d27c8e4c3b98fbc2de2cfd8a3d3f27ef224d406bb7465d6161d99"
+    },
+    "Feature icons/fast-delivery.png": {
+      "blob": "fdbe69064427d0ff3500a5b99ea1e49c",
+      "size": 11943,
+      "type": "image/png",
+      "sha256": "0bc9f9de55c242c3e8a0748a9996a9be402d1c2080be752199196f6c0773c096"
+    },
+    "Feature icons/pricing-piano.png": {
+      "blob": "4e03804a22f808b2283252c34a647e24",
+      "size": 27772,
+      "type": "image/png",
+      "sha256": "1bbcbb9498c760530c037485ff8d49f902d87cbff81d99da5a9716102a53dff6"
+    },
+    "Feature icons/pricing-melodic.png": {
+      "blob": "fef8a7b92e6c7e15765370cc5447ef89",
+      "size": 324103,
+      "type": "image/png",
+      "sha256": "cf6d30b2ef97808429274dfacdbd3cfbf0252da429f2b511e429992a592b68f8"
+    },
+    "Feature icons/star-rating.svg": {
+      "blob": "e3bcacb8d3c54b3d42ce07d82fdbb669",
+      "size": 2492,
+      "type": "image/svg+xml",
+      "sha256": "60fd8692856238db0664c9dd656a27d7d0d1be7298b86aa335636c3af6f02f5d"
+    },
+    "Software logos/accio.png": {
+      "blob": "a47c7e0a72538bd23f5a498a0b269a4a",
+      "size": 16333,
+      "type": "image/png",
+      "sha256": "b775c4f322da90e6e209fdcd905f251f5ed2887fd63f82c18e450640c2280840"
+    },
+    "Software logos/dorico.png": {
+      "blob": "b6dd5c7277659ceada155cbd1f959bc3",
+      "size": 14141,
+      "type": "image/png",
+      "sha256": "fdee10b19bb5e716f48c4a1ee8af5e14a604bce3d2c0310c2b0ccddc4a760a87"
+    },
+    "Software logos/finale.png": {
+      "blob": "bf935c8651939aac1d16b78bebaba427",
+      "size": 10959,
+      "type": "image/png",
+      "sha256": "25bc62c082472829cc640cace2078cdb05473d5c9d04a42eb85b3f7b3c5daccd"
+    },
+    "Software logos/guitar-pro.png": {
+      "blob": "3e05719ad59ec54da15244751195a6d3",
+      "size": 1045,
+      "type": "image/png",
+      "sha256": "e349f88a8aa7de18a902eaf18f43e38bbeaa2f58804b27c939df57c928d85bcc"
+    },
+    "Software logos/msmtmusic.png": {
+      "blob": "c0cf130afcc57500c0437bed96b4a301",
+      "size": 79312,
+      "type": "image/png",
+      "sha256": "81586e405981f1ef63e6048f0ff6ca031fef60738033f3e29a2b3e18f53dcb9d"
+    },
+    "Software logos/musescore.png": {
+      "blob": "b963d90e6613e683e4f4a406f06817ef",
+      "size": 1556,
+      "type": "image/png",
+      "sha256": "ab172dba0118ad82fe0912067e6109086c4ce02ebfc160753bef15b24f2a275f"
+    },
+    "Software logos/payment.svg": {
+      "blob": "233420af3e4a097916d6a463504eee7d",
+      "size": 30205,
+      "type": "image/svg+xml",
+      "sha256": "2cad93c86225515db2650dc8968d834228b881e57079a6352aea85794bdb52e4"
+    },
+    "Software logos/sibelius.png": {
+      "blob": "524e0618ee7b74c32a2d93c3cfa72c84",
+      "size": 1962,
+      "type": "image/png",
+      "sha256": "8ea717b4e6c111bfeee8c031b3b2df09164ef15c5f3fba846f3240035b86732c"
+    },
+    "Flags/de.png": {
+      "blob": "c6811d5df9b392fdd973383deb3c2bea",
+      "size": 13644,
+      "type": "image/png",
+      "sha256": "cb9af2ba743fe9f95db43c7367569b2df61ba20c6dbb47b6d1688cfc1b894db4"
+    },
+    "Flags/es.png": {
+      "blob": "9c15ee85934d6715baa11936df7079e9",
+      "size": 8725,
+      "type": "image/png",
+      "sha256": "b7154e34b7074c141da3b07efb592ebad9e72c22b92c4e1514ce43d60aafcba3"
+    },
+    "Flags/fr.png": {
+      "blob": "587969bca4a6ef687e8aaf2d482f346d",
+      "size": 12367,
+      "type": "image/png",
+      "sha256": "25992f2f411970e3186aae3ffa7bdd1214378066aed711392f3f44676c897efd"
+    },
+    "Flags/jp.png": {
+      "blob": "b21f3ee98e58dd6ed3ba3e343f1fdd09",
+      "size": 10472,
+      "type": "image/png",
+      "sha256": "b9df20537327d5227af993fe4cc8d8dae1584bfd56706c19033cea16de93991b"
+    }
+  }
+}

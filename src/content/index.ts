@@ -20,15 +20,21 @@ type MdxModule = {
 }
 
 // Frontmatter is read eagerly (tiny), bodies lazily (one chunk per page).
+// A page is a folder: <locale>/<collection>/<slug>/index.mdx with its images beside it (co-location).
+// The flat <slug>.mdx form is accepted for pages without assets.
 const frontmatters = import.meta.glob<Record<string, unknown>>(
-  './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*.mdx',
+  [
+    './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/index.mdx',
+    './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*.mdx',
+  ],
   { eager: true, import: 'frontmatter' },
 )
-const bodies = import.meta.glob<MdxModule>(
+const bodies = import.meta.glob<MdxModule>([
+  './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/index.mdx',
   './*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*.mdx',
-)
+])
 
-const FILE_RE = /^\.\/([a-z]{2})\/([a-z]+)\/([a-z0-9-]+)\.mdx$/
+const FILE_RE = /^\.\/([a-z]{2})\/([a-z]+)\/([a-z0-9-]+)(?:\/index)?\.mdx$/
 
 function parseFile(file: string): { locale: Locale; collection: Collection; slug: string } | null {
   const m = FILE_RE.exec(file)
@@ -42,7 +48,9 @@ const allEntries: Entry[] = Object.entries(frontmatters)
   .map(([file, fm]) => {
     const parsed = parseFile(file)
     if (!parsed)
-      throw new Error(`Content file does not match <locale>/<collection>/<slug>.mdx: ${file}`)
+      throw new Error(
+        `Content file does not match <locale>/<collection>/<slug>/index.mdx (or <slug>.mdx): ${file}`,
+      )
     const meta = parseFrontmatter(parsed.collection, fm, file)
     return { ...parsed, file, meta, path: pathFor(parsed.collection, parsed.slug, site.routes) }
   })
@@ -62,22 +70,37 @@ export function listEntries<C extends Collection>(collection: C): Entry[] {
   return entries.filter((e) => e.collection === collection)
 }
 
-const lazyCache = new Map<string, ComponentType<{ components?: MDXComponents }>>()
+type BodyComponent = ComponentType<{ components?: MDXComponents }>
+const bodyCache = new Map<string, BodyComponent>()
+const lazyCache = new Map<string, BodyComponent>()
 
-/** Lazily-loaded MDX body for an entry; cached so SSR and client share one component identity. */
-export function entryComponent(entry: Entry) {
+/**
+ * The MDX body of an entry. Route loaders call `preloadEntry` first, so this returns the real component and
+ * the page renders synchronously on the server and the client (no Suspense boundary, no flash of layout).
+ * The lazy fallback only covers a render that skipped the loader (e.g. a story); it suspends once.
+ */
+export function entryComponent(entry: Entry): BodyComponent {
+  const ready = bodyCache.get(entry.file)
+  if (ready) return ready
   let C = lazyCache.get(entry.file)
   if (!C) {
-    const loader = bodies[entry.file]
-    if (!loader) throw new Error(`No MDX module for ${entry.file}`)
-    C = lazy(async () => ({ default: (await loader()).default }))
+    C = lazy(async () => ({ default: await loadBody(entry) }))
     lazyCache.set(entry.file, C)
   }
   return C
 }
 
-/** Warms the module cache (used by route loaders so SSR renders synchronously). */
-export async function preloadEntry(entry: Entry): Promise<void> {
+async function loadBody(entry: Entry): Promise<BodyComponent> {
+  const cached = bodyCache.get(entry.file)
+  if (cached) return cached
   const loader = bodies[entry.file]
-  if (loader) await loader()
+  if (!loader) throw new Error(`No MDX module for ${entry.file}`)
+  const C = (await loader()).default
+  bodyCache.set(entry.file, C)
+  return C
+}
+
+/** Loads the body into the synchronous cache; every route loader awaits it before rendering. */
+export async function preloadEntry(entry: Entry): Promise<void> {
+  await loadBody(entry)
 }
