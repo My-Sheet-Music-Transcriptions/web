@@ -27,4 +27,30 @@ describe('contact form validation', () => {
     })
     expect(r.success).toBe(false)
   })
+  it('accepts a gift-card request with an amount and no details', () => {
+    const r = contactSchema.safeParse({
+      kind: 'gift-card',
+      name: 'Ana',
+      email: 'ana@example.com',
+      amount: '50',
+      currency: 'USD',
+      returnTo: '/gift-card',
+    })
+    expect(r.success).toBe(true)
+    if (r.success) expect(r.data.amount).toBe(50)
+  })
+  it('rejects a gift-card request without an amount', () => {
+    const r = contactSchema.safeParse({ kind: 'gift-card', name: 'Ana', email: 'ana@example.com' })
+    expect(r.success).toBe(false)
+    if (!r.success) expect(r.error.issues.map((i) => i.path[0])).toContain('amount')
+  })
+  it('rejects a return path outside the site', () => {
+    const r = contactSchema.safeParse({
+      name: 'Ana',
+      email: 'ana@example.com',
+      message: 'Long enough message here',
+      returnTo: 'https://evil.example/x',
+    })
+    expect(r.success).toBe(false)
+  })
 })

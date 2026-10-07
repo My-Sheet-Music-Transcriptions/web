@@ -9,9 +9,11 @@ export const Route = createFileRoute('/api/contact')({
         const { processContact } = await import('~/server/contact.server')
         const result = await processContact(fd)
         const url = new URL(request.url)
-        url.pathname = '/'
+        const returnTo = String(fd.get('returnTo') ?? '/')
+        const anchor = String(fd.get('anchor') ?? 'contact')
+        url.pathname = /^\/[a-z0-9/-]*$/.test(returnTo) ? returnTo : '/'
         url.search = result.ok ? '?sent=1' : '?sent=0'
-        url.hash = 'contact'
+        url.hash = /^[a-z0-9-]+$/.test(anchor) ? anchor : 'contact'
         return Response.redirect(url.toString(), 303)
       },
     },

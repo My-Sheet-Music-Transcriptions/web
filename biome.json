@@ -18,7 +18,7 @@
       "!**/public/og",
       "!**/*.svg",
       "!src/design-system/review/*.html",
-      "!mockups/**"
+      "!mockups"
     ]
   },
   "formatter": {

@@ -34,6 +34,10 @@ const names: IconName[] = [
   'plus',
   'minus',
   'external',
+  'dollar',
+  'pen',
+  'chat',
+  'gift',
 ]
 
 const meta = {

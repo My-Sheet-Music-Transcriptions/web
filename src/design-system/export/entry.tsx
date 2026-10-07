@@ -2,6 +2,7 @@ import './asset-base'
 import './entry.css'
 import { type ComponentType, Fragment, type ReactNode } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
+import samplePhoto from '~/assets/images/home/office-transcriber.jpg?w=480;960&as=picture'
 import { blocks } from '~/components/blocks'
 import { catalogue } from '~/components/blocks/catalogue'
 import { Footer } from '~/components/layout/Footer'
@@ -42,13 +43,22 @@ function renderChildren(text: string): ReactNode {
     ))
 }
 
+/** Preview-only placeholders: `"sample:photo"` in props becomes a bundled picture (MediaText image). */
+const samples: Record<string, unknown> = { 'sample:photo': samplePhoto }
+function withSamples(props: Record<string, unknown>) {
+  const out: Record<string, unknown> = {}
+  for (const [k, v] of Object.entries(props))
+    out[k] = typeof v === 'string' && v in samples ? samples[v] : v
+  return out
+}
+
 function mount(name: string, el: Element, props: Record<string, unknown> = {}) {
   const C = components[name]
   if (!C)
     throw new Error(
       `MSMT: unknown component "${name}". Known: ${Object.keys(components).join(', ')}`,
     )
-  const { children, ...rest } = props
+  const { children, ...rest } = withSamples(props)
   const node = (
     <C {...rest}>{typeof children === 'string' ? renderChildren(children) : undefined}</C>
   )

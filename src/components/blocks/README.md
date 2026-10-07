@@ -15,9 +15,11 @@ an axe pass. Props are optional with sensible defaults taken from `src/content/<
 | `ImageStrip` | Horizontal strip of sheet-music photos; scrolls on touch, no autoplay. | items | src/assets/images/home/strip-*.jpg |
 | `ReviewCards` | Customer quote cards with teal stars and a link to all reviews. | title, limit, ctaLabel, ctaHref | content/en/data/reviews.ts |
 | `AboutTeaser` | Office photo carousel next to the team introduction (children) and a "read more" button. | title, children, ctaLabel, ctaHref | src/assets/images/home/office-*.jpg |
-| `ContactSection` | Peach section with the quote request form (name, email, music link, instruments, file, message, phone). Submits to the contact server function; works without JavaScript. | title, subtitle, responseTime, id | – |
+| `ContactSection` | Peach section with the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript. | title, subtitle, responseTime, id, variant, returnTo | – |
 | `PageHero` | Dark page header for non-home pages: title, optional subtitle and eyebrow, short orange rule. | title, subtitle, eyebrow, tone | – |
 | `Section` | Generic titled section for prose or ad-hoc layouts: optional heading with rule, white/peach/cream background, three widths. | title, rule, tone, width, id, children | – |
+| `MediaText` | Prose beside a picture: optional heading, caption under the picture, optional button; picture left or right, white/cream/peach. | title, image, alt, imageSide, imageWidth, caption, cta, tone, id, children | – |
+| `Steps` | Numbered vertical timeline: a primary disc with an icon per step, "Step n" eyebrow and one line of text; optional heading. | title, steps, tone, id | – |
 
 Adding a block: component in its own file, props typed and documented, story with at least the default state,
 a row in this table, and the export in `index.tsx`.
