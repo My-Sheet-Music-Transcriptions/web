@@ -1,53 +1,46 @@
 ---
 name: mockup
-description: Draft a clickable, commentable mockup of a new or changed page on a Design canvas artifact that renders this site's real blocks from the published Design System artifact, before any code is written. Use when the user asks for a new page, landing page, section or redesign; iterate on the same canvas until they approve, then hand over to new-page.
+description: Default first step for any new page, landing page, section or page change. Builds an HTML mockup rendered with the site's real design-system components, publishes it as a commentable artifact (desktop/tablet/phone switch, block labels, per-section Comment buttons), and iterates on it until the user approves. Then hand over to new-page.
 ---
 
-# Mockup a page on the Design canvas
+# Mockup a page as an HTML review artifact
 
-The mockup is built from the published Design System artifact (`src/design-system/artifact.json`): the canvas
-loads the site's real components (`window.MSMT`, see the artifact's README) so what the user approves is
-exactly what `new-page` writes as MDX, one block per section.
+The user asks for a page in chat and gets a link to a page that looks like the real thing. They comment on
+sections; we edit and republish the same artifact; on approval `new-page` builds it. No design tool, no free-form
+editing: what they approve is a list of blocks with props, so it can be built exactly.
 
 1. **Freshness.** If `src/styles/theme.css`, a block, `catalogue.ts`, a layout component or a brand asset changed
-   after `artifact.json#publishedFrom`, run `publish-design-system` first.
-2. **Brief → block list.** Read `src/components/blocks/catalogue.ts` (same data as the artifact's component
-   cards): description, defaults, `mdx`, data source, guidelines. Put the page together as an ordered list of
-   blocks with props from the catalogue only. A section nothing fits becomes a **proposed block**: give it a
-   name and props as if it existed, render it as plain markup styled with token values from
-   `dist/design-system/project/tokens.json` (or the artifact's `tokens.json`), and say so in the reply. Prefer
-   a prop on an existing block over a new block.
-3. **Copy and data.** Real copy from the user or the live page (`legacyOrigin` in `src/i18n/sites/en.ts`);
-   unknown facts are `[PLACEHOLDER]`, never invented. Prices, counts, ratings, reviews, nav items come from
-   `src/content/<locale>/data/*.ts`; quote them, never retype variants.
-4. **Canvas.** Once per page: Artifact `quickstart` with intent `design`, then create a canvas from the Design
-   type with title "<Page name> page" (never pass `type_url` again). Follow the type's instructions for the
-   files, with these choices:
-   - Install the design system in the first publish: server-side copies
-     (`{"artifact": "<artifact url>", "path": "project/<file>"}`) of `tokens.json`,
-     `components/bundle.js`, `components/bundle.css`, `components/fonts.css`, every `components/assets/*.webp`
-     and every `fonts/*.woff2` into `project/ds/msmt/<same path>` (list the artifact's files with
-     `scope: "files"` to get the hashed asset names), plus the `designSystems` record
-     `{ title: "My Sheet Music Transcriptions", namespace: "msmt", artifact: <url>, version: <id>, copiedAt }`.
-     The bundle resolves its images next to `bundle.js`, so the assets folder must travel with it.
-   - Two PAGE artboards: `Main.dc.html` (desktop, `w` 1440) and `Mobile.dc.html` (`w` 390), both
-     `"expand": "fill"`, `h` generous (over-tall beats clipped), 80px apart. Same body in both files.
-   - `<head>`: after the `support.js` line, `<link rel="stylesheet" href="ds/msmt/components/fonts.css">`,
-     `<link rel="stylesheet" href="ds/msmt/components/bundle.css">`, `<script src="ds/msmt/components/bundle.js"></script>`.
-   - Body, inside `<x-dc>`: `<div data-msmt="TopBar"></div>`, `<div data-msmt="Header"></div>`, then one
-     `<div data-msmt="<Block>" data-props='{…}'></div>` per section (props = catalogue props; `children` is a
-     light-markdown string; apostrophes as `&#39;`), proposed blocks as
+   after `src/design-system/artifact.json#publishedFrom`, run `publish-design-system` first; the review page
+   loads the components from the published artifact.
+2. **Brief → block list.** Read `src/components/blocks/catalogue.ts` (description, defaults, `mdx`, data source,
+   guidelines). Compose the page as an ordered list of blocks with catalogue props only. A section nothing fits
+   becomes a **proposed block** (or a proposed prop on an existing block): give it a name and props as if it
+   existed and draw it as plain markup with token values from `dist/design-system/project/tokens.json`
+   (`pnpm ds:export` writes it). Prefer a prop on an existing block over a new block.
+3. **Copy and data.** Real copy from the user or the live page. The live site blocks headless browsers; its
+   WordPress API answers: `curl -A "Mozilla/5.0" "https://www.mysheetmusictranscriptions.com/wp-json/wp/v2/pages?slug=<slug>&_fields=title,content,yoast_head_json"`
+   (images under `wp-content/uploads` download the same way). Unknown facts are `[PLACEHOLDER]`, never
+   invented; prices, counts, ratings, reviews and nav come from `src/content/<locale>/data/*.ts`. Say in the
+   reply which lines you derived rather than copied.
+4. **Write `mockups/<slug>/sections.html`** (images in `mockups/<slug>/img/`, referenced as `img/<file>`):
+   - a root `<div style="width: 100%; background: #ffffff; color: #444444; font-family: 'Montserrat Variable', Montserrat, system-ui, sans-serif;">`
+   - `<div data-msmt="TopBar"></div>`, `<div data-msmt="Header"></div>`, then one
+     `<div data-msmt="<Block>" data-props='{…}'></div>` per real block (props exactly as the catalogue;
+     `children` is a light-markdown string; apostrophes inside `data-props` as `&#39;`), proposed blocks as
      `<section data-proposed="<Name>" data-props='{…}'>…plain markup…</section>`, and
-     `<div data-msmt="Footer"></div>` last. The logic class mounts them:
-     `componentDidMount() { if (window.MSMT) window.MSMT.renderAll() }`; `renderVals()` returns `{}`.
-     No tweaks unless a real lever exists (a variant enum); copy stays literal in `data-props`.
-   - One sticky `notes` entry per artboard row (`y` above the frames) listing the sections in order as
-     `BlockName prop=value` and marking proposed blocks; this is what the user reads, the `data-msmt`
-     attributes are what `new-page` reads.
-5. **Reply** with the canvas link, the block list with props, proposed blocks, assumptions and the
-   placeholders still open. Say that the canvas is private until shared. Do not verify the canvas in a browser.
-6. **Feedback.** Edit the same artboard files (both widths), republish only the changed files; a comment on the
-   canvas addressed to Claude arrives here, treat it like a chat message. Never start a second canvas for the
-   same page.
-7. **Approval** → run `new-page` with the canvas URL: it maps the `data-msmt` sections to MDX in order and
-   builds proposed blocks properly (component + story + catalogue entry + README + `publish-design-system`).
+     `<div data-msmt="Footer"></div>` last. Plain markup must be fluid (flex-wrap, max-width 1140px, 16px side
+     padding) so the phone width works, with real `<label>`/`<input>`/`<button>` elements and 4.5:1 text.
+   - no scripts, no `{{`, no external resources.
+5. **Build and publish.** `pnpm ds:review <slug> "<Page name> page"` writes
+   `dist/design-system/review/<slug>/{index.html,page.html,files.json}`. Publish with the Artifact tool:
+   `file_path` = the absolute path of that `index.html`, `files` = the contents of `files.json` (page, images,
+   and the bundle/assets/fonts copied server-side from the Design System artifact), `icon: "page"`,
+   `capabilities: {"comments": {"composer_only": true}}`, a one-sentence `description`. Republish the same
+   `file_path` (or `url`) on every iteration; never create a second artifact for the same page.
+6. **Reply** with the link, the block list with props, proposed blocks, assumptions and open placeholders. The
+   artifact is private until shared. Do not open it in a browser to verify.
+7. **Feedback.** Comments on the artifact reach you only when the user says so or you read them with the
+   `ArtifactComments` tool (wake subscriptions are not available in this environment); ask the user to ping you
+   after commenting. Edit `sections.html`, rerun `pnpm ds:review`, republish. Keep `mockups/<slug>/` in the
+   page's PR: it is the approved source.
+8. **Approval** → run `new-page` with the slug.

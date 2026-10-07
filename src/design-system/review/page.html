@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__ (mockup render)</title>
+<link rel="stylesheet" href="ds/components/fonts.css">
+<link rel="stylesheet" href="ds/components/bundle.css">
+<style>html,body{margin:0;background:#ffffff;overflow-x:hidden} body{overflow-y:hidden}</style>
+</head>
+<body>
+<!-- __SECTIONS__ -->
+<script src="ds/components/bundle.js"></script>
+<script>
+(function () {
+  if (window.MSMT) window.MSMT.renderAll();
+  var sel = '[data-msmt],[data-proposed]';
+  function summary(el) {
+    var raw = el.getAttribute('data-props');
+    if (!raw) return '';
+    try {
+      var p = JSON.parse(raw), out = [];
+      for (var k in p) {
+        var v = p[k];
+        if (typeof v === 'string' && v.length <= 48) out.push(k + '="' + v + '"');
+        else if (typeof v === 'number' || typeof v === 'boolean') out.push(k + '=' + v);
+        else if (Array.isArray(v)) out.push(k + '=[' + v.length + ']');
+      }
+      return out.join(' ');
+    } catch (e) { return ''; }
+  }
+  function post() {
+    var sections = [];
+    document.querySelectorAll(sel).forEach(function (el, i) {
+      var r = el.getBoundingClientRect();
+      var name = el.getAttribute('data-msmt') || el.getAttribute('data-proposed');
+      sections.push({ id: 's' + i, name: name, proposed: el.hasAttribute('data-proposed'), props: summary(el), top: r.top + window.scrollY, height: r.height });
+    });
+    parent.postMessage({ type: 'msmt:layout', height: document.documentElement.scrollHeight, width: window.innerWidth, sections: sections }, '*');
+  }
+  var t;
+  function schedule() { clearTimeout(t); t = setTimeout(post, 60); }
+  window.addEventListener('load', schedule);
+  window.addEventListener('resize', schedule);
+  window.addEventListener('message', function (e) { if (e.data && e.data.type === 'msmt:measure') schedule(); });
+  if (window.ResizeObserver) new ResizeObserver(schedule).observe(document.body);
+  document.querySelectorAll('img').forEach(function (img) { img.addEventListener('load', schedule); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  schedule();
+})();
+</script>
+</body>
+</html>

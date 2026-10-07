@@ -1,29 +1,32 @@
 ---
 name: new-page
-description: Create or update a content page (MDX) composed from the block catalogue, with valid frontmatter, assets, SEO fields and a draft PR that passes CI. Use after a mockup on the Design canvas is approved, or when the user asks for a page directly and explicitly skips the mockup.
+description: Build an approved mockup into a content page (MDX from the block catalogue, new blocks if proposed, assets, SEO fields) and ship it through a ready-for-review PR with auto-merge so a green CI deploys it. Use after the user approves a mockup; when they skip the mockup explicitly, build from their brief the same way.
 ---
 
 # New page
 
-1. **From the approved canvas.** Read the Design canvas artifact (the `mockup` skill produced it). Each section
-   is labelled `BlockName prop=value …`; map them to MDX in order, one block per section, with exactly those
-   props. `PageHero` becomes the page template's hero (frontmatter) when the template renders one; block prose
-   becomes MDX children. A label naming a block or prop that is not in `src/components/blocks/catalogue.ts`
-   is a mistake in the mockup: fix the canvas first (or add the block properly: component + story + catalogue
-   entry + README section + `blocks/index.tsx` export, then `publish-design-system`). Never improvise a prop.
+1. **From the approved mockup.** Read `mockups/<slug>/sections.html`. Each `data-msmt` element is one MDX block
+   with exactly its `data-props`; `children` becomes MDX prose. `PageHero` becomes the page template's hero in
+   frontmatter when the template renders one. Each `data-proposed` element is a block or prop to build first:
+   component (+ props interface with doc comments), story, `catalogue.ts` entry, README section, export from
+   `blocks/index.tsx`, axe pass in Storybook; then `publish-design-system`. Never improvise a prop that is not
+   in the catalogue.
 2. Decide the collection (`pages` unless it is a service/post/faq/artist/musician/partner/review) and the slug
-   (lowercase, hyphens, same as the live site when porting). Check for collisions: `pnpm exec tsx scripts/check-slugs.ts`.
-3. Write `src/content/<locale>/<collection>/<slug>.mdx`:
-   - frontmatter per `src/content/schema.ts`: `title` (page `<title>` 30–65 chars), `description` (50–160),
-     `translationKey` (shared across locales), `template` for pages, type-specific fields otherwise.
-   - body composed only of blocks from `src/components/blocks/index.tsx` and plain Markdown prose.
-   - copy comes from the canvas; `[PLACEHOLDER]` left on the canvas means ask, never invent.
-4. Images: copy originals into `src/assets/images/<collection>/`, max 2000px on the long side, descriptive
-   file names. Blocks import them through `<Picture>`; never hotlink. Add alt text.
-5. Structured facts (prices, counts, nav entries) go in `src/content/<locale>/data/*.ts`, not inline.
-6. If the page needs a header/footer link, edit `data/nav.ts` or `data/footer.ts`; remove the slug from the
-   legacy list the `SmartLink` falls back to if it was pointing at the old site.
-7. Run `pnpm release-check` (and `pnpm ds:export` if a block changed). Fix every failure (SEO suite messages
-   name the file and the rule).
-8. Commit, push, open a draft PR describing the page, the canvas link and the blocks used; paste the Netlify
-   preview URL once it is posted and compare it with the artboard block by block.
+   (same as the live site when porting). Check collisions: `pnpm exec tsx scripts/check-slugs.ts`.
+3. Write `src/content/<locale>/<collection>/<slug>.mdx`: frontmatter per `src/content/schema.ts` (`title` 30–65
+   chars as the page `<title>`, `description` 50–160, `translationKey`, `template` or type-specific fields);
+   body only from blocks in `src/components/blocks/index.tsx` plus Markdown prose. Copy comes from the mockup;
+   a `[PLACEHOLDER]` still in it means ask, never invent.
+4. Images: originals into `src/assets/images/<collection>/` (≤ 2000px long side, descriptive names, alt text),
+   imported through blocks and `<Picture>`; never hotlink.
+5. Structured facts (prices, counts, nav entries) go in `src/content/<locale>/data/*.ts`. Add the page to
+   `data/nav.ts` / `data/footer.ts` where the mockup shows it, and drop its slug from any legacy-link list.
+6. `pnpm release-check` (and `pnpm test:storybook` when a block changed; CI runs it on main only). Fix every
+   failure; never lower a threshold.
+7. Ship: commit on a branch, push, open a **ready-for-review** PR (title "Add /<slug>", body: mockup artifact
+   link, blocks used, new blocks) and enable **auto-merge (squash)** with the GitHub tool
+   `enable_pr_auto_merge`. Keep `mockups/<slug>/` in the PR. Subscribe to the PR and drive it to green; when
+   it merges, Netlify deploys production. If auto-merge is refused, say so: the repository needs "Allow
+   auto-merge" and a branch protection rule on `main` requiring the CI checks (otherwise auto-merge would merge
+   before CI finishes). Paste the Netlify preview URL once posted and compare it with the mockup section by
+   section. Draft PRs are only for work the user has not approved.
