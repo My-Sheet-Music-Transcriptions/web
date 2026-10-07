@@ -1,0 +1,25 @@
+import type { ReactNode } from 'react'
+import { site } from '~/site'
+import { ConsentBanner } from './ConsentBanner'
+import { Footer } from './Footer'
+import { Header } from './Header'
+import { TopBar } from './TopBar'
+
+/** Site chrome around every page: skip link, top bar, sticky header, footer, consent banner. */
+export function SiteShell({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-pill focus:bg-primary focus:px-5 focus:py-3 focus:text-white focus:font-bold"
+      >
+        {site.strings.skipToContent}
+      </a>
+      <TopBar />
+      <Header />
+      {children}
+      <Footer />
+      <ConsentBanner />
+    </>
+  )
+}

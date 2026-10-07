@@ -1,0 +1,31 @@
+{
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/*.mdx"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".netlify",
+    ".output",
+    "storybook-static",
+    "playwright-report",
+    "test-results"
+  ],
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["DOM", "DOM.Iterable", "ES2024"],
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "ES2024",
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+    "types": ["vite/client", "node"],
+    "paths": { "~/*": ["./src/*"] },
+    "noEmit": true
+  }
+}

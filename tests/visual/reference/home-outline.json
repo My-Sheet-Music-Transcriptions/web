@@ -1,0 +1,3960 @@
+[
+  {
+    "i": 0,
+    "id": null,
+    "cls": "",
+    "top": 0,
+    "h": 107,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1440,
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "Login",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "400",
+        "lh": "2.8px",
+        "color": "#242424",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(36, 36, 36)",
+        "w": 40,
+        "h": 3
+      },
+      {
+        "tag": "h3",
+        "text": "Sign up",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "400",
+        "lh": "2.8px",
+        "color": "#242424",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(36, 36, 36)",
+        "w": 54,
+        "h": 3
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "REQUEST YOUR SHEET MUSIC",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#ffffff",
+        "bg": "#e2864d",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 259,
+        "h": 42,
+        "href": "#contact"
+      },
+      {
+        "tag": "a",
+        "text": "GET IT NOW",
+        "font": "Montserrat",
+        "size": "17px",
+        "weight": "700",
+        "lh": "17px",
+        "color": "#fef5ea",
+        "bg": "#ec8a1c",
+        "radius": "100px",
+        "pad": "12px 24px",
+        "border": "0px none rgb(254, 245, 234)",
+        "w": 0,
+        "h": 0,
+        "href": "/summer-26"
+      }
+    ],
+    "links": [
+      {
+        "t": "Login",
+        "href": "https://hub.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "Sign up",
+        "href": "https://hub.mysheetmusictranscriptions.com/signup"
+      },
+      {
+        "t": "EN",
+        "href": "https://www.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "ES",
+        "href": "https://mistranscripcionesmusicales.com/"
+      },
+      {
+        "t": "FR",
+        "href": "https://mapartitionsurmesure.com/"
+      },
+      {
+        "t": "|",
+        "href": "https://mysheetmusictranscriptions.jp/"
+      },
+      {
+        "t": "DE",
+        "href": "https://meinemusiktranskription.de/"
+      },
+      {
+        "t": "|",
+        "href": "https://mysheetmusictranscriptions.jp/"
+      },
+      {
+        "t": "JP",
+        "href": "https://mysheetmusictranscriptions.jp/"
+      },
+      {
+        "t": "Home",
+        "href": "https://www.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "Audio → Sheet music",
+        "href": "https://www.mysheetmusictranscriptions.com/music-transcription-service"
+      },
+      {
+        "t": "Services & Samples",
+        "href": "https://www.mysheetmusictranscriptions.com/services-samples"
+      },
+      {
+        "t": "Piano Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano"
+      },
+      {
+        "t": "Piano & Vocal Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano-vocal"
+      },
+      {
+        "t": "Guitar & Bass Transcriptions",
+        "href": "#"
+      },
+      {
+        "t": "Guitar Tabs & Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/guitar-tab"
+      },
+      {
+        "t": "Bass Tabs & Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/bass-tab-transcription-service"
+      },
+      {
+        "t": "Ukulele Tabs & Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/ukulele-transcription-service"
+      },
+      {
+        "t": "Mandolin and Oud Tabs & Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/mandolin-and-oud-tabs-sheets"
+      },
+      {
+        "t": "Lap Steel Guitar",
+        "href": "https://www.mysheetmusictranscriptions.com/lap-steel-guitar-transcription-service"
+      },
+      {
+        "t": "Guitar Chord Charts",
+        "href": "https://www.mysheetmusictranscriptions.com/chord-charts"
+      },
+      {
+        "t": "Jazz & Blues Transcriptions",
+        "href": "#"
+      },
+      {
+        "t": "Piano Jazz",
+        "href": "https://www.mysheetmusictranscriptions.com/jazz-piano-solo-transcriptions"
+      },
+      {
+        "t": "Piano Jazz Trio",
+        "href": "https://www.mysheetmusictranscriptions.com/piano-jazz-trio-transcriptions"
+      },
+      {
+        "t": "Piano Blues",
+        "href": "https://www.mysheetmusictranscriptions.com/blues-piano-transcription-service"
+      },
+      {
+        "t": "Jazz Solos",
+        "href": "https://www.mysheetmusictranscriptions.com/jazz-transcription-service"
+      },
+      {
+        "t": "Jazz Rhythm Charts",
+        "href": "https://www.mysheetmusictranscriptions.com/rhythm-charts"
+      },
+      {
+        "t": "Instrumental Lead Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/lead-sheet-transcription-service"
+      },
+      {
+        "t": "Big Band Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/big-band-arrangement-service"
+      },
+      {
+        "t": "Vocal Transcriptions",
+        "href": "#"
+      },
+      {
+        "t": "Vocal Lead Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/vocal-lead-sheet-transcription-service"
+      },
+      {
+        "t": "Backing Vocals",
+        "href": "https://www.mysheetmusictranscriptions.com/backing-vocals-transcription-service"
+      },
+      {
+        "t": "Vocal Ensemble",
+        "href": "https://www.mysheetmusictranscriptions.com/vocal-ensemble-transcription-service"
+      },
+      {
+        "t": "Horn Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/horns-transcription-service"
+      },
+      {
+        "t": "Trumpet",
+        "href": "https://www.mysheetmusictranscriptions.com/trumpet-transcription-service"
+      },
+      {
+        "t": "Trombone",
+        "href": "https://www.mysheetmusictranscriptions.com/trombone-transcription-service"
+      },
+      {
+        "t": "Saxophone",
+        "href": "https://www.mysheetmusictranscriptions.com/saxophone-transcription-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Logotip-Positiu.svg",
+        "alt": "My Sheet Music Transcriptions - Logo",
+        "w": 183,
+        "h": 50
+      },
+      {
+        "src": "Logotip-Positiu.svg",
+        "alt": "My Sheet Music Transcriptions - Logo",
+        "w": 604,
+        "h": 165
+      },
+      {
+        "src": "1f525.svg",
+        "alt": "🔥",
+        "w": 150,
+        "h": 150
+      },
+      {
+        "src": "1f525.svg",
+        "alt": "🔥",
+        "w": 150,
+        "h": 150
+      }
+    ],
+    "paras": [
+      "EN | ES | FR | DE | JP",
+      "Home",
+      "Audio → Sheet music",
+      "Services & Samples",
+      "Piano Transcriptions",
+      "Piano & Vocal Transcriptions",
+      "Guitar & Bass Transcriptions Guitar Tabs & Sheets Bass Tabs & Sheets Ukulele Tabs & Sheets Mandolin and Oud Tabs & Sheets Lap Steel Guitar Guitar Chord Charts",
+      "Guitar Tabs & Sheets",
+      "Bass Tabs & Sheets",
+      "Ukulele Tabs & Sheets",
+      "Mandolin and Oud Tabs & Sheets",
+      "Lap Steel Guitar"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 1,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-56a8f311 elementor-section-boxed",
+    "top": 0,
+    "h": 55,
+    "bg": "#ffffff",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1440,
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "Login",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "400",
+        "lh": "2.8px",
+        "color": "#242424",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(36, 36, 36)",
+        "w": 40,
+        "h": 3
+      },
+      {
+        "tag": "h3",
+        "text": "Sign up",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "400",
+        "lh": "2.8px",
+        "color": "#242424",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(36, 36, 36)",
+        "w": 54,
+        "h": 3
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Login",
+        "href": "https://hub.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "Sign up",
+        "href": "https://hub.mysheetmusictranscriptions.com/signup"
+      },
+      {
+        "t": "EN",
+        "href": "https://www.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "ES",
+        "href": "https://mistranscripcionesmusicales.com/"
+      },
+      {
+        "t": "FR",
+        "href": "https://mapartitionsurmesure.com/"
+      },
+      {
+        "t": "|",
+        "href": "https://mysheetmusictranscriptions.jp/"
+      },
+      {
+        "t": "DE",
+        "href": "https://meinemusiktranskription.de/"
+      },
+      {
+        "t": "|",
+        "href": "https://mysheetmusictranscriptions.jp/"
+      },
+      {
+        "t": "JP",
+        "href": "https://mysheetmusictranscriptions.jp/"
+      }
+    ],
+    "imgs": [],
+    "paras": ["EN | ES | FR | DE | JP"],
+    "iframes": []
+  },
+  {
+    "i": 2,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-20a08f97 elementor-section-height-min-height",
+    "top": 35,
+    "h": 71,
+    "bg": "#ffffff",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1440,
+    "headings": [],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "REQUEST YOUR SHEET MUSIC",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#ffffff",
+        "bg": "#e2864d",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 259,
+        "h": 42,
+        "href": "#contact"
+      }
+    ],
+    "links": [
+      {
+        "t": "Home",
+        "href": "https://www.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "Audio → Sheet music",
+        "href": "https://www.mysheetmusictranscriptions.com/music-transcription-service"
+      },
+      {
+        "t": "Services & Samples",
+        "href": "https://www.mysheetmusictranscriptions.com/services-samples"
+      },
+      {
+        "t": "Piano Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano"
+      },
+      {
+        "t": "Piano & Vocal Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano-vocal"
+      },
+      {
+        "t": "Guitar & Bass Transcriptions",
+        "href": "#"
+      },
+      {
+        "t": "Guitar Tabs & Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/guitar-tab"
+      },
+      {
+        "t": "Bass Tabs & Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/bass-tab-transcription-service"
+      },
+      {
+        "t": "Ukulele Tabs & Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/ukulele-transcription-service"
+      },
+      {
+        "t": "Mandolin and Oud Tabs & Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/mandolin-and-oud-tabs-sheets"
+      },
+      {
+        "t": "Lap Steel Guitar",
+        "href": "https://www.mysheetmusictranscriptions.com/lap-steel-guitar-transcription-service"
+      },
+      {
+        "t": "Guitar Chord Charts",
+        "href": "https://www.mysheetmusictranscriptions.com/chord-charts"
+      },
+      {
+        "t": "Jazz & Blues Transcriptions",
+        "href": "#"
+      },
+      {
+        "t": "Piano Jazz",
+        "href": "https://www.mysheetmusictranscriptions.com/jazz-piano-solo-transcriptions"
+      },
+      {
+        "t": "Piano Jazz Trio",
+        "href": "https://www.mysheetmusictranscriptions.com/piano-jazz-trio-transcriptions"
+      },
+      {
+        "t": "Piano Blues",
+        "href": "https://www.mysheetmusictranscriptions.com/blues-piano-transcription-service"
+      },
+      {
+        "t": "Jazz Solos",
+        "href": "https://www.mysheetmusictranscriptions.com/jazz-transcription-service"
+      },
+      {
+        "t": "Jazz Rhythm Charts",
+        "href": "https://www.mysheetmusictranscriptions.com/rhythm-charts"
+      },
+      {
+        "t": "Instrumental Lead Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/lead-sheet-transcription-service"
+      },
+      {
+        "t": "Big Band Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/big-band-arrangement-service"
+      },
+      {
+        "t": "Vocal Transcriptions",
+        "href": "#"
+      },
+      {
+        "t": "Vocal Lead Sheets",
+        "href": "https://www.mysheetmusictranscriptions.com/vocal-lead-sheet-transcription-service"
+      },
+      {
+        "t": "Backing Vocals",
+        "href": "https://www.mysheetmusictranscriptions.com/backing-vocals-transcription-service"
+      },
+      {
+        "t": "Vocal Ensemble",
+        "href": "https://www.mysheetmusictranscriptions.com/vocal-ensemble-transcription-service"
+      },
+      {
+        "t": "Horn Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/horns-transcription-service"
+      },
+      {
+        "t": "Trumpet",
+        "href": "https://www.mysheetmusictranscriptions.com/trumpet-transcription-service"
+      },
+      {
+        "t": "Trombone",
+        "href": "https://www.mysheetmusictranscriptions.com/trombone-transcription-service"
+      },
+      {
+        "t": "Saxophone",
+        "href": "https://www.mysheetmusictranscriptions.com/saxophone-transcription-service"
+      },
+      {
+        "t": "Clarinet",
+        "href": "https://www.mysheetmusictranscriptions.com/clarinet-transcription-service"
+      },
+      {
+        "t": "Flute",
+        "href": "https://www.mysheetmusictranscriptions.com/flute-transcription-service"
+      },
+      {
+        "t": "Horn Section",
+        "href": "https://www.mysheetmusictranscriptions.com/horn-section-transcription-service"
+      },
+      {
+        "t": "Big Band",
+        "href": "https://www.mysheetmusictranscriptions.com/big-band-arrangement-service"
+      },
+      {
+        "t": "Concert & Brass Band",
+        "href": "https://www.mysheetmusictranscriptions.com/concert-brass-band-transcriptions"
+      },
+      {
+        "t": "Marching Band",
+        "href": "https://www.mysheetmusictranscriptions.com/marching-band-transcription-service"
+      },
+      {
+        "t": "String Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/strings-transcription-service"
+      },
+      {
+        "t": "Violin",
+        "href": "https://www.mysheetmusictranscriptions.com/violin-transcription-service"
+      },
+      {
+        "t": "Cello",
+        "href": "https://www.mysheetmusictranscriptions.com/cello-transcription-service"
+      },
+      {
+        "t": "String Quartet",
+        "href": "https://www.mysheetmusictranscriptions.com/string-quartet-transcription-service"
+      },
+      {
+        "t": "String Orchestra",
+        "href": "https://www.mysheetmusictranscriptions.com/string-orchestra"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Logotip-Positiu.svg",
+        "alt": "My Sheet Music Transcriptions - Logo",
+        "w": 183,
+        "h": 50
+      }
+    ],
+    "paras": [
+      "Home",
+      "Audio → Sheet music",
+      "Services & Samples",
+      "Piano Transcriptions",
+      "Piano & Vocal Transcriptions",
+      "Guitar & Bass Transcriptions Guitar Tabs & Sheets Bass Tabs & Sheets Ukulele Tabs & Sheets Mandolin and Oud Tabs & Sheets Lap Steel Guitar Guitar Chord Charts",
+      "Guitar Tabs & Sheets",
+      "Bass Tabs & Sheets",
+      "Ukulele Tabs & Sheets",
+      "Mandolin and Oud Tabs & Sheets",
+      "Lap Steel Guitar",
+      "Guitar Chord Charts"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 3,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-2f72dc8c elementor-section-height-min-height",
+    "top": 107,
+    "h": 765,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1440,
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Your #1 sheet music transcription service online",
+        "font": "Montserrat",
+        "size": "40px",
+        "weight": "700",
+        "lh": "46px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 459,
+        "h": 138
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "LEARN MORE",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#ffffff",
+        "bg": "#219ebc",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 139,
+        "h": 42,
+        "href": "#scroll"
+      }
+    ],
+    "links": [
+      {
+        "t": "LEARN MORE",
+        "href": "#scroll"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Logotip-Positiu.svg",
+        "alt": "My Sheet Music Transcriptions - Logo",
+        "w": 340,
+        "h": 93
+      }
+    ],
+    "paras": [
+      "Get accurate and high-quality sheet music to learn a song, perform, register a composition, educate, or for any music tech application.",
+      "Reliable digital notation services by professional transcribers and music editors."
+    ],
+    "iframes": []
+  },
+  {
+    "i": 4,
+    "id": null,
+    "cls": "elementor-element-da9abe5 e-con-boxed e-con",
+    "top": 892,
+    "h": 602,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1350,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "854 reviews",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "400",
+        "lh": "16px",
+        "color": "#171717",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(23, 23, 23)",
+        "w": 300,
+        "h": 16
+      },
+      {
+        "tag": "h2",
+        "text": "How does it work?",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 1140,
+        "h": 32
+      },
+      {
+        "tag": "h3",
+        "text": "1. Send us audio",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "800",
+        "lh": "26px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 320,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "2. We transcribe it for you",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "800",
+        "lh": "26px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 320,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "3. Print & Play",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "800",
+        "lh": "26px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 320,
+        "h": 26
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "SEE MORE",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#219ebc",
+        "bg": "transparent",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(33, 158, 188)",
+        "w": 134,
+        "h": 42,
+        "href": "#contact"
+      }
+    ],
+    "links": [
+      {
+        "t": "5.0 on Google Reviews",
+        "href": "https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@1.030838,-86.4651805,3z/data=!3m1!4b1!4m7!3m6!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.54571!4d1.98091!9m1!1b1"
+      },
+      {
+        "t": "854 reviews",
+        "href": "https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@1.030838,-86.4651805,3z/data=!3m1!4b1!4m7!3m6!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.54571!4d1.98091!9m1!1b1"
+      },
+      {
+        "t": "SEE MORE",
+        "href": "#contact"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "16231558095-star-rating-1-1-1.svg",
+        "alt": "My Sheet Music Transcriptions - The highest-rated online sheet music transcribers",
+        "w": 144,
+        "h": 29
+      },
+      {
+        "src": "3-steps.jpg",
+        "alt": "My Sheet Music Transcriptions - How does it work",
+        "w": 974,
+        "h": 266
+      },
+      {
+        "src": "Send-the-audio-mobile.png",
+        "alt": "My Sheet Music Transcriptions - How does it work - Send us audio",
+        "w": 403,
+        "h": 403
+      },
+      {
+        "src": "We-transcribe-mobile.png",
+        "alt": "My Sheet Music Transcriptions - How does it work - We transcribe it for you",
+        "w": 403,
+        "h": 403
+      },
+      {
+        "src": "Play-and-play-mobile.jpg",
+        "alt": "My Sheet Music Transcriptions - How does it work - Print & Play",
+        "w": 255,
+        "h": 330
+      }
+    ],
+    "paras": [
+      "We will promptly send you a quote and an estimated delivery time",
+      "Our team of transcribers will prepare the sheet music as per your requirements",
+      "You will be able to use and play your sheet music in PDF and other formats"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 5,
+    "id": null,
+    "cls": "elementor-element-320efda7 e-con-boxed e-con",
+    "top": 1543,
+    "h": 796,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1440,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "The highest-rated online sheet music transcribers",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 1420,
+        "h": 32
+      },
+      {
+        "tag": "h2",
+        "text": "854 reviews",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "400",
+        "lh": "16px",
+        "color": "#171717",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(23, 23, 23)",
+        "w": 376,
+        "h": 16
+      },
+      {
+        "tag": "h2",
+        "text": "26,330",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 376,
+        "h": 32
+      },
+      {
+        "tag": "h2",
+        "text": "300 reviews",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "400",
+        "lh": "16px",
+        "color": "#171717",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(23, 23, 23)",
+        "w": 376,
+        "h": 16
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "SEE ON GOOGLE",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#219ebc",
+        "bg": "transparent",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(33, 158, 188)",
+        "w": 179,
+        "h": 42,
+        "href": "https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@1.030838,-86.4651805,3z/data=!3m1!4b1!4m7!3m6!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.54571!4d1.98091!9m1!1b1"
+      },
+      {
+        "tag": "a",
+        "text": "SEE ON FACEBOOK",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#4683f4",
+        "bg": "transparent",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(70, 131, 244)",
+        "w": 199,
+        "h": 42,
+        "href": "https://www.facebook.com/mysheetmusictranscriptions/reviews/"
+      }
+    ],
+    "links": [
+      {
+        "t": "5.0 on Google Reviews",
+        "href": "https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@1.030838,-86.4651805,3z/data=!3m1!4b1!4m7!3m6!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.54571!4d1.98091!9m1!1b1"
+      },
+      {
+        "t": "854 reviews",
+        "href": "https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@1.030838,-86.4651805,3z/data=!3m1!4b1!4m7!3m6!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.54571!4d1.98091!9m1!1b1"
+      },
+      {
+        "t": "SEE ON GOOGLE",
+        "href": "https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@1.030838,-86.4651805,3z/data=!3m1!4b1!4m7!3m6!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.54571!4d1.98091!9m1!1b1"
+      },
+      {
+        "t": "Based in the US, UK & Europe",
+        "href": "https://www.mysheetmusictranscriptions.com/customer-reviews"
+      },
+      {
+        "t": "26,330",
+        "href": "https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@1.030838,-86.4651805,3z/data=!3m1!4b1!4m7!3m6!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.54571!4d1.98091!9m1!1b1"
+      },
+      {
+        "t": "happy customers until October 2026",
+        "href": "https://www.mysheetmusictranscriptions.com/customer-reviews"
+      },
+      {
+        "t": "5.0 on Facebook Reviews",
+        "href": "https://www.facebook.com/mysheetmusictranscriptions/reviews/"
+      },
+      {
+        "t": "300 reviews",
+        "href": "https://www.facebook.com/mysheetmusictranscriptions/reviews/"
+      },
+      {
+        "t": "SEE ON FACEBOOK",
+        "href": "https://www.facebook.com/mysheetmusictranscriptions/reviews/"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "16231558095-star-rating-1-1-1.svg",
+        "alt": "My Sheet Music Transcriptions - The highest-rated online sheet music transcribers",
+        "w": 181,
+        "h": 36
+      },
+      {
+        "src": "16231558095-star-rating-1-1-1.svg",
+        "alt": "My Sheet Music Transcriptions - The highest-rated online sheet music transcribers",
+        "w": 181,
+        "h": 36
+      }
+    ],
+    "paras": ["Based in the US, UK & Europe", "happy customers until October 2026"],
+    "iframes": []
+  },
+  {
+    "i": 6,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-4846b38 elementor-section-boxed",
+    "top": 2389,
+    "h": 718,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "90px 0px",
+    "innerW": 1440,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Who do we work for?",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 1420,
+        "h": 32
+      },
+      {
+        "tag": "h3",
+        "text": "Music Businesses",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "700",
+        "lh": "40px",
+        "color": "#272727",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(39, 39, 39)",
+        "w": 248,
+        "h": 40
+      },
+      {
+        "tag": "h3",
+        "text": "Artists",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "700",
+        "lh": "40px",
+        "color": "#272727",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(39, 39, 39)",
+        "w": 248,
+        "h": 40
+      },
+      {
+        "tag": "h3",
+        "text": "Music Educators",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "700",
+        "lh": "40px",
+        "color": "#272727",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(39, 39, 39)",
+        "w": 248,
+        "h": 40
+      },
+      {
+        "tag": "h3",
+        "text": "All musicians",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "700",
+        "lh": "40px",
+        "color": "#272727",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(39, 39, 39)",
+        "w": 248,
+        "h": 40
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Music Businesses",
+        "href": "https://www.mysheetmusictranscriptions.com/b2b"
+      },
+      {
+        "t": "Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/artists"
+      },
+      {
+        "t": "Music Educators",
+        "href": "https://www.mysheetmusictranscriptions.com/music-educators"
+      },
+      {
+        "t": "All musicians",
+        "href": "https://www.mysheetmusictranscriptions.com/services-samples"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "B2B-2.png",
+        "alt": "Digital Music Services for your Music Tech Solutions - My Sheet Music Transcriptions",
+        "w": 126,
+        "h": 112
+      },
+      {
+        "src": "Musicians-2.png",
+        "alt": "Sheet Music Transcriptions for Music Artists - My Sheet Music Transcriptions",
+        "w": 101,
+        "h": 113
+      },
+      {
+        "src": "Music-Educators.png",
+        "alt": "",
+        "w": 101,
+        "h": 113
+      },
+      {
+        "src": "All-musicians.webp",
+        "alt": "",
+        "w": 119,
+        "h": 118
+      }
+    ],
+    "paras": [
+      "Sheet music publishers, music tech, music learning apps, backing track and karaoke apps.",
+      "Composers, performers, songwriters, conductors, arrangers, and producers. Musical theatre singers, music directors and accompanists.",
+      "Music tutors, teachers, professors and researchers. University, high school, academy, music school, private lessons, and musicologists.",
+      "Students, auditionees, churches, families, choirs, non-profits, ensembles, bands, orchestras, and more. Discover our services below!"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 7,
+    "id": null,
+    "cls": "elementor-element-b61359d e-con-full e-con",
+    "top": 2592,
+    "h": 415,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "10px",
+    "innerW": null,
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "Music Businesses",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "700",
+        "lh": "40px",
+        "color": "#272727",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(39, 39, 39)",
+        "w": 248,
+        "h": 40
+      },
+      {
+        "tag": "h3",
+        "text": "Artists",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "700",
+        "lh": "40px",
+        "color": "#272727",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(39, 39, 39)",
+        "w": 248,
+        "h": 40
+      },
+      {
+        "tag": "h3",
+        "text": "Music Educators",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "700",
+        "lh": "40px",
+        "color": "#272727",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(39, 39, 39)",
+        "w": 248,
+        "h": 40
+      },
+      {
+        "tag": "h3",
+        "text": "All musicians",
+        "font": "Montserrat",
+        "size": "20px",
+        "weight": "700",
+        "lh": "40px",
+        "color": "#272727",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(39, 39, 39)",
+        "w": 248,
+        "h": 40
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Music Businesses",
+        "href": "https://www.mysheetmusictranscriptions.com/b2b"
+      },
+      {
+        "t": "Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/artists"
+      },
+      {
+        "t": "Music Educators",
+        "href": "https://www.mysheetmusictranscriptions.com/music-educators"
+      },
+      {
+        "t": "All musicians",
+        "href": "https://www.mysheetmusictranscriptions.com/services-samples"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "B2B-2.png",
+        "alt": "Digital Music Services for your Music Tech Solutions - My Sheet Music Transcriptions",
+        "w": 126,
+        "h": 112
+      },
+      {
+        "src": "Musicians-2.png",
+        "alt": "Sheet Music Transcriptions for Music Artists - My Sheet Music Transcriptions",
+        "w": 101,
+        "h": 113
+      },
+      {
+        "src": "Music-Educators.png",
+        "alt": "",
+        "w": 101,
+        "h": 113
+      },
+      {
+        "src": "All-musicians.webp",
+        "alt": "",
+        "w": 119,
+        "h": 118
+      }
+    ],
+    "paras": [
+      "Sheet music publishers, music tech, music learning apps, backing track and karaoke apps.",
+      "Composers, performers, songwriters, conductors, arrangers, and producers. Musical theatre singers, music directors and accompanists.",
+      "Music tutors, teachers, professors and researchers. University, high school, academy, music school, private lessons, and musicologists.",
+      "Students, auditionees, churches, families, choirs, non-profits, ensembles, bands, orchestras, and more. Discover our services below!"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 8,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-555f7b7b elementor-section-boxed",
+    "top": 3107,
+    "h": 1012,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "50px 0px 82px",
+    "innerW": 1140,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "We transcribe any instrument and musical genre",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 1120,
+        "h": 32
+      },
+      {
+        "tag": "h4",
+        "text": "Piano Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      },
+      {
+        "tag": "h4",
+        "text": "Piano & Vocal Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      },
+      {
+        "tag": "h4",
+        "text": "Vocal Lead Sheet Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 38
+      },
+      {
+        "tag": "h4",
+        "text": "Vocal Ensemble Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      },
+      {
+        "tag": "h4",
+        "text": "Guitar Tab Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      },
+      {
+        "tag": "h4",
+        "text": "Trumpet Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      },
+      {
+        "tag": "h4",
+        "text": "Saxophone Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      },
+      {
+        "tag": "h4",
+        "text": "Drums Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      },
+      {
+        "tag": "h4",
+        "text": "Violin Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      },
+      {
+        "tag": "h4",
+        "text": "String Orchestra Transcription Service",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 38
+      },
+      {
+        "tag": "h4",
+        "text": "Orchestration Services",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "SEE ALL SERVICES",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#ffffff",
+        "bg": "#e2864d",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 175,
+        "h": 42,
+        "href": "/services-samples"
+      }
+    ],
+    "links": [
+      {
+        "t": "Piano Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano"
+      },
+      {
+        "t": "Piano & Vocal Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano-vocal"
+      },
+      {
+        "t": "Vocal Lead Sheet Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/vocal-lead-sheet-transcription-service"
+      },
+      {
+        "t": "Vocal Ensemble Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/vocal-ensemble-transcription-service"
+      },
+      {
+        "t": "Guitar Tab Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/guitar-tab"
+      },
+      {
+        "t": "Trumpet Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/trumpet-transcription-service"
+      },
+      {
+        "t": "Saxophone Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/saxophone-transcription-service"
+      },
+      {
+        "t": "Drums Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/drums-transcription-service"
+      },
+      {
+        "t": "Violin Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/violin-transcription-service"
+      },
+      {
+        "t": "String Orchestra Transcription Service",
+        "href": "https://www.mysheetmusictranscriptions.com/string-orchestra"
+      },
+      {
+        "t": "Orchestration Services",
+        "href": "https://www.mysheetmusictranscriptions.com/orchestration-service"
+      },
+      {
+        "t": "Strings Transcription Service",
+        "href": "https://www.mysheetmusictranscriptions.com/strings-transcription-service"
+      },
+      {
+        "t": "SEE ALL SERVICES",
+        "href": "/services-samples"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Piano-New-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Voice-Piano-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Voice-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Vocal-Lead-Sheets2-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Guitarra-2-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Trumpet-1-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Saxo-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Drums-4-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Violin-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Violin-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "Cuartet2-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      },
+      {
+        "src": "String-Quartet-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 9,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3270,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Piano Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Piano Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Piano-New-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 10,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3270,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Piano & Vocal Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Piano & Vocal Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano-vocal"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Voice-Piano-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 11,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3270,
+    "h": 218,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Vocal Lead Sheet Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 38
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Vocal Lead Sheet Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/vocal-lead-sheet-transcription-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Voice-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 12,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3270,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Vocal Ensemble Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Vocal Ensemble Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/vocal-ensemble-transcription-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Vocal-Lead-Sheets2-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 13,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3518,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Guitar Tab Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Guitar Tab Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/guitar-tab"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Guitarra-2-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 14,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3518,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Trumpet Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Trumpet Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/trumpet-transcription-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Trumpet-1-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 15,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3518,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Saxophone Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Saxophone Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/saxophone-transcription-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Saxo-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 16,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3518,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Drums Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Drums Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/drums-transcription-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Drums-4-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 17,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3747,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Violin Transcriptions",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Violin Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/violin-transcription-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Violin-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 18,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3747,
+    "h": 218,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "String Orchestra Transcription Service",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 38
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "String Orchestra Transcription Service",
+        "href": "https://www.mysheetmusictranscriptions.com/string-orchestra"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Violin-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 19,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3747,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Orchestration Services",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Orchestration Services",
+        "href": "https://www.mysheetmusictranscriptions.com/orchestration-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Cuartet2-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 20,
+    "id": null,
+    "cls": "elementor-element-3d290281 e-con-boxed e-con",
+    "top": 3747,
+    "h": 199,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 260,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Strings Transcription Service",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "19.2px",
+        "color": "#363636",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(54, 54, 54)",
+        "w": 260,
+        "h": 19
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Strings Transcription Service",
+        "href": "https://www.mysheetmusictranscriptions.com/strings-transcription-service"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "String-Quartet-300x297.png",
+        "alt": "",
+        "w": 130,
+        "h": 129
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 21,
+    "id": null,
+    "cls": "elementor-element-7a9558db e-con-boxed e-con",
+    "top": 4169,
+    "h": 700,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1440,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "What's included?",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 1420,
+        "h": 32
+      },
+      {
+        "tag": "h3",
+        "text": "All sheet music formats",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "600",
+        "lh": "36px",
+        "color": "#0c0c0c",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(12, 12, 12)",
+        "w": 336,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "100% accuracy & Customer care",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "600",
+        "lh": "36px",
+        "color": "#0c0c0c",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(12, 12, 12)",
+        "w": 336,
+        "h": 36
+      }
+    ],
+    "buttons": [],
+    "links": [],
+    "imgs": [
+      {
+        "src": "fast-delivery-new-1.png",
+        "alt": "Fast delivery - My Sheet Music Transcriptions",
+        "w": 74,
+        "h": 74
+      },
+      {
+        "src": "icones-2.png",
+        "alt": "My Sheet Music Transcriptions - All sheet music formats",
+        "w": 266,
+        "h": 63
+      },
+      {
+        "src": "accuracy-3-1-1.png",
+        "alt": "My Sheet Music Transcriptions - 100% accuracy & Customer care",
+        "w": 74,
+        "h": 74
+      }
+    ],
+    "paras": [
+      "1-2 days standard delivery time. Rush orders available",
+      "Get the transcription in digital format: PDF, midi, SIB, MUSX, XML, MSCZ, GP",
+      "Note-for-note transcriptions and full customer support along the process"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 22,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-11320849 elementor-section-boxed",
+    "top": 4919,
+    "h": 1096,
+    "bg": "#ffffff",
+    "bgImg": null,
+    "pad": "0px 0px 50px",
+    "innerW": 1120,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Flexible pricing",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 1060,
+        "h": 32
+      },
+      {
+        "tag": "h2",
+        "text": "Piano",
+        "font": "Montserrat",
+        "size": "26px",
+        "weight": "700",
+        "lh": "26px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 356,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "from",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "$19 USD",
+        "font": "Montserrat",
+        "size": "46px",
+        "weight": "700",
+        "lh": "92px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 92
+      },
+      {
+        "tag": "h3",
+        "text": "per minute of music",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "Pricing factors:",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 256,
+        "h": 32
+      },
+      {
+        "tag": "h2",
+        "text": "Bands/Ensembles",
+        "font": "Montserrat",
+        "size": "26px",
+        "weight": "700",
+        "lh": "26px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 356,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "from",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "$30 USD",
+        "font": "Montserrat",
+        "size": "46px",
+        "weight": "700",
+        "lh": "92px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 92
+      },
+      {
+        "tag": "h3",
+        "text": "per minute of music",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "Pricing factors:",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 256,
+        "h": 32
+      },
+      {
+        "tag": "h2",
+        "text": "Melodic Instrument",
+        "font": "Montserrat",
+        "size": "26px",
+        "weight": "700",
+        "lh": "26px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 356,
+        "h": 26
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "SEE THE FULL PRICING GUIDE",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#ffffff",
+        "bg": "#e2864d",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 259,
+        "h": 42,
+        "href": "/pricing"
+      }
+    ],
+    "links": [
+      {
+        "t": "SEE THE FULL PRICING GUIDE",
+        "href": "/pricing"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "Grand-Piano-2-2-1.png",
+        "alt": "",
+        "w": 107,
+        "h": 106
+      },
+      {
+        "src": "Cuartet2-1-2-1.png",
+        "alt": "",
+        "w": 107,
+        "h": 106
+      },
+      {
+        "src": "Horns2-1-2-1.png",
+        "alt": "",
+        "w": 107,
+        "h": 106
+      }
+    ],
+    "paras": [
+      "There are pricing options for every budget. The more instruments and the longer or more complex a piece is, the longer it takes to transcribe. The simpler and m",
+      "We are a team of professional musicians, performers, editors, and musicologists with extensive experience. Your score will be 100% personalized, tailored to you",
+      "Revisions and transpositions are included in the price, as well as all the digital formats you may need.",
+      "Below you will find a price guide, but please contact us for customized proposals:",
+      "Music length",
+      "Musical complexity and density",
+      "Difficulty of listening, notation, layers, and polyphonies",
+      "*minimum charge of $49 USD",
+      "Music length",
+      "Notation complexity and difficulty of listening",
+      "Part extraction"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 23,
+    "id": null,
+    "cls": "elementor-element-11094300 e-con-boxed e-con",
+    "top": 4929,
+    "h": 409,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 1080,
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Flexible pricing",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 1060,
+        "h": 32
+      }
+    ],
+    "buttons": [],
+    "links": [],
+    "imgs": [],
+    "paras": [
+      "There are pricing options for every budget. The more instruments and the longer or more complex a piece is, the longer it takes to transcribe. The simpler and m",
+      "We are a team of professional musicians, performers, editors, and musicologists with extensive experience. Your score will be 100% personalized, tailored to you",
+      "Revisions and transpositions are included in the price, as well as all the digital formats you may need.",
+      "Below you will find a price guide, but please contact us for customized proposals:"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 24,
+    "id": null,
+    "cls": "elementor-element-3e6e1f57 e-con-boxed e-con",
+    "top": 5417,
+    "h": 455,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 1080,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Piano",
+        "font": "Montserrat",
+        "size": "26px",
+        "weight": "700",
+        "lh": "26px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 356,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "from",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "$19 USD",
+        "font": "Montserrat",
+        "size": "46px",
+        "weight": "700",
+        "lh": "92px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 92
+      },
+      {
+        "tag": "h3",
+        "text": "per minute of music",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "Pricing factors:",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 256,
+        "h": 32
+      },
+      {
+        "tag": "h2",
+        "text": "Bands/Ensembles",
+        "font": "Montserrat",
+        "size": "26px",
+        "weight": "700",
+        "lh": "26px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 356,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "from",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "$30 USD",
+        "font": "Montserrat",
+        "size": "46px",
+        "weight": "700",
+        "lh": "92px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 92
+      },
+      {
+        "tag": "h3",
+        "text": "per minute of music",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      },
+      {
+        "tag": "h3",
+        "text": "Pricing factors:",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 256,
+        "h": 32
+      },
+      {
+        "tag": "h2",
+        "text": "Melodic Instrument",
+        "font": "Montserrat",
+        "size": "26px",
+        "weight": "700",
+        "lh": "26px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 356,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "from",
+        "font": "Montserrat",
+        "size": "18px",
+        "weight": "400",
+        "lh": "36px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 356,
+        "h": 36
+      }
+    ],
+    "buttons": [],
+    "links": [],
+    "imgs": [
+      {
+        "src": "Grand-Piano-2-2-1.png",
+        "alt": "",
+        "w": 107,
+        "h": 106
+      },
+      {
+        "src": "Cuartet2-1-2-1.png",
+        "alt": "",
+        "w": 107,
+        "h": 106
+      },
+      {
+        "src": "Horns2-1-2-1.png",
+        "alt": "",
+        "w": 107,
+        "h": 106
+      }
+    ],
+    "paras": [
+      "Music length",
+      "Musical complexity and density",
+      "Difficulty of listening, notation, layers, and polyphonies",
+      "*minimum charge of $49 USD",
+      "Music length",
+      "Notation complexity and difficulty of listening",
+      "Part extraction",
+      "Music length",
+      "Musical complexity and density",
+      "Idiomatic difficulty relative to each instrument"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 25,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-343b9371 elementor-section-full_width",
+    "top": 6165,
+    "h": 221,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1440,
+    "headings": [],
+    "buttons": [],
+    "links": [],
+    "imgs": [
+      {
+        "src": "My-Sheet-Music-Transcriptions-Guitar-3.jpg",
+        "alt": "My Sheet Music Transcriptions - Guitar Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-10.jpg",
+        "alt": "My Sheet Music Transcriptions - Piano Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-5.jpg",
+        "alt": "My Sheet Music Transcriptions - Piano Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-8.jpg",
+        "alt": "My Sheet Music Transcriptions - Playing Piano",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-7.jpg",
+        "alt": "My Sheet Music Transcriptions - Piano Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-6.jpg",
+        "alt": "My Sheet Music Transcriptions - Piano Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-9.jpg",
+        "alt": "My Sheet Music Transcriptions - Piano Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Guitar-4.jpg",
+        "alt": "My Sheet Music Transcriptions - Guitar Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-3.jpg",
+        "alt": "My Sheet Music Transcriptions - Piano Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-4.jpg",
+        "alt": "My Sheet Music Transcriptions - Piano Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Guitar-3.jpg",
+        "alt": "My Sheet Music Transcriptions - Guitar Score",
+        "w": 250,
+        "h": 374
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Piano-10.jpg",
+        "alt": "My Sheet Music Transcriptions - Piano Score",
+        "w": 250,
+        "h": 374
+      }
+    ],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 26,
+    "id": null,
+    "cls": "elementor-element-27e71067 e-con-full e-con",
+    "top": 6536,
+    "h": 2213,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "50px 0px",
+    "innerW": 1140,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Customer Reviews",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 1140,
+        "h": 32
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "READ ALL OUR REVIEWS",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#ffffff",
+        "bg": "#e2864d",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 223,
+        "h": 42,
+        "href": "/customer-reviews"
+      }
+    ],
+    "links": [
+      {
+        "t": "Lachlan T.  Composer from Australia",
+        "href": "https://www.trustpilot.com/reviews/6a84e405c71459c48fa570b3"
+      },
+      {
+        "t": "Innessa S.  Composer from the US | ",
+        "href": "https://www.trustpilot.com/reviews/6a739f8d8a1fc76c25919ee2"
+      },
+      {
+        "t": "Margaret O.  Pianist from Ireland |",
+        "href": "https://www.trustpilot.com/reviews/6a64f16bfd0621dc36f57dc5"
+      },
+      {
+        "t": "Clayton P.  Guitarist from the US |",
+        "href": "https://www.trustpilot.com/reviews/6a46cbfbf0036c2b143aec1a"
+      },
+      {
+        "t": "Andy D.  Composer from the US | May",
+        "href": "https://maps.app.goo.gl/kEwaBDfCi9KGhUkq9"
+      },
+      {
+        "t": "Jason G.  Singer from the US | May ",
+        "href": "https://maps.app.goo.gl/Sp8RzJYaH7TPbaCy8"
+      },
+      {
+        "t": "Leonard M.  Pianist and Guitarist f",
+        "href": "https://maps.app.goo.gl/wGRBgR9whPeWd7Xv6"
+      },
+      {
+        "t": "Mandy B.  Clarinetist from Japan | ",
+        "href": "https://maps.app.goo.gl/DweqMYCWTjL9hPUT6"
+      },
+      {
+        "t": "READ ALL OUR REVIEWS",
+        "href": "/customer-reviews"
+      }
+    ],
+    "imgs": [],
+    "paras": [
+      "Efficient, 99% accuracy, incredible customer service team, almost felt like the team had been part of the project for years. Thanks again My Sheet Music Transcr",
+      "5 stars is not sufficient! Cannot brag enough on my experience with every person I have interacted in each transcription done for me so far. Always great servic",
+      "I’m very happy with the transcription, t was completed in two days, was very accurate. It was great to get it in Sibelius, so that I could edit it if I wanted t",
+      "Honestly, I did feel that I was taking a risk, which everyone does every time they engage an online service. However, the website was very thorough and I was im",
+      "I have used MSMT on multiple projects of a variety styles, scope and difficulty. They never disappoint! Their online request system makes it super easy to get t",
+      "The customer service team at My Sheet Music Transcriptions were amazing to work with. They were enthusiastic about the project, walked me through the process an",
+      "I have been using their transcription services for years, mostly for guitar and piano. The accuracy is impressive, so is their customer service. Transcribing li",
+      "I love these guys! Everyone is so friendly and professional, explaining everything clearly from start to finish. If you’re a beginner like me, but have a piece "
+    ],
+    "iframes": []
+  },
+  {
+    "i": 27,
+    "id": null,
+    "cls": "elementor-element-475f0ec1 e-con-boxed e-con",
+    "top": 8749,
+    "h": 749,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1140,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Who are we?",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 1140,
+        "h": 32
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "a",
+        "text": "READ MORE ABOUT US",
+        "font": "Montserrat",
+        "size": "14px",
+        "weight": "700",
+        "lh": "14px",
+        "color": "#ffffff",
+        "bg": "#e2864d",
+        "radius": "28px",
+        "pad": "14px 20px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 211,
+        "h": 42,
+        "href": "/about-us"
+      }
+    ],
+    "links": [
+      {
+        "t": "READ MORE ABOUT US",
+        "href": "/about-us"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Customer-Service-9.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Customer Service",
+        "w": 654,
+        "h": 437
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Customer-Service-8.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Transcriber working",
+        "w": 654,
+        "h": 437
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Customer-Service-14.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Customer Service",
+        "w": 654,
+        "h": 437
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Customer-Service-12.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Customer Service",
+        "w": 654,
+        "h": 437
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Transcriber.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Transcriber working",
+        "w": 654,
+        "h": 437
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Customer-Service-11.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Customer Service",
+        "w": 654,
+        "h": 437
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Customer-Service-10.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Customer Service",
+        "w": 654,
+        "h": 437
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Customer-Service-9.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Customer Service",
+        "w": 654,
+        "h": 437
+      },
+      {
+        "src": "My-Sheet-Music-Transcriptions-Office-Customer-Service-8.jpg",
+        "alt": "My Sheet Music Transcriptions Office - Transcriber working",
+        "w": 654,
+        "h": 437
+      }
+    ],
+    "paras": [
+      "We are a team of 70+ professional transcribers, arrangers, music editors, musicologists, and engineers with proven experience in all types of musical transcript",
+      "Why do we do it? To create opportunities and facilitate the preservation, usefulness, and accessibility of musical brilliance.",
+      "How do we like to do it? Bridging the gap between audio and music notation through a combination of expertise, experience, optimization, and commitment to quali",
+      "We transcribe each note by hand and by ear one by one. We don’t use any kind of automatic transcription software. It’s a slow process but it gives great results"
+    ],
+    "iframes": []
+  },
+  {
+    "i": 28,
+    "id": null,
+    "cls": "",
+    "top": 9518,
+    "h": 2601,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px",
+    "innerW": 1140,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Contact us",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 880,
+        "h": 32
+      },
+      {
+        "tag": "h3",
+        "text": "Average response time: 1-4 hours",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 323,
+        "h": 32
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in Spanish",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 0,
+        "h": 0
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in French",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 0,
+        "h": 0
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in German",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 0,
+        "h": 0
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in Japanese",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 0,
+        "h": 0
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in Spanish",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 250,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in French",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 250,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in German",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 250,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in Japanese",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 250,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "Sibelius",
+        "font": "Montserrat",
+        "size": "10px",
+        "weight": "600",
+        "lh": "20px",
+        "color": "#aaaaaa",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(170, 170, 170)",
+        "w": 38,
+        "h": 20
+      },
+      {
+        "tag": "h3",
+        "text": "GuitarPro",
+        "font": "Montserrat",
+        "size": "10px",
+        "weight": "600",
+        "lh": "20px",
+        "color": "#aaaaaa",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(170, 170, 170)",
+        "w": 58,
+        "h": 20
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "button",
+        "text": "SEND",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "16px",
+        "color": "#ffffff",
+        "bg": "#e2864d",
+        "radius": "25px",
+        "pad": "15px 30px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 880,
+        "h": 47,
+        "href": null
+      }
+    ],
+    "links": [
+      {
+        "t": "Privacy Policy",
+        "href": "https://www.mysheetmusictranscriptions.com/gdpr"
+      },
+      {
+        "t": "Privacy Policy",
+        "href": "https://policies.google.com/privacy"
+      },
+      {
+        "t": "Terms of Service",
+        "href": "https://policies.google.com/terms"
+      },
+      {
+        "t": "Home",
+        "href": "https://www.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "Audio → sheet music",
+        "href": "https://www.mysheetmusictranscriptions.com/music-transcription-service"
+      },
+      {
+        "t": "Pricing",
+        "href": "https://www.mysheetmusictranscriptions.com/pricing"
+      },
+      {
+        "t": "Customer Reviews",
+        "href": "https://www.mysheetmusictranscriptions.com/customer-reviews"
+      },
+      {
+        "t": "Gift a Transcription!",
+        "href": "https://www.mysheetmusictranscriptions.com/gift-card"
+      },
+      {
+        "t": "Our MSMT Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/endorsed-musicians-and-composers"
+      },
+      {
+        "t": "Our Partners",
+        "href": "https://www.mysheetmusictranscriptions.com/partners"
+      },
+      {
+        "t": "Glossary of Musical Terms",
+        "href": "https://www.mysheetmusictranscriptions.com/glossary-of-musical-terms"
+      },
+      {
+        "t": "Glossary of Guitar TABs",
+        "href": "https://www.mysheetmusictranscriptions.com/glossary-guitar-tabs"
+      },
+      {
+        "t": "Home",
+        "href": "https://www.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "Audio → sheet music",
+        "href": "https://www.mysheetmusictranscriptions.com/music-transcription-service"
+      },
+      {
+        "t": "Pricing",
+        "href": "https://www.mysheetmusictranscriptions.com/pricing"
+      },
+      {
+        "t": "Customer Reviews",
+        "href": "https://www.mysheetmusictranscriptions.com/customer-reviews"
+      },
+      {
+        "t": "Gift a Transcription!",
+        "href": "https://www.mysheetmusictranscriptions.com/gift-card"
+      },
+      {
+        "t": "Our MSMT Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/endorsed-musicians-and-composers"
+      },
+      {
+        "t": "Our Partners",
+        "href": "https://www.mysheetmusictranscriptions.com/partners"
+      },
+      {
+        "t": "Glossary of Musical Terms",
+        "href": "https://www.mysheetmusictranscriptions.com/glossary-of-musical-terms"
+      },
+      {
+        "t": "Glossary of Guitar TABs",
+        "href": "https://www.mysheetmusictranscriptions.com/glossary-guitar-tabs"
+      },
+      {
+        "t": "Services for Music Educators",
+        "href": "https://www.mysheetmusictranscriptions.com/music-educators"
+      },
+      {
+        "t": "Services for Music Businesses",
+        "href": "https://www.mysheetmusictranscriptions.com/b2b"
+      },
+      {
+        "t": "Services for Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/artists"
+      },
+      {
+        "t": "See our Endorsed Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/endorsed-musicians-and-composers"
+      },
+      {
+        "t": "View this site in Spanish",
+        "href": "https://mistranscripcionesmusicales.com/"
+      },
+      {
+        "t": "View this site in French",
+        "href": "https://mapartitionsurmesure.com/"
+      },
+      {
+        "t": "View this site in German",
+        "href": "https://meinemusiktranskription.de/"
+      },
+      {
+        "t": "View this site in Japanese",
+        "href": "https://www.mysheetmusictranscriptions.jp"
+      },
+      {
+        "t": "View this site in Spanish",
+        "href": "https://mistranscripcionesmusicales.com/"
+      },
+      {
+        "t": "View this site in French",
+        "href": "https://mapartitionsurmesure.com/"
+      },
+      {
+        "t": "View this site in German",
+        "href": "https://meinemusiktranskription.de/"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "es.png",
+        "alt": "",
+        "w": 449,
+        "h": 449
+      },
+      {
+        "src": "fr.png",
+        "alt": "",
+        "w": 449,
+        "h": 449
+      },
+      {
+        "src": "de.png",
+        "alt": "",
+        "w": 449,
+        "h": 449
+      },
+      {
+        "src": "jp-1.png",
+        "alt": "My Sheet Music Transcriptions - Japanese",
+        "w": 449,
+        "h": 449
+      },
+      {
+        "src": "es.png",
+        "alt": "",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "src": "fr.png",
+        "alt": "",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "src": "de.png",
+        "alt": "",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "src": "jp-1.png",
+        "alt": "My Sheet Music Transcriptions - Japanese",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "src": "payment.svg",
+        "alt": "",
+        "w": 216,
+        "h": 73
+      },
+      {
+        "src": "sibelius.png",
+        "alt": "",
+        "w": 31,
+        "h": 33
+      },
+      {
+        "src": "pro.png",
+        "alt": "",
+        "w": 29,
+        "h": 34
+      },
+      {
+        "src": "dorico-white-2.png",
+        "alt": "",
+        "w": 34,
+        "h": 34
+      }
+    ],
+    "paras": [
+      "Request your sheet music or digital notation services",
+      "Home",
+      "Audio → sheet music",
+      "Pricing",
+      "Customer Reviews",
+      "Gift a Transcription!",
+      "Our MSMT Artists",
+      "Our Partners",
+      "Glossary of Musical Terms",
+      "Glossary of Guitar TABs",
+      "Home",
+      "Audio → sheet music"
+    ],
+    "iframes": [
+      "https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LfoLwIsAAAAAI1b5B8Bzyc2etSQjK4KeVL0PX8V&co=aHR0",
+      ""
+    ]
+  },
+  {
+    "i": 29,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-6f2aeea elementor-section-height-min-height",
+    "top": 9518,
+    "h": 1368,
+    "bg": "#f49946",
+    "bgImg": null,
+    "pad": "100px 0px",
+    "innerW": 900,
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Contact us",
+        "font": "Montserrat",
+        "size": "32px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#444444",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(68, 68, 68)",
+        "w": 880,
+        "h": 32
+      },
+      {
+        "tag": "h3",
+        "text": "Average response time: 1-4 hours",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 323,
+        "h": 32
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "button",
+        "text": "SEND",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "16px",
+        "color": "#ffffff",
+        "bg": "#e2864d",
+        "radius": "25px",
+        "pad": "15px 30px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 880,
+        "h": 47,
+        "href": null
+      }
+    ],
+    "links": [
+      {
+        "t": "Privacy Policy",
+        "href": "https://www.mysheetmusictranscriptions.com/gdpr"
+      },
+      {
+        "t": "Privacy Policy",
+        "href": "https://policies.google.com/privacy"
+      },
+      {
+        "t": "Terms of Service",
+        "href": "https://policies.google.com/terms"
+      }
+    ],
+    "imgs": [],
+    "paras": ["Request your sheet music or digital notation services"],
+    "iframes": [
+      "https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LfoLwIsAAAAAI1b5B8Bzyc2etSQjK4KeVL0PX8V&co=aHR0",
+      ""
+    ]
+  },
+  {
+    "i": 30,
+    "id": null,
+    "cls": "elementor-element-be6ed8b e-con-boxed e-con",
+    "top": 9744,
+    "h": 70,
+    "bg": "transparent",
+    "bgImg": null,
+    "pad": "0px 10px",
+    "innerW": 500,
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "Average response time: 1-4 hours",
+        "font": "Montserrat",
+        "size": "16px",
+        "weight": "700",
+        "lh": "32px",
+        "color": "#ffffff",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "w": 323,
+        "h": 32
+      }
+    ],
+    "buttons": [],
+    "links": [],
+    "imgs": [],
+    "paras": [],
+    "iframes": []
+  },
+  {
+    "i": 31,
+    "id": null,
+    "cls": "elementor-section elementor-top-section elementor-element-60fb8f8 elementor-section-stretched",
+    "top": 10886,
+    "h": 1233,
+    "bg": "#222222",
+    "bgImg": null,
+    "pad": "65px 0px",
+    "innerW": 1200,
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "View this site in Spanish",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 0,
+        "h": 0
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in French",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 0,
+        "h": 0
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in German",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 0,
+        "h": 0
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in Japanese",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 0,
+        "h": 0
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in Spanish",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 250,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in French",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 250,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in German",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 250,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "View this site in Japanese",
+        "font": "Montserrat",
+        "size": "13px",
+        "weight": "600",
+        "lh": "26px",
+        "color": "#94a3a3",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(148, 163, 163)",
+        "w": 250,
+        "h": 26
+      },
+      {
+        "tag": "h3",
+        "text": "Sibelius",
+        "font": "Montserrat",
+        "size": "10px",
+        "weight": "600",
+        "lh": "20px",
+        "color": "#aaaaaa",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(170, 170, 170)",
+        "w": 38,
+        "h": 20
+      },
+      {
+        "tag": "h3",
+        "text": "GuitarPro",
+        "font": "Montserrat",
+        "size": "10px",
+        "weight": "600",
+        "lh": "20px",
+        "color": "#aaaaaa",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(170, 170, 170)",
+        "w": 58,
+        "h": 20
+      },
+      {
+        "tag": "h3",
+        "text": "Dorico",
+        "font": "Montserrat",
+        "size": "10px",
+        "weight": "600",
+        "lh": "20px",
+        "color": "#aaaaaa",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(170, 170, 170)",
+        "w": 34,
+        "h": 20
+      },
+      {
+        "tag": "h3",
+        "text": "MuseScore",
+        "font": "Montserrat",
+        "size": "10px",
+        "weight": "600",
+        "lh": "20px",
+        "color": "#aaaaaa",
+        "bg": "transparent",
+        "radius": "0px",
+        "pad": "0px",
+        "border": "0px none rgb(170, 170, 170)",
+        "w": 58,
+        "h": 20
+      }
+    ],
+    "buttons": [],
+    "links": [
+      {
+        "t": "Home",
+        "href": "https://www.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "Audio → sheet music",
+        "href": "https://www.mysheetmusictranscriptions.com/music-transcription-service"
+      },
+      {
+        "t": "Pricing",
+        "href": "https://www.mysheetmusictranscriptions.com/pricing"
+      },
+      {
+        "t": "Customer Reviews",
+        "href": "https://www.mysheetmusictranscriptions.com/customer-reviews"
+      },
+      {
+        "t": "Gift a Transcription!",
+        "href": "https://www.mysheetmusictranscriptions.com/gift-card"
+      },
+      {
+        "t": "Our MSMT Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/endorsed-musicians-and-composers"
+      },
+      {
+        "t": "Our Partners",
+        "href": "https://www.mysheetmusictranscriptions.com/partners"
+      },
+      {
+        "t": "Glossary of Musical Terms",
+        "href": "https://www.mysheetmusictranscriptions.com/glossary-of-musical-terms"
+      },
+      {
+        "t": "Glossary of Guitar TABs",
+        "href": "https://www.mysheetmusictranscriptions.com/glossary-guitar-tabs"
+      },
+      {
+        "t": "Home",
+        "href": "https://www.mysheetmusictranscriptions.com/"
+      },
+      {
+        "t": "Audio → sheet music",
+        "href": "https://www.mysheetmusictranscriptions.com/music-transcription-service"
+      },
+      {
+        "t": "Pricing",
+        "href": "https://www.mysheetmusictranscriptions.com/pricing"
+      },
+      {
+        "t": "Customer Reviews",
+        "href": "https://www.mysheetmusictranscriptions.com/customer-reviews"
+      },
+      {
+        "t": "Gift a Transcription!",
+        "href": "https://www.mysheetmusictranscriptions.com/gift-card"
+      },
+      {
+        "t": "Our MSMT Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/endorsed-musicians-and-composers"
+      },
+      {
+        "t": "Our Partners",
+        "href": "https://www.mysheetmusictranscriptions.com/partners"
+      },
+      {
+        "t": "Glossary of Musical Terms",
+        "href": "https://www.mysheetmusictranscriptions.com/glossary-of-musical-terms"
+      },
+      {
+        "t": "Glossary of Guitar TABs",
+        "href": "https://www.mysheetmusictranscriptions.com/glossary-guitar-tabs"
+      },
+      {
+        "t": "Services for Music Educators",
+        "href": "https://www.mysheetmusictranscriptions.com/music-educators"
+      },
+      {
+        "t": "Services for Music Businesses",
+        "href": "https://www.mysheetmusictranscriptions.com/b2b"
+      },
+      {
+        "t": "Services for Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/artists"
+      },
+      {
+        "t": "See our Endorsed Artists",
+        "href": "https://www.mysheetmusictranscriptions.com/endorsed-musicians-and-composers"
+      },
+      {
+        "t": "View this site in Spanish",
+        "href": "https://mistranscripcionesmusicales.com/"
+      },
+      {
+        "t": "View this site in French",
+        "href": "https://mapartitionsurmesure.com/"
+      },
+      {
+        "t": "View this site in German",
+        "href": "https://meinemusiktranskription.de/"
+      },
+      {
+        "t": "View this site in Japanese",
+        "href": "https://www.mysheetmusictranscriptions.jp"
+      },
+      {
+        "t": "View this site in Spanish",
+        "href": "https://mistranscripcionesmusicales.com/"
+      },
+      {
+        "t": "View this site in French",
+        "href": "https://mapartitionsurmesure.com/"
+      },
+      {
+        "t": "View this site in German",
+        "href": "https://meinemusiktranskription.de/"
+      },
+      {
+        "t": "View this site in Japanese",
+        "href": "https://www.mysheetmusictranscriptions.jp"
+      },
+      {
+        "t": "Piano Transcriptions",
+        "href": "https://www.mysheetmusictranscriptions.com/piano"
+      },
+      {
+        "t": "Piano & Vocal Arrangements",
+        "href": "https://www.mysheetmusictranscriptions.com/piano-vocal"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "es.png",
+        "alt": "",
+        "w": 449,
+        "h": 449
+      },
+      {
+        "src": "fr.png",
+        "alt": "",
+        "w": 449,
+        "h": 449
+      },
+      {
+        "src": "de.png",
+        "alt": "",
+        "w": 449,
+        "h": 449
+      },
+      {
+        "src": "jp-1.png",
+        "alt": "My Sheet Music Transcriptions - Japanese",
+        "w": 449,
+        "h": 449
+      },
+      {
+        "src": "es.png",
+        "alt": "",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "src": "fr.png",
+        "alt": "",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "src": "de.png",
+        "alt": "",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "src": "jp-1.png",
+        "alt": "My Sheet Music Transcriptions - Japanese",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "src": "payment.svg",
+        "alt": "",
+        "w": 216,
+        "h": 73
+      },
+      {
+        "src": "sibelius.png",
+        "alt": "",
+        "w": 31,
+        "h": 33
+      },
+      {
+        "src": "pro.png",
+        "alt": "",
+        "w": 29,
+        "h": 34
+      },
+      {
+        "src": "dorico-white-2.png",
+        "alt": "",
+        "w": 34,
+        "h": 34
+      }
+    ],
+    "paras": [
+      "Home",
+      "Audio → sheet music",
+      "Pricing",
+      "Customer Reviews",
+      "Gift a Transcription!",
+      "Our MSMT Artists",
+      "Our Partners",
+      "Glossary of Musical Terms",
+      "Glossary of Guitar TABs",
+      "Home",
+      "Audio → sheet music",
+      "Pricing"
+    ],
+    "iframes": []
+  }
+]
