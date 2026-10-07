@@ -15,7 +15,7 @@ pnpm test:seo                 # SEO conformance over dist/client (needs a build)
 pnpm test:storybook           # every story through axe (contrast included)
 pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
 pnpm lhci                     # Lighthouse CI thresholds (needs a build; locally set CHROME_PATH to a Chrome/Chromium binary)
-pnpm release-check            # what CI runs, locally
+pnpm release-check            # the full local gate (more than the PR CI runs: see nightly.yml)
 pnpm ds:export                # design-system export for the artifact -> dist/design-system (see below)
 pnpm ds:review <slug> "<Title>"   # HTML review page of mockups/<slug>/sections.html -> dist/design-system/review/<slug>
 NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify site publishes (dist/client)
@@ -99,8 +99,10 @@ The Design System artifact (`src/design-system/artifact.json`, title "My Sheet M
 `pnpm ds:export` from `theme.css`, the blocks, `catalogue.ts`, the layout components and the brand assets; it ships
 the real components as `components/bundle.js` (`window.MSMT`, React included) and the review pages load them from
 there. Republish with the `publish-design-system` skill after changing any of those sources; never edit the
-artifact by hand. CI: PRs run lint/types/unit (+ `ds:export`), build, SEO, e2e and Lighthouse; the Storybook axe
-suite runs on `main` only (run `pnpm test:storybook` locally when touching components).
+artifact by hand. CI: PRs and pushes to `main` run only the fast checks (lint/types/unit, build, SEO suite);
+Storybook axe, Playwright e2e + visual, Lighthouse, the link check and `ds:export` run nightly on `main`
+(`nightly.yml`, also on demand). Run `pnpm test:storybook` and `pnpm test:e2e` locally when touching
+components or layout.
 
 ## Conventions
 

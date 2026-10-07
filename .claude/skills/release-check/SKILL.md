@@ -7,9 +7,13 @@ description: Run every gate CI runs (lint, types, unit tests, Storybook axe, bui
 
 ```sh
 pnpm release-check                 # lint, typecheck, unit, storybook a11y, build (en), SEO suite
-pnpm ds:export                     # design-system export (CI runs it in the storybook job)
+pnpm ds:export                     # design-system export (nightly in CI)
 pnpm test:e2e && pnpm lhci         # when layout or performance-relevant code changed
 ```
+
+CI on a PR runs only lint/types/unit, the build and the SEO suite (minutes). Storybook axe, e2e + visual,
+Lighthouse, the link check and the export run nightly on `main` (`.github/workflows/nightly.yml`, or trigger
+it manually from the Actions tab), so run them locally before pushing component or layout changes.
 
 Reading failures:
 - Biome: `pnpm lint:fix` first, then fix what remains by hand.

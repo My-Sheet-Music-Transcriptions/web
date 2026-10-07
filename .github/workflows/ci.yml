@@ -1,5 +1,8 @@
 name: CI
 
+# Fast consistency checks on every PR and push to main: lint/types/unit, the static build and the SEO suite
+# (a few minutes). Everything heavier (Storybook axe, Playwright e2e + visual, Lighthouse, link check, the
+# design-system export) runs once a day on main in nightly.yml, or on demand.
 on:
   pull_request:
   push:
@@ -28,39 +31,6 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test:unit
-      - run: pnpm ds:export
-      - uses: actions/upload-artifact@v4
-        with:
-          name: design-system
-          path: dist/design-system
-          retention-days: 7
-
-  storybook:
-    name: Storybook a11y (axe + contrast)
-    # Slow (Playwright + every story); runs on main only. PRs get lint/types/unit, build, SEO, e2e, Lighthouse.
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - uses: actions/cache@v4
-        with:
-          path: .pw-browsers
-          key: pw-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-      - run: pnpm exec playwright install chromium --with-deps
-      - run: pnpm build:hreflang
-      - run: pnpm test:storybook
-      - run: pnpm build-storybook --quiet
-      - uses: actions/upload-artifact@v4
-        with:
-          name: storybook
-          path: storybook-static
-          retention-days: 7
 
   build:
     name: Build (prerender + OG + sitemap)
@@ -105,67 +75,3 @@ jobs:
           path: dist
       - run: pnpm build:hreflang
       - run: pnpm test:seo
-
-  e2e:
-    name: Playwright e2e + visual
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-      - uses: actions/cache@v4
-        with:
-          path: .pw-browsers
-          key: pw-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-      - run: pnpm exec playwright install chromium --with-deps
-      - run: pnpm test:e2e
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: playwright-report
-          path: playwright-report
-          retention-days: 7
-
-  lighthouse:
-    name: Lighthouse CI
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-      - run: pnpm lhci
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-
-  links:
-    name: Link check (internal)
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-      - uses: lycheeverse/lychee-action@v2
-        with:
-          args: --offline --root-dir ${{ github.workspace }}/dist/client --include-fragments 'dist/client/**/*.html'
-          fail: true
