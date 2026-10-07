@@ -118,13 +118,9 @@ const layoutDocs: Record<string, { description: string; previewHeight: number }>
   },
 }
 
-// The artifact's preview frame may inline bundle.js, so the bundle cannot learn its own URL. A hidden
-// probe <img> with a relative src lets the browser (or the frame's URL rewriting) resolve the real location of
-// components/assets/, and the mount script points the asset resolver there before rendering.
-const probeAsset = fs.readdirSync(path.join(COMP, 'assets')).find((f) => f.endsWith('.webp'))
-if (!probeAsset) throw new Error('ds:build emitted no webp assets')
-const MOUNT_SCRIPT = `<img data-msmt-probe src="../../components/assets/${probeAsset}" alt="" width="1" height="1" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
-<script>(function(){var s=document.querySelector('script[src$="bundle.js"]'),p=document.querySelector('img[data-msmt-probe]');window.__msmtAssetBase=s?new URL('.',s.src).href:p&&p.src?new URL('..',p.src).href:new URL('../../components/',document.baseURI).href;if(window.MSMT)window.MSMT.renderAll()})()</script>`
+// The card runs at its own address (…/components/<Name>/preview.html); the bundle derives the assets folder
+// from it (see export/asset-base.ts), so the preview only needs to mount.
+const MOUNT_SCRIPT = `<script>if (window.MSMT) window.MSMT.renderAll()</script>`
 const previewHtml = (name: string, props: Record<string, unknown>, group: string, height: number) =>
   `<!-- @dsCard group="${group}" height=${height} -->\n<div data-msmt="${name}" data-props='${JSON.stringify(props).replace(/'/g, '&#39;')}'></div>\n${MOUNT_SCRIPT}\n`
 

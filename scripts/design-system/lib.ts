@@ -24,7 +24,11 @@ export interface ArtifactRecord {
   namespace: string
   createdOnFiles: { v: 1; at: string }
   publishedBy: string
+  /** Commit the artifact was last published from (`pnpm ds:index --published`). */
   publishedFrom: string | null
+  publishedAt?: string | null
+  /** Hash of every source the artifact is built from at the last publish; tests fail when it drifts. */
+  sourceHash?: string | null
   /** keyed `<Group>/<file name>` */
   assets: Record<string, AssetRecord>
 }
@@ -139,6 +143,66 @@ export function uploads(record: ArtifactRecord): Upload[] {
   )
 }
 
+/**
+ * Everything the published artifact is built from: the same files Storybook renders. When any of them
+ * changes, the artifact is stale until `publish-design-system` runs (tests/unit/design-system-sync.test.ts).
+ */
+export function designSystemSources(): string[] {
+  const list = (dir: string, keep: (f: string) => boolean) =>
+    fs.existsSync(dir)
+      ? fs
+          .readdirSync(dir)
+          .filter(keep)
+          .map((f) => path.join(dir, f))
+      : []
+  const code = (f: string) => /\.(tsx?|css|html)$/.test(f) && !/\.stories\.tsx$/.test(f)
+  const assets = (f: string) => /\.(png|jpe?g|webp|svg)$/.test(f)
+  return [
+    'src/styles/theme.css',
+    'src/styles/app.css',
+    ...list('src/components/blocks', code),
+    ...list('src/components/primitives', code),
+    ...list('src/components/layout', code),
+    ...list('src/design-system/export', code),
+    'src/design-system/theme-parse.ts',
+    ...list('src/content/en/data', code),
+    ...list('src/i18n/sites', code),
+    'src/i18n/types.ts',
+    ...list('src/assets/images/home', assets),
+    ...list('src/assets/images/brand', assets),
+    ...list('src/assets/images/icons', assets),
+    ...list('src/assets/images/logos', assets),
+    ...list('src/assets/images/flags', assets),
+    'vite.ds.config.ts',
+    'scripts/design-system/export.ts',
+    'scripts/design-system/lib.ts',
+  ]
+    .filter((f) => fs.existsSync(f))
+    .sort()
+}
+
+/** Short content hash over designSystemSources(). */
+export function designSystemSourceHash(): string {
+  const h = crypto.createHash('sha256')
+  for (const f of designSystemSources()) {
+    h.update(f)
+    h.update('\0')
+    h.update(fs.readFileSync(f))
+    h.update('\0')
+  }
+  return h.digest('hex').slice(0, 16)
+}
+
+/** Records the publish that just happened (commit + source hash) in src/design-system/artifact.json. */
+export function recordPublish() {
+  const record = readArtifactRecord()
+  record.publishedFrom = gitSha()
+  record.publishedAt = new Date().toISOString()
+  record.sourceHash = designSystemSourceHash()
+  fs.writeFileSync(ARTIFACT_FILE, `${JSON.stringify(record, null, 2)}\n`)
+  return record
+}
+
 export function gitSha(): string {
   try {
     return execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim()
@@ -206,6 +270,8 @@ export function writeIndex(note: string) {
     files: walk(PROJ).map((f) => path.relative(PROJ, f).split(path.sep).join('/')),
     uploads: ups,
     pendingUploads: ups.filter((u) => !u.blob).map((u) => u.path),
+    sourceHash: designSystemSourceHash(),
+    publishedSourceHash: record.sourceHash ?? null,
   }
   fs.writeFileSync(path.join(OUT, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`)
   return manifest
