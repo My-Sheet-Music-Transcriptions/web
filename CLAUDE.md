@@ -18,7 +18,7 @@ pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
 pnpm lhci                     # Lighthouse CI thresholds (needs a build; locally set CHROME_PATH to a Chrome/Chromium binary)
 pnpm release-check            # the full local gate (more than the PR CI runs: see nightly.yml)
 pnpm ds:export                # design-system export for the artifact -> dist/design-system (see below)
-pnpm ds:review <slug> "<Title>"   # HTML review page of mockups/<slug>/sections.html -> dist/design-system/review/<slug>
+pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, builds the review page and prints the Artifact publish parameters
 NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify site publishes (dist/client)
 ```
 
@@ -43,7 +43,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/design-system` – `theme-parse.ts` (reads `theme.css` into tokens), `tokens.tsx` (Storybook Foundations),
   `export/` (browser bundle entry, router shim, cover), `review/` (shell + page template of the HTML preview
   artifact), `artifact.json` (the published artifact + asset ids).
-- `mockups/<slug>/sections.html` (+ `img/`) – the approved preview of a page, what the `page` skill publishes from.
+- `mockups/<slug>/sections.html` (+ `img/`, `preview.json` with title, path and artifact URL) – the approved preview of a page, what the `page` skill publishes from; `tests/unit/mockups.test.ts` keeps every mockup valid.
 - `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `jsonld.ts`, `og/template.tsx` (Satori).
 - `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG PNGs), `serve-dist.ts`, `lib/content-fs.ts`,
   `design-system/{export,index,lib}.ts` (artifact export).
