@@ -16,7 +16,9 @@
       "!**/test-results",
       "!**/.cache",
       "!**/public/og",
-      "!**/*.svg"
+      "!**/*.svg",
+      "!src/design-system/review/*.html",
+      "!mockups/**"
     ]
   },
   "formatter": {
