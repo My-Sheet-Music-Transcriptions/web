@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720">
+  <rect width="960" height="720" fill="#f7eee7"/>
+  <g fill="none" stroke="#6b6b6b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M360 230v-50h240v50"/>
+    <rect x="230" y="230" width="500" height="250" rx="24"/>
+    <circle cx="340" cy="365" r="70"/>
+    <circle cx="340" cy="365" r="24"/>
+    <circle cx="620" cy="365" r="70"/>
+    <circle cx="620" cy="365" r="24"/>
+    <rect x="430" y="300" width="100" height="56" rx="8"/>
+    <path d="M440 400h80M440 430h80"/>
+  </g>
+  <text x="480" y="580" text-anchor="middle" font-family="Montserrat, system-ui, sans-serif" font-size="34" font-weight="700" fill="#444444">[PLACEHOLDER] Boom box photo</text>
+</svg>
