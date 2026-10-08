@@ -6,7 +6,7 @@ import { nav } from '~/content/en/data/nav'
 import { cn } from '~/lib/cn'
 import { useSite } from '~/site'
 
-/** Full-screen mobile menu (dialog) with collapsible service groups. */
+/** Right-hand drawer (dialog) with collapsible service groups, the CTA and the hub links. */
 export function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
   const site = useSite()
   const panel = useRef<HTMLDivElement>(null)
@@ -28,11 +28,11 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
 
   if (!open) return null
   return (
-    <div className="fixed inset-0 z-[60] lg:hidden">
+    <div className="fixed inset-0 z-[80] lg:hidden">
       <button
         type="button"
         aria-label={site.strings.closeMenu}
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-navy-deep/50 backdrop-blur-[2px]"
         onClick={onClose}
         tabIndex={-1}
       />
@@ -42,28 +42,28 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
         role="dialog"
         aria-modal="true"
         aria-label={site.strings.menu}
-        className="absolute inset-y-0 right-0 flex w-[min(360px,90vw)] flex-col bg-white shadow-float"
+        className="absolute inset-y-0 right-0 flex w-[min(380px,92vw)] flex-col rounded-l-[28px] bg-white shadow-float"
       >
-        <div className="flex h-[57px] items-center justify-between border-b border-line px-4">
-          <span className="text-small font-bold uppercase text-ink">{site.strings.menu}</span>
+        <div className="flex h-16 items-center justify-between pl-6 pr-3">
+          <span className="eyebrow text-muted">{site.strings.menu}</span>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-pill hover:bg-surface"
             aria-label={site.strings.closeMenu}
             onClick={onClose}
           >
-            <Icon name="close" size={24} />
+            <Icon name="close" size={22} />
           </button>
         </div>
-        <nav aria-label="Main" className="flex-1 overflow-y-auto px-2 py-2">
-          <ul>
+        <nav aria-label="Main" className="flex-1 overflow-y-auto px-3 pb-6">
+          <ul className="space-y-0.5">
             {nav.map((item) => (
-              <li key={item.label} className="border-b border-line last:border-0">
+              <li key={item.label}>
                 {item.groups ? (
                   <>
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between px-3 py-3.5 text-left text-body font-semibold text-ink"
+                      className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-[17px] font-semibold text-ink hover:bg-surface"
                       aria-expanded={expanded === item.label}
                       onClick={() => setExpanded(expanded === item.label ? null : item.label)}
                     >
@@ -72,17 +72,17 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                         name="chevron-down"
                         size={18}
                         className={cn(
-                          'transition-transform',
+                          'text-muted transition-transform',
                           expanded === item.label && 'rotate-180',
                         )}
                       />
                     </button>
                     {expanded === item.label && (
-                      <ul className="pb-3 pl-3">
+                      <ul className="mb-2 ml-3 border-l-2 border-line pb-1 pl-3">
                         <li>
                           <SmartLink
                             href={item.href}
-                            className="block px-3 py-2 text-small font-bold text-primary"
+                            className="block rounded-lg px-3 py-2 text-small font-bold text-primary"
                             onClick={onClose}
                           >
                             All services & samples
@@ -93,7 +93,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                             {g.href && g.href !== '#' ? (
                               <SmartLink
                                 href={g.href}
-                                className="block px-3 py-1.5 text-small font-bold text-ink"
+                                className="block rounded-lg px-3 py-1.5 text-small font-bold text-ink"
                                 onClick={onClose}
                               >
                                 {g.title}
@@ -107,7 +107,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                                   <li key={l.label}>
                                     <SmartLink
                                       href={l.href}
-                                      className="block px-3 py-1.5 text-small text-[#444]"
+                                      className="block rounded-lg px-3 py-1.5 text-small text-charcoal"
                                       onClick={onClose}
                                     >
                                       {l.label}
@@ -124,7 +124,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                 ) : (
                   <SmartLink
                     href={item.href}
-                    className="block px-3 py-3.5 text-body font-semibold text-ink"
+                    className="block rounded-xl px-3 py-3 text-[17px] font-semibold text-ink hover:bg-surface"
                     onClick={onClose}
                   >
                     {item.label}
@@ -133,24 +133,24 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex flex-col gap-3 px-3">
-            <Button asChild size="block">
-              <SmartLink href={site.routes.contactAnchor} onClick={onClose}>
-                {site.strings.requestCta}
-              </SmartLink>
-            </Button>
-            <div className="flex justify-center gap-6 text-small">
-              <a href={site.hub.login} className="inline-flex items-center gap-1.5 text-ink">
-                <Icon name="users" size={16} className="text-primary" />
-                {site.strings.login}
-              </a>
-              <a href={site.hub.signup} className="inline-flex items-center gap-1.5 text-ink">
-                <Icon name="user-plus" size={16} className="text-primary" />
-                {site.strings.signup}
-              </a>
-            </div>
-          </div>
         </nav>
+        <div className="border-t border-line p-5">
+          <Button asChild size="block">
+            <SmartLink href={site.routes.contactAnchor} onClick={onClose}>
+              {site.strings.requestCta}
+            </SmartLink>
+          </Button>
+          <div className="mt-4 flex justify-center gap-6 text-small font-medium">
+            <a href={site.hub.login} className="inline-flex items-center gap-1.5 text-ink">
+              <Icon name="users" size={16} className="text-primary" />
+              {site.strings.login}
+            </a>
+            <a href={site.hub.signup} className="inline-flex items-center gap-1.5 text-ink">
+              <Icon name="user-plus" size={16} className="text-primary" />
+              {site.strings.signup}
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   )

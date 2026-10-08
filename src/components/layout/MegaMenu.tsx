@@ -3,6 +3,7 @@ import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import type { NavItem } from '~/i18n/types'
 import { cn } from '~/lib/cn'
+import { navItemClass } from './nav-styles'
 
 /**
  * "Services & Samples" drop-down: a button that opens on hover, focus or Enter/Space and lists
@@ -54,10 +55,7 @@ export function MegaMenu({ item }: { item: NavItem }) {
     >
       <button
         type="button"
-        className={cn(
-          'inline-flex items-center gap-1 rounded px-3 py-2 text-small font-semibold text-[#333] hover:text-accent-deep',
-          open && 'text-accent-deep',
-        )}
+        className={cn(navItemClass, open && 'bg-surface text-ink')}
         aria-expanded={open}
         aria-controls={id}
         aria-haspopup="true"
@@ -76,50 +74,55 @@ export function MegaMenu({ item }: { item: NavItem }) {
           className={cn('transition-transform', open && 'rotate-180')}
         />
       </button>
+      {/* The padding keeps the pointer inside the wrapper while it crosses from the trigger to the panel. */}
       <div
         id={id}
         className={cn(
-          'absolute left-1/2 top-full z-50 w-[min(1100px,calc(100vw-40px))] -translate-x-1/2 rounded-b-card border border-line bg-white p-6 shadow-float',
+          'absolute left-1/2 top-full z-50 w-[min(1120px,calc(100vw-40px))] -translate-x-1/2 pt-3',
           open ? 'block' : 'hidden',
         )}
       >
-        <div className="grid grid-cols-4 gap-x-8 gap-y-6">
-          {groups.map((g) => (
-            <div key={g.title}>
-              {g.href && g.href !== '#' ? (
-                <SmartLink
-                  href={g.href}
-                  className="block text-small font-bold text-ink hover:text-accent-deep"
-                >
-                  {g.title}
-                </SmartLink>
-              ) : (
-                <p className="text-small font-bold text-ink">{g.title}</p>
-              )}
-              {g.links.length > 0 && (
-                <ul className="mt-2 space-y-1">
-                  {g.links.map((l) => (
-                    <li key={l.label}>
-                      <SmartLink
-                        href={l.href}
-                        className="block py-0.5 text-[13px] text-[#444] hover:text-accent-deep"
-                      >
-                        {l.label}
-                      </SmartLink>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="mt-6 border-t border-line pt-4 text-right">
-          <SmartLink
-            href={item.href}
-            className="text-small font-bold uppercase text-primary hover:underline"
-          >
-            {item.label} →
-          </SmartLink>
+        <div className="rounded-card border border-line bg-white p-8 shadow-float">
+          <div className="grid grid-cols-4 gap-x-10 gap-y-8">
+            {groups.map((g) => (
+              <div key={g.title}>
+                {g.href && g.href !== '#' ? (
+                  <SmartLink
+                    href={g.href}
+                    className="block text-[15px] font-bold text-ink hover:text-primary"
+                  >
+                    {g.title}
+                  </SmartLink>
+                ) : (
+                  <p className="text-[15px] font-bold text-ink">{g.title}</p>
+                )}
+                {g.links.length > 0 && (
+                  <ul className="mt-3 space-y-1.5">
+                    {g.links.map((l) => (
+                      <li key={l.label}>
+                        <SmartLink
+                          href={l.href}
+                          className="block text-small text-charcoal hover:text-primary"
+                        >
+                          {l.label}
+                        </SmartLink>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex items-center justify-between border-t border-line pt-5">
+            <p className="text-small text-muted">Every instrument, genre and format.</p>
+            <SmartLink
+              href={item.href}
+              className="inline-flex items-center gap-1.5 text-small font-bold text-primary hover:underline"
+            >
+              {item.label}
+              <Icon name="arrow-right" size={14} />
+            </SmartLink>
+          </div>
         </div>
       </div>
     </div>

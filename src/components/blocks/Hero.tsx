@@ -1,20 +1,18 @@
-import heroOverlay from '~/assets/images/home/hero.png?w=800;1440;2200&as=picture'
-import { Logo } from '~/components/layout/Logo'
 import { Button } from '~/components/primitives/Button'
-import { Picture, type PictureSource } from '~/components/primitives/Picture'
+import { Icon } from '~/components/primitives/Icon'
+import type { PictureSource } from '~/components/primitives/Picture'
 import { SmartLink } from '~/components/primitives/SmartLink'
-import { ratings } from '~/content/en/data/home'
+import { Stars } from '~/components/primitives/Stars'
+import { counter, ratings } from '~/content/en/data/home'
+import { useSite } from '~/site'
 import { HeroSlideshow } from './HeroSlideshow'
 import { RatingCard } from './StatsBanner'
 
-const desktopSlides = import.meta.glob<PictureSource>(
-  '../../assets/images/home/hero-slide-[0-9].webp',
-  { eager: true, import: 'default', query: '?w=1000;1600;2000&as=picture' },
-)
-const mobileSlides = import.meta.glob<PictureSource>(
-  '../../assets/images/home/hero-slide-mobile-*.webp',
-  { eager: true, import: 'default', query: '?w=480;800&as=picture' },
-)
+const slides = import.meta.glob<PictureSource>('../../assets/images/home/hero-slide-*.webp', {
+  eager: true,
+  import: 'default',
+  query: '?w=480;720;1000&as=picture',
+})
 
 export interface HeroProps {
   /** Headline; `highlight` (default "#1") is rendered in orange. */
@@ -22,6 +20,7 @@ export interface HeroProps {
   highlight?: string
   lead?: string
   strong?: string
+  /** Secondary (outlined) button; the main button is the site's "Request your sheet music" CTA. */
   ctaLabel?: string
   ctaHref?: string
   /** Rotate the studio photos (every 6 s, paused for reduced-motion users). */
@@ -29,9 +28,9 @@ export interface HeroProps {
 }
 
 /**
- * Homepage hero. Layers, back to front: a slow slideshow of studio photos, the staff-lines overlay
- * whose transparent diagonal reveals the photo on the right, then the copy column and the floating
- * Google rating card (desktop). On mobile the photo band sits above a dark copy panel.
+ * Homepage hero: a two-column split on a soft gradient. Left, the Google rating chip, the headline with
+ * its orange highlight, two lines of copy and two buttons; right, the studio photo slideshow in a
+ * rounded frame with the floating Google rating card and the delivery counter. Stacks on phones.
  */
 export function Hero({
   title = 'Your #1 sheet music transcription service online',
@@ -42,67 +41,78 @@ export function Hero({
   ctaHref = '#how-it-works',
   slideshow = true,
 }: HeroProps) {
+  const site = useSite()
   const [before, after] =
     highlight && title.includes(highlight) ? title.split(highlight) : [title, null]
   const google = ratings.find((r) => r.id === 'google')
   return (
-    <section className="relative" aria-labelledby="hero-title">
-      {/* Mobile photo band */}
-      <div className="relative h-[260px] overflow-hidden lg:hidden">
-        <HeroSlideshow
-          slides={Object.values(mobileSlides)}
-          sizes="100vw"
-          position="center"
-          rotate={slideshow}
-        />
-      </div>
-      {/* Desktop: photo slideshow + overlay fill the whole section */}
-      <div className="absolute inset-0 hidden overflow-hidden lg:block" aria-hidden="true">
-        <HeroSlideshow
-          slides={Object.values(desktopSlides)}
-          sizes="100vw"
-          position="left"
-          rotate={slideshow}
-        />
-        <Picture
-          image={heroOverlay}
-          alt=""
-          priority
-          sizes="100vw"
-          className="absolute inset-0 h-full w-full object-cover object-left-top"
-          pictureClassName="contents"
-        />
-      </div>
-      <div className="relative bg-[#3f3f3f] text-white lg:bg-transparent lg:text-ink">
-        <div className="mx-auto flex max-w-[1440px] flex-col px-6 py-10 lg:min-h-[765px] lg:justify-center lg:px-[85px] lg:py-16">
-          <div className="max-w-[440px]">
-            <Logo width={340} className="hidden lg:inline-flex" />
-            <h1
-              id="hero-title"
-              className="mt-0 text-[30px] font-bold leading-[1.15] text-white lg:mt-8 lg:text-display lg:text-ink"
+    <section className="relative isolate overflow-hidden bg-surface" aria-labelledby="hero-title">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(60%_80%_at_0%_0%,rgb(26_127_151/0.10),transparent_60%),radial-gradient(50%_60%_at_100%_100%,rgb(244_153_70/0.14),transparent_60%)]"
+      />
+      <div className="container-wide grid items-center gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16 lg:py-24">
+        <div className="max-w-[600px]">
+          {google ? (
+            <a
+              href={google.href}
+              rel="noopener"
+              className="inline-flex items-center gap-2 rounded-pill border border-line bg-white py-1.5 pl-2 pr-4 text-small font-semibold text-ink shadow-card"
             >
-              {before}
-              {after !== null && (
-                <span className="text-accent-light lg:text-orange">{highlight}</span>
-              )}
-              {after}
-            </h1>
-            <p className="mt-6 text-[17px] leading-7 lg:text-[18px] lg:text-ink">{lead}</p>
-            <p className="mt-4 text-[17px] font-bold leading-7 lg:text-[18px] lg:text-ink">
-              {strong}
-            </p>
-            <div className="mt-8">
-              <Button variant="primary" asChild>
-                <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
-              </Button>
-            </div>
+              <Icon name="google" size={18} className="text-google" />
+              <Stars rating={5} size={14} label={`${google.score} out of 5 stars`} />
+              {google.score} on Google · {google.count} reviews
+            </a>
+          ) : null}
+          <h1
+            id="hero-title"
+            className="mt-6 text-[38px] font-bold leading-[1.08] text-ink md:text-[48px] lg:text-display"
+          >
+            {before}
+            {after !== null && <span className="text-accent-deep">{highlight}</span>}
+            {after}
+          </h1>
+          <p className="mt-6 text-[17px] leading-relaxed text-charcoal md:text-[19px]">{lead}</p>
+          <p className="mt-4 text-[17px] font-semibold leading-relaxed text-ink md:text-[18px]">
+            {strong}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button size="lg" asChild>
+              <SmartLink href={site.routes.contactAnchor}>{site.strings.requestCta}</SmartLink>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
+            </Button>
           </div>
         </div>
-        {google && (
-          <div className="absolute bottom-[-130px] right-[120px] z-20 hidden w-[300px] lg:block">
-            <RatingCard source={google} compact />
+
+        <div className="relative lg:pb-12 lg:pl-6">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-panel shadow-float lg:aspect-[5/4]">
+            <HeroSlideshow
+              slides={Object.values(slides)}
+              sizes="(min-width: 1025px) 640px, (min-width: 768px) 720px, 100vw"
+              position="center"
+              rotate={slideshow}
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent"
+            />
+            <p className="absolute bottom-5 left-5 right-5 text-right text-white lg:bottom-6 lg:right-6">
+              <span className="block text-[34px] font-bold leading-none tabular-nums tracking-tight">
+                {counter.value.toLocaleString('en-US')}
+              </span>
+              <span className="mt-1 block text-small font-medium text-white/90">
+                {counter.label}
+              </span>
+            </p>
           </div>
-        )}
+          {google ? (
+            <div className="absolute -bottom-2 -left-2 z-10 hidden w-[240px] lg:block">
+              <RatingCard source={google} compact />
+            </div>
+          ) : null}
+        </div>
       </div>
     </section>
   )

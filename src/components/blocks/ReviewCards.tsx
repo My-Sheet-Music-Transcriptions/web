@@ -7,6 +7,7 @@ import type { Review } from '~/content/types'
 
 export interface ReviewCardsProps {
   title?: string
+  eyebrow?: string
   /** Number of reviews shown (defaults to all in content/en/data/reviews.ts). */
   limit?: number
   ctaLabel?: string
@@ -25,16 +26,19 @@ function monthLabel(date: string) {
 /** "Customer Reviews": two-column grid of quote cards with teal stars and a link to all reviews. */
 export function ReviewCards({
   title = 'Customer Reviews',
+  eyebrow = 'What musicians say',
   limit,
   ctaLabel = 'Read all our reviews',
   ctaHref = '/customer-reviews',
 }: ReviewCardsProps) {
   const items = limit ? homeReviews.slice(0, limit) : homeReviews
   return (
-    <section className="py-12" aria-labelledby="reviews-title">
+    <section className="bg-surface py-section lg:py-section-lg" aria-labelledby="reviews-title">
       <div className="container-content">
-        <SectionHeading id="reviews-title">{title}</SectionHeading>
-        <ul className="mx-auto mt-10 grid max-w-[1130px] gap-8 md:grid-cols-2">
+        <SectionHeading id="reviews-title" eyebrow={eyebrow} rule="none">
+          {title}
+        </SectionHeading>
+        <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:gap-6">
           {items.map((r) => (
             <li key={r.name + r.date}>
               <ReviewCard review={r} />
@@ -53,26 +57,38 @@ export function ReviewCards({
 
 export function ReviewCard({ review }: { review: Review }) {
   const name = review.sourceUrl ? (
-    <a href={review.sourceUrl} rel="noopener" className="hover:text-accent-deep hover:underline">
+    <a href={review.sourceUrl} rel="noopener" className="hover:text-primary hover:underline">
       {review.name}
     </a>
   ) : (
     review.name
   )
-  const body = (
-    <>
-      <p className="text-[18px] font-bold text-[#222]">{name}</p>
-      <Stars rating={review.rating} color="primary" size={18} className="mt-2" />
-      <p className="mt-3 text-body text-ink">
-        {review.role} from {review.country} |{' '}
-        <strong className="font-bold">{monthLabel(review.date)}</strong>
-      </p>
-    </>
-  )
+  const initials = review.name
+    .split(/\s+/)
+    .map((w) => w[0] ?? '')
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
   return (
-    <article className="flex h-full flex-col rounded-card border border-[#e8e8e8] bg-white p-[30px]">
-      <header className="border-b border-line pb-5">{body}</header>
-      <blockquote className="pt-6 text-[15px] leading-[1.7] text-ink">{review.quote}</blockquote>
+    <article className="flex h-full flex-col rounded-card border border-line bg-white p-7 shadow-card lg:p-8">
+      <header className="flex items-center gap-4">
+        <span
+          aria-hidden="true"
+          className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-[15px] font-bold text-primary-deep"
+        >
+          {initials}
+        </span>
+        <div className="min-w-0">
+          <p className="text-[17px] font-bold text-ink">{name}</p>
+          <p className="mt-0.5 text-small text-muted">
+            {review.role} from {review.country} · {monthLabel(review.date)}
+          </p>
+        </div>
+        <Stars rating={review.rating} color="primary" size={16} className="ml-auto shrink-0" />
+      </header>
+      <blockquote className="mt-5 text-[15px] leading-[1.7] text-charcoal">
+        {review.quote}
+      </blockquote>
     </article>
   )
 }

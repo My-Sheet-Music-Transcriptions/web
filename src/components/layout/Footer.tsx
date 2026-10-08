@@ -20,32 +20,35 @@ const logos = import.meta.glob<PictureSource>('../../assets/images/logos/*.png',
   query: '?w=80;160&as=picture',
 })
 
-const phoneIcon: Record<string, string> = {
-  us: 'text-primary',
-  uk: 'text-primary',
-  au: 'text-accent-deep',
-  fr: 'text-primary',
-  eu: 'text-accent-deep',
-  world: 'text-pine',
+const languageNames: Record<string, string> = {
+  es: 'Spanish',
+  fr: 'French',
+  de: 'German',
+  ja: 'Japanese',
+  ca: 'Catalan',
+  en: 'English',
 }
 
-/** Dark four-column footer with sitemap, services, contact details, payment, social and legal links. */
+const heading = 'eyebrow text-white/60'
+const link = 'text-small text-footer-text transition-colors hover:text-white'
+
+/** Dark navy footer: four left-aligned columns, then languages, software logos, payment and legal in a bottom band. */
 export function Footer() {
   const site = useSite()
   const s = site.strings
   const languages = site.languageSwitcher.filter((l) => l.locale !== site.locale)
   return (
-    <footer className="bg-footer py-16 text-[13px] leading-[26px] text-footer-text">
-      <div className="container-wide grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
-        <div className="text-center">
-          <h2 className="text-body font-bold text-white">{s.sitemap}</h2>
-          <ul className="mt-5 text-left">
+    <footer className="bg-footer pt-16 text-footer-text">
+      <div className="container-wide grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1fr_1.5fr_1.3fr_1fr]">
+        <div>
+          <h2 className={heading}>{s.sitemap}</h2>
+          <ul className="mt-5 space-y-2">
             {footer.sitemap.map((l) => (
               <li key={l.href}>
                 <SmartLink
                   href={l.href}
-                  className="hover:text-white"
-                  activeProps={{ className: 'text-accent' }}
+                  className={link}
+                  activeProps={{ className: 'text-white' }}
                   activeOptions={{ exact: true }}
                 >
                   {l.label}
@@ -53,38 +56,106 @@ export function Footer() {
               </li>
             ))}
           </ul>
-          <ul className="mt-6 space-y-1 text-left">
+          <ul className="mt-6 space-y-2">
             {footer.audiences.map((l) => (
               <li key={l.href}>
-                <SmartLink
-                  href={l.href}
-                  className="inline-flex items-center gap-2 hover:text-white"
-                >
+                <SmartLink href={l.href} className={`inline-flex items-center gap-2 ${link}`}>
                   <Icon name={l.icon as IconName} size={14} className="text-accent" />
                   {l.label}
                 </SmartLink>
               </li>
             ))}
           </ul>
-          <h2 className="mt-8 text-body font-bold text-white">{s.languages}</h2>
-          <ul className="mt-4 space-y-2 text-left">
+        </div>
+
+        <div>
+          <h2 className={heading}>{s.services}</h2>
+          <ul className="mt-5 space-y-2 sm:columns-2 sm:gap-8 [&>li]:break-inside-avoid">
+            {footer.services.map((l) => (
+              <li key={l.href + l.label}>
+                <SmartLink href={l.href} className={link}>
+                  {l.label}
+                </SmartLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className={heading}>{s.contactUs}</h2>
+          <ul className="mt-5 space-y-2">
+            <li>
+              <a
+                href={`mailto:${site.contact.email}`}
+                className={`inline-flex items-start gap-2 break-all text-[13px] ${link}`}
+              >
+                <Icon name="mail" size={14} className="mt-1 shrink-0 text-accent" />
+                {site.contact.email}
+              </a>
+            </li>
+            {site.contact.phones.map((p) => (
+              <li key={p.label}>
+                <a
+                  href={`tel:${p.number.replace(/[^\d+]/g, '')}`}
+                  className={`inline-flex items-center gap-2 ${link}`}
+                >
+                  <Icon name="phone" size={14} className="shrink-0 text-accent" />
+                  {p.label}: {p.number}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <h2 className={`mt-8 ${heading}`}>{s.stayConnected}</h2>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {site.social.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  rel="noopener"
+                  aria-label={l.label}
+                  title={l.label}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-pill bg-white/10 text-white transition-colors hover:bg-primary"
+                >
+                  <Icon name={l.icon as IconName} size={16} />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <h2 className={`mt-8 ${heading}`}>{s.aboutUs}</h2>
+          <ul className="mt-4 space-y-2">
+            {footer.about.map((l) => (
+              <li key={l.href}>
+                <SmartLink href={l.href} className={`inline-flex items-center gap-2 ${link}`}>
+                  <Icon name={l.icon as IconName} size={14} className="text-accent" />
+                  {l.label}
+                </SmartLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className={heading}>{s.paymentSecurity}</h2>
+          <p className="mt-5 text-small leading-relaxed">{footer.paymentText}</p>
+          <img
+            src={payment}
+            alt="Accepted payment methods: PayPal, Discover, Stripe, Visa, American Express, Mastercard"
+            width={190}
+            height={90}
+            className="mt-4 rounded-xl bg-white/90 p-2"
+            loading="lazy"
+          />
+          <h2 className={`mt-8 ${heading}`}>{s.languages}</h2>
+          <ul className="mt-4 space-y-2">
             {languages.map(({ locale }) => {
               const t = sites[locale]
-              const name = {
-                es: 'Spanish',
-                fr: 'French',
-                de: 'German',
-                ja: 'Japanese',
-                ca: 'Catalan',
-                en: 'English',
-              }[locale]
               const flag = flags[`../../assets/images/flags/${locale === 'ja' ? 'jp' : locale}.png`]
               return (
                 <li key={locale}>
                   <a
                     href={localeSwitchHref(locale)}
                     hrefLang={t.lang}
-                    className="inline-flex items-center gap-2 hover:text-white"
+                    className={`inline-flex items-center gap-2 ${link}`}
                   >
                     {flag ? (
                       <Picture
@@ -94,98 +165,60 @@ export function Footer() {
                         className="h-[18px] w-[18px] rounded-full"
                       />
                     ) : null}
-                    {s.viewSiteIn} {name}
+                    {s.viewSiteIn} {languageNames[locale]}
                   </a>
                 </li>
               )
             })}
           </ul>
         </div>
+      </div>
 
-        <div className="text-center">
-          <h2 className="text-body font-bold text-white">{s.services}</h2>
-          <ul className="mt-5 text-left">
-            {footer.services.map((l) => (
-              <li key={l.href + l.label}>
-                <SmartLink href={l.href} className="hover:text-white">
-                  {l.label}
-                </SmartLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="text-center">
-          <h2 className="text-body font-bold text-white">{s.contactUs}</h2>
-          <ul className="mt-5 space-y-1 text-left">
-            <li>
+      <div className="container-wide mt-14 border-t border-white/10 py-8">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <h2 className={heading}>{s.compatibleWith}</h2>
+            <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-3">
+              {footer.compatible.map((c) => (
+                <li
+                  key={c.logo}
+                  className="flex items-center gap-2 text-[12px] font-medium text-footer-text"
+                >
+                  <LogoImg id={c.logo} />
+                  <span>{c.label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex flex-wrap items-center gap-6">
+            <div className="flex items-center gap-3">
+              <span className="eyebrow text-white/60">{s.providedBy}</span>
               <a
-                href={`mailto:${site.contact.email}`}
-                className="inline-flex items-center gap-2 hover:text-white"
+                href="https://msmtmusic.com"
+                rel="noopener"
+                className="inline-block rounded-xl bg-white/10 px-3 py-1.5 transition-colors hover:bg-white/15"
               >
-                <Icon name="mail" size={14} className="text-accent" />
-                {site.contact.email}
+                <Picture
+                  image={msmtmusic}
+                  alt="msmtmusic"
+                  sizes="110px"
+                  className="h-[24px] w-auto"
+                />
               </a>
-            </li>
-            {site.contact.phones.map((p) => (
-              <li key={p.label}>
-                <a
-                  href={`tel:${p.number.replace(/[^\d+]/g, '')}`}
-                  className="inline-flex items-center gap-2 hover:text-white"
-                >
-                  <Icon
-                    name="phone"
-                    size={14}
-                    className={phoneIcon[p.icon ?? ''] ?? 'text-accent'}
-                  />
-                  {p.label}: {p.number}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <h2 className="mt-8 text-body font-bold text-white">{s.stayConnected}</h2>
-          <ul className="mt-4 space-y-1 text-left">
-            {site.social.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
-                  rel="noopener"
-                  className="inline-flex items-center gap-2 hover:text-white"
-                >
-                  <Icon name={l.icon as IconName} size={14} className="text-primary" />
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <h2 className="mt-8 text-body font-bold text-white">{s.aboutUs}</h2>
-          <ul className="mt-4 space-y-1 text-left">
-            {footer.about.map((l) => (
-              <li key={l.href}>
-                <SmartLink
-                  href={l.href}
-                  className="inline-flex items-center gap-2 hover:text-white"
-                >
-                  <Icon name={l.icon as IconName} size={14} className="text-footer-text" />
-                  {l.label}
-                </SmartLink>
-              </li>
-            ))}
-          </ul>
+            </div>
+            <Picture
+              image={accio}
+              alt="ACCIÓ – Catalonia Trade & Investment"
+              sizes="80px"
+              className="h-auto w-[72px] rounded-md bg-white/90 p-1"
+            />
+          </div>
         </div>
-
-        <div className="text-center">
-          <h2 className="text-body font-bold text-white">{s.paymentSecurity}</h2>
-          <p className="mt-5 text-left">{footer.paymentText}</p>
-          <img
-            src={payment}
-            alt="Accepted payment methods: PayPal, Discover, Stripe, Visa, American Express, Mastercard"
-            width={190}
-            height={90}
-            className="mx-auto mt-5"
-            loading="lazy"
-          />
-          <ul className="mt-8 space-y-1 text-left">
+        <div className="mt-8 flex flex-col gap-3 text-caption text-footer-text/80 md:flex-row md:items-center md:justify-between">
+          <p>
+            © {new Date().getFullYear()} {site.brand}
+          </p>
+          <ul className="flex flex-wrap gap-x-5 gap-y-1">
             {footer.legal.map((l) => (
               <li key={l.href}>
                 <SmartLink href={l.href} className="hover:text-white">
@@ -194,34 +227,8 @@ export function Footer() {
               </li>
             ))}
           </ul>
-          <h2 className="mt-8 text-body font-bold text-white">{s.compatibleWith}</h2>
-          <ul className="mt-5 flex flex-wrap justify-center gap-4">
-            {footer.compatible.map((c) => (
-              <li key={c.logo} className="flex w-12 flex-col items-center text-[9px] leading-3">
-                <LogoImg id={c.logo} />
-                <span className="mt-1">{c.label}</span>
-              </li>
-            ))}
-          </ul>
-          <h2 className="mt-8 text-body font-bold text-white">{s.providedBy}</h2>
-          <a
-            href="https://msmtmusic.com"
-            rel="noopener"
-            className="mx-auto mt-4 inline-block rounded border border-white/60 bg-white/5 px-3 py-1"
-          >
-            <Picture image={msmtmusic} alt="msmtmusic" sizes="110px" className="h-[27px] w-auto" />
-          </a>
-          <Picture
-            image={accio}
-            alt="ACCIÓ – Catalonia Trade & Investment"
-            sizes="80px"
-            className="mx-auto mt-5 h-auto w-[80px]"
-          />
         </div>
       </div>
-      <p className="container-wide mt-12 text-center text-caption text-footer-text/80">
-        © {new Date().getFullYear()} {site.brand}
-      </p>
     </footer>
   )
 }
@@ -229,5 +236,5 @@ export function Footer() {
 function LogoImg({ id }: { id: string }) {
   const img = logos[`../../assets/images/logos/${id}.png`]
   if (!img) return null
-  return <Picture image={img} alt="" sizes="36px" className="h-9 w-9 object-contain" />
+  return <Picture image={img} alt="" sizes="28px" className="h-7 w-7 object-contain" />
 }

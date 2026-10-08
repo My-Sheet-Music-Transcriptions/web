@@ -38,12 +38,12 @@ export function ConsentBanner() {
       role="dialog"
       aria-labelledby="consent-title"
       aria-describedby="consent-body"
-      className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-[520px] rounded-card bg-white p-5 text-left shadow-float"
+      className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-[520px] rounded-card border border-line bg-white p-6 text-left shadow-float"
     >
       <h2 id="consent-title" className="text-body font-bold text-ink">
         {s.cookieTitle}
       </h2>
-      <p id="consent-body" className="mt-2 text-[13px] leading-5 text-[#444]">
+      <p id="consent-body" className="mt-2 text-[13px] leading-5 text-charcoal">
         {s.cookieBody}
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
@@ -53,7 +53,7 @@ export function ConsentBanner() {
         <Button
           variant="ghost"
           size="sm"
-          className="border border-line"
+          className="ring-1 ring-inset ring-line"
           onClick={() => decide('denied')}
         >
           {s.deny}

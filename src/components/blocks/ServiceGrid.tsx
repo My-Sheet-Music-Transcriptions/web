@@ -12,41 +12,46 @@ const icons = import.meta.glob<PictureSource>('../../assets/images/icons/*.png',
 
 export interface ServiceGridProps {
   title?: string
+  eyebrow?: string
   ctaLabel?: string
   ctaHref?: string
   /** Limit the number of items (defaults to the full homepage list of 12). */
   limit?: number
 }
 
-/** "We transcribe any instrument": four-column grid of instrument icons linking to service pages. */
+/** "We transcribe any instrument": grid of instrument tiles linking to service pages. */
 export function ServiceGrid({
   title = 'We transcribe any instrument and musical genre',
+  eyebrow = 'Services',
   ctaLabel = 'See all services',
   ctaHref = '/services-samples',
   limit,
 }: ServiceGridProps) {
   const items = limit ? serviceGrid.slice(0, limit) : serviceGrid
   return (
-    <section className="pb-20 pt-12" aria-labelledby="services-title">
+    <section className="py-section lg:py-section-lg" aria-labelledby="services-title">
       <div className="container-content">
-        <SectionHeading id="services-title" rule="grey">
+        <SectionHeading id="services-title" eyebrow={eyebrow} rule="none">
           {title}
         </SectionHeading>
-        <ul className="mx-auto mt-10 grid max-w-[1040px] grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4">
+        <ul className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {items.map((s) => {
             const img = icons[`../../assets/images/icons/${s.icon}.png`]
             return (
-              <li key={s.label} className="text-center">
-                <SmartLink href={s.href} className="group inline-flex flex-col items-center">
+              <li key={s.label}>
+                <SmartLink
+                  href={s.href}
+                  className="group flex h-full flex-col items-center rounded-card border border-line bg-white px-4 py-6 text-center transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
+                >
                   {img ? (
                     <Picture
                       image={img}
                       alt=""
-                      sizes="130px"
-                      className="h-[130px] w-[130px] transition-transform group-hover:scale-105"
+                      sizes="88px"
+                      className="h-[88px] w-[88px] object-contain transition-transform group-hover:scale-105"
                     />
                   ) : null}
-                  <span className="mt-4 block max-w-[220px] text-h4 font-bold leading-[19px] text-[#363636] group-hover:text-accent-deep">
+                  <span className="mt-4 block text-h4 font-bold text-ink group-hover:text-primary">
                     {s.label}
                   </span>
                 </SmartLink>
@@ -54,8 +59,8 @@ export function ServiceGrid({
             )
           })}
         </ul>
-        <div className="mt-12 text-center">
-          <Button asChild>
+        <div className="mt-10 text-center">
+          <Button variant="outline" asChild>
             <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
           </Button>
         </div>

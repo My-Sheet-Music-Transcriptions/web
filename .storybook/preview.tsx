@@ -10,7 +10,8 @@ const preview: Preview = {
       options: {
         white: { name: 'White', value: '#ffffff' },
         peach: { name: 'Peach', value: '#fdebdc' },
-        footer: { name: 'Footer', value: '#222222' },
+        surface: { name: 'Surface', value: '#f4f7f8' },
+        footer: { name: 'Footer', value: '#0b1f2c' },
       },
     },
     a11y: {

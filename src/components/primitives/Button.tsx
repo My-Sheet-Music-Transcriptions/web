@@ -8,19 +8,19 @@ export type ButtonSize = 'sm' | 'md' | 'lg' | 'block'
 const variants: Record<ButtonVariant, string> = {
   /** Orange filled pill: the site's main call to action. */
   accent: 'bg-accent-deep text-white hover:bg-accent-hover',
-  /** Teal-blue filled pill: secondary CTA (e.g. "Learn more"). */
+  /** Teal filled pill: secondary CTA (e.g. "Learn more"). */
   primary: 'bg-primary text-white hover:bg-primary-deep',
-  /** Teal-blue text pill without fill (e.g. "See more"). */
-  outline: 'bg-transparent text-primary hover:bg-primary/10',
-  ghost: 'bg-transparent text-ink hover:bg-black/5',
-  /** Inline arrow link styled like the "SEE ON GOOGLE →" links. */
+  /** Teal outlined pill on light backgrounds (e.g. "See more"). */
+  outline: 'bg-transparent text-primary ring-1 ring-inset ring-primary/40 hover:bg-primary-tint',
+  ghost: 'bg-transparent text-ink hover:bg-ink/5',
+  /** Inline arrow link styled like the "See on Google →" links. */
   link: 'bg-transparent text-primary p-0 hover:underline',
 }
 const sizes: Record<ButtonSize, string> = {
-  sm: 'text-[13px] px-4 py-2.5',
-  md: 'text-small px-5 py-3.5',
-  lg: 'text-body px-7 py-4',
-  block: 'w-full text-body px-7 py-3.5',
+  sm: 'text-small px-4 py-2.5',
+  md: 'text-[15px] px-6 py-3.5',
+  lg: 'text-body px-8 py-4',
+  block: 'w-full text-body px-7 py-4',
 }
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
@@ -30,6 +30,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   asChild?: boolean
 }
 
+/** Pill button in sentence case; `asChild` lends the styles to a Link or <a>. */
 export function Button({
   variant = 'accent',
   size = 'md',
@@ -44,10 +45,10 @@ export function Button({
       {...(asChild ? {} : { type: type ?? 'button' })}
       {...props}
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-pill font-bold uppercase leading-none tracking-[0.2px] transition-colors',
+        'inline-flex items-center justify-center gap-2 rounded-pill font-semibold leading-none transition-[background-color,color,box-shadow,transform] duration-150 active:scale-[0.98]',
         'focus-visible:outline-3 focus-visible:outline-primary focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none',
         variants[variant],
-        variant === 'link' ? 'text-small' : sizes[size],
+        variant === 'link' ? 'text-small font-bold' : sizes[size],
         className,
       )}
     />

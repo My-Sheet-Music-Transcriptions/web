@@ -1,4 +1,3 @@
-import wide from '~/assets/images/home/how-it-works.jpg?w=700;974;1460&as=picture'
 import step1 from '~/assets/images/home/step-1-send-audio.png?w=240;403&as=picture'
 import step2 from '~/assets/images/home/step-2-transcribe.png?w=240;403&as=picture'
 import step3 from '~/assets/images/home/step-3-print-play.jpg?w=200;255&as=picture'
@@ -10,35 +9,41 @@ const stepImages = { 'step-1': step1, 'step-2': step2, 'step-3': step3 }
 
 export interface HowItWorksProps {
   title?: string
+  eyebrow?: string
   id?: string
 }
 
-/** "How does it work?": three numbered steps; one wide illustration on desktop, stacked on mobile. */
-export function HowItWorks({ title = 'How does it work?', id = 'how-it-works' }: HowItWorksProps) {
+/** "How does it work?": three numbered step cards (send audio, we transcribe, print & play). */
+export function HowItWorks({
+  title = 'How does it work?',
+  eyebrow = 'Three simple steps',
+  id = 'how-it-works',
+}: HowItWorksProps) {
   return (
-    <section id={id} className="scroll-mt-20 pb-16 pt-20 lg:pt-24" aria-labelledby={`${id}-title`}>
+    <section
+      id={id}
+      className="scroll-mt-24 py-section lg:py-section-lg"
+      aria-labelledby={`${id}-title`}
+    >
       <div className="container-content">
-        <SectionHeading id={`${id}-title`} rule="grey">
+        <SectionHeading id={`${id}-title`} eyebrow={eyebrow} rule="none">
           {title}
         </SectionHeading>
-        <div className="mx-auto mt-12 hidden max-w-[974px] lg:block">
-          <Picture
-            image={wide}
-            alt="Three steps: send us the audio, we transcribe it, print and play the PDF"
-            sizes="974px"
-          />
-        </div>
-        <ol className="mx-auto mt-10 grid max-w-[1000px] gap-12 md:grid-cols-3 md:gap-6 lg:mt-8">
-          {howItWorks.map((step) => (
-            <li key={step.title} className="flex flex-col items-center text-center">
+        <ol className="mt-12 grid gap-5 md:grid-cols-3 lg:gap-6">
+          {howItWorks.map((step, i) => (
+            <li
+              key={step.title}
+              className="relative flex flex-col rounded-card border border-line bg-surface p-7 lg:p-8"
+            >
+              <span className="eyebrow text-accent-text">Step {i + 1}</span>
               <Picture
                 image={stepImages[step.image]}
                 alt=""
-                sizes="(min-width: 768px) 160px, 200px"
-                className="mb-6 h-auto w-[160px] lg:hidden"
+                sizes="140px"
+                className="mt-6 h-[120px] w-auto self-start object-contain"
               />
-              <h3 className="text-h3 font-extrabold">{step.title}</h3>
-              <p className="mt-3 max-w-[280px] text-small leading-6 text-ink">{step.body}</p>
+              <h3 className="mt-6 text-h3">{step.title.replace(/^\d+\.\s*/, '')}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-charcoal">{step.body}</p>
             </li>
           ))}
         </ol>

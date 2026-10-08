@@ -11,6 +11,8 @@ export interface LangSwitcherProps {
   alternates?: Partial<Record<string, string>>
   className?: string
   tone?: 'dark' | 'light'
+  /** Tighter separators for the phone header. */
+  compact?: boolean
 }
 
 /**
@@ -18,7 +20,12 @@ export interface LangSwitcherProps {
  * locale's TLD in production and to /<locale>/... in previews (localeSwitchHref). Plain <a>: changing
  * language is a full document change (<html lang>, strings), not a client-side navigation.
  */
-export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: LangSwitcherProps) {
+export function LangSwitcher({
+  alternates = {},
+  className,
+  tone = 'dark',
+  compact,
+}: LangSwitcherProps) {
   const site = useSite()
   return (
     <nav
@@ -36,7 +43,7 @@ export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: Lang
         return (
           <Fragment key={locale}>
             {i > 0 && (
-              <span aria-hidden="true" className="px-1 opacity-60">
+              <span aria-hidden="true" className={cn('opacity-60', compact ? 'px-px' : 'px-1')}>
                 |
               </span>
             )}
@@ -48,7 +55,7 @@ export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: Lang
               aria-label={`${label} – ${target.siteName}`}
               className={cn(
                 'rounded px-0.5 font-semibold hover:underline',
-                current ? 'text-accent-hover' : '',
+                current ? (tone === 'light' ? 'text-accent-light' : 'text-accent-deep') : '',
               )}
             >
               {label}

@@ -1,4 +1,4 @@
-import { Card } from '~/components/primitives/Card'
+import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
@@ -12,39 +12,52 @@ const icons = import.meta.glob<PictureSource>('../../assets/images/home/audience
 
 export interface AudienceCardsProps {
   title?: string
+  eyebrow?: string
 }
 
-/** "Who do we work for?": four peach cards, each linking to an audience landing page. */
-export function AudienceCards({ title = 'Who do we work for?' }: AudienceCardsProps) {
+/** "Who do we work for?": four white cards on the cool surface, each linking to an audience landing page. */
+export function AudienceCards({
+  title = 'Who do we work for?',
+  eyebrow = 'For every musician',
+}: AudienceCardsProps) {
   return (
-    <section className="py-[90px]" aria-labelledby="audience-title">
-      <div className="mx-auto max-w-[1440px] px-4">
-        <SectionHeading id="audience-title">{title}</SectionHeading>
-        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <section className="bg-surface py-section lg:py-section-lg" aria-labelledby="audience-title">
+      <div className="container-wide">
+        <SectionHeading id="audience-title" eyebrow={eyebrow} rule="none">
+          {title}
+        </SectionHeading>
+        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {audiences.map((a) => {
             const key = Object.keys(icons).find((k) => k.includes(`/${a.icon}.`))
             const img = key ? icons[key] : undefined
             return (
               <li key={a.href}>
-                <Card
-                  tone="peach"
-                  className="flex h-full flex-col items-center px-6 pb-8 pt-7 text-center"
+                <SmartLink
+                  href={a.href}
+                  aria-labelledby={`audience-${a.icon}`}
+                  className="group flex h-full flex-col rounded-card border border-line bg-white p-7 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
                 >
                   {img ? (
                     <Picture
                       image={img}
                       alt=""
-                      sizes="110px"
-                      className="h-[110px] w-auto object-contain"
+                      sizes="96px"
+                      className="h-[96px] w-auto self-start object-contain"
                     />
                   ) : null}
-                  <h3 className="mt-5 text-h3 leading-10 text-[#272727]">
-                    <SmartLink href={a.href} className="hover:text-accent-deep">
-                      {a.title}
-                    </SmartLink>
+                  <h3 id={`audience-${a.icon}`} className="mt-6 text-h3 group-hover:text-primary">
+                    {a.title}
                   </h3>
-                  <p className="mt-2 text-small leading-6 text-ink">{a.body}</p>
-                </Card>
+                  <p className="mt-2 flex-1 text-[15px] leading-relaxed text-charcoal">{a.body}</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-small font-bold text-primary">
+                    Learn more
+                    <Icon
+                      name="arrow-right"
+                      size={14}
+                      className="transition-transform group-hover:translate-x-0.5"
+                    />
+                  </span>
+                </SmartLink>
               </li>
             )
           })}

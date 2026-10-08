@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Button } from '~/components/primitives/Button'
+import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
@@ -15,72 +16,76 @@ const tones = { teal: 'bg-teal', blue: 'bg-sky', navy: 'bg-navy' }
 
 export interface PricingTiersProps {
   title?: string
+  eyebrow?: string
   /** Intro paragraphs (MDX children) rendered above the cards. */
   children?: ReactNode
   ctaLabel?: string
   ctaHref?: string
 }
 
-/** "Flexible pricing": intro copy and three price-from cards with coloured headers and factor lists. */
+/** "Flexible pricing": intro copy and three price-from cards with a coloured top edge and a factor checklist. */
 export function PricingTiers({
   title = 'Flexible pricing',
+  eyebrow = 'Pricing',
   children,
   ctaLabel = 'See the full pricing guide',
   ctaHref = '/pricing',
 }: PricingTiersProps) {
   return (
-    <section className="pb-16 pt-20" aria-labelledby="pricing-title">
-      <div className="mx-auto max-w-[1120px] px-4 md:px-10">
-        <SectionHeading id="pricing-title">{title}</SectionHeading>
-        {children ? (
-          <div className="mt-8 space-y-4 text-body leading-6 text-ink [&_p]:my-0 [&_strong]:font-bold [&_p+p]:mt-4">
-            {children}
-          </div>
-        ) : null}
-        <ul className="mt-20 grid gap-x-5 gap-y-20 md:grid-cols-3">
+    <section className="py-section lg:py-section-lg" aria-labelledby="pricing-title">
+      <div className="container-content">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <SectionHeading id="pricing-title" eyebrow={eyebrow} rule="none" align="left">
+            {title}
+          </SectionHeading>
+          {children ? (
+            <div className="space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
+              {children}
+            </div>
+          ) : null}
+        </div>
+        <ul className="mt-14 grid gap-5 md:grid-cols-3 lg:gap-6">
           {pricingTiers.map((t) => {
             const img = icons[`../../assets/images/icons/${t.icon}.png`]
             return (
-              <li key={t.id} className="relative flex flex-col rounded-card bg-white shadow-card">
-                {img ? (
-                  <Picture
-                    image={img}
-                    alt=""
-                    sizes="107px"
-                    className="absolute left-1/2 top-0 h-[107px] w-[107px] -translate-x-1/2 -translate-y-[62%]"
-                  />
-                ) : null}
-                <h3
-                  className={cn(
-                    'rounded-t-card py-[22px] pt-10 text-center text-[26px] font-bold leading-none text-white',
-                    tones[t.tone],
-                  )}
-                >
-                  {t.title}
-                </h3>
-                <div className="flex flex-1 flex-col px-6 pb-7 pt-5 text-center text-ink">
-                  <p className="text-[18px] leading-9">from</p>
-                  <p className="text-price font-bold leading-none">{t.from}</p>
-                  <p className="mt-2 text-[18px] leading-9">{t.unit}</p>
-                  <p className="mt-4 text-body font-bold leading-8">Pricing factors:</p>
-                  <ul className="mx-auto mt-1 list-disc space-y-1 pl-5 text-left text-small leading-5">
-                    {t.factors.map((f) => (
-                      <li key={f}>{f}</li>
-                    ))}
-                  </ul>
-                  {t.note ? (
-                    <p className="mt-auto pt-6 text-right text-caption italic leading-5">
-                      {t.note}
-                    </p>
-                  ) : (
-                    <span className="mt-auto" />
-                  )}
+              <li
+                key={t.id}
+                className="relative flex flex-col overflow-hidden rounded-card border border-line bg-white p-7 shadow-card lg:p-8"
+              >
+                <span
+                  aria-hidden="true"
+                  className={cn('absolute inset-x-0 top-0 h-1.5', tones[t.tone])}
+                />
+                <div className="flex items-center justify-between gap-4">
+                  <h3 className="text-h3">{t.title}</h3>
+                  {img ? (
+                    <Picture image={img} alt="" sizes="56px" className="h-14 w-14 object-contain" />
+                  ) : null}
                 </div>
+                <p className="mt-6 text-small text-muted">from</p>
+                <p className="mt-1 text-price font-bold tracking-tight text-ink">{t.from}</p>
+                <p className="mt-1 text-small text-muted">{t.unit}</p>
+                <p className="mt-6 border-t border-line pt-5 text-small font-bold text-ink">
+                  Pricing factors
+                </p>
+                <ul className="mt-3 space-y-2 text-small leading-snug text-charcoal">
+                  {t.factors.map((f) => (
+                    <li key={f} className="flex items-start gap-2">
+                      <Icon name="check" size={16} className="mt-0.5 shrink-0 text-primary" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                {t.note ? (
+                  <p className="mt-auto pt-6 text-caption italic text-muted">{t.note}</p>
+                ) : (
+                  <span className="mt-auto" />
+                )}
               </li>
             )
           })}
         </ul>
-        <div className="mt-12 text-center">
+        <div className="mt-10 text-center">
           <Button asChild>
             <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
           </Button>
