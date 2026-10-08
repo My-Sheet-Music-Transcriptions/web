@@ -5,7 +5,7 @@ import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
 
-const photos = import.meta.glob<PictureSource>('../../assets/images/home/office-*.jpg', {
+const photos = import.meta.glob<PictureSource>('../../../content/en/pages/home/office-*.jpg', {
   eager: true,
   import: 'default',
   query: '?w=560;1000&as=picture',
@@ -13,7 +13,7 @@ const photos = import.meta.glob<PictureSource>('../../assets/images/home/office-
 /** The live site's order. */
 const order = ['8', '14', '12', 'transcriber', '11', '10', '9']
 const slides = order.flatMap((n) => {
-  const id = `../../assets/images/home/office-${n}.jpg`
+  const id = `../../../content/en/pages/home/office-${n}.jpg`
   const img = photos[id]
   if (!img) return []
   return [

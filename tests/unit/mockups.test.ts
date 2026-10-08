@@ -22,7 +22,7 @@ describe('mockups', () => {
   })
 
   it('reports every kind of mistake at once', () => {
-    const dir = 'src/assets/images/home'
+    const dir = 'content/en/pages/home'
     const bad = `<div>
 <div data-msmt="Header"></div>
 <div data-msmt="Herro"></div>
@@ -45,7 +45,7 @@ describe('mockups', () => {
       `<div><div data-msmt="TopBar"></div><div data-msmt="Header"></div>
 <div data-msmt="MediaText" data-props='{"image":"img/office-8.jpg","alt":"x","children":"It&#39;s fine"}'></div>
 <div data-msmt="Footer"></div></div>`,
-      'src/assets/images/home',
+      'content/en/pages/home',
     )
     expect(errors).toEqual([])
     expect(html).toContain(
@@ -55,9 +55,9 @@ describe('mockups', () => {
   })
 
   it('reads image headers', () => {
-    expect(imageSize('src/assets/images/home/office-8.jpg')).toEqual({ w: 1000, h: 668 })
-    expect(imageSize('src/assets/images/home/audience-all.webp')).toEqual({ w: 735, h: 727 })
-    expect(imageSize('src/assets/images/home/hero-slide-1.webp')).toEqual({ w: 1600, h: 806 })
-    expect(imageSize('src/assets/images/home/step-1-send-audio.png')).toEqual({ w: 403, h: 403 })
+    expect(imageSize('content/en/pages/home/office-8.jpg')).toEqual({ w: 1000, h: 668 })
+    expect(imageSize('src/assets/images/icons/audience-all.webp')).toEqual({ w: 735, h: 727 })
+    expect(imageSize('src/assets/images/hero/hero-slide-1.webp')).toEqual({ w: 1600, h: 806 })
+    expect(imageSize('content/en/pages/home/step-1-send-audio.png')).toEqual({ w: 403, h: 403 })
   })
 })

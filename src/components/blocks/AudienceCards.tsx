@@ -3,7 +3,7 @@ import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
 
-const icons = import.meta.glob<PictureSource>('../../assets/images/home/audience-*.{png,webp}', {
+const icons = import.meta.glob<PictureSource>('../../assets/images/icons/audience-*.{png,webp}', {
   eager: true,
   import: 'default',
   query: '?w=130;260&as=picture',

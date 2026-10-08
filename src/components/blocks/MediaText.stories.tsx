@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import photo from '~/assets/images/home/office-transcriber.jpg?w=480;960&as=picture'
+import photo from '~/assets/images/samples/office-transcriber.jpg?w=480;960&as=picture'
 import { MediaText } from './MediaText'
 
 const meta = {

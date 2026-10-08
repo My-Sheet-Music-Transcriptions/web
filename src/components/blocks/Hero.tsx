@@ -2,20 +2,20 @@ import { ratings } from '@content/en/data/home'
 import { Logo } from '~/components/layout/Logo'
 import { Button } from '~/components/primitives/Button'
 import type { PictureSource } from '~/components/primitives/Picture'
+import { RatingCard } from '~/components/primitives/RatingCard'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { HeroSlideshow } from './HeroSlideshow'
-import { RatingCard } from './StatsBanner'
 
 const desktopSlides = import.meta.glob<PictureSource>(
-  '../../assets/images/home/hero-slide-[0-9].webp',
+  '../../assets/images/hero/hero-slide-[0-9].webp',
   { eager: true, import: 'default', query: '?w=1000;1600;2000&as=picture' },
 )
 /** The live site's rotation order. */
 const desktopOrder = [1, 6, 2, 4, 3, 5].map(
-  (n) => desktopSlides[`../../assets/images/home/hero-slide-${n}.webp`] as PictureSource,
+  (n) => desktopSlides[`../../assets/images/hero/hero-slide-${n}.webp`] as PictureSource,
 )
 const mobileSlides = import.meta.glob<PictureSource>(
-  '../../assets/images/home/hero-slide-mobile-*.webp',
+  '../../assets/images/hero/hero-slide-mobile-*.webp',
   { eager: true, import: 'default', query: '?w=480;800&as=picture' },
 )
 

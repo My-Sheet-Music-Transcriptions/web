@@ -69,11 +69,11 @@ export function blockProps(name: string): BlockProps | undefined {
     const local = declarations(source)
     const props = local[`${name}Props`]
     if (Array.isArray(props)) {
-      // named types from `~/…` imports (e.g. IconName from primitives/Icon)
+      // named types from `~/…` imports (IconName from primitives/Icon, item shapes from content/types)
       const imported: Record<string, PropDoc[] | string> = {}
       for (const m of source.matchAll(/import [^\n]*from '~\/([^']+)'/g)) {
-        const f = `src/${m[1]}.tsx`
-        if (fs.existsSync(f)) Object.assign(imported, declarations(fs.readFileSync(f, 'utf8')))
+        const f = [`src/${m[1]}.tsx`, `src/${m[1]}.ts`].find((x) => fs.existsSync(x))
+        if (f) Object.assign(imported, declarations(fs.readFileSync(f, 'utf8')))
       }
       const all = { ...imported, ...local }
       const types: Record<string, PropDoc[] | string> = {}

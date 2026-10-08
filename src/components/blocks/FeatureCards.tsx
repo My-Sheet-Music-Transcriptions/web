@@ -1,5 +1,5 @@
 import { included } from '@content/en/data/home'
-import bg from '~/assets/images/home/included-bg.jpg?w=1000;1600&as=picture'
+import bg from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { WaveDivider } from '~/components/primitives/WaveDivider'
 import { cn } from '~/lib/cn'

@@ -1,14 +1,14 @@
 import './asset-base'
 import './entry.css'
-import { type ComponentType, Fragment, type ReactNode } from 'react'
+import type { ComponentType } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
-import samplePhoto from '~/assets/images/home/office-transcriber.jpg?w=480;960&as=picture'
+import samplePhoto from '~/assets/images/samples/office-transcriber.jpg?w=480;960&as=picture'
 import { blocks } from '~/components/blocks'
 import { catalogue } from '~/components/blocks/catalogue'
 import { Footer } from '~/components/layout/Footer'
 import { Header } from '~/components/layout/Header'
 import { TopBar } from '~/components/layout/TopBar'
-import { Text } from '~/components/typography'
+import { lightMarkdown } from '~/lib/light-markdown'
 
 /**
  * Browser bundle of the design system (`window.MSMT`). Used by the published Design System
@@ -21,28 +21,6 @@ import { Text } from '~/components/typography'
 // biome-ignore lint/suspicious/noExplicitAny: heterogeneous component map
 const components: Record<string, ComponentType<any>> = { ...blocks, Header, Footer, TopBar }
 const roots = new WeakMap<Element, Root>()
-
-/** Light markdown for prose children: blank lines separate paragraphs (`Text`, as pages write them), **bold** is supported. */
-function renderChildren(text: string): ReactNode {
-  // Static text split once per render: positions are stable, so index keys are correct here.
-  return text
-    .trim()
-    .split(/\n\s*\n/)
-    .map((para, i) => (
-      // biome-ignore lint/suspicious/noArrayIndexKey: static split, never reordered
-      <Text key={`p${i}`}>
-        {para.split(/(\*\*[^*]+\*\*)/g).map((part, j) =>
-          part.startsWith('**') && part.endsWith('**') ? (
-            // biome-ignore lint/suspicious/noArrayIndexKey: static split, never reordered
-            <strong key={`s${j}`}>{part.slice(2, -2)}</strong>
-          ) : (
-            // biome-ignore lint/suspicious/noArrayIndexKey: static split, never reordered
-            <Fragment key={`t${j}`}>{part}</Fragment>
-          ),
-        )}
-      </Text>
-    ))
-}
 
 /** Preview-only placeholders: `"sample:photo"` in props becomes a bundled picture (MediaText image). */
 const samples: Record<string, unknown> = { 'sample:photo': samplePhoto }
@@ -60,9 +38,7 @@ function mount(name: string, el: Element, props: Record<string, unknown> = {}) {
       `MSMT: unknown component "${name}". Known: ${Object.keys(components).join(', ')}`,
     )
   const { children, ...rest } = withSamples(props)
-  const node = (
-    <C {...rest}>{typeof children === 'string' ? renderChildren(children) : undefined}</C>
-  )
+  const node = <C {...rest}>{typeof children === 'string' ? lightMarkdown(children) : undefined}</C>
   let root = roots.get(el)
   if (!root) {
     root = createRoot(el)

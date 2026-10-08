@@ -1,6 +1,6 @@
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 
-const images = import.meta.glob<PictureSource>('../../assets/images/home/strip-*.jpg', {
+const images = import.meta.glob<PictureSource>('../../../content/en/pages/home/strip-*.jpg', {
   eager: true,
   import: 'default',
   query: '?w=250;500&as=picture',
@@ -43,7 +43,7 @@ export function ImageStrip({
   ],
 }: ImageStripProps) {
   const photos = items.flatMap((id) => {
-    const img = images[`../../assets/images/home/${id}.jpg`]
+    const img = images[`../../../content/en/pages/home/${id}.jpg`]
     return img ? [{ id, img }] : []
   })
   return (

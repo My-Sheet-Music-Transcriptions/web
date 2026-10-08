@@ -1,5 +1,5 @@
 import { homeReviews } from '@content/en/data/reviews'
-import lines from '~/assets/images/home/reviews-lines.png?w=1440;2880&as=picture'
+import lines from '~/assets/images/bands/reviews-lines.png?w=1440;2880&as=picture'
 import { Button } from '~/components/primitives/Button'
 import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
