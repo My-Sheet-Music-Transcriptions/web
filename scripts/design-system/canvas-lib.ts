@@ -38,7 +38,7 @@ export function estimateHeight(labels: string[], width: number): number {
   return Math.max(900, Math.round(h / 10) * 10)
 }
 
-/** One artboard: a self-contained Design Component page mounting the real blocks. */
+/** One artboard: a self-contained Design Component page mounting the real blocks (`title` as the board is named). */
 export function boardHtml(
   preparedHtml: string,
   opts: { title: string; width: number; height: number },
@@ -51,7 +51,7 @@ export function boardHtml(
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${opts.title} / ${opts.width}</title>
+<title>${opts.title}</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="ds/${DS_NAMESPACE}/components/fonts.css">
 <link rel="stylesheet" href="ds/${DS_NAMESPACE}/components/bundle.css">
