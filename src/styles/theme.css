@@ -94,6 +94,23 @@
       transform: scale(1.045);
     }
   }
+  --animate-appear: appear 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; /* hero copy on load: rises and fades in; stagger with [animation-delay:…] */
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+  --animate-unveil: unveil 1.1s cubic-bezier(0.65, 0, 0.35, 1) both; /* hero photo frame on load: wipes open from the bottom */
+  @keyframes unveil {
+    /* both ends explicit: clip-path cannot interpolate to its initial value, none */
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      clip-path: inset(0);
+    }
+  }
 
   --spacing-section: 56px;
   --spacing-section-lg: 96px;

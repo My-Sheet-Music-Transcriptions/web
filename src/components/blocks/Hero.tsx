@@ -28,7 +28,8 @@ export interface HeroProps {
 /**
  * Homepage hero on white: headline with its orange highlight, two lines of copy and two buttons beside the
  * studio photo slideshow, then a row of three trust facts (Google rating, transcriptions delivered,
- * response time) separated by hairlines. Stacks on phones.
+ * response time) separated by hairlines. Stacks on phones. On load (CSS only, so it runs before hydration)
+ * the copy rises in line by line and the photo frame wipes open; nothing moves for reduced motion.
  */
 export function Hero({
   title = 'Your #1 sheet music transcription service online',
@@ -51,19 +52,19 @@ export function Hero({
           <div>
             <h1
               id="hero-title"
-              className="text-[38px] font-bold leading-[1.06] text-ink md:text-[50px] lg:text-display"
+              className="text-[38px] font-bold leading-[1.06] text-ink motion-safe:animate-appear md:text-[50px] lg:text-display"
             >
               {before}
               {after !== null && <span className="text-accent-deep">{highlight}</span>}
               {after}
             </h1>
-            <p className="mt-5 max-w-[34em] text-[17px] leading-relaxed text-charcoal md:mt-6 md:text-[19px]">
+            <p className="mt-5 max-w-[34em] text-[17px] leading-relaxed text-charcoal motion-safe:animate-appear motion-safe:[animation-delay:100ms] md:mt-6 md:text-[19px]">
               {lead}
             </p>
-            <p className="mt-3.5 max-w-[34em] text-[17px] font-semibold leading-relaxed text-ink">
+            <p className="mt-3.5 max-w-[34em] text-[17px] font-semibold leading-relaxed text-ink motion-safe:animate-appear motion-safe:[animation-delay:180ms]">
               {strong}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3 motion-safe:animate-appear motion-safe:[animation-delay:260ms]">
               <Button asChild>
                 <SmartLink href={site.routes.contactAnchor}>{site.strings.requestCta}</SmartLink>
               </Button>
@@ -72,7 +73,7 @@ export function Hero({
               </Button>
             </div>
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-ui lg:aspect-[5/4]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-ui motion-safe:animate-unveil lg:aspect-[5/4]">
             <div className="absolute inset-0 motion-safe:animate-settle">
               <HeroSlideshow
                 slides={Object.values(slides)}
@@ -83,7 +84,7 @@ export function Hero({
             </div>
           </div>
         </div>
-        <dl className="mt-10 grid border-t border-line md:grid-cols-3 lg:mt-14">
+        <dl className="mt-10 grid border-t border-line motion-safe:animate-appear motion-safe:[animation-delay:420ms] md:grid-cols-3 lg:mt-14">
           {google ? (
             <div className="border-b border-line py-4 md:border-b-0 md:pr-6 md:pt-5">
               <dt className="sr-only">Rating</dt>
