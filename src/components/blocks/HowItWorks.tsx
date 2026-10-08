@@ -1,6 +1,7 @@
 import step1 from '~/assets/images/home/step-1-send-audio.png?w=240;403&as=picture'
 import step2 from '~/assets/images/home/step-2-transcribe.png?w=240;403&as=picture'
 import step3 from '~/assets/images/home/step-3-print-play.jpg?w=200;255&as=picture'
+import { Reveal } from '~/components/motion/Reveal'
 import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { howItWorks } from '~/content/en/data/home'
@@ -31,7 +32,12 @@ export function HowItWorks({
         </SectionHeading>
         <ol className="mt-10 grid gap-8 md:grid-cols-3 lg:mt-14 lg:gap-10">
           {howItWorks.map((step, i) => (
-            <li key={step.title} className="flex flex-col gap-3 border-t border-line pt-6">
+            <Reveal
+              as="li"
+              key={step.title}
+              delay={i * 0.06}
+              className="flex flex-col gap-3 border-t border-line pt-6"
+            >
               <span className="eyebrow tabular-nums text-muted">
                 {String(i + 1).padStart(2, '0')}
               </span>
@@ -43,7 +49,7 @@ export function HowItWorks({
               />
               <h3 className="mt-2 text-h3">{step.title.replace(/^\d+\.\s*/, '')}</h3>
               <p className="text-[15px] leading-relaxed text-charcoal">{step.body}</p>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </div>

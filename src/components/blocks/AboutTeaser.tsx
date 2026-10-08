@@ -1,4 +1,5 @@
 import { type ReactNode, useState } from 'react'
+import { Reveal } from '~/components/motion/Reveal'
 import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
@@ -46,16 +47,18 @@ export function AboutTeaser({
     >
       <div className="container-content grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <section className="relative" aria-roledescription="carousel" aria-label="Office photos">
-          <div aria-live="polite" className="overflow-hidden rounded-ui">
-            {current ? (
-              <Picture
-                image={current.img}
-                alt={current.alt}
-                sizes="(min-width: 1025px) 580px, 100vw"
-                className="aspect-[3/2] w-full object-cover"
-              />
-            ) : null}
-          </div>
+          <Reveal className="overflow-hidden rounded-ui">
+            <div aria-live="polite">
+              {current ? (
+                <Picture
+                  image={current.img}
+                  alt={current.alt}
+                  sizes="(min-width: 1025px) 580px, 100vw"
+                  className="aspect-[3/2] w-full object-cover"
+                />
+              ) : null}
+            </div>
+          </Reveal>
           <div className="absolute bottom-3 right-3 flex gap-1.5">
             <button
               type="button"
@@ -82,10 +85,14 @@ export function AboutTeaser({
           </div>
           <SmartLink
             href={ctaHref}
-            className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
+            className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
           >
             {ctaLabel}
-            <Icon name="arrow-right" size={14} />
+            <Icon
+              name="arrow-right"
+              size={14}
+              className="transition-transform duration-200 group-hover:translate-x-1"
+            />
           </SmartLink>
         </div>
       </div>

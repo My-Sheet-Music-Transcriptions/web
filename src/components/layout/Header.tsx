@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { AnimatePresence } from 'motion/react'
+import { useCallback, useState } from 'react'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
@@ -8,7 +9,7 @@ import { LangSwitcher } from './LangSwitcher'
 import { Logo } from './Logo'
 import { MegaMenu } from './MegaMenu'
 import { MobileNav } from './MobileNav'
-import { navItemClass } from './nav-styles'
+import { navItemActive, navItemClass } from './nav-styles'
 
 /**
  * Sticky white header with a hairline under it: logo (home), four navigation items with the Services panel,
@@ -18,6 +19,7 @@ import { navItemClass } from './nav-styles'
 export function Header() {
   const site = useSite()
   const [open, setOpen] = useState(false)
+  const close = useCallback(() => setOpen(false), [])
 
   return (
     <>
@@ -41,7 +43,7 @@ export function Header() {
                     <SmartLink
                       href={item.href}
                       className={navItemClass}
-                      activeProps={{ className: 'border-b-primary text-primary' }}
+                      activeProps={{ className: navItemActive }}
                     >
                       {item.label}
                     </SmartLink>
@@ -75,7 +77,7 @@ export function Header() {
           </div>
         </div>
       </header>
-      <MobileNav open={open} onClose={() => setOpen(false)} />
+      <AnimatePresence>{open && <MobileNav onClose={close} />}</AnimatePresence>
     </>
   )
 }

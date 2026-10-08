@@ -36,15 +36,15 @@ test.describe('homepage', () => {
     await open(page)
     const nav = page.getByRole('navigation', { name: 'Language' }).first()
     await nav.getByRole('button', { name: /language/i }).click()
-    await expect(nav.getByRole('link', { name: /^ES /i })).toHaveAttribute(
+    await expect(nav.getByRole('link', { name: /^Español/ })).toHaveAttribute(
       'href',
       /mistranscripcionesmusicales\.com/,
     )
-    await expect(nav.getByRole('link', { name: /^FR /i })).toHaveAttribute(
+    await expect(nav.getByRole('link', { name: /^Français/ })).toHaveAttribute(
       'href',
       /mapartitionsurmesure\.com/,
     )
-    await expect(nav.getByRole('link', { name: /^JP /i })).toHaveAttribute(
+    await expect(nav.getByRole('link', { name: /^日本語/ })).toHaveAttribute(
       'href',
       /mysheetmusictranscriptions\.jp/,
     )

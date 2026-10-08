@@ -1,3 +1,4 @@
+import { Reveal } from '~/components/motion/Reveal'
 import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
@@ -27,11 +28,16 @@ export function AudienceCards({
           {title}
         </SectionHeading>
         <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
-          {audiences.map((a) => {
+          {audiences.map((a, i) => {
             const key = Object.keys(icons).find((k) => k.includes(`/${a.icon}.`))
             const img = key ? icons[key] : undefined
             return (
-              <li key={a.href} className="flex flex-col gap-3 border-t border-line pt-6">
+              <Reveal
+                as="li"
+                key={a.href}
+                delay={i * 0.06}
+                className="flex flex-col gap-3 border-t border-line pt-6"
+              >
                 {img ? (
                   <Picture
                     image={img}
@@ -44,12 +50,16 @@ export function AudienceCards({
                 <p className="flex-1 text-[15px] leading-relaxed text-charcoal">{a.body}</p>
                 <SmartLink
                   href={a.href}
-                  className="inline-flex items-center gap-1.5 self-start text-[15px] font-semibold text-primary hover:underline"
+                  className="group inline-flex items-center gap-1.5 self-start text-[15px] font-semibold text-primary hover:underline"
                 >
                   Learn more<span className="sr-only"> about {a.title}</span>
-                  <Icon name="arrow-right" size={14} />
+                  <Icon
+                    name="arrow-right"
+                    size={14}
+                    className="transition-transform duration-200 group-hover:translate-x-1"
+                  />
                 </SmartLink>
-              </li>
+              </Reveal>
             )
           })}
         </ul>

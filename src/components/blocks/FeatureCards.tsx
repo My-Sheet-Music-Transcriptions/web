@@ -1,3 +1,4 @@
+import { Reveal } from '~/components/motion/Reveal'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { included } from '~/content/en/data/home'
@@ -27,10 +28,15 @@ export function FeatureCards({
           {title}
         </SectionHeading>
         <ul className="mt-10 grid gap-8 md:grid-cols-3 lg:mt-14 lg:gap-10">
-          {included.map((f) => {
+          {included.map((f, i) => {
             const img = icons[`../../assets/images/icons/${f.icon}.png`]
             return (
-              <li key={f.title} className="flex flex-col gap-3 border-t border-line pt-6">
+              <Reveal
+                as="li"
+                key={f.title}
+                delay={i * 0.06}
+                className="flex flex-col gap-3 border-t border-line pt-6"
+              >
                 <span className="flex h-14 items-center">
                   {img ? (
                     <Picture
@@ -51,7 +57,7 @@ export function FeatureCards({
                     </>
                   ) : null}
                 </p>
-              </li>
+              </Reveal>
             )
           })}
         </ul>

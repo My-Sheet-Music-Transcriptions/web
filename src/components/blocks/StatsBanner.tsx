@@ -1,4 +1,5 @@
 import bg from '~/assets/images/home/stats-bg.jpg?w=900;1282&as=picture'
+import { Reveal } from '~/components/motion/Reveal'
 import { Picture } from '~/components/primitives/Picture'
 import { Stars } from '~/components/primitives/Stars'
 import { counter, ratings } from '~/content/en/data/home'
@@ -47,10 +48,10 @@ export function StatsBanner({
           </p>
         </div>
         <ul className="grid gap-4 sm:grid-cols-3 sm:gap-0">
-          {ratings.map((r) => (
-            <li key={r.id}>
+          {ratings.map((r, i) => (
+            <Reveal as="li" key={r.id} delay={i * 0.06}>
               <Rating source={r} />
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>

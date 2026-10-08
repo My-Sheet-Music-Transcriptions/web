@@ -87,6 +87,14 @@
   --breakpoint-lg: 1025px; /* tablets end at 1024 */
   --breakpoint-xl: 1280px; /* wide desktop: larger nav type */
   --breakpoint-2xl: 1536px; /* unused, kept in px for ordering */
+  /* Motion */
+  --animate-settle: settle 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; /* hero photo on load (transform only) */
+  @keyframes settle {
+    from {
+      transform: scale(1.045);
+    }
+  }
+
   --spacing-section: 56px;
   --spacing-section-lg: 96px;
 }

@@ -1,4 +1,7 @@
+import { AnimatePresence } from 'motion/react'
+import * as m from 'motion/react-m'
 import { useEffect, useRef, useState } from 'react'
+import { ease } from '~/components/motion/MotionProvider'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
@@ -6,14 +9,17 @@ import { nav } from '~/content/en/data/nav'
 import { cn } from '~/lib/cn'
 import { useSite } from '~/site'
 
-/** Phone menu (dialog): a full-height white sheet with the four items, Services expandable, then the call to action. */
-export function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
+/**
+ * Phone menu (dialog): a full-height white sheet that slides in from the right over a fading scrim, with
+ * the four items (Services expands smoothly) and the call to action. Render it inside AnimatePresence so
+ * closing animates too.
+ */
+export function MobileNav({ onClose }: { onClose: () => void }) {
   const site = useSite()
   const panel = useRef<HTMLDivElement>(null)
   const [expanded, setExpanded] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!open) return
     const prev = document.activeElement as HTMLElement | null
     document.body.style.overflow = 'hidden'
     panel.current?.querySelector<HTMLElement>('button, a')?.focus()
@@ -24,27 +30,34 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
       document.removeEventListener('keydown', onKey)
       prev?.focus()
     }
-  }, [open, onClose])
+  }, [onClose])
 
-  if (!open) return null
   const row =
     'flex w-full items-center justify-between border-b border-line py-4 text-[17px] font-semibold text-ink'
   return (
     <div className="fixed inset-0 z-[80] lg:hidden">
-      <button
+      <m.button
         type="button"
         aria-label={site.strings.closeMenu}
         className="absolute inset-0 bg-navy-deep/40"
         onClick={onClose}
         tabIndex={-1}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
       />
-      <div
+      <m.div
         id="mobile-menu"
         ref={panel}
         role="dialog"
         aria-modal="true"
         aria-label={site.strings.menu}
         className="absolute inset-y-0 right-0 flex w-[min(400px,100vw)] flex-col bg-white"
+        initial={{ x: '100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '100%' }}
+        transition={{ duration: 0.36, ease }}
       >
         <div className="flex h-16 items-center justify-between border-b border-line pl-5 pr-2">
           <span className="eyebrow text-muted">{site.strings.menu}</span>
@@ -79,39 +92,50 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                         )}
                       />
                     </button>
-                    {expanded === item.label && (
-                      <div className="space-y-6 border-b border-line py-5">
-                        {item.menu.columns.map((col) => (
-                          <div key={col.title}>
-                            <p className="eyebrow text-muted">{col.title}</p>
-                            <ul className="mt-3 space-y-2.5">
-                              {col.links.map((l) => (
-                                <li key={l.label}>
-                                  <SmartLink
-                                    href={l.href}
-                                    className="text-[15px] font-medium text-ink"
-                                    onClick={onClose}
-                                  >
-                                    {l.label}
-                                  </SmartLink>
-                                </li>
-                              ))}
-                            </ul>
+                    <AnimatePresence initial={false}>
+                      {expanded === item.label && (
+                        <m.div
+                          key="sub"
+                          className="overflow-hidden"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease }}
+                        >
+                          <div className="space-y-6 border-b border-line py-5">
+                            {item.menu.columns.map((col) => (
+                              <div key={col.title}>
+                                <p className="eyebrow text-muted">{col.title}</p>
+                                <ul className="mt-3 space-y-2.5">
+                                  {col.links.map((l) => (
+                                    <li key={l.label}>
+                                      <SmartLink
+                                        href={l.href}
+                                        className="text-[15px] font-medium text-ink"
+                                        onClick={onClose}
+                                      >
+                                        {l.label}
+                                      </SmartLink>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                            {item.menu.features.map((f) => (
+                              <SmartLink
+                                key={f.title}
+                                href={f.href}
+                                className="flex items-center gap-1.5 text-[15px] font-semibold text-primary"
+                                onClick={onClose}
+                              >
+                                {f.title}
+                                <Icon name="arrow-right" size={14} />
+                              </SmartLink>
+                            ))}
                           </div>
-                        ))}
-                        {item.menu.features.map((f) => (
-                          <SmartLink
-                            key={f.title}
-                            href={f.href}
-                            className="flex items-center gap-1.5 text-[15px] font-semibold text-primary"
-                            onClick={onClose}
-                          >
-                            {f.title}
-                            <Icon name="arrow-right" size={14} />
-                          </SmartLink>
-                        ))}
-                      </div>
-                    )}
+                        </m.div>
+                      )}
+                    </AnimatePresence>
                   </>
                 ) : (
                   <SmartLink href={item.href} className={row} onClick={onClose}>
@@ -137,7 +161,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
             </a>
           </div>
         </div>
-      </div>
+      </m.div>
     </div>
   )
 }

@@ -1,9 +1,17 @@
 import type { Preview } from '@storybook/react-vite'
+import { MotionProvider } from '../src/components/motion/MotionProvider'
 import { RouterDecorator } from './router-decorator'
 import '../src/styles/app.css'
 
 const preview: Preview = {
-  decorators: [RouterDecorator],
+  decorators: [
+    RouterDecorator,
+    (Story) => (
+      <MotionProvider>
+        <Story />
+      </MotionProvider>
+    ),
+  ],
   parameters: {
     layout: 'fullscreen',
     backgrounds: {

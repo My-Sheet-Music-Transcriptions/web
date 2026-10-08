@@ -70,7 +70,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   (the image file must exist in dist), twitter card, `<html lang>`, valid JSON-LD, images with alt/width/height,
   no broken internal links, present in sitemap unless `noindex`.
 - Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`).
-- Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 150 KB.
+- Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 180 KB (raised from 150 for Motion, the animation library: its features load lazily after hydration).
 - Biome formats and lints everything; `tsc --noEmit` must pass; MDX may only use components from `blocks`.
 
 ## Adding content (short version; the skills have the full checklist)
@@ -149,6 +149,10 @@ components or layout.
 - TypeScript strict, Biome style (single quotes, no semicolons). Components are function components with typed props.
 - Internal links use the router `<Link>` (preloaded on hover); external ones a plain `<a rel="noopener">`.
 - Images go through `<Picture>` (vite-imagetools `?w=...` import) so they ship as AVIF/WebP with dimensions.
+- Animation uses Motion (`motion/react`): `m.*` components from `motion/react-m` inside `MotionProvider`
+  (`src/components/motion`, LazyMotion in strict mode, features loaded after hydration, reduced motion respected).
+  `AnimatePresence` for things that mount and unmount (drawer, cookie banner), variants for always-rendered panels
+  (Services menu, language menu), `<Reveal>` for scroll-ins. Hover states and the hero photo stay plain CSS.
 - Prefer editing an existing block over adding a near-duplicate. New block = component + story + README section
   in `src/components/blocks/README.md` + export from `blocks/index.tsx`.
 - Do not commit generated files: `routeTree.gen.ts`, `hreflang.generated.json`, `public/og`, `public/robots.txt`.

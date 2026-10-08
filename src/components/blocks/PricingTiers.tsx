@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Reveal } from '~/components/motion/Reveal'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
@@ -42,8 +43,13 @@ export function PricingTiers({
           ) : null}
         </div>
         <ul className="mt-12 grid gap-10 md:grid-cols-3 lg:mt-14">
-          {pricingTiers.map((t) => (
-            <li key={t.id} className={cn('flex flex-col border-t-[3px] pt-6', tones[t.tone])}>
+          {pricingTiers.map((t, i) => (
+            <Reveal
+              as="li"
+              key={t.id}
+              delay={i * 0.06}
+              className={cn('flex flex-col border-t-[3px] pt-6', tones[t.tone])}
+            >
               <h3 className="text-[22px]">{t.title}</h3>
               <p className="mt-4 text-caption text-muted">from</p>
               <p className="text-price font-bold tabular-nums tracking-tight text-ink">{t.from}</p>
@@ -58,7 +64,7 @@ export function PricingTiers({
                 ))}
               </ul>
               {t.note ? <p className="mt-4 text-caption italic text-muted">{t.note}</p> : null}
-            </li>
+            </Reveal>
           ))}
         </ul>
         <div className="mt-10">

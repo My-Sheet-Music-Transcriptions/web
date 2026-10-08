@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Reveal } from '~/components/motion/Reveal'
 import { cn } from '~/lib/cn'
 
 export interface SectionHeadingProps {
@@ -17,7 +18,7 @@ export interface SectionHeadingProps {
   id?: string
 }
 
-/** Section title: optional eyebrow, the heading and a subtitle, left-aligned in a 640px measure. */
+/** Section title: optional eyebrow, the heading and a subtitle, left-aligned in a 640px measure; rises in on scroll. */
 export function SectionHeading({
   children,
   eyebrow,
@@ -31,7 +32,7 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   const light = tone === 'light'
   return (
-    <div
+    <Reveal
       className={cn(
         'flex max-w-[640px] flex-col gap-3.5',
         align === 'center' ? 'mx-auto items-center text-center' : 'items-start text-left',
@@ -66,6 +67,6 @@ export function SectionHeading({
           {subtitle}
         </p>
       ) : null}
-    </div>
+    </Reveal>
   )
 }

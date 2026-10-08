@@ -73,12 +73,14 @@ export function Hero({
             </div>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-ui lg:aspect-[5/4]">
-            <HeroSlideshow
-              slides={Object.values(slides)}
-              sizes="(min-width: 1025px) 580px, (min-width: 768px) 720px, 100vw"
-              position="center"
-              rotate={slideshow}
-            />
+            <div className="absolute inset-0 motion-safe:animate-settle">
+              <HeroSlideshow
+                slides={Object.values(slides)}
+                sizes="(min-width: 1025px) 580px, (min-width: 768px) 720px, 100vw"
+                position="center"
+                rotate={slideshow}
+              />
+            </div>
           </div>
         </div>
         <dl className="mt-10 grid border-t border-line md:grid-cols-3 lg:mt-14">

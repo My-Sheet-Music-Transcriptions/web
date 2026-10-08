@@ -8,35 +8,21 @@ import { footer } from '~/content/en/data/footer'
 import { sites } from '~/i18n/sites'
 import { localeSwitchHref } from '~/i18n/switch'
 import { useSite } from '~/site'
+import { nativeName, siteHost } from './LangSwitcher'
 
-const flags = import.meta.glob<PictureSource>('../../assets/images/flags/*.png', {
-  eager: true,
-  import: 'default',
-  query: '?w=36;72&as=picture',
-})
 const logos = import.meta.glob<PictureSource>('../../assets/images/logos/*.png', {
   eager: true,
   import: 'default',
   query: '?w=80;160&as=picture',
 })
 
-const languageNames: Record<string, string> = {
-  es: 'Spanish',
-  fr: 'French',
-  de: 'German',
-  ja: 'Japanese',
-  ca: 'Catalan',
-  en: 'English',
-}
-
 const heading = 'eyebrow text-white/60'
 const link = 'text-small text-footer-text transition-colors hover:text-white'
 
-/** Dark navy footer: four left-aligned columns, then software logos, payment and legal in a bottom band with a hairline above. */
+/** Dark navy footer: four left-aligned columns, a language band (each language by its own name and site), then software logos and legal links. */
 export function Footer() {
   const site = useSite()
   const s = site.strings
-  const languages = site.languageSwitcher.filter((l) => l.locale !== site.locale)
   return (
     <footer className="bg-footer pt-16 text-footer-text">
       <div className="container-content grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1fr_1.5fr_1.3fr_1fr]">
@@ -144,36 +130,41 @@ export function Footer() {
             className="mt-4 rounded-sm bg-white p-1.5"
             loading="lazy"
           />
-          <h2 className={`mt-8 ${heading}`}>{s.languages}</h2>
-          <ul className="mt-4 space-y-2">
-            {languages.map(({ locale }) => {
-              const t = sites[locale]
-              const flag = flags[`../../assets/images/flags/${locale === 'ja' ? 'jp' : locale}.png`]
-              return (
-                <li key={locale}>
-                  <a
-                    href={localeSwitchHref(locale)}
-                    hrefLang={t.lang}
-                    className={`inline-flex items-center gap-2 ${link}`}
-                  >
-                    {flag ? (
-                      <Picture
-                        image={flag}
-                        alt=""
-                        sizes="18px"
-                        className="h-[18px] w-[18px] rounded-full"
-                      />
-                    ) : null}
-                    {s.viewSiteIn} {languageNames[locale]}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
         </div>
       </div>
 
-      <div className="container-content mt-14 border-t border-white/10 py-8">
+      <nav
+        aria-label={s.languages}
+        className="container-content mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 lg:flex-row lg:flex-wrap lg:items-baseline lg:gap-x-7"
+      >
+        <h2 className={heading}>{s.languages}</h2>
+        <ul className="flex flex-col gap-2.5 lg:flex-row lg:flex-wrap lg:gap-x-7">
+          {site.languageSwitcher.map(({ locale }) => {
+            const t = sites[locale]
+            const current = locale === site.locale
+            return (
+              <li key={locale}>
+                <a
+                  href={localeSwitchHref(locale)}
+                  hrefLang={t.lang}
+                  lang={t.lang}
+                  aria-current={current ? 'true' : undefined}
+                  className={
+                    current
+                      ? 'font-medium text-white underline underline-offset-4'
+                      : `font-medium ${link}`
+                  }
+                >
+                  {nativeName(locale)}
+                  <span className="ml-1.5 text-[12px] text-footer-text/70">{siteHost(locale)}</span>
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+
+      <div className="container-content mt-6 border-t border-white/10 py-8">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className={heading}>{s.compatibleWith}</h2>
@@ -209,7 +200,7 @@ export function Footer() {
               image={accio}
               alt="ACCIÓ – Catalonia Trade & Investment"
               sizes="80px"
-              className="h-auto w-[72px] rounded-sm bg-white p-1"
+              className="h-auto w-[72px]"
             />
           </div>
         </div>

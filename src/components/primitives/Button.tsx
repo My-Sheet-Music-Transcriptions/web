@@ -45,7 +45,7 @@ export function Button({
       {...(asChild ? {} : { type: type ?? 'button' })}
       {...props}
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-ui font-semibold leading-none transition-[background-color,color,box-shadow] duration-150',
+        'inline-flex items-center justify-center gap-2 rounded-ui font-semibold leading-none transition-[background-color,color,box-shadow,transform] duration-150 active:translate-y-px',
         'focus-visible:outline-3 focus-visible:outline-primary focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none',
         variants[variant],
         variant === 'link' ? 'text-small font-bold' : sizes[size],

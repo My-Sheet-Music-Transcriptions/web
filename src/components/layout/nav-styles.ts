@@ -1,3 +1,6 @@
-/** Shared look of every top-level navigation item (links and the Services trigger): text with an underline bar. */
+/** Shared look of every top-level navigation item (links and the Services trigger): the underline grows from the left. */
 export const navItemClass =
-  'inline-flex h-full items-center gap-1.5 whitespace-nowrap border-y-2 border-transparent text-[15px] font-semibold text-ink transition-colors hover:border-b-primary hover:text-primary'
+  'relative inline-flex h-full items-center gap-1.5 whitespace-nowrap text-[15px] font-semibold text-ink transition-colors duration-150 hover:text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-200 after:ease-[cubic-bezier(.2,.7,.2,1)] hover:after:scale-x-100'
+
+/** Added when an item is the current page or its panel is open. */
+export const navItemActive = 'text-primary after:scale-x-100'

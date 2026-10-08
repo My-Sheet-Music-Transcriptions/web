@@ -1,4 +1,5 @@
 import { type FormEvent, useEffect, useId, useRef, useState } from 'react'
+import { Reveal } from '~/components/motion/Reveal'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
@@ -143,7 +144,7 @@ export function ContactSection({
       aria-labelledby={`${uid}-title`}
     >
       <div className="container-content grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:gap-16">
-        <div className="lg:pt-4">
+        <Reveal className="lg:pt-4">
           <p className="eyebrow text-accent-text">
             {eyebrow ?? (gift ? 'Gift card' : 'Get a quote')}
           </p>
@@ -166,7 +167,7 @@ export function ContactSection({
               {site.contact.email}
             </a>
           </p>
-        </div>
+        </Reveal>
 
         <div>
           {status === 'sent' ? (

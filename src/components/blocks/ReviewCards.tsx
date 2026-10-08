@@ -1,3 +1,4 @@
+import { Reveal } from '~/components/motion/Reveal'
 import { Icon } from '~/components/primitives/Icon'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
@@ -39,18 +40,22 @@ export function ReviewCards({
           {title}
         </SectionHeading>
         <ul className="mt-10 grid md:grid-cols-2 md:gap-x-14 lg:mt-14">
-          {items.map((r) => (
-            <li key={r.name + r.date}>
+          {items.map((r, i) => (
+            <Reveal as="li" key={r.name + r.date} delay={(i % 2) * 0.06}>
               <ReviewCard review={r} />
-            </li>
+            </Reveal>
           ))}
         </ul>
         <SmartLink
           href={ctaHref}
-          className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
+          className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
         >
           {ctaLabel}
-          <Icon name="arrow-right" size={14} />
+          <Icon
+            name="arrow-right"
+            size={14}
+            className="transition-transform duration-200 group-hover:translate-x-1"
+          />
         </SmartLink>
       </div>
     </section>
