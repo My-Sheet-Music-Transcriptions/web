@@ -42,7 +42,7 @@ export function ServiceGrid({
           {items.map((s, i) => {
             const img = icons[`../../assets/images/icons/${s.icon}.png`]
             return (
-              <Reveal as="li" key={s.label} delay={(i % 4) * 0.04}>
+              <Reveal as="li" key={s.label} effect="scale" delay={(i % 4) * 0.08}>
                 <SmartLink
                   href={s.href}
                   className="flex items-center gap-3.5 border-b border-line py-3.5 text-[15px] font-semibold text-ink hover:text-primary"

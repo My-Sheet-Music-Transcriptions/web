@@ -34,7 +34,7 @@ export function FeatureCards({
               <Reveal
                 as="li"
                 key={f.title}
-                delay={i * 0.06}
+                delay={i * 0.1}
                 className="flex flex-col gap-3 border-t border-line pt-6"
               >
                 <span className="flex h-14 items-center">

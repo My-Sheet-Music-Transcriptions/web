@@ -41,7 +41,12 @@ export function ReviewCards({
         </SectionHeading>
         <ul className="mt-10 grid md:grid-cols-2 md:gap-x-14 lg:mt-14">
           {items.map((r, i) => (
-            <Reveal as="li" key={r.name + r.date} delay={(i % 2) * 0.06}>
+            <Reveal
+              as="li"
+              key={r.name + r.date}
+              effect={i % 2 ? 'right' : 'left'}
+              delay={(i % 2) * 0.1}
+            >
               <ReviewCard review={r} />
             </Reveal>
           ))}

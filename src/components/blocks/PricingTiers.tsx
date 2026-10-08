@@ -38,7 +38,8 @@ export function PricingTiers({
           </SectionHeading>
           {children ? (
             <Reveal
-              delay={0.08}
+              effect="right"
+              delay={0.1}
               className="space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4"
             >
               {children}
@@ -50,7 +51,7 @@ export function PricingTiers({
             <Reveal
               as="li"
               key={t.id}
-              delay={i * 0.06}
+              delay={i * 0.1}
               className={cn('flex flex-col border-t-[3px] pt-6', tones[t.tone])}
             >
               <h3 className="text-[22px]">{t.title}</h3>

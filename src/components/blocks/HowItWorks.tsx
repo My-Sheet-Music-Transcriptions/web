@@ -35,7 +35,7 @@ export function HowItWorks({
             <Reveal
               as="li"
               key={step.title}
-              delay={i * 0.06}
+              delay={i * 0.1}
               className="flex flex-col gap-3 border-t border-line pt-6"
             >
               <span className="eyebrow tabular-nums text-muted">

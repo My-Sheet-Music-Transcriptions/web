@@ -144,7 +144,7 @@ export function ContactSection({
       aria-labelledby={`${uid}-title`}
     >
       <div className="container-content grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:gap-16">
-        <Reveal className="lg:pt-4">
+        <Reveal effect="left" className="lg:pt-4">
           <p className="eyebrow text-accent-text">
             {eyebrow ?? (gift ? 'Gift card' : 'Get a quote')}
           </p>
@@ -169,7 +169,7 @@ export function ContactSection({
           </p>
         </Reveal>
 
-        <Reveal delay={0.08}>
+        <Reveal effect="right" delay={0.1}>
           {status === 'sent' ? (
             <output className="block text-center text-ink" aria-live="polite">
               <p className="text-h3">Thank you! Your request is on its way.</p>

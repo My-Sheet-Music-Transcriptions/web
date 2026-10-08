@@ -47,7 +47,7 @@ export function AboutTeaser({
     >
       <div className="container-content grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <section className="relative" aria-roledescription="carousel" aria-label="Office photos">
-          <Reveal className="overflow-hidden rounded-ui">
+          <Reveal effect="left" className="overflow-hidden rounded-ui">
             <div aria-live="polite">
               {current ? (
                 <Picture
@@ -80,7 +80,7 @@ export function AboutTeaser({
           <SectionHeading id="about-title" eyebrow={eyebrow}>
             {title}
           </SectionHeading>
-          <Reveal delay={0.08}>
+          <Reveal effect="right" delay={0.1}>
             <div className="mt-5 space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
               {children}
             </div>

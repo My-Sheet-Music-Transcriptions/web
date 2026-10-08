@@ -34,7 +34,7 @@ export function ImageStrip({
 }: ImageStripProps) {
   return (
     <section aria-label="Examples of our sheet music" className="pb-section">
-      <Reveal>
+      <Reveal effect="right">
         <ul
           className="flex snap-x gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:thin] focus-visible:outline-3 focus-visible:outline-primary lg:justify-center"
           // biome-ignore lint/a11y/noNoninteractiveTabindex: a horizontally scrollable region must be keyboard reachable
