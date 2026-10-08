@@ -41,9 +41,10 @@ también funciona.
 1. **Unas pocas preguntas.** Claude pregunta solo lo que no puede deducir: qué página y qué sitio, qué debe
    conseguir la página, qué va en ella. Las respuestas son clicables; con "Other" escribes lo que quieras.
 2. **La vista previa.** En unos minutos recibes un enlace a una vista previa privada de la página, hecha con
-   los componentes reales de la web. Arriba puedes cambiar entre escritorio, tableta y móvil. Pulsa
-   **Comment**, haz clic en cualquier parte de la página y escribe qué debería cambiar, luego **Done**; o
-   díselo a Claude en la conversación. Avisa a Claude cuando hayas terminado de comentar (los comentarios no
+   los componentes reales de la web. Arriba puedes cambiar entre escritorio, tableta y móvil. Los
+   comentarios están activados desde el principio: haz clic en cualquier parte de la página y escribe qué
+   debería cambiar (desactiva **Comment** para hacer clic en los enlaces de la página); o díselo a Claude en
+   la conversación. Avisa a Claude cuando hayas terminado de comentar (los comentarios no
    le llegan solos). Claude actualiza la misma vista previa hasta que digas que está bien. El texto que
    Claude no tiene aparece como `[PLACEHOLDER]`: nunca inventa textos, precios ni cifras.
 3. **La pregunta.** Cuando la vista previa está bien, Claude pregunta: "¿Lo publico en la web?". No se
