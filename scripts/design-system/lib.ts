@@ -24,11 +24,24 @@ export interface ArtifactRecord {
   namespace: string
   createdOnFiles: { v: 1; at: string }
   publishedBy: string
-  /** Commit the artifact was last published from (`pnpm ds:index --published`). */
+  /**
+   * Commit the artifact was last published from (`pnpm ds:index --published`). Informational only: a
+   * branch commit vanishes when its PR is squash-merged, so never look it up or reason from it. The
+   * record is `publishedVersion` + `exportHash`.
+   */
   publishedFrom: string | null
   publishedAt?: string | null
-  /** Hash of every source the artifact is built from at the last publish; tests fail when it drifts. */
-  sourceHash?: string | null
+  /**
+   * Version of the artifact the last publish created (shown by an Artifact files listing). Page previews
+   * copy the design-system files from this exact version, so a later publish from another branch cannot
+   * change what a preview renders.
+   */
+  publishedVersion?: string | null
+  /**
+   * Hash of the export output (dist/design-system/project, see exportHash()) at the last publish.
+   * `pnpm ds:index --check` compares a fresh export against it: equal means the artifact is in sync.
+   */
+  exportHash?: string | null
   /** keyed `<Group>/<file name>` */
   assets: Record<string, AssetRecord>
 }
@@ -143,63 +156,48 @@ export function uploads(record: ArtifactRecord): Upload[] {
   )
 }
 
-/**
- * Everything the published artifact is built from: the same files Storybook renders. When any of them
- * changes, the artifact is stale until `publish-design-system` runs (tests/unit/design-system-sync.test.ts).
- */
-export function designSystemSources(): string[] {
-  const list = (dir: string, keep: (f: string) => boolean) =>
-    fs.existsSync(dir)
-      ? fs
-          .readdirSync(dir)
-          .filter(keep)
-          .map((f) => path.join(dir, f))
-      : []
-  const code = (f: string) => /\.(tsx?|css|html)$/.test(f) && !/\.stories\.tsx$/.test(f)
-  const assets = (f: string) => /\.(png|jpe?g|webp|svg)$/.test(f)
-  return [
-    'src/styles/theme.css',
-    'src/styles/app.css',
-    ...list('src/components/blocks', code),
-    ...list('src/components/primitives', code),
-    ...list('src/components/typography', code),
-    ...list('src/components/layout', code),
-    ...list('src/design-system/export', code),
-    'src/design-system/theme-parse.ts',
-    ...list('content/en/data', code),
-    ...list('src/i18n/sites', code),
-    'src/i18n/types.ts',
-    ...list('src/assets/images/home', assets),
-    ...list('src/assets/images/brand', assets),
-    ...list('src/assets/images/icons', assets),
-    ...list('src/assets/images/logos', assets),
-    ...list('src/assets/images/flags', assets),
-    'vite.ds.config.ts',
-    'scripts/design-system/export.ts',
-    'scripts/design-system/lib.ts',
-  ]
-    .filter((f) => fs.existsSync(f))
-    .sort()
+/** Files of the export that carry a timestamp or note; hashed with those fields removed. */
+const VOLATILE: Record<string, (text: string) => string> = {
+  'design-system.json': (text) => {
+    const index = JSON.parse(text) as Record<string, unknown>
+    delete index.lastChange
+    return JSON.stringify(index)
+  },
 }
 
-/** Short content hash over designSystemSources(). */
-export function designSystemSourceHash(): string {
+/**
+ * Short content hash of the export output: every file under `project/` (the artifact's files), with the
+ * volatile fields of the index left out. Two exports of the same sources hash the same (Vite's asset
+ * names are content hashes), so the hash says whether the published artifact renders what the repo
+ * renders, without listing which sources feed the export.
+ */
+export function exportHash(dir: string = PROJ): string {
+  if (!fs.existsSync(dir)) throw new Error(`${dir} is missing: run pnpm ds:export first`)
   const h = crypto.createHash('sha256')
-  for (const f of designSystemSources()) {
-    h.update(f)
+  for (const f of walk(dir).sort()) {
+    const rel = path.relative(dir, f).split(path.sep).join('/')
+    const normalise = VOLATILE[rel]
+    h.update(rel)
     h.update('\0')
-    h.update(fs.readFileSync(f))
+    h.update(normalise ? normalise(fs.readFileSync(f, 'utf8')) : fs.readFileSync(f))
     h.update('\0')
   }
   return h.digest('hex').slice(0, 16)
 }
 
-/** Records the publish that just happened (commit + source hash) in src/design-system/artifact.json. */
-export function recordPublish() {
+/**
+ * Records the publish that just happened (artifact version, export hash, commit, time) in
+ * src/design-system/artifact.json. `version` is the artifact version the publish created, as the
+ * Artifact files listing prints it.
+ */
+export function recordPublish(version: string) {
+  if (!/^[\w.-]{4,64}$/.test(version))
+    throw new Error(`"${version}" does not look like an artifact version (e.g. 1791471138-a631)`)
   const record = readArtifactRecord()
   record.publishedFrom = gitSha()
   record.publishedAt = new Date().toISOString()
-  record.sourceHash = designSystemSourceHash()
+  record.publishedVersion = version
+  record.exportHash = exportHash()
   fs.writeFileSync(ARTIFACT_FILE, `${JSON.stringify(record, null, 2)}\n`)
   return record
 }
@@ -271,8 +269,9 @@ export function writeIndex(note: string) {
     files: walk(PROJ).map((f) => path.relative(PROJ, f).split(path.sep).join('/')),
     uploads: ups,
     pendingUploads: ups.filter((u) => !u.blob).map((u) => u.path),
-    sourceHash: designSystemSourceHash(),
-    publishedSourceHash: record.sourceHash ?? null,
+    exportHash: exportHash(),
+    publishedExportHash: record.exportHash ?? null,
+    publishedVersion: record.publishedVersion ?? null,
   }
   fs.writeFileSync(path.join(OUT, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`)
   return manifest

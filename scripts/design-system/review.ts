@@ -6,12 +6,14 @@ import {
   imageFiles,
   memoFile,
   mockupDir,
+  mockupPageHtml,
   printPublish,
   readPreviewMemo,
-  requireDesignSystemUrl,
+  requireDesignSystem,
   writePreviewMemo,
 } from './preview-lib'
 import { prepareSections } from './review-lib'
+import { NoChromiumError, printReports, type ShotReport, shootMockup } from './shot-lib'
 
 /**
  * Builds the HTML review artifact of a page mockup from mockups/<slug>/sections.html:
@@ -22,11 +24,15 @@ import { prepareSections } from './review-lib'
  *   pnpm ds:review <slug> ["<Title>"] [/path]
  *
  * Checks the mockup first (known blocks, valid data-props, images present, no external files) and
- * fails with one line per problem. Runs `pnpm ds:export` itself when dist/design-system is missing.
+ * fails with one line per problem. Runs `pnpm ds:export` itself when the export is missing or stale.
  * Title, path and the preview's artifact URL are remembered in mockups/<slug>/preview.json, so later
  * runs (also in another session) need only the slug and update the same artifact.
+ * Then renders the page locally at 1440/768/390 px (`pnpm ds:shot`'s check, pictures in
+ * dist/design-system/shot/<slug>/) and prints the publish parameters only when the render is clean;
+ * `--no-shot` skips the render (only when the check itself is wrong, or no Chromium can run).
  */
-const [slug, titleArg, pathArg] = process.argv.slice(2)
+const args = process.argv.slice(2)
+const [slug, titleArg, pathArg] = args.filter((a) => a !== '--no-shot')
 if (!slug) throw new Error('usage: pnpm ds:review <slug> ["<Title>"] [/path]')
 const src = mockupDir(slug)
 const sectionsFile = path.join(src, 'sections.html')
@@ -47,7 +53,7 @@ if (errors.length) {
   process.exit(1)
 }
 
-const dsUrl = requireDesignSystemUrl()
+const ds = requireDesignSystem()
 const manifest = ensureManifest('ds:review')
 
 const out = path.join('dist/design-system/review', slug)
@@ -59,21 +65,35 @@ fs.writeFileSync(
     .replaceAll('__TITLE__', title)
     .replaceAll('__PATH__', pagePath),
 )
-fs.writeFileSync(
-  path.join(out, 'page.html'),
-  fs
-    .readFileSync('src/design-system/review/page.html', 'utf8')
-    .replaceAll('__TITLE__', title)
-    .replace('<!-- __SECTIONS__ -->', html),
-)
+fs.writeFileSync(path.join(out, 'page.html'), mockupPageHtml(title, html))
 
 // files map: page, images under mockups/<slug>/img, and the design-system files from the artifact
 const files: Record<string, unknown> = {
   'page.html': `${out}/page.html`,
   ...imageFiles('img/', imgDir),
-  ...designSystemFiles('ds/', manifest, dsUrl),
+  ...designSystemFiles('ds/', manifest, ds),
 }
 fs.writeFileSync(path.join(out, 'files.json'), `${JSON.stringify(files, null, 2)}\n`)
+
+if (!args.includes('--no-shot')) {
+  let reports: ShotReport[] | null = null
+  try {
+    reports = await shootMockup(
+      slug,
+      { main: path.join(out, 'page.html') },
+      path.join('dist/design-system/shot', slug),
+    )
+  } catch (e) {
+    if (!(e instanceof NoChromiumError)) throw e
+    console.log(`[ds:review] local render skipped: ${e.message}`)
+  }
+  if (reports && !printReports('ds:review', reports)) {
+    console.error(
+      '[ds:review] fix what the render shows (the pictures name the sections), then rerun; nothing to publish yet',
+    )
+    process.exit(1)
+  }
+}
 
 const publish = {
   ...(memo.url ? { url: memo.url } : {}),

@@ -24,6 +24,10 @@ export default defineConfig({
   },
   resolve: { tsconfigPaths: true },
   server: { port: 3000 },
+  // Prerendering fetches every page from Vite's preview server at its resolved URL. With the default host
+  // that URL is http://localhost:<port>, which Netlify's build image resolves to ::1 first, where the
+  // connection hangs (ETIMEDOUT) while the server listens on IPv4 only. Pin both ends to IPv4 loopback.
+  preview: { host: '127.0.0.1' },
   plugins: [
     imagetools({
       defaultDirectives: (url) => {
@@ -54,6 +58,8 @@ export default defineConfig({
       pages,
     }),
     viteReact(),
-    netlify(),
+    // The site has no edge functions; Netlify's dev emulation of them would start a Deno it downloads on first
+    // use, which slows `pnpm dev` and breaks it when that Deno is newer than the plugin expects.
+    netlify({ dev: { edgeFunctions: { enabled: false } } }),
   ],
 })

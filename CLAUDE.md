@@ -9,17 +9,19 @@ chatting with Claude Code. Read this file before touching anything.
 pnpm dev                      # Vite dev server, every locale under /en, /es... (http://localhost:3000/en)
 pnpm storybook                # design system docs + a11y panel (http://localhost:6006)
 pnpm check                    # biome + tsc + unit tests  (fast, run before every commit)
+pnpm check:pr                 # exactly what PR CI runs: check + English build + SEO suite (~1.5 min)
 SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemap -> dist/client
 pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemap (what deploy previews ship)
 pnpm serve:dist               # serve dist/client on :4173
 pnpm test:seo                 # SEO conformance over dist/client (needs a build)
 pnpm test:storybook           # every story through axe (contrast included)
 pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
-pnpm lhci                     # Lighthouse CI thresholds (needs a build; locally set CHROME_PATH to a Chrome/Chromium binary)
+pnpm lhci                     # Lighthouse CI thresholds (needs a build; finds Chromium itself, CHROME_PATH overrides)
 pnpm release-check            # the full local gate (more than the PR CI runs: see nightly.yml)
 pnpm ds:export                # design-system export for the artifact -> dist/design-system (see below)
 pnpm ds:blocks [Block...|--all]    # no args: the index (blocks by role, when to use each, where used); names: props, allowed values, docs + a ready mockup line
-pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, builds the review page and prints the Artifact publish parameters
+pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, renders it locally (as ds:shot), builds the review page and prints the Artifact publish parameters
+pnpm ds:shot <slug> [--built | --url <url>] [--width 390]   # renders the mockup (or the real page) in headless Chromium at 1440/768/390: pictures per section + problems
 pnpm ds:canvas <slug> [--canvas <canvas.json>] | --pull <Board.dc.html>   # design mode: the mockup as a Design canvas, and back
 pnpm ds:mockup <slug> [--force]    # an existing page (index.tsx + meta.ts) -> mockups/<slug>/sections.html (+ img/, preview.json)
 pnpm page:status [slug]            # the pages in flight (mockups/*/preview.json) as JSON, for the /status command
@@ -59,8 +61,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   surface and the build start from; `tests/unit/mockups.test.ts` keeps every mockup valid.
 - `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `jsonld.ts`, `og/template.tsx` (Satori).
 - `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG PNGs), `serve-dist.ts`, `lib/content-fs.ts`,
-  `design-system/{export,index,lib}.ts` (artifact export; these three are design-system sources, hashed by the sync
-  test), `design-system/{blocks,review,canvas,mockup,status}.ts` + `*-lib.ts` and `preview-lib.ts` (the page-preview tooling).
+  `lib/chromium.ts` (the Chromium Playwright, Storybook's vitest, `lhci` and `ds:shot` launch: Playwright's own,
+  else the one the container ships in `/opt/pw-browsers`; `CHROME_PATH` overrides),
+  `design-system/{export,index,lib}.ts` (artifact export, `ds:index --check` and the publish record),
+  `design-system/{blocks,review,shot,canvas,mockup,status}.ts` + `*-lib.ts` and `preview-lib.ts` (the page-preview tooling).
 - `tests/unit`, `tests/seo` (runs over `dist/client`), `tests/e2e`, `tests/visual` (+ `reference/` captures of the live site).
 - `.claude/skills` – `page` (the whole page workflow; `reference/*.md` hold the recipes per step), the content-manager
   commands `new-page`, `edit-page`, `translate`, `design`, `publish`, `status`, `site-help` (thin entry points into
@@ -144,7 +148,9 @@ and `/site-help` are entry points into it that preset its mode. One conversation
    artifact (`pnpm ds:review`: desktop/tablet/phone switch, block labels, per-section comments) by default, or, only
    when the user asks for design, a **Design canvas** (`pnpm ds:canvas`: a desktop and a phone artboard per option,
    the design system installed on the canvas, pulled back into the mockup with `--pull` when they are done).
-   Iterate on the same artifact until the user says it is right, then ask whether to publish. Never publish unasked.
+   Each round is rendered and looked at locally first (`ds:review` runs the `ds:shot` check: pictures per section
+   at 1440/768/390), then published. Iterate on the same artifact until the user says it is right, then ask
+   whether to publish. Never publish unasked.
 3. **Build and check the real thing**, only after an explicit yes: build the approved sections into the page
    folder (`content/<locale>/<collection>/<slug>/` with `index.tsx`, `meta.ts` and images), build proposed blocks, run every check
    locally, push a **draft PR** and hand the user Netlify's deploy preview of the real page.
@@ -157,10 +163,15 @@ The Design System artifact (`src/design-system/artifact.json`, title "My Sheet M
 `pnpm ds:export` from `theme.css`, the blocks, `catalogue.ts`, the layout components and the brand assets; it ships
 the real components as `components/bundle.js` (`window.MSMT`, React included) and both preview surfaces load them
 from there (the server copies the files by name, so a file the artifact lacks fails every preview publish).
-Republish with the `publish-design-system` skill after changing any of those sources; never edit the
-artifact by hand. CI: PRs and pushes to `main` run only the fast checks (lint/types/unit, build, SEO suite);
-Storybook axe, Playwright e2e + visual, Lighthouse, the link check and `ds:export` run nightly on `main`
-(`nightly.yml`, also on demand). Run `pnpm test:storybook` and `pnpm test:e2e` locally when touching
+The artifact follows `main`: `pnpm ds:index --check` exports and compares the output's hash with the one
+recorded at the last publish (`artifact.json#exportHash`); a scheduled Claude routine runs it on `main` every
+few hours and republishes when it fails (the `publish-design-system` skill), the `page` skill runs it before
+every preview, and nightly CI runs it as an alarm. A PR that changes blocks or tokens does not republish; a
+branch publishes only when its preview needs a proposed block. Every preview copies the design-system files
+from the artifact version recorded in `artifact.json#publishedVersion`, so a publish from any branch never
+changes an existing preview. Never edit the artifact by hand. CI: PRs and pushes to `main` run only the fast
+checks (lint/types/unit, build, SEO suite); Storybook axe, Playwright e2e + visual, Lighthouse, the link check,
+`ds:export` and the artifact sync check run nightly on `main` (`nightly.yml`, also on demand). Run `pnpm test:storybook` and `pnpm test:e2e` locally when touching
 components or layout.
 
 ## Conventions

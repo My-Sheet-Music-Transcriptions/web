@@ -6,14 +6,20 @@ description: Run every gate CI runs (lint, types, unit tests, Storybook axe, bui
 # Release check
 
 ```sh
-pnpm release-check                 # lint, typecheck, unit, storybook a11y, build (en), SEO suite
+pnpm check:pr                      # exactly what PR CI runs: lint, typecheck, unit, build (en), SEO suite
+pnpm release-check                 # the same plus storybook a11y
 pnpm ds:export                     # design-system export (nightly in CI)
+pnpm ds:index --check              # the Design System artifact vs this export (nightly in CI; a failure means "publish", not "fix")
 pnpm test:e2e && pnpm lhci         # when layout or performance-relevant code changed
 ```
 
-CI on a PR runs only lint/types/unit, the build and the SEO suite (minutes). Storybook axe, e2e + visual,
-Lighthouse, the link check and the export run nightly on `main` (`.github/workflows/nightly.yml`, or trigger
-it manually from the Actions tab), so run them locally before pushing component or layout changes.
+Browsers: Storybook's vitest, Playwright and `pnpm lhci` all launch the Chromium `scripts/lib/chromium.ts`
+finds (Playwright's own when installed, else the newest one in `/opt/pw-browsers` or `~/.cache/ms-playwright`,
+`CHROME_PATH` overrides), so never `playwright install` in a cloud session.
+
+CI on a PR runs only lint/types/unit, the build and the SEO suite (minutes: `pnpm check:pr`). Storybook axe,
+e2e + visual, Lighthouse, the link check and the export run nightly on `main` (`.github/workflows/nightly.yml`,
+or trigger it manually from the Actions tab), so run them locally before pushing component or layout changes.
 
 Reading failures:
 - Biome: `pnpm lint:fix` first, then fix what remains by hand.

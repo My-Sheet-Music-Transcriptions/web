@@ -1,13 +1,12 @@
 import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
-import { readArtifactRecord } from './lib'
+import { readArtifactRecord, walk } from './lib'
 
 /**
  * Shared pieces of the page-preview scripts (ds:review, ds:canvas, ds:mockup, page:status): the
  * mockups/<slug>/preview.json memo, the design-system export manifest and the `files` maps of an Artifact
- * publish. Kept out of lib.ts on purpose: lib.ts is a design-system source and changing it demands a
- * republish of the artifact.
+ * publish. Kept separate from lib.ts (the export itself) so the two can change independently.
  */
 
 /** What mockups/<slug>/preview.json remembers about a page in flight. Unknown keys are preserved. */
@@ -66,14 +65,59 @@ export function writePreviewMemo(slug: string, patch: Partial<PreviewMemo>): Pre
 
 export interface Manifest {
   files: string[]
+  /** Hash of this export (lib.ts exportHash()). */
+  exportHash?: string
+  /** Hash recorded at the last publish; equal to exportHash when the artifact is in sync. */
+  publishedExportHash?: string | null
+  /** Artifact version of the last publish, the one previews copy the design-system files from. */
+  publishedVersion?: string | null
 }
 
 export const MANIFEST_FILE = 'dist/design-system/manifest.json'
 
-/** The design-system export manifest; runs `pnpm ds:export` first when there is no export yet. */
+/**
+ * What the export is built from (theme, blocks, layout, primitives, typography, brand assets, the English data
+ * files and site strings, the export code). Generated files that builds rewrite are left out.
+ */
+const EXPORT_INPUTS = [
+  'src/styles',
+  'src/components',
+  'src/design-system/export',
+  'src/design-system/theme-parse.ts',
+  'src/assets/images',
+  'src/i18n',
+  'src/lib',
+  'content/en/data',
+  'vite.ds.config.ts',
+  'scripts/design-system/export.ts',
+  'scripts/design-system/lib.ts',
+]
+
+/** The newest export input changed after `since` (ms), if any. */
+export function changedExportInput(since: number, inputs: string[] = EXPORT_INPUTS): string | null {
+  for (const input of inputs) {
+    if (!fs.existsSync(input)) continue
+    const files = fs.statSync(input).isDirectory() ? walk(input) : [input]
+    const newer = files.find(
+      (f) => !/\.generated\.json$|\.stories\.tsx$/.test(f) && fs.statSync(f).mtimeMs > since,
+    )
+    if (newer) return newer
+  }
+  return null
+}
+
+/**
+ * The design-system export manifest; runs `pnpm ds:export` first when there is no export yet or when an
+ * export input changed after it (so the local render check never shows old blocks).
+ */
 export function ensureManifest(tag: string): Manifest {
-  if (!fs.existsSync(MANIFEST_FILE)) {
-    console.log(`[${tag}] no design-system export yet: running pnpm ds:export`)
+  const changed = fs.existsSync(MANIFEST_FILE)
+    ? changedExportInput(fs.statSync(MANIFEST_FILE).mtimeMs)
+    : 'none'
+  if (changed) {
+    console.log(
+      `[${tag}] ${changed === 'none' ? 'no design-system export yet' : `${changed} changed since the last export`}: running pnpm ds:export`,
+    )
     try {
       execSync('pnpm ds:export', { stdio: 'pipe' })
     } catch (e) {
@@ -81,28 +125,64 @@ export function ensureManifest(tag: string): Manifest {
       throw new Error('pnpm ds:export failed')
     }
   }
-  return JSON.parse(fs.readFileSync(MANIFEST_FILE, 'utf8')) as Manifest
+  const manifest = JSON.parse(fs.readFileSync(MANIFEST_FILE, 'utf8')) as Manifest
+  if (manifest.publishedExportHash && manifest.publishedExportHash !== manifest.exportHash)
+    console.log(
+      `[${tag}] note: this export differs from the published design system; the local render shows it, the published preview will not until the publish-design-system skill runs`,
+    )
+  return manifest
 }
 
-export function requireDesignSystemUrl(): string {
+/** The rendered mockup page: sections.html inside the preview's page template (design system + pictures). */
+export function mockupPageHtml(title: string, sectionsHtml: string): string {
+  return fs
+    .readFileSync('src/design-system/review/page.html', 'utf8')
+    .replaceAll('__TITLE__', title)
+    .replace('<!-- __SECTIONS__ -->', sectionsHtml)
+}
+
+/** The published design system a preview copies its files from: the artifact URL and the pinned version. */
+export interface DesignSystemRef {
+  url: string
+  /** Artifact version of the last publish; null in a record from before versions were pinned. */
+  version: string | null
+}
+
+export function requireDesignSystem(): DesignSystemRef {
   const record = readArtifactRecord()
   if (!record.url)
     throw new Error('src/design-system/artifact.json has no url: publish the design system first')
-  return record.url
+  return { url: record.url, version: record.publishedVersion ?? null }
 }
 
 /** The export files a rendered mockup needs: tokens, the bundle, fonts and the bundle's images. */
 export const DS_FILE = /^(tokens\.json$|components\/(bundle\.(js|css)|fonts\.css|assets\/)|fonts\/)/
 
-/** `files` entries copying the design system from its artifact, keyed `<prefix><export path>`. */
+/** One `files` entry copying a published file of another artifact, pinned to a version when known. */
+export interface ArtifactCopy {
+  artifact: string
+  path: string
+  ver?: string
+}
+
+/**
+ * `files` entries copying the design system from its artifact, keyed `<prefix><export path>`. Pinned to
+ * the version recorded at the last publish (`ver`), so what a preview renders does not change when
+ * someone republishes the design system from another branch.
+ */
 export function designSystemFiles(
   prefix: string,
   manifest: Manifest,
-  dsUrl: string,
-): Record<string, { artifact: string; path: string }> {
-  const out: Record<string, { artifact: string; path: string }> = {}
+  ds: DesignSystemRef,
+): Record<string, ArtifactCopy> {
+  const out: Record<string, ArtifactCopy> = {}
   for (const f of manifest.files)
-    if (DS_FILE.test(f)) out[`${prefix}${f}`] = { artifact: dsUrl, path: `project/${f}` }
+    if (DS_FILE.test(f))
+      out[`${prefix}${f}`] = {
+        artifact: ds.url,
+        path: `project/${f}`,
+        ...(ds.version ? { ver: ds.version } : {}),
+      }
   return out
 }
 

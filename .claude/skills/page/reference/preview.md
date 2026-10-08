@@ -52,16 +52,36 @@ worked example: read it before writing a mockup.
 `pnpm ds:review <slug> "<Page name>" [/path]` (later runs: `pnpm ds:review <slug>`; title and path are
 remembered in `mockups/<slug>/preview.json`). It fails with one line per problem (unknown block, unreadable
 props, unknown or missing prop, value not allowed, missing picture, external file, wrapper order): fix
-every line and rerun. It runs `pnpm ds:export` itself when
-needed. Its last line is the exact Artifact publish parameters: call the Artifact tool with them as printed,
-replacing only the `description` placeholder with one real sentence. After the first publish write the
+every line and rerun. It runs `pnpm ds:export` itself when there is no export or a block, token or data
+file changed since the last one, then the local check below. Its last line is the exact Artifact publish
+parameters: call the Artifact tool with them as printed, replacing only the `description` placeholder with
+one real sentence. After the first publish write the
 artifact URL into `preview.json` as `"url"`: from then on the printed parameters update that same artifact
 (in a new session, `Artifact read` it once before publishing).
 
-Do not render or screenshot the preview locally: the local `page.html` is blank by design (bundle and
-pictures only join it in the published artifact). Publishing is the check. If the publish is refused, fix
-the cause and publish again; never drop files from the parameters. A design-system file the artifact lacks
-means running the `publish-design-system` skill first.
+If the publish is refused, fix the cause and publish again; never drop files from the parameters. A
+design-system file the artifact lacks means running the `publish-design-system` skill first.
+
+## The local check
+
+Before printing the parameters, `ds:review` renders the mockup in headless Chromium with the local
+design-system export (the same bundle the published preview copies from the artifact) at 1440, 768 and
+390 px, about five seconds in all, and writes `dist/design-system/shot/<slug>/`: `main-<width>.png` (the
+whole page) and `main-<width>-<nn>-<Block>.png` (one per section, readable at full size). It prints one
+line per width and refuses, with nothing to publish, on a script error, a file or picture that did not
+load, anything wider than the screen (naming the section) or a block that rendered nothing; leftover
+`[PLACEHOLDER]`s are listed, not refused.
+- Read (the Read tool shows images) the section pictures of what you added or changed, at 390 always and
+  at 1440; the whole-page picture only for rhythm. Look for what a person would notice: cramped or
+  overlapping text, a picture cropped badly, an orphan word in a heading, a button off its line, a section
+  that looks unlike its neighbours. Fix it in `sections.html` (a proposed block's markup or a real block's
+  props) and rerun: several rounds before one publish is the point.
+- The pictures are your check, never the preview: the person always gets the published artifact.
+- `pnpm ds:shot <slug> [--width 390]` renders without building a publish (every `sections.<variant>.html`
+  too, for design options); `--no-shot` on `ds:review` skips the render only when the check itself is
+  wrong or no Chromium can run, and you say so.
+- A note that the export differs from the published design system means the local render shows code the
+  published preview will not have yet: run the `publish-design-system` skill before publishing.
 
 ## Talking about it
 
@@ -72,5 +92,5 @@ page, or use the comment tool in the top right);
 "Block labels" is for the technical view only. The preview is private until they share it. Ask them to tell
 you here when they are done; then read the comments with the `ArtifactComments` tool.
 
-Iterate: edit `sections.html`, rerun `pnpm ds:review <slug>`, republish with the printed parameters,
-summarise what changed in two or three lines.
+Iterate: edit `sections.html`, rerun `pnpm ds:review <slug>`, look at the sections you changed, republish
+with the printed parameters, summarise what changed in two or three lines.

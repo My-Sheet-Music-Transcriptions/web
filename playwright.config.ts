@@ -1,7 +1,10 @@
 import { defineConfig, devices } from '@playwright/test'
+import { chromiumExecutable } from './scripts/lib/chromium'
 
 const PORT = 4173
 const baseURL = process.env.BASE_URL ?? `http://localhost:${PORT}`
+// The Chromium already in the container when this Playwright's own revision is not installed.
+const executablePath = chromiumExecutable()
 
 export default defineConfig({
   testDir: 'tests',
@@ -11,7 +14,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : [['list']],
-  use: { baseURL, trace: 'on-first-retry' },
+  use: { baseURL, trace: 'on-first-retry', launchOptions: { executablePath } },
   expect: { toHaveScreenshot: { maxDiffPixelRatio: 0.01, animations: 'disabled' } },
   webServer: process.env.BASE_URL
     ? undefined
