@@ -2,5 +2,14 @@
   "title": "MMVV 2027",
   "path": "/mmvv",
   "locale": "ca",
-  "url": "https://claude.ai/artifact/7pky16SQ4F8cpvVZaBHWB3"
+  "url": "https://claude.ai/artifact/7pky16SQ4F8cpvVZaBHWB3",
+  "canvas": {
+    "url": "https://claude.ai/artifact/VqoGsPUzvHR7qFdDw2CRcC",
+    "boards": [
+      "Main.dc.html",
+      "Mobile.dc.html",
+      "Navy.dc.html",
+      "Navy-mobile.dc.html"
+    ]
+  }
 }
