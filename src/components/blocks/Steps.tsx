@@ -99,7 +99,10 @@ export function Steps({
                 {paragraphs(step.text).map((p) => (
                   <p
                     key={p}
-                    className="mt-5 mb-[14.4px] max-w-[310px] text-body text-secondary md:max-w-[280px] lg:mb-0"
+                    className={cn(
+                      'mt-5 mb-[14.4px] text-body text-secondary lg:mb-0',
+                      !step.video && 'max-w-[310px] md:max-w-[280px]',
+                    )}
                   >
                     {inlineMarkdown(p)}
                   </p>

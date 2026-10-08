@@ -48,7 +48,7 @@ export function Samples({ title, items, tone = 'white', id }: SamplesProps) {
                 image={s.image}
                 alt={s.alt}
                 sizes="(min-width: 768px) 420px, 100vw"
-                className="mx-auto max-h-[520px] w-auto rounded-card shadow-card"
+                className="mx-auto w-full max-w-[360px] rounded-card shadow-card"
               />
             </li>
           ))}
