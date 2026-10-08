@@ -8,6 +8,7 @@ description: Run every gate CI runs (lint, types, unit tests, Storybook axe, bui
 ```sh
 pnpm release-check                 # lint, typecheck, unit, storybook a11y, build (en), SEO suite
 pnpm ds:export                     # design-system export (nightly in CI)
+pnpm ds:index --check              # the Design System artifact vs this export (nightly in CI; a failure means "publish", not "fix")
 pnpm test:e2e && pnpm lhci         # when layout or performance-relevant code changed
 ```
 

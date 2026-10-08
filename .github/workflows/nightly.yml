@@ -1,7 +1,8 @@
 name: Nightly checks
 
 # The heavy suites, once a day on main (and on demand): Storybook axe + contrast over every story, Playwright
-# e2e + visual, Lighthouse CI, the internal link check and the design-system export. PRs run only ci.yml.
+# e2e + visual, Lighthouse CI, the internal link check, the design-system export and the artifact sync check
+# (the Design System artifact follows main; a failure here means the publish routine did not run). PRs run only ci.yml.
 on:
   schedule:
     - cron: '23 5 * * *'
@@ -71,6 +72,19 @@ jobs:
           name: design-system
           path: dist/design-system
           retention-days: 7
+
+  ds-sync:
+    name: Design System artifact in sync with main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm ds:index --check
 
   e2e:
     name: Playwright e2e + visual

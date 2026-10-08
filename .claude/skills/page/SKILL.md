@@ -67,8 +67,9 @@ exploratory commands (no `cat`/`grep`/`ls` probes chained with `;` or `&&`: a pr
 the person a red "Failed"). Run each recipe command on its own and let its error lines tell you what to fix.
 0. **Setup**: the session hook installs dependencies in cloud sessions; if `node_modules` is still missing
    (`pnpm` reports `tsx: not found` or a missing package), run `pnpm install --frozen-lockfile` once.
-1. **Freshness**: skip when this session has not touched `src/`. Otherwise `pnpm ds:index --check`; if it
-   fails, run the `publish-design-system` skill first.
+1. **Freshness**: `pnpm ds:index --check` (exports the design system, about ten seconds). If it fails,
+   the artifact is behind the repo: run the `publish-design-system` skill first. Previews pin the artifact
+   version that skill records, so a publish never changes a preview someone is already looking at.
 2. **The mockup**: write or regenerate `mockups/<slug>/sections.html` per `reference/preview.md`
    (edit mode: `reference/edit.md` generates it from the real page first; translate: `reference/translate.md`).
 3. **The surface**:
