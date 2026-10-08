@@ -1,8 +1,8 @@
+import { counter, ratings } from '@content/en/data/home'
 import bg from '~/assets/images/home/stats-bg.jpg?w=900;1282&as=picture'
 import { Reveal } from '~/components/motion/Reveal'
 import { Picture } from '~/components/primitives/Picture'
 import { Stars } from '~/components/primitives/Stars'
-import { counter, ratings } from '~/content/en/data/home'
 import type { RatingSource } from '~/content/types'
 
 export interface StatsBannerProps {

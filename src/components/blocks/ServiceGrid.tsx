@@ -1,9 +1,9 @@
+import { serviceGrid } from '@content/en/data/home'
 import { Reveal } from '~/components/motion/Reveal'
 import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
-import { serviceGrid } from '~/content/en/data/home'
 
 const icons = import.meta.glob<PictureSource>('../../assets/images/icons/*.png', {
   eager: true,

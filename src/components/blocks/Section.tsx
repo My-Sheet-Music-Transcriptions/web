@@ -15,7 +15,7 @@ export interface SectionProps {
 const tones = { white: 'bg-white', peach: 'bg-peach', cream: 'bg-cream', surface: 'bg-surface' }
 const widths = { content: 'container-content', narrow: 'container-narrow', wide: 'container-wide' }
 
-/** Generic titled section for prose or ad-hoc layouts in MDX. */
+/** Generic titled section for a page's own prose (`Text`, `Heading`, `List`… from ~/components/typography). */
 export function Section({
   title,
   eyebrow,
@@ -42,7 +42,7 @@ export function Section({
             {title}
           </SectionHeading>
         ) : null}
-        {children}
+        <div className="flex flex-col gap-4 text-charcoal">{children}</div>
       </div>
     </section>
   )

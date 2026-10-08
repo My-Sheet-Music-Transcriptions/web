@@ -5,7 +5,7 @@ description: Handles any request about the website's pages from anyone, technica
 
 # Page: request → preview → build → check the real thing → publish
 
-The person asking may be a colleague who never sees code. Talk about the page, never about blocks, MDX,
+The person asking may be a colleague who never sees code. Talk about the page, never about blocks, components,
 props, branches, commits or scripts. Everything technical happens behind the preview. Reply in their
 language (English, Spanish, Catalan, French, German or Japanese: whatever they wrote in).
 
@@ -15,7 +15,7 @@ language (English, Spanish, Catalan, French, German or Japanese: whatever they w
   options each, the sensible default first and marked "(Recommended)"; free text comes for free through
   "Other" (chips render in the Claude Code app; elsewhere the same question falls back to text).
 - Never invent copy: missing text shows as `[PLACEHOLDER]` in the preview and you say what you still need.
-  Prices, counts, ratings, phone numbers and reviews come only from `src/content/<locale>/data/*.ts`.
+  Prices, counts, ratings, phone numbers and reviews come only from `content/<locale>/data/*.ts`.
 - Research on the web through a real browser when the session has one (Claude in Chrome or the Claude app's
   browser), and download any picture you need through a browser, never `curl`: `reference/wordpress.md` has
   the source order and the fallbacks.
@@ -49,7 +49,7 @@ new session starts by reading `preview.json`.
 
 Ask only what you cannot find out yourself:
 - **Which page, which site?** An existing page (name or URL) or a new one; which language site (English,
-  Spanish, French, German, Japanese, Catalan). A language whose site has no content yet (`src/content/<locale>`
+  Spanish, French, German, Japanese, Catalan). A language whose site has no content yet (`content/<locale>`
   missing or empty): say so and offer the English site or a translation (`reference/translate.md` says what
   that means today).
 - **What should it achieve?** Who reads it and what they should do next (ask for a quote, buy a gift card…).
@@ -89,7 +89,7 @@ the person a red "Failed"). Run each recipe command on its own and let its error
 
 Tell them it takes a few minutes and that they will get a second link, the real page on a test address,
 before anything goes live. Keep the rest out of the conversation.
-1. **Build** the page from the approved mockup: `reference/build.md` (page folder, pictures, frontmatter,
+1. **Build** the page from the approved mockup: `reference/build.md` (page folder, pictures, meta,
    data files, proposed blocks built for real, every check green). A page that cannot pass the checks is not
    pushed: go back to the person with what is missing, in plain words.
 2. **Draft PR and the test address**: `reference/publish.md` steps 1–2. Hand them the deploy-preview link to

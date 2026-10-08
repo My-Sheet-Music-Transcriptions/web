@@ -17,16 +17,18 @@ it manually from the Actions tab), so run them locally before pushing component 
 
 Reading failures:
 - Biome: `pnpm lint:fix` first, then fix what remains by hand.
-- tsc: MDX using an unknown component shows up as a type error in `mdx-components.d.ts` context – add the
-  block to `blocks/index.tsx` or use an existing one. A new block without a `catalogue.ts` entry is a type error
-  too: add the entry (description, defaults, mdx, previewHeight).
+- tsc: a page (`content/**/index.tsx`) is type-checked against the real block props: a wrong prop or an
+  unknown block is a type error at the page. A new block without a `catalogue.ts` entry is a type error too:
+  add the entry (description, defaults, usage, previewHeight), and export it by name from `blocks/index.tsx`.
+- Unit tests: `content` fails when a `meta.ts` is not a plain literal (it names the line) or misses a field, and
+  when a page writes raw `<p>`/`<h2>`/`<ul>`/`<a>` instead of the typography components.
 - Unit tests: `theme-tokens` fails when a token in `src/styles/theme.css` lacks a usage comment, duplicates a
   name or fails contrast; `catalogue` fails when a block has no story or the README table is stale (run
   `pnpm ds:export` to regenerate the table).
 - Storybook/axe: open `pnpm storybook`, the Accessibility panel names the element and the rule. Fix the
   component, never disable the rule. Contrast failures: darken text or the fill; tokens are in `theme.css`.
 - SEO suite: the message names the HTML file and the rule (title length, missing description, broken link...).
-  Fix the MDX frontmatter or the block that rendered the markup.
+  Fix the page's `meta.ts` or the block that rendered the markup.
 - `ds:export`: a bundle containing `</script` or `<!--`, or a block whose props interface cannot be parsed,
   stops the export with the reason.
 - Lighthouse: check the JS budget (150 KB) and image sizes (`?w=` directives) first.

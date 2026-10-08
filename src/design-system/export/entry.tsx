@@ -9,6 +9,7 @@ import { Footer } from '~/components/layout/Footer'
 import { Header } from '~/components/layout/Header'
 import { TopBar } from '~/components/layout/TopBar'
 import { MotionProvider } from '~/components/motion/MotionProvider'
+import { Text } from '~/components/typography'
 
 /**
  * Browser bundle of the design system (`window.MSMT`). Used by the published Design System
@@ -22,7 +23,7 @@ import { MotionProvider } from '~/components/motion/MotionProvider'
 const components: Record<string, ComponentType<any>> = { ...blocks, Header, Footer, TopBar }
 const roots = new WeakMap<Element, Root>()
 
-/** Light markdown for prose children: blank lines separate paragraphs, **bold** is supported. */
+/** Light markdown for prose children: blank lines separate paragraphs (`Text`, as pages write them), **bold** is supported. */
 function renderChildren(text: string): ReactNode {
   // Static text split once per render: positions are stable, so index keys are correct here.
   return text
@@ -30,7 +31,7 @@ function renderChildren(text: string): ReactNode {
     .split(/\n\s*\n/)
     .map((para, i) => (
       // biome-ignore lint/suspicious/noArrayIndexKey: static split, never reordered
-      <p key={`p${i}`}>
+      <Text key={`p${i}`}>
         {para.split(/(\*\*[^*]+\*\*)/g).map((part, j) =>
           part.startsWith('**') && part.endsWith('**') ? (
             // biome-ignore lint/suspicious/noArrayIndexKey: static split, never reordered
@@ -40,7 +41,7 @@ function renderChildren(text: string): ReactNode {
             <Fragment key={`t${j}`}>{part}</Fragment>
           ),
         )}
-      </p>
+      </Text>
     ))
 }
 

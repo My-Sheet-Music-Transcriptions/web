@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { type BlockDoc, catalogue, ROLES } from '../../src/components/blocks/catalogue'
 import { DEFAULT_LOCALE } from '../../src/i18n/routing'
-import { readAllEntries } from '../lib/content-fs'
+import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
 
 /**
  * Reads each block's `<Name>Props` interface straight from its source, so `pnpm ds:blocks` can show the
@@ -160,16 +160,17 @@ export function checkProps(name: string, props: unknown): string[] {
 
 // --- the index: every block by role, with where it is used (computed from the pages, never written down)
 
-/** Pages using each block, as `slug` (`<locale>/<slug>` outside the default locale), from the MDX itself. */
+/** Pages using each block, as `slug` (`<locale>/<slug>` outside the default locale), from each page's index.tsx. */
 export function blockUsage(entries = readAllEntries()): Record<string, string[]> {
   const out: Record<string, string[]> = {}
   for (const name of Object.keys(catalogue)) out[name] = []
   for (const e of entries) {
     const page = e.locale === DEFAULT_LOCALE ? e.slug : `${e.locale}/${e.slug}`
+    const source = fs.readFileSync(path.join(CONTENT_DIR, e.page), 'utf8')
     for (const name of Object.keys(catalogue)) {
-      // PageHero comes from frontmatter `hero` on every template but home
+      // PageHero comes from the meta.ts `hero` on every template but home
       const used =
-        new RegExp(`<${name}\\b`).test(e.body) ||
+        new RegExp(`<${name}\\b`).test(source) ||
         (name === 'PageHero' && 'hero' in e.meta && !!e.meta.hero)
       if (used) out[name]?.push(page)
     }

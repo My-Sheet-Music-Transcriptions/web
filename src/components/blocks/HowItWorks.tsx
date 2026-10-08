@@ -1,10 +1,10 @@
+import { howItWorks } from '@content/en/data/home'
 import step1 from '~/assets/images/home/step-1-send-audio.png?w=240;403&as=picture'
 import step2 from '~/assets/images/home/step-2-transcribe.png?w=240;403&as=picture'
 import step3 from '~/assets/images/home/step-3-print-play.jpg?w=200;255&as=picture'
 import { Reveal } from '~/components/motion/Reveal'
 import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
-import { howItWorks } from '~/content/en/data/home'
 
 const stepImages = { 'step-1': step1, 'step-2': step2, 'step-3': step3 }
 

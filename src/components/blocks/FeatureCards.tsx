@@ -1,7 +1,7 @@
+import { included } from '@content/en/data/home'
 import { Reveal } from '~/components/motion/Reveal'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
-import { included } from '~/content/en/data/home'
 
 const icons = import.meta.glob<PictureSource>(
   '../../assets/images/icons/{fast-delivery,formats,accuracy}.png',
