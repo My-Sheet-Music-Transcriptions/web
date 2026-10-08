@@ -3,7 +3,10 @@ import { cn } from '~/lib/cn'
 
 export interface SectionHeadingProps {
   children: ReactNode
-  /** Short rule under the heading: orange (accent) or grey, as on the live site. */
+  /**
+   * Short 1px rule under the heading (orange on every live section): 50% of the heading's width on
+   * phones, 20% from tablet up, 35px below the heading and 15px above what follows.
+   */
   rule?: 'accent' | 'grey' | 'none'
   /** Heading level; the homepage uses h2 for every section. */
   as?: 'h1' | 'h2' | 'h3'
@@ -28,7 +31,7 @@ export function SectionHeading({
       <Tag
         id={id}
         className={cn(
-          'text-[28px] leading-tight md:text-h2',
+          'text-[28px] leading-8 md:text-h2 md:leading-8',
           tone === 'light' ? 'text-white' : 'text-ink',
         )}
       >
@@ -38,7 +41,7 @@ export function SectionHeading({
         <span
           aria-hidden="true"
           className={cn(
-            'mt-5 block h-px w-[150px]',
+            'mt-[35px] mb-[15px] block h-px w-1/2 md:w-1/5',
             rule === 'accent' ? 'bg-accent' : 'bg-[#c9c9c9]',
           )}
         />

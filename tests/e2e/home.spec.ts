@@ -15,8 +15,9 @@ test.describe('homepage', () => {
     await expect(page.getByRole('heading', { level: 1 })).toContainText(
       'sheet music transcription service',
     )
-    await expect(page.getByRole('link', { name: /learn more/i })).toBeVisible()
+    // As on the live site, the hero's "Learn more" button is desktop-only.
     if (info.project.name !== 'mobile') {
+      await expect(page.getByRole('link', { name: /learn more/i })).toBeVisible()
       await expect(
         page.getByRole('banner').getByRole('link', { name: /request your sheet music/i }),
       ).toBeVisible()

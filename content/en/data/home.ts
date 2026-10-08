@@ -115,7 +115,7 @@ export const serviceGrid: ServiceGridItem[] = [
 export const included: FeatureItem[] = [
   {
     title: 'Fast turnaround time',
-    body: '1-2 days standard delivery time. Rush orders available',
+    body: '1-2 days standard delivery time.\nRush orders available',
     icon: 'fast-delivery',
   },
   {

@@ -1,31 +1,50 @@
+import type { CSSProperties } from 'react'
 import { cn } from '~/lib/cn'
 
-/** Elementor "waves" shape divider used above/below the photo banners (white, layered opacity). */
+/**
+ * Elementor "waves" shape divider used above/below the photo banners (white, layered opacity). As on the
+ * live site, the top shape is drawn as is and the bottom one turned 180°, and `width` (% of the section,
+ * centred) stretches the waves wider than the section.
+ */
 export function WaveDivider({
   position,
   className,
-  height = 60,
+  height = 42,
+  width = 100,
+  mobileHeight = height,
+  mobileWidth = width,
 }: {
   position: 'top' | 'bottom'
   className?: string
   height?: number
+  width?: number
+  /** Height and width below 768px (Elementor sets the shape per device). */
+  mobileHeight?: number
+  mobileWidth?: number
 }) {
   return (
     <div
       aria-hidden="true"
       className={cn(
-        'pointer-events-none absolute inset-x-0 z-10 overflow-hidden leading-[0]',
-        position === 'top' ? 'top-0 rotate-180' : 'bottom-0',
+        'pointer-events-none absolute inset-x-0 z-10 h-[var(--wave-hm)] overflow-hidden leading-[0] md:h-[var(--wave-h)]',
+        position === 'top' ? 'top-[-1px]' : 'bottom-[-1px] rotate-180',
         className,
       )}
-      style={{ height }}
+      style={
+        {
+          '--wave-h': `${height}px`,
+          '--wave-hm': `${mobileHeight}px`,
+          '--wave-w': `calc(${width}% + 1.3px)`,
+          '--wave-wm': `calc(${mobileWidth}% + 1.3px)`,
+        } as CSSProperties
+      }
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1000 100"
         preserveAspectRatio="none"
         aria-hidden="true"
-        className="block h-full w-full fill-white"
+        className="relative left-1/2 block h-full w-[var(--wave-wm)] -translate-x-1/2 fill-white md:w-[var(--wave-w)]"
       >
         <path
           opacity="0.33"

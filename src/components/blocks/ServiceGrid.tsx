@@ -27,26 +27,24 @@ export function ServiceGrid({
 }: ServiceGridProps) {
   const items = limit ? serviceGrid.slice(0, limit) : serviceGrid
   return (
-    <section className="pb-20 pt-12" aria-labelledby="services-title">
-      <div className="container-content">
-        <SectionHeading id="services-title" rule="grey">
-          {title}
-        </SectionHeading>
-        <ul className="mx-auto mt-10 grid max-w-[1040px] grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4">
+    <section className="pt-[154px] md:pb-[72px]" aria-labelledby="services-title">
+      <div className="mx-auto max-w-[1140px] md:px-[10px]">
+        <SectionHeading id="services-title">{title}</SectionHeading>
+        <ul className="mx-auto mt-5 grid max-w-[1120px] grid-cols-2 items-start gap-y-[30px] md:grid-cols-4">
           {items.map((s) => {
             const img = icons[`../../assets/images/icons/${s.icon}.png`]
             return (
-              <li key={s.label} className="text-center">
+              <li key={s.label} className="p-[10px] text-center">
                 <SmartLink href={s.href} className="group inline-flex flex-col items-center">
                   {img ? (
                     <Picture
                       image={img}
                       alt=""
-                      sizes="130px"
-                      className="h-[130px] w-[130px] transition-transform group-hover:scale-105"
+                      sizes="137px"
+                      className="h-[137px] w-[137px] transition-transform group-hover:scale-105 md:h-[130px] md:w-[130px]"
                     />
                   ) : null}
-                  <span className="mt-4 block max-w-[220px] text-h4 font-bold leading-[19px] text-[#363636] group-hover:text-accent-deep">
+                  <span className="mt-[14px] mb-4 block text-h4 font-bold leading-[19.2px] text-[#363636] group-hover:text-accent-deep">
                     {s.label}
                   </span>
                 </SmartLink>
@@ -54,7 +52,7 @@ export function ServiceGrid({
             )
           })}
         </ul>
-        <div className="mt-12 text-center">
+        <div className="mt-[33px] text-center md:mt-[34px]">
           <Button asChild>
             <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
           </Button>

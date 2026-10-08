@@ -135,20 +135,31 @@ export function ContactSection({
   return (
     <section
       id={id}
-      className="relative scroll-mt-20 bg-peach pb-20 pt-24"
+      className="relative scroll-mt-20 bg-[rgb(244_153_70/0.23)] pt-[110px] pb-[117px] md:pb-[133px]"
       aria-labelledby={`${uid}-title`}
     >
-      <WaveDivider position="top" height={70} />
-      <div className="container-narrow">
-        <h2 id={`${uid}-title`} className="text-center text-[28px] md:text-h2">
+      <WaveDivider position="top" height={86} width={300} mobileHeight={44} />
+      <div className="mx-auto max-w-[880px] px-5 md:px-0">
+        <h2
+          id={`${uid}-title`}
+          className="text-center text-[28px] leading-8 md:text-h2 md:leading-8"
+        >
           {title}
         </h2>
-        <p className="mt-4 text-center text-[18px] text-ink">{subtitle}</p>
-        <p className="mt-6 flex items-center justify-center gap-2 text-body font-bold text-ink">
-          <Icon name="send" size={18} className="text-accent-deep" />
-          {responseTime}
+        <p className="mt-5 text-center text-[20px] leading-[30px] font-light text-secondary">
+          {subtitle}
         </p>
-        <span aria-hidden="true" className="mx-auto mt-4 block h-px w-[120px] bg-[#c9c9c9]" />
+        <p
+          data-live-colour=""
+          className="mx-[-10px] mt-[44px] flex items-center justify-center gap-x-0 rounded-[25px] bg-[linear-gradient(266deg,#2ec4b6_0%,#2e97c4_100%)] pt-1.5 pr-2.5 pb-3 pl-2.5 text-body leading-8 font-bold text-white md:mx-auto md:w-[430px] md:pt-0.5 md:pr-10 md:pb-2 md:pl-[42px]"
+        >
+          <Icon name="fa-paper-plane" size={25} className="mt-2 hidden shrink-0 md:block" />
+          <span className="mt-2 flex-1 text-center">{responseTime}</span>
+        </p>
+        <span
+          aria-hidden="true"
+          className="mx-auto mt-[25px] block h-px w-1/2 bg-accent md:w-1/5"
+        />
 
         {status === 'sent' ? (
           <output
@@ -165,7 +176,7 @@ export function ContactSection({
         ) : (
           <form
             ref={formRef}
-            className="mt-10"
+            className="mt-4 md:mt-[35px]"
             aria-label={gift ? 'Request your gift card' : 'Request your sheet music'}
             method="post"
             action="/api/contact"
@@ -173,7 +184,7 @@ export function ContactSection({
             noValidate
             onSubmit={onSubmit}
           >
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid gap-x-[10px] gap-y-[6px] md:grid-cols-2">
               <div>
                 <Label htmlFor={`${uid}-name`} required>
                   Name
@@ -203,7 +214,7 @@ export function ContactSection({
             </div>
             {gift ? (
               <>
-                <div className="mt-5 grid gap-5 md:grid-cols-[1fr_200px]">
+                <div className="mt-[6px] grid gap-x-[10px] gap-y-[6px] md:grid-cols-[1fr_200px]">
                   <div>
                     <Label htmlFor={`${uid}-amount`} required>
                       Amount
@@ -227,7 +238,7 @@ export function ContactSection({
                     </select>
                   </div>
                 </div>
-                <div className="mt-5">
+                <div className="mt-[6px]">
                   <Label htmlFor={`${uid}-message`}>Details about the gift card</Label>
                   <Textarea
                     {...field('message')}
@@ -239,23 +250,25 @@ export function ContactSection({
               </>
             ) : (
               <>
-                <div className="mt-5">
+                <div className="mt-[6px]">
                   <Label htmlFor={`${uid}-link`}>Where can we listen to the music?</Label>
                   <Textarea
                     {...field('link')}
                     rows={2}
+                    className="h-[55px]"
                     placeholder="A Youtube link? Copy paste it here. An audio file? Send us an email or attach it below!"
                   />
                 </div>
-                <div className="mt-5">
+                <div className="mt-[6px]">
                   <Label htmlFor={`${uid}-instruments`}>What instruments?</Label>
                   <Textarea
                     {...field('instruments')}
                     rows={2}
+                    className="h-[55px]"
                     placeholder="What instruments is the transcription or arrangement for?"
                   />
                 </div>
-                <div className="mt-5">
+                <div className="mt-[6px]">
                   <Label htmlFor={`${uid}-file`} hint="(audio or pdf)">
                     Upload a file
                   </Label>
@@ -263,29 +276,37 @@ export function ContactSection({
                     {...field('file')}
                     type="file"
                     accept="audio/*,video/*,.pdf,image/*,.zip"
-                    className="block w-full rounded-field bg-white px-3 py-2 text-small file:mr-3 file:rounded-pill file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-[13px] file:font-bold file:text-white"
+                    className="block h-[30px] w-full bg-white text-body text-ink file:mr-1 file:rounded-[2px] file:border file:border-[#767676] file:bg-[#efefef] file:px-1.5 file:py-px"
                   />
                   <Err name="file" />
                 </div>
-                <div className="mt-5">
+                <div className="mt-[6px]">
                   <Label htmlFor={`${uid}-message`} required>
                     Message
                   </Label>
                   <Textarea
                     {...field('message')}
                     rows={8}
+                    className="h-[256px]"
                     required
                     placeholder="Do you need a price quote for a transcription? What instruments do you have available? Do you have a deadline?  Send us an email if you wish to upload multiple files."
                   />
                   <Err name="message" />
                 </div>
-                <div className="mt-5 grid grid-cols-[150px_1fr] gap-4">
+                <div className="mt-[6px] grid gap-x-[10px] gap-y-[6px] md:grid-cols-[213px_1fr]">
                   <div>
                     <Label htmlFor={`${uid}-prefix`} hint="(not required)">
                       Prefix
                     </Label>
-                    <select {...field('prefix')} className={inputClass} defaultValue="">
-                      <option value="">—</option>
+                    <select
+                      {...field('prefix')}
+                      className={cn(
+                        inputClass,
+                        'appearance-none bg-[url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2018%2016%27%3E%3Cpath%20d=%27M0%200h18L9%2016z%27%20fill=%27%23aaa%27/%3E%3C/svg%3E")] bg-[length:18px_16px] bg-[position:right_16px_center] bg-no-repeat',
+                      )}
+                      defaultValue=""
+                    >
+                      <option value="" />
                       {prefixes.map((p) => (
                         <option key={p} value={p}>
                           {p}
@@ -321,7 +342,7 @@ export function ContactSection({
               />
             </div>
             <input type="hidden" name="startedAt" value={startedAt.current} />
-            <p className="mt-4 text-small leading-6 text-ink">
+            <p className="mt-[6px] text-[15px] leading-[22.5px] text-ink">
               By submitting this request, you agree to our{' '}
               <SmartLink href="/gdpr" className="font-bold text-ink underline">
                 Privacy Policy
@@ -337,7 +358,7 @@ export function ContactSection({
             <Button
               type="submit"
               size="block"
-              className="mt-4 rounded-[25px] py-[15px]"
+              className="mt-[6px] rounded-[25px] py-[15px] leading-4"
               disabled={status === 'sending'}
             >
               {status === 'sending' ? 'Sending…' : 'Send'}
@@ -350,7 +371,7 @@ export function ContactSection({
 }
 
 const inputClass =
-  'block w-full rounded-field border border-transparent bg-white px-4 py-2.5 text-body text-ink placeholder:text-[#767676] focus:border-primary aria-[invalid]:border-[#b3261e]'
+  'block h-10 w-full rounded-[25px] border border-transparent bg-white px-4 py-2 text-body leading-[22.4px] text-ink placeholder:text-[#767676] focus:border-primary aria-[invalid]:border-[#b3261e]'
 
 function Label({
   htmlFor,
@@ -364,10 +385,13 @@ function Label({
   hint?: string
 }) {
   return (
-    <label htmlFor={htmlFor} className="mb-1.5 block text-small font-bold text-ink">
+    <label
+      htmlFor={htmlFor}
+      className="block pb-0.5 text-body leading-[48px] font-semibold text-secondary"
+    >
       {children}
       {required ? (
-        <span className="ml-1 text-[#b3261e]" aria-hidden="true">
+        <span className="ml-2 text-[#b3261e]" aria-hidden="true">
           *
         </span>
       ) : null}
@@ -379,5 +403,10 @@ function Input(props: React.ComponentPropsWithoutRef<'input'>) {
   return <input {...props} className={cn(inputClass, props.className)} />
 }
 function Textarea(props: React.ComponentPropsWithoutRef<'textarea'>) {
-  return <textarea {...props} className={cn(inputClass, 'resize-y', props.className)} />
+  return (
+    <textarea
+      {...props}
+      className={cn(inputClass, 'resize-y px-[14px] py-[5px]', props.className)}
+    />
+  )
 }

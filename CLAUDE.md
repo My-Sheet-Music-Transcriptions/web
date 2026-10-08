@@ -77,7 +77,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description/image
   (the image file must exist in dist), twitter card, `<html lang>`, valid JSON-LD, images with alt/width/height,
   no broken internal links, present in sitemap unless `noindex`.
-- Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`).
+- Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`). The one exception
+  is elements marked `data-live-colour`, which keep the live site's colours by decision (filled buttons, pricing headers,
+  the active nav item, the current language, the response-time pill); contrast is checked everywhere else.
 - Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 150 KB.
 - Biome formats and lints everything; `tsc --noEmit` must pass (pages are type-checked against the block props).
 - `meta.ts` is a literal only; pages use the typography components for text (`tests/unit/content.test.ts`).
@@ -124,8 +126,8 @@ mode: `SITE_LOCALE` unset or `all`); only the English Netlify site builds previe
 ## Design tokens
 
 Defined once in `src/styles/theme.css` (`@theme`, every token with a usage comment; `app.css` only imports).
-Text and fills use the contrast-safe `primary` #1a7f97 and `accent-deep` #b8571c; the live site's #219EBC / #F49946
-survive as decorative `sky` / `accent`. Navy #023047, teal #239c90, ink #444. Font: Montserrat (variable). Radii:
+Text uses the contrast-safe `primary` #1a7f97 and `accent-deep` #b8571c; filled buttons keep the live site's `cta` #E2864D
+and `sky` #219EBC (marked `data-live-colour`), and #F49946 stays the decorative `accent`. Navy #023047, teal #239c90, ink #444. Font: Montserrat (variable). Radii:
 card 12px, pill 28px, field 20px. Containers 1140 / 1200 / 900 px. Breakpoints: md 768, lg 1025 (Elementor's
 tablet/desktop split). Use utilities, never ad-hoc hex values in components. `tests/unit/theme-tokens.test.ts`
 checks names, usage notes and contrast.

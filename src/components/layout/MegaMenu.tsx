@@ -55,8 +55,8 @@ export function MegaMenu({ item }: { item: NavItem }) {
       <button
         type="button"
         className={cn(
-          'inline-flex items-center gap-1 rounded px-3 py-2 text-small font-semibold text-[#333] hover:text-accent-deep',
-          open && 'text-accent-deep',
+          'inline-flex items-center gap-2 rounded px-[14px] py-[13px] text-[15px] leading-5 font-semibold text-secondary hover:text-[#f2893b]',
+          open && 'text-[#f2893b]',
         )}
         aria-expanded={open}
         aria-controls={id}
@@ -71,7 +71,7 @@ export function MegaMenu({ item }: { item: NavItem }) {
       >
         {item.label}
         <Icon
-          name="chevron-down"
+          name="fa-caret-down"
           size={14}
           className={cn('transition-transform', open && 'rotate-180')}
         />

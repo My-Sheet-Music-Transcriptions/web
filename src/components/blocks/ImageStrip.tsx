@@ -13,6 +13,9 @@ const alts: Record<string, string> = {
   'strip-piano-7': 'Close-up of a handwritten-style piano score',
   'strip-piano-8': 'Pianist playing from a printed score',
   'strip-piano-10': 'Vocal and piano score on a digital piano',
+  'strip-piano-9': 'Printed lead sheet on a wooden table next to a plant',
+  'strip-piano-3': 'Piano songbook open on a stand above a digital keyboard',
+  'strip-piano-4': 'Piano score resting on the keys of a piano',
 }
 
 export interface ImageStripProps {
@@ -20,7 +23,11 @@ export interface ImageStripProps {
   items?: string[]
 }
 
-/** Horizontal strip of 250x374 sheet-music photos; scrolls on touch, no autoplay. */
+/**
+ * Strip of 250x374 sheet-music photos that scrolls by on its own, as on the live site (one photo every
+ * 8 s, endless: the list is drawn twice and slides by half its width). It stops for reduced-motion users
+ * and while hovered or focused. Hidden on phones, like the live site.
+ */
 export function ImageStrip({
   items = [
     'strip-guitar-3',
@@ -29,31 +36,37 @@ export function ImageStrip({
     'strip-piano-8',
     'strip-piano-7',
     'strip-piano-6',
+    'strip-piano-9',
+    'strip-guitar-4',
+    'strip-piano-3',
+    'strip-piano-4',
   ],
 }: ImageStripProps) {
+  const photos = items.flatMap((id) => {
+    const img = images[`../../assets/images/home/${id}.jpg`]
+    return img ? [{ id, img }] : []
+  })
   return (
-    <section aria-label="Examples of our sheet music" className="py-12">
-      <ul
-        className="flex snap-x gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:thin] focus-visible:outline-3 focus-visible:outline-primary lg:justify-center-safe"
-        // biome-ignore lint/a11y/noNoninteractiveTabindex: a horizontally scrollable region must be keyboard reachable
-        tabIndex={0}
-        aria-label="Scroll through photos of our sheet music"
-      >
-        {items.map((id) => {
-          const img = images[`../../assets/images/home/${id}.jpg`]
-          if (!img) return null
-          return (
-            <li key={id} className="w-[250px] shrink-0 snap-center overflow-hidden rounded-[6px]">
-              <Picture
-                image={img}
-                alt={alts[id] ?? ''}
-                sizes="250px"
-                className="h-[374px] w-[250px] object-cover"
-              />
-            </li>
-          )
-        })}
-      </ul>
+    <section
+      aria-label="Examples of our sheet music"
+      className="hidden overflow-hidden pt-[107px] pb-[70px] md:block"
+    >
+      <div className="group mx-[-80px] flex w-max motion-safe:animate-marquee hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]">
+        {[0, 1].map((copy) => (
+          <ul key={copy} className="flex gap-5 pr-5" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {photos.map(({ id, img }) => (
+              <li key={id} className="w-[250px] shrink-0">
+                <Picture
+                  image={img}
+                  alt={copy === 0 ? (alts[id] ?? '') : ''}
+                  sizes="250px"
+                  className="h-[374px] w-[250px] rounded-card object-cover"
+                />
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
     </section>
   )
 }

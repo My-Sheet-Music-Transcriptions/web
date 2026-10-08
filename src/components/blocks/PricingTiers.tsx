@@ -11,7 +11,7 @@ const icons = import.meta.glob<PictureSource>('../../assets/images/icons/*.png',
   import: 'default',
   query: '?w=110;220&as=picture',
 })
-const tones = { teal: 'bg-teal', blue: 'bg-sky', navy: 'bg-navy' }
+const tones = { teal: 'bg-teal-light', blue: 'bg-sky', navy: 'bg-navy' }
 
 export interface PricingTiersProps {
   title?: string
@@ -29,43 +29,56 @@ export function PricingTiers({
   ctaHref = '/pricing',
 }: PricingTiersProps) {
   return (
-    <section className="pb-16 pt-20" aria-labelledby="pricing-title">
-      <div className="mx-auto max-w-[1120px] px-4 md:px-10">
-        <SectionHeading id="pricing-title">{title}</SectionHeading>
-        {children ? <div className="mt-8 flex flex-col gap-4 text-ink">{children}</div> : null}
-        <ul className="mt-20 grid gap-x-5 gap-y-20 md:grid-cols-3">
+    <section className="pt-[30px] pb-[10px]" aria-labelledby="pricing-title">
+      <div className="mx-auto max-w-[1108px] px-5 md:px-0">
+        <SectionHeading id="pricing-title" className="px-[10px] md:px-[41px]">
+          {title}
+        </SectionHeading>
+        {children ? (
+          <div className="mt-5 flex flex-col gap-[14.4px] px-[10px] text-ink md:px-[65px]">
+            {children}
+          </div>
+        ) : null}
+        <ul className="mt-[92px] grid gap-y-[121px] md:mt-[162px] md:grid-cols-3 md:gap-x-5">
           {pricingTiers.map((t) => {
             const img = icons[`../../assets/images/icons/${t.icon}.png`]
             return (
-              <li key={t.id} className="relative flex flex-col rounded-card bg-white shadow-card">
+              <li
+                key={t.id}
+                className={cn(
+                  'relative flex flex-col rounded-card bg-white shadow-[0_0_45px_rgb(0_0_0/0.13)] md:min-h-[435px]',
+                  t.note ? 'min-h-[435px]' : 'min-h-[368px]',
+                )}
+              >
                 {img ? (
                   <Picture
                     image={img}
                     alt=""
                     sizes="107px"
-                    className="absolute left-1/2 top-0 h-[107px] w-[107px] -translate-x-1/2 -translate-y-[62%]"
+                    className="absolute left-1/2 top-[-83px] h-[104px] w-[105px] -translate-x-1/2 md:h-[106px] md:w-[107px]"
                   />
                 ) : null}
                 <h3
+                  data-live-colour=""
                   className={cn(
-                    'rounded-t-card py-[22px] pt-10 text-center text-[26px] font-bold leading-none text-white',
+                    'rounded-t-card py-[22px] text-center text-[26px] font-bold leading-[26px] text-white',
                     tones[t.tone],
                   )}
                 >
                   {t.title}
                 </h3>
-                <div className="flex flex-1 flex-col px-6 pb-7 pt-5 text-center text-ink">
+                <div className="flex flex-1 flex-col pt-[5px] text-center text-ink">
                   <p className="text-[18px] leading-9">from</p>
-                  <p className="text-price font-bold leading-none">{t.from}</p>
-                  <p className="mt-2 text-[18px] leading-9">{t.unit}</p>
-                  <p className="mt-4 text-body font-bold leading-8">Pricing factors:</p>
-                  <ul className="mx-auto mt-1 list-disc space-y-1 pl-5 text-left text-small leading-5">
+                  <p className="mt-1 text-price font-bold leading-[46px]">{t.from}</p>
+                  <p className="-mt-0.5 text-[18px] leading-9">{t.unit}</p>
+                  <p className="mt-5 text-body font-bold leading-8">Pricing factors:</p>
+                  <ul className="mx-[26px] mt-[5px] list-disc pl-10 text-left text-body">
                     {t.factors.map((f) => (
                       <li key={f}>{f}</li>
                     ))}
                   </ul>
                   {t.note ? (
-                    <p className="mt-auto pt-6 text-right text-caption italic leading-5">
+                    <p className="mt-auto pt-9 pr-[26px] pb-[26px] text-right text-small leading-[21px] italic">
                       {t.note}
                     </p>
                   ) : (
@@ -76,7 +89,7 @@ export function PricingTiers({
             )
           })}
         </ul>
-        <div className="mt-12 text-center">
+        <div className="mt-[63px] text-center md:mt-[65px]">
           <Button asChild>
             <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
           </Button>

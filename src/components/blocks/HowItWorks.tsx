@@ -7,6 +7,8 @@ import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 
 const stepImages = { 'step-1': step1, 'step-2': step2, 'step-3': step3 }
+/** Phone widths of the step illustrations, as on the live site. */
+const stepWidths = { 'step-1': 'w-[177px]', 'step-2': 'w-[188px]', 'step-3': 'w-[112px]' }
 
 export interface HowItWorksProps {
   title?: string
@@ -16,29 +18,38 @@ export interface HowItWorksProps {
 /** "How does it work?": three numbered steps; one wide illustration on desktop, stacked on mobile. */
 export function HowItWorks({ title = 'How does it work?', id = 'how-it-works' }: HowItWorksProps) {
   return (
-    <section id={id} className="scroll-mt-20 pb-16 pt-20 lg:pt-24" aria-labelledby={`${id}-title`}>
-      <div className="container-content">
-        <SectionHeading id={`${id}-title`} rule="grey">
-          {title}
-        </SectionHeading>
-        <div className="mx-auto mt-12 hidden max-w-[974px] lg:block">
+    <section
+      id={id}
+      className="scroll-mt-20 md:mt-5 px-[10px] pt-[50px] pb-[50px] lg:px-[55px] lg:pb-[84px]"
+      aria-labelledby={`${id}-title`}
+    >
+      <div className="mx-auto max-w-[1140px] pt-[10px]">
+        <SectionHeading id={`${id}-title`}>{title}</SectionHeading>
+        <div className="mx-auto mt-5 hidden w-[974px] max-w-full lg:block">
           <Picture
             image={wide}
             alt="Three steps: send us the audio, we transcribe it, print and play the PDF"
             sizes="974px"
           />
         </div>
-        <ol className="mx-auto mt-10 grid max-w-[1000px] gap-12 md:grid-cols-3 md:gap-6 lg:mt-8">
+        <ol className="mx-auto -mt-[10px] grid max-w-[1080px] gap-[30px] md:grid-cols-3 md:gap-[60px] lg:mt-0">
           {howItWorks.map((step) => (
-            <li key={step.title} className="flex flex-col items-center text-center">
+            <li
+              key={step.title}
+              className="flex flex-col items-center py-[10px] text-center lg:pt-0"
+            >
               <Picture
                 image={stepImages[step.image]}
                 alt=""
-                sizes="(min-width: 768px) 160px, 200px"
-                className="mb-6 h-auto w-[160px] lg:hidden"
+                sizes="200px"
+                className={`mb-5 h-auto lg:hidden ${stepWidths[step.image]}`}
               />
-              <h3 className="text-h3 font-extrabold">{step.title}</h3>
-              <p className="mt-3 max-w-[280px] text-small leading-6 text-ink">{step.body}</p>
+              <h3 className="text-h3 leading-[23px] font-extrabold lg:leading-[26px]">
+                {step.title}
+              </h3>
+              <p className="mt-5 mb-[14.4px] max-w-[310px] text-body text-secondary md:max-w-[280px] lg:mb-0">
+                {step.body}
+              </p>
             </li>
           ))}
         </ol>

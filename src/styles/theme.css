@@ -9,9 +9,9 @@
 
   /* Brand palette */
   /*
-   * Contrast note: the live site uses #219EBC / #E2864D for text and buttons, which fail WCAG AA
-   * (3.1:1 and 2.7:1 on white). Text and button fills use the darker variants below (>= 4.5:1);
-   * the original hues stay as `sky` and `accent` for decorative use (stars, rules, icons).
+   * Contrast note: the live site uses #219EBC / #E2864D for buttons, which fail WCAG AA with white
+   * 14px text (3.1:1 and 2.7:1). Buttons keep the live colours (`cta`, `sky`) to match the site;
+   * text on white uses the darker variants below (>= 4.5:1).
    */
   --color-primary: #1a7f97; /* text links, outlined buttons, primary button fill (4.8:1 on white) */
   --color-primary-deep: #15687b; /* hover of primary */
@@ -23,6 +23,7 @@
   --color-accent: #f49946; /* Elementor "Accent": orange rules and decorative highlights (never text) */
   --color-accent-deep: #b8571c; /* filled CTA buttons and orange text on white (4.7:1) */
   --color-accent-hover: #a34c17;
+  --color-cta: #e2864d; /* filled orange buttons, as on the live site (white text 2.7:1: buttons only) */
   --color-accent-light: #ffb36b; /* orange text on dark backgrounds */
   --color-orange: #d4780f; /* large-text highlight ("#1" in the hero, 3.2:1) */
   --color-orange-tint: #ec8a1b1f;
@@ -75,10 +76,21 @@
   --container-content: 1140px;
   --container-wide: 1200px;
   --container-narrow: 900px;
+  --breakpoint-sm: 640px; /* large phones; every breakpoint is in px so they sort correctly */
   --breakpoint-md: 768px; /* Elementor mobile ends at 767 */
   --breakpoint-lg: 1025px; /* Elementor tablet ends at 1024 */
+  --breakpoint-xl: 1280px; /* wide desktop */
+  --breakpoint-2xl: 1536px; /* unused, kept in px for ordering */
   --spacing-section: 50px;
   --spacing-section-lg: 90px;
+
+  /* Motion */
+  --animate-marquee: marquee 80s linear infinite; /* homepage photo strip: one photo every 8 s, as live */
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 @layer base {
@@ -99,7 +111,6 @@
   h4 {
     color: var(--color-ink);
     font-weight: 700;
-    text-wrap: balance;
   }
   /* Emphasis inside text is plain <strong>/<em> everywhere (pages, blocks, stories): bold in the colour
      of the text around it. */

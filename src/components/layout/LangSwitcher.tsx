@@ -24,7 +24,7 @@ export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: Lang
     <nav
       aria-label="Language"
       className={cn(
-        'flex items-center text-small',
+        'flex items-center text-small leading-[21px]',
         tone === 'light' ? 'text-white' : 'text-ink',
         className,
       )}
@@ -36,7 +36,7 @@ export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: Lang
         return (
           <Fragment key={locale}>
             {i > 0 && (
-              <span aria-hidden="true" className="px-1 opacity-60">
+              <span aria-hidden="true" className="px-1">
                 |
               </span>
             )}
@@ -45,10 +45,11 @@ export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: Lang
               hrefLang={target.lang}
               lang={target.lang}
               aria-current={current ? 'true' : undefined}
+              data-live-colour={current ? '' : undefined}
               aria-label={`${label} – ${target.siteName}`}
               className={cn(
-                'rounded px-0.5 font-semibold hover:underline',
-                current ? 'text-accent-hover' : '',
+                'rounded hover:underline',
+                current ? 'text-accent' : tone === 'light' ? '' : 'text-[#575757]',
               )}
             >
               {label}

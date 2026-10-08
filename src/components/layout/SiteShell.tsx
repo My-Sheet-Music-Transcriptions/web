@@ -1,4 +1,6 @@
+import { useRouterState } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+import { stripLocale } from '~/i18n/routing'
 import { useSite } from '~/site'
 import { ConsentBanner } from './ConsentBanner'
 import { Footer } from './Footer'
@@ -8,6 +10,9 @@ import { TopBar } from './TopBar'
 /** Site chrome around every page: skip link, top bar, sticky header, footer, consent banner. */
 export function SiteShell({ children }: { children: ReactNode }) {
   const site = useSite()
+  const home = useRouterState({
+    select: (s) => stripLocale(s.location.publicHref.split(/[?#]/)[0] ?? '/').path === '/',
+  })
   return (
     <>
       <a
@@ -17,7 +22,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         {site.strings.skipToContent}
       </a>
       <TopBar />
-      <Header />
+      <Header home={home} />
       {children}
       <Footer />
       <ConsentBanner />

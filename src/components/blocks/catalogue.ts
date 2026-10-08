@@ -51,7 +51,7 @@ export const catalogue = {
     useWhen: 'The homepage opening, with the brand lockup and the Google rating card.',
     notFor: 'any other page: PageHero.',
     description:
-      'Homepage hero: brand lockup, headline with an orange highlight, two lines of copy, teal CTA, studio photo slideshow and the floating Google rating card.',
+      'Homepage hero: studio photo slideshow cut by a white diagonal, brand lockup, headline with an orange highlight, two lines of copy, teal CTA and the floating Google rating card. Phones: the photo above the copy, no button or card.',
     defaults: { slideshow: false },
     usage: '<Hero />',
     previewHeight: 820,
@@ -65,7 +65,7 @@ export const catalogue = {
     useWhen: "The homepage's fixed three steps with the wide illustration.",
     notFor: 'a page-specific process: Steps takes its own steps and icons.',
     description:
-      'Three numbered steps (send audio, we transcribe, print & play) with one wide illustration on desktop.',
+      'Three numbered steps (send audio, we transcribe, print & play) with one wide illustration on desktop, one per step on phones.',
     defaults: {},
     usage: '<HowItWorks />',
     previewHeight: 640,
@@ -77,7 +77,7 @@ export const catalogue = {
     useWhen: 'A big trust moment mid-page: the counter and the three ratings over a photo.',
     notFor: 'a page that already has ReviewCards close by; one proof banner per page.',
     description:
-      'Full-bleed photo banner with wavy edges, a big counter and three rating cards (Google, customers, Facebook).',
+      'Full-bleed piano photo with white wavy edges, a big counter and three rating cards (Google, customers, Facebook).',
     defaults: {},
     usage: '<StatsBanner />',
     previewHeight: 760,
@@ -88,7 +88,7 @@ export const catalogue = {
     role: 'offer',
     useWhen: 'Showing who the service is for, with a link per audience.',
     description:
-      'Four peach cards describing who the service is for, each linking to an audience page.',
+      'Four rounded peach cards in one row describing who the service is for, each linking to an audience page.',
     defaults: {},
     usage: '<AudienceCards />',
     previewHeight: 620,
@@ -100,7 +100,7 @@ export const catalogue = {
     useWhen:
       'Pointing to the instrument service pages; `limit` for a short list on a landing page.',
     description:
-      'Grid of instrument icons linking to service pages, with a "see all services" button.',
+      'Four-column grid of instrument icons linking to service pages, with a "see all services" button.',
     defaults: { limit: 8 },
     usage: '<ServiceGrid limit={8} />',
     previewHeight: 720,
@@ -141,7 +141,8 @@ export const catalogue = {
     role: 'story',
     useWhen: 'A visual breather of sheet-music photos between two text-heavy sections.',
     notFor: 'pictures that need a caption or a paragraph: MediaText.',
-    description: 'Horizontal strip of sheet-music photos; scrolls on touch, no autoplay.',
+    description:
+      'Strip of ten sheet-music photos that scrolls by on its own (paused on hover and for reduced motion); hidden on phones.',
     defaults: {},
     usage: '<ImageStrip />',
     previewHeight: 480,
@@ -152,7 +153,8 @@ export const catalogue = {
     role: 'proof',
     useWhen: 'Quotes that back a claim: a few customer reviews with stars.',
     notFor: 'a page that already shows StatsBanner right next to it.',
-    description: 'Customer quote cards with teal stars and a link to all reviews.',
+    description:
+      'Customer quote cards in two columns with teal stars over the peach staff lines, and a link to all reviews.',
     defaults: { limit: 4 },
     usage: '<ReviewCards limit={4} />',
     previewHeight: 900,
@@ -166,7 +168,7 @@ export const catalogue = {
     useWhen: 'Introducing the team briefly with the office photos, linking to the about page.',
     notFor: 'the about page itself: write it in full with Section and MediaText.',
     description:
-      'Office photo carousel next to the team introduction (children) and a "read more" button.',
+      'Office photo carousel (slides every 10 s) next to the team introduction (children) and a "read more" button.',
     defaults: {},
     children:
       'We are **a team of 70+ professional transcribers, arrangers, music editors, musicologists, and engineers** with proven experience in all types of musical transcriptions.\n\nWe transcribe **each note by hand and by ear one by one.**',
@@ -181,7 +183,7 @@ export const catalogue = {
     useWhen: 'The last section of every page that asks for a quote or a gift card.',
     notFor: 'a second form on the same page; one per page.',
     description:
-      'Peach section with the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
+      'Peach section under a white wave: title, subtitle, the teal response-time pill and the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
     defaults: {},
     usage:
       '<ContactSection />\n<ContactSection variant="gift-card" id="gift-card" title="Request your gift card" />',
