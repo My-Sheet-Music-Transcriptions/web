@@ -2,13 +2,13 @@ import './asset-base'
 import './entry.css'
 import type { ComponentType } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
-import samplePhoto from '~/assets/images/samples/office-transcriber.jpg?w=480;960&as=picture'
 import { blocks } from '~/components/blocks'
 import { catalogue } from '~/components/blocks/catalogue'
 import { Footer } from '~/components/layout/Footer'
 import { Header } from '~/components/layout/Header'
 import { TopBar } from '~/components/layout/TopBar'
 import { lightMarkdown } from '~/lib/light-markdown'
+import { withSamples } from '../samples'
 
 /**
  * Browser bundle of the design system (`window.MSMT`). Used by the published Design System
@@ -21,16 +21,6 @@ import { lightMarkdown } from '~/lib/light-markdown'
 // biome-ignore lint/suspicious/noExplicitAny: heterogeneous component map
 const components: Record<string, ComponentType<any>> = { ...blocks, Header, Footer, TopBar }
 const roots = new WeakMap<Element, Root>()
-
-/** Preview-only placeholders: `"sample:photo"` anywhere in the props (a list item too) becomes a bundled picture. */
-const samples: Record<string, unknown> = { 'sample:photo': samplePhoto }
-function withSamples(value: unknown): unknown {
-  if (typeof value === 'string') return value in samples ? samples[value] : value
-  if (Array.isArray(value)) return value.map(withSamples)
-  if (value && typeof value === 'object')
-    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, withSamples(v)]))
-  return value
-}
 
 function mount(name: string, el: Element, props: Record<string, unknown> = {}) {
   const C = components[name]

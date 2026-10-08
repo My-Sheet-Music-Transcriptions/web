@@ -66,8 +66,8 @@ describe('artboards', () => {
 
   it('estimates heights from the catalogue', () => {
     expect(
-      estimateHeight(['TopBar', 'Header', 'PageHero', 'Steps', 'Foo (new)', 'Footer'], 1440),
-    ).toBe(60 + 120 + 340 + 760 + 600 + 820)
+      estimateHeight(['TopBar', 'Header', 'PageHeader', 'Steps', 'Foo (new)', 'Footer'], 1440),
+    ).toBe(60 + 120 + 560 + 640 + 600 + 820)
     expect(estimateHeight(['TopBar', 'Header', 'Footer'], 390)).toBe(1600)
     expect(estimateHeight([], 1440)).toBe(900)
   })
@@ -342,7 +342,7 @@ describe('pulling an artboard back', () => {
 <div style="width: 100%; background: #ffffff;">
   <div data-msmt="TopBar"></div>
   <div data-msmt="Header"><header class="rendered"><nav>Services</nav></header></div>
-  <div data-msmt="PageHero" data-props="{&quot;title&quot;:&quot;Gift a transcription!&quot;,&quot;subtitle&quot;:&quot;It&#39;s here&quot;}"></div>
+  <div data-msmt="PageHeader" data-props="{&quot;title&quot;:&quot;Gift a transcription!&quot;,&quot;subtitle&quot;:&quot;It&#39;s here&quot;}"></div>
   <div data-msmt="MediaText" data-props='{"image":{"sources":{},"img":{"src":"img/mascot.png","w":1,"h":1}},"children":"Hi"}'></div>
   <section data-proposed="PieceList" data-props='{"count":2}' style="padding: 50px 16px;"><h2>Pieces</h2><img src="/_blob/0123456789abcdef0123456789abcdef" alt="a"><img src="https://claude.ai/_blob/ffffffffffffffffffffffffffffffff" alt="b"></section>
   <div data-msmt="Footer"></div>
@@ -368,7 +368,7 @@ describe('pulling an artboard back', () => {
     expect(blockSummary(sections).map((b) => b.name)).toEqual([
       'TopBar',
       'Header',
-      'PageHero',
+      'PageHeader',
       'MediaText',
       'PieceList',
       'Footer',

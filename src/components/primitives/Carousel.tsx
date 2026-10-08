@@ -7,6 +7,8 @@ import { Picture, type PictureSource } from './Picture'
 export interface Slide {
   image: PictureSource
   alt: string
+  /** A line under the picture where the block shows one ("Before", "After", a name). */
+  caption?: string
 }
 
 export interface CarouselProps {
@@ -25,7 +27,8 @@ export interface CarouselProps {
 
 /**
  * Photo carousel with arrows that slides on by itself, as the live site's Elementor carousels do (a 2 s
- * slide every `interval` seconds). Only the visible photo is announced.
+ * slide every `interval` seconds). Only the visible photo is announced; it is a named group, not a landmark,
+ * so it can sit inside a section labelled with the same words.
  */
 export function Carousel({
   slides,
@@ -48,7 +51,9 @@ export function Carousel({
   const arrow =
     'absolute top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-white drop-shadow'
   return (
-    <section
+    // biome-ignore lint/a11y/useSemanticElements: the WAI-ARIA carousel pattern is a named group, not a form fieldset
+    <div
+      role="group"
       className="relative"
       aria-roledescription="carousel"
       aria-label={label}
@@ -98,6 +103,6 @@ export function Carousel({
           </p>
         </>
       ) : null}
-    </section>
+    </div>
   )
 }

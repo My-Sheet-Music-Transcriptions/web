@@ -94,22 +94,26 @@ export function assetGroupSpecs(): Record<string, AssetGroupSpec> {
     'Instrument icons': {
       tile: 'm',
       readme:
-        '# Instrument icons\n\nFlat colour illustrations used by `ServiceGrid` and `PricingTiers`, always on a `cream` or `peach-deep` disc. Shown at 56–80px; do not place them on dark backgrounds or recolour them.\n',
+        '# Instrument icons\n\nFlat colour illustrations of instruments and services, used by `IconGrid`, `PricingCards` and the service page header (by file name, e.g. `piano`). Shown at 56–180px; do not place them on dark backgrounds or recolour them.\n',
       files: icons(
         'src/assets/images/icons',
-        (f) => !/^(accuracy|formats|fast-delivery|pricing-|star-rating)/.test(f),
+        (f) => !/^(accuracy|formats|fast-delivery|pricing-|star-rating|audience-)/.test(f),
       ),
     },
     'Feature icons': {
       tile: 'm',
       readme:
-        '# Feature icons\n\nThe three "why us" illustrations (`FeatureCards`), the two pricing-tier icons that differ from the instrument set, and the Google star-rating mark. Same rules as instrument icons.\n',
+        '# Feature icons\n\nThe three "what is included" illustrations and the four audience illustrations (`CardGrid`), the two pricing-tier icons that differ from the instrument set, and the Google star-rating mark. Same rules as instrument icons.\n',
       files: [
         'accuracy.png',
         'formats.png',
         'fast-delivery.png',
         'pricing-piano.png',
         'pricing-melodic.png',
+        'audience-business.png',
+        'audience-artists.png',
+        'audience-educators.png',
+        'audience-all.webp',
         'star-rating.svg',
       ].map((f) => `src/assets/images/icons/${f}`),
     },

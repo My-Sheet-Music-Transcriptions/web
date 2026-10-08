@@ -1,13 +1,15 @@
 import fs from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { type BlockDoc, catalogue, ROLES } from '../../src/components/blocks/catalogue'
+import { withBlockTable } from '../../scripts/design-system/readme-lib'
+import { type BlockDoc, catalogue, ROLE_LABELS, ROLES } from '../../src/components/blocks/catalogue'
 
 const names = Object.keys(catalogue)
 const readme = fs.readFileSync('src/components/blocks/README.md', 'utf8')
 
 describe('block catalogue', () => {
-  it('documents every block in README.md', () => {
+  it('documents every block in README.md, with the current table (pnpm ds:export rewrites it)', () => {
     for (const n of names) expect(readme, n).toContain(`\`${n}\``)
+    expect(readme).toBe(withBlockTable(readme))
   })
   it('uses the block itself as the root tag of its usage snippet', () => {
     for (const [n, doc] of Object.entries(catalogue)) {
@@ -35,6 +37,20 @@ describe('block catalogue', () => {
       expect(oneLine(doc.useWhen), `${n}.useWhen`).toBe(true)
       if (doc.notFor) expect(oneLine(doc.notFor), `${n}.notFor`).toBe(true)
     }
+  })
+  it('files every block story under Blocks/<Role>/<Name>', () => {
+    for (const [n, doc] of Object.entries(catalogue) as [string, BlockDoc][]) {
+      const story = fs.readFileSync(`src/components/blocks/${n}.stories.tsx`, 'utf8')
+      expect(/title: '([^']+)'/.exec(story)?.[1], n).toBe(`Blocks/${ROLE_LABELS[doc.role]}/${n}`)
+    }
+  })
+  it('lists the roles in Storybook in page order', () => {
+    const preview = fs.readFileSync('.storybook/preview.tsx', 'utf8').replace(/\s+/g, ' ')
+    expect(preview).toContain(
+      `'Blocks', [${Object.values(ROLE_LABELS)
+        .map((l) => `'${l}'`)
+        .join(', ')}]`,
+    )
   })
   it('keeps preview heights sane', () => {
     for (const [n, doc] of Object.entries(catalogue)) {

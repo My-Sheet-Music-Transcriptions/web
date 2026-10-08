@@ -47,14 +47,16 @@ export function RatingCard({ source, compact }: { source: RatingSource; compact?
       ) : (
         <p className="mt-[6px] text-h2 leading-8 font-bold text-ink">{source.count}</p>
       )}
-      <p
-        className={cn(
-          'text-body text-secondary',
-          source.score ? 'mt-[6px] leading-4' : 'mb-[14.4px] max-w-[160px] text-[#575757]',
-        )}
-      >
-        {source.countLabel}
-      </p>
+      {source.countLabel ? (
+        <p
+          className={cn(
+            'text-body text-secondary',
+            source.score ? 'mt-[6px] leading-4' : 'mb-[14.4px] max-w-[160px] text-[#575757]',
+          )}
+        >
+          {source.countLabel}
+        </p>
+      ) : null}
       {source.href && source.linkLabel ? (
         <a
           href={source.href}
@@ -67,7 +69,7 @@ export function RatingCard({ source, compact }: { source: RatingSource; compact?
         >
           {compact ? (
             <>
-              See more<span className="sr-only"> reviews on Google</span>
+              See more<span className="sr-only">: {source.label}</span>
             </>
           ) : (
             source.linkLabel

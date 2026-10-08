@@ -4,6 +4,7 @@ import path from 'node:path'
 import { type BlockDoc, catalogue } from '../../src/components/blocks/catalogue'
 import { FONT_FILES, parseTheme, toArtifactTokens } from '../../src/design-system/theme-parse'
 import { COMP, OUT, PROJ, writeIndex } from './lib'
+import { blockTable, withBlockTable } from './readme-lib'
 
 /**
  * Produces everything the Design System artifact needs, ready to publish, under dist/design-system:
@@ -124,7 +125,6 @@ const MOUNT_SCRIPT = `<script>if (window.MSMT) window.MSMT.renderAll()</script>`
 const previewHtml = (name: string, props: Record<string, unknown>, group: string, height: number) =>
   `<!-- @dsCard group="${group}" height=${height} -->\n<div data-msmt="${name}" data-props='${JSON.stringify(props).replace(/'/g, '&#39;')}'></div>\n${MOUNT_SCRIPT}\n`
 
-const blockTable: string[] = []
 const dts: string[] = []
 for (const [name, doc] of Object.entries(catalogue) as [string, BlockDoc][]) {
   const file = `src/components/blocks/${name}.tsx`
@@ -155,9 +155,6 @@ for (const [name, doc] of Object.entries(catalogue) as [string, BlockDoc][]) {
       doc.previewHeight,
     ),
   )
-  blockTable.push(
-    `| \`${name}\` | ${doc.description} | ${props.map((p) => p.name).join(', ') || '–'} | ${doc.dataSource ?? '–'} |`,
-  )
   const ifaceSrc = new RegExp(`export interface ${name}Props[\\s\\S]*?\\n\\}`).exec(
     fs.readFileSync(file, 'utf8'),
   )?.[0]
@@ -186,15 +183,7 @@ fs.writeFileSync(
 
 // --- block README in the repo (table generated from the catalogue)
 const readmePath = 'src/components/blocks/README.md'
-const readme = fs.readFileSync(readmePath, 'utf8')
-const tableStart = readme.indexOf('| Block |')
-const tableEnd = readme.indexOf('\n\n', tableStart)
-const newTable = [
-  '| Block | Purpose | Props | Data source |',
-  '| --- | --- | --- | --- |',
-  ...blockTable,
-].join('\n')
-fs.writeFileSync(readmePath, `${readme.slice(0, tableStart)}${newTable}${readme.slice(tableEnd)}`)
+fs.writeFileSync(readmePath, withBlockTable(fs.readFileSync(readmePath, 'utf8')))
 
 // --- README.md (brand book)
 const colour = (n: string) => theme.color.tokens.find((t) => t.name === n)?.value ?? ''
@@ -218,8 +207,8 @@ This system ships its real React components as one classic script: \`components/
 <link rel="stylesheet" href="../../components/fonts.css">
 <link rel="stylesheet" href="../../components/bundle.css">
 <script src="../../components/bundle.js"></script>
-<div data-msmt="PageHero" data-props='{"title":"Gift a transcription","subtitle":"…"}'></div>
-<div data-msmt="ReviewCards" data-props='{"limit":2}'></div>
+<div data-msmt="PageHeader" data-props='{"title":"Gift a transcription","subtitle":"…"}'></div>
+<div data-msmt="Section" data-props='{"title":"How it works","children":"…"}'></div>
 <script>MSMT.renderAll()</script>
 \`\`\`
 
@@ -262,9 +251,7 @@ Buttons are 14px bold uppercase. Headings use title case only for proper nouns; 
 
 ## Blocks
 
-| Block | Purpose | Props | Data source |
-| --- | --- | --- | --- |
-${blockTable.join('\n')}
+${blockTable()}
 
 Layout: \`TopBar\`, \`Header\`, \`Footer\` (no props; content from the locale's data files). Every page is
 TopBar + Header + blocks + Footer; \`ContactSection\` is always the last block when present.

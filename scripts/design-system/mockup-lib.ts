@@ -11,6 +11,7 @@ import {
   unwrap,
   where,
 } from '../lib/ts-literal'
+import { rendersPageHeader } from './blocks-lib'
 import { encodeProps, LAYOUT, WRAPPER_OPEN } from './review-lib'
 
 /**
@@ -30,7 +31,14 @@ export interface MockupEntry {
     type: string
     title: string
     template?: string
-    hero?: { eyebrow?: string; title: string; subtitle?: string }
+    hero?: {
+      eyebrow?: string
+      title?: string
+      subtitle?: string
+      lead?: string
+      cta?: { label: string; href: string }
+      rating?: boolean
+    }
   }
   /** The text of index.tsx. */
   source: string
@@ -61,10 +69,8 @@ const TYPOGRAPHY_MODULE = '~/components/typography'
 const PARAGRAPHS = ['Text', 'Heading']
 const TYPOGRAPHY = [...PARAGRAPHS, 'TextLink', 'List', 'ListItem', 'Quote', 'Divider']
 
-/** Every template but the homepage renders PageHero from the meta hero (or the title). */
-export function rendersPageHero(meta: { type: string; template?: string }): boolean {
-  return !(meta.type === 'page' && meta.template === 'home')
-}
+/** The templates that render PageHeader from meta.ts (see blocks-lib). */
+export { rendersPageHeader }
 
 function fail(message: string, node?: ts.Node): never {
   throw new MockupError(`cannot mockup: ${message}${node ? where(node) : ''}`)
@@ -368,8 +374,8 @@ export function mockupFromEntry(
     flushProse()
     if ((LAYOUT as readonly string[]).includes(name))
       fail(`<${name}> in the page: the layout comes with every page`, node)
-    if (name === 'PageHero' && rendersPageHero(entry.meta))
-      fail('<PageHero> in the page: this template already renders the hero from the meta', node)
+    if (name === 'PageHeader' && rendersPageHeader(entry.meta))
+      fail('<PageHeader> in the page: this template already renders the header from the meta', node)
     if (!(name in catalogue)) fail(`unknown block <${name}>`, node)
     const props: Record<string, unknown> = {}
     for (const attr of attributesOf(node)) {
@@ -399,12 +405,22 @@ export function mockupFromEntry(
     warnings.push('ContactSection is not the last block; the design system expects it last')
 
   const blocks: MockupBlock[] = [{ name: 'TopBar' }, { name: 'Header' }]
-  if (rendersPageHero(entry.meta)) {
-    const hero = entry.meta.hero ?? { title: entry.meta.title }
-    const props: Record<string, unknown> = { title: hero.title }
-    if (hero.subtitle) props.subtitle = hero.subtitle
-    if (hero.eyebrow) props.eyebrow = hero.eyebrow
-    blocks.push({ name: 'PageHero', props })
+  if (rendersPageHeader(entry.meta)) {
+    const hero = entry.meta.hero ?? {}
+    const props: Record<string, unknown> = { title: hero.title ?? entry.meta.title }
+    for (const k of ['subtitle', 'eyebrow', 'lead', 'cta'] as const)
+      if (hero[k] !== undefined) props[k] = hero[k]
+    // services show the rating card unless the meta turns it off; pages only when they ask
+    const rating = entry.meta.type === 'service' ? hero.rating !== false : hero.rating === true
+    if (rating) {
+      const locale = /^([a-z]{2})\//.exec(entry.file)?.[1] ?? 'en'
+      try {
+        props.rating = readModuleLiterals(readData(locale, 'ratings'), 'ratings.ts').google
+      } catch {
+        warnings.push(`no content/${locale}/data/ratings.ts: the header's rating card is left out`)
+      }
+    }
+    blocks.push({ name: 'PageHeader', props })
   }
   blocks.push(...body, { name: 'Footer' })
   return {

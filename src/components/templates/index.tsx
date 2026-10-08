@@ -1,7 +1,9 @@
 import type { ComponentType, ReactNode } from 'react'
 import type { Entry } from '~/content'
 import { HomeTemplate } from './HomeTemplate'
+import { LandingTemplate } from './LandingTemplate'
 import { PageTemplate } from './PageTemplate'
+import { ServiceTemplate } from './ServiceTemplate'
 
 export interface TemplateProps {
   entry: Entry
@@ -12,7 +14,8 @@ export interface TemplateProps {
 export const templates = {
   home: HomeTemplate,
   page: PageTemplate,
-  landing: PageTemplate,
+  landing: LandingTemplate,
+  service: ServiceTemplate,
 } satisfies Record<string, ComponentType<TemplateProps>>
 
 export type TemplateName = keyof typeof templates

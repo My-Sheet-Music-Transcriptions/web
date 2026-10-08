@@ -34,11 +34,14 @@ describe('block props', () => {
     expect(errors).toMatch(/has no prop "side": it takes .*imageSide/)
     expect(errors).toMatch(/tone is "blue": use one of white, cream, peach/)
     expect(errors).toMatch(/cta needs "href"/)
-    expect(errors).toMatch(/needs "alt"/)
-    expect(checkProps('Steps', { steps: [{ icon: 'nope', text: 'x' }] }).join()).toMatch(
-      /steps\[0\]\.icon is "nope": use one of .*dollar/,
+    expect(checkProps('Steps', { items: [{ icon: 'nope', text: 'x' }] }).join()).toMatch(
+      /items\[0\]\.icon is "nope": use one of .*dollar/,
     )
-    expect(checkProps('PageHero', {})).toEqual(['PageHero needs "title" (string)'])
+    expect(checkProps('PageHeader', {})).toEqual(['PageHeader needs "title" (string)'])
+    // item shapes from ~/content/types are checked too
+    expect(checkProps('CardGrid', { items: [{ title: 'x' }] }).join()).toMatch(
+      /items\[0\] needs "body"/,
+    )
   })
 })
 
@@ -49,9 +52,9 @@ describe('block index', () => {
   it('finds where each block is used from the pages themselves', () => {
     expect(usage.Hero).toEqual(['home'])
     expect(usage.Steps).toContain('gift-card')
-    // PageHero is the meta.ts `hero`, not a tag in the page
-    expect(usage.PageHero).toContain('gift-card')
-    expect(usage.PageHero).not.toContain('home')
+    // the page template renders PageHeader from meta.ts; the homepage has none
+    expect(usage.PageHeader).toContain('gift-card')
+    expect(usage.PageHeader).not.toContain('home')
   })
 
   it('lists every block once, grouped by role in page order', () => {
@@ -59,14 +62,15 @@ describe('block index', () => {
     const headings = [...index.matchAll(/^## (\w+): /gm)].map((m) => m[1])
     expect(headings).toEqual(Object.keys(ROLES))
     const at = (n: string) => index.indexOf(`- ${n}: `)
-    expect(at('PageHero')).toBeLessThan(at('ReviewCards'))
-    expect(at('ReviewCards')).toBeLessThan(at('ContactSection'))
+    expect(at('PageHeader')).toBeLessThan(at('Testimonials'))
+    expect(at('Testimonials')).toBeLessThan(at('ContactSection'))
   })
 
   it('says when to use a block, when not, and where it is used', () => {
     expect(index).toContain('  use when: The homepage opening')
-    expect(index).toContain('  not for: any other page: PageHero.')
+    expect(index).toContain('  not for: any other page: PageHeader.')
     expect(index).toContain('  used on: home\n')
-    expect(index).toMatch(/- Section: .*\n(.*\n){2} {2}not used on any page yet/)
+    const unused = blockIndex({ ...usage, Section: [] })
+    expect(unused).toMatch(/- Section: .*\n(.*\n){2} {2}not used on any page yet/)
   })
 })
