@@ -1,4 +1,10 @@
 {
   "title": "Gift card",
-  "path": "/gift-card"
+  "path": "/gift-card",
+  "canvas": {
+    "boards": [
+      "Main.dc.html",
+      "Mobile.dc.html"
+    ]
+  }
 }

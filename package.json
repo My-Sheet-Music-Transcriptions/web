@@ -34,7 +34,10 @@
     "ds:build": "vite build -c vite.ds.config.ts",
     "ds:export": "tsx scripts/design-system/export.ts",
     "ds:index": "tsx scripts/design-system/index.ts",
-    "ds:review": "tsx scripts/design-system/review.ts"
+    "ds:review": "tsx scripts/design-system/review.ts",
+    "ds:canvas": "tsx scripts/design-system/canvas.ts",
+    "ds:mockup": "tsx scripts/design-system/mockup.ts",
+    "page:status": "tsx scripts/design-system/status.ts"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.3.0",
