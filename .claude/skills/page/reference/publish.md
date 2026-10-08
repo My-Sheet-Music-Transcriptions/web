@@ -7,9 +7,13 @@
    contains or what changed in plain words, new blocks if any); subscribe to it (`subscribe_pr_activity`).
    Record the PR in `preview.json` as `pr: { number, url, branch }` and push that too, so `/status` and a
    new session find it.
-2. **The test address.** Netlify posts the deploy preview within a few minutes: wait for its comment (or
-   poll `https://deploy-preview-<n>--msmt-web.netlify.app/<locale><path>`, e.g. `/en/gift-card`,
-   `/es/precios`: previews serve every locale under its prefix) until it answers 200, check that page
+2. **The test address.** Watch the PR, don't poll: tell the person the test address is on its way, end the
+   turn, and let the PR events wake you (arm a `send_later` check-in ~10 minutes out in case none comes).
+   Netlify's bot posts one comment per site and edits it in place on every push: act on the **msmt-web**
+   comment (ignore msmt-web-storybook) only when it reads "ready" and its "Latest commit" is the PR's head
+   commit; "processing" needs nothing, "failed" means open its deploy log, fix, push. The page is
+   `<Deploy Preview URL>/<locale><path>` (e.g. `https://deploy-preview-12--msmt-web.netlify.app/en/gift-card`,
+   `/es/precios`: previews serve every locale under its prefix). Fetch it until it answers 200, check that page
    against the approved mockup section by section, then give the person that link and ask with
    AskUserQuestion: "This is the real page on a test address. Does it look right?" (options: "Yes, put it
    live" / "Something to change"). The link is a clickable markdown link straight to the page

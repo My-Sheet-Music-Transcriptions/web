@@ -15,7 +15,9 @@ worked example: read it before writing a mockup.
    `pnpm ds:mockup <slug>` instead of writing from scratch (`edit.md`). A section nothing fits becomes a
    **proposed block** (prefer a new prop on an existing block over a new block).
 2. Pictures: copy every picture the page needs into `mockups/<slug>/img/` (from the person, from
-   `src/assets/images/home/` as a stand-in, or downloaded from the live site, never linked). A real block
+   `src/assets/images/home/` as a stand-in, or downloaded from the live site, never linked). A picture you
+   do need to download goes through a browser (`wordpress.md`); one from outside our own sites gets a line
+   in your summary (where it came from, rights to confirm before publishing). A real block
    takes a picture as the string `"img/<file>"` in its props; the script turns it into the picture object
    with its real size. Porting from the live site: `wordpress.md`.
 3. The file, like the example:
