@@ -1,6 +1,7 @@
 import { Carousel, type Slide } from '~/components/primitives/Carousel'
 import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
+import type { MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { useTitleId } from '~/lib/use-title-id'
 
@@ -14,6 +15,8 @@ export interface GalleryProps {
   title?: string
   /** What the pictures are, for screen readers when there is no title. */
   label?: string
+  /** The words of the carousel arrows: `media` from content/<locale>/data/labels (carousel). */
+  labels?: MediaLabels
   /** Anchor id. */
   id?: string
 }
@@ -27,10 +30,11 @@ export function Gallery({
   columns = 5,
   title,
   label,
+  labels,
   id,
 }: GalleryProps) {
   const titleId = useTitleId(id)
-  const named = title ? { 'aria-labelledby': titleId } : { 'aria-label': label ?? 'Photos' }
+  const named = title ? { 'aria-labelledby': titleId } : { 'aria-label': label }
   if (variant === 'marquee')
     return (
       <section id={id} {...named} className="hidden overflow-hidden pt-[107px] pb-[70px] md:block">
@@ -74,7 +78,8 @@ export function Gallery({
         {variant === 'carousel' ? (
           <Carousel
             slides={images}
-            label={title ?? label ?? 'Photos'}
+            label={title ?? label ?? ''}
+            labels={labels}
             sizes="(min-width: 1140px) 1140px, 100vw"
             imageClassName="aspect-[3/2]"
           />

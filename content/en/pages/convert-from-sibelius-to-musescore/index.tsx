@@ -1,4 +1,6 @@
+import { quoteForm } from '@content/en/data/forms'
 import { platforms } from '@content/en/data/ratings'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
 import {
   ContactSection,
   CtaBand,
@@ -71,11 +73,12 @@ export default function ConvertSibeliusToMusescorePage() {
       />
 
       <RatingBanner
+        image={pianoBand}
         title="Welcome to the most popular worldwide music transcription service"
         sources={platforms}
       />
 
-      <ContactSection returnTo="/convert-from-sibelius-to-musescore" />
+      <ContactSection form={quoteForm} returnTo="/convert-from-sibelius-to-musescore" />
     </>
   )
 }

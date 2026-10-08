@@ -1,14 +1,34 @@
-import { nav } from '@content/en/data/nav'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
+import type { Link } from '~/content/types'
+import type { NavItem } from '~/i18n/types'
 import { cn } from '~/lib/cn'
-import { useSite } from '~/site'
+
+/** The menus' words: accessible names and the link at the top of an open group. */
+export interface MenuLabels {
+  /** Accessible name of the main navigation ("Main"). */
+  main: string
+  /** "Menu" */
+  menu: string
+  /** "Close menu" */
+  closeMenu: string
+  /** The link to a group's own page ("All services & samples"). */
+  allServices: string
+}
+
+export interface MobileNavProps {
+  open: boolean
+  onClose: () => void
+  nav: NavItem[]
+  cta: Link
+  labels: MenuLabels
+  account: { login: Link; signup: Link }
+}
 
 /** Full-screen mobile menu (dialog) with collapsible service groups. */
-export function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const site = useSite()
+export function MobileNav({ open, onClose, nav, cta, labels: s, account }: MobileNavProps) {
   const panel = useRef<HTMLDivElement>(null)
   const [expanded, setExpanded] = useState<string | null>(null)
 
@@ -31,7 +51,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
     <div className="fixed inset-0 z-[60] lg:hidden">
       <button
         type="button"
-        aria-label={site.strings.closeMenu}
+        aria-label={s.closeMenu}
         className="absolute inset-0 bg-black/40"
         onClick={onClose}
         tabIndex={-1}
@@ -41,21 +61,21 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
         ref={panel}
         role="dialog"
         aria-modal="true"
-        aria-label={site.strings.menu}
+        aria-label={s.menu}
         className="absolute inset-y-0 right-0 flex w-[min(360px,90vw)] flex-col bg-white shadow-float"
       >
         <div className="flex h-[57px] items-center justify-between border-b border-line px-4">
-          <span className="text-small font-bold uppercase text-ink">{site.strings.menu}</span>
+          <span className="text-small font-bold uppercase text-ink">{s.menu}</span>
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded"
-            aria-label={site.strings.closeMenu}
+            aria-label={s.closeMenu}
             onClick={onClose}
           >
             <Icon name="close" size={24} />
           </button>
         </div>
-        <nav aria-label="Main" className="flex-1 overflow-y-auto px-2 py-2">
+        <nav aria-label={s.main} className="flex-1 overflow-y-auto px-2 py-2">
           <ul>
             {nav.map((item) => (
               <li key={item.label} className="border-b border-line last:border-0">
@@ -85,7 +105,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                             className="block px-3 py-2 text-small font-bold text-primary"
                             onClick={onClose}
                           >
-                            All services & samples
+                            {s.allServices}
                           </SmartLink>
                         </li>
                         {item.groups.map((g) => (
@@ -135,18 +155,18 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
           </ul>
           <div className="mt-4 flex flex-col gap-3 px-3">
             <Button asChild size="block">
-              <SmartLink href={site.routes.contactAnchor} onClick={onClose}>
-                {site.strings.requestCta}
+              <SmartLink href={cta.href} onClick={onClose}>
+                {cta.label}
               </SmartLink>
             </Button>
             <div className="flex justify-center gap-6 text-small">
-              <a href={site.hub.login} className="inline-flex items-center gap-1.5 text-ink">
+              <a href={account.login.href} className="inline-flex items-center gap-1.5 text-ink">
                 <Icon name="users" size={16} className="text-primary" />
-                {site.strings.login}
+                {account.login.label}
               </a>
-              <a href={site.hub.signup} className="inline-flex items-center gap-1.5 text-ink">
+              <a href={account.signup.href} className="inline-flex items-center gap-1.5 text-ink">
                 <Icon name="user-plus" size={16} className="text-primary" />
-                {site.strings.signup}
+                {account.signup.label}
               </a>
             </div>
           </div>

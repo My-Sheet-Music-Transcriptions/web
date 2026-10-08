@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { NotFound } from '~/components/layout/NotFound'
+import { NotFound } from '~/app/NotFound'
 import { pageTitle } from '~/seo/head'
 import { getSiteConfig, localeOf, SITE_LOCALE } from '~/site'
 
@@ -10,12 +10,10 @@ export const Route = createFileRoute('/404')({
     const site = getSiteConfig(loaderData?.locale ?? SITE_LOCALE)
     return {
       meta: [
-        { title: pageTitle(site.strings.notFoundTitle ?? 'Page not found', site.locale) },
+        { title: pageTitle(site.strings.notFound.title, site.locale) },
         {
           name: 'description',
-          content:
-            site.strings.notFoundBody ??
-            'The page you are looking for does not exist or has moved.',
+          content: site.strings.notFound.body,
         },
         { name: 'robots', content: 'noindex, nofollow' },
       ],

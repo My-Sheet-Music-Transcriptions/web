@@ -1,4 +1,3 @@
-import starRating from '~/assets/images/icons/star-rating.svg'
 import type { RatingSource } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { Icon, type IconName } from './Icon'
@@ -26,23 +25,17 @@ export function RatingCard({ source, compact }: { source: RatingSource; compact?
             ),
       )}
     >
-      <Icon
-        name={icon}
-        size={50}
-        className={cn('mb-[7px]', className)}
-        title={source.id === 'customers' ? undefined : source.id}
-      />
+      <Icon name={icon} size={50} className={cn('mb-[7px]', className)} />
       <p className={cn('text-body font-bold text-[#575757]', !source.score && 'mb-[14.4px]')}>
         {source.label}
       </p>
       {source.score ? (
-        <img
-          src={starRating}
-          alt={`${source.score} out of 5 stars`}
+        <Icon
+          name="star-rating"
+          title={source.starsLabel}
           width={compact ? 144 : 181}
           height={compact ? 29 : 36}
-          loading="lazy"
-          className={compact ? undefined : 'h-8 w-auto md:h-9'}
+          className={cn('text-gold', !compact && 'h-8 w-auto md:h-9')}
         />
       ) : (
         <p className="mt-[6px] text-h2 leading-8 font-bold text-ink">{source.count}</p>
@@ -67,9 +60,10 @@ export function RatingCard({ source, compact }: { source: RatingSource; compact?
             link,
           )}
         >
-          {compact ? (
+          {compact && source.moreLabel ? (
             <>
-              See more<span className="sr-only">: {source.label}</span>
+              {source.moreLabel}
+              <span className="sr-only">: {source.label}</span>
             </>
           ) : (
             source.linkLabel

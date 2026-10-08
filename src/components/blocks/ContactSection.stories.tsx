@@ -1,4 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { ContactFormCopy } from '~/content/types'
+import { giftCardForm } from '~/stories/data'
+import { withSamples } from '~/stories/samples'
 import { ContactSection, type ContactSectionProps } from './ContactSection'
 import { storyArgs } from './story-args'
 
@@ -16,7 +19,6 @@ export const GiftCard: Story = {
   args: {
     variant: 'gift-card',
     id: 'gift-card',
-    title: 'Request your gift card',
-    subtitle: 'Tell us the amount and who it is for. We create the card and send it to you.',
+    form: withSamples<ContactFormCopy>(giftCardForm),
   },
 }

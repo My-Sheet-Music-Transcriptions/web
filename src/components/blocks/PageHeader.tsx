@@ -1,9 +1,8 @@
-import { iconPicture } from '~/assets/icons'
 import { Carousel, type Slide } from '~/components/primitives/Carousel'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
-import type { RatingSource } from '~/content/types'
+import type { MediaLabels, RatingSource } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { inlineMarkdown } from '~/lib/light-markdown'
 
@@ -22,14 +21,14 @@ export interface PageHeaderProps {
   rating?: RatingSource
   /** band: dark centred title band (default). split: copy left and pictures right, on white (landing pages). */
   variant?: 'band' | 'split'
-  /** The picture beside the copy (split), or beside the rating card under the band. */
+  /** The picture beside the copy (split), or beside the rating card under the band (a service's icon). */
   image?: PictureSource
-  /** An illustrated icon by name (src/assets/images/icons) beside the rating card under the band: service pages. */
-  icon?: string
   /** Alt text of the picture; empty when decorative. */
   alt?: string
   /** Two or more pictures beside the copy, as a carousel (split). */
   images?: Slide[]
+  /** The words of the carousel arrows: `media` from content/<locale>/data/labels (with `images`). */
+  labels?: MediaLabels
   /** Background of the band. */
   tone?: 'grey' | 'navy'
   /** Anchor id. */
@@ -50,13 +49,12 @@ export function PageHeader({
   rating,
   variant = 'band',
   image,
-  icon,
   alt = '',
   images,
+  labels,
   tone = 'grey',
   id,
 }: PageHeaderProps) {
-  const picture = image ?? iconPicture(icon)
   if (variant === 'split') {
     const slides = images ?? (image ? [{ image, alt }] : [])
     return (
@@ -88,6 +86,7 @@ export function PageHeader({
             <Carousel
               slides={slides}
               label={title}
+              labels={labels}
               sizes="(min-width: 1025px) 560px, 100vw"
               interval={6}
               imageClassName="aspect-[3/2]"
@@ -132,10 +131,10 @@ export function PageHeader({
         ) : null}
         {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
       </div>
-      {rating || picture ? (
+      {rating || image ? (
         <div className="container-content flex flex-wrap items-center justify-center gap-10 py-10">
-          {picture ? (
-            <Picture image={picture} alt={alt} sizes="180px" className="h-[180px] w-auto" />
+          {image ? (
+            <Picture image={image} alt={alt} sizes="180px" className="h-[180px] w-auto" />
           ) : null}
           {rating ? (
             <div className="w-full max-w-[300px]">

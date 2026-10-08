@@ -163,6 +163,8 @@ export function prepareSections(sections: string, imgDir: string): PreparedSecti
           errors.push(`${name}: missing image ${v}`)
           return v
         }
+        // an SVG (a logo) stays a URL; anything else becomes a picture with its size
+        if (/\.svg$/i.test(v)) return v
         return { sources: {}, img: { src: v, ...imageSize(path.join(imgDir, v.slice(4))) } }
       }
       if (Array.isArray(v)) return v.map(resolve)

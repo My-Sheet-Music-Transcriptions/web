@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import band from '~/assets/images/bands/included-bg.jpg?w=560;1000&as=picture'
-import photo from '~/assets/images/samples/office-transcriber.jpg?w=480;960&as=picture'
+import { mediaLabels } from '~/stories/data'
+import { sample } from '~/stories/samples'
 import { MediaText, type MediaTextProps } from './MediaText'
 import { storyArgs } from './story-args'
 
@@ -21,9 +21,10 @@ export const CenteredCarousel: Story = {
     image: undefined,
     caption: undefined,
     tone: 'white',
+    labels: mediaLabels,
     images: [
-      { image: photo, alt: 'A transcriber at work' },
-      { image: band, alt: 'A recording studio' },
+      { image: sample.photo, alt: 'A transcriber at work' },
+      { image: sample.icon, alt: 'A piano' },
     ],
     cta: { label: 'Read more about us', href: '/about-us' },
   },
@@ -37,8 +38,8 @@ export const BeforeAfter: Story = {
     tone: 'white',
     imagesLayout: 'pair',
     images: [
-      { image: photo, alt: 'The original duet', caption: 'Before' },
-      { image: band, alt: 'The arrangement', caption: 'After' },
+      { image: sample.photo, alt: 'The original duet', caption: 'Before' },
+      { image: sample.icon, alt: 'The arrangement', caption: 'After' },
     ],
     cta: { label: 'Request your arrangement', href: '/music-arrangement-service' },
   },
@@ -49,5 +50,7 @@ export const WithVideo: Story = {
     image: undefined,
     caption: undefined,
     video: { youtube: '2m9LBweAHXU', title: 'Materials and finishes of our sheet music books' },
+    labels: mediaLabels,
+    videoPoster: sample.photo,
   },
 }

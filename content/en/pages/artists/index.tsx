@@ -1,3 +1,4 @@
+import { quoteForm } from '@content/en/data/forms'
 import { google } from '@content/en/data/ratings'
 import {
   CardGrid,
@@ -279,6 +280,7 @@ export default function ArtistsPage() {
       />
 
       <ContactSection
+        form={quoteForm}
         title="Contact Us"
         subtitle="Let’s explore ways to unlock new revenue, get fans engaged, optimize rehearsal time, facilitate gig subbing, and give new life to your compositions."
         returnTo="/artists"

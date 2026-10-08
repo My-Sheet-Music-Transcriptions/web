@@ -1,3 +1,16 @@
+import {
+  faqGroup,
+  google,
+  included,
+  logo,
+  mediaLabels,
+  pianoPricing,
+  platforms,
+  quoteForm,
+  reviewLabels,
+  reviews,
+  services,
+} from '../../stories/data'
 import type { BlockName } from './index'
 
 /**
@@ -52,51 +65,6 @@ export interface BlockDoc {
   guidelines?: string
 }
 
-const google = {
-  id: 'google',
-  label: '5.0 on Google Reviews',
-  score: '5.0',
-  count: '854',
-  countLabel: '854 reviews',
-  href: 'https://www.google.com/maps/place/My+Sheet+Music+Transcriptions',
-  linkLabel: 'See on Google',
-}
-const platforms = [
-  google,
-  {
-    id: 'trustpilot',
-    label: '4.9 on Trustpilot',
-    score: '4.9',
-    href: 'https://www.trustpilot.com/review/mysheetmusictranscriptions.com',
-    linkLabel: 'See on Trustpilot',
-  },
-  {
-    id: 'facebook',
-    label: '5.0 on Facebook Reviews',
-    score: '5.0',
-    count: '300',
-    countLabel: '300 reviews',
-    href: 'https://www.facebook.com/mysheetmusictranscriptions/reviews/',
-    linkLabel: 'See on Facebook',
-  },
-]
-const generalFaq = {
-  title: 'Music services',
-  id: 'music-services',
-  items: [
-    {
-      question: 'Which songs can be transcribed?',
-      answer:
-        '**We can transcribe all songs and music genres!** Send us your songs and we’ll transcribe them.',
-    },
-    {
-      question: 'How long does it take?',
-      answer:
-        'Our standard delivery time is **1-2 days** and we also have a **rush order service!**',
-    },
-  ],
-}
-
 export const catalogue = {
   Hero: {
     group: 'Blocks',
@@ -105,12 +73,23 @@ export const catalogue = {
     notFor: 'any other page: PageHeader.',
     description:
       'Homepage hero: studio photo slideshow cut by a white diagonal, brand lockup, headline with an orange highlight, two lines of copy, teal CTA and the floating rating card. Phones: the photo above the copy, no button or card.',
-    defaults: { slideshow: false, rating: google },
-    usage: '<Hero rating={google} />',
+    defaults: {
+      title: 'Your #1 sheet music transcription service online',
+      highlight: '#1',
+      lead: 'Get accurate and high-quality sheet music to learn a song, perform, register a composition, educate, or for any music tech application.',
+      strong: 'Reliable digital notation services by professional transcribers and music editors.',
+      cta: { label: 'Learn more', href: '#how-it-works' },
+      images: ['sample:photo'],
+      slideshow: false,
+      rating: google,
+      logo,
+    },
+    usage:
+      '<Hero title="…" highlight="#1" lead="…" strong="…" cta={{ label: "Learn more", href: "#how-it-works" }} images={[slide1, slide2]} rating={google} />',
     previewHeight: 820,
     dataSource: 'content/<locale>/data/ratings.ts (google)',
     guidelines:
-      'Homepage only. Keep the headline under 60 characters; the highlight must be a substring of the title.',
+      'Homepage only. Keep the headline under 60 characters; the highlight must be a substring of the title. The photos live in the page folder.',
   },
   PageHeader: {
     group: 'Blocks',
@@ -123,15 +102,15 @@ export const catalogue = {
     defaults: {
       title: 'Piano Transcription Service',
       subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',
-      icon: 'piano',
+      image: 'sample:icon',
       rating: google,
     },
     usage:
-      '<PageHeader title="…" subtitle="…" icon="piano" rating={google} />\n<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} />',
+      '<PageHeader title="…" subtitle="…" image={pianoIcon} rating={google} />\n<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} labels={mediaLabels} />',
     previewHeight: 560,
     dataSource: 'content/<locale>/data/ratings.ts (google)',
     guidelines:
-      'The first block of every page but the homepage: the band on content pages (`icon` + `rating` on service pages), `variant="split"` on landing pages. One per page.',
+      'The first block of every page but the homepage: the band on content pages (the service icon as `image` + `rating` on service pages), `variant="split"` on landing pages. One per page.',
   },
   RatingBanner: {
     group: 'Blocks',
@@ -144,11 +123,13 @@ export const catalogue = {
       title: 'The highest-rated online sheet music transcribers',
       counter: { value: 71844, label: 'transcriptions delivered since 2011' },
       sources: platforms,
+      image: 'sample:photo',
     },
-    usage: '<RatingBanner title="…" counter={counter} sources={platforms} />',
+    usage: '<RatingBanner title="…" counter={counter} sources={platforms} image={pianoBand} />',
     previewHeight: 760,
     dataSource: 'content/<locale>/data/ratings.ts (counter, homeRatings, platforms)',
-    guidelines: 'One per page. Numbers live in data/ratings.ts; never type them into a page.',
+    guidelines:
+      'One per page. Numbers live in data/ratings.ts; never type them into a page. `image` is the piano photo every page imports from `~/assets/images/bands/stats-bg.jpg`.',
   },
   Testimonials: {
     group: 'Blocks',
@@ -159,27 +140,14 @@ export const catalogue = {
       'Customer quote cards in two columns with teal stars over the peach staff lines, and an optional link to all reviews.',
     defaults: {
       title: 'Customer Reviews',
-      items: [
-        {
-          name: 'Rob Haskin',
-          rating: 5,
-          source: 'google',
-          quote:
-            "I hired them to create a marching band transcription for my students and it's great!!",
-        },
-        {
-          name: 'Issy Melrose',
-          rating: 5,
-          source: 'google',
-          quote:
-            'Such a great service - needed a song transcribed quickly for an audition and they did a fantastic job!',
-        },
-      ],
+      items: reviews.slice(0, 2),
+      labels: reviewLabels,
       cta: { label: 'Read all our reviews', href: '/customer-reviews' },
     },
-    usage: '<Testimonials title="Customer Reviews" items={homeReviews} limit={4} />',
+    usage:
+      '<Testimonials title="Customer Reviews" items={homeReviews} limit={4} labels={reviewLabels} />',
     previewHeight: 760,
-    dataSource: 'content/<locale>/data/reviews.ts',
+    dataSource: 'content/<locale>/data/reviews.ts, labels.ts (reviewLabels)',
     guidelines:
       'Quotes are verbatim from Trustpilot/Google; add new ones to data/reviews.ts, never inline.',
   },
@@ -234,6 +202,7 @@ export const catalogue = {
     description:
       'One row per sample: its title and the YouTube video (loaded on click) beside the score picture.',
     defaults: {
+      labels: mediaLabels,
       items: [
         {
           title: 'Piano cover transcription',
@@ -262,31 +231,15 @@ export const catalogue = {
     defaults: {
       title: "What's included?",
       background: 'photo',
-      items: [
-        {
-          title: 'Fast turnaround time',
-          body: '1-2 days standard delivery time.\nRush orders available',
-          icon: 'fast-delivery',
-        },
-        {
-          title: 'All sheet music formats',
-          body: 'Get the transcription in digital format:',
-          emphasis: 'PDF, midi, SIB, MUSX, XML, MSCZ, GP',
-          icon: 'formats',
-        },
-        {
-          title: '100% accuracy & Customer care',
-          body: 'Note-for-note transcriptions and full customer support along the process',
-          icon: 'accuracy',
-        },
-      ],
+      image: 'sample:photo',
+      items: included,
     },
     usage:
-      '<CardGrid title="What\'s included?" background="photo" items={included} />\n<CardGrid title="Who do we work for?" surface="tile" columns={4} items={audiences} />',
+      '<CardGrid title="What\'s included?" background="photo" image={studioBand} items={included} />\n<CardGrid title="Who do we work for?" surface="tile" columns={4} items={audiences} />',
     previewHeight: 700,
     dataSource: 'content/<locale>/data/services.ts (included), home.ts (audiences)',
     guidelines:
-      'Card text is light markdown (paragraphs, **bold**, [links](/path)). Icons by name from src/assets/images/icons; pictures from the page folder.',
+      'Card text is light markdown (paragraphs, **bold**, [links](/path)). Icons are pictures imported in the data (src/assets/images/icons) or the page folder; `background="photo"` needs `image` (the studio, `~/assets/images/bands/included-bg.jpg`).',
   },
   IconGrid: {
     group: 'Blocks',
@@ -297,16 +250,7 @@ export const catalogue = {
       'Grid of illustrated icons with their labels, each linking to its page, and an optional button.',
     defaults: {
       title: 'We transcribe any instrument and musical genre',
-      items: [
-        { label: 'Piano Transcriptions', href: '/piano', icon: 'piano' },
-        { label: 'Guitar Tab Transcriptions', href: '/guitar-tab', icon: 'guitar' },
-        {
-          label: 'Trumpet Transcriptions',
-          href: '/trumpet-transcription-service',
-          icon: 'trumpet',
-        },
-        { label: 'Violin Transcriptions', href: '/violin-transcription-service', icon: 'violin' },
-      ],
+      items: services,
       cta: { label: 'See all services', href: '/services-samples' },
     },
     usage:
@@ -323,15 +267,7 @@ export const catalogue = {
       'Three price-from cards with coloured headers, floating icons and pricing factors, or one wide card (price beside numbered factors) when given one tier; intro prose goes in the children.',
     defaults: {
       title: 'Flexible pricing for piano',
-      tiers: [
-        {
-          from: '$19-35+USD',
-          unit: 'per minute of music',
-          note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-          factorsLabel: 'Our piano rates are based on',
-          factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-        },
-      ],
+      tiers: [pianoPricing],
       cta: { label: 'Request your sheet music', href: '#contact' },
     },
     usage:
@@ -349,6 +285,7 @@ export const catalogue = {
     defaults: {
       title: 'How it works',
       id: 'how-it-works',
+      stepLabel: 'Step {n}',
       items: [
         { icon: 'dollar', text: 'Choose how much you want to gift.' },
         {
@@ -434,7 +371,7 @@ export const catalogue = {
       'Questions that open one at a time (no script), in titled groups with optional jump links, a button, and FAQPage structured data.',
     defaults: {
       title: 'Frequently asked questions',
-      groups: [generalFaq],
+      groups: [faqGroup],
       cta: { label: 'Read all our FAQs', href: '/frequent-asked-questions' },
     },
     usage:
@@ -489,12 +426,12 @@ export const catalogue = {
     notFor: 'a second form on the same page; one per page.',
     description:
       'Peach section under a white wave: title, subtitle, the teal response-time pill and the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
-    defaults: {},
+    defaults: { form: quoteForm },
     usage:
-      '<ContactSection />\n<ContactSection variant="gift-card" id="gift-card" title="Request your gift card" />',
+      '<ContactSection form={quoteForm} returnTo="/piano" />\n<ContactSection form={giftCardForm} variant="gift-card" id="gift-card" />',
     previewHeight: 1180,
     guidelines:
-      'One per page, always last. Use `id` to change the anchor and `title`/`subtitle` for context-specific copy; `variant="gift-card"` for the gift-card page.',
+      'One per page, always last. Its words come from `form` (content/<locale>/data/forms.ts); `variant="gift-card"` with `giftCardForm` on the gift-card page.',
   },
 } satisfies Record<BlockName, BlockDoc>
 

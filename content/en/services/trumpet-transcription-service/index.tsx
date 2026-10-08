@@ -1,6 +1,11 @@
 import { generalFaq } from '@content/en/data/faqs'
+import { quoteForm } from '@content/en/data/forms'
+import { mediaLabels } from '@content/en/data/labels'
 import { counter, google, platforms } from '@content/en/data/ratings'
 import { included, trumpetPricing } from '@content/en/data/services'
+import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import {
   CardGrid,
   ContactSection,
@@ -23,11 +28,13 @@ export default function TrumpetTranscriptionServicePage() {
       <PageHeader
         title="Trumpet Transcription Service"
         subtitle="Get your trumpet songs transcribed accurately into sheet music by professionals"
-        icon="trumpet"
+        image={trumpet}
         rating={google}
       />
 
       <Steps
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         title="How does it work?"
         layout="columns"
         items={[
@@ -53,12 +60,15 @@ export default function TrumpetTranscriptionServicePage() {
       />
 
       <RatingBanner
+        image={pianoBand}
         title="#1 Musician’s choice trumpet transcription service online"
         counter={counter}
         sources={platforms}
       />
 
       <Samples
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         items={[
           {
             title: 'Trumpet jazz solo',
@@ -88,7 +98,7 @@ export default function TrumpetTranscriptionServicePage() {
         cta={{ label: 'See our Glossary', href: '/glossary-of-musical-terms' }}
       />
 
-      <CardGrid title="What's included?" background="photo" items={included} />
+      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing for trumpet"
@@ -198,7 +208,7 @@ export default function TrumpetTranscriptionServicePage() {
         cta={{ label: 'Read all our FAQs', href: '/frequent-asked-questions' }}
       />
 
-      <ContactSection returnTo="/trumpet-transcription-service" />
+      <ContactSection form={quoteForm} returnTo="/trumpet-transcription-service" />
     </>
   )
 }

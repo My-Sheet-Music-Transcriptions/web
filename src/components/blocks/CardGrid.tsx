@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { iconPicture } from '~/assets/icons'
-import included from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
 import { Card } from '~/components/primitives/Card'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
 import { PhotoBand } from '~/components/primitives/PhotoBand'
@@ -33,7 +31,7 @@ export interface CardGridProps {
   surface?: 'card' | 'tile' | 'plain'
   /** photo: white cards over a full-bleed photo band with wavy edges ("What's included?"). */
   background?: 'none' | 'photo'
-  /** The photo of the band (the studio by default). */
+  /** The photo behind `background="photo"` (`~/assets/images/bands/included-bg.jpg` is the studio every page uses). */
   image?: PictureSource
   /** Background without a photo: white (default), cream or peach. */
   tone?: 'white' | 'cream' | 'peach'
@@ -57,7 +55,7 @@ export function CardGrid({
   columns = 3,
   surface = 'card',
   background = 'none',
-  image = included,
+  image,
   tone = 'white',
   cta,
   id,
@@ -66,7 +64,7 @@ export function CardGrid({
   const [tab, setTab] = useState(0)
   const shown = tabs ? (tabs[tab]?.items ?? []) : items
 
-  if (background === 'photo')
+  if (background === 'photo' && image)
     return (
       <PhotoBand image={image} title={title ?? ''} titleId={titleId} id={id} preset="cards">
         <ul className={cn('mt-[60px] grid gap-5 md:grid-cols-3', cols[columns])}>
@@ -245,7 +243,7 @@ function CardIcon({
   sizes: string
   className?: string
 }) {
-  const img = item.image ?? iconPicture(item.icon)
+  const img = item.image ?? item.icon
   if (!img) return null
   const wide = img.img.w / img.img.h > 2
   return (

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import band from '~/assets/images/bands/included-bg.jpg?w=560;1000&as=picture'
-import photo from '~/assets/images/samples/office-transcriber.jpg?w=480;960&as=picture'
+import { mediaLabels } from '~/stories/data'
+import { sample } from '~/stories/samples'
 import { Gallery, type GalleryProps } from './Gallery'
 import { storyArgs } from './story-args'
 
@@ -18,16 +18,20 @@ export const Marquee: Story = {
   args: {
     variant: 'marquee',
     label: 'Examples of our sheet music',
-    images: [1, 2, 3, 4, 5, 6].map((n) => ({ image: n % 2 ? photo : band, alt: `Photo ${n}` })),
+    images: [1, 2, 3, 4, 5, 6].map((n) => ({
+      image: n % 2 ? sample.photo : sample.mark,
+      alt: `Photo ${n}`,
+    })),
   },
 }
 export const Carousel: Story = {
   args: {
     variant: 'carousel',
     title: 'Our studio',
+    labels: mediaLabels,
     images: [
-      { image: photo, alt: 'A transcriber at work' },
-      { image: band, alt: 'A recording studio' },
+      { image: sample.photo, alt: 'A transcriber at work' },
+      { image: sample.mark, alt: 'A partner mark' },
     ],
   },
 }

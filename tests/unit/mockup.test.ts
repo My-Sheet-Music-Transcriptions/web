@@ -359,3 +359,27 @@ describe('composing the page', () => {
     expect(r.warnings).toEqual([expect.stringMatching(/ContactSection is not the last block/)])
   })
 })
+
+describe('every page passes its blocks the words they need', () => {
+  const pages = entries.filter((e) => e.locale === 'en').map((e) => e.slug)
+
+  it('round-trips every page into a mockup (literal props, data and pictures only)', () => {
+    for (const slug of pages) expect(() => mockupFromEntry(entryOf(slug)), slug).not.toThrow()
+  })
+
+  it('names the carousel controls wherever a carousel shows', () => {
+    const missing: string[] = []
+    for (const slug of pages)
+      for (const b of mockupFromEntry(entryOf(slug)).blocks) {
+        const p = (b.props ?? {}) as Record<string, unknown>
+        const slides = Array.isArray(p.images) ? p.images.length : 0
+        const carousel =
+          (['MediaText', 'PageHeader'].includes(b.name) &&
+            slides > 1 &&
+            p.imagesLayout !== 'pair') ||
+          (b.name === 'Gallery' && p.variant === 'carousel')
+        if (carousel && !p.labels) missing.push(`${slug}: <${b.name}> without labels`)
+      }
+    expect(missing).toEqual([])
+  })
+})

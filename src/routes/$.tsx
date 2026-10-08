@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
-import { EntryPage } from '~/components/layout/EntryPage'
+import { EntryPage } from '~/app/EntryPage'
 import { preloadEntry, resolveEntry } from '~/content'
 import { entryHead } from '~/seo/head'
 import { localeOf } from '~/site'

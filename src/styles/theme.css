@@ -34,6 +34,7 @@
   --color-azure: #2786d8;
   --color-pine: #1f9b90;
   --color-yellow: #ffb703; /* rating stars */
+  --color-gold: #ffd800; /* the five-star graphic of the rating cards (RatingCard) */
   --color-peach: #fdebdc; /* audience cards, contact section */
   --color-peach-deep: #fbe0cb;
   --color-cream: #f7eee7; /* pricing tier card body */
@@ -84,6 +85,9 @@
   --breakpoint-2xl: 1536px; /* unused, kept in px for ordering */
   --spacing-section: 50px;
   --spacing-section-lg: 90px;
+
+  /* Textures (components never import a picture; a decorative background is a token) */
+  --background-image-staff-lines: url("../assets/images/bands/reviews-lines.png"); /* the peach staff lines behind Testimonials */
 
   /* Motion */
   --animate-marquee: marquee 80s linear infinite; /* homepage photo strip: one photo every 8 s, as live */

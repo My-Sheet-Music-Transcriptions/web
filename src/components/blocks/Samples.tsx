@@ -2,7 +2,9 @@ import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { tones } from '~/components/primitives/tones'
 import { type Video, VideoEmbed } from '~/components/primitives/VideoEmbed'
+import type { MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
+import { fill } from '~/lib/strings'
 import { useTitleId } from '~/lib/use-title-id'
 
 /** One piece we transcribed: the recording and the first page of our score. */
@@ -22,12 +24,16 @@ export interface SamplesProps {
   items: Sample[]
   /** Background: white (default), cream or peach. */
   tone?: 'white' | 'cream' | 'peach'
+  /** The words of the carousel arrows and the play button: `media` from content/<locale>/data/labels. */
+  labels?: MediaLabels
+  /** The still shown over each video until it is played (`~/assets/images/brand/video-poster.jpg`). */
+  videoPoster?: PictureSource
   /** Anchor id. */
   id?: string
 }
 
 /** Our work, to compare: each sample's recording beside the score we wrote from it. */
-export function Samples({ title, items, tone = 'white', id }: SamplesProps) {
+export function Samples({ title, items, tone = 'white', labels, videoPoster, id }: SamplesProps) {
   const titleId = useTitleId(id)
   return (
     <section
@@ -42,7 +48,11 @@ export function Samples({ title, items, tone = 'white', id }: SamplesProps) {
             <li key={s.title} className="grid items-center gap-8 md:grid-cols-[3fr_2fr]">
               <div className="flex flex-col gap-4">
                 <h3 className="text-center text-h3 font-bold text-ink md:text-left">{s.title}</h3>
-                <VideoEmbed {...s.video} />
+                <VideoEmbed
+                  {...s.video}
+                  poster={videoPoster}
+                  playLabel={labels && fill(labels.play, { title: s.video.title })}
+                />
               </div>
               <Picture
                 image={s.image}

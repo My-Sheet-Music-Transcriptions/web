@@ -1,3 +1,4 @@
+import { mediaLabels } from '@content/en/data/labels'
 import { CtaBand, Gallery, MediaText, PageHeader, Section, Table } from '~/components/blocks'
 import { Text } from '~/components/typography'
 import office8 from './office-8.jpg?w=560;1000&as=picture'
@@ -271,6 +272,7 @@ export default function CareersPage() {
       />
 
       <MediaText
+        labels={mediaLabels}
         title="About the hiring process"
         align="center"
         imageSide="left"

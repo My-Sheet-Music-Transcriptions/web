@@ -3,13 +3,15 @@ import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { tones } from '~/components/primitives/tones'
 import { type Video, VideoEmbed } from '~/components/primitives/VideoEmbed'
+import type { MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { inlineMarkdown } from '~/lib/light-markdown'
+import { fill } from '~/lib/strings'
 import { useTitleId } from '~/lib/use-title-id'
 
 /** One step of a process. */
 export interface StepItem {
-  /** Short heading ("1. Send us audio"); a timeline numbers untitled steps itself. */
+  /** Short heading ("1. Send us audio"); untitled timeline steps show `stepLabel`. */
   title?: string
   /** What happens; **bold** and [links](/path) kept, blank lines start a paragraph. */
   text: string
@@ -33,8 +35,14 @@ export interface StepsProps {
   illustration?: PictureSource
   /** Alt text of the wide picture. */
   illustrationAlt?: string
+  /** The small label above each untitled timeline step; `{n}` is its number ("Step {n}"). */
+  stepLabel?: string
   /** Background: white (default), cream or peach. */
   tone?: 'white' | 'cream' | 'peach'
+  /** The words of the carousel arrows and the play button: `media` from content/<locale>/data/labels. */
+  labels?: MediaLabels
+  /** The still shown over each video until it is played (`~/assets/images/brand/video-poster.jpg`). */
+  videoPoster?: PictureSource
   /** Anchor id. */
   id?: string
 }
@@ -48,7 +56,10 @@ export function Steps({
   layout = 'timeline',
   illustration,
   illustrationAlt = '',
+  stepLabel,
   tone = 'white',
+  labels,
+  videoPoster,
   id,
 }: StepsProps) {
   const titleId = useTitleId(id)
@@ -83,7 +94,14 @@ export function Steps({
                 className="flex flex-col items-center py-[10px] text-center lg:pt-0"
               >
                 {step.video ? (
-                  <VideoEmbed {...step.video} className="mb-5 w-full" />
+                  <VideoEmbed
+                    {...step.video}
+                    poster={videoPoster}
+                    playLabel={
+                      labels && step.video && fill(labels.play, { title: step.video.title })
+                    }
+                    className="mb-5 w-full"
+                  />
                 ) : step.image ? (
                   <Picture
                     image={step.image}
@@ -150,9 +168,11 @@ export function Steps({
                     </>
                   ) : (
                     <>
-                      <span className="block text-[13px] font-extrabold uppercase tracking-[0.08em] text-accent-hover">
-                        Step {i + 1}
-                      </span>
+                      {stepLabel ? (
+                        <span className="block text-[13px] font-extrabold uppercase tracking-[0.08em] text-accent-hover">
+                          {fill(stepLabel, { n: i + 1 })}
+                        </span>
+                      ) : null}
                       <p className="mt-1 text-[18px] font-semibold leading-[1.5] text-ink">
                         {inlineMarkdown(step.text)}
                       </p>

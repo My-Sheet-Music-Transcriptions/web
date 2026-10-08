@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import defaultPoster from '~/assets/images/video-poster.jpg?w=560;1000&as=picture'
 import { cn } from '~/lib/cn'
 import { Icon } from './Icon'
 import { Picture, type PictureSource } from './Picture'
@@ -15,8 +14,10 @@ export interface Video {
 }
 
 export interface VideoEmbedProps extends Video {
-  /** The still shown until the visitor plays it; the site's video thumbnail by default. */
+  /** The still shown until the visitor plays it; a dark frame without one. */
   poster?: PictureSource
+  /** What the play button says to screen readers ("Play the video: …"); the title without it. */
+  playLabel?: string
   className?: string
 }
 
@@ -28,7 +29,8 @@ export function VideoEmbed({
   youtube,
   title,
   caption,
-  poster = defaultPoster,
+  poster,
+  playLabel,
   className,
 }: VideoEmbedProps) {
   const [playing, setPlaying] = useState(false)
@@ -49,17 +51,19 @@ export function VideoEmbed({
             onClick={() => setPlaying(true)}
             className="group absolute inset-0 h-full w-full"
           >
-            <Picture
-              image={poster}
-              alt=""
-              sizes="(min-width: 768px) 560px, 100vw"
-              className="h-full w-full object-cover"
-              pictureClassName="contents"
-            />
+            {poster ? (
+              <Picture
+                image={poster}
+                alt=""
+                sizes="(min-width: 768px) 560px, 100vw"
+                className="h-full w-full object-cover"
+                pictureClassName="contents"
+              />
+            ) : null}
             <span className="absolute top-1/2 left-1/2 inline-flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-pill bg-[#cc0000] text-white shadow-float transition-transform group-hover:scale-110">
               <Icon name="play" size={28} />
             </span>
-            <span className="sr-only">Play the video: {title}</span>
+            <span className="sr-only">{playLabel ?? title}</span>
           </button>
         )}
       </div>

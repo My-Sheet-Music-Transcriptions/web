@@ -6,24 +6,24 @@ import {
   useRouter,
 } from '@tanstack/react-router'
 import { Button } from '~/components/primitives/Button'
+import { useSite } from '~/site'
 
-export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
+export function ErrorPage({ error }: ErrorComponentProps) {
   const router = useRouter()
   const isRoot = useMatch({ strict: false, select: (state) => state.id === rootRouteId })
+  const s = useSite().strings.errorPage
   console.error(error)
   return (
     <main id="main" className="container-content py-24 text-center">
-      <h1 className="text-display">Something went wrong</h1>
-      <p className="mt-4 text-ink">
-        Please try again. If the problem persists, contact us by email.
-      </p>
+      <h1 className="text-display">{s.title}</h1>
+      <p className="mt-4 text-ink">{s.body}</p>
       <div className="mt-8 flex justify-center gap-3">
         <Button variant="outline" onClick={() => router.invalidate()}>
-          Try again
+          {s.retry}
         </Button>
         {isRoot ? (
           <Button asChild>
-            <Link to="/">Home</Link>
+            <Link to="/">{s.home}</Link>
           </Button>
         ) : (
           <Button asChild>
@@ -34,7 +34,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
                 window.history.back()
               }}
             >
-              Go back
+              {s.back}
             </Link>
           </Button>
         )}

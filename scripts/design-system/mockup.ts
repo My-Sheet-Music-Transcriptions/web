@@ -51,7 +51,7 @@ if (fs.existsSync(sectionsFile) && !force)
 
 const imgDir = path.join(dir, 'img')
 for (const img of result.images) {
-  const from = path.join(pageDir, img)
+  const from = result.sources[img] ?? path.join(pageDir, img)
   if (!fs.existsSync(from))
     throw new Error(`cannot mockup: ${from} (imported by the page) does not exist`)
   fs.mkdirSync(imgDir, { recursive: true })

@@ -266,8 +266,9 @@ TopBar + Header + blocks + Footer; \`ContactSection\` is always the last block w
 ## Assets
 
 Brand lockup (\`logo.svg\`), favicon, instrument and feature icons, notation-software logos and language flags are
-in the asset groups, each with a README of usage rules. Photos used by the blocks ship inside
-\`components/assets/\` (webp, at most 1200px wide) and are referenced by the bundle only.
+in the asset groups, each with a README of usage rules. Components hold no picture of their own: a page passes its
+photos (shared ones from \`src/assets/images/bands\`), a name from the config or the data picks a brand file, and the
+sample photo of the previews ships inside \`components/assets/\` (webp, at most 1200px wide).
 
 ## Source
 

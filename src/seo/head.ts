@@ -65,7 +65,7 @@ export function entryHead(locale: Locale = SITE_LOCALE, path = '/'): HeadResult 
   if (!entry)
     return {
       meta: [
-        { title: pageTitle(getSiteConfig(locale).strings.notFoundTitle ?? 'Not found', locale) },
+        { title: pageTitle(getSiteConfig(locale).strings.notFound.title, locale) },
         { name: 'robots', content: 'noindex' },
       ],
       links: [],

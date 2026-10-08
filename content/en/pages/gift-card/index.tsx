@@ -1,3 +1,4 @@
+import { giftCardForm } from '@content/en/data/forms'
 import { ContactSection, MediaText, PageHeader, Steps } from '~/components/blocks'
 import { Text } from '~/components/typography'
 import card from './gift-card.png?w=480;960&as=picture'
@@ -50,6 +51,7 @@ export default function GiftCardPage() {
 
       <Steps
         title="How it works"
+        stepLabel="Step {n}"
         id="how-it-works"
         items={[
           { icon: 'dollar', text: 'Choose how much you want to gift.' },
@@ -73,11 +75,10 @@ export default function GiftCardPage() {
       />
 
       <ContactSection
+        form={giftCardForm}
         variant="gift-card"
         id="gift-card"
         returnTo="/gift-card"
-        title="Request your gift card"
-        subtitle="Tell us the amount and who it is for. We create the card and send it to you."
       />
     </>
   )

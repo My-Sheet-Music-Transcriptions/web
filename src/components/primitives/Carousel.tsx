@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+import type { MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
+import { fill } from '~/lib/strings'
 import { Icon } from './Icon'
 import { Picture, type PictureSource } from './Picture'
 
@@ -15,6 +17,8 @@ export interface CarouselProps {
   slides: Slide[]
   /** What the photos are, for screen readers ("Office photos"). */
   label: string
+  /** The words of the arrows and of the position, for screen readers. */
+  labels?: Pick<MediaLabels, 'previous' | 'next' | 'position' | 'carousel'>
   /** The `sizes` of each picture. */
   sizes: string
   /** Seconds between slides (paused while hovered or focused, and for reduced-motion users). */
@@ -33,6 +37,7 @@ export interface CarouselProps {
 export function Carousel({
   slides,
   label,
+  labels,
   sizes,
   interval = 10,
   frameClassName,
@@ -55,7 +60,7 @@ export function Carousel({
     <div
       role="group"
       className="relative"
-      aria-roledescription="carousel"
+      aria-roledescription={labels?.carousel}
       aria-label={label}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -85,7 +90,7 @@ export function Carousel({
           <button
             type="button"
             onClick={() => go(-1)}
-            aria-label="Previous photo"
+            aria-label={labels?.previous}
             className={`${arrow} left-0`}
           >
             <Icon name="chevron-left" size={25} />
@@ -93,14 +98,14 @@ export function Carousel({
           <button
             type="button"
             onClick={() => go(1)}
-            aria-label="Next photo"
+            aria-label={labels?.next}
             className={`${arrow} right-0`}
           >
             <Icon name="chevron-right" size={25} />
           </button>
-          <p className="sr-only">
-            Photo {i + 1} of {n}
-          </p>
+          {labels ? (
+            <p className="sr-only">{fill(labels.position, { n: i + 1, total: n })}</p>
+          ) : null}
         </>
       ) : null}
     </div>

@@ -1,3 +1,11 @@
+import accioLogo from '~/assets/images/logos/accio.png?w=100;200&as=picture'
+import doricoLogo from '~/assets/images/logos/dorico.png?w=58;116&as=picture'
+import finaleLogo from '~/assets/images/logos/finale.png?w=58;116&as=picture'
+import guitarProLogo from '~/assets/images/logos/guitar-pro.png?w=58;116&as=picture'
+import msmtmusicLogo from '~/assets/images/logos/msmtmusic.png?w=192;384&as=picture'
+import musescoreLogo from '~/assets/images/logos/musescore.png?w=58;116&as=picture'
+import paymentLogo from '~/assets/images/logos/payment.svg'
+import sibeliusLogo from '~/assets/images/logos/sibelius.png?w=58;116&as=picture'
 import type { FooterData } from '~/content/types'
 
 export const footer: FooterData = {
@@ -66,12 +74,18 @@ export const footer: FooterData = {
     { label: 'Work with us', href: '/careers', icon: 'briefcase' },
   ],
   compatible: [
-    { label: 'Sibelius', logo: 'sibelius' },
-    { label: 'GuitarPro', logo: 'guitar-pro' },
-    { label: 'Dorico', logo: 'dorico' },
-    { label: 'MuseScore', logo: 'musescore' },
-    { label: 'Finale', logo: 'finale' },
+    { label: 'Sibelius', image: sibeliusLogo },
+    { label: 'GuitarPro', image: guitarProLogo },
+    { label: 'Dorico', image: doricoLogo },
+    { label: 'MuseScore', image: musescoreLogo },
+    { label: 'Finale', image: finaleLogo },
   ],
   paymentText:
     'Payment can be made safely and securely with Credit Card, Debit Card, Stripe, or PayPal',
+  payment: {
+    image: paymentLogo,
+    alt: 'Accepted payment methods: PayPal, Discover, Stripe, Visa, American Express, Mastercard',
+  },
+  providedBy: { image: msmtmusicLogo, alt: 'msmtmusic', href: 'https://msmtmusic.com' },
+  badges: [{ image: accioLogo, alt: 'ACCIÓ – Catalonia Trade & Investment' }],
 }

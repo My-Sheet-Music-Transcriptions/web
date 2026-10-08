@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import photo from '~/assets/images/samples/office-transcriber.jpg?w=480;960&as=picture'
+import { sample } from '~/stories/samples'
 import { LogoGrid, type LogoGridProps } from './LogoGrid'
 import { storyArgs } from './story-args'
 
@@ -26,6 +26,6 @@ export const Logos: Story = {
       'UCSC',
       'Parkview HS',
       'Hamilton College',
-    ].map((name) => ({ name, image: photo })),
+    ].map((name) => ({ name, image: sample.mark })),
   },
 }

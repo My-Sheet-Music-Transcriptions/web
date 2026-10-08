@@ -1,5 +1,7 @@
-import { pricingTiers } from '@content/en/data/home'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { PricingTier } from '~/content/types'
+import { pricingTiers } from '~/stories/data'
+import { withSamples } from '~/stories/samples'
 import { PricingCards, type PricingCardsProps } from './PricingCards'
 import { storyArgs } from './story-args'
 
@@ -16,7 +18,7 @@ export const Default: Story = {}
 export const ThreeTiers: Story = {
   args: {
     title: 'Flexible pricing',
-    tiers: pricingTiers,
+    tiers: withSamples<PricingTier[]>(pricingTiers),
     cta: { label: 'See the full pricing guide', href: '/pricing' },
   },
 }

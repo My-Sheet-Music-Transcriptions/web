@@ -1,3 +1,4 @@
+import { quoteForm } from '@content/en/data/forms'
 import { ContactSection, LogoGrid, PageHeader, Section } from '~/components/blocks'
 import { Text } from '~/components/typography'
 import caitlinDeVille from './caitlin-de-ville.png?w=180;360&as=picture'
@@ -78,7 +79,7 @@ export default function EndorsedMusiciansPage() {
         ]}
       />
 
-      <ContactSection returnTo="/endorsed-musicians-and-composers" />
+      <ContactSection form={quoteForm} returnTo="/endorsed-musicians-and-composers" />
     </>
   )
 }
