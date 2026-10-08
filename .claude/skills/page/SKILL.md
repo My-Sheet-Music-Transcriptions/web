@@ -58,7 +58,12 @@ If the message already answers these, do not ask: state your assumptions in one 
 
 ## Phase 2 · Preview and iterate
 
-Build the mockup without narrating it; the tooling checks it; follow the recipe literally:
+Build the mockup without narrating it; the tooling checks it; follow the recipe literally. Everything you
+need comes from `preview.json`, `pnpm ds:blocks` and the worked example: do not read component sources or run
+exploratory commands (no `cat`/`grep`/`ls` probes chained with `;` or `&&`: a probe that exits non-zero shows
+the person a red "Failed"). Run each recipe command on its own and let its error lines tell you what to fix.
+0. **Setup**: the session hook installs dependencies in cloud sessions; if `node_modules` is still missing
+   (`pnpm` reports `tsx: not found` or a missing package), run `pnpm install --frozen-lockfile` once.
 1. **Freshness**: skip when this session has not touched `src/`. Otherwise `pnpm ds:index --check`; if it
    fails, run the `publish-design-system` skill first.
 2. **The mockup**: write or regenerate `mockups/<slug>/sections.html` per `reference/preview.md`
