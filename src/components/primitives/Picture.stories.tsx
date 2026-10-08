@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import office from '~/assets/images/home/office-8.jpg?w=400;800&as=picture'
+import office from '~/assets/images/samples/office-transcriber.jpg?w=400;800&as=picture'
 import { Picture } from './Picture'
 
 const meta = {

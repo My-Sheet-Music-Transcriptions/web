@@ -9,10 +9,13 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
      `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider` for the rest), `**bold**` → plain `<strong>`,
      emphasis → plain `<em>`. Never raw `<p>`, `<h2>`, `<ul>`, `<a>`: the content test refuses them.
    - `"img/<file>"` → the file copied into the page folder and imported with `?w=…&as=picture`.
-   - `PageHero` → the `hero` in `meta.ts`, since every template but `home` renders it.
+   - `PageHeader` → the `hero` in `meta.ts` for the `page` and `service` templates, which render it; a
+     `landing` page writes its own `<PageHeader variant="split" …/>` as its first block.
    - `ContactSection` gets `returnTo` = the page path.
    `mockups/gift-card/sections.html` ↔ `content/en/pages/gift-card/index.tsx` + `meta.ts` is the worked
-   example. Props are literals (strings, numbers, objects, arrays) and picture imports. Never improvise a prop
+   example. Props are literals (strings, numbers, objects, arrays), picture imports and lists imported from
+   `@content/<locale>/data/<file>` (`import { included } from '@content/en/data/services'`; ratings, prices,
+   reviews and shared FAQ groups live there, never typed into a page). Never improvise a prop
    that is not in the catalogue; `pnpm ds:mockup <slug> --force` afterwards must reproduce the mockup block for
    block (that is the check that nothing was lost in translation).
 2. **Proposed blocks first.** Each `data-proposed` element → component (+ typed props with doc comments),

@@ -32,7 +32,18 @@ const preview: Preview = {
       },
     },
     options: {
-      storySort: { order: ['Foundations', 'Primitives', 'Blocks', 'Layout', 'Templates'] },
+      // Blocks are filed by role, in page order (src/components/blocks/catalogue.ts ROLE_LABELS).
+      storySort: {
+        order: [
+          'Foundations',
+          'Typography',
+          'Primitives',
+          'Blocks',
+          ['Opening', 'Proof', 'Offer', 'How', 'Story', 'Closing'],
+          'Templates',
+          'Layout',
+        ],
+      },
     },
   },
   tags: ['autodocs'],

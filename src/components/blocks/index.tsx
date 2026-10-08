@@ -1,57 +1,67 @@
-import { AboutTeaser } from './AboutTeaser'
-import { AudienceCards } from './AudienceCards'
+import { CardGrid } from './CardGrid'
 import { ContactSection } from './ContactSection'
-import { FeatureCards } from './FeatureCards'
+import { CtaBand } from './CtaBand'
+import { FaqList } from './FaqList'
+import { Gallery } from './Gallery'
 import { Hero } from './Hero'
-import { HowItWorks } from './HowItWorks'
-import { ImageStrip } from './ImageStrip'
+import { IconGrid } from './IconGrid'
+import { LogoGrid } from './LogoGrid'
 import { MediaText } from './MediaText'
-import { PageHero } from './PageHero'
-import { PricingTiers } from './PricingTiers'
-import { ReviewCards } from './ReviewCards'
+import { PageHeader } from './PageHeader'
+import { PricingCards } from './PricingCards'
+import { RatingBanner } from './RatingBanner'
+import { Samples } from './Samples'
 import { Section } from './Section'
-import { ServiceGrid } from './ServiceGrid'
-import { StatsBanner } from './StatsBanner'
+import { Stats } from './Stats'
 import { Steps } from './Steps'
+import { Table } from './Table'
+import { Testimonials } from './Testimonials'
 
 /**
  * The block catalogue: what pages (content/<locale>/<collection>/<slug>/index.tsx) are composed of, imported by name
- * (`import { MediaText, Steps } from '~/components/blocks'`). Documented in README.md and catalogue.ts.
+ * (`import { MediaText, Steps } from '~/components/blocks'`). Grouped by role in catalogue.ts, Storybook and
+ * README.md. Blocks never import content: pages pass their lists (`items`, `tiers`, `groups`…) as props.
  */
 export const blocks = {
   Hero,
-  HowItWorks,
-  StatsBanner,
-  AudienceCards,
-  ServiceGrid,
-  FeatureCards,
-  PricingTiers,
-  ImageStrip,
-  ReviewCards,
-  AboutTeaser,
-  ContactSection,
-  PageHero,
+  PageHeader,
+  RatingBanner,
+  Testimonials,
+  LogoGrid,
+  Stats,
+  Samples,
+  CardGrid,
+  IconGrid,
+  PricingCards,
+  Steps,
   Section,
   MediaText,
-  Steps,
+  Gallery,
+  FaqList,
+  Table,
+  CtaBand,
+  ContactSection,
 }
 
 export type BlockName = keyof typeof blocks
 
 export {
-  AboutTeaser,
-  AudienceCards,
+  CardGrid,
   ContactSection,
-  FeatureCards,
+  CtaBand,
+  FaqList,
+  Gallery,
   Hero,
-  HowItWorks,
-  ImageStrip,
+  IconGrid,
+  LogoGrid,
   MediaText,
-  PageHero,
-  PricingTiers,
-  ReviewCards,
+  PageHeader,
+  PricingCards,
+  RatingBanner,
+  Samples,
   Section,
-  ServiceGrid,
-  StatsBanner,
+  Stats,
   Steps,
+  Table,
+  Testimonials,
 }

@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Hero } from './Hero'
+import { Hero, type HeroProps } from './Hero'
+import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Hero',
+  title: 'Blocks/Opening/Hero',
   component: Hero,
   parameters: { layout: 'fullscreen' },
+  args: storyArgs<HeroProps>('Hero'),
 } satisfies Meta<typeof Hero>
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** As used on the homepage (defaults from content/en/data). */
 export const Default: Story = {}

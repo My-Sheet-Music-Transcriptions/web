@@ -46,7 +46,7 @@ export default function GiftCardPage() {
       <Steps
         title="How it works"
         id="how-it-works"
-        steps={[
+        items={[
           { icon: 'dollar', text: 'Choose how much you want to gift.' },
           {
             icon: 'pen',

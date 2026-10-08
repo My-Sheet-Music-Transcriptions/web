@@ -14,6 +14,11 @@ import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
 
 const BLOCKS = 'src/components/blocks'
 
+/** The templates that render PageHeader from meta.ts: all but the homepage and landing pages (src/components/templates). */
+export function rendersPageHeader(meta: { type: string; template?: string }): boolean {
+  return !(meta.type === 'page' && (meta.template === 'home' || meta.template === 'landing'))
+}
+
 export interface PropDoc {
   name: string
   optional: boolean
@@ -69,11 +74,11 @@ export function blockProps(name: string): BlockProps | undefined {
     const local = declarations(source)
     const props = local[`${name}Props`]
     if (Array.isArray(props)) {
-      // named types from `~/…` imports (e.g. IconName from primitives/Icon)
+      // named types from `~/…` imports (IconName from primitives/Icon, item shapes from content/types)
       const imported: Record<string, PropDoc[] | string> = {}
       for (const m of source.matchAll(/import [^\n]*from '~\/([^']+)'/g)) {
-        const f = `src/${m[1]}.tsx`
-        if (fs.existsSync(f)) Object.assign(imported, declarations(fs.readFileSync(f, 'utf8')))
+        const f = [`src/${m[1]}.tsx`, `src/${m[1]}.ts`].find((x) => fs.existsSync(x))
+        if (f) Object.assign(imported, declarations(fs.readFileSync(f, 'utf8')))
       }
       const all = { ...imported, ...local }
       const types: Record<string, PropDoc[] | string> = {}
@@ -168,10 +173,10 @@ export function blockUsage(entries = readAllEntries()): Record<string, string[]>
     const page = e.locale === DEFAULT_LOCALE ? e.slug : `${e.locale}/${e.slug}`
     const source = fs.readFileSync(path.join(CONTENT_DIR, e.page), 'utf8')
     for (const name of Object.keys(catalogue)) {
-      // PageHero comes from the meta.ts `hero` on every template but home
+      // the page and service templates render PageHeader from meta.ts
       const used =
         new RegExp(`<${name}\\b`).test(source) ||
-        (name === 'PageHero' && 'hero' in e.meta && !!e.meta.hero)
+        (name === 'PageHeader' && rendersPageHeader(e.meta as { type: string; template?: string }))
       if (used) out[name]?.push(page)
     }
   }

@@ -48,8 +48,9 @@ function propertyName(name: ts.PropertyName, src: string): string {
 
 /**
  * The value of a literal expression: strings, numbers, booleans, null, `undefined`, negation, arrays, plain
- * objects, and identifiers listed in `identifiers` (the mockup maps image imports to "img/<file>"). Anything
- * else (calls, member access, template substitutions, spreads, JSX…) throws a LiteralError with the line.
+ * objects, identifiers listed in `identifiers` (the mockup maps image imports to "img/<file>" and data imports
+ * to their values) and fields of those (`piano.faq`, `ratings[0]`). Anything else (calls, template
+ * substitutions, spreads, JSX…) throws a LiteralError with the line.
  */
 export function evalTsLiteral(
   node: ts.Expression,
@@ -90,10 +91,25 @@ export function evalTsLiteral(
     if (n.text === 'undefined') return undefined
     if (Object.hasOwn(identifiers, n.text)) return identifiers[n.text]
     return fail(
-      `unknown identifier "${n.text}": only imported pictures may be referenced ${ONLY}`,
+      `unknown identifier "${n.text}": only imported pictures and data may be referenced ${ONLY}`,
       n,
       src,
     )
+  }
+  // `piano.faq`, `ratings[0]`: a field of a value already known (imported data), never of anything else
+  if (ts.isPropertyAccessExpression(n) || ts.isElementAccessExpression(n)) {
+    const base = evalTsLiteral(n.expression, identifiers, src)
+    let key: string | number
+    if (ts.isPropertyAccessExpression(n)) key = n.name.text
+    else {
+      const k = unwrap(n.argumentExpression)
+      if (ts.isNumericLiteral(k)) key = Number(k.text)
+      else if (ts.isStringLiteral(k) || ts.isNoSubstitutionTemplateLiteral(k)) key = k.text
+      else return fail(`a computed index in "${n.getText()}" ${ONLY}`, n, src)
+    }
+    if (!base || typeof base !== 'object' || !Object.hasOwn(base, key))
+      return fail(`"${n.getText()}" is not a field of the data`, n, src)
+    return (base as Record<string | number, unknown>)[key]
   }
   if (ts.isTemplateExpression(n)) return fail(`a template string with \${…} ${ONLY}`, n, src)
   if (ts.isRegularExpressionLiteral(n)) return fail(`a regular expression ${ONLY}`, n, src)
@@ -141,4 +157,38 @@ export function readDefaultExportLiteral(text: string, file: string): unknown {
   }
   if (!value) throw new LiteralError(`${file}: no "export default { … }"`)
   return evalTsLiteral(value, {}, file)
+}
+
+/**
+ * A data module (content/<locale>/data/*.ts): type-only imports and top-level `const`s (exported or not,
+ * `satisfies`/`as const` welcome), each a literal that may name the consts above it. Returns every const by
+ * name; anything else (functions, other imports, `let`, expressions) throws a LiteralError with the line.
+ */
+export function readModuleLiterals(text: string, file: string): Record<string, unknown> {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+  const values: Record<string, unknown> = {}
+  for (const s of sf.statements) {
+    if (ts.isImportDeclaration(s)) {
+      if (isTypeOnlyImport(s)) continue
+      throw new LiteralError(`${file}: a data file may only import types${where(s)}`)
+    }
+    if (ts.isInterfaceDeclaration(s) || ts.isTypeAliasDeclaration(s)) continue
+    if (
+      ts.isVariableStatement(s) &&
+      (s.declarationList.flags & ts.NodeFlags.Const) !== 0 &&
+      s.declarationList.declarations.every((d) => ts.isIdentifier(d.name) && d.initializer)
+    ) {
+      for (const d of s.declarationList.declarations)
+        values[(d.name as ts.Identifier).text] = evalTsLiteral(
+          d.initializer as ts.Expression,
+          values,
+          file,
+        )
+      continue
+    }
+    throw new LiteralError(
+      `${file}: only "export const name = <literal>" and type imports are allowed in a data file (found ${ts.SyntaxKind[s.kind]})${where(s)}`,
+    )
+  }
+  return values
 }

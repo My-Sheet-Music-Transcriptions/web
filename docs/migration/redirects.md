@@ -58,6 +58,7 @@ Trailing slash: WordPress canonicals have no trailing slash (`/pricing`). The ne
 | `/p/*` | from the plugin export, else `/` | live | Blogger static pages (`/p/payments.html`…) |
 | `/home/*` | `/` | verify | old attachment pages of the home page |
 | `/team/*`, `/about-us/*` | `/about-us` | verify | team member pages (`/team/santi` captured 2026-03) |
+| `/faqs/*` | `/frequent-asked-questions` | planned | D5: 100 single FAQ entries (`/faqs/synthesia`…) answer on the WP REST API (`/wp-json/wp/v2/faqs`), not in the sitemaps; their content lives in `content/en/data/faqs.ts` |
 | `/shop/*` | `https://catalog.mysheetmusictranscriptions.com/shop/:splat` | live | the live site already sends at least one product there (decision D4/D6) |
 | `/shop` | `https://catalog.mysheetmusictranscriptions.com/` | planned | D4 |
 | `/catalog` | `https://catalog.mysheetmusictranscriptions.com/` | live | |

@@ -71,6 +71,7 @@
   --radius-field: 20px; /* form fields */
   --shadow-card: 0 0 10px 0 rgb(0 0 0 / 0.1); /* cards on light backgrounds */
   --shadow-float: 0 4px 20px 0 rgb(0 0 0 / 0.12); /* floating card, mega-menu, consent banner */
+  --shadow-band: 0 0 45px 0 rgb(0 0 0 / 0.13); /* white cards over a photo band or on white: rating, feature and pricing cards */
 
   /* Layout */
   --container-content: 1140px;
@@ -95,7 +96,6 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
   }
   body {
@@ -127,9 +127,6 @@
     outline-offset: 2px;
   }
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
     *,
     *::before,
     *::after {

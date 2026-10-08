@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Section } from './Section'
+import { Section, type SectionProps } from './Section'
+import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Section',
+  title: 'Blocks/Story/Section',
   component: Section,
   parameters: { layout: 'fullscreen' },
-  args: {
-    title: 'Who do we work for?',
-    id: 'demo',
-    children: (
-      <p className="text-center text-ink">
-        Any prose or layout goes here. Use it for text pages and one-off sections.
-      </p>
-    ),
-  },
+  args: storyArgs<SectionProps>('Section'),
 } satisfies Meta<typeof Section>
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
-export const Peach: Story = { args: { tone: 'peach' } }
-export const Narrow: Story = { args: { width: 'narrow', rule: 'grey' } }
+export const PeachWithLinks: Story = {
+  args: {
+    tone: 'peach',
+    links: [
+      { label: 'High School', href: '#high-school' },
+      { label: 'Universities', href: '#universities' },
+    ],
+  },
+}

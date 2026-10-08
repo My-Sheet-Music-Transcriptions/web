@@ -1,21 +1,21 @@
-import { ratings } from '@content/en/data/home'
 import { Logo } from '~/components/layout/Logo'
 import { Button } from '~/components/primitives/Button'
 import type { PictureSource } from '~/components/primitives/Picture'
+import { RatingCard } from '~/components/primitives/RatingCard'
 import { SmartLink } from '~/components/primitives/SmartLink'
+import type { RatingSource } from '~/content/types'
 import { HeroSlideshow } from './HeroSlideshow'
-import { RatingCard } from './StatsBanner'
 
 const desktopSlides = import.meta.glob<PictureSource>(
-  '../../assets/images/home/hero-slide-[0-9].webp',
+  '../../assets/images/hero/hero-slide-[0-9].webp',
   { eager: true, import: 'default', query: '?w=1000;1600;2000&as=picture' },
 )
 /** The live site's rotation order. */
 const desktopOrder = [1, 6, 2, 4, 3, 5].map(
-  (n) => desktopSlides[`../../assets/images/home/hero-slide-${n}.webp`] as PictureSource,
+  (n) => desktopSlides[`../../assets/images/hero/hero-slide-${n}.webp`] as PictureSource,
 )
 const mobileSlides = import.meta.glob<PictureSource>(
-  '../../assets/images/home/hero-slide-mobile-*.webp',
+  '../../assets/images/hero/hero-slide-mobile-*.webp',
   { eager: true, import: 'default', query: '?w=480;800&as=picture' },
 )
 
@@ -31,10 +31,12 @@ export interface HeroProps {
   ctaHref?: string
   /** Rotate the studio photos (every 6 s, paused for reduced-motion users). */
   slideshow?: boolean
+  /** The floating rating card (desktop): pass `google` from content/<locale>/data/ratings. */
+  rating?: RatingSource
 }
 
 /**
- * Homepage hero. Desktop: a slow slideshow of studio photos (each cut with the white diagonal that holds
+ * The brand's opening (the homepage). Desktop: a slow slideshow of studio photos (each cut with the white diagonal that holds
  * the copy), the copy column and the floating Google rating card. Mobile: the photo band above the copy
  * on white, without the button or the card, as on the live site.
  */
@@ -47,10 +49,10 @@ export function Hero({
   ctaLabel = 'Learn more',
   ctaHref = '#how-it-works',
   slideshow = true,
+  rating,
 }: HeroProps) {
   const [before, after] =
     highlight && title.includes(highlight) ? title.split(highlight) : [title, null]
-  const google = ratings.find((r) => r.id === 'google')
   return (
     <section className="relative" aria-labelledby="hero-title">
       {/* Mobile photo band */}
@@ -94,9 +96,9 @@ export function Hero({
             </div>
           </div>
         </div>
-        {google && (
+        {rating && (
           <div className="absolute bottom-[25px] right-[120px] z-20 hidden w-[300px] lg:block">
-            <RatingCard source={google} compact />
+            <RatingCard source={rating} compact />
           </div>
         )}
       </div>

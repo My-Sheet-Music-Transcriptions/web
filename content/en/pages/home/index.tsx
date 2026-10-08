@@ -1,34 +1,96 @@
+import { audiences, pricingTiers, serviceGrid } from '@content/en/data/home'
+import { counter, google, homeRatings } from '@content/en/data/ratings'
+import { homeReviews } from '@content/en/data/reviews'
+import { included } from '@content/en/data/services'
 import {
-  AboutTeaser,
-  AudienceCards,
+  CardGrid,
   ContactSection,
-  FeatureCards,
+  Gallery,
   Hero,
-  HowItWorks,
-  ImageStrip,
-  PricingTiers,
-  ReviewCards,
-  ServiceGrid,
-  StatsBanner,
+  IconGrid,
+  MediaText,
+  PricingCards,
+  RatingBanner,
+  Steps,
+  Testimonials,
 } from '~/components/blocks'
 import { Text } from '~/components/typography'
+import howItWorks from './how-it-works.jpg?w=700;974;1460&as=picture'
+import office8 from './office-8.jpg?w=560;1000&as=picture'
+import office9 from './office-9.jpg?w=560;1000&as=picture'
+import office10 from './office-10.jpg?w=560;1000&as=picture'
+import office11 from './office-11.jpg?w=560;1000&as=picture'
+import office12 from './office-12.jpg?w=560;1000&as=picture'
+import office14 from './office-14.jpg?w=560;1000&as=picture'
+import officeTranscriber from './office-transcriber.jpg?w=560;1000&as=picture'
+import step1 from './step-1-send-audio.png?w=240;403&as=picture'
+import step2 from './step-2-transcribe.png?w=240;403&as=picture'
+import step3 from './step-3-print-play.jpg?w=200;255&as=picture'
+import stripGuitar3 from './strip-guitar-3.jpg?w=250;500&as=picture'
+import stripGuitar4 from './strip-guitar-4.jpg?w=250;500&as=picture'
+import stripPiano3 from './strip-piano-3.jpg?w=250;500&as=picture'
+import stripPiano4 from './strip-piano-4.jpg?w=250;500&as=picture'
+import stripPiano5 from './strip-piano-5.jpg?w=250;500&as=picture'
+import stripPiano6 from './strip-piano-6.jpg?w=250;500&as=picture'
+import stripPiano7 from './strip-piano-7.jpg?w=250;500&as=picture'
+import stripPiano8 from './strip-piano-8.jpg?w=250;500&as=picture'
+import stripPiano9 from './strip-piano-9.jpg?w=250;500&as=picture'
+import stripPiano10 from './strip-piano-10.jpg?w=250;500&as=picture'
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
+      <Hero rating={google} />
 
-      <HowItWorks />
+      <Steps
+        id="how-it-works"
+        title="How does it work?"
+        layout="columns"
+        illustration={howItWorks}
+        illustrationAlt="Three steps: send us the audio, we transcribe it, print and play the PDF"
+        items={[
+          {
+            title: '1. Send us audio',
+            text: 'We will promptly send you a quote and an estimated delivery time',
+            image: step1,
+            imageWidth: 177,
+          },
+          {
+            title: '2. We transcribe it for you',
+            text: 'Our team of transcribers will prepare the sheet music as per your requirements',
+            image: step2,
+            imageWidth: 188,
+          },
+          {
+            title: '3. Print & Play',
+            text: 'You will be able to use and play your sheet music in PDF and other formats',
+            image: step3,
+            imageWidth: 112,
+          },
+        ]}
+      />
 
-      <StatsBanner />
+      <RatingBanner
+        title="The highest-rated online sheet music transcribers"
+        counter={counter}
+        sources={homeRatings}
+      />
 
-      <AudienceCards />
+      <CardGrid title="Who do we work for?" surface="tile" columns={4} items={audiences} />
 
-      <ServiceGrid />
+      <IconGrid
+        title="We transcribe any instrument and musical genre"
+        items={serviceGrid}
+        cta={{ label: 'See all services', href: '/services-samples' }}
+      />
 
-      <FeatureCards />
+      <CardGrid title="What's included?" background="photo" items={included} />
 
-      <PricingTiers>
+      <PricingCards
+        title="Flexible pricing"
+        tiers={pricingTiers}
+        cta={{ label: 'See the full pricing guide', href: '/pricing' }}
+      >
         <Text>
           <strong>There are pricing options for every budget.</strong> The more instruments and the
           longer or more complex a piece is, the longer it takes to transcribe. The simpler and more
@@ -51,13 +113,66 @@ export default function HomePage() {
         <Text>
           Below you will find a price guide, but please contact us for customized proposals:
         </Text>
-      </PricingTiers>
+      </PricingCards>
 
-      <ImageStrip />
+      <Gallery
+        label="Examples of our sheet music"
+        images={[
+          { image: stripGuitar3, alt: 'Guitar tab sheet music next to an acoustic guitar' },
+          { image: stripPiano10, alt: 'Vocal and piano score on a digital piano' },
+          { image: stripPiano5, alt: 'Open piano score on a keyboard' },
+          { image: stripPiano8, alt: 'Pianist playing from a printed score' },
+          { image: stripPiano7, alt: 'Close-up of a handwritten-style piano score' },
+          { image: stripPiano6, alt: 'Piano sheet music book open on a music stand' },
+          { image: stripPiano9, alt: 'Printed lead sheet on a wooden table next to a plant' },
+          { image: stripGuitar4, alt: 'Sheet music pages on a table with a guitar' },
+          { image: stripPiano3, alt: 'Piano songbook open on a stand above a digital keyboard' },
+          { image: stripPiano4, alt: 'Piano score resting on the keys of a piano' },
+        ]}
+      />
 
-      <ReviewCards />
+      <Testimonials
+        title="Customer Reviews"
+        items={homeReviews}
+        cta={{ label: 'Read all our reviews', href: '/customer-reviews' }}
+      />
 
-      <AboutTeaser>
+      <MediaText
+        title="Who are we?"
+        align="center"
+        imageSide="left"
+        images={[
+          {
+            image: office8,
+            alt: 'The customer service team in the My Sheet Music Transcriptions office',
+          },
+          {
+            image: office14,
+            alt: 'The customer service team in the My Sheet Music Transcriptions office',
+          },
+          {
+            image: office12,
+            alt: 'The customer service team in the My Sheet Music Transcriptions office',
+          },
+          {
+            image: officeTranscriber,
+            alt: 'A transcriber at work in the My Sheet Music Transcriptions office',
+          },
+          {
+            image: office11,
+            alt: 'The customer service team in the My Sheet Music Transcriptions office',
+          },
+          {
+            image: office10,
+            alt: 'The customer service team in the My Sheet Music Transcriptions office',
+          },
+          {
+            image: office9,
+            alt: 'The customer service team in the My Sheet Music Transcriptions office',
+          },
+        ]}
+        cta={{ label: 'Read more about us', href: '/about-us' }}
+      >
         <Text>
           We are{' '}
           <strong>
@@ -80,7 +195,7 @@ export default function HomePage() {
           kind of automatic transcription software. It's a slow process but it gives{' '}
           <strong>great results, reliable notation, and tailored solutions</strong>.
         </Text>
-      </AboutTeaser>
+      </MediaText>
 
       <ContactSection />
     </>
