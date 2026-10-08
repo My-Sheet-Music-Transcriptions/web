@@ -1,3 +1,4 @@
+import { nav } from '@content/en/data/nav'
 import { AnimatePresence } from 'motion/react'
 import * as m from 'motion/react-m'
 import { useEffect, useRef, useState } from 'react'
@@ -5,7 +6,6 @@ import { ease } from '~/components/motion/MotionProvider'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
-import { nav } from '~/content/en/data/nav'
 import { cn } from '~/lib/cn'
 import { useSite } from '~/site'
 

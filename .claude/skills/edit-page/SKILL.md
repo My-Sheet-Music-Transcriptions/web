@@ -9,7 +9,7 @@ Invoke the `page` skill with the Skill tool (`page`) and run it in mode **edit**
 
 Request as typed: $ARGUMENTS
 
-- Find the page in `src/content` (title, slug or URL; `pnpm page:status` and `src/content/paths.generated.json`
+- Find the page in `content/` (title, slug or URL; `pnpm page:status` and `src/content/paths.generated.json`
   help). A page that only exists on the live WordPress site is a port: switch to mode **new**.
 - Generate the mockup from the real page first (`pnpm ds:mockup <slug>`, see the skill's `reference/edit.md`);
   never rewrite the page from memory.

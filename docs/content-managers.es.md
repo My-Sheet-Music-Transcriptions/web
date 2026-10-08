@@ -56,6 +56,11 @@ también funciona.
 5. **Publicada.** Con tu sí, Claude publica y, cuando la web se ha desplegado (unos minutos), te envía el
    enlace definitivo. Si algo falla por el camino, Claude lo arregla y te lo cuenta.
 
+Los textos, las fotos, los precios y las traducciones se publican solo con tu sí. Un cambio que además toca
+cómo funciona la web (un tipo de sección nuevo, el formulario de contacto, el código de los menús) espera antes
+la aprobación de una persona del equipo técnico (core); Claude te avisa cuando es el caso, y la página se
+publica en cuanto lo aprueban.
+
 Cada enlace llega como mensaje en la conversación y, si llega más tarde, también como notificación.
 
 ## Modo diseño

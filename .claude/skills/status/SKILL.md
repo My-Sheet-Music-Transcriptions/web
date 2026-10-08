@@ -9,7 +9,7 @@ Invoke the `page` skill with the Skill tool (`page`) and run it in mode **status
 Request as typed: $ARGUMENTS
 
 1. `pnpm page:status [slug]`: one JSON line per page with a mockup (title, path, preview and canvas URLs,
-   recorded PR, whether the page exists in `src/content`, live URL).
+   recorded PR, whether the page exists in `content/`, live URL).
 2. For each recorded PR, read its state with the GitHub tools (`pull_request_read`): draft (waiting for
    the person's check of the test address), ready/auto-merge (publishing), merged (live), closed. Netlify's
    deploy-preview comment gives the test-address link.

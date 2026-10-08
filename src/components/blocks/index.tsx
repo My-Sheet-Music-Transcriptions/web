@@ -14,7 +14,10 @@ import { ServiceGrid } from './ServiceGrid'
 import { StatsBanner } from './StatsBanner'
 import { Steps } from './Steps'
 
-/** The block catalogue: the only components MDX content can render. Documented in README.md. */
+/**
+ * The block catalogue: what pages (content/<locale>/<collection>/<slug>/index.tsx) are composed of, imported by name
+ * (`import { MediaText, Steps } from '~/components/blocks'`). Documented in README.md and catalogue.ts.
+ */
 export const blocks = {
   Hero,
   HowItWorks,
@@ -34,3 +37,21 @@ export const blocks = {
 }
 
 export type BlockName = keyof typeof blocks
+
+export {
+  AboutTeaser,
+  AudienceCards,
+  ContactSection,
+  FeatureCards,
+  Hero,
+  HowItWorks,
+  ImageStrip,
+  MediaText,
+  PageHero,
+  PricingTiers,
+  ReviewCards,
+  Section,
+  ServiceGrid,
+  StatsBanner,
+  Steps,
+}

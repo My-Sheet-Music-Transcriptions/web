@@ -21,7 +21,7 @@ const slides = Object.entries(photos).map(([k, img]) => ({
 export interface AboutTeaserProps {
   title?: string
   eyebrow?: string
-  /** Rich text (MDX children) shown next to the photo carousel. */
+  /** Rich text (`<p>` children) shown next to the photo carousel. */
   children?: ReactNode
   ctaLabel?: string
   ctaHref?: string
@@ -80,9 +80,7 @@ export function AboutTeaser({
           <SectionHeading id="about-title" eyebrow={eyebrow}>
             {title}
           </SectionHeading>
-          <div className="mt-5 space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
-            {children}
-          </div>
+          <div className="mt-5 space-y-4 text-charcoal">{children}</div>
           <SmartLink
             href={ctaHref}
             className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"

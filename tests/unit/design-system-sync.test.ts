@@ -15,6 +15,8 @@ describe('design-system artifact is in sync with its sources', () => {
     const sources = designSystemSources()
     expect(sources).toContain('src/styles/theme.css')
     expect(sources).toContain('src/components/blocks/catalogue.ts')
+    expect(sources).toContain('src/components/typography/index.tsx')
+    expect(sources).toContain('content/en/data/home.ts')
     expect(sources.some((f) => f.startsWith('src/components/blocks/') && f.endsWith('.tsx'))).toBe(
       true,
     )

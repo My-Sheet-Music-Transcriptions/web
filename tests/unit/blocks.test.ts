@@ -49,7 +49,7 @@ describe('block index', () => {
   it('finds where each block is used from the pages themselves', () => {
     expect(usage.Hero).toEqual(['home'])
     expect(usage.Steps).toContain('gift-card')
-    // PageHero is frontmatter `hero`, not a tag in the body
+    // PageHero is the meta.ts `hero`, not a tag in the page
     expect(usage.PageHero).toContain('gift-card')
     expect(usage.PageHero).not.toContain('home')
   })

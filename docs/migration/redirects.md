@@ -16,7 +16,7 @@ a rule.
 
 ## How rules will ship (built in W1, see the plan)
 
-- One typed list per locale, `src/content/<locale>/redirects.ts` (`{ from, to, status }`), written to
+- One typed list per locale, `content/<locale>/redirects.ts` (`{ from, to, status }`), written to
   `dist/client/_redirects` by `scripts/postbuild.ts` for that locale's production build (domain mode) and with the
   `/<locale>` prefix in preview builds, so every rule can be tried on a deploy preview.
 - Unit test: no chains (a rule never points at another rule's `from`), no loops, every internal `to` is a page the build

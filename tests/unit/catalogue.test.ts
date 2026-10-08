@@ -9,9 +9,9 @@ describe('block catalogue', () => {
   it('documents every block in README.md', () => {
     for (const n of names) expect(readme, n).toContain(`\`${n}\``)
   })
-  it('uses the block itself as the root tag of its MDX snippet', () => {
+  it('uses the block itself as the root tag of its usage snippet', () => {
     for (const [n, doc] of Object.entries(catalogue)) {
-      expect(doc.mdx.trim().startsWith(`<${n}`), n).toBe(true)
+      expect(doc.usage.trim().startsWith(`<${n}`), n).toBe(true)
     }
   })
   it('has a story and a component file for every block', () => {

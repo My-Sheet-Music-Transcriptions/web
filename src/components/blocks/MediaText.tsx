@@ -25,7 +25,7 @@ export interface MediaTextProps {
   tone?: 'white' | 'cream' | 'peach' | 'surface'
   /** Anchor id; also labels the section by its heading. */
   id?: string
-  /** Prose (MDX paragraphs). */
+  /** Prose: `<Text>` paragraphs from ~/components/typography. */
   children: ReactNode
 }
 
@@ -81,9 +81,7 @@ export function MediaText({
               {title}
             </h2>
           ) : null}
-          <div className="text-body leading-relaxed text-charcoal [&_strong]:text-ink [&_p+p]:mt-4">
-            {children}
-          </div>
+          <div className="my-4 flex flex-col gap-4 text-charcoal">{children}</div>
           {cta ? (
             <Button asChild className="mt-6 self-start">
               <SmartLink href={cta.href}>{cta.label}</SmartLink>

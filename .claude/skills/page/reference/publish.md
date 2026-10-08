@@ -22,11 +22,17 @@
    heard from you. Changes they ask for now go through the same loop: edit the mockup and the page, checks,
    push, and when Netlify's comment shows the new commit ready, the link again, saying what changed.
 3. **Publish on their acceptance.** Mark the PR ready for review and enable **auto-merge (squash)** with the
-   GitHub tools (`update_pull_request` draft=false, `enable_pr_auto_merge` SQUASH). From here on auto-fix:
-   stay subscribed, and on every CI failure or review-bot finding fix the root cause and push until the PR
-   merges (never skip a test or lower a threshold). If auto-merge is refused, say so: the repository needs
-   "Allow auto-merge" and a branch protection rule on `main` requiring the CI checks; merge manually once
-   CI is green only if the person asks.
+   GitHub tools (`update_pull_request` draft=false, `enable_pr_auto_merge` SQUASH), always: the branch rule on
+   `main` decides when it may merge. Then read the PR's scope label (`.github/workflows/labels.yml` sets it):
+   - `content` only (the PR touches `content/`, `mockups/`, `docs/migration/`, `src/design-system/artifact.json`):
+     no approval is needed; it merges when CI is green.
+   - `engineering` (anything else: a block, a component, a test, config): tell the person in plain words that
+     this change also touches how the site works, so an engineer from the core team must approve it before it
+     goes live, and request a review from the `core` team (`@My-Sheet-Music-Transcriptions/core`). Never
+     try to get around it (no splitting the PR to dodge the rule, no admin merge).
+   From here on auto-fix: stay subscribed, and on every CI failure or review-bot finding fix the root cause
+   and push until the PR merges (never skip a test or lower a threshold). If auto-merge is refused, say so:
+   the repository settings are in README.md ("Who may change what").
 4. **Confirm.** When the PR merges, Netlify deploys `main`: poll the live URL until the new page answers 200
    with its title (up to ~5 minutes), then tell the person it is live with a clickable link to the live
    page, in the conversation and as a push notification. If the production deploy or CI on main fails

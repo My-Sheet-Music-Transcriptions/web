@@ -1,8 +1,5 @@
 import fs from 'node:fs'
-import type * as estree from 'estree'
-import remarkMdx from 'remark-mdx'
-import remarkParse from 'remark-parse'
-import { unified } from 'unified'
+import type ts from 'typescript'
 import { describe, expect, it } from 'vitest'
 import {
   evalLiteral,
@@ -12,7 +9,8 @@ import {
   rendersPageHero,
 } from '../../scripts/design-system/mockup-lib'
 import { parseBlocks, prepareSections } from '../../scripts/design-system/review-lib'
-import { readAllEntries } from '../../scripts/lib/content-fs'
+import { CONTENT_DIR, readAllEntries } from '../../scripts/lib/content-fs'
+import { parseTsx } from '../../scripts/lib/ts-literal'
 
 /**
  * ds:mockup turns an existing page into the mockup the page skill previews from. The committed gift-card
@@ -22,19 +20,36 @@ const entries = readAllEntries()
 const entryOf = (slug: string): MockupEntry => {
   const e = entries.find((x) => x.locale === 'en' && x.slug === slug)
   if (!e) throw new Error(`no en/${slug}`)
-  return { file: e.file, path: e.path, meta: e.meta as MockupEntry['meta'], body: e.body }
+  return {
+    file: e.page,
+    path: e.path,
+    meta: e.meta as MockupEntry['meta'],
+    source: fs.readFileSync(`${CONTENT_DIR}/${e.page}`, 'utf8'),
+  }
 }
-const page = (body: string, meta: Partial<MockupEntry['meta']> = {}): MockupEntry => ({
-  file: 'en/pages/x/index.mdx',
+/** A page component returning `jsx` in a fragment, after `head` (imports, statements). */
+const page = (
+  jsx: string,
+  meta: Partial<MockupEntry['meta']> = {},
+  head = "import { Text } from '~/components/typography'",
+): MockupEntry => ({
+  file: 'en/pages/x/index.tsx',
   path: '/x',
   meta: { type: 'page', title: 'X page title', template: 'page', ...meta },
-  body,
+  source: `${head}\n\nexport default function Page() {\n  return (\n    <>\n${jsx}\n    </>\n  )\n}\n`,
 })
-const expr = (code: string): estree.Node => {
-  const tree = unified().use(remarkParse).use(remarkMdx).parse(`<B a={${code}} />`)
-  const el = tree.children[0] as { attributes: { value: { data: { estree: estree.Program } } }[] }
-  const stmt = el.attributes[0]?.value.data.estree.body[0] as estree.ExpressionStatement
-  return stmt.expression
+const expr = (code: string): ts.Expression => {
+  const sf = parseTsx(`const x = <B a={${code}} />`)
+  const decl = (sf.statements[0] as ts.VariableStatement).declarationList.declarations[0]
+  const el = decl?.initializer as ts.JsxSelfClosingElement
+  const init = (el.attributes.properties[0] as ts.JsxAttribute).initializer as ts.JsxExpression
+  return init.expression as ts.Expression
+}
+const jsxChildren = (jsx: string): readonly ts.JsxChild[] => {
+  const sf = parseTsx(`const x = <T>${jsx}</T>`)
+  const decl = (sf.statements[0] as ts.VariableStatement).declarationList.declarations[0]
+  if (!decl?.initializer) throw new Error('no JSX')
+  return (decl.initializer as ts.JsxElement).children
 }
 const summary = (html: string) => parseBlocks(html).map(({ name, props }) => ({ name, props }))
 
@@ -111,32 +126,49 @@ describe('evalLiteral', () => {
 })
 
 describe('flattenChildren', () => {
-  const children = (md: string) =>
-    flattenChildren(unified().use(remarkParse).use(remarkMdx).parse(md).children, 'T')
+  const children = (jsx: string) => flattenChildren(jsxChildren(jsx), 'T')
   it('keeps paragraphs and bold, flattens the rest', () => {
     expect(
-      children('Line one\ncontinues *here* with [a link](/x) and `code`.\n\n**Bold** end.'),
-    ).toBe('Line one continues here with a link and code.\n\n**Bold** end.')
-    expect(children('- first item\n- second **item**\n\n> quoted')).toBe(
-      'first item\n\nsecond **item**\n\nquoted',
+      children(`
+        <Text>
+          Line one
+          continues <em>here</em> with <TextLink href="/x">a link</TextLink>{' '}
+          and <i>more</i>.
+        </Text>
+        <Text><strong>Bold</strong> end.</Text>`),
+    ).toBe('Line one continues here with a link and more.\n\n**Bold** end.')
+    expect(
+      children(
+        '<List><ListItem>first item</ListItem><ListItem>second <strong>item</strong></ListItem></List><Quote><Text>quoted</Text></Quote>',
+      ),
+    ).toBe('first item\n\nsecond **item**\n\nquoted')
+    expect(children('<Heading>Heading</Heading><Divider /><Text>text</Text>')).toBe(
+      'Heading\n\ntext',
     )
-    expect(children('## Heading\n\n---\n\ntext')).toBe('Heading\n\ntext')
+    expect(children('Bare text, <strong>bold</strong>{/* a comment */}')).toBe(
+      'Bare text, **bold**',
+    )
     expect(children('')).toBeUndefined()
   })
   it('refuses what a mockup cannot show', () => {
-    expect(() => children('Text <Steps /> more')).toThrow(/nested components/)
-    expect(() => children('![alt](./pic.png)')).toThrow(/pictures are props/)
-    expect(() => children('{1 + 1}')).toThrow(/expression/)
+    expect(() => children('<Text>Text <Steps /> more</Text>')).toThrow(/nested components/)
+    expect(() => children('<Text><Picture src={pic} /></Text>')).toThrow(/pictures are props/)
+    expect(() => children('<Text>{1 + 1}</Text>')).toThrow(/expression/)
+    expect(() => children('<p>raw</p>')).toThrow(/typography components/)
+    expect(() => children('<Text>a &amp; b</Text>')).toThrow(/HTML entity/)
+    expect(() => children('<Text>a <Text>b</Text></Text>')).toThrow(/paragraph of its own/)
+    expect(() => children('<List><Text>x</Text></List>')).toThrow(/ListItem/)
   })
 })
 
 describe('composing the page', () => {
-  it('renders the hero from the frontmatter, or the title', () => {
+  it('renders the hero from the meta, or the title', () => {
     expect(rendersPageHero({ type: 'page', template: 'home' })).toBe(false)
     for (const template of ['page', 'landing', 'pricing', undefined])
       expect(rendersPageHero({ type: 'page', template })).toBe(true)
     expect(rendersPageHero({ type: 'service' })).toBe(true)
     const plain = mockupFromEntry(page('<Section title="Hi">Text</Section>'))
+    expect(plain.blocks[3]).toEqual({ name: 'Section', props: { title: 'Hi', children: 'Text' } })
     expect(plain.blocks[2]).toEqual({ name: 'PageHero', props: { title: 'X page title' } })
     const withHero = mockupFromEntry(
       page('<Section title="Hi">Text</Section>', {
@@ -161,7 +193,9 @@ describe('composing the page', () => {
 
   it('wraps stray prose in a Section with a warning', () => {
     const r = mockupFromEntry(
-      page('Some intro text.\n\n<Steps title="S" steps={[]} />\n\nMore **bold** text.'),
+      page(
+        '<Text>Some intro text.</Text>\n<Steps title="S" steps={[]} />\n<Text>More <strong>bold</strong> text.</Text>',
+      ),
     )
     expect(r.blocks.map((b) => b.name)).toEqual([
       'TopBar',
@@ -179,7 +213,9 @@ describe('composing the page', () => {
   it('handles boolean attributes, image imports and returnTo', () => {
     const r = mockupFromEntry(
       page(
-        'import pic from \'./pic.jpg?w=480&as=picture\'\nimport unused from \'./other.png\'\n\n<MediaText image={pic} alt="A" caption />\n\n<ContactSection returnTo="/x" id="c" />',
+        '<MediaText image={pic} alt="A" caption />\n<ContactSection returnTo="/x" id="c" />',
+        {},
+        "import pic from './pic.jpg?w=480&as=picture'\nimport unused from './other.png'",
       ),
     )
     expect(r.blocks[3]).toEqual({
@@ -202,20 +238,46 @@ describe('composing the page', () => {
     expect(() => mockupFromEntry(page('<Nope />'))).toThrow(/unknown block <Nope>/)
     expect(() => mockupFromEntry(page('<Steps {...props} />'))).toThrow(/spread/)
     expect(() => mockupFromEntry(page('<Steps steps={items} />'))).toThrow(
-      /unknown identifier "items".*line 1/,
+      /unknown identifier "items".*line 6:/,
     )
-    expect(() => mockupFromEntry(page("import { x } from './a.ts'\n\n<Steps />"))).toThrow(
-      /only "import x from/,
+    expect(() => mockupFromEntry(page('<Steps />', {}, "import { x } from './a.ts'"))).toThrow(
+      /only blocks from/,
     )
-    expect(() => mockupFromEntry(page('export const a = 1\n\n<Steps />'))).toThrow(/export/)
-    expect(() => mockupFromEntry(page('{1 + 1}\n\n<Steps />'))).toThrow(/expression/)
+    expect(() => mockupFromEntry(page('<Steps />', {}, 'export const a = 1'))).toThrow(/an export/)
+    expect(() => mockupFromEntry(page('<Steps />', {}, 'const a = 1'))).toThrow(
+      /only imports and the default export/,
+    )
+    expect(() => mockupFromEntry(page('{1 + 1}\n<Steps />'))).toThrow(/expression/)
+    expect(() => mockupFromEntry(page('<p>raw</p>'))).toThrow(/typography components/)
+    expect(() => mockupFromEntry(page('<Foo.Bar />'))).toThrow(/plain component names/)
     expect(
-      mockupFromEntry(page('{/* a comment */}\n\n<Steps />')).blocks.map((b) => b.name),
+      mockupFromEntry(page('{/* a comment */}\n<Steps />')).blocks.map((b) => b.name),
     ).toContain('Steps')
   })
 
+  it('reads the page component in either form, and nothing else', () => {
+    const arrow: MockupEntry = {
+      ...page(''),
+      source: 'export default () => (\n  <>\n    <Steps />\n  </>\n)\n',
+    }
+    expect(mockupFromEntry(arrow).blocks.map((b) => b.name)).toContain('Steps')
+    const single: MockupEntry = {
+      ...page(''),
+      source: 'export default function P() {\n  return <Steps />\n}\n',
+    }
+    expect(mockupFromEntry(single).blocks.map((b) => b.name)).toContain('Steps')
+    expect(() => mockupFromEntry({ ...page(''), source: 'const x = 1\n' })).toThrow()
+    expect(() => mockupFromEntry({ ...page(''), source: '' })).toThrow(/no default export/)
+    expect(() =>
+      mockupFromEntry({
+        ...page(''),
+        source: 'export default function P() {\n  const a = 1\n  return <Steps />\n}\n',
+      }),
+    ).toThrow(/may only "return/)
+  })
+
   it('warns when ContactSection is not last', () => {
-    const r = mockupFromEntry(page('<ContactSection />\n\n<Steps steps={[]} />'))
+    const r = mockupFromEntry(page('<ContactSection />\n<Steps steps={[]} />'))
     expect(r.warnings).toEqual([expect.stringMatching(/ContactSection is not the last block/)])
   })
 })
