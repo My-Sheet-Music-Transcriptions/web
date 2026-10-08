@@ -72,7 +72,9 @@ export function Steps({
           <ol
             className={cn(
               'mx-auto -mt-[10px] grid max-w-[1080px] gap-[30px] md:gap-[60px] lg:mt-0',
-              items.length === 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-3',
+              items.length === 4 || items.length > 6
+                ? 'md:grid-cols-2 lg:grid-cols-4'
+                : 'md:grid-cols-3',
             )}
           >
             {items.map((step) => (
