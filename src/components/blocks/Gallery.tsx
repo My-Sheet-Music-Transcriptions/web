@@ -79,7 +79,13 @@ export function Gallery({
             imageClassName="aspect-[3/2]"
           />
         ) : (
-          <ul className={cn('grid grid-cols-2 gap-4', cols[columns])}>
+          <ul
+            className={cn(
+              'grid gap-4',
+              columns >= 5 ? 'grid-cols-3' : 'grid-cols-2',
+              cols[columns],
+            )}
+          >
             {images.map((s) => (
               <li key={s.image.img.src}>
                 <figure>
