@@ -9,9 +9,14 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
      `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider` for the rest), `**bold**` → plain `<strong>`,
      emphasis → plain `<em>`. Never raw `<p>`, `<h2>`, `<ul>`, `<a>`: the content test refuses them.
    - `"img/<file>"` → the file copied into the page folder and imported with `?w=…&as=picture`.
-   - `PageHeader` → the first block of the page, as in the mockup (a service page passes `icon` and
-     `rating={google}` from `@content/<locale>/data/ratings`; a landing page uses `variant="split"`).
-   - `ContactSection` gets `returnTo` = the page path.
+   - `PageHeader` → the first block of the page, as in the mockup (a service page passes its icon as `image`
+     and `rating={google}` from `@content/<locale>/data/ratings`; a landing page uses `variant="split"`).
+   - `ContactSection` gets `form={quoteForm}` (`giftCardForm` on the gift-card page) from
+     `@content/<locale>/data/forms` and `returnTo` = the page path.
+   - The words around content come from `@content/<locale>/data/labels`: `labels={mediaLabels}` on a block
+     with a carousel or a video (plus `videoPoster`, `~/assets/images/brand/video-poster.jpg`),
+     `labels={reviewLabels}` on `Testimonials`, `stepLabel="Step {n}"` on untitled timeline `Steps`. Blocks have
+     no words of their own: a page passes them all.
    `mockups/gift-card/sections.html` ↔ `content/en/pages/gift-card/index.tsx` + `meta.ts` is the worked
    example. Props are literals (strings, numbers, objects, arrays), picture imports and lists imported from
    `@content/<locale>/data/<file>` (`import { included } from '@content/en/data/services'`; ratings, prices,
@@ -29,7 +34,8 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
    component: `export default function GiftCardPage() { return (<>…</>) }`), `meta.ts` and every picture of
    the page (≤ 2000px long side, descriptive names), imported at the top of `index.tsx`
    (`import card from './gift-card.png?w=480;960&as=picture'`) and passed to blocks as props with alt text.
-   No external URLs, ever; brand-wide assets only (logo, icons, flags) stay in `src/assets/images/`.
+   No external URLs, ever; brand-wide assets only (logo, icons, photo bands, flags) stay in `src/assets/images/`
+   and are imported from there (`~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture` for `RatingBanner`).
    Collection `pages` unless it is a service/post/faq/artist/musician/partner/review; slug as on the live
    site when porting; `pnpm exec tsx scripts/check-slugs.ts`.
 4. **Meta** in `meta.ts` per `src/content/schema.ts`: `import type { PageMetaInput } from '~/content/schema'`

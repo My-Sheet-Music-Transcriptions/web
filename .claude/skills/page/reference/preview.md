@@ -38,7 +38,10 @@ worked example: read it before writing a mockup.
    One `<div data-msmt="<Block>" data-props='{…}'></div>` per real block, in page order; `children` is the
    prose as one string (blank line = new paragraph, `**bold**`). `data-props` is JSON in single quotes: write
    an apostrophe as `&#39;`, never a raw `'`. TopBar and Header first, Footer last; ContactSection last of
-   the content blocks when present.
+   the content blocks when present. Blocks hold no words of their own, so their props carry them too:
+   `ContactSection` its `form` (the words of `quoteForm` in `content/<locale>/data/forms.ts`), a block with a
+   carousel or video its `labels` (`mediaLabels` in `labels.ts`), `Testimonials` its `labels` (`reviewLabels`).
+   `pnpm ds:blocks <Block>` prints a ready line with them.
 4. A proposed block is `<section data-proposed="<Name>" data-props='{…}'>` whose props are what the block
    would take, drawn inside as fluid plain markup (flex-wrap, max-width 1140px, 16px side padding, real
    `<label>`/`<input>`/`<button>`, 4.5:1 text) with the token values: text #444444, primary #1a7f97, CTA fill

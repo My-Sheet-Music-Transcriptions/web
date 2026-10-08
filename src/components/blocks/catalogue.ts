@@ -108,7 +108,7 @@ export const catalogue = {
     usage:
       '<PageHeader title="…" subtitle="…" image={pianoIcon} rating={google} />\n<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} labels={mediaLabels} />',
     previewHeight: 560,
-    dataSource: 'content/<locale>/data/ratings.ts (google)',
+    dataSource: 'content/<locale>/data/ratings.ts (google), labels.ts (mediaLabels, with images)',
     guidelines:
       'The first block of every page but the homepage: the band on content pages (the service icon as `image` + `rating` on service pages), `variant="split"` on landing pages. One per page.',
   },
@@ -218,6 +218,7 @@ export const catalogue = {
     },
     usage:
       '<Samples items={[{ title: "…", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />',
+    dataSource: 'content/<locale>/data/labels.ts (mediaLabels)',
     previewHeight: 640,
     guidelines: 'Scores live in the page folder (first page, PNG). Two to four samples.',
   },
@@ -300,6 +301,7 @@ export const catalogue = {
     },
     usage:
       '<Steps title="How it works" items={[{ icon: "dollar", text: "…" }, { icon: "gift", text: "…" }]} />\n<Steps layout="columns" items={[{ title: "1. Send us audio", text: "…", image: step1 }]} />',
+    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with videos)',
     previewHeight: 640,
     guidelines:
       'Three to seven steps, one or two sentences each. Icons come from the Icon primitive (dollar, pen, music, chat, gift, send, check…).',
@@ -340,6 +342,7 @@ export const catalogue = {
       "We will work on your friend's favorite music transcription! The receiver of the voucher can redeem it for any transcription worth the value of the voucher.",
     usage:
       '<MediaText image={photo} alt="…" imageSide="right" caption="…">\n  <Text>…</Text>\n</MediaText>',
+    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with a carousel or a video)',
     previewHeight: 520,
     guidelines:
       "Pictures live in the page folder (`import photo from './photo.jpg?w=480;960&as=picture'`). Keep prose to a few short paragraphs; use `cta` only for the section's main action.",
@@ -361,6 +364,7 @@ export const catalogue = {
       ],
     },
     usage: '<Gallery label="Examples of our sheet music" images={[{ image: photo, alt: "…" }]} />',
+    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, carousel)',
     previewHeight: 520,
   },
   FaqList: {
@@ -429,6 +433,7 @@ export const catalogue = {
     defaults: { form: quoteForm },
     usage:
       '<ContactSection form={quoteForm} returnTo="/piano" />\n<ContactSection form={giftCardForm} variant="gift-card" id="gift-card" />',
+    dataSource: 'content/<locale>/data/forms.ts (quoteForm, giftCardForm)',
     previewHeight: 1180,
     guidelines:
       'One per page, always last. Its words come from `form` (content/<locale>/data/forms.ts); `variant="gift-card"` with `giftCardForm` on the gift-card page.',
