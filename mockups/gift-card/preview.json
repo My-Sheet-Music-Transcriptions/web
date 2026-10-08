@@ -1,4 +1,14 @@
 {
   "title": "Gift card",
-  "path": "/gift-card"
+  "path": "/gift-card",
+  "locale": "en",
+  "url": "https://claude.ai/artifact/2YKcNXfSuC2VcqNm7R6noN",
+  "source": "en/pages/gift-card",
+  "canvas": {
+    "url": "https://claude.ai/artifact/NJSHDg51xU6mtLh5c2H3Ls",
+    "boards": [
+      "Main.dc.html",
+      "Mobile.dc.html"
+    ]
+  }
 }

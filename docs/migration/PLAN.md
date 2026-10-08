@@ -104,8 +104,11 @@ services), and **~22 Catalan pages to write**.
 1. **Same URL, same host, same words.** A port reproduces the page at the same path with the same title, description
    and copy; redesign happens after the migration, through the `page` skill. Improvements are allowed only where CI
    forces them (D13) or the plan says so. (Catalan has no legacy to preserve: it is written new.)
-2. **Nothing reaches `main` that the user has not seen on a deploy preview** (CLAUDE.md). Ports go through draft PRs
-   with a Netlify preview, reviewed in batches (D1).
+2. **Porting is automatic; people decide, they do not review pages.** The importer turns every WordPress page into
+   MDX and automated parity checks prove each port matches the live page (W1.13). Nobody previews or approves pages
+   one by one. Human input is limited to the owner's inputs and decisions up front (W0) and one go/no-go per domain
+   at cutover. This is compatible with CLAUDE.md's "nothing reaches `main` unseen" rule because `main` reaches no
+   real domain until that domain's cutover, and the cutover go/no-go is where a person looks at the whole site (D1).
 3. **Co-location, no hotlinking.** Every image, PDF and audio sample is downloaded into the page's folder; nothing
    points at `wp-content` (CLAUDE.md conventions).
 4. **The inventory is the source of truth.** Every URL has exactly one action. A page found later is added to the
@@ -121,7 +124,7 @@ Each has a recommendation; the waves that depend on it say so. Record the answer
 
 | # | Question | Recommendation | Blocks |
 |---|---|---|---|
-| D1 | How are ports reviewed? The `page` skill makes an artifact mockup per page; that is ~400 previews. | Verbatim ports skip the mockup: one draft PR per batch (a wave or ~10–20 pages of one template), reviewed on the Netlify deploy preview with a list of links in the PR body; accepted batch → ready + auto-merge. New pages (all of Catalan) and changes keep using the `page` skill. Formalize it in the `port-page-from-wordpress` skill (W1.6). | W2+ |
+| D1 | Who reviews the ports? | **Nobody, page by page.** Ports run unattended: importer → parity checks (W1.13) → one PR per batch that auto-merges when CI and the parity report are green. A port that fails parity is fixed by the next session, never handed to a person. People act only at W0 (inputs, decisions) and at each domain's cutover go/no-go, where they browse the whole new site on its Netlify URL with the parity report. The `page` skill and its previews stay for **new** pages and **changes** after the migration. Record this exception to CLAUDE.md's page workflow in CLAUDE.md when W1.6 lands. | W2+ |
 | D2 | Cutover style? | Big-bang per domain once its inventory is complete (no proxying unported paths to WordPress: SiteGround's bot protection would challenge Netlify's proxy, and mixed hosting complicates caching and analytics). | C2, W8+ |
 | D3 | Order of the domains? | **ca first** (pilot: nothing to lose, exercises the locale checklist, the Netlify site setup, DNS and the cutover runbook end to end), then **en** (most value, most work), then es → fr → de → ja (business value, then size). | C1, W8+ |
 | D4 | Payments and shop: per-currency payment pages, how-to-pay, WooCommerce endpoints, regional prices (USD/GBP/AUD/EUR/JPY). | The static site takes no payments. Payment links point to the hub (or Stripe/PayPal payment links decided by the business); payment pages become plain pages with those links, or 301 to the hub. Shop URLs 301 to `catalog.` (already live for products). Needs the owner's input on where customers pay today and which currency each site quotes. | W7 |
@@ -133,8 +136,8 @@ Each has a recommendation; the waves that depend on it say so. Record the answer
 | D10 | Media: old `/wp-content/uploads/*` URLs and audio/PDF samples. | Let upload URLs 404 unless Search Console shows image traffic to specific files; commit samples next to their page (MP3 at 128 kbps, PDFs as-is). Measure the total in W0.3; past ~300 MB, decide on Git LFS or a Netlify Blobs-backed `/assets/samples`. | W1, W3 |
 | D11 | RSS: `/feed` exists on every site. | Generate `/feed` (RSS 2.0) from the `posts` collection at build; keeps subscribers and integrations working. | W5 |
 | D12 | Forms: contact, B2B, educators, careers/transcriber application, catalog download, gift card (done). | All post to `/api/*` functions modelled on `src/server/contact.*` (Resend), same recipients as the Elementor forms; confirmation inline (no thank-you pages). Needs the recipients and any webhook the forms feed (hub, CRM). | W2, W4, W7 |
-| D13 | Legacy titles/descriptions that break CI rules. | CI wins; adjust with `seoTitle`/`description`, keep the meaning, record the change in the PR. | W2+ |
-| D14 | Who writes and approves Catalan copy? | Claude translates from the English page with the Spanish page as reference (shared vocabulary); a Catalan speaker on the team approves each preview in the `page` skill. Same rule for any page a locale lacks (e.g. Catalan gift card). Confirm the proposed slugs in [`inventory/ca.md`](./inventory/ca.md). | C1 |
+| D13 | Legacy titles/descriptions that break CI rules. | CI wins; the importer applies a fixed rule (append the brand suffix to short titles, trim long ones at a word boundary, fall back to the first paragraph for missing descriptions) and lists every change in the parity report. | W2+ |
+| D14 | Catalan is new copy, not a port: who writes and checks it? | Generated automatically like the ports: Claude translates each page from English with the Spanish page as reference, slugs as proposed in [`inventory/ca.md`](./inventory/ca.md). A Catalan speaker reads the whole site once, at C2's go/no-go, instead of page by page. | C1 |
 | D15 | Catalan in the other sites: language switcher, hreflang, footer languages. | Add `ca` to every site's `languageSwitcher` and to the hreflang sets the day Catalan launches (the build does hreflang automatically from shared `translationKey`s; the switcher is config). WordPress sites still live at that point keep linking without Catalan; acceptable until they move. | C1 |
 
 ## 5. Inputs needed from the site owner (W0.1)
@@ -157,7 +160,7 @@ Without these the plan still works (archives), but each one removes guesswork:
 - [ ] **Payments**: where customers pay per currency today (D4).
 - [ ] **DNS**: where each domain's DNS is hosted and who can change it; current MX/SPF/DKIM records (email must keep
       working); TTLs.
-- [ ] **Catalan**: a Catalan speaker to approve copy and slugs (D14).
+- [ ] **Catalan**: a Catalan speaker who reads the finished Catalan site once, at C2's go/no-go (D14).
 - [ ] **Content freeze**: from which date WordPress edits stop per domain, or how changes made during the migration are
       reported.
 
@@ -200,13 +203,15 @@ W0 inputs ─► W1 foundations ─► W2 en core ─► C1 Catalan launch ─�
 - [ ] W1.5 **New blocks the legacy pages need** (confirm while porting): `AudioSample` (native `<audio>`, local file),
       `PdfSample` (thumbnail + download), `FaqList` (accordion), `VideoEmbed` (click-to-load facade, D7),
       `ComparisonTable` (software conversions), `PriceTable` per service.
-- [ ] W1.6 **Importer + skill**: `scripts/import-wp.ts <locale> <path>` reads the page (REST API
+- [ ] W1.6 **Importer, run in bulk without input**: `scripts/import-wp.ts <locale> <path>` reads the page (REST API
       `/wp-json/wp/v2/<type>?slug=` with `yoast_head_json`, or the WXR export) into `.cache/wp/` (git-ignored),
       downloads its media (with the media library's alt texts) into the page folder, converts the Elementor HTML to an
       MDX draft with the blocks, **rewrites links** (absolute same-site URLs → locale-free paths, other sites' URLs →
       `siteUrl()`), fills frontmatter (title, description, `seoTitle`, `translationKey` from the inventory, `updated`),
-      and prints what needs a human look. Turn the `port-page-from-wordpress` stub into the batch workflow of D1, and
-      the `new-blog-post`/`new-service-page` stubs into real skills once their templates exist.
+      and writes what it could not map to the parity report instead of asking. `scripts/import-wp.ts --wave <W> |
+      --locale <l>` ports every row of the inventory in one run. Single ports already run through `/new-page` with
+      `.claude/skills/page/reference/wordpress.md` (REST API recipe); point that recipe at the importer, and turn the hidden `new-blog-post`/`new-service-page` stubs into real skills once their
+      templates exist.
 - [ ] W1.7 **Forms** (D12): generalize `/api/contact` for the other forms; alert on delivery failures.
 - [ ] W1.8 **Consent and analytics** (D7); update the cookie and privacy policies for the new processors (Netlify,
       Resend, analytics) in the same PR as the consent change.
@@ -221,6 +226,12 @@ W0 inputs ─► W1 foundations ─► W2 en core ─► C1 Catalan launch ─�
       `scripts/netlify-ignore.sh` so a production site skips builds that touch neither shared code nor its locale's
       content.
 
+- [ ] W1.13 **Parity checks (the replacement for human review)**: `scripts/parity.ts <locale>` compares each ported
+      page with its WordPress original (live HTML via the REST API or export, archived capture as fallback) and writes
+      `docs/migration/parity/<locale>.md`: visible text diff (≥ 98 % of the words, every heading, every price and
+      number), same images (count, alt), same internal links (resolving or redirected), same title/description/
+      canonical (or the D13 change), forms present. Plus a screenshot pair per template (desktop + phone) for the
+      cutover go/no-go. A batch merges only with a green report; failures go back to the importer, not to a person.
 ### W2 · English core pages (12 pages)
 
 `/pricing`, `/contact`, `/about-us`, `/customer-reviews`, `/frequent-asked-questions`, `/services-samples`,
@@ -231,7 +242,7 @@ D12, D13.
 ### C1 · Catalan launch (2 sessions, after W1 and W2)
 
 The page set is in [`inventory/ca.md`](./inventory/ca.md): home, the eleven core and legal pages, gift card and ten
-services, written new through the `page` skill (D14).
+services, generated automatically from the English pages (D14).
 - [ ] Locale chrome: `src/i18n/sites/ca.ts` strings in Catalan (today it inherits English), `src/content/ca/data/`
       (`nav.ts`, `footer.ts`, `home.ts`, `reviews.ts`, prices in EUR), the `ca` logo lockup, the Catalan legal entity
       text. This is the checklist the `add-locale` skill stub becomes.
@@ -261,7 +272,7 @@ Christmas, auditions, MIDI/YouTube/productions into scores), 9 AI-music pages an
 
 ### W5 · English blog (126 posts + index)
 
-Importer-driven, in batches of ~20 by date. Index at `/music-blog` with the same pagination scheme. RSS. Keep `date`,
+Importer-driven, one unattended run for all 126 posts. Index at `/music-blog` with the same pagination scheme. RSS. Keep `date`,
 `updated`, author, cover image, tags as data (tag archives are not rebuilt: redirects). WordPress comments, if any,
 are not migrated.
 
@@ -299,7 +310,8 @@ Per locale, in the D3 order:
 - [ ] Keep a full WordPress backup (files + database) offline; cancel the SiteGround plan once the last domain using it
       has moved and DNS/email no longer depend on it.
 - [ ] Close the inventory's `decide`/`verify` leftovers; mark the locale done in the session log.
-- [ ] Colleagues who edited WordPress now request changes through the `page` skill: a short walkthrough per team.
+- [ ] Colleagues who edited WordPress now request changes through the `page` skill's commands (`/new-page`,
+      `/edit-page`, `/translate`…); walk each team through `docs/content-managers.{md,es.md,ca.md}`.
 
 ## 7. Cutover runbook (per domain)
 
@@ -309,6 +321,8 @@ Per locale, in the D3 order:
 - [ ] Final delta: diff the live sitemap against the inventory one last time; port anything new; content freeze starts.
 - [ ] Crawl the production build locally (`pnpm serve:dist`) with every legacy URL of the inventory and of the redirect
       export: 200 or a single 301 to a 200, nothing else.
+- [ ] **Go/no-go** (the one human step per domain): the owner browses the new site on its Netlify URL with the
+      parity report and the screenshot pairs, and says go.
 - [ ] Netlify site ready: custom domain + aliases, environment variables, form API keys, TLS ready to issue.
 - [ ] Baseline exported: Search Console clicks per page, analytics conversions of the last 4 weeks.
 - [ ] DNS: lower TTLs to 300 s; copy every record that is not the website (MX, SPF, DKIM, DMARC, `hub.`, `catalog.`,
@@ -339,7 +353,8 @@ fixed within the hour.
 | Content drifts on WordPress during the migration | content freeze per domain; final delta crawl |
 | A locale's Netlify site is reachable on `*.netlify.app` before cutover | canonicals point at the real domain; optionally password-protect or `noindex` the Netlify subdomain until cutover |
 | Email or subdomains break when nameservers move | copy all non-web DNS records first; test mail on switch day; rehearsed in C2 |
-| Catalan copy quality (written new, no native review) | D14: a Catalan speaker approves each preview |
+| An automatic port silently loses content | W1.13 parity report gates every batch; the cutover go/no-go reads it |
+| Catalan copy quality (machine-written) | D14: a Catalan speaker reads the whole site once at C2 |
 | Repo size from media | W0.3 census, D10 |
 | Build minutes: six production sites rebuild on every merge | W1.12 |
 | Analytics gap hides a regression | D7 decided and live before the first cutover; baseline exported before |
@@ -359,4 +374,4 @@ Not blocking the start, but each needs an answer before the wave named:
 
 | Date | Session | Done | Next |
 |---|---|---|---|
-| 2026-10-08 | Plan | Researched the six sites (archives; live access blocked), wrote this plan, the inventories and the redirect draft; Catalan reworked as the pilot launch after review | W0.1 inputs from the owner; W1.1–W1.3 can start in parallel |
+| 2026-10-08 | Plan | Researched the six sites (archives; live access blocked), wrote this plan, the inventories and the redirect draft; Catalan reworked as the pilot launch; porting made fully automatic (importer + parity checks, one human go/no-go per domain) | W0.1 inputs from the owner; W1.1–W1.3 can start in parallel |

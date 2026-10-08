@@ -1,9 +1,11 @@
 ---
 name: new-blog-post
-description: (Planned for a later iteration – see CLAUDE.md.) Create a blog post in posts/ with cover image, excerpt and BlogPost template.
+description: Planned, not built yet: Create a blog post in posts/ with cover image, excerpt and BlogPost template.
+user-invocable: false
 ---
 
-# new-blog-post (stub)
+# new-blog-post (planned)
 
-This skill is scheduled for a later iteration. Until the template and tooling exist, follow the `page` skill and ask
-the user before inventing structure. Track the plan in the repository's PR description.
+Not built yet: the template and tooling do not exist. Until then every page request goes through the `page`
+skill (`/new-page`, `/edit-page`, `/translate`, `/design`): ask the person before inventing structure, and
+record what this skill should do in the PR that builds it.
