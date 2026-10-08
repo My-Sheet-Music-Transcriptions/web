@@ -8,8 +8,8 @@ Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); mac
 |---|---|
 | Port | 18 |
 | Verify first (linked from the live site, never archived) | 2 |
-| Decide first (see the plan's decisions) | 4 |
-| Redirect (retired URLs) | 4 |
+| Decide first (see the plan's decisions) | 3 |
+| Redirect (retired URLs) | 5 |
 | **Total** | **28** |
 
 ## Port
@@ -49,13 +49,13 @@ Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); mac
 | [`/pay`](https://mysheetmusictranscriptions.jp/pay) | sitemap:page, archive | pages |  |  | 2022-08 | payment page (D4) | |
 | [`/pay-cancel`](https://mysheetmusictranscriptions.jp/pay-cancel) | sitemap:page, archive | pages |  |  | 2022-08 | payment page (D4) | |
 | [`/pay-ok`](https://mysheetmusictranscriptions.jp/pay-ok) | sitemap:page, archive | pages |  |  | 2022-08 | payment page (D4) | |
-| [`/review/yu-pi`](https://mysheetmusictranscriptions.jp/review/yu-pi) | archive | reviews |  |  | 2024-06 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
 
 ## Redirect (retired URLs)
 
 | Path | Found in | Target | EN counterpart | Title (archived) | Archived | Notes | PR |
 |---|---|---|---|---|---|---|---|
 | [`/black-friday-23`](https://mysheetmusictranscriptions.jp/black-friday-23) | archive | — |  |  | 2023-12 | expired promo → pricing page | |
+| [`/review/yu-pi`](https://mysheetmusictranscriptions.jp/review/yu-pi) | archive | reviews |  |  | 2024-06 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/spring-24`](https://mysheetmusictranscriptions.jp/spring-24) | archive | — |  |  | 2024-04 | expired promo → pricing page | |
 | [`/summer-26`](https://mysheetmusictranscriptions.jp/summer-26) | live-2026-home | — |  |  | — | expired promo → pricing page | |
 | [`/summer-discounts-23`](https://mysheetmusictranscriptions.jp/summer-discounts-23) | archive | — |  |  | 2023-09 | expired promo → pricing page | |

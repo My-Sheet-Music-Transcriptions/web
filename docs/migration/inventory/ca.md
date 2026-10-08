@@ -27,8 +27,9 @@ slashed form (plan W1.3), so the two pages that keep their slug keep working.
 ## Pages to create for launch (wave C1)
 
 Mirror of the core set that every other locale has, translated from English with the Spanish page as a reference.
-**Slugs are proposals**: a Catalan speaker on the team confirms them (and the copy) before C1 starts. The services
-list follows what the Spanish and French sites offer today; extend it later through the `page` skill.
+The slugs below are decided here so C1 can run unattended; nothing indexes them yet, so a Catalan speaker can still
+rename any of them at C2's go/no-go at no cost. The services list follows what the Spanish and French sites offer
+today; extend it later through the `page` skill.
 
 | Proposed path | Collection | translationKey (= EN page) | Spanish reference | PR |
 |---|---|---|---|---|

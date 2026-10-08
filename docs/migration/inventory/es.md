@@ -8,8 +8,8 @@ Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); mac
 |---|---|
 | Port | 25 |
 | Verify first (linked from the live site, never archived) | 1 |
-| Decide first (see the plan's decisions) | 58 |
-| Redirect (retired URLs) | 24 |
+| Decide first (see the plan's decisions) | 1 |
+| Redirect (retired URLs) | 81 |
 | Drop (test pages: let them 404) | 3 |
 | **Total** | **111** |
 
@@ -54,63 +54,6 @@ Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); mac
 | Path | Found in | Target | EN counterpart | Title (archived) | Archived | Notes | PR |
 |---|---|---|---|---|---|---|---|
 | [`/jellynote`](https://www.mistranscripcionesmusicales.com/jellynote) | archive | pages |  |  | 2021-04 | partner landing / thank-you (noindex) | |
-| [`/equipo/albert`](https://www.mistranscripcionesmusicales.com/equipo/albert) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/anandi`](https://www.mistranscripcionesmusicales.com/equipo/anandi) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/brett`](https://www.mistranscripcionesmusicales.com/equipo/brett) | archive | team |  |  | 2024-05 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/carla`](https://www.mistranscripcionesmusicales.com/equipo/carla) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/colome`](https://www.mistranscripcionesmusicales.com/equipo/colome) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/david`](https://www.mistranscripcionesmusicales.com/equipo/david) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/elena`](https://www.mistranscripcionesmusicales.com/equipo/elena) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/eric`](https://www.mistranscripcionesmusicales.com/equipo/eric) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/francesc`](https://www.mistranscripcionesmusicales.com/equipo/francesc) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/gemma`](https://www.mistranscripcionesmusicales.com/equipo/gemma) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/guillem`](https://www.mistranscripcionesmusicales.com/equipo/guillem) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/isaac`](https://www.mistranscripcionesmusicales.com/equipo/isaac) | archive | team |  |  | 2024-05 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/joan`](https://www.mistranscripcionesmusicales.com/equipo/joan) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/joel`](https://www.mistranscripcionesmusicales.com/equipo/joel) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/joel-2`](https://www.mistranscripcionesmusicales.com/equipo/joel-2) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/joel-3`](https://www.mistranscripcionesmusicales.com/equipo/joel-3) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/jofre`](https://www.mistranscripcionesmusicales.com/equipo/jofre) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/leandro`](https://www.mistranscripcionesmusicales.com/equipo/leandro) | archive | team |  |  | 2024-03 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/maja`](https://www.mistranscripcionesmusicales.com/equipo/maja) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/maragda`](https://www.mistranscripcionesmusicales.com/equipo/maragda) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/marc`](https://www.mistranscripcionesmusicales.com/equipo/marc) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/marina`](https://www.mistranscripcionesmusicales.com/equipo/marina) | archive | team |  |  | 2024-05 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/mauricio`](https://www.mistranscripcionesmusicales.com/equipo/mauricio) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/mauro`](https://www.mistranscripcionesmusicales.com/equipo/mauro) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/ona`](https://www.mistranscripcionesmusicales.com/equipo/ona) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/oriol`](https://www.mistranscripcionesmusicales.com/equipo/oriol) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/oriol-lc`](https://www.mistranscripcionesmusicales.com/equipo/oriol-lc) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/oscar`](https://www.mistranscripcionesmusicales.com/equipo/oscar) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/pablo`](https://www.mistranscripcionesmusicales.com/equipo/pablo) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/quim`](https://www.mistranscripcionesmusicales.com/equipo/quim) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/roc`](https://www.mistranscripcionesmusicales.com/equipo/roc) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/sabas`](https://www.mistranscripcionesmusicales.com/equipo/sabas) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/victor`](https://www.mistranscripcionesmusicales.com/equipo/victor) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/equipo/xavi`](https://www.mistranscripcionesmusicales.com/equipo/xavi) | archive | team |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/faqs/faqs-servicios`](https://www.mistranscripcionesmusicales.com/faqs/faqs-servicios) | archive | faqs |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/faqs/preguntas-tecnicas`](https://www.mistranscripcionesmusicales.com/faqs/preguntas-tecnicas) | archive | faqs |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/faqs/proceso-de-solicitud`](https://www.mistranscripcionesmusicales.com/faqs/proceso-de-solicitud) | archive | faqs |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/faqs/sobre-nosotros`](https://www.mistranscripcionesmusicales.com/faqs/sobre-nosotros) | archive | faqs |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/alex-gomez-o`](https://www.mistranscripcionesmusicales.com/review/alex-gomez-o) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/alvaro-n`](https://www.mistranscripcionesmusicales.com/review/alvaro-n) | archive | reviews |  |  | 2024-07 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/angel-r`](https://www.mistranscripcionesmusicales.com/review/angel-r) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/anne-c`](https://www.mistranscripcionesmusicales.com/review/anne-c) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/arnau-s`](https://www.mistranscripcionesmusicales.com/review/arnau-s) | archive | reviews |  |  | 2024-05 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/carlos-b`](https://www.mistranscripcionesmusicales.com/review/carlos-b) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/carlos-b-2`](https://www.mistranscripcionesmusicales.com/review/carlos-b-2) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/carmen-s`](https://www.mistranscripcionesmusicales.com/review/carmen-s) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/chalo-y`](https://www.mistranscripcionesmusicales.com/review/chalo-y) | archive | reviews |  |  | 2024-05 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/claudio-mendez`](https://www.mistranscripcionesmusicales.com/review/claudio-mendez) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/dani-b-2`](https://www.mistranscripcionesmusicales.com/review/dani-b-2) | archive | reviews |  |  | 2024-05 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/daniela`](https://www.mistranscripcionesmusicales.com/review/daniela) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/erik-y`](https://www.mistranscripcionesmusicales.com/review/erik-y) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/ezequiel-g`](https://www.mistranscripcionesmusicales.com/review/ezequiel-g) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/geoff-r`](https://www.mistranscripcionesmusicales.com/review/geoff-r) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/helena-u`](https://www.mistranscripcionesmusicales.com/review/helena-u) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/moises-b`](https://www.mistranscripcionesmusicales.com/review/moises-b) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/pablo-lopez-r`](https://www.mistranscripcionesmusicales.com/review/pablo-lopez-r) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/review/pedro-j`](https://www.mistranscripcionesmusicales.com/review/pedro-j) | archive | reviews |  |  | 2023-12 | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
 
 ## Redirect (retired URLs)
 
@@ -132,9 +75,66 @@ Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); mac
 | [`/category/quienes-somos-2`](https://www.mistranscripcionesmusicales.com/category/quienes-somos-2) | archive | — |  |  | 2022-10 | WP archive → blog index | |
 | [`/category/tutoriales`](https://www.mistranscripcionesmusicales.com/category/tutoriales) | archive | — |  |  | 2022-10 | WP archive → blog index | |
 | [`/category/uncategorized`](https://www.mistranscripcionesmusicales.com/category/uncategorized) | archive | — |  |  | 2021-01 | WP archive → blog index | |
+| [`/equipo/albert`](https://www.mistranscripcionesmusicales.com/equipo/albert) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/anandi`](https://www.mistranscripcionesmusicales.com/equipo/anandi) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/brett`](https://www.mistranscripcionesmusicales.com/equipo/brett) | archive | team |  |  | 2024-05 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/carla`](https://www.mistranscripcionesmusicales.com/equipo/carla) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/colome`](https://www.mistranscripcionesmusicales.com/equipo/colome) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/david`](https://www.mistranscripcionesmusicales.com/equipo/david) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/elena`](https://www.mistranscripcionesmusicales.com/equipo/elena) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/eric`](https://www.mistranscripcionesmusicales.com/equipo/eric) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/francesc`](https://www.mistranscripcionesmusicales.com/equipo/francesc) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/gemma`](https://www.mistranscripcionesmusicales.com/equipo/gemma) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/guillem`](https://www.mistranscripcionesmusicales.com/equipo/guillem) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/isaac`](https://www.mistranscripcionesmusicales.com/equipo/isaac) | archive | team |  |  | 2024-05 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/joan`](https://www.mistranscripcionesmusicales.com/equipo/joan) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/joel`](https://www.mistranscripcionesmusicales.com/equipo/joel) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/joel-2`](https://www.mistranscripcionesmusicales.com/equipo/joel-2) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/joel-3`](https://www.mistranscripcionesmusicales.com/equipo/joel-3) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/jofre`](https://www.mistranscripcionesmusicales.com/equipo/jofre) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/leandro`](https://www.mistranscripcionesmusicales.com/equipo/leandro) | archive | team |  |  | 2024-03 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/maja`](https://www.mistranscripcionesmusicales.com/equipo/maja) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/maragda`](https://www.mistranscripcionesmusicales.com/equipo/maragda) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/marc`](https://www.mistranscripcionesmusicales.com/equipo/marc) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/marina`](https://www.mistranscripcionesmusicales.com/equipo/marina) | archive | team |  |  | 2024-05 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/mauricio`](https://www.mistranscripcionesmusicales.com/equipo/mauricio) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/mauro`](https://www.mistranscripcionesmusicales.com/equipo/mauro) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/ona`](https://www.mistranscripcionesmusicales.com/equipo/ona) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/oriol`](https://www.mistranscripcionesmusicales.com/equipo/oriol) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/oriol-lc`](https://www.mistranscripcionesmusicales.com/equipo/oriol-lc) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/oscar`](https://www.mistranscripcionesmusicales.com/equipo/oscar) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/pablo`](https://www.mistranscripcionesmusicales.com/equipo/pablo) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/quim`](https://www.mistranscripcionesmusicales.com/equipo/quim) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/roc`](https://www.mistranscripcionesmusicales.com/equipo/roc) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/sabas`](https://www.mistranscripcionesmusicales.com/equipo/sabas) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/victor`](https://www.mistranscripcionesmusicales.com/equipo/victor) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/equipo/xavi`](https://www.mistranscripcionesmusicales.com/equipo/xavi) | archive | team |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/faqs/faqs-servicios`](https://www.mistranscripcionesmusicales.com/faqs/faqs-servicios) | archive | faqs |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/faqs/preguntas-tecnicas`](https://www.mistranscripcionesmusicales.com/faqs/preguntas-tecnicas) | archive | faqs |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/faqs/proceso-de-solicitud`](https://www.mistranscripcionesmusicales.com/faqs/proceso-de-solicitud) | archive | faqs |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/faqs/sobre-nosotros`](https://www.mistranscripcionesmusicales.com/faqs/sobre-nosotros) | archive | faqs |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/finalizar-compra`](https://www.mistranscripcionesmusicales.com/finalizar-compra) | archive | — |  |  | 2020-10 | WooCommerce → home / hub (D4) | |
 | [`/mi-cuenta`](https://www.mistranscripcionesmusicales.com/mi-cuenta) | archive | — |  |  | 2020-10 | WooCommerce → home / hub (D4) | |
 | [`/política-de-cookies`](https://www.mistranscripcionesmusicales.com/política-de-cookies) | linked | — |  |  | — | accented duplicate of /politica-de-cookies | |
+| [`/review/alex-gomez-o`](https://www.mistranscripcionesmusicales.com/review/alex-gomez-o) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/alvaro-n`](https://www.mistranscripcionesmusicales.com/review/alvaro-n) | archive | reviews |  |  | 2024-07 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/angel-r`](https://www.mistranscripcionesmusicales.com/review/angel-r) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/anne-c`](https://www.mistranscripcionesmusicales.com/review/anne-c) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/arnau-s`](https://www.mistranscripcionesmusicales.com/review/arnau-s) | archive | reviews |  |  | 2024-05 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/carlos-b`](https://www.mistranscripcionesmusicales.com/review/carlos-b) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/carlos-b-2`](https://www.mistranscripcionesmusicales.com/review/carlos-b-2) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/carmen-s`](https://www.mistranscripcionesmusicales.com/review/carmen-s) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/chalo-y`](https://www.mistranscripcionesmusicales.com/review/chalo-y) | archive | reviews |  |  | 2024-05 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/claudio-mendez`](https://www.mistranscripcionesmusicales.com/review/claudio-mendez) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/dani-b-2`](https://www.mistranscripcionesmusicales.com/review/dani-b-2) | archive | reviews |  |  | 2024-05 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/daniela`](https://www.mistranscripcionesmusicales.com/review/daniela) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/erik-y`](https://www.mistranscripcionesmusicales.com/review/erik-y) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/ezequiel-g`](https://www.mistranscripcionesmusicales.com/review/ezequiel-g) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/geoff-r`](https://www.mistranscripcionesmusicales.com/review/geoff-r) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/helena-u`](https://www.mistranscripcionesmusicales.com/review/helena-u) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/moises-b`](https://www.mistranscripcionesmusicales.com/review/moises-b) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/pablo-lopez-r`](https://www.mistranscripcionesmusicales.com/review/pablo-lopez-r) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/review/pedro-j`](https://www.mistranscripcionesmusicales.com/review/pedro-j) | archive | reviews |  |  | 2023-12 | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/servicios/orquestraciones`](https://www.mistranscripcionesmusicales.com/servicios/orquestraciones) | linked | — |  |  | — | old nested service URL → /orquestraciones | |
 | [`/summer-24`](https://www.mistranscripcionesmusicales.com/summer-24) | linked | — |  |  | — | expired promo → pricing page | |
 | [`/summer-discounts-23`](https://www.mistranscripcionesmusicales.com/summer-discounts-23) | archive | — |  |  | 2023-09 | expired promo → pricing page | |

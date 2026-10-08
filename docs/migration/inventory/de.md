@@ -8,8 +8,8 @@ Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); mac
 |---|---|
 | Port | 36 |
 | Verify first (linked from the live site, never archived) | 11 |
-| Decide first (see the plan's decisions) | 62 |
-| Redirect (retired URLs) | 10 |
+| Decide first (see the plan's decisions) | 3 |
+| Redirect (retired URLs) | 69 |
 | Drop (test pages: let them 404) | 1 |
 | **Total** | **120** |
 
@@ -77,80 +77,80 @@ Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); mac
 | [`/comment-payer`](https://meinemusiktranskription.de/comment-payer) | archive | pages |  |  | 2024-05 | payment page (D4) | |
 | [`/jellynote`](https://meinemusiktranskription.de/jellynote) | archive | pages |  |  | 2024-05 | partner landing / thank-you (noindex) | |
 | [`/jellynote-merci`](https://meinemusiktranskription.de/jellynote-merci) | archive | pages |  |  | 2024-05 | partner landing / thank-you (noindex) | |
-| [`/a-propos`](https://meinemusiktranskription.de/a-propos) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/albert`](https://meinemusiktranskription.de/albert) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/anandi`](https://meinemusiktranskription.de/anandi) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/anne-c`](https://meinemusiktranskription.de/anne-c) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/arrangements-musicaux`](https://meinemusiktranskription.de/arrangements-musicaux) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/basse`](https://meinemusiktranskription.de/basse) | sitemap:faqs, linked | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/batterie`](https://meinemusiktranskription.de/batterie) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/bruno`](https://meinemusiktranskription.de/bruno) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/carla`](https://meinemusiktranskription.de/carla) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/caryl-mansfield`](https://meinemusiktranskription.de/caryl-mansfield) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/celine-m`](https://meinemusiktranskription.de/celine-m) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/claire-r`](https://meinemusiktranskription.de/claire-r) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/claude-l`](https://meinemusiktranskription.de/claude-l) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/colome`](https://meinemusiktranskription.de/colome) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/david`](https://meinemusiktranskription.de/david) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/elena`](https://meinemusiktranskription.de/elena) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/ensembles-vocaux`](https://meinemusiktranskription.de/ensembles-vocaux) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/eric`](https://meinemusiktranskription.de/eric) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/francesc`](https://meinemusiktranskription.de/francesc) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/gemma`](https://meinemusiktranskription.de/gemma) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/guillem`](https://meinemusiktranskription.de/guillem) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/guitare`](https://meinemusiktranskription.de/guitare) | sitemap:faqs, linked | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/jean-christophe-m`](https://meinemusiktranskription.de/jean-christophe-m) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/jean-r`](https://meinemusiktranskription.de/jean-r) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/joan`](https://meinemusiktranskription.de/joan) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/joel`](https://meinemusiktranskription.de/joel) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/joel-r`](https://meinemusiktranskription.de/joel-r) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/laurence-d`](https://meinemusiktranskription.de/laurence-d) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/maja`](https://meinemusiktranskription.de/maja) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/maragda`](https://meinemusiktranskription.de/maragda) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/marc`](https://meinemusiktranskription.de/marc) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/marc-l`](https://meinemusiktranskription.de/marc-l) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/mauricio`](https://meinemusiktranskription.de/mauricio) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/mauro`](https://meinemusiktranskription.de/mauro) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/michael`](https://meinemusiktranskription.de/michael) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/michel-d`](https://meinemusiktranskription.de/michel-d) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/michel-d-2`](https://meinemusiktranskription.de/michel-d-2) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/nathan`](https://meinemusiktranskription.de/nathan) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/ona`](https://meinemusiktranskription.de/ona) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/oriol`](https://meinemusiktranskription.de/oriol) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/oriol-v`](https://meinemusiktranskription.de/oriol-v) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/oscar-j`](https://meinemusiktranskription.de/oscar-j) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/pablo`](https://meinemusiktranskription.de/pablo) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/paul-m`](https://meinemusiktranskription.de/paul-m) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/philippe-q`](https://meinemusiktranskription.de/philippe-q) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/piano`](https://meinemusiktranskription.de/piano) | sitemap:faqs, linked | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/piano-et-voix`](https://meinemusiktranskription.de/piano-et-voix) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/piano-jazz`](https://meinemusiktranskription.de/piano-jazz) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/processus-de-commande`](https://meinemusiktranskription.de/processus-de-commande) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/questions-techniques`](https://meinemusiktranskription.de/questions-techniques) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/quim`](https://meinemusiktranskription.de/quim) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/roc`](https://meinemusiktranskription.de/roc) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/sabas`](https://meinemusiktranskription.de/sabas) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/sebastien-l`](https://meinemusiktranskription.de/sebastien-l) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/service`](https://meinemusiktranskription.de/service) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/stephane-l`](https://meinemusiktranskription.de/stephane-l) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/tiffany-p`](https://meinemusiktranskription.de/tiffany-p) | sitemap:review | reviews |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/victor`](https://meinemusiktranskription.de/victor) | sitemap:team | team |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
-| [`/vocal-lead-sheet`](https://meinemusiktranskription.de/vocal-lead-sheet) | sitemap:faqs | faqs |  |  | — | single CPT entry: data for the listing page, URL → 301 to the listing (D5) | |
 
 ## Redirect (retired URLs)
 
 | Path | Found in | Target | EN counterpart | Title (archived) | Archived | Notes | PR |
 |---|---|---|---|---|---|---|---|
+| [`/a-propos`](https://meinemusiktranskription.de/a-propos) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/albert`](https://meinemusiktranskription.de/albert) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/anandi`](https://meinemusiktranskription.de/anandi) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/anne-c`](https://meinemusiktranskription.de/anne-c) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/arrangements-musicaux`](https://meinemusiktranskription.de/arrangements-musicaux) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/author/webmaster-msmtgmail-com`](https://meinemusiktranskription.de/author/webmaster-msmtgmail-com) | sitemap:author, archive | — |  |  | 2024-05 | WP archive → blog index | |
+| [`/basse`](https://meinemusiktranskription.de/basse) | sitemap:faqs, linked | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/batterie`](https://meinemusiktranskription.de/batterie) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/black-friday-2024`](https://meinemusiktranskription.de/black-friday-2024) | sitemap:page | — |  |  | — | expired promo → pricing page | |
 | [`/black-friday-23`](https://meinemusiktranskription.de/black-friday-23) | archive | — |  |  | 2024-05 | expired promo → pricing page | |
+| [`/bruno`](https://meinemusiktranskription.de/bruno) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/carla`](https://meinemusiktranskription.de/carla) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/caryl-mansfield`](https://meinemusiktranskription.de/caryl-mansfield) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/category/bievenus`](https://meinemusiktranskription.de/category/bievenus) | sitemap:category | — |  |  | — | WP archive → blog index | |
 | [`/category/logiciels-de-notation-musicale`](https://meinemusiktranskription.de/category/logiciels-de-notation-musicale) | sitemap:category | — |  |  | — | WP archive → blog index | |
+| [`/celine-m`](https://meinemusiktranskription.de/celine-m) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/claire-r`](https://meinemusiktranskription.de/claire-r) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/claude-l`](https://meinemusiktranskription.de/claude-l) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/colome`](https://meinemusiktranskription.de/colome) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/david`](https://meinemusiktranskription.de/david) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/elena`](https://meinemusiktranskription.de/elena) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/ensembles-vocaux`](https://meinemusiktranskription.de/ensembles-vocaux) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/eric`](https://meinemusiktranskription.de/eric) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/fall-25`](https://meinemusiktranskription.de/fall-25) | sitemap:page | — |  |  | — | expired promo → pricing page | |
+| [`/francesc`](https://meinemusiktranskription.de/francesc) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/gemma`](https://meinemusiktranskription.de/gemma) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/guillem`](https://meinemusiktranskription.de/guillem) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/guitare`](https://meinemusiktranskription.de/guitare) | sitemap:faqs, linked | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/jean-christophe-m`](https://meinemusiktranskription.de/jean-christophe-m) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/jean-r`](https://meinemusiktranskription.de/jean-r) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/joan`](https://meinemusiktranskription.de/joan) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/joel`](https://meinemusiktranskription.de/joel) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/joel-r`](https://meinemusiktranskription.de/joel-r) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/laurence-d`](https://meinemusiktranskription.de/laurence-d) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/maja`](https://meinemusiktranskription.de/maja) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/maragda`](https://meinemusiktranskription.de/maragda) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/marc`](https://meinemusiktranskription.de/marc) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/marc-l`](https://meinemusiktranskription.de/marc-l) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/mauricio`](https://meinemusiktranskription.de/mauricio) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/mauro`](https://meinemusiktranskription.de/mauro) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/michael`](https://meinemusiktranskription.de/michael) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/michel-d`](https://meinemusiktranskription.de/michel-d) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/michel-d-2`](https://meinemusiktranskription.de/michel-d-2) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/nathan`](https://meinemusiktranskription.de/nathan) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/ona`](https://meinemusiktranskription.de/ona) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/oriol`](https://meinemusiktranskription.de/oriol) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/oriol-v`](https://meinemusiktranskription.de/oriol-v) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/oscar-j`](https://meinemusiktranskription.de/oscar-j) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/pablo`](https://meinemusiktranskription.de/pablo) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/paul-m`](https://meinemusiktranskription.de/paul-m) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/philippe-q`](https://meinemusiktranskription.de/philippe-q) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/piano`](https://meinemusiktranskription.de/piano) | sitemap:faqs, linked | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/piano-et-voix`](https://meinemusiktranskription.de/piano-et-voix) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/piano-jazz`](https://meinemusiktranskription.de/piano-jazz) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/processus-de-commande`](https://meinemusiktranskription.de/processus-de-commande) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/questions-techniques`](https://meinemusiktranskription.de/questions-techniques) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/quim`](https://meinemusiktranskription.de/quim) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/roc`](https://meinemusiktranskription.de/roc) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/sabas`](https://meinemusiktranskription.de/sabas) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/sebastien-l`](https://meinemusiktranskription.de/sebastien-l) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/service`](https://meinemusiktranskription.de/service) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/services`](https://meinemusiktranskription.de/services) | sitemap:services, archive | — |  |  | 2024-05 | services CPT archive → /dienstleistungen | |
+| [`/stephane-l`](https://meinemusiktranskription.de/stephane-l) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 | [`/summer-25`](https://meinemusiktranskription.de/summer-25) | sitemap:page | — |  |  | — | expired promo → pricing page | |
 | [`/summer-26`](https://meinemusiktranskription.de/summer-26) | live-2026-home | — |  |  | — | expired promo → pricing page | |
 | [`/summer-discounts-23`](https://meinemusiktranskription.de/summer-discounts-23) | archive | — |  |  | 2024-05 | expired promo → pricing page | |
+| [`/tiffany-p`](https://meinemusiktranskription.de/tiffany-p) | sitemap:review | reviews |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/victor`](https://meinemusiktranskription.de/victor) | sitemap:team | team |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
+| [`/vocal-lead-sheet`](https://meinemusiktranskription.de/vocal-lead-sheet) | sitemap:faqs | faqs |  |  | — | single entry of a custom post type: becomes data for the listing page, URL → 301 to the listing (D5 default) | |
 
 ## Drop (test pages: let them 404)
 
