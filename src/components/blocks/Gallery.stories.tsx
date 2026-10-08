@@ -5,7 +5,7 @@ import { Gallery, type GalleryProps } from './Gallery'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Story/Gallery',
+  title: 'Blocks/Text & media/Gallery',
   component: Gallery,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<GalleryProps>('Gallery'),

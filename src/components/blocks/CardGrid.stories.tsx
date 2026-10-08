@@ -5,7 +5,7 @@ import { CardGrid, type CardGridProps } from './CardGrid'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Offer/CardGrid',
+  title: 'Blocks/Lists & grids/CardGrid',
   component: CardGrid,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<CardGridProps>('CardGrid'),

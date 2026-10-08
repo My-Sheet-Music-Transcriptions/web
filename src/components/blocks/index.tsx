@@ -19,8 +19,8 @@ import { Testimonials } from './Testimonials'
 
 /**
  * The block catalogue: what pages (content/<locale>/<collection>/<slug>/index.tsx) are composed of, imported by name
- * (`import { MediaText, Steps } from '~/components/blocks'`). Grouped by role in catalogue.ts, Storybook and
- * README.md. Blocks never import content: pages pass their lists (`items`, `tiers`, `groups`…) as props.
+ * (`import { MediaText, Steps } from '~/components/blocks'`). Filed by category (what each shows) in catalogue.ts,
+ * Storybook and README.md. Blocks never import content: pages pass their lists (`items`, `tiers`, `groups`…) as props.
  */
 export const blocks = {
   Hero,

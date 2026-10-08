@@ -3,7 +3,7 @@ import { Samples, type SamplesProps } from './Samples'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Proof/Samples',
+  title: 'Blocks/Text & media/Samples',
   component: Samples,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<SamplesProps>('Samples'),

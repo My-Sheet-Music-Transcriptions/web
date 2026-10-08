@@ -3,7 +3,7 @@ import { RatingBanner, type RatingBannerProps } from './RatingBanner'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Proof/RatingBanner',
+  title: 'Blocks/Reviews & ratings/RatingBanner',
   component: RatingBanner,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<RatingBannerProps>('RatingBanner'),

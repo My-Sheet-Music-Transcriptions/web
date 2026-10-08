@@ -3,7 +3,7 @@ import { Section, type SectionProps } from './Section'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Story/Section',
+  title: 'Blocks/Text & media/Section',
   component: Section,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<SectionProps>('Section'),

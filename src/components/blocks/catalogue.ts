@@ -1,29 +1,27 @@
 import type { BlockName } from './index'
 
 /**
- * Where a block sits in a page, in page order. `pnpm ds:blocks`, Storybook (Blocks/<Role>/<Name>) and the
- * README group the catalogue by role, so whoever composes a page scans "what do I need here?".
+ * What a block shows, in page order. `pnpm ds:blocks`, Storybook (Blocks/<Category>/<Name>) and the README
+ * group the catalogue by category, so whoever composes a page scans "what do I need here?".
  */
-export const ROLES = {
-  opening: 'the first section: what the page is and who it is for',
-  proof: 'numbers, ratings, quotes, logos and samples that build trust',
-  offer: 'what we sell: who it is for, the services, what is included, prices',
-  how: 'the process, step by step',
-  story: 'prose, pictures, questions and facts: the free-form middle of a page',
-  closing: 'the action the page asks for: a band with a button, the form (always last)',
+export const CATEGORIES = {
+  header: { label: 'Headers', meaning: 'the top of a page: its h1, a subtitle or lead, a button' },
+  text: {
+    label: 'Text & media',
+    meaning: 'prose, pictures and video: the free-form body of a page',
+  },
+  list: {
+    label: 'Lists & grids',
+    meaning: 'repeated items with a shape: cards, icons, logos, steps, figures, prices, questions',
+  },
+  reviews: { label: 'Reviews & ratings', meaning: 'what customers say and the ratings behind it' },
+  cta: {
+    label: 'Calls to action',
+    meaning: 'a band with a button; the request form (always last)',
+  },
 } as const
 
-export type BlockRole = keyof typeof ROLES
-
-/** The Storybook folder of each role (`Blocks/<label>/<Name>`), in page order. */
-export const ROLE_LABELS: Record<BlockRole, string> = {
-  opening: 'Opening',
-  proof: 'Proof',
-  offer: 'Offer',
-  how: 'How',
-  story: 'Story',
-  closing: 'Closing',
-}
+export type BlockCategory = keyof typeof CATEGORIES
 
 /**
  * The block manifest: one entry per block in `blocks`. It drives the generated README table, the
@@ -34,8 +32,8 @@ export interface BlockDoc {
   group: 'Blocks'
   /** One sentence, what the block is for. */
   description: string
-  /** Where it sits in a page (see ROLES). */
-  role: BlockRole
+  /** What it shows (see CATEGORIES). */
+  category: BlockCategory
   /** One line: the need that makes this the block to pick. */
   useWhen: string
   /** One line: the case people reach for it by mistake, and what to use instead. */
@@ -102,7 +100,7 @@ const generalFaq = {
 export const catalogue = {
   Hero: {
     group: 'Blocks',
-    role: 'opening',
+    category: 'header',
     useWhen: 'The homepage opening, with the brand lockup and the Google rating card.',
     notFor: 'any other page: PageHeader.',
     description:
@@ -116,7 +114,7 @@ export const catalogue = {
   },
   PageHeader: {
     group: 'Blocks',
-    role: 'opening',
+    category: 'header',
     useWhen: 'The opening of every page but the homepage: its h1, a subtitle or lead, a button.',
     notFor: 'the homepage: Hero.',
     description:
@@ -135,7 +133,7 @@ export const catalogue = {
   },
   RatingBanner: {
     group: 'Blocks',
-    role: 'proof',
+    category: 'reviews',
     useWhen: 'A big trust moment mid-page: the counter and the rating cards over a photo.',
     notFor: 'quotes from customers: Testimonials.',
     description:
@@ -152,7 +150,7 @@ export const catalogue = {
   },
   Testimonials: {
     group: 'Blocks',
-    role: 'proof',
+    category: 'reviews',
     useWhen: 'Quotes that back a claim: a few customer reviews with stars.',
     notFor: 'ratings and counts: RatingBanner.',
     description:
@@ -185,7 +183,7 @@ export const catalogue = {
   },
   LogoGrid: {
     group: 'Blocks',
-    role: 'proof',
+    category: 'list',
     useWhen: 'Who trusts us: partner logos, schools, or the artists we work with.',
     notFor: 'photos without names or links: Gallery.',
     description:
@@ -210,7 +208,7 @@ export const catalogue = {
   },
   Stats: {
     group: 'Blocks',
-    role: 'proof',
+    category: 'list',
     useWhen: 'Two to four figures that back a claim, each with its one-line label.',
     notFor: 'our own ratings and counter: RatingBanner.',
     description:
@@ -228,7 +226,7 @@ export const catalogue = {
   },
   Samples: {
     group: 'Blocks',
-    role: 'proof',
+    category: 'text',
     useWhen: 'Showing our work: a recording beside the first page of the score we wrote.',
     notFor: 'a single video with prose: MediaText `video`.',
     description:
@@ -254,7 +252,7 @@ export const catalogue = {
   },
   CardGrid: {
     group: 'Blocks',
-    role: 'offer',
+    category: 'list',
     useWhen: 'Cards in a row: who we work for, what is included, why us, services with prices.',
     notFor: 'links that are only an icon and a label: IconGrid.',
     description:
@@ -290,7 +288,7 @@ export const catalogue = {
   },
   IconGrid: {
     group: 'Blocks',
-    role: 'offer',
+    category: 'list',
     useWhen: 'Pointing to service or instrument pages with their icons; `limit` for a short list.',
     notFor: 'cards with a text each: CardGrid.',
     description:
@@ -316,7 +314,7 @@ export const catalogue = {
   },
   PricingCards: {
     group: 'Blocks',
-    role: 'offer',
+    category: 'list',
     useWhen: 'Any page that talks about price: price-from cards with the factors.',
     notFor: 'a price inside a sentence: say it in prose, from data, never typed in.',
     description:
@@ -342,7 +340,7 @@ export const catalogue = {
   },
   Steps: {
     group: 'Blocks',
-    role: 'how',
+    category: 'list',
     useWhen: 'A process step by step: how ordering works, how a gift card works, why convert.',
     description:
       '`timeline`: numbered vertical list with an icon or number per step. `columns`: steps side by side, each with its picture or video (the homepage adds one wide illustration on desktop).',
@@ -369,7 +367,7 @@ export const catalogue = {
   },
   Section: {
     group: 'Blocks',
-    role: 'story',
+    category: 'text',
     useWhen:
       'Prose with a heading: text pages, a one-off paragraph, anything no other block shapes.',
     notFor: 'prose that belongs with a picture or video: MediaText.',
@@ -383,7 +381,7 @@ export const catalogue = {
   },
   MediaText: {
     group: 'Blocks',
-    role: 'story',
+    category: 'text',
     useWhen: 'Prose beside media: a picture, a carousel, a before/after pair or a video.',
     notFor: 'pictures without prose: Gallery; a list of steps: Steps.',
     description:
@@ -409,7 +407,7 @@ export const catalogue = {
   },
   Gallery: {
     group: 'Blocks',
-    role: 'story',
+    category: 'text',
     useWhen: 'Pictures without prose: a scrolling strip, a grid of portraits, a carousel.',
     notFor: 'logos or people with names and links: LogoGrid.',
     description:
@@ -428,7 +426,7 @@ export const catalogue = {
   },
   FaqList: {
     group: 'Blocks',
-    role: 'story',
+    category: 'list',
     useWhen: 'Questions and answers: a page-specific group, then the shared ones.',
     description:
       'Questions that open one at a time (no script), in titled groups with optional jump links, a button, and FAQPage structured data.',
@@ -446,7 +444,7 @@ export const catalogue = {
   },
   Table: {
     group: 'Blocks',
-    role: 'story',
+    category: 'text',
     useWhen: 'Rows and columns of facts: job openings, prices per level.',
     notFor: 'prices from: PricingCards; cards: CardGrid.',
     description:
@@ -470,7 +468,7 @@ export const catalogue = {
   },
   CtaBand: {
     group: 'Blocks',
-    role: 'closing',
+    category: 'cta',
     useWhen: 'One line and one button that point somewhere: the glossary, the form, an email.',
     notFor: 'the request form itself: ContactSection.',
     description:
@@ -484,7 +482,7 @@ export const catalogue = {
   },
   ContactSection: {
     group: 'Blocks',
-    role: 'closing',
+    category: 'cta',
     useWhen: 'The last section of every page that asks for a quote or a gift card.',
     notFor: 'a second form on the same page; one per page.',
     description:

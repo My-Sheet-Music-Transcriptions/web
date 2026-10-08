@@ -4,7 +4,7 @@ import { Steps, type StepsProps } from './Steps'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/How/Steps',
+  title: 'Blocks/Lists & grids/Steps',
   component: Steps,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<StepsProps>('Steps'),

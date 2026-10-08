@@ -3,7 +3,7 @@ import { CtaBand, type CtaBandProps } from './CtaBand'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Closing/CtaBand',
+  title: 'Blocks/Calls to action/CtaBand',
   component: CtaBand,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<CtaBandProps>('CtaBand'),

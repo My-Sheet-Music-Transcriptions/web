@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { type BlockDoc, catalogue, ROLES } from '../../src/components/blocks/catalogue'
+import { type BlockDoc, CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
 import { DEFAULT_LOCALE } from '../../src/i18n/routing'
 import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
 
@@ -163,7 +163,7 @@ export function checkProps(name: string, props: unknown): string[] {
   return checkObject(name, props ?? {}, block.props, block.types)
 }
 
-// --- the index: every block by role, with where it is used (computed from the pages, never written down)
+// --- the index: every block by category, with where it is used (computed from the pages, never written down)
 
 /** Pages using each block, as `slug` (`<locale>/<slug>` outside the default locale), from each page's index.tsx. */
 export function blockUsage(entries = readAllEntries()): Record<string, string[]> {
@@ -188,15 +188,17 @@ export const usageLine = (pages: string[]): string =>
   pages.length ? `used on: ${pages.join(', ')}` : 'not used on any page yet'
 
 /**
- * The one-screen index `pnpm ds:blocks` prints without arguments: the blocks grouped by role in page order,
+ * The one-screen index `pnpm ds:blocks` prints without arguments: the blocks grouped by category in page order,
  * one line of purpose, when to pick each and when not, and where it is used. Props and the ready mockup
  * line stay behind `pnpm ds:blocks <Block>`.
  */
 export function blockIndex(usage = blockUsage()): string {
   const out: string[] = []
-  for (const [role, meaning] of Object.entries(ROLES)) {
-    out.push(`## ${role}: ${meaning}`)
-    for (const [name, doc] of Object.entries(catalogue).filter(([, d]) => d.role === role)) {
+  for (const [category, { label, meaning }] of Object.entries(CATEGORIES)) {
+    out.push(`## ${label}: ${meaning}`)
+    for (const [name, doc] of Object.entries(catalogue).filter(
+      ([, d]) => d.category === category,
+    )) {
       const d = doc as BlockDoc
       out.push(`- ${name}: ${d.description}`)
       out.push(`  use when: ${d.useWhen}`)

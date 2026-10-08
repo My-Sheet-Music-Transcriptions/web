@@ -3,7 +3,7 @@ import { ContactSection, type ContactSectionProps } from './ContactSection'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Closing/ContactSection',
+  title: 'Blocks/Calls to action/ContactSection',
   component: ContactSection,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<ContactSectionProps>('ContactSection'),

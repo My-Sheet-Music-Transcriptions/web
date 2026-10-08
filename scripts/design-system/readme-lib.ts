@@ -1,23 +1,23 @@
-import { type BlockDoc, catalogue, ROLE_LABELS, ROLES } from '../../src/components/blocks/catalogue'
+import { type BlockDoc, CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
 import { blockProps } from './blocks-lib'
 
 /**
  * The block table of src/components/blocks/README.md and of the artifact's brand book: one row per block,
- * grouped by role in page order, generated from the catalogue and the props interfaces. `pnpm ds:export`
+ * grouped by category in page order, generated from the catalogue and the props interfaces. `pnpm ds:export`
  * writes it; tests/unit/catalogue.test.ts checks the committed README carries the current one.
  */
 export function blockTable(): string {
   const rows: string[] = []
-  for (const role of Object.keys(ROLES) as (keyof typeof ROLES)[])
+  for (const [category, { label }] of Object.entries(CATEGORIES))
     for (const [name, doc] of Object.entries(catalogue) as [string, BlockDoc][]) {
-      if (doc.role !== role) continue
+      if (doc.category !== category) continue
       const props = blockProps(name)?.props.map((p) => p.name) ?? []
       rows.push(
-        `| \`${name}\` | ${ROLE_LABELS[role]} | ${doc.description} | ${props.join(', ') || '–'} | ${doc.dataSource ?? '–'} |`,
+        `| \`${name}\` | ${label} | ${doc.description} | ${props.join(', ') || '–'} | ${doc.dataSource ?? '–'} |`,
       )
     }
   return [
-    '| Block | Role | Purpose | Props | Data source |',
+    '| Block | Category | Purpose | Props | Data source |',
     '| --- | --- | --- | --- | --- |',
     ...rows,
   ].join('\n')

@@ -5,7 +5,7 @@ import { PageHeader, type PageHeaderProps } from './PageHeader'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Opening/PageHeader',
+  title: 'Blocks/Headers/PageHeader',
   component: PageHeader,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<PageHeaderProps>('PageHeader'),

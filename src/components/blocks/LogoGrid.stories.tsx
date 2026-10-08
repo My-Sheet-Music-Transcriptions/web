@@ -4,7 +4,7 @@ import { LogoGrid, type LogoGridProps } from './LogoGrid'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Proof/LogoGrid',
+  title: 'Blocks/Lists & grids/LogoGrid',
   component: LogoGrid,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<LogoGridProps>('LogoGrid'),

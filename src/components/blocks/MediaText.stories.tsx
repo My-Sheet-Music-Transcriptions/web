@@ -5,7 +5,7 @@ import { MediaText, type MediaTextProps } from './MediaText'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Story/MediaText',
+  title: 'Blocks/Text & media/MediaText',
   component: MediaText,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<MediaTextProps>('MediaText'),

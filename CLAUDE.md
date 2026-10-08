@@ -19,7 +19,7 @@ pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
 pnpm lhci                     # Lighthouse CI thresholds (needs a build; finds Chromium itself, CHROME_PATH overrides)
 pnpm release-check            # the full local gate (more than the PR CI runs: see nightly.yml)
 pnpm ds:export                # design-system export for the artifact -> dist/design-system (see below)
-pnpm ds:blocks [Block...|--all]    # no args: the index (blocks by role, when to use each, where used); names: props, allowed values, docs + a ready mockup line
+pnpm ds:blocks [Block...|--all]    # no args: the index (blocks by category, when to use each, where used); names: props, allowed values, docs + a ready mockup line
 pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, renders it locally (as ds:shot), builds the review page and prints the Artifact publish parameters
 pnpm ds:shot <slug> [--built | --url <url>] [--width 390]   # renders the mockup (or the real page) in headless Chromium at 1440/768/390: pictures per section + problems
 pnpm ds:canvas <slug> [--canvas <canvas.json>] | --pull <Board.dc.html>   # design mode: the mockup as a Design canvas, and back
@@ -43,8 +43,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/content/{index,schema,types}.ts` – the content loader (globs `content/`), the meta schemas and data types.
 - `src/components/primitives` – Button, Card, Picture, Stars, Icon, SectionHeading, WaveDivider...
 - `src/components/blocks` – the page-building catalogue, named by what each block does (`PageHeader`, `CardGrid`,
-  `FaqList`…) and filed by role (opening, proof, offer, how, story, closing) in `catalogue.ts`, the README and
-  Storybook (`Blocks/<Role>/<Name>`). `index.tsx` exports every block by name (pages import them from
+  `FaqList`…) and filed by category, what each shows (headers, text & media, lists & grids, reviews & ratings, calls to
+  action), in `catalogue.ts`, the README and Storybook (`Blocks/<Category>/<Name>`). `index.tsx` exports every block by name (pages import them from
   `~/components/blocks`) and the `blocks` map (the preview bundle). Each block has a story next to it, built from
   its catalogue example. Shared pieces (photo band, carousel, video, button, tones) are primitives.
 - `src/components/typography` – `Text`, `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider`: the prose

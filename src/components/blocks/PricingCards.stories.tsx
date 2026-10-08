@@ -4,7 +4,7 @@ import { PricingCards, type PricingCardsProps } from './PricingCards'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Offer/PricingCards',
+  title: 'Blocks/Lists & grids/PricingCards',
   component: PricingCards,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<PricingCardsProps>('PricingCards'),

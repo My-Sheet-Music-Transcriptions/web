@@ -8,7 +8,7 @@ worked example: read it before writing a mockup.
 ## Writing sections.html
 
 1. Pick the blocks, then read only those. `pnpm ds:blocks` prints the index: every block grouped by its
-   role in a page (opening, proof, offer, how, story, closing), one line of what it is, when to pick it and
+   category (headers, text & media, lists & grids, reviews & ratings, calls to action), one line of what it is, when to pick it and
    when not, and the pages that already use it. Walk the page top to bottom choosing one block per section
    from the index. Then `pnpm ds:blocks PageHeader MediaText Steps` (the ones you picked) prints each one's
    detail: every prop with its type, allowed values and doc comment, a ready `<div data-msmt=…>` line to
