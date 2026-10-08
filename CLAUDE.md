@@ -49,6 +49,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   `design-system/{export,index,lib}.ts` (artifact export).
 - `tests/unit`, `tests/seo` (runs over `dist/client`), `tests/e2e`, `tests/visual` (+ `reference/` captures of the live site).
 - `.claude/skills` – `page` (request → preview → publish), `publish-design-system`, `release-check`, and stubs for later phases.
+- `docs/migration/PLAN.md` – the WordPress → repo migration plan (waves, decisions, cutover runbook), with the URL
+  inventory per locale (`inventory/<locale>.md` + `.json`) and the redirect map. Read it before porting a page; tick
+  its checklists, fill the inventory's PR column and add a session-log line when you do.
 
 ## Rules that CI enforces
 
