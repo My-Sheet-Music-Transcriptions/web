@@ -1,6 +1,7 @@
 # WordPress → this repo: migration plan
 
-Status: **plan, nothing executed yet** beyond what was already in the repo (English home page and `/gift-card`).
+Status: **W1.4–W1.6 under way.** Fourteen English pages are in the repo: home, `/gift-card` and the twelve ported on
+2026-10-08 ahead of their waves (see the [session log](#10-session-log)); nothing is cut over.
 Written 2026-10-08. This file is the general plan; the specifics live in the files it links to. Follow it wave by wave
 in later sessions: tick the checklists here, fill the **PR** column of the inventories, and add a line to the
 [session log](#10-session-log) at the end of every session.
@@ -218,9 +219,19 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       (popular), `musician` (endorsed), `partner`, `legal` (long prose with table of contents), `glossary` (terms with
       anchors), FAQ page (from `faqs`, FAQPage JSON-LD), reviews page (from `reviews`). Frontmatter `path` override
       (D8). Prices and counts that appear on several pages go to `content/<locale>/data/*.ts`, as CLAUDE.md wants.
+      *Done 2026-10-08:* `service` (services collection: PageHeader band from meta.ts with the service icon and the Google
+      card; the page composes Steps, RatingBanner, Samples, CtaBand, CardGrid, PricingCards, FaqList) and `landing` (no
+      header from meta; the page opens with `<PageHeader variant="split">`). Shared data: `data/ratings.ts`,
+      `data/services.ts` (included, per-service prices, `allServices`), `data/faqs.ts` (shared and category groups),
+      `data/reviews.ts`. *Open:* post + blog index, artist, musician, partner, legal, glossary, FAQ page, reviews page.
 - [ ] W1.5 **New blocks the legacy pages need** (confirm while porting): `AudioSample` (native `<audio>`, local file),
       `PdfSample` (thumbnail + download), `FaqList` (accordion), `VideoEmbed` (click-to-load facade, D7),
       `ComparisonTable` (software conversions), `PriceTable` per service.
+      *Done 2026-10-08, with semantic names (catalogue in `src/components/blocks`, by role):* `FaqList` (native
+      accordion + FAQPage JSON-LD), `VideoEmbed` (primitive: click-to-load facade on youtube-nocookie, used by `Samples`,
+      `Steps` and `MediaText`), `Samples` (video beside the score), `Table` (covers the comparison and price tables),
+      `PricingCards` (one wide card per service), plus `LogoGrid`, `Stats`, `CtaBand`, `Gallery`, `CardGrid` tabs
+      (currencies). *Open:* `AudioSample`, `PdfSample` (no page of the first batch had audio or PDFs).
 - [ ] W1.6 **Importer, run in bulk without input**: `scripts/import-wp.ts --locale <l> [--wave <W> | <path>…]` ports
       every eligible row of the inventory in one run. Per page: reads it (REST API `/wp-json/wp/v2/<type>?slug=` with
       `yoast_head_json`, or the WXR export) into `.cache/wp/` (git-ignored); downloads its media at the original size
@@ -234,6 +245,26 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       instead of pages (D5). Single ports already run through `/new-page` with
       `.claude/skills/page/reference/wordpress.md` (REST API recipe); point that recipe at the importer, and turn the
       hidden `new-blog-post`/`new-service-page` stubs into real skills once their templates exist.
+      *Learned 2026-10-08 (12 pages ported by hand from the REST API and Archive captures):* the REST API answered from the
+      cloud session for pages; the `services` post type exposes no `content`, so services came from Archive captures
+      (`web.archive.org/web/2026id_/…`, gzip). Uploads download directly. Widget → block map that held up:
+
+      | Elementor widget | Block |
+      |---|---|
+      | heading + text-editor | `Section` prose, or the `title` of the block it introduces |
+      | image + text-editor / image-box | `MediaText` (image-carousel → `images`; before/after → `imagesLayout="pair"`) |
+      | uael-video + score image ("Play to compare") | `Samples`; inside "How does it work?" → `Steps layout="columns"` |
+      | uael-timeline | `Steps` (timeline) |
+      | counter + three rating boxes | `RatingBanner` (numbers from `data/ratings.ts`) |
+      | icon-box "What's included" | `CardGrid background="photo" items={included}` |
+      | "Flexible pricing for …" headings | `PricingCards` with one tier from `data/services.ts` |
+      | custom_acf_accordion | `FaqList` (the shared "Music services" group is identical on every service page) |
+      | loop-grid / loop-carousel of services | `IconGrid items={allServices}` |
+      | image-box grids of people or logos | `LogoGrid` (portrait / logo) |
+      | nested-tabs ($ / €) | `CardGrid tabs` |
+      | af_jobs_table | `Table` |
+      | slides | `CardGrid` with `linkLabel` |
+      | form | `ContactSection` |
 - [ ] W1.7 **Parity checks (the replacement for human review)**: `scripts/parity.ts <locale>` compares each ported
       page with its WordPress original (the cached HTML from W1.6, archived capture as fallback) and writes
       `docs/migration/parity/<locale>.md`, committed with the batch: visible text of the main content area (Elementor's
@@ -402,3 +433,4 @@ Not blocking the start; each is resolved in W0.4 or before the wave named:
 | Date | Session | Done | Next |
 |---|---|---|---|
 | 2026-10-08 | Plan | Researched the six sites (archives; live access blocked), wrote this plan, the inventories and the redirect draft; Catalan reworked as the pilot launch; porting made fully automatic (importer + parity checks, one human go/no-go per domain); review pass: recommendations are defaults, D5 applied to the inventories, hreflang handled by porting twins together, Spanish cut over before English, `legacyOrigin` dropped at cutover | W0.1 inputs from the owner; W1.1–W1.3 can start in parallel |
+| 2026-10-08 | Blocks + first ports | Block catalogue reshaped into semantic blocks filed by role (Storybook `Blocks/<Role>/<Name>`); blocks take their data as props; `service` and `landing` templates. Ported English-only, verbatim, pictures in the page folders: `/piano`, `/guitar-tab`, `/trumpet-transcription-service`, `/violin-transcription-service`, `/music-transcription-service`, `/artists`, `/music-educators`, `/sheet-music-printing`, `/convert-from-sibelius-to-musescore`, `/careers`, `/partners`, `/endorsed-musicians-and-composers`. Exception to principle 6: `/piano` and `/guitar-tab` have es/fr/de/ja twins, ported later in their waves. Titles shortened where they broke the 65-character rule (D13); review counts from data (854, not the captures' 791). `/faqs/*` rule added to the redirect map | Same pattern for the remaining W3 services (a `scripts/import-wp.ts` for the service template is now a small step), then W4 conversion pages from the Sibelius → MuseScore page |
