@@ -7,7 +7,7 @@
     "at": "2026-10-07T18:25:00Z"
   },
   "publishedBy": "Josep Jaume Rey",
-  "publishedFrom": "9f9b5bb",
+  "publishedFrom": "22ff5ab",
   "assets": {
     "Brand/logo.svg": {
       "blob": "7c0b1235a713e45bbb5a9759cca53073",
@@ -202,6 +202,6 @@
       "sha256": "b9df20537327d5227af993fe4cc8d8dae1584bfd56706c19033cea16de93991b"
     }
   },
-  "publishedAt": "2026-10-08T05:59:28.744Z",
-  "sourceHash": "4d9bcf4984ec05e7"
+  "publishedAt": "2026-10-08T11:47:52.195Z",
+  "sourceHash": "fff13ef0acc78a38"
 }
