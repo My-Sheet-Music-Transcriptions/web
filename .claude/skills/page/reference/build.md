@@ -35,7 +35,20 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
    shared across languages, `template` or the type-specific fields. Structured facts stay in
    `content/<locale>/data/*.ts`; add the page to `data/nav.ts` / `data/footer.ts` where the preview shows
    it; its path leaves any legacy-link list by itself (`src/content/paths.generated.json` is generated).
-5. **All checks green before pushing:** `pnpm release-check` (lint, types, unit, Storybook axe, build, SEO
-   suite), plus `pnpm test:e2e` when layout changed. Fix failures, never lower a threshold (the
+5. **Look at the real page while building it.** Start `pnpm dev` once in the background (Bash
+   `run_in_background`; ready in about ten seconds at http://localhost:3000, every locale under its prefix)
+   and keep it for the whole phase: edits to `index.tsx`, `meta.ts` or a block show up without a rebuild.
+   `pnpm ds:shot <slug> --url http://localhost:3000/<locale><path>` renders the real page at the three
+   widths into `dist/design-system/shot/<slug>/page-*.png`, refuses on the same problems as the mockup
+   check and prints the page's height next to the mockup's at each width: more than 5% apart means a
+   section was lost, doubled or restyled on the way (compare `page-<width>-…` with `main-<width>-…`). The
+   first render after a start takes longer while Vite compiles. Stop the server before step 6: while it
+   runs it rewrites `src/routeTree.gen.ts` with its own variant right after the checks regenerate it, which
+   shows up as false type errors.
+6. **All checks green before pushing:** a page that changes only `content/` (and `mockups/`) runs
+   `pnpm check:pr`, exactly what PR CI runs (lint, types, unit, the English build, SEO suite: about a minute
+   and a half); anything outside them (a proposed block, a layout change) runs `pnpm release-check`
+   (adds Storybook axe), plus `pnpm test:e2e` when layout changed. After the build, `pnpm ds:shot <slug>
+   --built` is the last look at the prerendered page itself. Fix failures, never lower a threshold (the
    `release-check` skill reads the failures). A page that cannot pass is not pushed: go back to the person
    with what is missing, in plain words.

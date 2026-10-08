@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
-import { readArtifactRecord } from './lib'
+import { readArtifactRecord, walk } from './lib'
 
 /**
  * Shared pieces of the page-preview scripts (ds:review, ds:canvas, ds:mockup, page:status): the
@@ -75,10 +75,49 @@ export interface Manifest {
 
 export const MANIFEST_FILE = 'dist/design-system/manifest.json'
 
-/** The design-system export manifest; runs `pnpm ds:export` first when there is no export yet. */
+/**
+ * What the export is built from (theme, blocks, layout, primitives, typography, brand assets, the English data
+ * files and site strings, the export code). Generated files that builds rewrite are left out.
+ */
+const EXPORT_INPUTS = [
+  'src/styles',
+  'src/components',
+  'src/design-system/export',
+  'src/design-system/theme-parse.ts',
+  'src/assets/images',
+  'src/i18n',
+  'src/lib',
+  'content/en/data',
+  'vite.ds.config.ts',
+  'scripts/design-system/export.ts',
+  'scripts/design-system/lib.ts',
+]
+
+/** The newest export input changed after `since` (ms), if any. */
+export function changedExportInput(since: number, inputs: string[] = EXPORT_INPUTS): string | null {
+  for (const input of inputs) {
+    if (!fs.existsSync(input)) continue
+    const files = fs.statSync(input).isDirectory() ? walk(input) : [input]
+    const newer = files.find(
+      (f) => !/\.generated\.json$|\.stories\.tsx$/.test(f) && fs.statSync(f).mtimeMs > since,
+    )
+    if (newer) return newer
+  }
+  return null
+}
+
+/**
+ * The design-system export manifest; runs `pnpm ds:export` first when there is no export yet or when an
+ * export input changed after it (so the local render check never shows old blocks).
+ */
 export function ensureManifest(tag: string): Manifest {
-  if (!fs.existsSync(MANIFEST_FILE)) {
-    console.log(`[${tag}] no design-system export yet: running pnpm ds:export`)
+  const changed = fs.existsSync(MANIFEST_FILE)
+    ? changedExportInput(fs.statSync(MANIFEST_FILE).mtimeMs)
+    : 'none'
+  if (changed) {
+    console.log(
+      `[${tag}] ${changed === 'none' ? 'no design-system export yet' : `${changed} changed since the last export`}: running pnpm ds:export`,
+    )
     try {
       execSync('pnpm ds:export', { stdio: 'pipe' })
     } catch (e) {
@@ -86,7 +125,20 @@ export function ensureManifest(tag: string): Manifest {
       throw new Error('pnpm ds:export failed')
     }
   }
-  return JSON.parse(fs.readFileSync(MANIFEST_FILE, 'utf8')) as Manifest
+  const manifest = JSON.parse(fs.readFileSync(MANIFEST_FILE, 'utf8')) as Manifest
+  if (manifest.publishedExportHash && manifest.publishedExportHash !== manifest.exportHash)
+    console.log(
+      `[${tag}] note: this export differs from the published design system; the local render shows it, the published preview will not until the publish-design-system skill runs`,
+    )
+  return manifest
+}
+
+/** The rendered mockup page: sections.html inside the preview's page template (design system + pictures). */
+export function mockupPageHtml(title: string, sectionsHtml: string): string {
+  return fs
+    .readFileSync('src/design-system/review/page.html', 'utf8')
+    .replaceAll('__TITLE__', title)
+    .replace('<!-- __SECTIONS__ -->', sectionsHtml)
 }
 
 /** The published design system a preview copies its files from: the artifact URL and the pinned version. */
