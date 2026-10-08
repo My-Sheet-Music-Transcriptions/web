@@ -22,13 +22,14 @@ import { lightMarkdown } from '~/lib/light-markdown'
 const components: Record<string, ComponentType<any>> = { ...blocks, Header, Footer, TopBar }
 const roots = new WeakMap<Element, Root>()
 
-/** Preview-only placeholders: `"sample:photo"` in props becomes a bundled picture (MediaText image). */
+/** Preview-only placeholders: `"sample:photo"` anywhere in the props (a list item too) becomes a bundled picture. */
 const samples: Record<string, unknown> = { 'sample:photo': samplePhoto }
-function withSamples(props: Record<string, unknown>) {
-  const out: Record<string, unknown> = {}
-  for (const [k, v] of Object.entries(props))
-    out[k] = typeof v === 'string' && v in samples ? samples[v] : v
-  return out
+function withSamples(value: unknown): unknown {
+  if (typeof value === 'string') return value in samples ? samples[value] : value
+  if (Array.isArray(value)) return value.map(withSamples)
+  if (value && typeof value === 'object')
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, withSamples(v)]))
+  return value
 }
 
 function mount(name: string, el: Element, props: Record<string, unknown> = {}) {
@@ -37,7 +38,7 @@ function mount(name: string, el: Element, props: Record<string, unknown> = {}) {
     throw new Error(
       `MSMT: unknown component "${name}". Known: ${Object.keys(components).join(', ')}`,
     )
-  const { children, ...rest } = withSamples(props)
+  const { children, ...rest } = withSamples(props) as Record<string, unknown>
   const node = <C {...rest}>{typeof children === 'string' ? lightMarkdown(children) : undefined}</C>
   let root = roots.get(el)
   if (!root) {

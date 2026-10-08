@@ -1,6 +1,16 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import ts from 'typescript'
 import { catalogue } from '../../src/components/blocks/catalogue'
-import { evalTsLiteral, LiteralError, parseTsx, unwrap, where } from '../lib/ts-literal'
+import { CONTENT_DIR } from '../lib/content-fs'
+import {
+  evalTsLiteral,
+  LiteralError,
+  parseTsx,
+  readModuleLiterals,
+  unwrap,
+  where,
+} from '../lib/ts-literal'
 import { encodeProps, LAYOUT, WRAPPER_OPEN } from './review-lib'
 
 /**
@@ -60,15 +70,19 @@ function fail(message: string, node?: ts.Node): never {
   throw new MockupError(`cannot mockup: ${message}${node ? where(node) : ''}`)
 }
 
-/** A literal JSX attribute expression as a JSON value; picture imports become `img/<file>`. */
+/**
+ * A literal JSX attribute expression as a JSON value; picture imports become `img/<file>`, data imports
+ * (`import { ratings } from '@content/en/data/ratings'`) their values.
+ */
 export function evalLiteral(
   node: ts.Expression,
   imports: Record<string, string>,
   source = '',
+  data: Record<string, unknown> = {},
 ): unknown {
   const pictures = Object.fromEntries(Object.entries(imports).map(([k, f]) => [k, `img/${f}`]))
   try {
-    return evalTsLiteral(node, pictures, source)
+    return evalTsLiteral(node, { ...data, ...pictures }, source)
   } catch (e) {
     if (e instanceof LiteralError) throw new MockupError(`cannot mockup: ${e.message}`)
     throw e
@@ -178,6 +192,7 @@ function attributeValue(
   attr: ts.JsxAttribute,
   imports: Record<string, string>,
   block: string,
+  data: Record<string, unknown>,
 ): unknown {
   const init = attr.initializer
   if (!init) return true
@@ -187,6 +202,7 @@ function attributeValue(
       init.expression,
       imports,
       `<${block} ${attr.name.getText()}={${init.expression.getText()}}>`,
+      data,
     )
   return fail(`<${block} ${attr.name.getText()}=…> is not a value`, attr)
 }
@@ -210,12 +226,26 @@ export function serializeBlocks(blocks: MockupBlock[]): string {
   return out.join('\n')
 }
 
+const DATA_MODULE = /^@content\/([a-z]{2})\/data\/([\w-]+)$/
+
+/** Reads `content/<locale>/data/<file>.ts` statically (never runs it). */
+export type DataReader = (locale: string, file: string) => string
+const readDataFile: DataReader = (locale, file) =>
+  fs.readFileSync(path.join(CONTENT_DIR, locale, 'data', `${file}.ts`), 'utf8')
+
 /** The page's imports and the JSX its default export returns (a fragment's children, or one element). */
-function readPage(sf: ts.SourceFile): {
+function readPage(
+  sf: ts.SourceFile,
+  readData: DataReader,
+  warnings: string[],
+): {
   imports: Record<string, string>
+  data: Record<string, unknown>
   nodes: readonly ts.JsxChild[]
 } {
   const imports: Record<string, string> = {}
+  const data: Record<string, unknown> = {}
+  const pageLocale = /^([a-z]{2})\//.exec(sf.fileName)?.[1]
   let fn: ts.FunctionLikeDeclaration | undefined
   const isDefaultExport = (s: ts.Statement) =>
     ts.canHaveModifiers(s) &&
@@ -232,8 +262,29 @@ function readPage(sf: ts.SourceFile): {
         continue
       }
       if ((from === BLOCKS_MODULE || from === TYPOGRAPHY_MODULE) && !clause.name) continue
+      const dataModule = DATA_MODULE.exec(from)
+      const named = clause.namedBindings
+      if (dataModule && !clause.name && named && ts.isNamedImports(named)) {
+        const [, locale, file] = dataModule as unknown as [string, string, string]
+        if (pageLocale && locale !== pageLocale)
+          warnings.push(`${from}: data of another locale than the page (${pageLocale})`)
+        let values: Record<string, unknown>
+        try {
+          values = readModuleLiterals(readData(locale, file), `content/${locale}/data/${file}.ts`)
+        } catch (e) {
+          if (e instanceof LiteralError) fail(e.message, s)
+          return fail(`cannot read ${from}: ${(e as Error).message}`, s)
+        }
+        for (const el of named.elements) {
+          if (el.isTypeOnly) continue
+          const name = (el.propertyName ?? el.name).text
+          if (!Object.hasOwn(values, name)) fail(`${from} has no "${name}"`, el)
+          data[el.name.text] = values[name]
+        }
+        continue
+      }
       fail(
-        `import of ${from} (only blocks from '${BLOCKS_MODULE}', text from '${TYPOGRAPHY_MODULE}' and pictures "import x from './picture.png?…'" are supported)`,
+        `import of ${from} (only blocks from '${BLOCKS_MODULE}', text from '${TYPOGRAPHY_MODULE}', data from '@content/<locale>/data/<file>' and pictures "import x from './picture.png?…'" are supported)`,
         s,
       )
     }
@@ -261,8 +312,8 @@ function readPage(sf: ts.SourceFile): {
     if (!returned) fail('the page component may only "return (<>…</>)"', fn.body)
   } else returned = fn.body
   const jsx = unwrap(returned as ts.Expression)
-  if (ts.isJsxFragment(jsx)) return { imports, nodes: jsx.children }
-  if (isElement(jsx)) return { imports, nodes: [jsx] }
+  if (ts.isJsxFragment(jsx)) return { imports, data, nodes: jsx.children }
+  if (isElement(jsx)) return { imports, data, nodes: [jsx] }
   return fail('the page must return a fragment of blocks (<>…</>)', jsx)
 }
 
@@ -273,11 +324,14 @@ function isExport(s: ts.Statement): boolean {
   )
 }
 
-export function mockupFromEntry(entry: MockupEntry): MockupResult {
+export function mockupFromEntry(
+  entry: MockupEntry,
+  readData: DataReader = readDataFile,
+): MockupResult {
   const warnings: string[] = []
   const used = new Set<string>()
   const body: MockupBlock[] = []
-  const { imports, nodes } = readPage(parseTsx(entry.source, entry.file))
+  const { imports, data, nodes } = readPage(parseTsx(entry.source, entry.file), readData, warnings)
   let prose: ts.JsxChild[] = []
   const flushProse = () => {
     if (!prose.length) return
@@ -325,7 +379,7 @@ export function mockupFromEntry(entry: MockupEntry): MockupResult {
         warnings.push(`<ContactSection returnTo> left out: the page derives it from its path`)
         continue
       }
-      const value = attributeValue(attr, imports, name)
+      const value = attributeValue(attr, imports, name, data)
       if (value === undefined) continue
       if (typeof value === 'string' && value.startsWith('img/')) used.add(value.slice(4))
       if (Array.isArray(value) || (value && typeof value === 'object'))

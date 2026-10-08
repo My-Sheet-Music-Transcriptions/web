@@ -10,7 +10,7 @@ import {
 } from '../../scripts/design-system/mockup-lib'
 import { parseBlocks, prepareSections } from '../../scripts/design-system/review-lib'
 import { CONTENT_DIR, readAllEntries } from '../../scripts/lib/content-fs'
-import { parseTsx } from '../../scripts/lib/ts-literal'
+import { parseTsx, readModuleLiterals } from '../../scripts/lib/ts-literal'
 
 /**
  * ds:mockup turns an existing page into the mockup the page skill previews from. The committed gift-card
@@ -122,6 +122,81 @@ describe('evalLiteral', () => {
     '/re/',
   ])('rejects %s', (code) => {
     expect(() => evalLiteral(expr(code), imports)).toThrow(/cannot mockup/)
+  })
+})
+
+describe('data imports', () => {
+  const ratings = `import type { RatingSource } from '~/content/types'
+
+export const google = { id: 'google', count: '854' } satisfies Partial<RatingSource>
+const customers = { id: 'customers', count: '26,330' }
+export const ratings = [google, customers] as const
+`
+  it('reads a data module statically, consts naming the consts above them', () => {
+    expect(readModuleLiterals(ratings, 'ratings.ts')).toEqual({
+      google: { id: 'google', count: '854' },
+      customers: { id: 'customers', count: '26,330' },
+      ratings: [
+        { id: 'google', count: '854' },
+        { id: 'customers', count: '26,330' },
+      ],
+    })
+  })
+  it.each([
+    ["import { x } from './x'", /only import types/],
+    ['export function f() {}', /only "export const/],
+    ['export let a = 1', /only "export const/],
+    ['export const a = f()', /f\(\)/],
+  ])('refuses %s', (code, error) => {
+    expect(() => readModuleLiterals(code, 'x.ts')).toThrow(error)
+  })
+  it('resolves fields of known values, never of unknown ones', () => {
+    const known = { k: { b: [1, 2] } }
+    expect(evalLiteral(expr('k.b'), {}, '', known)).toEqual([1, 2])
+    expect(evalLiteral(expr('k.b[1]'), {}, '', known)).toBe(2)
+    expect(evalLiteral(expr("k['b']"), {}, '', known)).toEqual([1, 2])
+    expect(() => evalLiteral(expr('k.c'), {}, '', known)).toThrow(/not a field/)
+    expect(() => evalLiteral(expr('k.b[i]'), {}, '', known)).toThrow(/computed index/)
+  })
+  it('puts imported data into the block props', () => {
+    const reader = (locale: string, file: string) => {
+      expect([locale, file]).toEqual(['en', 'ratings'])
+      return ratings
+    }
+    const r = mockupFromEntry(
+      page(
+        '<Section title={g.id}>Text</Section>\n<Steps items={ratings} />',
+        {},
+        "import { ratings, google as g } from '@content/en/data/ratings'",
+      ),
+      reader,
+    )
+    expect(r.blocks.find((b) => b.name === 'Section')?.props?.title).toBe('google')
+    expect(r.blocks.find((b) => b.name === 'Steps')?.props).toEqual({
+      items: [
+        { id: 'google', count: '854' },
+        { id: 'customers', count: '26,330' },
+      ],
+    })
+    const other = mockupFromEntry(
+      page(
+        '<Section title="x">{"a"}</Section>',
+        {},
+        "import { google } from '@content/es/data/ratings'",
+      ),
+      () => ratings,
+    )
+    expect(other.warnings).toContainEqual(expect.stringMatching(/another locale/))
+    expect(() =>
+      mockupFromEntry(
+        page(
+          '<Section title="x">a</Section>',
+          {},
+          "import { nope } from '@content/en/data/ratings'",
+        ),
+        () => ratings,
+      ),
+    ).toThrow(/has no "nope"/)
   })
 })
 
