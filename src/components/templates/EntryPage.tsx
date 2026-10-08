@@ -1,10 +1,9 @@
 import { entryComponent, resolveEntry } from '~/content'
-import { mdxComponents } from '~/content/mdx-components'
 import type { Locale } from '~/i18n/types'
 import { templateByName, templates } from './index'
 
 /**
- * Resolves an entry by locale and path and renders it inside the template its frontmatter names. The body comes from the
+ * Resolves an entry by locale and path and renders it inside the template its meta names. The body comes from the
  * cache the route loader filled, so there is no Suspense boundary: the whole page is in the first HTML flush.
  */
 export function EntryPage({ locale, path }: { locale: Locale; path: string }) {
@@ -14,7 +13,7 @@ export function EntryPage({ locale, path }: { locale: Locale; path: string }) {
   const Template = templateByName(templateFor(entry.meta))
   return (
     <Template entry={entry}>
-      <Body components={mdxComponents} />
+      <Body />
     </Template>
   )
 }

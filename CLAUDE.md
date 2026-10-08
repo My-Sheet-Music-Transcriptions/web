@@ -1,6 +1,6 @@
 # My Sheet Music Transcriptions – web
 
-One codebase, one static build per locale/domain. No CMS: content is MDX in this repo and is changed by
+One codebase, one static build per locale/domain. No CMS: content is React pages in this repo (`content/`) and is changed by
 chatting with Claude Code. Read this file before touching anything.
 
 ## Commands
@@ -21,26 +21,33 @@ pnpm ds:export                # design-system export for the artifact -> dist/de
 pnpm ds:blocks [Block...]          # every block's props (types, allowed values, docs) + a ready mockup line
 pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, builds the review page and prints the Artifact publish parameters
 pnpm ds:canvas <slug> [--canvas <canvas.json>] | --pull <Board.dc.html>   # design mode: the mockup as a Design canvas, and back
-pnpm ds:mockup <slug> [--force]    # an existing page's MDX -> mockups/<slug>/sections.html (+ img/, preview.json)
+pnpm ds:mockup <slug> [--force]    # an existing page (index.tsx + meta.ts) -> mockups/<slug>/sections.html (+ img/, preview.json)
 pnpm page:status [slug]            # the pages in flight (mockups/*/preview.json) as JSON, for the /status command
 NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify site publishes (dist/client)
 ```
 
 ## Where things live
 
-- `src/content/<locale>/<collection>/<slug>/index.mdx` – every page is a **folder**: the MDX plus every image the
-  page uses, side by side (co-location). Collections: pages, services, posts, faqs, artists, musicians, partners,
-  reviews. The folder name is the URL slug (`pages/home/` is `/`, `faqs/x/` is `/faqs/x`). A flat `<slug>.mdx` is
-  accepted for a page with no assets of its own. Frontmatter is validated by `src/content/schema.ts` (zod) at
-  build and in unit tests.
-- `src/content/<locale>/data/*.ts` – structured data blocks read (nav, footer, pricing, ratings, reviews).
+- `content/` – everything content managers own, and the only folder a PR may change without a core approval
+  (see "Who may change what"). Imported as `@content/*` (tsconfig paths).
+- `content/<locale>/<collection>/<slug>/` – every page is a **folder**: `index.tsx` (the page component, a
+  fragment of blocks), `meta.ts` (`export default { title, description, translationKey, … } satisfies
+  PageMetaInput`) and every image the page uses, side by side (co-location). Collections: pages, services, posts,
+  faqs, artists, musicians, partners, reviews. The folder name is the URL slug (`pages/home/` is `/`, `faqs/x/` is
+  `/faqs/x`). `meta.ts` is plain data: read statically by `scripts/lib/ts-literal.ts` (never run in Node) and
+  validated by `src/content/schema.ts` (zod) at build and in unit tests.
+- `content/<locale>/data/*.ts` – structured data blocks read (nav, footer, pricing, ratings, reviews).
   Numbers that appear in several places (review counts, prices) live here once.
+- `src/content/{index,schema,types}.ts` – the content loader (globs `content/`), the meta schemas and data types.
 - `src/components/primitives` – Button, Card, Picture, Stars, Icon, SectionHeading, WaveDivider...
-- `src/components/blocks` – the page-building catalogue. `index.tsx` exports the `blocks` map, which is the only
-  set of components MDX may use. Each block has a story next to it.
+- `src/components/blocks` – the page-building catalogue. `index.tsx` exports every block by name (pages import
+  them from `~/components/blocks`) and the `blocks` map (the preview bundle). Each block has a story next to it.
+- `src/components/typography` – `Text`, `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider`: the prose
+  inside pages and blocks, styled with Tailwind once. Plain `<strong>` / `<em>` are the exceptions, styled in the
+  base layer of `theme.css`. Pages never write raw `<p>`, `<h2>`, `<ul>`, `<a>` (`tests/unit/content.test.ts`).
 - `src/components/layout` – TopBar, Header (+MegaMenu, MobileNav), Footer, ConsentBanner, SiteShell.
-- `src/components/templates` – wraps an entry's MDX body (home, page, landing...). Selected by frontmatter.
-- `src/components/blocks/catalogue.ts` – one entry per block (description, defaults, MDX snippet, data source);
+- `src/components/templates` – wraps an entry's page component (home, page, landing...). Selected by `meta.ts`.
+- `src/components/blocks/catalogue.ts` – one entry per block (description, defaults, JSX usage, data source);
   drives the README table, the artifact docs and the `page` skill's previews. Missing entry = type error.
 - `src/i18n/sites/<locale>.ts` – domain, strings, switcher, contact facts per locale. `src/site.ts` exposes the build's
   locale routing and `useSite()` / `useLocale()` (the page's locale); `src/i18n/routing.ts` is how locales map to URLs.
@@ -72,18 +79,32 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   no broken internal links, present in sitemap unless `noindex`.
 - Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`).
 - Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 180 KB (raised from 150 for Motion, the animation library: its features load lazily after hydration).
-- Biome formats and lints everything; `tsc --noEmit` must pass; MDX may only use components from `blocks`.
+- Biome formats and lints everything; `tsc --noEmit` must pass (pages are type-checked against the block props).
+- `meta.ts` is a literal only; pages use the typography components for text (`tests/unit/content.test.ts`).
+- A PR touching anything outside the content paths needs a code-owner approval (`.github/CODEOWNERS`).
 
 ## Adding content (short version; the skills have the full checklist)
 
-1. Pick the collection and slug; check `src/content/<locale>/...` for collisions.
-2. Write frontmatter (title, description, translationKey, template/type-specific fields) and compose the body
-   from blocks, e.g. `<Hero />`, `<Section title="...">prose</Section>`, `<ReviewCards limit={4} />`.
-3. Put the page's images in its folder (`src/content/<locale>/<collection>/<slug>/`), import them in the MDX
+1. Pick the collection and slug; check `content/<locale>/...` for collisions.
+2. Write `meta.ts` (title, description, translationKey, template/type-specific fields) and compose `index.tsx`
+   from blocks, e.g. `<Hero />`, `<Section title="..."><Text>…</Text></Section>`, `<ReviewCards limit={4} />`
+   (`content/en/pages/gift-card/` is the worked example).
+3. Put the page's images in its folder (`content/<locale>/<collection>/<slug>/`), import them in `index.tsx`
    (`import mascot from './mascot.png?w=240;480&as=picture'`) and pass them to blocks as props; never raw `<img>`.
    Only brand-wide assets (logo, icons, flags, software logos) live in `src/assets/images/`.
 4. Content goes live through the `page` skill (checks, draft PR + Netlify preview, then auto-merge on acceptance);
-   engineering changes go through `pnpm release-check` and a PR with a Netlify preview.
+   engineering changes go through `pnpm release-check` and a PR with a Netlify preview and a core approval.
+
+## Who may change what
+
+Paths decide, not people. `.github/CODEOWNERS` makes `@My-Sheet-Music-Transcriptions/core` the owner of everything
+except `content/`, `mockups/`, `docs/migration/` and `src/design-system/artifact.json` (generated, rewritten when a
+data change forces a republish). The branch rule on `main` requires a code owner's review, so a PR that only touches
+those paths merges on green CI, and any other PR (blocks, components, server functions, forms, tests, CI, config,
+these instructions, the skills) waits for core. `.github/workflows/labels.yml` labels every PR `content` and/or
+`engineering` so the blast radius is visible; the `page` skill reads the label and tells the person when an engineer
+must approve. Auto-merge is always enabled on acceptance: the rule, not the skill, decides when it merges. Keep the
+unowned list in CODEOWNERS and `CONTENT_PATHS` in the labels workflow identical.
 
 ## Locales and URLs
 
@@ -92,7 +113,7 @@ prefix). Deploy previews, branch deploys and `pnpm dev` are one build with every
 mode: `SITE_LOCALE` unset or `all`); only the English Netlify site builds previews (`scripts/netlify-ignore.sh`).
 
 - Routes, content paths and hrefs are always locale-free: `<Link to="/pricing">`, `<SmartLink href="/#contact">`,
-  `[text](/gift-card)` in MDX. In path mode the router's URL rewrite (`localePrefixRewrite`) adds the current
+  `<TextLink href="/gift-card">` in a page. In path mode the router's URL rewrite (`localePrefixRewrite`) adds the current
   page's prefix, so links stay TanStack `<Link>`s with preloading. Never hand-write `/es/...` or a TLD.
 - Components read the locale with `useSite()` / `useLocale()`, never a module-level constant; loaders and `head`
   use `localeOf(location.publicHref)`. Other locales: `siteUrl(locale, path)` (TLD or prefix), absolute URLs:
@@ -123,12 +144,12 @@ and `/site-help` are entry points into it that preset its mode. One conversation
    the design system installed on the canvas, pulled back into the mockup with `--pull` when they are done).
    Iterate on the same artifact until the user says it is right, then ask whether to publish. Never publish unasked.
 3. **Build and check the real thing**, only after an explicit yes: build the approved sections into the page
-   folder (`src/content/<locale>/<collection>/<slug>/index.mdx` + images), build proposed blocks, run every check
+   folder (`content/<locale>/<collection>/<slug>/` with `index.tsx`, `meta.ts` and images), build proposed blocks, run every check
    locally, push a **draft PR** and hand the user Netlify's deploy preview of the real page.
 4. **Publish** on their acceptance: mark the PR ready with **auto-merge (squash)** and auto-fix it (watch CI,
    fix failures, push) until it merges; Netlify deploys `main`; confirm to the user when the page is live.
-   Nothing reaches `main` without the user having seen the real page first. Engineering PRs (blocks, tooling,
-   CI) follow the normal review path.
+   Nothing reaches `main` without the user having seen the real page first. A page PR that also touches code
+   (a proposed block) waits for a core approval; Engineering PRs (blocks, tooling, CI) follow the normal review path.
 
 The Design System artifact (`src/design-system/artifact.json`, title "My Sheet Music Transcriptions") is generated by
 `pnpm ds:export` from `theme.css`, the blocks, `catalogue.ts`, the layout components and the brand assets; it ships

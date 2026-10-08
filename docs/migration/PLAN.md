@@ -109,7 +109,7 @@ services), and **~22 Catalan pages to generate**.
    and copy; redesign happens after the migration, through the `page` skill. Improvements are allowed only where CI
    forces them (D13) or the plan says so. (Catalan has no legacy to preserve: it is written new.)
 2. **Porting is automatic; people decide, they do not review pages.** The importer turns every WordPress page into
-   MDX and automated parity checks prove each port matches the live page (W1.7). Nobody previews or approves pages
+   page components and automated parity checks prove each port matches the live page (W1.7). Nobody previews or approves pages
    one by one. Human input is limited to the owner's inputs and decisions up front (W0) and one go/no-go per domain
    at cutover. This is compatible with CLAUDE.md's "nothing reaches `main` unseen" rule because `main` reaches no
    real domain until that domain's cutover, and the cutover go/no-go is where a person looks at the whole site (D1).
@@ -140,7 +140,7 @@ recommendation applies and the waves run on it. Record the answer here (and in t
 | D5 | Single FAQ, review and team entries (es `/review/*`, `/equipo/*`, `/faqs/*`; de flat slugs; ja `/review/*`; en `/team/*`). | Keep them as data (the `reviews`/`faqs` collections and `data/*.ts` feed the listing pages and JSON-LD), no indexable pages; 301 each old URL to its listing page. The inventories already carry this as `redirect`. Exception: an entry with real search traffic (Search Console) is ported as a page. | W2, W8+ |
 | D6 | Catalogue and archive pages (`/jazz-piano`, `/blues-piano`, `/popular-sheet-music`, `/sheet-music-catalogue`, `/catalog-grid`, `/midi-catalog`). | Port the ones Search Console shows traffic for as static lists linking to `catalog.`; 301 the rest to `catalog.`. Without Search Console data: port all six (cheap, zero risk). | W6 |
 | D7 | Third-party scripts. CLAUDE.md forbids runtime third-party URLs; the live site runs GTM, Bing UET, Tidio, Trustpilot, reCAPTCHA, YouTube embeds. | Keep **measurement** (needed to prove the migration did no harm): consent-gated GA4/GTM through the existing ConsentBanner, written into CLAUDE.md as the one exception. Trustpilot widget → static rating from `data/`. Tidio → drop unless sales depends on it. YouTube → click-to-load facade. reCAPTCHA → honeypot + server checks in `/api`. | W1 |
-| D8 | May any URL change? | No, except: collisions (finding 5: the page wins over the partner entry, the musician over the partner), the duplicate Spanish orchestration page (`/orquestraciones` stays, it is the one in the hreflang tags), Japanese nested `/services/<slug>` (kept through a frontmatter `path` override). | W1, W6, W12 |
+| D8 | May any URL change? | No, except: collisions (finding 5: the page wins over the partner entry, the musician over the partner), the duplicate Spanish orchestration page (`/orquestraciones` stays, it is the one in the hreflang tags), Japanese nested `/services/<slug>` (kept through a `path` override in `meta.ts`). | W1, W6, W12 |
 | D9 | Prune old blog posts (2017–2021 news, covid update, "top albums 2021")? | Port all 126 verbatim first (free with the importer, zero SEO risk); prune afterwards from Search Console data. | W5 |
 | D10 | Media: old `/wp-content/uploads/*` URLs and audio/PDF samples. | Let upload URLs 404 unless Search Console shows image traffic to specific files; commit samples next to their page (MP3 at 128 kbps, PDFs as-is). Measure the total in W0.3; past ~300 MB, decide on Git LFS or a Netlify Blobs-backed `/assets/samples`. | W1, W3 |
 | D11 | RSS: `/feed` exists on every site. | Generate `/feed` (RSS 2.0) from the `posts` collection at build; keeps subscribers and integrations working. | W5 |
@@ -203,7 +203,7 @@ parallel with them. The inventories carry the wave of every English URL.
 
 The critical path to the first port (W1.1–W1.9), then what every cutover needs (W1.10–W1.12).
 
-- [ ] W1.1 **Redirect pipeline**: `src/content/<locale>/redirects.ts` → `dist/client/_redirects` in `postbuild.ts`
+- [ ] W1.1 **Redirect pipeline**: `content/<locale>/redirects.ts` → `dist/client/_redirects` in `postbuild.ts`
       (domain mode as is, path mode with `/<locale>` prefixes so previews can test them) + unit test (no chains,
       loops, shadowing; internal targets exist). Seed with the "planned" rules of `redirects.md`.
 - [ ] W1.2 **Cutover test**: `tests/migration/inventory.test.ts` over `dist/client`: every `port`/`port-noindex`/
@@ -217,7 +217,7 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       included items, pricing link, FAQ), `post` + blog index with `/<blogIndex>/page/<n>` pagination, `artist`
       (popular), `musician` (endorsed), `partner`, `legal` (long prose with table of contents), `glossary` (terms with
       anchors), FAQ page (from `faqs`, FAQPage JSON-LD), reviews page (from `reviews`). Frontmatter `path` override
-      (D8). Prices and counts that appear on several pages go to `src/content/<locale>/data/*.ts`, as CLAUDE.md wants.
+      (D8). Prices and counts that appear on several pages go to `content/<locale>/data/*.ts`, as CLAUDE.md wants.
 - [ ] W1.5 **New blocks the legacy pages need** (confirm while porting): `AudioSample` (native `<audio>`, local file),
       `PdfSample` (thumbnail + download), `FaqList` (accordion), `VideoEmbed` (click-to-load facade, D7),
       `ComparisonTable` (software conversions), `PriceTable` per service.
@@ -225,11 +225,11 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       every eligible row of the inventory in one run. Per page: reads it (REST API `/wp-json/wp/v2/<type>?slug=` with
       `yoast_head_json`, or the WXR export) into `.cache/wp/` (git-ignored); downloads its media at the original size
       (not the `-1024x768` derivative) with the media library's alt texts into the page folder; converts the Elementor
-      HTML to MDX by a **widget → block mapping table** (heading/text-editor → `Section` prose, image+text → `MediaText`,
+      HTML to page components (`index.tsx`) by a **widget → block mapping table** (heading/text-editor → `Section` prose, image+text → `MediaText`,
       accordion → `FaqList`, audio/file → `AudioSample`/`PdfSample`, video → `VideoEmbed`, button → link…), built up
       template by template with the parity report as the feedback loop; what no rule maps becomes `Section` prose, never
       a question to a person; **rewrites links** (absolute same-site URLs → locale-free paths, other sites' URLs →
-      `siteUrl()`); fills frontmatter (title, description, `seoTitle`, `translationKey` from the inventory, `updated`,
+      `siteUrl()`); fills `meta.ts` (title, description, `seoTitle`, `translationKey` from the inventory, `updated`,
       D13 rule); and imports custom post type entries (reviews, FAQs, team) into their collections or `data/*.ts`
       instead of pages (D5). Single ports already run through `/new-page` with
       `.claude/skills/page/reference/wordpress.md` (REST API recipe); point that recipe at the importer, and turn the
@@ -264,7 +264,7 @@ on one `translationKey`. First real run of the importer and the parity report. N
 
 The page set is in [`inventory/ca.md`](./inventory/ca.md): home, the eleven core and legal pages, gift card and ten
 services, generated automatically from the English pages (D14).
-- [ ] Locale chrome: `src/i18n/sites/ca.ts` strings in Catalan (today it inherits English), `src/content/ca/data/`
+- [ ] Locale chrome: `src/i18n/sites/ca.ts` strings in Catalan (today it inherits English), `content/ca/data/`
       (`nav.ts`, `footer.ts`, `home.ts`, `reviews.ts`, prices in EUR), the `ca` logo lockup, the Catalan legal entity
       text. This is the checklist the `add-locale` skill stub becomes.
 - [ ] Pages: core first (home, preus, contacte, sobre-nosaltres, opinions, preguntes-frequents, serveis-musicals,

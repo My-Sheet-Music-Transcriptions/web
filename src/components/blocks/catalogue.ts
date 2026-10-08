@@ -11,10 +11,10 @@ export interface BlockDoc {
   description: string
   /** Props used for the preview and as the documented defaults. */
   defaults: Record<string, unknown>
-  /** Prose children for blocks that take MDX content (light markdown: paragraphs, **bold**). */
+  /** Prose children for blocks that take text (light markdown in mockups: paragraphs, **bold**; `<Text>` in pages). */
   children?: string
-  /** Canonical MDX usage. */
-  mdx: string
+  /** Canonical usage in a page component (content/<locale>/<collection>/<slug>/index.tsx). */
+  usage: string
   /** Preview card height in the artifact. */
   previewHeight: number
   /** Where the block's data lives when it is not passed as props. */
@@ -29,7 +29,7 @@ export const catalogue = {
     description:
       'Homepage hero on white: headline with an orange highlight, two lines of copy, orange and outlined buttons beside the studio photo slideshow, then a row of three trust facts (Google rating, transcriptions delivered, response time) separated by hairlines.',
     defaults: { slideshow: false },
-    mdx: '<Hero />',
+    usage: '<Hero />',
     previewHeight: 820,
     dataSource: 'content/en/data/home.ts (ratings)',
     guidelines:
@@ -40,7 +40,7 @@ export const catalogue = {
     description:
       'Three numbered columns under a hairline (send audio, we transcribe, print & play), each with its illustration.',
     defaults: {},
-    mdx: '<HowItWorks />',
+    usage: '<HowItWorks />',
     previewHeight: 640,
     dataSource: 'content/en/data/home.ts (howItWorks)',
   },
@@ -49,7 +49,7 @@ export const catalogue = {
     description:
       'Full-bleed navy band over a dimmed piano photo: big counter and the three ratings (Google, customers, Facebook) in hairline columns.',
     defaults: {},
-    mdx: '<StatsBanner />',
+    usage: '<StatsBanner />',
     previewHeight: 760,
     dataSource: 'content/en/data/home.ts (counter, ratings)',
   },
@@ -58,7 +58,7 @@ export const catalogue = {
     description:
       'Four columns under a hairline describing who the service is for, each with its illustration and a link to its audience page.',
     defaults: {},
-    mdx: '<AudienceCards />',
+    usage: '<AudienceCards />',
     previewHeight: 620,
     dataSource: 'content/en/data/home.ts (audiences)',
   },
@@ -67,7 +67,7 @@ export const catalogue = {
     description:
       'Four-column list of services, each row an instrument icon and a name over a hairline, with a "see all services" link.',
     defaults: { limit: 8 },
-    mdx: '<ServiceGrid limit={8} />',
+    usage: '<ServiceGrid limit={8} />',
     previewHeight: 720,
     dataSource: 'content/en/data/home.ts (serviceGrid)',
     guidelines:
@@ -78,7 +78,7 @@ export const catalogue = {
     description:
       '"What\'s included": three columns under a hairline (turnaround, formats, accuracy), each with its icon.',
     defaults: {},
-    mdx: '<FeatureCards />',
+    usage: '<FeatureCards />',
     previewHeight: 640,
     dataSource: 'content/en/data/home.ts (included)',
   },
@@ -89,16 +89,17 @@ export const catalogue = {
     defaults: {},
     children:
       '**There are pricing options for every budget.** The more instruments and the longer or more complex a piece is, the longer it takes to transcribe.\n\nRevisions and transpositions are included in the price.',
-    mdx: '<PricingTiers>\n  **There are pricing options for every budget.** …\n</PricingTiers>',
+    usage:
+      '<PricingTiers>\n  <Text>\n    <strong>There are pricing options for every budget.</strong> …\n  </Text>\n</PricingTiers>',
     previewHeight: 980,
     dataSource: 'content/en/data/home.ts (pricingTiers)',
-    guidelines: 'Prices live in data/home.ts; never type amounts into MDX.',
+    guidelines: 'Prices live in content/en/data/home.ts; never type amounts into a page.',
   },
   ImageStrip: {
     group: 'Blocks',
     description: 'Horizontal strip of sheet-music photos; scrolls on touch, no autoplay.',
     defaults: {},
-    mdx: '<ImageStrip />',
+    usage: '<ImageStrip />',
     previewHeight: 480,
     dataSource: 'src/assets/images/home/strip-*.jpg',
   },
@@ -107,7 +108,7 @@ export const catalogue = {
     description:
       'Customer quotes in two columns, each under a hairline with teal stars and the reviewer below, and a link to all reviews.',
     defaults: { limit: 4 },
-    mdx: '<ReviewCards limit={4} />',
+    usage: '<ReviewCards limit={4} />',
     previewHeight: 900,
     dataSource: 'content/en/data/reviews.ts',
     guidelines:
@@ -120,7 +121,8 @@ export const catalogue = {
     defaults: {},
     children:
       'We are **a team of 70+ professional transcribers, arrangers, music editors, musicologists, and engineers** with proven experience in all types of musical transcriptions.\n\nWe transcribe **each note by hand and by ear one by one.**',
-    mdx: '<AboutTeaser>\n  We are **a team of 70+ professional transcribers** …\n</AboutTeaser>',
+    usage:
+      '<AboutTeaser>\n  <Text>\n    We are <strong>a team of 70+ professional transcribers</strong> …\n  </Text>\n</AboutTeaser>',
     previewHeight: 760,
     dataSource: 'src/assets/images/home/office-*.jpg',
   },
@@ -129,7 +131,8 @@ export const catalogue = {
     description:
       'Full-bleed peach band: intro and contact facts beside the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
     defaults: {},
-    mdx: '<ContactSection />\n<ContactSection variant="gift-card" id="gift-card" title="Request your gift card" />',
+    usage:
+      '<ContactSection />\n<ContactSection variant="gift-card" id="gift-card" title="Request your gift card" />',
     previewHeight: 1180,
     guidelines:
       'One per page, always last. Use `id` to change the anchor and `title`/`subtitle` for context-specific copy; `variant="gift-card"` for the gift-card page.',
@@ -142,10 +145,10 @@ export const catalogue = {
       title: 'Piano Transcription Service',
       subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',
     },
-    mdx: '<PageHero title="…" subtitle="…" />',
+    usage: '<PageHero title="…" subtitle="…" />',
     previewHeight: 340,
     guidelines:
-      'Pages using the `page` template get it from frontmatter `hero`; use `tone="navy"` for artist pages.',
+      'Pages using the `page` template get it from the `hero` in their meta.ts; use `tone="navy"` for artist pages.',
   },
   Section: {
     group: 'Blocks',
@@ -153,7 +156,8 @@ export const catalogue = {
       'Generic titled section for prose or ad-hoc layouts: optional eyebrow and left-aligned heading (optional short rule), white/peach/cream/surface background, three widths.',
     defaults: { title: 'Who do we work for?', id: 'demo' },
     children: 'Any prose or layout goes here. Use it for text pages and one-off sections.',
-    mdx: '<Section title="…" tone="peach">\n  prose\n</Section>',
+    usage:
+      '<Section title="…" tone="peach">\n  <Text>…</Text>\n  <Heading level={3}>…</Heading>\n  <List>\n    <ListItem>…</ListItem>\n  </List>\n</Section>',
     previewHeight: 360,
   },
   MediaText: {
@@ -173,10 +177,11 @@ export const catalogue = {
     },
     children:
       "We will work on your friend's favorite music transcription! The receiver of the voucher can redeem it for any transcription worth the value of the voucher.",
-    mdx: '<MediaText image={photo} alt="…" imageSide="right" caption="…">\n  prose\n</MediaText>',
+    usage:
+      '<MediaText image={photo} alt="…" imageSide="right" caption="…">\n  <Text>…</Text>\n</MediaText>',
     previewHeight: 520,
     guidelines:
-      "The picture lives in the page folder and is imported in the MDX. Keep prose to two or three short paragraphs; use `cta` only for the page's main action.",
+      "The picture lives in the page folder and is imported in the page (`import photo from './photo.jpg?w=480;960&as=picture'`). Keep prose to two or three short paragraphs; use `cta` only for the page's main action.",
   },
   Steps: {
     group: 'Blocks',
@@ -205,7 +210,8 @@ export const catalogue = {
         },
       ],
     },
-    mdx: '<Steps title="How it works" steps={[{ icon: "dollar", text: "…" }, { icon: "gift", text: "…" }]} />',
+    usage:
+      '<Steps title="How it works" steps={[{ icon: "dollar", text: "…" }, { icon: "gift", text: "…" }]} />',
     previewHeight: 760,
     guidelines:
       'Three to six steps, one sentence each. Icons come from the Icon primitive (dollar, pen, music, chat, gift, send, check…).',

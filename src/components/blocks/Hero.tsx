@@ -1,8 +1,8 @@
+import { counter, ratings, responseTime } from '@content/en/data/home'
 import { Button } from '~/components/primitives/Button'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { Stars } from '~/components/primitives/Stars'
-import { counter, ratings, responseTime } from '~/content/en/data/home'
 import { useSite } from '~/site'
 import { HeroSlideshow } from './HeroSlideshow'
 

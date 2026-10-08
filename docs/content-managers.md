@@ -55,6 +55,10 @@ command work too.
 5. **Live.** On your yes Claude publishes and, once the site has deployed (a few minutes), sends you the
    live link. If anything fails on the way, Claude fixes it and tells you.
 
+Page text, pictures, prices and translations go live on your yes alone. A change that also touches how the
+site works (a new kind of section, the contact form, the menus' code) waits for an engineer from the core team
+to approve it first; Claude tells you when that is the case, and the page goes live as soon as they approve.
+
 Each link comes as a message in the conversation and, when it arrives later, as a notification too.
 
 ## Design mode

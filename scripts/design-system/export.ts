@@ -144,7 +144,7 @@ for (const [name, doc] of Object.entries(catalogue) as [string, BlockDoc][]) {
     : '_No props._'
   fs.writeFileSync(
     path.join(dir, 'README.md'),
-    `# ${name}\n\n${doc.description}\n\n## Usage (MDX)\n\n\`\`\`mdx\n${doc.mdx}\n\`\`\`\n\n## Props\n\n${propsTable}\n${doc.children ? '\nChildren: light markdown prose (paragraphs, **bold**).\n' : ''}${doc.dataSource ? `\nData: \`${doc.dataSource}\`\n` : ''}${doc.guidelines ? `\n## Guidelines\n\n${doc.guidelines}\n` : ''}\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}" data-props='${JSON.stringify({ ...doc.defaults, ...(doc.children ? { children: '…' } : {}) })}'></div>\n\`\`\`\n`,
+    `# ${name}\n\n${doc.description}\n\n## Usage (page component)\n\n\`\`\`tsx\n${doc.usage}\n\`\`\`\n\n## Props\n\n${propsTable}\n${doc.children ? '\nChildren: prose, written as `<Text>` paragraphs (`<strong>`/`<em>` inside) in a page; light markdown (paragraphs, **bold**) in a mockup.\n' : ''}${doc.dataSource ? `\nData: \`${doc.dataSource}\`\n` : ''}${doc.guidelines ? `\n## Guidelines\n\n${doc.guidelines}\n` : ''}\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}" data-props='${JSON.stringify({ ...doc.defaults, ...(doc.children ? { children: '…' } : {}) })}'></div>\n\`\`\`\n`,
   )
   fs.writeFileSync(
     path.join(dir, 'preview.html'),
@@ -168,7 +168,7 @@ for (const [name, doc] of Object.entries(layoutDocs)) {
   fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(
     path.join(dir, 'README.md'),
-    `# ${name}\n\n${doc.description}\n\nNo props: content comes from \`src/content/<locale>/data/nav.ts\`, \`footer.ts\` and \`src/i18n/sites/<locale>.ts\`.\n\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}"></div>\n\`\`\`\n`,
+    `# ${name}\n\n${doc.description}\n\nNo props: content comes from \`content/<locale>/data/nav.ts\`, \`footer.ts\` and \`src/i18n/sites/<locale>.ts\`.\n\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}"></div>\n\`\`\`\n`,
   )
   fs.writeFileSync(
     path.join(dir, 'preview.html'),
@@ -207,7 +207,7 @@ transcription service that turns audio into sheet music by hand. Warm, confident
 peach sections, teal and orange accents, Montserrat throughout, rounded cards with soft shadows.
 
 Pages are built from **blocks**. Every section of a page mockup or artboard mirrors exactly one block of this
-system, in order, so that the approved design can be written as MDX one block per section.
+system, in order, so that the approved design can be written as a page component, one block per section.
 
 ## Using the live components
 
@@ -271,7 +271,7 @@ TopBar + Header + blocks + Footer; \`ContactSection\` is always the last block w
 
 ## Copy and data rules
 
-- Prices, review counts, ratings, phone numbers and nav links live in \`src/content/<locale>/data/*.ts\` and are
+- Prices, review counts, ratings, phone numbers and nav links live in \`content/<locale>/data/*.ts\` and are
   never typed into a page. A mockup shows the real numbers from there or \`[PLACEHOLDER]\`.
 - Unknown copy is \`[PLACEHOLDER]\`, never invented. Reviews are verbatim quotes with name, role, country, month.
 - British/American spelling follows the live site (American). The brand is written "My Sheet Music Transcriptions".

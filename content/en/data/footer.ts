@@ -1,4 +1,4 @@
-import type { FooterData } from '../../types'
+import type { FooterData } from '~/content/types'
 
 export const footer: FooterData = {
   sitemap: [

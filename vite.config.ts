@@ -1,11 +1,7 @@
-import mdx from '@mdx-js/rollup'
 import netlify from '@netlify/vite-plugin-tanstack-start'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
-import remarkFrontmatter from 'remark-frontmatter'
-import remarkGfm from 'remark-gfm'
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import { defineConfig } from 'vite'
 import { imagetools } from 'vite-imagetools'
 import { listPrerenderPages } from './scripts/lib/content-fs.ts'
@@ -29,14 +25,6 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   server: { port: 3000 },
   plugins: [
-    // MDX must run before React so JSX in .mdx is compiled by the MDX compiler.
-    {
-      enforce: 'pre',
-      ...mdx({
-        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
-        providerImportSource: '@mdx-js/react',
-      }),
-    },
     imagetools({
       defaultDirectives: (url) => {
         // Every image ships as AVIF/WebP (+ original format) in a <picture>, unless the import says otherwise.

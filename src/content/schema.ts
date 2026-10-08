@@ -1,8 +1,10 @@
 import { z } from 'zod'
 
 /**
- * Frontmatter schemas for every content collection. Pure TypeScript: shared by the Vite runtime
- * index (src/content/index.ts) and the Node build scripts (scripts/lib/content-fs.ts).
+ * Meta schemas for every content collection: what each page's `meta.ts` (content/<locale>/<collection>/<slug>/meta.ts)
+ * may say. Pure TypeScript: shared by the Vite runtime index (src/content/index.ts) and the Node build scripts
+ * (scripts/lib/content-fs.ts). A meta.ts writes `export default { … } satisfies PageMetaInput` (or the input type of
+ * its collection) so the editor checks it as it is typed.
  */
 
 export const COLLECTIONS = [
@@ -44,11 +46,11 @@ export const baseSchema = z.object({
 
 export const pageSchema = baseSchema.extend({
   type: z.literal('page').default('page'),
-  /** Which template renders the MDX body. */
+  /** Which template wraps the page component (index.tsx). */
   template: z
     .enum(['home', 'page', 'landing', 'pricing', 'contact', 'reviews', 'about'])
     .default('page'),
-  /** Optional hero copy for templates that render one from frontmatter. */
+  /** Optional hero copy for templates that render one from meta. */
   hero: z
     .object({ eyebrow: z.string().optional(), title: z.string(), subtitle: z.string().optional() })
     .optional(),
@@ -143,6 +145,16 @@ export type ArtistMeta = z.infer<typeof artistSchema>
 export type MusicianMeta = z.infer<typeof musicianSchema>
 export type PartnerMeta = z.infer<typeof partnerSchema>
 export type ReviewMeta = z.infer<typeof reviewSchema>
+/** What a meta.ts writes (defaulted fields optional): `export default { … } satisfies PageMetaInput`. */
+export type PageMetaInput = z.input<typeof pageSchema>
+export type ServiceMetaInput = z.input<typeof serviceSchema>
+export type PostMetaInput = z.input<typeof postSchema>
+export type FaqMetaInput = z.input<typeof faqSchema>
+export type ArtistMetaInput = z.input<typeof artistSchema>
+export type MusicianMetaInput = z.input<typeof musicianSchema>
+export type PartnerMetaInput = z.input<typeof partnerSchema>
+export type ReviewMetaInput = z.input<typeof reviewSchema>
+
 export type EntryMeta =
   | PageMeta
   | ServiceMeta
@@ -185,13 +197,14 @@ export function pathFor(
   return `/${slug}`
 }
 
-export function parseFrontmatter(collection: Collection, data: unknown, file: string): EntryMeta {
+/** Validates a meta.ts value against its collection's schema; throws with every issue listed. */
+export function parseMeta(collection: Collection, data: unknown, file: string): EntryMeta {
   const result = schemas[collection].safeParse(data)
   if (!result.success) {
     const issues = result.error.issues
       .map((i) => `  ${i.path.join('.') || '(root)'}: ${i.message}`)
       .join('\n')
-    throw new Error(`Invalid frontmatter in ${file}:\n${issues}`)
+    throw new Error(`Invalid meta in ${file}:\n${issues}`)
   }
   return result.data as EntryMeta
 }

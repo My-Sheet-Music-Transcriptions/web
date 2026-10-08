@@ -4,7 +4,7 @@ import type {
   PricingTier,
   RatingSource,
   ServiceGridItem,
-} from '../../types'
+} from '~/content/types'
 
 /** Numbers that appear in several places (hero card, stats banner, service pages). Update here only. */
 export const ratings: RatingSource[] = [

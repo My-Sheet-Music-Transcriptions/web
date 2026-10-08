@@ -1,10 +1,10 @@
+import { pricingTiers } from '@content/en/data/home'
 import type { ReactNode } from 'react'
 import { Reveal } from '~/components/motion/Reveal'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
-import { pricingTiers } from '~/content/en/data/home'
 import { cn } from '~/lib/cn'
 
 const tones = { teal: 'border-t-teal', blue: 'border-t-sky', navy: 'border-t-navy' }
@@ -12,7 +12,7 @@ const tones = { teal: 'border-t-teal', blue: 'border-t-sky', navy: 'border-t-nav
 export interface PricingTiersProps {
   title?: string
   eyebrow?: string
-  /** Intro paragraphs (MDX children) rendered beside the heading. */
+  /** Intro paragraphs (`<p>` children) rendered beside the heading. */
   children?: ReactNode
   ctaLabel?: string
   ctaHref?: string
@@ -36,11 +36,7 @@ export function PricingTiers({
           <SectionHeading id="pricing-title" eyebrow={eyebrow}>
             {title}
           </SectionHeading>
-          {children ? (
-            <div className="space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
-              {children}
-            </div>
-          ) : null}
+          {children ? <div className="space-y-4 text-charcoal">{children}</div> : null}
         </div>
         <ul className="mt-12 grid gap-10 md:grid-cols-3 lg:mt-14">
           {pricingTiers.map((t, i) => (

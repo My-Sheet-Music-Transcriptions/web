@@ -1,7 +1,9 @@
 # Block catalogue
 
-Blocks are the only components MDX pages may use. Every block has a story (`*.stories.tsx`) with its props and
-an axe pass. Props are optional with sensible defaults taken from `src/content/<locale>/data`.
+Blocks are what pages are made of: a page (`content/<locale>/<collection>/<slug>/index.tsx`) imports them by name from
+`~/components/blocks` and writes its prose with the typography components (`Text`, `Heading`, `List`, `TextLink`… from
+`~/components/typography`; `<strong>` and `<em>` stay plain). Every block has a story (`*.stories.tsx`) with its props
+and an axe pass. Props are optional with sensible defaults taken from `content/<locale>/data`.
 
 | Block | Purpose | Props | Data source |
 | --- | --- | --- | --- |
