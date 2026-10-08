@@ -41,9 +41,9 @@ command work too.
 1. **A few questions.** Claude asks only what it cannot work out: which page and which site, what the page
    should achieve, what goes on it. Answers are clickable; "Other" lets you type.
 2. **The preview.** Within a few minutes you get a link to a private preview of the page, rendered with the
-   real site components. At the top you can switch between desktop, tablet and phone. Press **Comment**,
-   click any part of the page and write what should change, then press **Done**; or simply tell Claude in
-   the conversation. Tell Claude when you are done commenting (comments do not reach it on their own).
+   real site components. At the top you can switch between desktop, tablet and phone. Commenting is on
+   from the start: click any part of the page and write what should change (turn **Comment** off to click
+   links inside the page); or simply tell Claude in the conversation. Tell Claude when you are done commenting (comments do not reach it on their own).
    Claude updates the same preview until you say it is right. Text Claude does not have shows as
    `[PLACEHOLDER]`: it never invents copy, prices or numbers.
 3. **The question.** When the preview is right, Claude asks: "Shall I publish this to the live site?".

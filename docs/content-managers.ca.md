@@ -41,9 +41,9 @@ també funciona.
 1. **Unes poques preguntes.** Claude pregunta només el que no pot deduir: quina pàgina i quin lloc, què ha
    d'aconseguir la pàgina, què hi va. Les respostes són clicables; amb "Other" escrius el que vulguis.
 2. **La vista prèvia.** En uns minuts reps un enllaç a una vista prèvia privada de la pàgina, feta amb els
-   components reals del web. A dalt pots canviar entre escriptori, tauleta i mòbil. Prem **Comment**, fes
-   clic a qualsevol part de la pàgina i escriu què hauria de canviar, després **Done**; o digues-ho a Claude
-   a la conversa. Avisa Claude quan hagis acabat de comentar (els comentaris no li arriben sols). Claude
+   components reals del web. A dalt pots canviar entre escriptori, tauleta i mòbil. Els comentaris estan
+   activats des del principi: fes clic a qualsevol part de la pàgina i escriu què hauria de canviar (desactiva
+   **Comment** per fer clic als enllaços de la pàgina); o digues-ho a Claude a la conversa. Avisa Claude quan hagis acabat de comentar (els comentaris no li arriben sols). Claude
    actualitza la mateixa vista prèvia fins que diguis que està bé. El text que Claude no té apareix com a
    `[PLACEHOLDER]`: mai inventa textos, preus ni xifres.
 3. **La pregunta.** Quan la vista prèvia està bé, Claude pregunta: "Ho publico al web?". No es construeix
