@@ -4,3 +4,11 @@ export const navItemClass =
 
 /** Added when an item is the current page or its panel is open. */
 export const navItemActive = 'text-primary after:scale-x-100'
+
+/**
+ * Added to a menu panel (Services, languages) while it is closed: hidden, not just transparent, so its
+ * links take no clicks or focus and leave the accessibility tree. CSS flips visibility once the 140ms
+ * fade-out is over; Motion's `transitionEnd` did it before, and a close that interrupted the opening
+ * animation (Enter, then Escape right away) often never applied it.
+ */
+export const menuPanelClosed = 'invisible transition-[visibility] delay-140 duration-0'
