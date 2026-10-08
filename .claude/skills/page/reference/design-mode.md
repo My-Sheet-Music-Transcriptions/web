@@ -15,7 +15,10 @@ hand-drawn sections (proposed blocks) are fully editable. The canvas is private 
 1. Write `mockups/<slug>/sections.html` exactly as in `preview.md`. Each option to compare is an extra
    `mockups/<slug>/sections.<variant>.html` (`sections.warm.html`, `sections.compact.html`…): same format,
    a short lowercase name.
-2. `pnpm ds:canvas <slug> "<Page name>"` (later runs: `pnpm ds:canvas <slug>`). It checks every sections
+2. `pnpm ds:shot <slug>` first: it renders `sections.html` and every option at 1440/768/390 px into
+   `dist/design-system/shot/<slug>/` (`<option>-<width>-<nn>-<Block>.png`) and refuses on the same
+   problems as `ds:review` (`preview.md`, "The local check"). Look at each option's sections, fix, rerun;
+   then `pnpm ds:canvas <slug> "<Page name>"` (later runs: `pnpm ds:canvas <slug>`). It checks every sections
    file like `ds:review`, writes the canvas files under `dist/design-system/canvas/<slug>/` and prints the
    Artifact calls:
    - **No canvas yet**: call 1 creates it from the Design type (`type_url` + `title`, nothing else; pass it

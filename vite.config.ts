@@ -54,6 +54,8 @@ export default defineConfig({
       pages,
     }),
     viteReact(),
-    netlify(),
+    // The site has no edge functions; Netlify's dev emulation of them would start a Deno it downloads on first
+    // use, which slows `pnpm dev` and breaks it when that Deno is newer than the plugin expects.
+    netlify({ dev: { edgeFunctions: { enabled: false } } }),
   ],
 })

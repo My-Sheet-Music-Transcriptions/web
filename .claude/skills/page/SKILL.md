@@ -72,26 +72,32 @@ the person a red "Failed"). Run each recipe command on its own and let its error
    version that skill records, so a publish never changes a preview someone is already looking at.
 2. **The mockup**: write or regenerate `mockups/<slug>/sections.html` per `reference/preview.md`
    (edit mode: `reference/edit.md` generates it from the real page first; translate: `reference/translate.md`).
-3. **The surface**:
+3. **Look before they do**: `pnpm ds:review` renders the mockup locally at 1440/768/390 px before it prints
+   anything to publish, and refuses on a script error, a missing picture, a page wider than the screen or a
+   block that rendered nothing. Read the section pictures it names for what you added or changed (and the
+   phone width always) and fix what looks wrong: as many rounds as needed, each a few seconds, before one
+   publish (`reference/preview.md`, "The local check"). The pictures are for you, never the preview.
+4. **The surface**:
    - default: `pnpm ds:review <slug> "<Page name>" [/path]` and publish the printed parameters with the
      Artifact tool → the HTML preview with Desktop/Tablet/Phone switch and per-section comments
      (`reference/preview.md`, "Publishing and talking").
    - design mode: `pnpm ds:canvas <slug>` → the Design canvas (`reference/design-mode.md`).
-4. **Talk**: the link; one short paragraph of what the page shows top to bottom in everyday words; what you
+5. **Talk**: the link; one short paragraph of what the page shows top to bottom in everyday words; what you
    assumed; what is still a placeholder and what you need; how to comment, in one sentence; ask them to tell
    you here when they are done (comments do not reach you on their own: read them with `ArtifactComments`
    when they say so).
-5. **Iterate** on the same artifact until they say it is right: edit the mockup, rerun the script, republish,
-   summarise the change. Then ask exactly one AskUserQuestion: "Shall I publish this to the live site?"
-   (options: "Yes, publish" / "Not yet, more changes"), naming the site and the address. Only a yes starts
-   Phase 3.
+6. **Iterate** on the same artifact until they say it is right: edit the mockup, rerun the script, look at
+   the changed sections, republish, summarise the change. Then ask exactly one AskUserQuestion: "Shall I
+   publish this to the live site?" (options: "Yes, publish" / "Not yet, more changes"), naming the site and
+   the address. Only a yes starts Phase 3.
 
 ## Phase 3 · Build, test page, publish, confirm (after an explicit yes)
 
 Tell them it takes a few minutes and that they will get a second link, the real page on a test address,
 before anything goes live. Keep the rest out of the conversation.
 1. **Build** the page from the approved mockup: `reference/build.md` (page folder, pictures, meta,
-   data files, proposed blocks built for real, every check green). A page that cannot pass the checks is not
+   data files, proposed blocks built for real, the real page looked at next to the mockup on the local dev
+   server, every check green). A page that cannot pass the checks is not
    pushed: go back to the person with what is missing, in plain words.
 2. **Draft PR and the test address**: `reference/publish.md` steps 1–2. Hand them the deploy-preview link to
    the page itself and ask: "This is the real page on a test address. Does it look right?" (options: "Yes,
