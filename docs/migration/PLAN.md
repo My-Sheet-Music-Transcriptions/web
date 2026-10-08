@@ -291,6 +291,9 @@ The pages that carry hreflang between the sites, ported together (principle 6): 
 French, German and Japanese twins from the inventories' "Translations"/"EN counterpart" columns (~60 pages), each pair
 on one `translationKey`. First real run of the importer and the parity report. Needs D5, D12, D13.
 
+*Ported 2026-10-08 ([#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32)):* `/music-transcription-service`
+and `/careers` (neither has a twin in the inventories). 10 of the 12 English core pages remain.
+
 ### C1 · Catalan launch (2 sessions, after W1 and W2)
 
 The page set is in [`inventory/ca.md`](./inventory/ca.md): home, the eleven core and legal pages, gift card and ten
@@ -317,11 +320,20 @@ mega-menu entries never seen live (`/horns-transcription-service`, `/lap-steel-g
 port, else drop from `nav.ts`). One importer run per group (keys, vocal, strings, guitar, winds, drums, ensembles, jazz,
 editing) while the mapping rules settle, then the rest in one.
 
+*Ported 2026-10-08 ([#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32), English only):* `/piano`,
+`/guitar-tab`, `/trumpet-transcription-service`, `/violin-transcription-service`, on the `service` template that the
+importer fills. The es/fr/de/ja twins of `/piano` and `/guitar-tab` follow in their locale waves. 37 to port and 5 to
+verify remain.
+
 ### W4 · English landing pages (45)
 
 Audience and B2B pages (`/artists`, `/b2b`, `/music-educators`, publishers, partners, printing…), use cases (weddings,
 Christmas, auditions, MIDI/YouTube/productions into scores), 9 AI-music pages and 15 notation-software conversion pages
 (two templates, filled from data), 4 glossaries.
+
+*Ported 2026-10-08 ([#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32)):* `/artists`,
+`/music-educators`, `/sheet-music-printing`, `/partners`, `/endorsed-musicians-and-composers` and
+`/convert-from-sibelius-to-musescore` (the model for the other 14 conversion pages). 39 remain.
 
 ### W5 · English blog (126 posts + index)
 
