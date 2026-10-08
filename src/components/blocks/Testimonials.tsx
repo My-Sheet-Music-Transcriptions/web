@@ -5,11 +5,14 @@ import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { Stars } from '~/components/primitives/Stars'
 import type { Review } from '~/content/types'
+import { inlineMarkdown } from '~/lib/light-markdown'
 import { useTitleId } from '~/lib/use-title-id'
 import { useLocale } from '~/site'
 
 export interface TestimonialsProps {
   title: string
+  /** A sentence under the title; **bold** and [links](/path) kept. */
+  lead?: string
   /** The reviews, verbatim: a list from content/<locale>/data/reviews. */
   items: Review[]
   /** Show only the first n reviews. */
@@ -21,7 +24,7 @@ export interface TestimonialsProps {
 }
 
 /** Customer quotes in two columns, with stars, over the peach staff lines. */
-export function Testimonials({ title, items, limit, cta, id }: TestimonialsProps) {
+export function Testimonials({ title, lead, items, limit, cta, id }: TestimonialsProps) {
   const titleId = useTitleId(id)
   const shown = limit ? items.slice(0, limit) : items
   return (
@@ -40,6 +43,11 @@ export function Testimonials({ title, items, limit, cta, id }: TestimonialsProps
       />
       <div className="mx-auto max-w-[1140px] px-5 md:px-[10px]">
         <SectionHeading id={titleId}>{title}</SectionHeading>
+        {lead ? (
+          <p className="mx-auto mb-6 max-w-3xl text-center text-[18px] leading-relaxed text-ink">
+            {inlineMarkdown(lead)}
+          </p>
+        ) : null}
         <ul className="mt-[23px] grid items-start gap-[33px] md:grid-cols-2 md:gap-x-9 md:gap-y-[33px]">
           {shown.map((r) => (
             <li key={r.name + r.quote.slice(0, 24)}>
