@@ -21,7 +21,7 @@ import {
   mockupDir,
   printPublish,
   readPreviewMemo,
-  requireDesignSystemUrl,
+  requireDesignSystem,
   writePreviewMemo,
 } from './preview-lib'
 import { prepareSections } from './review-lib'
@@ -120,7 +120,8 @@ for (const f of files) {
 }
 if (failed) process.exit(1)
 
-const dsUrl = requireDesignSystemUrl()
+const ds = requireDesignSystem()
+const dsUrl = ds.url
 const manifest = ensureManifest('ds:canvas')
 const root = path.join('dist/design-system/canvas', slug)
 const proj = path.join(root, 'project')
@@ -167,7 +168,7 @@ const publishFiles: Record<string, unknown> = {
   ...Object.fromEntries(
     Object.keys(imageFiles('', imgDir)).map((f) => [`project/img/${f}`, `project/img/${f}`]),
   ),
-  ...designSystemFiles(DS_PREFIX, manifest, dsUrl),
+  ...designSystemFiles(DS_PREFIX, manifest, ds),
 }
 const steps = publishSteps(memo, {
   title,

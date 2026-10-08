@@ -258,7 +258,10 @@ describe('publishing', () => {
         'fonts/m.woff2',
       ],
     }
-    const files = { ...canvasFilesFor(boards), ...designSystemFiles(DS_PREFIX, manifest, dsUrl) }
+    const files = {
+      ...canvasFilesFor(boards),
+      ...designSystemFiles(DS_PREFIX, manifest, { url: dsUrl, version: null }),
+    }
     expect(Object.keys(files)).toEqual([
       'project/Main.dc.html',
       'project/Mobile.dc.html',
@@ -272,6 +275,15 @@ describe('publishing', () => {
     expect(files['project/ds/msmt/components/bundle.js']).toEqual({
       artifact: dsUrl,
       path: 'project/components/bundle.js',
+    })
+    const pinned = designSystemFiles(DS_PREFIX, manifest, {
+      url: dsUrl,
+      version: '1791471138-a631',
+    })
+    expect(pinned['project/ds/msmt/components/bundle.js']).toEqual({
+      artifact: dsUrl,
+      path: 'project/components/bundle.js',
+      ver: '1791471138-a631',
     })
   })
 

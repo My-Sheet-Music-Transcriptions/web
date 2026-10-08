@@ -6,8 +6,7 @@ import { readArtifactRecord } from './lib'
 /**
  * Shared pieces of the page-preview scripts (ds:review, ds:canvas, ds:mockup, page:status): the
  * mockups/<slug>/preview.json memo, the design-system export manifest and the `files` maps of an Artifact
- * publish. Kept out of lib.ts on purpose: lib.ts is a design-system source and changing it demands a
- * republish of the artifact.
+ * publish. Kept separate from lib.ts (the export itself) so the two can change independently.
  */
 
 /** What mockups/<slug>/preview.json remembers about a page in flight. Unknown keys are preserved. */
@@ -66,6 +65,12 @@ export function writePreviewMemo(slug: string, patch: Partial<PreviewMemo>): Pre
 
 export interface Manifest {
   files: string[]
+  /** Hash of this export (lib.ts exportHash()). */
+  exportHash?: string
+  /** Hash recorded at the last publish; equal to exportHash when the artifact is in sync. */
+  publishedExportHash?: string | null
+  /** Artifact version of the last publish, the one previews copy the design-system files from. */
+  publishedVersion?: string | null
 }
 
 export const MANIFEST_FILE = 'dist/design-system/manifest.json'
@@ -84,25 +89,48 @@ export function ensureManifest(tag: string): Manifest {
   return JSON.parse(fs.readFileSync(MANIFEST_FILE, 'utf8')) as Manifest
 }
 
-export function requireDesignSystemUrl(): string {
+/** The published design system a preview copies its files from: the artifact URL and the pinned version. */
+export interface DesignSystemRef {
+  url: string
+  /** Artifact version of the last publish; null in a record from before versions were pinned. */
+  version: string | null
+}
+
+export function requireDesignSystem(): DesignSystemRef {
   const record = readArtifactRecord()
   if (!record.url)
     throw new Error('src/design-system/artifact.json has no url: publish the design system first')
-  return record.url
+  return { url: record.url, version: record.publishedVersion ?? null }
 }
 
 /** The export files a rendered mockup needs: tokens, the bundle, fonts and the bundle's images. */
 export const DS_FILE = /^(tokens\.json$|components\/(bundle\.(js|css)|fonts\.css|assets\/)|fonts\/)/
 
-/** `files` entries copying the design system from its artifact, keyed `<prefix><export path>`. */
+/** One `files` entry copying a published file of another artifact, pinned to a version when known. */
+export interface ArtifactCopy {
+  artifact: string
+  path: string
+  ver?: string
+}
+
+/**
+ * `files` entries copying the design system from its artifact, keyed `<prefix><export path>`. Pinned to
+ * the version recorded at the last publish (`ver`), so what a preview renders does not change when
+ * someone republishes the design system from another branch.
+ */
 export function designSystemFiles(
   prefix: string,
   manifest: Manifest,
-  dsUrl: string,
-): Record<string, { artifact: string; path: string }> {
-  const out: Record<string, { artifact: string; path: string }> = {}
+  ds: DesignSystemRef,
+): Record<string, ArtifactCopy> {
+  const out: Record<string, ArtifactCopy> = {}
   for (const f of manifest.files)
-    if (DS_FILE.test(f)) out[`${prefix}${f}`] = { artifact: dsUrl, path: `project/${f}` }
+    if (DS_FILE.test(f))
+      out[`${prefix}${f}`] = {
+        artifact: ds.url,
+        path: `project/${f}`,
+        ...(ds.version ? { ver: ds.version } : {}),
+      }
   return out
 }
 

@@ -8,7 +8,7 @@ import {
   mockupDir,
   printPublish,
   readPreviewMemo,
-  requireDesignSystemUrl,
+  requireDesignSystem,
   writePreviewMemo,
 } from './preview-lib'
 import { prepareSections } from './review-lib'
@@ -47,7 +47,7 @@ if (errors.length) {
   process.exit(1)
 }
 
-const dsUrl = requireDesignSystemUrl()
+const ds = requireDesignSystem()
 const manifest = ensureManifest('ds:review')
 
 const out = path.join('dist/design-system/review', slug)
@@ -71,7 +71,7 @@ fs.writeFileSync(
 const files: Record<string, unknown> = {
   'page.html': `${out}/page.html`,
   ...imageFiles('img/', imgDir),
-  ...designSystemFiles('ds/', manifest, dsUrl),
+  ...designSystemFiles('ds/', manifest, ds),
 }
 fs.writeFileSync(path.join(out, 'files.json'), `${JSON.stringify(files, null, 2)}\n`)
 
