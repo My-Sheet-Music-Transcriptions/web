@@ -18,7 +18,7 @@ pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
 pnpm lhci                     # Lighthouse CI thresholds (needs a build; locally set CHROME_PATH to a Chrome/Chromium binary)
 pnpm release-check            # the full local gate (more than the PR CI runs: see nightly.yml)
 pnpm ds:export                # design-system export for the artifact -> dist/design-system (see below)
-pnpm ds:blocks [Block...]          # every block's props (types, allowed values, docs) + a ready mockup line
+pnpm ds:blocks [Block...|--all]    # no args: the index (blocks by role, when to use each, where used); names: props, allowed values, docs + a ready mockup line
 pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, builds the review page and prints the Artifact publish parameters
 pnpm ds:canvas <slug> [--canvas <canvas.json>] | --pull <Board.dc.html>   # design mode: the mockup as a Design canvas, and back
 pnpm ds:mockup <slug> [--force]    # an existing page (index.tsx + meta.ts) -> mockups/<slug>/sections.html (+ img/, preview.json)

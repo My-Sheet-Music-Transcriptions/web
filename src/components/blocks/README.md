@@ -24,4 +24,6 @@ and an axe pass. Props are optional with sensible defaults taken from `content/<
 | `Steps` | Numbered list: each step is a teal icon square, a "Step n" eyebrow and one line of text, separated by hairlines; optional eyebrow and heading. | title, eyebrow, steps, tone, id | – |
 
 Adding a block: component in its own file, props typed and documented, story with at least the default state,
-a row in this table, and the export in `index.tsx`.
+a `catalogue.ts` entry (which regenerates this table and feeds `pnpm ds:blocks`, the index whoever composes a
+page reads: say in one line where the block sits in a page, when to pick it and when not), and the export in
+`index.tsx`.

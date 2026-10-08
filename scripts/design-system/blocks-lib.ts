@@ -1,5 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { type BlockDoc, catalogue, ROLES } from '../../src/components/blocks/catalogue'
+import { DEFAULT_LOCALE } from '../../src/i18n/routing'
+import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
 
 /**
  * Reads each block's `<Name>Props` interface straight from its source, so `pnpm ds:blocks` can show the
@@ -153,4 +156,49 @@ export function checkProps(name: string, props: unknown): string[] {
   const block = blockProps(name)
   if (!block) return []
   return checkObject(name, props ?? {}, block.props, block.types)
+}
+
+// --- the index: every block by role, with where it is used (computed from the pages, never written down)
+
+/** Pages using each block, as `slug` (`<locale>/<slug>` outside the default locale), from each page's index.tsx. */
+export function blockUsage(entries = readAllEntries()): Record<string, string[]> {
+  const out: Record<string, string[]> = {}
+  for (const name of Object.keys(catalogue)) out[name] = []
+  for (const e of entries) {
+    const page = e.locale === DEFAULT_LOCALE ? e.slug : `${e.locale}/${e.slug}`
+    const source = fs.readFileSync(path.join(CONTENT_DIR, e.page), 'utf8')
+    for (const name of Object.keys(catalogue)) {
+      // PageHero comes from the meta.ts `hero` on every template but home
+      const used =
+        new RegExp(`<${name}\\b`).test(source) ||
+        (name === 'PageHero' && 'hero' in e.meta && !!e.meta.hero)
+      if (used) out[name]?.push(page)
+    }
+  }
+  return out
+}
+
+/** `used on: a, b` or `not used yet`, for the index and the detail. */
+export const usageLine = (pages: string[]): string =>
+  pages.length ? `used on: ${pages.join(', ')}` : 'not used on any page yet'
+
+/**
+ * The one-screen index `pnpm ds:blocks` prints without arguments: the blocks grouped by role in page order,
+ * one line of purpose, when to pick each and when not, and where it is used. Props and the ready mockup
+ * line stay behind `pnpm ds:blocks <Block>`.
+ */
+export function blockIndex(usage = blockUsage()): string {
+  const out: string[] = []
+  for (const [role, meaning] of Object.entries(ROLES)) {
+    out.push(`## ${role}: ${meaning}`)
+    for (const [name, doc] of Object.entries(catalogue).filter(([, d]) => d.role === role)) {
+      const d = doc as BlockDoc
+      out.push(`- ${name}: ${d.description}`)
+      out.push(`  use when: ${d.useWhen}`)
+      if (d.notFor) out.push(`  not for: ${d.notFor}`)
+      out.push(`  ${usageLine(usage[name] ?? [])}`)
+    }
+    out.push('')
+  }
+  return out.join('\n')
 }
