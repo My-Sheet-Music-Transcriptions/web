@@ -1,5 +1,5 @@
-import type { LocaleRouting } from '../../src/i18n/routing'
-import { LOCALES, type Locale } from '../../src/i18n/types'
+import type { LocaleRouting } from '../../src/i18n/routing.ts'
+import { LOCALES, type Locale } from '../../src/i18n/types.ts'
 
 /** Validates SITE_LOCALE (build-time env) and defaults to English. */
 export function resolveSiteLocale(value: string | undefined): Locale {

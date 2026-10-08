@@ -5,11 +5,11 @@
   "type": "module",
   "packageManager": "pnpm@10.28.0",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18"
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "tsx scripts/prebuild.ts && vite build && tsx scripts/postbuild.ts",
+    "build": "tsx scripts/prebuild.ts && vite build --configLoader native && tsx scripts/postbuild.ts",
     "build:hreflang": "tsx scripts/build-hreflang.ts",
     "preview": "vite preview",
     "serve:dist": "tsx scripts/serve-dist.ts",
@@ -37,7 +37,8 @@
     "ds:review": "tsx scripts/design-system/review.ts",
     "ds:canvas": "tsx scripts/design-system/canvas.ts",
     "ds:mockup": "tsx scripts/design-system/mockup.ts",
-    "page:status": "tsx scripts/design-system/status.ts"
+    "page:status": "tsx scripts/design-system/status.ts",
+    "ds:blocks": "tsx scripts/design-system/blocks.ts"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.3.0",

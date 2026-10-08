@@ -8,9 +8,9 @@ import remarkGfm from 'remark-gfm'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import { defineConfig } from 'vite'
 import { imagetools } from 'vite-imagetools'
-import { listPrerenderPages } from './scripts/lib/content-fs'
-import { resolveLocaleRouting } from './scripts/lib/site-locale'
-import { getSiteConfig } from './src/i18n/sites'
+import { listPrerenderPages } from './scripts/lib/content-fs.ts'
+import { resolveLocaleRouting } from './scripts/lib/site-locale.ts'
+import { getSiteConfig } from './src/i18n/sites/index.ts'
 
 // SITE_LOCALE=<locale>: production build of one locale for its TLD. Unset or "all": every locale under
 // /<locale> (deploy previews, `pnpm dev`). See src/i18n/routing.ts.

@@ -13,7 +13,7 @@ import { nativeName, siteHost } from './LangSwitcher'
 const logos = import.meta.glob<PictureSource>('../../assets/images/logos/*.png', {
   eager: true,
   import: 'default',
-  query: '?w=80;160&as=picture',
+  query: '?w=36;72&as=picture',
 })
 
 const heading = 'eyebrow text-white/60'
