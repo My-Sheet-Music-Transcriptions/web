@@ -22,14 +22,20 @@ solving); take the first source that answers:
 When none answers, say so in one line and ask the person for the text and pictures (pasted or attached);
 never write the page from memory.
 
-## Pictures: download them, every time
+## Pictures: download them through a browser
 
-- Download every picture the page shows into `mockups/<slug>/img/<descriptive-name>.<ext>` as soon as you find
-  it, never link it and never leave a placeholder for a picture that exists somewhere. Keep the largest size,
-  ≤ 2000px long side, descriptive file names.
-- Try in order: `curl -sA "Mozilla/5.0" -o <file> <url>`; the archived original
-  `https://web.archive.org/web/2026im_/<url>` (`im_` serves the raw file); then ask the person for it. Check
-  what arrived (`file <file>`): a captcha comes back as HTML, which is not a picture.
+Download a picture only when the page needs it (the person did not supply it, no stand-in will do). When you
+do, use a browser, never `curl`/`wget`:
+- the person's browser above, when the session has one: open the picture's URL there and save it, or ask
+  the person to save it and attach it here;
+- otherwise the session's Chromium through Playwright (preinstalled; `executablePath: '/opt/pw-browsers/chromium'`
+  if the project's version differs): open the page, then save the picture's response body to
+  `mockups/<slug>/img/<descriptive-name>.<ext>`;
+- if the browser gets the captcha, the archived original (`https://web.archive.org/web/2026im_/<url>`, `im_`
+  serves the raw file) in the same browser; then ask the person for it.
+
+Keep the largest size, ≤ 2000px long side, descriptive file names, never link it. Check what arrived
+(`file <file>`): a captcha comes back as HTML, which is not a picture.
 
 ## Copy and slugs
 
