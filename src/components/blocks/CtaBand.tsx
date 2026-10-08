@@ -7,8 +7,8 @@ import { useTitleId } from '~/lib/use-title-id'
 export interface CtaBandProps {
   /** A short line above the title. */
   eyebrow?: string
-  /** The one line that asks ("Unsure about music notation?"). */
-  title: string
+  /** The one line that asks ("Unsure about music notation?"); a band can be a sentence and a button alone. */
+  title?: string
   /** A sentence or two; **bold**, [links](/path) and paragraphs kept. */
   text?: string
   /** The button. */
@@ -26,15 +26,17 @@ export function CtaBand({ eyebrow, title, text, cta, tone = 'cream', id }: CtaBa
     <section
       id={id}
       className={cn('scroll-mt-20 py-[50px]', tones[tone])}
-      aria-labelledby={titleId}
+      aria-labelledby={title ? titleId : undefined}
     >
       <div className="container-narrow flex flex-col items-center gap-4 text-center">
         {eyebrow ? (
           <p className="text-small font-bold uppercase tracking-wide text-accent-deep">{eyebrow}</p>
         ) : null}
-        <h2 id={titleId} className="text-[26px] leading-8 text-ink md:text-h2 md:leading-10">
-          {title}
-        </h2>
+        {title ? (
+          <h2 id={titleId} className="text-[26px] leading-8 text-ink md:text-h2 md:leading-10">
+            {title}
+          </h2>
+        ) : null}
         {text ? <div className="flex flex-col gap-3 text-ink">{lightMarkdown(text)}</div> : null}
         {cta ? <CtaLink cta={cta} className="mt-2" /> : null}
       </div>
