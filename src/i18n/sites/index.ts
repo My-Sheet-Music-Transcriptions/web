@@ -1,10 +1,10 @@
-import type { Locale, SiteConfig } from '../types'
-import { ca } from './ca'
-import { de } from './de'
-import { en } from './en'
-import { es } from './es'
-import { fr } from './fr'
-import { ja } from './ja'
+import type { Locale, SiteConfig } from '../types.ts'
+import { ca } from './ca.ts'
+import { de } from './de.ts'
+import { en } from './en.ts'
+import { es } from './es.ts'
+import { fr } from './fr.ts'
+import { ja } from './ja.ts'
 
 export const sites: Record<Locale, SiteConfig> = { en, es, fr, de, ja, ca }
 

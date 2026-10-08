@@ -1,5 +1,5 @@
-import type { SiteConfig } from '../types'
-import { en } from './en'
+import type { SiteConfig } from '../types.ts'
+import { en } from './en.ts'
 
 /** Scaffold: inherits English strings until the de port (Iteration 3). */
 export const de: SiteConfig = {

@@ -17,7 +17,7 @@ const flags = import.meta.glob<PictureSource>('../../assets/images/flags/*.png',
 const logos = import.meta.glob<PictureSource>('../../assets/images/logos/*.png', {
   eager: true,
   import: 'default',
-  query: '?w=80;160&as=picture',
+  query: '?w=36;72&as=picture',
 })
 
 const phoneIcon: Record<string, string> = {

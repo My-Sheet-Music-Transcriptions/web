@@ -10,15 +10,15 @@ import {
   parseFrontmatter,
   pathFor,
   RESERVED_SLUGS,
-} from '../../src/content/schema'
+} from '../../src/content/schema.ts'
 import {
   DEFAULT_LOCALE,
   type LocaleRouting,
   localeHref,
   localizePath,
-} from '../../src/i18n/routing'
-import { sites } from '../../src/i18n/sites'
-import { LOCALES, type Locale } from '../../src/i18n/types'
+} from '../../src/i18n/routing.ts'
+import { sites } from '../../src/i18n/sites/index.ts'
+import { LOCALES, type Locale } from '../../src/i18n/types.ts'
 
 /** Node-side view of src/content for build scripts and vite.config.ts (no import.meta.glob here). */
 

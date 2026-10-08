@@ -8,7 +8,7 @@ export type { ContactResult }
  * posts FormData to it. All logic lives in contact.server.ts, which never reaches the browser.
  */
 export const submitContact = createServerFn({ method: 'POST' })
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error('Expected FormData')
     return data
   })
