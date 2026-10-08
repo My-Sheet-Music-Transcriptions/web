@@ -18,6 +18,7 @@ pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
 pnpm lhci                     # Lighthouse CI thresholds (needs a build; locally set CHROME_PATH to a Chrome/Chromium binary)
 pnpm release-check            # the full local gate (more than the PR CI runs: see nightly.yml)
 pnpm ds:export                # design-system export for the artifact -> dist/design-system (see below)
+pnpm ds:blocks [Block...]          # every block's props (types, allowed values, docs) + a ready mockup line
 pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, builds the review page and prints the Artifact publish parameters
 pnpm ds:canvas <slug> [--canvas <canvas.json>] | --pull <Board.dc.html>   # design mode: the mockup as a Design canvas, and back
 pnpm ds:mockup <slug> [--force]    # an existing page's MDX -> mockups/<slug>/sections.html (+ img/, preview.json)
@@ -52,7 +53,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `jsonld.ts`, `og/template.tsx` (Satori).
 - `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG PNGs), `serve-dist.ts`, `lib/content-fs.ts`,
   `design-system/{export,index,lib}.ts` (artifact export; these three are design-system sources, hashed by the sync
-  test), `design-system/{review,canvas,mockup,status}.ts` + `*-lib.ts` and `preview-lib.ts` (the page-preview tooling).
+  test), `design-system/{blocks,review,canvas,mockup,status}.ts` + `*-lib.ts` and `preview-lib.ts` (the page-preview tooling).
 - `tests/unit`, `tests/seo` (runs over `dist/client`), `tests/e2e`, `tests/visual` (+ `reference/` captures of the live site).
 - `.claude/skills` – `page` (the whole page workflow; `reference/*.md` hold the recipes per step), the content-manager
   commands `new-page`, `edit-page`, `translate`, `design`, `publish`, `status`, `site-help` (thin entry points into

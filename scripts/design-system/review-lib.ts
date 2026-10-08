@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { catalogue } from '../../src/components/blocks/catalogue'
+import { checkProps } from './blocks-lib'
 
 /**
  * Checks and prepares a page mockup (mockups/<slug>/sections.html) for the review artifact, so a
@@ -140,7 +141,11 @@ export function prepareSections(sections: string, imgDir: string): PreparedSecti
         )
     } else if (COMPONENTS.includes(name) && !LAYOUT.includes(name as (typeof LAYOUT)[number]))
       errors.push(`"${name}" already exists: use data-msmt="${name}" instead of drawing it`)
-    if (a['data-props'] === undefined) return tag
+    const known = !proposed && COMPONENTS.includes(name)
+    if (a['data-props'] === undefined) {
+      if (known) errors.push(...checkProps(name, {}))
+      return tag
+    }
     let props: unknown
     try {
       props = JSON.parse(decode(a['data-props']))
@@ -151,6 +156,7 @@ export function prepareSections(sections: string, imgDir: string): PreparedSecti
       return tag
     }
     if (proposed) return tag
+    if (known) errors.push(...checkProps(name, props))
     const resolve = (v: unknown): unknown => {
       if (typeof v === 'string' && IMAGE.test(v)) {
         if (!have(v.slice(4))) {

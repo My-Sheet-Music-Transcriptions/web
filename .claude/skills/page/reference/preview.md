@@ -7,8 +7,11 @@ worked example: read it before writing a mockup.
 
 ## Writing sections.html
 
-1. Read `src/components/blocks/catalogue.ts`: the block names, their props and defaults (each entry's
-   `defaults` is a working example of its props, `guidelines` says when to use it). For an existing page run
+1. Run `pnpm ds:blocks` (or `pnpm ds:blocks MediaText Steps` for a few): per block, what it is for, every
+   prop with its type, allowed values and doc comment, a ready `<div data-msmt=…>` line to copy and adapt,
+   where its data lives and its guidelines. It is read from the block sources, so it is never stale: do not
+   open the components or `catalogue.ts` yourself. `ds:review` rejects an unknown prop, a missing required
+   one and a value outside the allowed ones, naming the alternatives. For an existing page run
    `pnpm ds:mockup <slug>` instead of writing from scratch (`edit.md`). A section nothing fits becomes a
    **proposed block** (prefer a new prop on an existing block over a new block).
 2. Pictures: copy every picture the page needs into `mockups/<slug>/img/` (from the person, from
@@ -42,7 +45,8 @@ worked example: read it before writing a mockup.
 
 `pnpm ds:review <slug> "<Page name>" [/path]` (later runs: `pnpm ds:review <slug>`; title and path are
 remembered in `mockups/<slug>/preview.json`). It fails with one line per problem (unknown block, unreadable
-props, missing picture, external file, wrapper order): fix and rerun. It runs `pnpm ds:export` itself when
+props, unknown or missing prop, value not allowed, missing picture, external file, wrapper order): fix
+every line and rerun. It runs `pnpm ds:export` itself when
 needed. Its last line is the exact Artifact publish parameters: call the Artifact tool with them as printed,
 replacing only the `description` placeholder with one real sentence. After the first publish write the
 artifact URL into `preview.json` as `"url"`: from then on the printed parameters update that same artifact
