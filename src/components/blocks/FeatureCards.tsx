@@ -1,7 +1,8 @@
 import { included } from '@content/en/data/home'
-import { Reveal } from '~/components/motion/Reveal'
+import bg from '~/assets/images/home/included-bg.jpg?w=1000;1600&as=picture'
+import { Card } from '~/components/primitives/Card'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
-import { SectionHeading } from '~/components/primitives/SectionHeading'
+import { WaveDivider } from '~/components/primitives/WaveDivider'
 
 const icons = import.meta.glob<PictureSource>(
   '../../assets/images/icons/{fast-delivery,formats,accuracy}.png',
@@ -10,54 +11,57 @@ const icons = import.meta.glob<PictureSource>(
 
 export interface FeatureCardsProps {
   title?: string
-  eyebrow?: string
 }
 
-/** "What's included?": three columns under a hairline (turnaround, formats, accuracy), each with its icon. */
-export function FeatureCards({
-  title = "What's included?",
-  eyebrow = 'Every order',
-}: FeatureCardsProps) {
+/** "What's included?": three white cards over a studio photo with wavy edges. */
+export function FeatureCards({ title = "What's included?" }: FeatureCardsProps) {
   return (
     <section
-      className="border-t border-line py-section lg:py-section-lg"
+      className="relative isolate overflow-hidden py-24 text-white lg:py-32"
       aria-labelledby="included-title"
     >
+      <Picture
+        image={bg}
+        alt=""
+        sizes="100vw"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+        pictureClassName="contents"
+      />
+      <div className="absolute inset-0 -z-10 bg-black/30" aria-hidden="true" />
+      <WaveDivider position="top" />
+      <WaveDivider position="bottom" />
       <div className="container-content">
-        <SectionHeading id="included-title" eyebrow={eyebrow}>
+        <h2 id="included-title" className="text-center text-[26px] font-bold text-white md:text-h2">
           {title}
-        </SectionHeading>
-        <ul className="mt-10 grid gap-8 md:grid-cols-3 lg:mt-14 lg:gap-10">
-          {included.map((f, i) => {
+        </h2>
+        <ul className="mx-auto mt-10 grid max-w-[1170px] gap-5 md:grid-cols-3">
+          {included.map((f) => {
             const img = icons[`../../assets/images/icons/${f.icon}.png`]
             return (
-              <Reveal
-                as="li"
-                key={f.title}
-                delay={i * 0.06}
-                className="flex flex-col gap-3 border-t border-line pt-6"
-              >
-                <span className="flex h-14 items-center">
+              <li key={f.title}>
+                <Card className="flex h-full flex-col items-center px-6 py-8 text-center text-ink">
                   {img ? (
                     <Picture
                       image={img}
                       alt=""
-                      sizes="120px"
-                      className={f.icon === 'formats' ? 'h-12 w-auto' : 'h-14 w-14'}
+                      sizes="150px"
+                      className={f.icon === 'formats' ? 'h-[63px] w-auto' : 'h-[74px] w-[74px]'}
                     />
                   ) : null}
-                </span>
-                <h3 className="mt-2 text-h3">{f.title}</h3>
-                <p className="text-[15px] leading-relaxed text-charcoal">
-                  {f.body}
-                  {f.emphasis ? (
-                    <>
-                      <br />
-                      <strong className="font-bold text-ink">{f.emphasis}</strong>
-                    </>
-                  ) : null}
-                </p>
-              </Reveal>
+                  <h3 className="mt-5 text-[18px] font-semibold leading-9 text-[#0c0c0c]">
+                    {f.title}
+                  </h3>
+                  <p className="text-small leading-6 text-ink">
+                    {f.body}
+                    {f.emphasis ? (
+                      <>
+                        <br />
+                        <strong className="font-bold">{f.emphasis}</strong>
+                      </>
+                    ) : null}
+                  </p>
+                </Card>
+              </li>
             )
           })}
         </ul>

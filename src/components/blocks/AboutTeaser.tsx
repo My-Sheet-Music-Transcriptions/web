@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from 'react'
-import { Reveal } from '~/components/motion/Reveal'
+import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
@@ -20,7 +20,6 @@ const slides = Object.entries(photos).map(([k, img]) => ({
 
 export interface AboutTeaserProps {
   title?: string
-  eyebrow?: string
   /** Rich text (`<p>` children) shown next to the photo carousel. */
   children?: ReactNode
   ctaLabel?: string
@@ -30,7 +29,6 @@ export interface AboutTeaserProps {
 /** "Who are we?": office photo carousel beside the team introduction. */
 export function AboutTeaser({
   title = 'Who are we?',
-  eyebrow = 'The team',
   children,
   ctaLabel = 'Read more about us',
   ctaHref = '/about-us',
@@ -38,60 +36,48 @@ export function AboutTeaser({
   const [i, setI] = useState(0)
   const go = (d: number) => setI((v) => (v + d + slides.length) % slides.length)
   const current = slides[i]
-  const arrow =
-    'inline-flex h-10 w-10 items-center justify-center rounded-ui bg-white text-ink hover:bg-surface'
   return (
-    <section
-      className="border-t border-line py-section lg:py-section-lg"
-      aria-labelledby="about-title"
-    >
-      <div className="container-content grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-        <section className="relative" aria-roledescription="carousel" aria-label="Office photos">
-          <Reveal className="overflow-hidden rounded-ui">
-            <div aria-live="polite">
+    <section className="py-16" aria-labelledby="about-title">
+      <div className="container-content">
+        <SectionHeading id="about-title">{title}</SectionHeading>
+        <div className="mx-auto mt-12 grid max-w-[1100px] items-center gap-10 lg:grid-cols-2">
+          <section className="relative" aria-roledescription="carousel" aria-label="Office photos">
+            <div aria-live="polite" className="overflow-hidden rounded-card">
               {current ? (
                 <Picture
                   image={current.img}
                   alt={current.alt}
-                  sizes="(min-width: 1025px) 580px, 100vw"
+                  sizes="(min-width: 1025px) 540px, 100vw"
                   className="aspect-[3/2] w-full object-cover"
                 />
               ) : null}
             </div>
-          </Reveal>
-          <div className="absolute bottom-3 right-3 flex gap-1.5">
             <button
               type="button"
               onClick={() => go(-1)}
               aria-label="Previous photo"
-              className={arrow}
+              className="absolute left-2 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-ink shadow-card hover:bg-white"
             >
-              <Icon name="chevron-left" size={18} />
+              <Icon name="chevron-left" size={22} />
             </button>
-            <button type="button" onClick={() => go(1)} aria-label="Next photo" className={arrow}>
-              <Icon name="chevron-right" size={18} />
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next photo"
+              className="absolute right-2 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-ink shadow-card hover:bg-white"
+            >
+              <Icon name="chevron-right" size={22} />
             </button>
-          </div>
-          <p className="sr-only">
-            Photo {i + 1} of {slides.length}
-          </p>
-        </section>
-        <div>
-          <SectionHeading id="about-title" eyebrow={eyebrow}>
-            {title}
-          </SectionHeading>
-          <div className="mt-5 space-y-4 text-charcoal">{children}</div>
-          <SmartLink
-            href={ctaHref}
-            className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
-          >
-            {ctaLabel}
-            <Icon
-              name="arrow-right"
-              size={14}
-              className="transition-transform duration-200 group-hover:translate-x-1"
-            />
-          </SmartLink>
+            <p className="sr-only">
+              Photo {i + 1} of {slides.length}
+            </p>
+          </section>
+          <div className="flex flex-col gap-4 text-ink">{children}</div>
+        </div>
+        <div className="mt-12 text-center">
+          <Button asChild>
+            <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
+          </Button>
         </div>
       </div>
     </section>

@@ -51,7 +51,7 @@ export const catalogue = {
     useWhen: 'The homepage opening, with the brand lockup and the Google rating card.',
     notFor: 'any other page: PageHero.',
     description:
-      'Homepage hero on white: headline with an orange highlight, two lines of copy, orange and outlined buttons beside the studio photo slideshow, then a row of three trust facts (Google rating, transcriptions delivered, response time) separated by hairlines.',
+      'Homepage hero: brand lockup, headline with an orange highlight, two lines of copy, teal CTA, studio photo slideshow and the floating Google rating card.',
     defaults: { slideshow: false },
     usage: '<Hero />',
     previewHeight: 820,
@@ -65,7 +65,7 @@ export const catalogue = {
     useWhen: "The homepage's fixed three steps with the wide illustration.",
     notFor: 'a page-specific process: Steps takes its own steps and icons.',
     description:
-      'Three numbered columns under a hairline (send audio, we transcribe, print & play), each with its illustration.',
+      'Three numbered steps (send audio, we transcribe, print & play) with one wide illustration on desktop.',
     defaults: {},
     usage: '<HowItWorks />',
     previewHeight: 640,
@@ -77,7 +77,7 @@ export const catalogue = {
     useWhen: 'A big trust moment mid-page: the counter and the three ratings over a photo.',
     notFor: 'a page that already has ReviewCards close by; one proof banner per page.',
     description:
-      'Full-bleed navy band over a dimmed piano photo: big counter and the three ratings (Google, customers, Facebook) in hairline columns.',
+      'Full-bleed photo banner with wavy edges, a big counter and three rating cards (Google, customers, Facebook).',
     defaults: {},
     usage: '<StatsBanner />',
     previewHeight: 760,
@@ -88,7 +88,7 @@ export const catalogue = {
     role: 'offer',
     useWhen: 'Showing who the service is for, with a link per audience.',
     description:
-      'Four columns under a hairline describing who the service is for, each with its illustration and a link to its audience page.',
+      'Four peach cards describing who the service is for, each linking to an audience page.',
     defaults: {},
     usage: '<AudienceCards />',
     previewHeight: 620,
@@ -100,7 +100,7 @@ export const catalogue = {
     useWhen:
       'Pointing to the instrument service pages; `limit` for a short list on a landing page.',
     description:
-      'Four-column list of services, each row an instrument icon and a name over a hairline, with a "see all services" link.',
+      'Grid of instrument icons linking to service pages, with a "see all services" button.',
     defaults: { limit: 8 },
     usage: '<ServiceGrid limit={8} />',
     previewHeight: 720,
@@ -114,7 +114,7 @@ export const catalogue = {
     useWhen: 'The three fixed reassurances (turnaround, formats, accuracy) in one strip.',
     notFor: 'page-specific benefits: write them as prose in Section or MediaText.',
     description:
-      '"What\'s included": three columns under a hairline (turnaround, formats, accuracy), each with its icon.',
+      '"What\'s included": three white cards (turnaround, formats, accuracy) over a studio photo.',
     defaults: {},
     usage: '<FeatureCards />',
     previewHeight: 640,
@@ -126,7 +126,7 @@ export const catalogue = {
     useWhen: 'Any page that talks about price: the three price-from cards with the factors.',
     notFor: 'a page with one fixed price: say it in prose, never type amounts into a page.',
     description:
-      'Heading beside the intro prose (children), then three price-from columns with a coloured top rule and a pricing-factor checklist.',
+      'Three price-from cards with coloured headers and pricing factors; intro prose goes in the children.',
     defaults: {},
     children:
       '**There are pricing options for every budget.** The more instruments and the longer or more complex a piece is, the longer it takes to transcribe.\n\nRevisions and transpositions are included in the price.',
@@ -152,8 +152,7 @@ export const catalogue = {
     role: 'proof',
     useWhen: 'Quotes that back a claim: a few customer reviews with stars.',
     notFor: 'a page that already shows StatsBanner right next to it.',
-    description:
-      'Customer quotes in two columns, each under a hairline with teal stars and the reviewer below, and a link to all reviews.',
+    description: 'Customer quote cards with teal stars and a link to all reviews.',
     defaults: { limit: 4 },
     usage: '<ReviewCards limit={4} />',
     previewHeight: 900,
@@ -167,7 +166,7 @@ export const catalogue = {
     useWhen: 'Introducing the team briefly with the office photos, linking to the about page.',
     notFor: 'the about page itself: write it in full with Section and MediaText.',
     description:
-      'Office photo carousel beside the team introduction (children) and a "read more" link.',
+      'Office photo carousel next to the team introduction (children) and a "read more" button.',
     defaults: {},
     children:
       'We are **a team of 70+ professional transcribers, arrangers, music editors, musicologists, and engineers** with proven experience in all types of musical transcriptions.\n\nWe transcribe **each note by hand and by ear one by one.**',
@@ -182,7 +181,7 @@ export const catalogue = {
     useWhen: 'The last section of every page that asks for a quote or a gift card.',
     notFor: 'a second form on the same page; one per page.',
     description:
-      'Full-bleed peach band: intro and contact facts beside the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
+      'Peach section with the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
     defaults: {},
     usage:
       '<ContactSection />\n<ContactSection variant="gift-card" id="gift-card" title="Request your gift card" />',
@@ -197,7 +196,7 @@ export const catalogue = {
       'The opening of every non-home page: the title people searched for, one line of subtitle.',
     notFor: 'the homepage: Hero.',
     description:
-      'Page header for non-home pages on a full-bleed navy (or ink) band: eyebrow, title and optional subtitle.',
+      'Dark page header for non-home pages: title, optional subtitle and eyebrow, short orange rule.',
     defaults: {
       title: 'Piano Transcription Service',
       subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',
@@ -214,7 +213,7 @@ export const catalogue = {
       'Prose with a heading: text pages, a one-off paragraph, anything no other block shapes.',
     notFor: 'prose that belongs with one picture: MediaText.',
     description:
-      'Generic titled section for prose or ad-hoc layouts: optional eyebrow and left-aligned heading (optional short rule), white/peach/cream/surface background, three widths.',
+      'Generic titled section for prose or ad-hoc layouts: optional heading with rule, white/peach/cream background, three widths.',
     defaults: { title: 'Who do we work for?', id: 'demo' },
     children: 'Any prose or layout goes here. Use it for text pages and one-off sections.',
     usage:
@@ -227,7 +226,7 @@ export const catalogue = {
     useWhen: 'One picture with its prose (and an optional button): a product, a sample, a person.',
     notFor: 'a strip of several pictures: ImageStrip; a list of steps: Steps.',
     description:
-      'Prose beside a picture: optional eyebrow and heading, caption under the picture, optional button; picture left or right, white/cream/peach/surface.',
+      'Prose beside a picture: optional heading, caption under the picture, optional button; picture left or right, white/cream/peach.',
     defaults: {
       title: 'Choose the amount you would like to gift',
       image: 'sample:photo',
@@ -253,7 +252,7 @@ export const catalogue = {
     useWhen: 'A process with its own steps and icons: how to order, how a gift card works.',
     notFor: "the homepage's three steps: HowItWorks.",
     description:
-      'Numbered list: each step is a teal icon square, a "Step n" eyebrow and one line of text, separated by hairlines; optional eyebrow and heading.',
+      'Numbered vertical timeline: a primary disc with an icon per step, "Step n" eyebrow and one line of text; optional heading.',
     defaults: {
       title: 'How it works',
       id: 'how-it-works',

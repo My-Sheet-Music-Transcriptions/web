@@ -1,8 +1,8 @@
 import { howItWorks } from '@content/en/data/home'
+import wide from '~/assets/images/home/how-it-works.jpg?w=700;974;1460&as=picture'
 import step1 from '~/assets/images/home/step-1-send-audio.png?w=240;403&as=picture'
 import step2 from '~/assets/images/home/step-2-transcribe.png?w=240;403&as=picture'
 import step3 from '~/assets/images/home/step-3-print-play.jpg?w=200;255&as=picture'
-import { Reveal } from '~/components/motion/Reveal'
 import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 
@@ -10,46 +10,36 @@ const stepImages = { 'step-1': step1, 'step-2': step2, 'step-3': step3 }
 
 export interface HowItWorksProps {
   title?: string
-  eyebrow?: string
   id?: string
 }
 
-/** "How does it work?": three numbered columns under a hairline (send audio, we transcribe, print & play). */
-export function HowItWorks({
-  title = 'How does it work?',
-  eyebrow = 'Three simple steps',
-  id = 'how-it-works',
-}: HowItWorksProps) {
+/** "How does it work?": three numbered steps; one wide illustration on desktop, stacked on mobile. */
+export function HowItWorks({ title = 'How does it work?', id = 'how-it-works' }: HowItWorksProps) {
   return (
-    <section
-      id={id}
-      className="scroll-mt-24 border-t border-line py-section lg:py-section-lg"
-      aria-labelledby={`${id}-title`}
-    >
+    <section id={id} className="scroll-mt-20 pb-16 pt-20 lg:pt-24" aria-labelledby={`${id}-title`}>
       <div className="container-content">
-        <SectionHeading id={`${id}-title`} eyebrow={eyebrow}>
+        <SectionHeading id={`${id}-title`} rule="grey">
           {title}
         </SectionHeading>
-        <ol className="mt-10 grid gap-8 md:grid-cols-3 lg:mt-14 lg:gap-10">
-          {howItWorks.map((step, i) => (
-            <Reveal
-              as="li"
-              key={step.title}
-              delay={i * 0.06}
-              className="flex flex-col gap-3 border-t border-line pt-6"
-            >
-              <span className="eyebrow tabular-nums text-muted">
-                {String(i + 1).padStart(2, '0')}
-              </span>
+        <div className="mx-auto mt-12 hidden max-w-[974px] lg:block">
+          <Picture
+            image={wide}
+            alt="Three steps: send us the audio, we transcribe it, print and play the PDF"
+            sizes="974px"
+          />
+        </div>
+        <ol className="mx-auto mt-10 grid max-w-[1000px] gap-12 md:grid-cols-3 md:gap-6 lg:mt-8">
+          {howItWorks.map((step) => (
+            <li key={step.title} className="flex flex-col items-center text-center">
               <Picture
                 image={stepImages[step.image]}
                 alt=""
-                sizes="96px"
-                className="h-[72px] w-auto self-start object-contain"
+                sizes="(min-width: 768px) 160px, 200px"
+                className="mb-6 h-auto w-[160px] lg:hidden"
               />
-              <h3 className="mt-2 text-h3">{step.title.replace(/^\d+\.\s*/, '')}</h3>
-              <p className="text-[15px] leading-relaxed text-charcoal">{step.body}</p>
-            </Reveal>
+              <h3 className="text-h3 font-extrabold">{step.title}</h3>
+              <p className="mt-3 max-w-[280px] text-small leading-6 text-ink">{step.body}</p>
+            </li>
           ))}
         </ol>
       </div>

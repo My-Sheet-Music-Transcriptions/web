@@ -7,8 +7,6 @@ import { cn } from '~/lib/cn'
 export interface MediaTextProps {
   /** Heading above the prose (optional). */
   title?: string
-  /** Small uppercase label above the heading (optional). */
-  eyebrow?: string
   /** The picture (imported with `?w=…&as=picture`). */
   image: PictureSource
   /** Alt text of the picture; empty for a purely decorative one. */
@@ -21,20 +19,19 @@ export interface MediaTextProps {
   caption?: string
   /** Call to action under the prose (optional). */
   cta?: { label: string; href: string }
-  /** Background: white (default), cream, peach or surface. */
-  tone?: 'white' | 'cream' | 'peach' | 'surface'
+  /** Background: white (default), cream or peach. */
+  tone?: 'white' | 'cream' | 'peach'
   /** Anchor id; also labels the section by its heading. */
   id?: string
   /** Prose: `<Text>` paragraphs from ~/components/typography. */
   children: ReactNode
 }
 
-const tones = { white: 'bg-white', peach: 'bg-peach', cream: 'bg-cream', surface: 'bg-surface' }
+const tones = { white: 'bg-white', peach: 'bg-peach', cream: 'bg-cream' }
 
 /** Prose beside a picture: intro paragraphs with an illustration, a product shot with a caption and a button. */
 export function MediaText({
   title,
-  eyebrow,
   image,
   alt,
   imageSide = 'right',
@@ -47,43 +44,41 @@ export function MediaText({
 }: MediaTextProps) {
   return (
     <section
-      className={cn('py-section', tones[tone])}
+      className={cn('py-12 md:py-16', tones[tone])}
       id={id}
       aria-labelledby={title && id ? `${id}-title` : undefined}
     >
       <div
         className={cn(
-          'container-content flex flex-wrap items-center gap-10 lg:gap-16',
+          'container-content flex flex-wrap items-center gap-10',
           imageSide === 'left' ? 'flex-row' : 'flex-row-reverse',
         )}
       >
         <figure
-          className="mx-auto flex min-w-0 shrink grow-0 basis-auto flex-col gap-3"
+          className="mx-auto flex min-w-0 shrink grow-0 basis-auto flex-col gap-2.5"
           style={{ maxWidth: imageWidth }}
         >
           <Picture
             image={image}
             alt={alt}
             sizes={`(min-width: 768px) ${imageWidth}px, 100vw`}
-            className={cn('h-auto w-full', caption && 'rounded-ui')}
+            className={cn('h-auto w-full', caption && 'rounded-card shadow-card')}
           />
           {caption ? (
-            <figcaption className="text-caption italic text-muted">{caption}</figcaption>
+            <figcaption className="text-[13px] italic leading-[1.5] text-muted">
+              {caption}
+            </figcaption>
           ) : null}
         </figure>
         <div className="flex min-w-0 flex-1 basis-[420px] flex-col gap-2">
-          {eyebrow ? <p className="eyebrow mb-2 text-accent-text">{eyebrow}</p> : null}
           {title ? (
-            <h2
-              id={id ? `${id}-title` : undefined}
-              className="mb-3 text-[30px] leading-[1.1] text-ink md:text-h2"
-            >
+            <h2 id={id ? `${id}-title` : undefined} className="mb-2 text-h2 text-ink">
               {title}
             </h2>
           ) : null}
-          <div className="my-4 flex flex-col gap-4 text-charcoal">{children}</div>
+          <div className="my-4 flex flex-col gap-4 text-ink">{children}</div>
           {cta ? (
-            <Button asChild className="mt-6 self-start">
+            <Button asChild className="mt-4 self-start">
               <SmartLink href={cta.href}>{cta.label}</SmartLink>
             </Button>
           ) : null}

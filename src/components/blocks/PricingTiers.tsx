@@ -1,70 +1,83 @@
 import { pricingTiers } from '@content/en/data/home'
 import type { ReactNode } from 'react'
-import { Reveal } from '~/components/motion/Reveal'
 import { Button } from '~/components/primitives/Button'
-import { Icon } from '~/components/primitives/Icon'
+import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { cn } from '~/lib/cn'
 
-const tones = { teal: 'border-t-teal', blue: 'border-t-sky', navy: 'border-t-navy' }
+const icons = import.meta.glob<PictureSource>('../../assets/images/icons/*.png', {
+  eager: true,
+  import: 'default',
+  query: '?w=110;220&as=picture',
+})
+const tones = { teal: 'bg-teal', blue: 'bg-sky', navy: 'bg-navy' }
 
 export interface PricingTiersProps {
   title?: string
-  eyebrow?: string
-  /** Intro paragraphs (`<p>` children) rendered beside the heading. */
+  /** Intro paragraphs (`<p>` children) rendered above the cards. */
   children?: ReactNode
   ctaLabel?: string
   ctaHref?: string
 }
 
-/** "Flexible pricing": heading beside the intro copy, then three price-from columns with a coloured top rule. */
+/** "Flexible pricing": intro copy and three price-from cards with coloured headers and factor lists. */
 export function PricingTiers({
   title = 'Flexible pricing',
-  eyebrow = 'Pricing',
   children,
   ctaLabel = 'See the full pricing guide',
   ctaHref = '/pricing',
 }: PricingTiersProps) {
   return (
-    <section
-      className="border-t border-line py-section lg:py-section-lg"
-      aria-labelledby="pricing-title"
-    >
-      <div className="container-content">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading id="pricing-title" eyebrow={eyebrow}>
-            {title}
-          </SectionHeading>
-          {children ? <div className="space-y-4 text-charcoal">{children}</div> : null}
-        </div>
-        <ul className="mt-12 grid gap-10 md:grid-cols-3 lg:mt-14">
-          {pricingTiers.map((t, i) => (
-            <Reveal
-              as="li"
-              key={t.id}
-              delay={i * 0.06}
-              className={cn('flex flex-col border-t-[3px] pt-6', tones[t.tone])}
-            >
-              <h3 className="text-[22px]">{t.title}</h3>
-              <p className="mt-4 text-caption text-muted">from</p>
-              <p className="text-price font-bold tabular-nums tracking-tight text-ink">{t.from}</p>
-              <p className="mt-1 text-small text-muted">{t.unit}</p>
-              <p className="mt-5 text-small font-bold text-ink">Pricing factors</p>
-              <ul className="mt-2.5 space-y-2 text-small leading-snug text-charcoal">
-                {t.factors.map((f) => (
-                  <li key={f} className="flex items-start gap-2">
-                    <Icon name="check" size={16} className="mt-0.5 shrink-0 text-primary" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              {t.note ? <p className="mt-4 text-caption italic text-muted">{t.note}</p> : null}
-            </Reveal>
-          ))}
+    <section className="pb-16 pt-20" aria-labelledby="pricing-title">
+      <div className="mx-auto max-w-[1120px] px-4 md:px-10">
+        <SectionHeading id="pricing-title">{title}</SectionHeading>
+        {children ? <div className="mt-8 flex flex-col gap-4 text-ink">{children}</div> : null}
+        <ul className="mt-20 grid gap-x-5 gap-y-20 md:grid-cols-3">
+          {pricingTiers.map((t) => {
+            const img = icons[`../../assets/images/icons/${t.icon}.png`]
+            return (
+              <li key={t.id} className="relative flex flex-col rounded-card bg-white shadow-card">
+                {img ? (
+                  <Picture
+                    image={img}
+                    alt=""
+                    sizes="107px"
+                    className="absolute left-1/2 top-0 h-[107px] w-[107px] -translate-x-1/2 -translate-y-[62%]"
+                  />
+                ) : null}
+                <h3
+                  className={cn(
+                    'rounded-t-card py-[22px] pt-10 text-center text-[26px] font-bold leading-none text-white',
+                    tones[t.tone],
+                  )}
+                >
+                  {t.title}
+                </h3>
+                <div className="flex flex-1 flex-col px-6 pb-7 pt-5 text-center text-ink">
+                  <p className="text-[18px] leading-9">from</p>
+                  <p className="text-price font-bold leading-none">{t.from}</p>
+                  <p className="mt-2 text-[18px] leading-9">{t.unit}</p>
+                  <p className="mt-4 text-body font-bold leading-8">Pricing factors:</p>
+                  <ul className="mx-auto mt-1 list-disc space-y-1 pl-5 text-left text-small leading-5">
+                    {t.factors.map((f) => (
+                      <li key={f}>{f}</li>
+                    ))}
+                  </ul>
+                  {t.note ? (
+                    <p className="mt-auto pt-6 text-right text-caption italic leading-5">
+                      {t.note}
+                    </p>
+                  ) : (
+                    <span className="mt-auto" />
+                  )}
+                </div>
+              </li>
+            )
+          })}
         </ul>
-        <div className="mt-10">
-          <Button variant="outline" asChild>
+        <div className="mt-12 text-center">
+          <Button asChild>
             <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
           </Button>
         </div>
