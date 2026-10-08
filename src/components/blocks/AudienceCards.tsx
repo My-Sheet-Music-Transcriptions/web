@@ -34,7 +34,6 @@ export function AudienceCards({
               <li key={a.href}>
                 <SmartLink
                   href={a.href}
-                  aria-labelledby={`audience-${a.icon}`}
                   className="group flex h-full flex-col rounded-card border border-line bg-white p-7 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
                 >
                   {img ? (
@@ -45,11 +44,13 @@ export function AudienceCards({
                       className="h-[96px] w-auto self-start object-contain"
                     />
                   ) : null}
-                  <h3 id={`audience-${a.icon}`} className="mt-6 text-h3 group-hover:text-primary">
-                    {a.title}
-                  </h3>
+                  <h3 className="mt-6 text-h3 group-hover:text-primary">{a.title}</h3>
                   <p className="mt-2 flex-1 text-[15px] leading-relaxed text-charcoal">{a.body}</p>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-small font-bold text-primary">
+                  {/* Decorative: the card itself is the link and its title names it; hidden so the name stays short. */}
+                  <span
+                    aria-hidden="true"
+                    className="mt-5 inline-flex items-center gap-1.5 text-small font-bold text-primary"
+                  >
                     Learn more
                     <Icon
                       name="arrow-right"
