@@ -112,7 +112,7 @@ export function MediaText({
       >
         <div
           className="mx-auto flex min-w-0 shrink grow-0 basis-auto flex-col gap-2.5"
-          style={{ maxWidth: imageWidth, width: video || images ? imageWidth : undefined }}
+          style={{ width: imageWidth, maxWidth: '100%' }}
         >
           <Media
             {...{ image, alt, images, imagesLayout, video, caption }}
