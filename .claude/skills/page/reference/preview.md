@@ -57,7 +57,8 @@ means running the `publish-design-system` skill first.
 
 The link; one short paragraph of what the page shows, top to bottom, in everyday words; what you assumed;
 what is still a placeholder and what you need. Commenting, in one sentence: Desktop/Tablet/Phone switch at
-the top; press **Comment**, click any section, write, press Done (or use the comment tool in the top right);
+the top; commenting is on from the start: click any section and write (turn **Comment** off to click links inside the
+page, or use the comment tool in the top right);
 "Block labels" is for the technical view only. The preview is private until they share it. Ask them to tell
 you here when they are done; then read the comments with the `ArtifactComments` tool.
 
