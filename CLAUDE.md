@@ -42,8 +42,11 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   Numbers that appear in several places (review counts, prices) live here once.
 - `src/content/{index,schema,types}.ts` – the content loader (globs `content/`), the meta schemas and data types.
 - `src/components/primitives` – Button, Card, Picture, Stars, Icon, SectionHeading, WaveDivider...
-- `src/components/blocks` – the page-building catalogue. `index.tsx` exports every block by name (pages import
-  them from `~/components/blocks`) and the `blocks` map (the preview bundle). Each block has a story next to it.
+- `src/components/blocks` – the page-building catalogue, named by what each block does (`PageHeader`, `CardGrid`,
+  `FaqList`…) and filed by role (opening, proof, offer, how, story, closing) in `catalogue.ts`, the README and
+  Storybook (`Blocks/<Role>/<Name>`). `index.tsx` exports every block by name (pages import them from
+  `~/components/blocks`) and the `blocks` map (the preview bundle). Each block has a story next to it, built from
+  its catalogue example. Shared pieces (photo band, carousel, video, button, tones) are primitives.
 - `src/components/typography` – `Text`, `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider`: the prose
   inside pages and blocks, styled with Tailwind once. Plain `<strong>` / `<em>` are the exceptions, styled in the
   base layer of `theme.css`. Pages never write raw `<p>`, `<h2>`, `<ul>`, `<a>` (`tests/unit/content.test.ts`).
@@ -93,8 +96,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 
 1. Pick the collection and slug; check `content/<locale>/...` for collisions.
 2. Write `meta.ts` (title, description, translationKey, template/type-specific fields) and compose `index.tsx`
-   from blocks, e.g. `<Hero />`, `<Section title="..."><Text>…</Text></Section>`, `<ReviewCards limit={4} />`
-   (`content/en/pages/gift-card/` is the worked example).
+   from blocks, e.g. `<PageHeader … />`, `<Section title="..."><Text>…</Text></Section>`,
+   `<Testimonials title="…" items={homeReviews} limit={4} />` (`content/en/pages/gift-card/` is the worked example,
+   `content/en/services/piano/` the service one). Blocks never import content: lists (ratings, prices, reviews,
+   shared FAQ groups) are imported from `content/<locale>/data/*.ts` in the page and passed as props.
 3. Put the page's images in its folder (`content/<locale>/<collection>/<slug>/`), import them in `index.tsx`
    (`import mascot from './mascot.png?w=240;480&as=picture'`) and pass them to blocks as props; never raw `<img>`.
    Only brand-wide assets (logo, icons, flags, software logos) live in `src/assets/images/`.

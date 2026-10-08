@@ -56,12 +56,18 @@ export function Quote({ className, ...p }: ComponentPropsWithoutRef<'blockquote'
   )
 }
 
-/** A link inside text: internal paths become router links (SmartLink), styled as links. */
+/**
+ * A link inside text: internal paths become router links (SmartLink). Underlined, so it stands out from the
+ * text around it by more than colour (WCAG 1.4.1).
+ */
 export function TextLink({ className, ...p }: SmartLinkProps) {
   return (
     <SmartLink
       {...p}
-      className={cn('text-primary underline-offset-2 hover:underline', className)}
+      className={cn(
+        'text-primary underline underline-offset-2 hover:decoration-2 hover:text-primary-deep',
+        className,
+      )}
     />
   )
 }

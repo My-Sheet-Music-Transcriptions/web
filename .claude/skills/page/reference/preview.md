@@ -10,7 +10,7 @@ worked example: read it before writing a mockup.
 1. Pick the blocks, then read only those. `pnpm ds:blocks` prints the index: every block grouped by its
    role in a page (opening, proof, offer, how, story, closing), one line of what it is, when to pick it and
    when not, and the pages that already use it. Walk the page top to bottom choosing one block per section
-   from the index. Then `pnpm ds:blocks PageHero MediaText Steps` (the ones you picked) prints each one's
+   from the index. Then `pnpm ds:blocks PageHeader MediaText Steps` (the ones you picked) prints each one's
    detail: every prop with its type, allowed values and doc comment, a ready `<div data-msmt=…>` line to
    copy and adapt, where its data lives and its guidelines. Never `--all` to browse: the index is for
    choosing, the detail is for writing. Both are read from the catalogue, the block sources and the pages,
@@ -19,7 +19,7 @@ worked example: read it before writing a mockup.
    an existing page run `pnpm ds:mockup <slug>` instead of writing from scratch (`edit.md`). A section
    nothing fits becomes a **proposed block** (prefer a new prop on an existing block over a new block).
 2. Pictures: copy every picture the page needs into `mockups/<slug>/img/` (from the person, from
-   `src/assets/images/home/` as a stand-in, or downloaded from the live site, never linked). A picture you
+   `content/en/pages/home/` as a stand-in, or downloaded from the live site, never linked). A picture you
    do need to download goes through a browser (`wordpress.md`); one from outside our own sites gets a line
    in your summary (where it came from, rights to confirm before publishing). A real block
    takes a picture as the string `"img/<file>"` in its props; the script turns it into the picture object
@@ -29,7 +29,7 @@ worked example: read it before writing a mockup.
    <div style="width: 100%; background: #ffffff; color: #444444; font-family: 'Montserrat Variable', Montserrat, system-ui, sans-serif;">
      <div data-msmt="TopBar"></div>
      <div data-msmt="Header"></div>
-     <div data-msmt="PageHero" data-props='{"title":"…","subtitle":"…"}'></div>
+     <div data-msmt="PageHeader" data-props='{"title":"…","subtitle":"…"}'></div>
      <div data-msmt="MediaText" data-props='{"image":"img/photo.jpg","alt":"…","children":"Paragraph one.\n\n**Bold** paragraph two."}'></div>
      <section data-proposed="PieceList" data-props='{"pieces":[…]}' style="padding: 50px 16px;">…plain markup…</section>
      <div data-msmt="Footer"></div>

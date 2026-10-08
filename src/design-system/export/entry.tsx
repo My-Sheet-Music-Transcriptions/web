@@ -16,7 +16,7 @@ import { withSamples } from '../samples'
  *
  *   MSMT.mount('Hero', element, { title: '...' })      // render a block into an element
  *   MSMT.renderAll()                                   // mount every [data-msmt] element
- *   <div data-msmt="ReviewCards" data-props='{"limit":2}'></div>
+ *   <div data-msmt="Testimonials" data-props='{"title":"Reviews","items":[…]}'></div>
  */
 // biome-ignore lint/suspicious/noExplicitAny: heterogeneous component map
 const components: Record<string, ComponentType<any>> = { ...blocks, Header, Footer, TopBar }
