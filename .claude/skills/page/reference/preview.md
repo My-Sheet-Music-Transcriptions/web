@@ -7,13 +7,17 @@ worked example: read it before writing a mockup.
 
 ## Writing sections.html
 
-1. Run `pnpm ds:blocks` (or `pnpm ds:blocks MediaText Steps` for a few): per block, what it is for, every
-   prop with its type, allowed values and doc comment, a ready `<div data-msmt=…>` line to copy and adapt,
-   where its data lives and its guidelines. It is read from the block sources, so it is never stale: do not
-   open the components or `catalogue.ts` yourself. `ds:review` rejects an unknown prop, a missing required
-   one and a value outside the allowed ones, naming the alternatives. For an existing page run
-   `pnpm ds:mockup <slug>` instead of writing from scratch (`edit.md`). A section nothing fits becomes a
-   **proposed block** (prefer a new prop on an existing block over a new block).
+1. Pick the blocks, then read only those. `pnpm ds:blocks` prints the index: every block grouped by its
+   role in a page (opening, proof, offer, how, story, closing), one line of what it is, when to pick it and
+   when not, and the pages that already use it. Walk the page top to bottom choosing one block per section
+   from the index. Then `pnpm ds:blocks PageHero MediaText Steps` (the ones you picked) prints each one's
+   detail: every prop with its type, allowed values and doc comment, a ready `<div data-msmt=…>` line to
+   copy and adapt, where its data lives and its guidelines. Never `--all` to browse: the index is for
+   choosing, the detail is for writing. Both are read from the catalogue, the block sources and the pages,
+   so they are never stale: do not open the components or `catalogue.ts` yourself. `ds:review` rejects an
+   unknown prop, a missing required one and a value outside the allowed ones, naming the alternatives. For
+   an existing page run `pnpm ds:mockup <slug>` instead of writing from scratch (`edit.md`). A section
+   nothing fits becomes a **proposed block** (prefer a new prop on an existing block over a new block).
 2. Pictures: copy every picture the page needs into `mockups/<slug>/img/` (from the person, from
    `src/assets/images/home/` as a stand-in, or downloaded from the live site, never linked). A picture you
    do need to download goes through a browser (`wordpress.md`); one from outside our own sites gets a line

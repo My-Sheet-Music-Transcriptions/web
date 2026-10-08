@@ -1,20 +1,35 @@
 import { catalogue } from '../../src/components/blocks/catalogue'
-import { blockProps, type PropDoc } from './blocks-lib'
+import { blockIndex, blockProps, blockUsage, type PropDoc, usageLine } from './blocks-lib'
 import { encodeProps, LAYOUT } from './review-lib'
 
 /**
- * Everything needed to write a mockup section, per block, in one read: what it is for, every prop with
- * its type, allowed values and doc comment (from the block's source), a ready `data-msmt` line built
- * from the catalogue defaults, where its data lives and the guidelines.
- *   pnpm ds:blocks               every block
- *   pnpm ds:blocks MediaText Steps
+ * What whoever composes a page needs to know about the blocks, without opening their code, in two tiers:
+ *   pnpm ds:blocks                   the index: every block by role (where it sits in a page), one line of
+ *                                    purpose, when to pick it and when not, and the pages that use it
+ *   pnpm ds:blocks MediaText Steps   the detail of the blocks picked: every prop with its type, allowed
+ *                                    values and doc comment, a ready `data-msmt` line built from the
+ *                                    catalogue defaults, where its data lives and the guidelines
+ *   pnpm ds:blocks --all             the detail of every block
+ * The prose comes from catalogue.ts, the props from each block's source, the usage from the pages.
  */
-const names = process.argv.slice(2)
+const args = process.argv.slice(2)
 const all = Object.keys(catalogue) as (keyof typeof catalogue)[]
+const names = args.includes('--all') ? [...all] : args
 const unknown = names.filter((n) => !(all as string[]).includes(n) && !LAYOUT.includes(n as never))
 if (unknown.length) {
   console.error(`[ds:blocks] unknown block ${unknown.join(', ')}: use one of ${all.join(', ')}`)
   process.exit(1)
+}
+
+console.log(`Layout (no props): ${LAYOUT.join(', ')}. TopBar and Header first, Footer last.\n`)
+const usage = blockUsage()
+
+if (!names.length) {
+  console.log(blockIndex(usage))
+  console.log(
+    'Details of the blocks you picked (props, allowed values, a ready mockup line, data, guidelines):\n  pnpm ds:blocks <Block> [<Block>...]     (every block: pnpm ds:blocks --all)',
+  )
+  process.exit(0)
 }
 
 // in a mockup a picture is the string "img/<file>", whatever PictureSource looks like in code
@@ -32,17 +47,16 @@ const forMockup = (v: unknown): unknown =>
         ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, forMockup(x)]))
         : v
 
-console.log(`Layout (no props): ${LAYOUT.join(', ')}. TopBar and Header first, Footer last.\n`)
-for (const name of (names.length ? names : all).filter((n) => n in catalogue)) {
-  const doc = catalogue[
-    name as keyof typeof catalogue
-  ] as (typeof catalogue)[keyof typeof catalogue] & {
-    children?: string
-    dataSource?: string
-    guidelines?: string
-  }
+for (const name of names.filter((n) => n in catalogue)) {
+  const doc = catalogue[name as keyof typeof catalogue]
   const block = blockProps(name)
-  const out = [`## ${name}`, doc.description]
+  const out = [
+    `## ${name} (${doc.role})`,
+    doc.description,
+    `use when: ${doc.useWhen}`,
+    ...('notFor' in doc ? [`not for: ${doc.notFor}`] : []),
+    usageLine(usage[name] ?? []),
+  ]
   if (block) {
     out.push('props:', ...block.props.map(line))
     for (const [type, def] of Object.entries(block.types).filter(([t]) => t !== 'PictureSource'))
@@ -50,7 +64,7 @@ for (const name of (names.length ? names : all).filter((n) => n in catalogue)) {
   }
   const props = {
     ...(forMockup(doc.defaults) as object),
-    ...(doc.children ? { children: doc.children } : {}),
+    ...('children' in doc ? { children: doc.children } : {}),
   }
   out.push(
     'mockup:',
@@ -58,7 +72,7 @@ for (const name of (names.length ? names : all).filter((n) => n in catalogue)) {
       ? `  <div data-msmt="${name}" data-props='${encodeProps(JSON.stringify(props))}'></div>`
       : `  <div data-msmt="${name}"></div>`,
   )
-  if (doc.dataSource) out.push(`data: ${doc.dataSource}`)
-  if (doc.guidelines) out.push(`guidelines: ${doc.guidelines}`)
+  if ('dataSource' in doc) out.push(`data: ${doc.dataSource}`)
+  if ('guidelines' in doc) out.push(`guidelines: ${doc.guidelines}`)
   console.log(`${out.join('\n')}\n`)
 }
