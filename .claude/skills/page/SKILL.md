@@ -16,6 +16,9 @@ language (English, Spanish, Catalan, French, German or Japanese: whatever they w
   "Other" (chips render in the Claude Code app; elsewhere the same question falls back to text).
 - Never invent copy: missing text shows as `[PLACEHOLDER]` in the preview and you say what you still need.
   Prices, counts, ratings, phone numbers and reviews come only from `src/content/<locale>/data/*.ts`.
+- Research on the web through a real browser when the session has one (Claude in Chrome or the Claude app's
+  browser), and download the pictures you find into the mockup rather than describing or linking them:
+  `reference/wordpress.md` has the source order and the download fallbacks.
 - Links you hand over are clickable markdown links straight to the thing (the preview, the page on the test
   address, the live page), never a home page or a PR. A link that arrives minutes after they last heard from
   you also goes out as a push notification (`PushNotification`, when available).
