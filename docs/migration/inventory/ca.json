@@ -1,0 +1,236 @@
+[
+  {
+    "locale": "ca",
+    "path": "/",
+    "sources": ["sitemap:page"],
+    "action": "replace",
+    "collection": "pages",
+    "en": "home",
+    "archived": "20250710"
+  },
+  {
+    "locale": "ca",
+    "path": "/sobre-nosaltres",
+    "sources": ["sitemap:page"],
+    "action": "replace",
+    "collection": "pages",
+    "en": "/about-us",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/contacte",
+    "sources": ["sitemap:page"],
+    "action": "replace",
+    "collection": "pages",
+    "en": "/contact",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/la-meva-partitura",
+    "sources": ["sitemap:page"],
+    "action": "redirect",
+    "collection": "—",
+    "en": "",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/contacte-2",
+    "sources": ["sitemap:page"],
+    "action": "redirect",
+    "collection": "—",
+    "en": "",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/descartes",
+    "sources": ["sitemap:page"],
+    "action": "drop",
+    "collection": "—",
+    "en": "",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/sample-page",
+    "sources": ["sitemap:page"],
+    "action": "drop",
+    "collection": "—",
+    "en": "",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/preus",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/pricing",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/opinions",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/customer-reviews",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/preguntes-frequents",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/frequent-asked-questions",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/serveis-musicals",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/services-samples",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/targeta-regal",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/gift-card",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/avis-legal",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/legal-notice",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/politica-de-cookies",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/cookies",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/politica-de-privacitat",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/gdpr",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/condicions-d-us",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "pages",
+    "en": "/terms-of-use",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/piano",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/piano",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/piano-i-veu",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/piano-vocal",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/piano-jazz-solo",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/jazz-piano-solo-transcriptions",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/guitarra",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/guitar-tab",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/baix",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/bass-tab-transcription-service",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/bateria",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/drums-transcription-service",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/conjunts-vocals",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/vocal-ensemble-transcription-service",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/arranjaments",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/music-arrangement-service",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/orquestracions",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/orchestration-service",
+    "archived": ""
+  },
+  {
+    "locale": "ca",
+    "path": "/bandes",
+    "sources": ["planned"],
+    "action": "create",
+    "collection": "services",
+    "en": "/concert-brass-band-transcriptions",
+    "archived": ""
+  }
+]
