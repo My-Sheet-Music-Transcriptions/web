@@ -1,9 +1,11 @@
 ---
 name: new-service-page
-description: (Planned for a later iteration – see CLAUDE.md.) Create a service page in services/ with the Service template (hero, before/after sample, pricing, FAQ).
+description: Planned, not built yet: Create a service page in services/ with the Service template (hero, before/after sample, pricing, FAQ).
+user-invocable: false
 ---
 
-# new-service-page (stub)
+# new-service-page (planned)
 
-This skill is scheduled for a later iteration. Until the template and tooling exist, follow the `page` skill and ask
-the user before inventing structure. Track the plan in the repository's PR description.
+Not built yet: the template and tooling do not exist. Until then every page request goes through the `page`
+skill (`/new-page`, `/edit-page`, `/translate`, `/design`): ask the person before inventing structure, and
+record what this skill should do in the PR that builds it.

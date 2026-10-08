@@ -1,133 +1,98 @@
 ---
 name: page
-description: Handles any request about the website's pages from anyone, technical or not — a new page or landing page, a translation, a change of text, images, prices or sections, in any of the site's languages. One conversation in three phases — understand the request in plain words, show a preview rendered with the real site components that the user can comment on and iterate until it is right, then (only when they say yes) build it on a draft PR, let them check Netlify's deploy preview of the real page, and on their acceptance mark the PR ready with auto-merge and drive it to green until it is live.
+description: Handles any request about the website's pages from anyone, technical or not — a new page or landing page, a change of text, pictures, prices or sections, a translation, a design exploration, "is my page live yet" — in any of the site's languages. One conversation in three phases — understand the request in plain words, show a preview rendered with the real site components (an HTML preview, or a Design canvas when design is asked for) that the user can comment on and iterate until it is right, then (only when they say yes) build it on a draft PR, let them check Netlify's deploy preview of the real page, and on their acceptance mark the PR ready with auto-merge and drive it to green until it is live. The slash commands /new-page, /edit-page, /translate, /design, /publish, /status and /site-help are entry points into this skill.
 ---
 
 # Page: request → preview → build → check the real thing → publish
 
 The person asking may be a colleague who never sees code. Talk about the page, never about blocks, MDX,
-props, branches or commits. Everything technical happens behind the preview. Reply in their language.
+props, branches, commits or scripts. Everything technical happens behind the preview. Reply in their
+language (English, Spanish, Catalan, French, German or Japanese: whatever they wrote in).
+
+## How to talk
+
+- Ask with **AskUserQuestion** so answers are clickable: one call, at most four questions, two to four
+  options each, the sensible default first and marked "(Recommended)"; free text comes for free through
+  "Other" (chips render in the Claude Code app; elsewhere the same question falls back to text).
+- Never invent copy: missing text shows as `[PLACEHOLDER]` in the preview and you say what you still need.
+  Prices, counts, ratings, phone numbers and reviews come only from `src/content/<locale>/data/*.ts`.
+- Links you hand over are clickable markdown links straight to the thing (the preview, the page on the test
+  address, the live page), never a home page or a PR. A link that arrives minutes after they last heard from
+  you also goes out as a push notification (`PushNotification`, when available).
+- Every request gets a preview the person can click before anything is built, even a single changed word.
+  What they see is always a published artifact, never a screenshot, image or description in words.
+- One preview artifact per page, updated in place; one canvas per page. Never a second one for the same page.
+- Never publish unasked, never lower a quality threshold, nothing reaches `main` before the person has
+  seen the real page on the test address.
+
+## Modes
+
+The request (or the slash command that invoked this skill) picks the mode; everything else is the same path.
+
+| Mode | When | What is different |
+| --- | --- | --- |
+| **new** | a page that does not exist yet; a live-site URL means "bring this page over" | `reference/preview.md`, porting copy with `reference/wordpress.md` |
+| **edit** | a change to an existing page: text, a picture, a price, a section | start from the real page: `reference/edit.md` |
+| **translate** | the same page in another of the site's languages | `reference/translate.md` |
+| **design** | only when they ask for design: words like design/diseño/disseny, mockup/maqueta, look, layout, "show me options/variants", or `/design` | the preview is a Design canvas: `reference/design-mode.md`. A text, price or picture change is never design mode |
+| **publish** | an approved preview that should go live (`/publish`) | skip to the publish question, then Phase 3 |
+| **status** | "where is my page", "is it live" (`/status`) | `pnpm page:status` + the PR, as a plain table; no preview |
+
+Every mode works on `mockups/<slug>/sections.html` (the mockup, the single source of truth of what was
+approved) and `mockups/<slug>/preview.json` (title, path, locale, preview URL, canvas URL, PR). Resuming in a
+new session starts by reading `preview.json`.
 
 ## Phase 1 · Understand (at most a few questions, in one message)
 
-Ask with the **AskUserQuestion** tool, so the answers are clickable: one call, at most four questions, two to
-four options each, the sensible default first and marked "(Recommended)", free text comes for free through
-"Other" (chips render in the Claude Code app; elsewhere, Slack for instance, the same question falls back to
-text). Ask only what you cannot find out yourself:
-- **Which page, which site?** An existing page (name or URL) or a new one; which site/language (English,
-  Spanish, French, German, Japanese, Catalan). A language whose site has no content yet
-  (`src/content/<locale>` empty): say so and offer the English site or to plan it.
+Ask only what you cannot find out yourself:
+- **Which page, which site?** An existing page (name or URL) or a new one; which language site (English,
+  Spanish, French, German, Japanese, Catalan). A language whose site has no content yet (`src/content/<locale>`
+  missing or empty): say so and offer the English site or a translation (`reference/translate.md` says what
+  that means today).
 - **What should it achieve?** Who reads it and what they should do next (ask for a quote, buy a gift card…).
 - **What goes on it?** Text they already have, facts and numbers, pictures (pasted or attached), anything
-  that must not change. Missing copy shows as `[PLACEHOLDER]` in the preview, never invented; prices,
-  counts, ratings and reviews come only from `src/content/<locale>/data/*.ts`.
-- **For a change to an existing page:** what exactly changes; everything else stays.
-If the message already answers these, do not ask: state your assumptions and go to the preview.
+  that must not change.
+- **For a change:** what exactly changes; everything else stays.
+- **For design:** the whole page or one section; one proposal or a few options side by side.
+If the message already answers these, do not ask: state your assumptions in one line and go to the preview.
 
 ## Phase 2 · Preview and iterate
 
-Every request gets this preview before anything else: a new page, and every change to an existing one, even a
-single word. What the person sees is always the published HTML artifact, never screenshots, images or a
-description in words.
+Build the mockup without narrating it; the tooling checks it; follow the recipe literally:
+1. **Freshness**: skip when this session has not touched `src/`. Otherwise `pnpm ds:index --check`; if it
+   fails, run the `publish-design-system` skill first.
+2. **The mockup**: write or regenerate `mockups/<slug>/sections.html` per `reference/preview.md`
+   (edit mode: `reference/edit.md` generates it from the real page first; translate: `reference/translate.md`).
+3. **The surface**:
+   - default: `pnpm ds:review <slug> "<Page name>" [/path]` and publish the printed parameters with the
+     Artifact tool → the HTML preview with Desktop/Tablet/Phone switch and per-section comments
+     (`reference/preview.md`, "Publishing and talking").
+   - design mode: `pnpm ds:canvas <slug>` → the Design canvas (`reference/design-mode.md`).
+4. **Talk**: the link; one short paragraph of what the page shows top to bottom in everyday words; what you
+   assumed; what is still a placeholder and what you need; how to comment, in one sentence; ask them to tell
+   you here when they are done (comments do not reach you on their own: read them with `ArtifactComments`
+   when they say so).
+5. **Iterate** on the same artifact until they say it is right: edit the mockup, rerun the script, republish,
+   summarise the change. Then ask exactly one AskUserQuestion: "Shall I publish this to the live site?"
+   (options: "Yes, publish" / "Not yet, more changes"), naming the site and the address. Only a yes starts
+   Phase 3.
 
-Build (do not narrate this). The tooling does the checking; follow the recipe literally:
-1. Freshness: skip when this session has not touched `src/`. Otherwise `pnpm ds:index --check`; if it fails,
-   run `publish-design-system` first.
-2. Read `src/components/blocks/catalogue.ts`: the block names, their props and defaults (the `defaults` of
-   each entry are a working example of its props). For an existing page start from its `index.mdx` and change
-   only what was asked. A section nothing fits becomes a **proposed block** (prefer a new prop on an existing
-   block over a new block).
-3. Images: copy every picture the page needs into `mockups/<slug>/img/` (from the user, from
-   `src/assets/images/home/` as a stand-in, or downloaded from the live site, never linked). A real block
-   takes a picture as the string `"img/<file>"` in `data-props`; `ds:review` turns it into the picture object
-   with its real size. Porting from the live site: it blocks headless browsers, its WordPress API answers
-   (`curl -A "Mozilla/5.0" "https://www.mysheetmusictranscriptions.com/wp-json/wp/v2/pages?slug=<slug>&_fields=title,content,yoast_head_json"`;
-   files under `wp-content/uploads` download the same way).
-4. Write `mockups/<slug>/sections.html` like `mockups/gift-card/sections.html` (the reference; read it):
-   ```html
-   <div style="width: 100%; background: #ffffff; color: #444444; font-family: 'Montserrat Variable', Montserrat, system-ui, sans-serif;">
-     <div data-msmt="TopBar"></div>
-     <div data-msmt="Header"></div>
-     <div data-msmt="PageHero" data-props='{"title":"…","subtitle":"…"}'></div>
-     <div data-msmt="MediaText" data-props='{"image":"img/photo.jpg","alt":"…","children":"Paragraph one.\n\n**Bold** paragraph two."}'></div>
-     <section data-proposed="PieceList" data-props='{"pieces":[…]}' style="padding: 50px 16px;">…plain markup…</section>
-     <div data-msmt="Footer"></div>
-   </div>
-   ```
-   One `<div data-msmt="<Block>" data-props='{…}'></div>` per real block, in page order, `children` = prose
-   as a string (blank line = new paragraph, `**bold**`). `data-props` is JSON in single quotes: write an
-   apostrophe as `&#39;` and never a raw `'`. A proposed block is a `<section data-proposed="<Name>"
-   data-props='{…}'>` whose props are what the block would take, drawn inside as fluid plain markup (flex-wrap,
-   max-width 1140px, 16px side padding, real `<label>`/`<input>`/`<button>`, 4.5:1 text) with these token
-   values: text #444444, primary #1a7f97, CTA fill #b8571c, orange rule #f49946, cream #f7eee7, peach #fdebdc,
-   muted #6b6b6b, line #e5e5e5, radii 12px cards / 28px buttons / 20px fields, h2 32px/700, body 16px/1.7.
-   No scripts, no `{{`, no external files.
-5. `pnpm ds:review <slug> "<Page name>" [/path]` (later runs: `pnpm ds:review <slug>`; title and path are
-   remembered in `mockups/<slug>/preview.json`). It checks the mockup (known blocks, readable props, images
-   present, no external files, wrapper order) and fails with one line per problem: fix and rerun. It runs
-   `pnpm ds:export` itself when needed. Its last lines are the exact Artifact publish parameters: call the
-   Artifact tool with them as printed (replace the `description` placeholder with one real sentence; nothing
-   else). After the first publish write the artifact URL into `mockups/<slug>/preview.json` as `"url"`: from
-   then on the printed parameters update that same artifact (in a new session, `Artifact read` it once
-   before publishing). Never a second artifact for the same page.
-   Do not render or screenshot the preview locally: the local `page.html` is blank by design (bundle and
-   images only join it in the published artifact). Publishing is the check. If the publish is refused,
-   fix the cause and publish again; never drop files from the parameters. A design-system file the artifact
-   lacks means running `publish-design-system` first.
-
-Talk: the link; one short paragraph of what the page shows, top to bottom, in everyday words; what you
-assumed; what is still a placeholder and what you need. Explain commenting in one sentence: Desktop/Tablet/
-Phone switch at the top; press **Comment**, click any section, write, press Done (or use the comment tool in
-the top right); "Block labels" is for the technical view only. Ask them to tell you here when they are done
-(comments do not reach you on their own; read them with the `ArtifactComments` tool when they say so). The
-preview is private until they share it. Iterate: edit `sections.html`, rerun `pnpm ds:review <slug>`,
-republish with the printed parameters, summarise the change. When they say it is right, ask exactly one
-AskUserQuestion: "Shall I publish this to the live site?" (options: "Yes, publish" / "Not yet, more changes"),
-naming the site and the address in the question. Only a yes starts Phase 3. Never publish unasked.
-
-## Phase 3 · Build and publish (after an explicit yes)
+## Phase 3 · Build, test page, publish, confirm (after an explicit yes)
 
 Tell them it takes a few minutes and that they will get a second link, the real page on a test address,
 before anything goes live. Keep the rest out of the conversation.
-1. **Build the page from the approved preview.** Each `data-msmt` element → one MDX block with exactly its
-   `data-props` (`children` → MDX prose; `"img/<file>"` → the file copied into the page folder and imported
-   with `?w=…&as=picture`; `PageHero` → the template's hero in frontmatter when the template renders one).
-   `mockups/gift-card/sections.html` ↔ `src/content/en/pages/gift-card/index.mdx` is the worked example. Each `data-proposed` element → build it first: component (+ typed props with doc comments),
-   story, `catalogue.ts` entry, README section, export from `blocks/index.tsx`, `pnpm test:storybook` green,
-   then `publish-design-system`. Never improvise a prop that is not in the catalogue.
-2. **Page folder (co-location).** `src/content/<locale>/<collection>/<slug>/index.mdx` with every image of the
-   page beside it (≤ 2000px long side, descriptive names), imported at the top of the MDX
-   (`import card from './gift-card.png?w=480;960&as=picture'`) and passed to blocks as props with alt text.
-   No external URLs, ever; brand-wide assets only (logo, icons, flags) stay in `src/assets/images/`.
-   Collection `pages` unless it is a service/post/faq/artist/musician/partner/review; slug as on the live
-   site when porting; `pnpm exec tsx scripts/check-slugs.ts`.
-3. **Frontmatter** per `src/content/schema.ts`: `title` 30–65 chars, `description` 50–160, `translationKey`
-   shared across languages, `template` or type-specific fields. Structured facts stay in
-   `src/content/<locale>/data/*.ts`; add the page to `data/nav.ts` / `data/footer.ts` where the preview shows
-   it; drop its slug from any legacy-link list.
-4. **All checks green before pushing:** `pnpm release-check` (lint, types, unit, Storybook axe, build, SEO
-   suite), plus `pnpm test:e2e` when layout changed. Fix failures, never lower a threshold. A page that cannot
-   pass is not pushed: go back to the user with what is missing, in plain words.
-5. **Draft PR with the real page.** Branch `page/<slug>` from `origin/main`; commit the page folder,
-   `mockups/<slug>/` (incl. `preview.json`) and any block work ("Add /<slug> (EN)"); push; open a **draft** PR (title "Add /<slug>",
-   body: the preview artifact link, what the page contains in plain words, new blocks if any); subscribe to it.
-   Netlify posts the deploy preview within a few minutes: wait for its comment (or poll
-   `https://deploy-preview-<n>--msmt-web.netlify.app/<locale><path>`, e.g. `/en/gift-card`, `/es/precios`: previews serve every locale under its prefix until it answers 200), check that page against
-   the approved preview section by section, then give the user that link and ask with AskUserQuestion:
-   "This is the real page on a test address. Does it look right?" (options: "Yes, put it live" / "Something
-   to change"). The link is a clickable markdown link straight to the page
-   (`[Open the boom boxes page](https://deploy-preview-12--msmt-web.netlify.app/en/boom-boxes)`), never the
-   preview's home page or the PR. It arrives minutes after they last heard from you, so also send it as a push
-   notification (`PushNotification`, when available) in case they stepped away. Changes they ask for now go
-   through the same loop: edit, checks, push, and when Netlify's comment shows the new commit ready, the
-   link again the same way, saying what changed.
-6. **Publish on their acceptance.** Mark the PR ready for review and enable **auto-merge (squash)** with the
-   GitHub tools (`update_pull_request` draft=false, `enable_pr_auto_merge` SQUASH). From here on auto-fix:
-   stay subscribed, and on every CI failure or review-bot finding fix the root cause and push until the PR
-   merges (never skip a test or lower a threshold); if auto-merge is refused, say so: the repository needs
-   "Allow auto-merge" and a branch protection rule on `main` requiring the CI checks, and merge manually once
-   CI is green only if the user asks.
-7. **Confirm.** When the PR merges, Netlify deploys `main`: poll the live URL until the new page answers 200
-   with its title (up to ~5 minutes), then tell the user it is live with a clickable link to the live page,
-   in the conversation and as a push notification. If the production
-   deploy or CI on main fails afterwards, say so, fix forward, and report.
+1. **Build** the page from the approved mockup: `reference/build.md` (page folder, pictures, frontmatter,
+   data files, proposed blocks built for real, every check green). A page that cannot pass the checks is not
+   pushed: go back to the person with what is missing, in plain words.
+2. **Draft PR and the test address**: `reference/publish.md` steps 1–2. Hand them the deploy-preview link to
+   the page itself and ask: "This is the real page on a test address. Does it look right?" (options: "Yes,
+   put it live" / "Something to change"). Changes go through the same loop: edit, checks, push, link again.
+3. **Publish on their acceptance**: `reference/publish.md` steps 3–4: mark the PR ready, auto-merge (squash),
+   auto-fix until it merges, then poll the live URL and confirm with a clickable link to the live page.
+
+## Resuming in a new session
+
+Read `mockups/<slug>/preview.json` first. `url` → `Artifact read` it once before republishing; `canvas.url`
+→ `Artifact read` its `project/canvas.json` and pass it to `pnpm ds:canvas <slug> --canvas <file>`; `pr` →
+look the PR up with the GitHub tools and continue from the state it is in (draft waiting for the person,
+ready and auto-merging, merged). `/status` shows all of this as a table.

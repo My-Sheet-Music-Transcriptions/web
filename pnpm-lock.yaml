@@ -81,6 +81,12 @@ importers:
       '@tanstack/router-generator':
         specifier: ^1.167.40
         version: 1.167.40
+      '@types/estree':
+        specifier: 1.0.9
+        version: 1.0.9
+      '@types/mdast':
+        specifier: 4.0.4
+        version: 4.0.4
       '@types/mdx':
         specifier: ^2.0.14
         version: 2.0.14
@@ -111,6 +117,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      mdast-util-mdx-jsx:
+        specifier: 3.2.0
+        version: 3.2.0
       playwright:
         specifier: ^1.63.0
         version: 1.63.0
@@ -120,9 +129,15 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      remark-mdx:
+        specifier: 3.1.1
+        version: 3.1.1
       remark-mdx-frontmatter:
         specifier: ^6.0.0
         version: 6.0.0
+      remark-parse:
+        specifier: 11.0.0
+        version: 11.0.0
       satori:
         specifier: ^0.36.0
         version: 0.36.0
@@ -144,6 +159,9 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      unified:
+        specifier: 11.0.5
+        version: 11.0.5
       vite:
         specifier: ^8.3.3
         version: 8.3.3(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
@@ -4088,8 +4106,8 @@ packages:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
     engines: {node: '>= 0.6.3'}
 
-  legacy-javascript@0.0.1:
-    resolution: {integrity: sha512-lPyntS4/aS7jpuvOlitZDFifBCb4W8L/3QU0PLbUTUj+zYah8rfVjYic88yG7ZKTxhS5h9iz7duT8oUXKszLhg==}
+  legacy-javascript@0.0.3:
+    resolution: {integrity: sha512-1r6MT4dVaJyXt4G07Cm2cQ0AUaLJdefiEp4SmIAylA++gnEQ82YvmzE58RkM5EP0fk5hROLCslUPGnwIYdZQVA==}
 
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
@@ -7638,7 +7656,7 @@ snapshots:
 
   '@paulirish/trace_engine@0.0.53':
     dependencies:
-      legacy-javascript: 0.0.1
+      legacy-javascript: 0.0.3
       third-party-web: 0.30.0
 
   '@playwright/test@1.63.0':
@@ -10475,7 +10493,7 @@ snapshots:
     dependencies:
       readable-stream: 2.3.8
 
-  legacy-javascript@0.0.1: {}
+  legacy-javascript@0.0.3: {}
 
   leven@3.1.0: {}
 
