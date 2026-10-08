@@ -1,9 +1,9 @@
+import { homeReviews } from '@content/en/data/reviews'
 import { Reveal } from '~/components/motion/Reveal'
 import { Icon } from '~/components/primitives/Icon'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { Stars } from '~/components/primitives/Stars'
-import { homeReviews } from '~/content/en/data/reviews'
 import type { Review } from '~/content/types'
 
 export interface ReviewCardsProps {

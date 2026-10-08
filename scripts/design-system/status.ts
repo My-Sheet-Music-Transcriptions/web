@@ -7,7 +7,7 @@ import { readPreviewMemo } from './preview-lib'
 
 /**
  * What the `/status` command reads: one JSON line per page in flight or recently shipped, from
- * mockups/<slug>/preview.json and src/content. GitHub (PR state, deploy preview) is added by the skill.
+ * mockups/<slug>/preview.json and content/. GitHub (PR state, deploy preview) is added by the skill.
  *   pnpm page:status [slug]
  */
 const only = process.argv[2]
@@ -40,7 +40,7 @@ for (const slug of slugs) {
       canvas: memo.canvas?.url ?? null,
       options: variants,
       pr: memo.pr ?? null,
-      /** The page exists in src/content on this checkout (built, maybe not yet live). */
+      /** The page exists in content/ on this checkout (built, maybe not yet live). */
       built: Boolean(entry),
       source: entry ? `${entry.locale}/${entry.collection}/${entry.slug}` : (memo.source ?? null),
     }),

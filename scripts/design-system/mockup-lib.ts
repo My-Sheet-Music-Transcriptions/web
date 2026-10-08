@@ -1,21 +1,18 @@
-import type * as estree from 'estree'
-import type * as mdast from 'mdast'
-import type { MdxJsxAttribute, MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx-jsx'
-import remarkMdx from 'remark-mdx'
-import remarkParse from 'remark-parse'
-import { unified } from 'unified'
+import ts from 'typescript'
 import { catalogue } from '../../src/components/blocks/catalogue'
+import { evalTsLiteral, LiteralError, parseTsx, unwrap, where } from '../lib/ts-literal'
 import { encodeProps, LAYOUT, WRAPPER_OPEN } from './review-lib'
 
 /**
- * Pure pieces of `pnpm ds:mockup`: an existing page (its MDX body and frontmatter) as the sections.html the
- * page skill previews from, so a change to a live page starts from a mechanical, faithful mockup. Only what
- * the mockup format can show is accepted (literal props, image imports, light-markdown children); anything
- * else fails with the line it came from, never silently.
+ * Pure pieces of `pnpm ds:mockup`: an existing page (its index.tsx and meta.ts) as the sections.html the page
+ * skill previews from, so a change to a live page starts from a mechanical, faithful mockup. The page is read
+ * statically with the TypeScript parser, never run. Only what the mockup format can show is accepted (blocks with
+ * literal props, picture imports, prose written with the typography components); anything else fails with the
+ * line it came from, never silently.
  */
 
 export interface MockupEntry {
-  /** `<locale>/<collection>/<slug>/index.mdx` or `<locale>/<collection>/<slug>.mdx` */
+  /** `<locale>/<collection>/<slug>/index.tsx`, relative to content/ */
   file: string
   /** Locale-free public path. */
   path: string
@@ -25,8 +22,8 @@ export interface MockupEntry {
     template?: string
     hero?: { eyebrow?: string; title: string; subtitle?: string }
   }
-  /** The MDX without its frontmatter. */
-  body: string
+  /** The text of index.tsx. */
+  source: string
 }
 
 export interface MockupBlock {
@@ -48,176 +45,150 @@ export interface MockupResult {
 class MockupError extends Error {}
 
 const IMAGE_IMPORT = /^\.\/([\w.-]+\.(?:png|jpe?g|webp|gif|svg))(?:\?.*)?$/i
+const BLOCKS_MODULE = '~/components/blocks'
+const TYPOGRAPHY_MODULE = '~/components/typography'
+/** Typography components that make a paragraph of their own; TextLink (and plain <strong>, <em>) are inline. */
+const PARAGRAPHS = ['Text', 'Heading']
+const TYPOGRAPHY = [...PARAGRAPHS, 'TextLink', 'List', 'ListItem', 'Quote', 'Divider']
 
-/** Every template but the homepage renders PageHero from the frontmatter hero (or the title). */
+/** Every template but the homepage renders PageHero from the meta hero (or the title). */
 export function rendersPageHero(meta: { type: string; template?: string }): boolean {
   return !(meta.type === 'page' && meta.template === 'home')
 }
 
-const where = (node: { position?: { start: { line: number; column: number } } }) =>
-  node.position ? ` (line ${node.position.start.line}:${node.position.start.column})` : ''
-
-function fail(
-  message: string,
-  node?: { position?: { start: { line: number; column: number } } },
-): never {
+function fail(message: string, node?: ts.Node): never {
   throw new MockupError(`cannot mockup: ${message}${node ? where(node) : ''}`)
 }
 
-/** A literal JSX attribute expression as a JSON value; image imports become `img/<file>`. */
+/** A literal JSX attribute expression as a JSON value; picture imports become `img/<file>`. */
 export function evalLiteral(
-  node: estree.Node,
+  node: ts.Expression,
   imports: Record<string, string>,
   source = '',
 ): unknown {
-  const src = source || `${node.type}`
-  switch (node.type) {
-    case 'Literal':
-      if ('regex' in node && node.regex) fail(`${src} (a regular expression)`)
-      return node.value
-    case 'TemplateLiteral':
-      if (node.expressions.length) fail(`${src} (only literals, objects, arrays and image imports)`)
-      return node.quasis[0]?.value.cooked ?? ''
-    case 'UnaryExpression': {
-      const v = evalLiteral(node.argument, imports, src)
-      if (node.operator === '-' && typeof v === 'number') return -v
-      if (node.operator === '+' && typeof v === 'number') return v
-      if (node.operator === '!') return !v
-      return fail(`${src} (unsupported unary expression)`)
-    }
-    case 'ArrayExpression':
-      return node.elements.map((el) => {
-        if (!el || el.type === 'SpreadElement') return fail(`${src} (array holes and spreads)`)
-        return evalLiteral(el, imports, src)
-      })
-    case 'ObjectExpression': {
-      const out: Record<string, unknown> = {}
-      for (const p of node.properties) {
-        if (p.type !== 'Property' || p.computed || p.kind !== 'init' || p.method)
-          return fail(`${src} (only plain key: value pairs)`)
-        const key =
-          p.key.type === 'Identifier'
-            ? p.key.name
-            : p.key.type === 'Literal'
-              ? String(p.key.value)
-              : fail(`${src} (computed key)`)
-        out[key] = evalLiteral(p.value as estree.Node, imports, src)
-      }
-      return out
-    }
-    case 'Identifier':
-      if (node.name === 'undefined') return undefined
-      if (node.name in imports) return `img/${imports[node.name]}`
-      return fail(
-        `${src} (unknown identifier "${node.name}": only imported images may be referenced)`,
-      )
-    default:
-      return fail(`${src} (only literals, objects, arrays and image imports)`)
+  const pictures = Object.fromEntries(Object.entries(imports).map(([k, f]) => [k, `img/${f}`]))
+  try {
+    return evalTsLiteral(node, pictures, source)
+  } catch (e) {
+    if (e instanceof LiteralError) throw new MockupError(`cannot mockup: ${e.message}`)
+    throw e
   }
 }
 
-type Inline = mdast.PhrasingContent | MdxJsxTextElement
+type Element = ts.JsxElement | ts.JsxSelfClosingElement
 
-function inline(nodes: Inline[], parent: string): string {
+const isElement = (n: ts.Node): n is Element => ts.isJsxElement(n) || ts.isJsxSelfClosingElement(n)
+
+function tagName(n: Element): string {
+  const tag = ts.isJsxElement(n) ? n.openingElement.tagName : n.tagName
+  if (ts.isIdentifier(tag)) return tag.text
+  return fail(`<${tag.getText()}>: only plain component names are supported`, n)
+}
+
+const childrenOf = (n: Element): readonly ts.JsxChild[] => (ts.isJsxElement(n) ? n.children : [])
+
+const attributesOf = (n: Element) =>
+  (ts.isJsxElement(n) ? n.openingElement : n).attributes.properties
+
+/** JSX text as React renders it: lines trimmed and joined by one space, blank lines dropped (Babel's rule). */
+function jsxText(node: ts.JsxText): string {
+  const raw = node.text // getText() would drop the leading whitespace
+  if (/&[#\w]+;/.test(raw)) fail('an HTML entity in the text: write the character itself', node)
+  const lines = raw.split(/\r\n|\n|\r/)
+  let lastNonEmpty = -1
+  for (const [i, l] of lines.entries()) if (/[^ \t]/.test(l)) lastNonEmpty = i
   let out = ''
-  for (const n of nodes) {
-    switch (n.type) {
-      case 'text':
-        out += n.value.replace(/\s*\n\s*/g, ' ')
-        break
-      case 'strong':
-        out += `**${inline(n.children as Inline[], parent).replaceAll('**', '')}**`
-        break
-      case 'emphasis':
-      case 'delete':
-      case 'link':
-      case 'linkReference':
-        out += inline(n.children as Inline[], parent)
-        break
-      case 'inlineCode':
-        out += n.value
-        break
-      case 'break':
-        out += ' '
-        break
-      case 'image':
-      case 'imageReference':
-        fail(`a picture inside <${parent}>: pictures are props, not prose`, n)
-        break
-      case 'mdxJsxTextElement':
-        if (n.name === 'br') out += ' '
-        else fail(`<${n.name}> inside <${parent}>: nested components are not shown in a mockup`, n)
-        break
-      case 'html':
-        fail(`raw HTML inside <${parent}>`, n)
-        break
-      default:
-        fail(`${(n as { type: string }).type} inside <${parent}>`, n as { position?: never })
-    }
+  for (const [i, l] of lines.entries()) {
+    let line = l.replace(/\t/g, ' ')
+    if (i > 0) line = line.replace(/^ +/, '')
+    if (i < lines.length - 1) line = line.replace(/ +$/, '')
+    if (line) out += i === lastNonEmpty ? line : `${line} `
   }
   return out
 }
 
-/** Block children as the light markdown the bundle renders: paragraphs by blank line, **bold** kept. */
-export function flattenChildren(nodes: mdast.RootContent[], parent = 'block'): string | undefined {
-  const paragraphs: string[] = []
+const RAW_TAG_HINT = `use the typography components (Text, Heading, List, TextLink…) from ${TYPOGRAPHY_MODULE}; only <strong> and <em> stay plain`
+
+function inline(nodes: readonly ts.JsxChild[], parent: string): string {
+  let out = ''
   for (const n of nodes) {
-    switch (n.type) {
-      case 'paragraph':
-      case 'heading':
-        paragraphs.push(inline(n.children as Inline[], parent).trim())
-        break
-      case 'list':
-        for (const item of n.children) {
-          const text = flattenChildren(item.children, parent)
-          if (text) paragraphs.push(text)
-        }
-        break
-      case 'blockquote': {
-        const text = flattenChildren(n.children, parent)
-        if (text) paragraphs.push(text)
-        break
-      }
-      case 'code':
-        paragraphs.push(n.value)
-        break
-      case 'thematicBreak':
-        break
-      case 'mdxJsxFlowElement':
-      case 'mdxJsxTextElement':
-        fail(
-          `<${(n as MdxJsxFlowElement).name}> inside <${parent}>: nested components are not shown in a mockup`,
-          n,
-        )
-        break
-      case 'mdxFlowExpression':
-      case 'mdxTextExpression':
-        fail(`an expression {…} inside <${parent}>`, n)
-        break
-      default:
-        fail(`${n.type} inside <${parent}>`, n)
+    if (ts.isJsxText(n)) {
+      out += jsxText(n)
+      continue
     }
+    if (ts.isJsxExpression(n)) {
+      if (!n.expression) continue // a {/* comment */}
+      const e = unwrap(n.expression)
+      if (ts.isStringLiteral(e) || ts.isNoSubstitutionTemplateLiteral(e)) out += e.text
+      else fail(`an expression {${e.getText()}} inside <${parent}>`, n)
+      continue
+    }
+    if (!isElement(n)) fail(`a fragment inside <${parent}>`, n)
+    const name = tagName(n)
+    if (name === 'strong' || name === 'b')
+      out += `**${inline(childrenOf(n), parent).replaceAll('**', '')}**`
+    else if (name === 'em' || name === 'i' || name === 'TextLink')
+      out += inline(childrenOf(n), parent)
+    else if (name === 'br') out += ' '
+    else if (['img', 'picture', 'Picture'].includes(name))
+      fail(`a picture inside <${parent}>: pictures are props, not prose`, n)
+    else if (TYPOGRAPHY.includes(name))
+      fail(`<${name}> inside a line of text in <${parent}>: it starts a paragraph of its own`, n)
+    else if (/^[a-z]/.test(name)) fail(`<${name}> inside <${parent}>: ${RAW_TAG_HINT}`, n)
+    else fail(`<${name}> inside <${parent}>: nested components are not shown in a mockup`, n)
   }
+  return out
+}
+
+/** Block children as the light markdown the bundle renders: one paragraph per Text/Heading, **bold** kept. */
+export function flattenChildren(
+  nodes: readonly ts.JsxChild[],
+  parent = 'block',
+): string | undefined {
+  const paragraphs: string[] = []
+  let line: ts.JsxChild[] = []
+  const flush = () => {
+    if (line.length) paragraphs.push(inline(line, parent).trim())
+    line = []
+  }
+  for (const n of nodes) {
+    const name = isElement(n) ? tagName(n) : ''
+    if (!isElement(n) || !['List', 'Quote', 'Divider', ...PARAGRAPHS].includes(name)) {
+      line.push(n)
+      continue
+    }
+    flush()
+    if (PARAGRAPHS.includes(name)) paragraphs.push(inline(childrenOf(n), name).trim())
+    else if (name === 'Quote') paragraphs.push(flattenChildren(childrenOf(n), name) ?? '')
+    else if (name === 'List')
+      for (const item of childrenOf(n)) {
+        if (ts.isJsxText(item) && item.containsOnlyTriviaWhiteSpaces) continue
+        if (ts.isJsxExpression(item) && !item.expression) continue
+        if (!isElement(item) || tagName(item) !== 'ListItem')
+          fail(`only <ListItem> goes inside <List>`, item)
+        paragraphs.push(flattenChildren(childrenOf(item), 'ListItem') ?? '')
+      }
+  }
+  flush()
   const text = paragraphs.filter(Boolean).join('\n\n')
   return text || undefined
 }
 
 function attributeValue(
-  attr: MdxJsxAttribute,
+  attr: ts.JsxAttribute,
   imports: Record<string, string>,
   block: string,
 ): unknown {
-  if (attr.value === null || attr.value === undefined) return true
-  if (typeof attr.value === 'string') return attr.value
-  const expr = attr.value.data?.estree?.body[0]
-  if (expr?.type !== 'ExpressionStatement')
-    return fail(`<${block} ${attr.name}={…}> is not a value`, attr)
-  try {
-    return evalLiteral(expr.expression, imports, `<${block} ${attr.name}={${attr.value.value}}>`)
-  } catch (e) {
-    if (e instanceof MockupError) throw new MockupError(`${e.message}${where(attr)}`)
-    throw e
-  }
+  const init = attr.initializer
+  if (!init) return true
+  if (ts.isStringLiteral(init)) return init.text
+  if (ts.isJsxExpression(init) && init.expression)
+    return evalLiteral(
+      init.expression,
+      imports,
+      `<${block} ${attr.name.getText()}={${init.expression.getText()}}>`,
+    )
+  return fail(`<${block} ${attr.name.getText()}=…> is not a value`, attr)
 }
 
 /** One `<div data-msmt="…" data-props='…'></div>` line per block, inside the standard wrapper. */
@@ -239,36 +210,79 @@ export function serializeBlocks(blocks: MockupBlock[]): string {
   return out.join('\n')
 }
 
-/** `<Section title="Hi">Text</Section>` on one line parses as inline JSX in a paragraph: treat it as a block. */
-function asFlowElement(node: mdast.RootContent): mdast.RootContent {
-  if (node.type !== 'paragraph') return node
-  const parts = node.children.filter((c) => !(c.type === 'text' && !c.value.trim()))
-  const only = parts[0]
-  if (parts.length !== 1 || only?.type !== 'mdxJsxTextElement') return node
-  const text = only as MdxJsxTextElement
-  const flow: MdxJsxFlowElement = {
-    type: 'mdxJsxFlowElement',
-    name: text.name,
-    attributes: text.attributes,
-    children: text.children.length
-      ? [{ type: 'paragraph', children: text.children as mdast.PhrasingContent[] }]
-      : [],
-    position: text.position,
+/** The page's imports and the JSX its default export returns (a fragment's children, or one element). */
+function readPage(sf: ts.SourceFile): {
+  imports: Record<string, string>
+  nodes: readonly ts.JsxChild[]
+} {
+  const imports: Record<string, string> = {}
+  let fn: ts.FunctionLikeDeclaration | undefined
+  const isDefaultExport = (s: ts.Statement) =>
+    ts.canHaveModifiers(s) &&
+    !!ts.getModifiers(s)?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword) &&
+    !!ts.getModifiers(s)?.some((m) => m.kind === ts.SyntaxKind.DefaultKeyword)
+  for (const s of sf.statements) {
+    if (ts.isImportDeclaration(s)) {
+      const from = (s.moduleSpecifier as ts.StringLiteral).text
+      const clause = s.importClause
+      if (!clause || clause.isTypeOnly) continue
+      const picture = IMAGE_IMPORT.exec(from)
+      if (picture && clause.name && !clause.namedBindings) {
+        imports[clause.name.text] = picture[1] as string
+        continue
+      }
+      if ((from === BLOCKS_MODULE || from === TYPOGRAPHY_MODULE) && !clause.name) continue
+      fail(
+        `import of ${from} (only blocks from '${BLOCKS_MODULE}', text from '${TYPOGRAPHY_MODULE}' and pictures "import x from './picture.png?…'" are supported)`,
+        s,
+      )
+    }
+    if (ts.isFunctionDeclaration(s) && isDefaultExport(s)) {
+      fn = s
+      continue
+    }
+    if (ts.isExportAssignment(s) && !s.isExportEquals) {
+      const e = unwrap(s.expression)
+      if (ts.isArrowFunction(e) || ts.isFunctionExpression(e)) {
+        fn = e
+        continue
+      }
+    }
+    if (ts.isExportAssignment(s) || ts.isExportDeclaration(s) || isExport(s))
+      fail('an export in the page (only the default export, the page component)', s)
+    fail(`${ts.SyntaxKind[s.kind]} in the page (only imports and the default export)`, s)
   }
-  return flow
+  if (!fn?.body)
+    return fail('no default export (export default function Page() { return (<>…</>) })')
+  let returned: ts.Expression | undefined
+  if (ts.isBlock(fn.body)) {
+    const [only, ...rest] = fn.body.statements
+    if (only && !rest.length && ts.isReturnStatement(only)) returned = only.expression
+    if (!returned) fail('the page component may only "return (<>…</>)"', fn.body)
+  } else returned = fn.body
+  const jsx = unwrap(returned as ts.Expression)
+  if (ts.isJsxFragment(jsx)) return { imports, nodes: jsx.children }
+  if (isElement(jsx)) return { imports, nodes: [jsx] }
+  return fail('the page must return a fragment of blocks (<>…</>)', jsx)
+}
+
+function isExport(s: ts.Statement): boolean {
+  return (
+    ts.canHaveModifiers(s) &&
+    !!ts.getModifiers(s)?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
+  )
 }
 
 export function mockupFromEntry(entry: MockupEntry): MockupResult {
   const warnings: string[] = []
-  const imports: Record<string, string> = {}
   const used = new Set<string>()
   const body: MockupBlock[] = []
-  const tree = unified().use(remarkParse).use(remarkMdx).parse(entry.body)
-  let prose: mdast.RootContent[] = []
+  const { imports, nodes } = readPage(parseTsx(entry.source, entry.file))
+  let prose: ts.JsxChild[] = []
   const flushProse = () => {
     if (!prose.length) return
     const text = flattenChildren(prose, 'page')
-    const first = prose[0]
+    const first = prose.find((n) => !(ts.isJsxText(n) && n.containsOnlyTriviaWhiteSpaces))
     if (text) {
       body.push({ name: 'Section', props: { children: text } })
       warnings.push(
@@ -278,73 +292,52 @@ export function mockupFromEntry(entry: MockupEntry): MockupResult {
     prose = []
   }
 
-  for (const raw of tree.children) {
-    const node = asFlowElement(raw)
-    switch (node.type) {
-      case 'mdxjsEsm': {
-        for (const stmt of node.data?.estree?.body ?? []) {
-          if (stmt.type !== 'ImportDeclaration')
-            fail(
-              `${stmt.type === 'ExportNamedDeclaration' || stmt.type === 'ExportDefaultDeclaration' ? 'an export' : stmt.type} in the page`,
-              node,
-            )
-          const m = IMAGE_IMPORT.exec(String(stmt.source.value))
-          const spec = stmt.specifiers[0]
-          if (!m || stmt.specifiers.length !== 1 || spec?.type !== 'ImportDefaultSpecifier')
-            fail(
-              `import of ${stmt.source.value} (only "import x from './picture.png?…'" is supported)`,
-              node,
-            )
-          imports[spec.local.name] = m[1] as string
-        }
-        break
-      }
-      case 'mdxJsxFlowElement': {
-        flushProse()
-        const name = node.name ?? ''
-        if ((LAYOUT as readonly string[]).includes(name))
-          fail(`<${name}> in the body: the layout comes with every page`, node)
-        if (name === 'PageHero' && rendersPageHero(entry.meta))
-          fail(
-            '<PageHero> in the body: this template already renders the hero from the frontmatter',
-            node,
-          )
-        if (!(name in catalogue)) fail(`unknown block <${name || '…'}>`, node)
-        const props: Record<string, unknown> = {}
-        for (const attr of node.attributes) {
-          if (attr.type !== 'mdxJsxAttribute') fail(`<${name} {...}> spread attributes`, node)
-          if (name === 'ContactSection' && attr.name === 'returnTo') {
-            warnings.push(`<ContactSection returnTo> left out: the page derives it from its path`)
-            continue
-          }
-          const value = attributeValue(attr, imports, name)
-          if (value === undefined) continue
-          if (typeof value === 'string' && value.startsWith('img/')) used.add(value.slice(4))
-          if (Array.isArray(value) || (value && typeof value === 'object'))
-            for (const v of JSON.stringify(value).matchAll(/"img\/([\w.-]+)"/g))
-              used.add(v[1] as string)
-          props[attr.name] = value
-        }
-        const children = flattenChildren(node.children, name)
-        if (children) props.children = children
-        body.push({ name, props })
-        break
-      }
-      case 'mdxFlowExpression': {
-        const stmts = node.data?.estree?.body ?? []
-        if (stmts.length) fail(`an expression {${node.value}} in the page`, node)
-        break // a comment
-      }
-      case 'html':
-      case 'yaml':
-        fail(`${node.type} in the page`, node)
-        break
-      default:
-        prose.push(node)
+  for (const node of nodes) {
+    if (ts.isJsxText(node)) {
+      if (!node.containsOnlyTriviaWhiteSpaces) prose.push(node)
+      continue
     }
+    if (ts.isJsxExpression(node)) {
+      if (!node.expression) continue // a {/* comment */}
+      const e = unwrap(node.expression)
+      if (ts.isStringLiteral(e) || ts.isNoSubstitutionTemplateLiteral(e)) prose.push(node)
+      else fail(`an expression {${e.getText()}} in the page`, node)
+      continue
+    }
+    if (!isElement(node)) fail('a nested fragment in the page', node)
+    const name = tagName(node)
+    if (TYPOGRAPHY.includes(name)) {
+      prose.push(node)
+      continue
+    }
+    if (/^[a-z]/.test(name)) fail(`<${name}> in the page: ${RAW_TAG_HINT}, inside a block`, node)
+    flushProse()
+    if ((LAYOUT as readonly string[]).includes(name))
+      fail(`<${name}> in the page: the layout comes with every page`, node)
+    if (name === 'PageHero' && rendersPageHero(entry.meta))
+      fail('<PageHero> in the page: this template already renders the hero from the meta', node)
+    if (!(name in catalogue)) fail(`unknown block <${name}>`, node)
+    const props: Record<string, unknown> = {}
+    for (const attr of attributesOf(node)) {
+      if (!ts.isJsxAttribute(attr)) fail(`<${name} {...}> spread attributes`, attr)
+      const attrName = attr.name.getText()
+      if (name === 'ContactSection' && attrName === 'returnTo') {
+        warnings.push(`<ContactSection returnTo> left out: the page derives it from its path`)
+        continue
+      }
+      const value = attributeValue(attr, imports, name)
+      if (value === undefined) continue
+      if (typeof value === 'string' && value.startsWith('img/')) used.add(value.slice(4))
+      if (Array.isArray(value) || (value && typeof value === 'object'))
+        for (const v of JSON.stringify(value).matchAll(/"img\/([\w.-]+)"/g))
+          used.add(v[1] as string)
+      props[attrName] = value
+    }
+    const children = flattenChildren(childrenOf(node), name)
+    if (children) props.children = children
+    body.push({ name, props })
   }
   flushProse()
-
   for (const [local, file] of Object.entries(imports))
     if (!used.has(file)) warnings.push(`import "${local}" (${file}) is not used by any block`)
   const last = body.findIndex((b) => b.name === 'ContactSection')

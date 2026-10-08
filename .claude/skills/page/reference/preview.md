@@ -2,7 +2,7 @@
 
 `mockups/<slug>/sections.html` is the page as a list of sections, each a real block of the design system or a
 proposed one. `pnpm ds:review` checks it, renders it with the real components and prints the Artifact
-publish parameters. `mockups/gift-card/sections.html` ↔ `src/content/en/pages/gift-card/index.mdx` is the
+publish parameters. `mockups/gift-card/sections.html` ↔ `content/en/pages/gift-card/index.tsx` is the
 worked example: read it before writing a mockup.
 
 ## Writing sections.html

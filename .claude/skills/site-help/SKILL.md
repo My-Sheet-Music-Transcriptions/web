@@ -18,5 +18,5 @@ link to the guide (as a path in the repository) and the list of commands with on
 | `/status` | where every page is right now |
 | `/site-help` | this explanation |
 
-Plain words only: no blocks, MDX, branches, PRs or scripts. If they then ask for something about a page,
+Plain words only: no blocks, code, branches, PRs or scripts. If they then ask for something about a page,
 hand over to the `page` skill.

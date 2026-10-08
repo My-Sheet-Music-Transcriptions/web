@@ -1,12 +1,12 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { readAllEntries } from '../lib/content-fs'
+import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
 import { mockupFromEntry } from './mockup-lib'
 import { mockupDir, readPreviewMemo, writePreviewMemo } from './preview-lib'
 import { prepareSections } from './review-lib'
 
 /**
- * Edit mode of the page skill: the mockup of an existing page, generated from its MDX.
+ * Edit mode of the page skill: the mockup of an existing page, generated from its index.tsx and meta.ts.
  *   pnpm ds:mockup <slug> | <locale>/<collection>/<slug> [--force]
  * Writes mockups/<slug>/sections.html (mockups/<locale>-<slug>/ outside English), copies the page's pictures
  * into img/ and fills preview.json (title, path, locale, source) without touching a title, url or canvas it
@@ -26,7 +26,7 @@ const matches =
     ? all.filter((e) => e.locale === parts[0] && e.collection === parts[1] && e.slug === parts[2])
     : all.filter((e) => e.slug === target)
 if (!matches.length)
-  throw new Error(`no page "${target}" under src/content (try <locale>/<collection>/<slug>)`)
+  throw new Error(`no page "${target}" under ${CONTENT_DIR}/ (try <locale>/<collection>/<slug>)`)
 if (matches.length > 1)
   throw new Error(
     `"${target}" is ambiguous: ${matches.map((e) => `${e.locale}/${e.collection}/${e.slug}`).join(', ')}`,
@@ -34,11 +34,12 @@ if (matches.length > 1)
 const entry = matches[0]
 if (!entry) throw new Error('unreachable')
 
+const pageDir = path.join(CONTENT_DIR, entry.dir)
 const result = mockupFromEntry({
-  file: entry.file,
+  file: entry.page,
   path: entry.path,
   meta: entry.meta as typeof entry.meta & { template?: string; hero?: { title: string } },
-  body: entry.body,
+  source: fs.readFileSync(path.join(CONTENT_DIR, entry.page), 'utf8'),
 })
 const slug = entry.locale === 'en' ? entry.slug : `${entry.locale}-${entry.slug}`
 const dir = mockupDir(slug)
@@ -48,7 +49,6 @@ if (fs.existsSync(sectionsFile) && !force)
     `${sectionsFile} exists: it may be an approved preview. Rerun with --force to overwrite it`,
   )
 
-const pageDir = path.join('src/content', path.dirname(entry.file))
 const imgDir = path.join(dir, 'img')
 for (const img of result.images) {
   const from = path.join(pageDir, img)
@@ -76,6 +76,6 @@ if (errors.length) {
   process.exit(1)
 }
 console.log(
-  `[ds:mockup] ${sectionsFile} from src/content/${entry.file}: ${labels.length} sections: ${labels.join(', ')}${result.images.length ? `; pictures: ${result.images.join(', ')}` : ''}`,
+  `[ds:mockup] ${sectionsFile} from ${CONTENT_DIR}/${entry.page}: ${labels.length} sections: ${labels.join(', ')}${result.images.length ? `; pictures: ${result.images.join(', ')}` : ''}`,
 )
 console.log(`[ds:mockup] next: pnpm ds:review ${slug}`)

@@ -126,6 +126,17 @@
   p {
     text-wrap: pretty;
   }
+  /* Emphasis inside text is plain <strong>/<em> everywhere (pages, blocks, stories): bold words take the
+     heading colour, like the headings above; on a dark tone a block sets its own colour with a utility. */
+  strong,
+  b {
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  em,
+  i {
+    font-style: italic;
+  }
   ::selection {
     background: var(--color-primary);
     color: #fff;

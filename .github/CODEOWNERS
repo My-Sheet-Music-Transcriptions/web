@@ -1,0 +1,17 @@
+# Who must approve a change, by path. `main` requires a code owner's review (branch rule), so:
+#   - everything not listed below needs an approval from the core team;
+#   - the paths listed at the end have no owner, so a PR that only touches them merges on green CI alone.
+# Content managers (through the `page` skill) only ever change the unowned paths. A PR that also touches
+# anything else is labelled `engineering` (.github/workflows/labels.yml) and waits for core.
+# Keep the unowned list in sync with CONTENT_PATHS in .github/workflows/labels.yml.
+
+*                                 @My-Sheet-Music-Transcriptions/core
+
+# Content: pages (meta.ts + index.tsx + their pictures) and the per-locale data files
+/content/
+# Approved page mockups and their preview memos (preview.json)
+/mockups/
+# The WordPress migration inventory the page workflow ticks when it ports a page
+/docs/migration/
+# Generated record of the published Design System artifact (republished after a data change)
+/src/design-system/artifact.json

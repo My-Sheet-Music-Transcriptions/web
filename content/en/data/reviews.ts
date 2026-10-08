@@ -1,4 +1,4 @@
-import type { Review } from '../../types'
+import type { Review } from '~/content/types'
 
 /** Homepage review cards (newest first). Sourced from Trustpilot and Google; keep quotes verbatim. */
 export const homeReviews: Review[] = [
