@@ -24,6 +24,7 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
     "types": ["vite/client", "node"],
     "paths": { "~/*": ["./src/*"] },
     "noEmit": true

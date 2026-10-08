@@ -1,6 +1,6 @@
 import type { LocationRewrite } from '@tanstack/react-router'
-import { sites } from './sites'
-import { LOCALES, type Locale } from './types'
+import { sites } from './sites/index.ts'
+import { LOCALES, type Locale } from './types.ts'
 
 /**
  * How a locale shows up in URLs. This module is pure (no import.meta.env) so build scripts can use it too;

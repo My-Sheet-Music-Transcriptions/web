@@ -5,11 +5,11 @@
   "type": "module",
   "packageManager": "pnpm@10.28.0",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18"
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "tsx scripts/prebuild.ts && vite build && tsx scripts/postbuild.ts",
+    "build": "tsx scripts/prebuild.ts && vite build --configLoader native && tsx scripts/postbuild.ts",
     "build:hreflang": "tsx scripts/build-hreflang.ts",
     "preview": "vite preview",
     "serve:dist": "tsx scripts/serve-dist.ts",
