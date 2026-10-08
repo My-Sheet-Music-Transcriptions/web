@@ -6,6 +6,7 @@ import { localeSwitchHref } from '~/i18n/switch'
 import type { Locale } from '~/i18n/types'
 import { cn } from '~/lib/cn'
 import { useSite } from '~/site'
+import { menuPanelClosed } from './nav-styles'
 
 export interface LangSwitcherProps {
   /** locale -> locale-free path of this page's translations (from the hreflang map). */
@@ -25,15 +26,10 @@ export function siteHost(locale: Locale): string {
   return new URL(sites[locale].domain).hostname.replace(/^www\./, '')
 }
 
-// Hidden (not just transparent) once closed, so it never reads as faint text or takes focus.
+// Hidden (not just transparent) once closed (`menuPanelClosed`), so it never reads as faint text or takes focus.
 const list = {
-  closed: {
-    opacity: 0,
-    y: -6,
-    transition: { duration: 0.14 },
-    transitionEnd: { visibility: 'hidden' },
-  },
-  open: { opacity: 1, y: 0, visibility: 'visible', transition: { duration: 0.22 } },
+  closed: { opacity: 0, y: -6, transition: { duration: 0.14 } },
+  open: { opacity: 1, y: 0, transition: { duration: 0.22 } },
 } as const
 
 /**
@@ -116,6 +112,7 @@ export function LangSwitcher({ alternates = {}, className }: LangSwitcherProps) 
           id={id}
           className={cn(
             'absolute right-[-12px] top-full z-50 w-[300px] max-w-[calc(100vw-24px)] rounded-ui border border-line bg-white p-2 shadow-float',
+            !open && menuPanelClosed,
           )}
           variants={list}
           initial={false}

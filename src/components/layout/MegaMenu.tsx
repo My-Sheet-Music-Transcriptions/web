@@ -4,22 +4,12 @@ import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import type { NavItem } from '~/i18n/types'
 import { cn } from '~/lib/cn'
-import { navItemActive, navItemClass } from './nav-styles'
+import { menuPanelClosed, navItemActive, navItemClass } from './nav-styles'
 
 /** Panel drops 6px into place; its columns follow 40ms apart. Closing is quicker than opening. */
 const panel = {
-  closed: {
-    opacity: 0,
-    y: -6,
-    transition: { duration: 0.14 },
-    transitionEnd: { visibility: 'hidden' },
-  },
-  open: {
-    opacity: 1,
-    y: 0,
-    visibility: 'visible',
-    transition: { duration: 0.22, staggerChildren: 0.04 },
-  },
+  closed: { opacity: 0, y: -6, transition: { duration: 0.14 } },
+  open: { opacity: 1, y: 0, transition: { duration: 0.22, staggerChildren: 0.04 } },
 } as const
 const column = { closed: { opacity: 0, y: 8 }, open: { opacity: 1, y: 0 } }
 
@@ -116,6 +106,7 @@ export function MegaMenu({ item }: { item: NavItem }) {
         id={id}
         className={cn(
           'absolute inset-x-0 top-full z-50 border-b border-line bg-white shadow-float',
+          !open && menuPanelClosed,
         )}
         variants={panel}
         initial={false}
