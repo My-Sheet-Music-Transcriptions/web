@@ -34,7 +34,7 @@ export function ImageStrip({
   return (
     <section aria-label="Examples of our sheet music" className="pb-section">
       <ul
-        className="flex snap-x gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:thin] focus-visible:outline-3 focus-visible:outline-primary lg:justify-center"
+        className="flex snap-x gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:thin] focus-visible:outline-3 focus-visible:outline-primary lg:justify-center-safe"
         // biome-ignore lint/a11y/noNoninteractiveTabindex: a horizontally scrollable region must be keyboard reachable
         tabIndex={0}
         aria-label="Scroll through photos of our sheet music"
