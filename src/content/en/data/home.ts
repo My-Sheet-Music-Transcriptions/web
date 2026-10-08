@@ -36,6 +36,9 @@ export const ratings: RatingSource[] = [
 
 export const counter = { value: 71844, label: 'transcriptions delivered since 2011' }
 
+/** How fast a request gets an answer (hero trust row, contact section). */
+export const responseTime = { value: '1–4 hours', label: 'average response time' }
+
 export const howItWorks = [
   {
     title: '1. Send us audio',

@@ -4,20 +4,22 @@ import { cn } from '~/lib/cn'
 
 export interface SectionProps {
   title?: string
+  eyebrow?: string
   rule?: 'accent' | 'grey' | 'none'
-  tone?: 'white' | 'peach' | 'cream'
+  tone?: 'white' | 'peach' | 'cream' | 'surface'
   width?: 'content' | 'narrow' | 'wide'
   id?: string
   children: ReactNode
 }
 
-const tones = { white: 'bg-white', peach: 'bg-peach', cream: 'bg-cream' }
+const tones = { white: 'bg-white', peach: 'bg-peach', cream: 'bg-cream', surface: 'bg-surface' }
 const widths = { content: 'container-content', narrow: 'container-narrow', wide: 'container-wide' }
 
 /** Generic titled section for prose or ad-hoc layouts in MDX. */
 export function Section({
   title,
-  rule = 'accent',
+  eyebrow,
+  rule = 'none',
   tone = 'white',
   width = 'content',
   id,
@@ -25,13 +27,18 @@ export function Section({
 }: SectionProps) {
   return (
     <section
-      className={cn('py-16', tones[tone])}
+      className={cn('py-section', tones[tone])}
       aria-labelledby={title && id ? `${id}-title` : undefined}
       id={id}
     >
       <div className={widths[width]}>
         {title ? (
-          <SectionHeading id={id ? `${id}-title` : undefined} rule={rule} className="mb-10">
+          <SectionHeading
+            id={id ? `${id}-title` : undefined}
+            eyebrow={eyebrow}
+            rule={rule}
+            className="mb-10 lg:mb-14"
+          >
             {title}
           </SectionHeading>
         ) : null}

@@ -4,19 +4,22 @@ import { Card } from './Card'
 const meta = {
   title: 'Primitives/Card',
   component: Card,
-  parameters: { layout: 'centered', backgrounds: { default: 'peach' } },
+  parameters: { layout: 'centered' },
   args: {
-    children: <p className="text-ink">Rounded 12px surface with the soft site shadow.</p>,
+    children: (
+      <>
+        <h3 className="text-h3">Fast turnaround time</h3>
+        <p className="mt-2 text-small text-charcoal">1-2 days standard delivery time.</p>
+      </>
+    ),
     className: 'w-72',
   },
 } satisfies Meta<typeof Card>
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const White: Story = {}
-export const Peach: Story = {
-  args: { tone: 'peach' },
-  parameters: { backgrounds: { default: 'white' } },
-}
-export const Cream: Story = { args: { tone: 'cream' } }
-export const Outline: Story = { args: { tone: 'outline' } }
+/** The default: a column set off by a hairline above, no box. */
+export const Rule: Story = {}
+/** Bordered panel for forms and notices. */
+export const Outline: Story = { args: { tone: 'outline', padding: 'md' } }
+export const Peach: Story = { args: { tone: 'peach', padding: 'md' } }

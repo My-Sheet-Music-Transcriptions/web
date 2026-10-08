@@ -1,4 +1,5 @@
-import { Button } from '~/components/primitives/Button'
+import { Reveal } from '~/components/motion/Reveal'
+import { Icon } from '~/components/primitives/Icon'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { Stars } from '~/components/primitives/Stars'
@@ -7,6 +8,7 @@ import type { Review } from '~/content/types'
 
 export interface ReviewCardsProps {
   title?: string
+  eyebrow?: string
   /** Number of reviews shown (defaults to all in content/en/data/reviews.ts). */
   limit?: number
   ctaLabel?: string
@@ -22,30 +24,39 @@ function monthLabel(date: string) {
   })
 }
 
-/** "Customer Reviews": two-column grid of quote cards with teal stars and a link to all reviews. */
+/** "Customer reviews": quotes in two columns, each under a hairline with teal stars and the reviewer below. */
 export function ReviewCards({
-  title = 'Customer Reviews',
+  title = 'Customer reviews',
+  eyebrow = 'What musicians say',
   limit,
   ctaLabel = 'Read all our reviews',
   ctaHref = '/customer-reviews',
 }: ReviewCardsProps) {
   const items = limit ? homeReviews.slice(0, limit) : homeReviews
   return (
-    <section className="py-12" aria-labelledby="reviews-title">
+    <section className="py-section lg:py-section-lg" aria-labelledby="reviews-title">
       <div className="container-content">
-        <SectionHeading id="reviews-title">{title}</SectionHeading>
-        <ul className="mx-auto mt-10 grid max-w-[1130px] gap-8 md:grid-cols-2">
-          {items.map((r) => (
-            <li key={r.name + r.date}>
+        <SectionHeading id="reviews-title" eyebrow={eyebrow}>
+          {title}
+        </SectionHeading>
+        <ul className="mt-10 grid md:grid-cols-2 md:gap-x-14 lg:mt-14">
+          {items.map((r, i) => (
+            <Reveal as="li" key={r.name + r.date} delay={(i % 2) * 0.06}>
               <ReviewCard review={r} />
-            </li>
+            </Reveal>
           ))}
         </ul>
-        <div className="mt-12 text-center">
-          <Button asChild>
-            <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
-          </Button>
-        </div>
+        <SmartLink
+          href={ctaHref}
+          className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
+        >
+          {ctaLabel}
+          <Icon
+            name="arrow-right"
+            size={14}
+            className="transition-transform duration-200 group-hover:translate-x-1"
+          />
+        </SmartLink>
       </div>
     </section>
   )
@@ -53,26 +64,20 @@ export function ReviewCards({
 
 export function ReviewCard({ review }: { review: Review }) {
   const name = review.sourceUrl ? (
-    <a href={review.sourceUrl} rel="noopener" className="hover:text-accent-deep hover:underline">
+    <a href={review.sourceUrl} rel="noopener" className="hover:text-primary hover:underline">
       {review.name}
     </a>
   ) : (
     review.name
   )
-  const body = (
-    <>
-      <p className="text-[18px] font-bold text-[#222]">{name}</p>
-      <Stars rating={review.rating} color="primary" size={18} className="mt-2" />
-      <p className="mt-3 text-body text-ink">
-        {review.role} from {review.country} |{' '}
-        <strong className="font-bold">{monthLabel(review.date)}</strong>
-      </p>
-    </>
-  )
   return (
-    <article className="flex h-full flex-col rounded-card border border-[#e8e8e8] bg-white p-[30px]">
-      <header className="border-b border-line pb-5">{body}</header>
-      <blockquote className="pt-6 text-[15px] leading-[1.7] text-ink">{review.quote}</blockquote>
+    <article className="flex h-full flex-col gap-3.5 border-t border-line pb-9 pt-7">
+      <Stars rating={review.rating} color="primary" size={16} />
+      <blockquote className="text-[17px] leading-[1.65] text-ink">{review.quote}</blockquote>
+      <p className="text-small text-muted">
+        <span className="font-bold text-ink">{name}</span> · {review.role} from {review.country} ·{' '}
+        {monthLabel(review.date)}
+      </p>
     </article>
   )
 }
