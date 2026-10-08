@@ -27,14 +27,14 @@ How to use it: when a page is ported, put the PR link in the **PR** column (and 
 | Path | WP type | Target | Action | Translations | Title (archived) | Archived | Notes | PR |
 |---|---|---|---|---|---|---|---|---|
 | [`/about-us`](https://www.mysheetmusictranscriptions.com/about-us) | page | pages | port | de `/uber-uns` · es `/sobre-nosotros` · fr `/qui-sommes-nous` · ja `/about-us` | About Us | 2026-05 |  | |
-| [`/careers`](https://www.mysheetmusictranscriptions.com/careers) | linked | pages | port |  | Careers | 2026-05 |  | |
+| [`/careers`](https://www.mysheetmusictranscriptions.com/careers) | linked | pages | port |  | Careers | 2026-05 |  | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/contact`](https://www.mysheetmusictranscriptions.com/contact) | page | pages | port | de `/kontakt` · es `/contacto` · fr `/contact` · ja `/contact` | Contact | 2026-05 |  | |
 | [`/cookies`](https://www.mysheetmusictranscriptions.com/cookies) | linked | pages | port | de `/cookie-richtlinien` · es `/politica-de-cookies` · fr `/politique-de-cookies` · ja `/cookies-policy` | Cookies Policy | 2026-08 |  | |
 | [`/customer-reviews`](https://www.mysheetmusictranscriptions.com/customer-reviews) | page | pages | port | de `/kundenbewertungen` · es `/opiniones` · fr `/avis-des-clients` · ja `/reviews` | Customer Reviews | 2026-02 |  | |
 | [`/frequent-asked-questions`](https://www.mysheetmusictranscriptions.com/frequent-asked-questions) | page | pages | port | de `/faq` · es `/preguntas-frecuentes` · fr `/faq` · ja `/faqs` |  | — |  | |
 | [`/gdpr`](https://www.mysheetmusictranscriptions.com/gdpr) | linked | pages | port | de `/datenschutzerklarung` · es `/politica-de-privacidad` · fr `/politique-de-confidentialite` · ja `/data-protection-and-privacy-policy` | Privacy Policy • MSMT Barcelona Music S.L. | 2026-08 |  | |
 | [`/legal-notice`](https://www.mysheetmusictranscriptions.com/legal-notice) | linked | pages | port | es `/aviso-legal` | Legal Notice | 2026-05 |  | |
-| [`/music-transcription-service`](https://www.mysheetmusictranscriptions.com/music-transcription-service) | page | pages | port |  | Music Transcription Service • 100% Accurate & Professional | 2026-05 |  | |
+| [`/music-transcription-service`](https://www.mysheetmusictranscriptions.com/music-transcription-service) | page | pages | port |  | Music Transcription Service • 100% Accurate & Professional | 2026-05 |  | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/pricing`](https://www.mysheetmusictranscriptions.com/pricing) | page | pages | port | de `/preisgestaltung` · es `/precios` · fr `/tarifs` · ja `/pricing` | Pricing & Samples | 2025-12 |  | |
 | [`/services-samples`](https://www.mysheetmusictranscriptions.com/services-samples) | page | pages | port | de `/dienstleistungen` · es `/servicios-musicales` · fr `/services-musicales` |  | — |  | |
 | [`/terms-of-use`](https://www.mysheetmusictranscriptions.com/terms-of-use) | linked | pages | port | de `/bedingungen-fur-die-nutzung` · es `/terminos-de-uso` · fr `/conditions-dutilisation` · ja `/terms-of-use` | Terms and Conditions | 2026-05 |  | |
@@ -55,7 +55,7 @@ How to use it: when a page is ported, put the PR link in the **PR** column (and 
 | [`/drums-transcription-service`](https://www.mysheetmusictranscriptions.com/drums-transcription-service) | services | services | port | fr `/transcriptions-de-batterie` |  | — |  | |
 | [`/flute-transcription-service`](https://www.mysheetmusictranscriptions.com/flute-transcription-service) | services | services | port |  |  | — |  | |
 | [`/full-band-transcription-service`](https://www.mysheetmusictranscriptions.com/full-band-transcription-service) | services | services | port |  |  | — |  | |
-| [`/guitar-tab`](https://www.mysheetmusictranscriptions.com/guitar-tab) | services | services | port | de `/gitarren-tab` · es `/guitarra` · fr `/guitare` |  | — |  | |
+| [`/guitar-tab`](https://www.mysheetmusictranscriptions.com/guitar-tab) | services | services | port | de `/gitarren-tab` · es `/guitarra` · fr `/guitare` |  | — |  | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/harp-transcription-service`](https://www.mysheetmusictranscriptions.com/harp-transcription-service) | services | services | port |  | Harp Transcription Service | 2026-04 |  | |
 | [`/horn-section-transcription-service`](https://www.mysheetmusictranscriptions.com/horn-section-transcription-service) | services | services | port |  |  | — |  | |
 | [`/horns-transcription-service`](https://www.mysheetmusictranscriptions.com/horns-transcription-service) | nav | services | verify |  |  | — | in the mega menu (content/en/data/nav.ts) but not in the sitemap and never archived: check it exists live | |
@@ -72,7 +72,7 @@ How to use it: when a page is ported, put the PR link in the **PR** column (and 
 | [`/nashville-numbers-charts`](https://www.mysheetmusictranscriptions.com/nashville-numbers-charts) | services | services | port |  |  | — |  | |
 | [`/orchestration-service`](https://www.mysheetmusictranscriptions.com/orchestration-service) | services | services | port | de `/orchestrierungsdienst` · es `/orquestraciones` · fr `/orchestrations` | Orchestration Service | 2026-04 |  | |
 | [`/organ-transcription-service`](https://www.mysheetmusictranscriptions.com/organ-transcription-service) | services | services | port |  | Organ Transcription Service | 2026-04 |  | |
-| [`/piano`](https://www.mysheetmusictranscriptions.com/piano) | services | services | port | de `/klavier` · es `/piano` · fr `/piano` · ja `/services/piano` | Piano Transcription Service | 2026-04 |  | |
+| [`/piano`](https://www.mysheetmusictranscriptions.com/piano) | services | services | port | de `/klavier` · es `/piano` · fr `/piano` · ja `/services/piano` | Piano Transcription Service | 2026-04 |  | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/piano-jazz-trio-transcriptions`](https://www.mysheetmusictranscriptions.com/piano-jazz-trio-transcriptions) | services | services | port |  |  | — |  | |
 | [`/piano-vocal`](https://www.mysheetmusictranscriptions.com/piano-vocal) | services | services | port | de `/klavier-und-gesangs-transkriptionsservice` · es `/piano-vocal` · fr `/piano-voix` |  | — |  | |
 | [`/rhythm-charts`](https://www.mysheetmusictranscriptions.com/rhythm-charts) | services | services | port |  |  | — |  | |
@@ -84,9 +84,9 @@ How to use it: when a page is ported, put the PR link in the **PR** column (and 
 | [`/strings-transcription-service`](https://www.mysheetmusictranscriptions.com/strings-transcription-service) | nav | services | verify |  |  | — | in the mega menu (content/en/data/nav.ts) but not in the sitemap and never archived: check it exists live | |
 | [`/synthesia-piano-tutorials`](https://www.mysheetmusictranscriptions.com/synthesia-piano-tutorials) | services | services | port |  |  | — |  | |
 | [`/trombone-transcription-service`](https://www.mysheetmusictranscriptions.com/trombone-transcription-service) | nav | services | verify |  |  | — | in the mega menu (content/en/data/nav.ts) but not in the sitemap and never archived: check it exists live | |
-| [`/trumpet-transcription-service`](https://www.mysheetmusictranscriptions.com/trumpet-transcription-service) | services | services | port |  | Trumpet Transcription Service | 2025-03 |  | |
+| [`/trumpet-transcription-service`](https://www.mysheetmusictranscriptions.com/trumpet-transcription-service) | services | services | port |  | Trumpet Transcription Service | 2025-03 |  | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/ukulele-transcription-service`](https://www.mysheetmusictranscriptions.com/ukulele-transcription-service) | services | services | port |  | Ukulele Transcription Service | 2026-03 |  | |
-| [`/violin-transcription-service`](https://www.mysheetmusictranscriptions.com/violin-transcription-service) | services | services | port |  |  | — |  | |
+| [`/violin-transcription-service`](https://www.mysheetmusictranscriptions.com/violin-transcription-service) | services | services | port |  |  | — |  | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/vocal-ensemble-transcription-service`](https://www.mysheetmusictranscriptions.com/vocal-ensemble-transcription-service) | services | services | port | fr `/transcriptions-ensembles-vocaux` |  | 2026-01 |  | |
 | [`/vocal-lead-sheet-transcription-service`](https://www.mysheetmusictranscriptions.com/vocal-lead-sheet-transcription-service) | services | services | port | fr `/transcription-de-vocal-lead-sheet` |  | — |  | |
 
@@ -95,7 +95,7 @@ How to use it: when a page is ported, put the PR link in the **PR** column (and 
 | Path | WP type | Target | Action | Translations | Title (archived) | Archived | Notes | PR |
 |---|---|---|---|---|---|---|---|---|
 | [`/aiva-to-sheet-music`](https://www.mysheetmusictranscriptions.com/aiva-to-sheet-music) | page | pages | port |  |  | — | AI-music → sheet music landing (one template, 9 pages) | |
-| [`/artists`](https://www.mysheetmusictranscriptions.com/artists) | page | pages | port |  | Sheet Music Transcriptions for Composers and Artists | 2026-04 | audience / B2B landing | |
+| [`/artists`](https://www.mysheetmusictranscriptions.com/artists) | page | pages | port |  | Sheet Music Transcriptions for Composers and Artists | 2026-04 | audience / B2B landing | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/b2b`](https://www.mysheetmusictranscriptions.com/b2b) | page | pages | port |  |  | 2025-03 | audience / B2B landing | |
 | [`/beatoven-to-sheet-music`](https://www.mysheetmusictranscriptions.com/beatoven-to-sheet-music) | page | pages | port |  |  | — | AI-music → sheet music landing (one template, 9 pages) | |
 | [`/boomy-to-sheet-music`](https://www.mysheetmusictranscriptions.com/boomy-to-sheet-music) | page | pages | port |  |  | — | AI-music → sheet music landing (one template, 9 pages) | |
@@ -110,10 +110,10 @@ How to use it: when a page is ported, put the PR link in the **PR** column (and 
 | [`/convert-from-musescore-to-sibelius`](https://www.mysheetmusictranscriptions.com/convert-from-musescore-to-sibelius) | page | pages | port |  |  | — | notation-software conversion landing (one template) | |
 | [`/convert-from-sibelius-to-dorico`](https://www.mysheetmusictranscriptions.com/convert-from-sibelius-to-dorico) | page | pages | port |  |  | — | notation-software conversion landing (one template) | |
 | [`/convert-from-sibelius-to-guitar-pro`](https://www.mysheetmusictranscriptions.com/convert-from-sibelius-to-guitar-pro) | page | pages | port |  |  | — | notation-software conversion landing (one template) | |
-| [`/convert-from-sibelius-to-musescore`](https://www.mysheetmusictranscriptions.com/convert-from-sibelius-to-musescore) | page | pages | port |  | Convert from Sibelius to MuseScore | 2026-05 | notation-software conversion landing (one template) | |
+| [`/convert-from-sibelius-to-musescore`](https://www.mysheetmusictranscriptions.com/convert-from-sibelius-to-musescore) | page | pages | port |  | Convert from Sibelius to MuseScore | 2026-05 | notation-software conversion landing (one template) | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/custom-sheet-music-for-christmas`](https://www.mysheetmusictranscriptions.com/custom-sheet-music-for-christmas) | page | pages | port |  |  | — | use-case landing | |
 | [`/discord`](https://www.mysheetmusictranscriptions.com/discord) | page | pages | port |  | Discord | 2024-06 | audience / B2B landing | |
-| [`/endorsed-musicians-and-composers`](https://www.mysheetmusictranscriptions.com/endorsed-musicians-and-composers) | page | pages | port |  |  | — | audience / B2B landing | |
+| [`/endorsed-musicians-and-composers`](https://www.mysheetmusictranscriptions.com/endorsed-musicians-and-composers) | page | pages | port |  |  | — | audience / B2B landing | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/files-glossary`](https://www.mysheetmusictranscriptions.com/files-glossary) | page | pages | port |  | Files glossary | 2024-06 | glossary (long reference page) | |
 | [`/finale-to-dorico`](https://www.mysheetmusictranscriptions.com/finale-to-dorico) | page | pages | port |  |  | — | notation-software conversion landing (one template) | |
 | [`/finale-to-musescore`](https://www.mysheetmusictranscriptions.com/finale-to-musescore) | page | pages | port |  |  | — | notation-software conversion landing (one template) | |
@@ -126,13 +126,13 @@ How to use it: when a page is ported, put the PR link in the **PR** column (and 
 | [`/midi-into-sheet-music`](https://www.mysheetmusictranscriptions.com/midi-into-sheet-music) | page | pages | port |  |  | — | use-case landing | |
 | [`/mubert-to-sheet-music`](https://www.mysheetmusictranscriptions.com/mubert-to-sheet-music) | page | pages | port |  |  | — | AI-music → sheet music landing (one template, 9 pages) | |
 | [`/music-education-content`](https://www.mysheetmusictranscriptions.com/music-education-content) | page | pages | port |  | Services for Music Education Content providers • My Sheet Music… | 2024-05 | audience / B2B landing | |
-| [`/music-educators`](https://www.mysheetmusictranscriptions.com/music-educators) | page | pages | port |  |  | — | audience / B2B landing | |
+| [`/music-educators`](https://www.mysheetmusictranscriptions.com/music-educators) | page | pages | port |  |  | — | audience / B2B landing | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/music-productions-into-scores`](https://www.mysheetmusictranscriptions.com/music-productions-into-scores) | page | pages | port |  |  | — | use-case landing | |
 | [`/music-transcription-service-for-publishers`](https://www.mysheetmusictranscriptions.com/music-transcription-service-for-publishers) | page | pages | port |  |  | — | audience / B2B landing | |
 | [`/new-ways-to-make-music-projects-for-accesibility`](https://www.mysheetmusictranscriptions.com/new-ways-to-make-music-projects-for-accesibility) | page | pages | port |  |  | — | audience / B2B landing | |
-| [`/partners`](https://www.mysheetmusictranscriptions.com/partners) | page | pages | port |  |  | — | audience / B2B landing | |
+| [`/partners`](https://www.mysheetmusictranscriptions.com/partners) | page | pages | port |  |  | — | audience / B2B landing | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/sheet-music-for-weddings`](https://www.mysheetmusictranscriptions.com/sheet-music-for-weddings) | page | pages | port |  |  | — | use-case landing | |
-| [`/sheet-music-printing`](https://www.mysheetmusictranscriptions.com/sheet-music-printing) | page | pages | port |  | Sheet Music Printing Service | 2026-03 | audience / B2B landing | |
+| [`/sheet-music-printing`](https://www.mysheetmusictranscriptions.com/sheet-music-printing) | page | pages | port |  | Sheet Music Printing Service | 2026-03 | audience / B2B landing | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/soundful-to-sheet-music`](https://www.mysheetmusictranscriptions.com/soundful-to-sheet-music) | page | pages | port |  |  | — | AI-music → sheet music landing (one template, 9 pages) | |
 | [`/soundraw-to-sheet-music`](https://www.mysheetmusictranscriptions.com/soundraw-to-sheet-music) | page | pages | port |  |  | — | AI-music → sheet music landing (one template, 9 pages) | |
 | [`/suno-to-sheet-music`](https://www.mysheetmusictranscriptions.com/suno-to-sheet-music) | page | pages | port |  |  | — | AI-music → sheet music landing (one template, 9 pages) | |
