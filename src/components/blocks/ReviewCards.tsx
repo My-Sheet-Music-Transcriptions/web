@@ -1,6 +1,7 @@
 import { homeReviews } from '@content/en/data/reviews'
-import { Reveal } from '~/components/motion/Reveal'
-import { Icon } from '~/components/primitives/Icon'
+import lines from '~/assets/images/home/reviews-lines.png?w=1440;2880&as=picture'
+import { Button } from '~/components/primitives/Button'
+import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { Stars } from '~/components/primitives/Stars'
@@ -8,7 +9,6 @@ import type { Review } from '~/content/types'
 
 export interface ReviewCardsProps {
   title?: string
-  eyebrow?: string
   /** Number of reviews shown (defaults to all in content/en/data/reviews.ts). */
   limit?: number
   ctaLabel?: string
@@ -24,39 +24,41 @@ function monthLabel(date: string) {
   })
 }
 
-/** "Customer reviews": quotes in two columns, each under a hairline with teal stars and the reviewer below. */
+/** "Customer Reviews": two-column grid of quote cards with teal stars over the peach staff lines, and a link to all reviews. */
 export function ReviewCards({
-  title = 'Customer reviews',
-  eyebrow = 'What musicians say',
+  title = 'Customer Reviews',
   limit,
   ctaLabel = 'Read all our reviews',
   ctaHref = '/customer-reviews',
 }: ReviewCardsProps) {
   const items = limit ? homeReviews.slice(0, limit) : homeReviews
   return (
-    <section className="py-section lg:py-section-lg" aria-labelledby="reviews-title">
-      <div className="container-content">
-        <SectionHeading id="reviews-title" eyebrow={eyebrow}>
-          {title}
-        </SectionHeading>
-        <ul className="mt-10 grid md:grid-cols-2 md:gap-x-14 lg:mt-14">
-          {items.map((r, i) => (
-            <Reveal as="li" key={r.name + r.date} delay={(i % 2) * 0.06}>
+    <section
+      className="relative isolate overflow-hidden pt-[30px] pb-[50px] md:pt-[60px]"
+      aria-labelledby="reviews-title"
+    >
+      {/* The live site's peach staff lines behind the section (background-size: cover from the top left). */}
+      <Picture
+        image={lines}
+        alt=""
+        sizes="100vw"
+        className="absolute inset-0 -z-10 h-full w-full object-cover object-left-top"
+        pictureClassName="contents"
+      />
+      <div className="mx-auto max-w-[1140px] px-5 md:px-[10px]">
+        <SectionHeading id="reviews-title">{title}</SectionHeading>
+        <ul className="mt-[23px] grid items-start gap-[33px] md:grid-cols-2 md:gap-x-9 md:gap-y-[33px]">
+          {items.map((r) => (
+            <li key={r.name + r.date}>
               <ReviewCard review={r} />
-            </Reveal>
+            </li>
           ))}
         </ul>
-        <SmartLink
-          href={ctaHref}
-          className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
-        >
-          {ctaLabel}
-          <Icon
-            name="arrow-right"
-            size={14}
-            className="transition-transform duration-200 group-hover:translate-x-1"
-          />
-        </SmartLink>
+        <div className="mt-[62px] text-center md:mt-[59px]">
+          <Button asChild>
+            <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
+          </Button>
+        </div>
       </div>
     </section>
   )
@@ -64,20 +66,27 @@ export function ReviewCards({
 
 export function ReviewCard({ review }: { review: Review }) {
   const name = review.sourceUrl ? (
-    <a href={review.sourceUrl} rel="noopener" className="hover:text-primary hover:underline">
+    <a href={review.sourceUrl} rel="noopener" className="hover:text-accent-deep hover:underline">
       {review.name}
     </a>
   ) : (
     review.name
   )
   return (
-    <article className="flex h-full flex-col gap-3.5 border-t border-line pb-9 pt-7">
-      <Stars rating={review.rating} color="primary" size={16} />
-      <blockquote className="text-[17px] leading-[1.65] text-ink">{review.quote}</blockquote>
-      <p className="text-small text-muted">
-        <span className="font-bold text-ink">{name}</span> · {review.role} from {review.country} ·{' '}
-        {monthLabel(review.date)}
-      </p>
+    <article className="rounded-card bg-white pb-10 shadow-[0_0_4px_rgb(0_0_0/0.17)]">
+      <div className="p-px md:mx-[14px]">
+        <header className="border-b border-[#e1e8ed] px-[15px] pt-[15px] pb-6 text-[#202020]">
+          <p className="text-[20px] leading-[38px] font-semibold">{name}</p>
+          <Stars rating={review.rating} color="primary" size={22} className="h-[30px] gap-[5px]" />
+          <p className="text-body leading-8 md:text-[18px] md:leading-[44px]">
+            {review.role} from {review.country} |{' '}
+            <strong className="font-bold">{monthLabel(review.date)}</strong>
+          </p>
+        </header>
+        <blockquote className="px-[15px] pt-6 pb-[29.4px] text-body leading-[30.4px] text-[#202020]">
+          {review.quote}
+        </blockquote>
+      </div>
     </article>
   )
 }

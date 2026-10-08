@@ -16,9 +16,9 @@ type Story = StoryObj<typeof meta>
 
 /** Orange pill: the main call to action everywhere on the site. */
 export const Accent: Story = { args: { variant: 'accent' } }
-/** Teal pill: secondary actions. */
+/** Teal-blue pill: secondary actions such as "Learn more". */
 export const Primary: Story = { args: { variant: 'primary', children: 'Learn more' } }
-/** Outlined pill: quiet secondary actions ("Learn more", "See all services"). */
+/** Text-only pill used next to rating cards ("See more"). */
 export const Outline: Story = { args: { variant: 'outline', children: 'See more' } }
 export const Link: Story = { args: { variant: 'link', children: 'See on Google →' } }
 export const Block: Story = {

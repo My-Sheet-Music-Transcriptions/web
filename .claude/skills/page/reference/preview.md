@@ -42,7 +42,7 @@ worked example: read it before writing a mockup.
 4. A proposed block is `<section data-proposed="<Name>" data-props='{…}'>` whose props are what the block
    would take, drawn inside as fluid plain markup (flex-wrap, max-width 1140px, 16px side padding, real
    `<label>`/`<input>`/`<button>`, 4.5:1 text) with the token values: text #444444, primary #1a7f97, CTA fill
-   #b8571c, orange rule #f49946, cream #f7eee7, peach #fdebdc, muted #6b6b6b, line #e5e5e5, radii 12px cards /
+   #e2864d (as the live buttons), orange rule #f49946, cream #f7eee7, peach #fdebdc, muted #6b6b6b, line #e5e5e5, radii 12px cards /
    28px buttons / 20px fields, h2 32px/700, body 16px/1.7. No scripts, no `{{`, no external files.
 5. Options to compare side by side (design mode only) are extra files `mockups/<slug>/sections.<variant>.html`
    in the same format; the HTML preview shows only `sections.html`.

@@ -1,7 +1,5 @@
 /*
- * Design tokens. The palette keeps the brand of mysheetmusictranscriptions.com (teal, orange, navy, peach);
- * the 2026 refresh is flat and editorial: white pages, hairline rules instead of boxes, one small radius,
- * no card shadows, and only two full-bleed colour bands (navy stats, peach contact).
+ * Design tokens. Values come from the live Elementor kit of mysheetmusictranscriptions.com.
  * This file is the single source of truth: Storybook's Foundations page and the published Design
  * System artifact are generated from it (src/design-system/theme-parse.ts).
  * Keep the inline comment after a token: it becomes the token's usage note.
@@ -11,92 +9,88 @@
 
   /* Brand palette */
   /*
-   * Contrast note: the live site used #219EBC / #E2864D for text and buttons, which fail WCAG AA
-   * (3.1:1 and 2.7:1 on white). Text and button fills use the darker variants below (>= 4.5:1);
-   * the original hues stay as `sky` and `accent` for decorative use (stars, rules, icons).
+   * Contrast note: the live site uses #219EBC / #E2864D for buttons, which fail WCAG AA with white
+   * 14px text (3.1:1 and 2.7:1). Buttons keep the live colours (`cta`, `sky`) to match the site;
+   * text on white uses the darker variants below (>= 4.5:1).
    */
   --color-primary: #1a7f97; /* text links, outlined buttons, primary button fill (4.8:1 on white) */
   --color-primary-deep: #15687b; /* hover of primary */
-  --color-primary-tint: #e6f3f6; /* soft teal surface: icon discs, hover pills, avatar circles */
-  --color-sky: #219ebc; /* the original teal-blue: review stars, decorative accents (never text) */
-  --color-secondary: #171717; /* small labels on light */
-  --color-ink: #12232d; /* headings and emphasised copy on light (navy-black) */
-  --color-charcoal: #3b4851; /* default body copy (8.6:1 on white) */
-  --color-muted: #5f6c74; /* captions, meta lines (5.4:1 on white) */
-  --color-accent: #f49946; /* brand orange: rules, icons and decorative highlights (never text) */
-  --color-accent-deep: #b8571c; /* filled CTA buttons, eyebrows and orange text on white (4.7:1) */
+  --color-sky: #219ebc; /* the original teal-blue: review stars, pricing header (large text), icons */
+  --color-secondary: #171717; /* Elementor "Secondary": small labels */
+  --color-ink: #444444; /* Elementor "Text": headings and body on light */
+  --color-charcoal: #333333; /* default body copy */
+  --color-muted: #6b6b6b; /* captions (darkened from source #94a3a3 to pass contrast) */
+  --color-accent: #f49946; /* Elementor "Accent": orange rules and decorative highlights (never text) */
+  --color-accent-deep: #b8571c; /* filled CTA buttons and orange text on white (4.7:1) */
   --color-accent-hover: #a34c17;
-  --color-accent-text: #a34c17; /* eyebrows and small orange text on tinted backgrounds (5.0:1 on peach) */
+  --color-cta: #e2864d; /* filled orange buttons, as on the live site (white text 2.7:1: buttons only) */
   --color-accent-light: #ffb36b; /* orange text on dark backgrounds */
   --color-orange: #d4780f; /* large-text highlight ("#1" in the hero, 3.2:1) */
   --color-orange-tint: #ec8a1b1f;
-  --color-navy: #023047; /* dark panels: stats banner, page heroes, pricing "Melodic" tier */
-  --color-navy-deep: #021f2f; /* gradient end of navy panels and the footer */
-  --color-teal: #239c90; /* pricing "Piano" tier accent */
+  --color-navy: #023047; /* pricing "Difficult"/"Melodic" headers, artist hero */
+  --color-teal: #239c90; /* pricing header (white large text, 3.3:1); the original #2EC4B6 stays as teal-light */
   --color-teal-light: #2ec4b6;
-  --color-blue: #2e97c4; /* pricing "Bands" tier accent */
+  --color-blue: #2e97c4; /* pricing "Average"/"Bands" header */
   --color-azure: #2786d8;
   --color-pine: #1f9b90;
   --color-yellow: #ffb703; /* rating stars */
-  --color-peach: #fdebdc; /* warm section background: contact section, included cards */
+  --color-peach: #fdebdc; /* audience cards, contact section */
   --color-peach-deep: #fbe0cb;
-  --color-peach-line: #e6d9cc; /* form field borders on the peach contact band */
-  --color-cream: #f7eee7; /* icon discs and warm cards */
+  --color-cream: #f7eee7; /* pricing tier card body */
   --color-sand: #efe7df;
-  --color-surface: #f4f7f8; /* hover rows and menu items; never a section background */
-  --color-line: #e3e9eb; /* hairlines between sections, columns and list rows */
-  --color-footer: #0b1f2c; /* footer background */
-  --color-footer-text: #b9c6ce; /* footer links (9.3:1 on footer) */
+  --color-line: #e5e5e5;
+  --color-footer: #222222;
+  --color-footer-text: #c9c9c9;
   --color-google: #4285f4;
   --color-facebook: #1877f2;
   --color-trustpilot: #00b67a;
 
   /* Type scale (desktop); mobile sizes are set per utility */
-  --text-display: 60px;
-  --text-display--line-height: 1.04;
-  --text-h2: 40px;
-  --text-h2--line-height: 1.1;
+  --text-display: 40px;
+  --text-display--line-height: 46px;
+  --text-h2: 32px;
+  --text-h2--line-height: 1;
   --text-h3: 20px;
-  --text-h3--line-height: 1.3;
-  --text-h4: 17px;
-  --text-h4--line-height: 1.35;
-  --text-price: 48px;
+  --text-h3--line-height: 26px;
+  --text-h4: 16px;
+  --text-h4--line-height: 1.2;
+  --text-price: 46px;
   --text-price--line-height: 1;
-  --text-counter: 80px;
+  --text-counter: 64px;
   --text-counter--line-height: 1;
   --text-body: 16px;
-  --text-body--line-height: 1.65;
+  --text-body--line-height: 24px;
   --text-small: 14px;
-  --text-small--line-height: 1.5;
+  --text-small--line-height: 20px;
   --text-caption: 13px;
-  --text-caption--line-height: 1.5;
-  --text-eyebrow: 12px;
-  --text-eyebrow--line-height: 1.2;
+  --text-caption--line-height: 26px;
 
   /* Shape */
-  --radius-ui: 6px; /* the one radius: buttons, fields, photos, menus */
-  --radius-sm: 3px; /* small images in strips and badges */
-  --shadow-float: 0 24px 40px -24px rgb(2 48 71 / 0.25); /* open menus and the consent banner only */
+  --radius-card: 12px; /* cards, pricing tiers, review cards, menus */
+  --radius-pill: 28px; /* buttons */
+  --radius-field: 20px; /* form fields */
+  --shadow-card: 0 0 10px 0 rgb(0 0 0 / 0.1); /* cards on light backgrounds */
+  --shadow-float: 0 4px 20px 0 rgb(0 0 0 / 0.12); /* floating card, mega-menu, consent banner */
 
   /* Layout */
-  --container-content: 1240px;
-  --container-wide: 1320px;
-  --container-narrow: 820px;
+  --container-content: 1140px;
+  --container-wide: 1200px;
+  --container-narrow: 900px;
   --breakpoint-sm: 640px; /* large phones; every breakpoint is in px so they sort correctly */
-  --breakpoint-md: 768px; /* phones end at 767 */
-  --breakpoint-lg: 1025px; /* tablets end at 1024 */
-  --breakpoint-xl: 1280px; /* wide desktop: larger nav type */
+  --breakpoint-md: 768px; /* Elementor mobile ends at 767 */
+  --breakpoint-lg: 1025px; /* Elementor tablet ends at 1024 */
+  --breakpoint-xl: 1280px; /* wide desktop */
   --breakpoint-2xl: 1536px; /* unused, kept in px for ordering */
+  --spacing-section: 50px;
+  --spacing-section-lg: 90px;
+
   /* Motion */
-  --animate-settle: settle 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; /* hero photo on load (transform only) */
-  @keyframes settle {
-    from {
-      transform: scale(1.045);
+  --animate-marquee: marquee 80s linear infinite; /* homepage photo strip: one photo every 8 s, as live */
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
     }
   }
-
-  --spacing-section: 56px;
-  --spacing-section-lg: 96px;
 }
 
 @layer base {
@@ -117,29 +111,16 @@
   h4 {
     color: var(--color-ink);
     font-weight: 700;
-    text-wrap: balance;
   }
-  h1,
-  h2 {
-    letter-spacing: -0.02em;
-  }
-  p {
-    text-wrap: pretty;
-  }
-  /* Emphasis inside text is plain <strong>/<em> everywhere (pages, blocks, stories): bold words take the
-     heading colour, like the headings above; on a dark tone a block sets its own colour with a utility. */
+  /* Emphasis inside text is plain <strong>/<em> everywhere (pages, blocks, stories): bold in the colour
+     of the text around it. */
   strong,
   b {
     font-weight: 700;
-    color: var(--color-ink);
   }
   em,
   i {
     font-style: italic;
-  }
-  ::selection {
-    background: var(--color-primary);
-    color: #fff;
   }
   :focus-visible {
     outline: 3px solid var(--color-primary);
@@ -162,32 +143,23 @@
   width: 100%;
   max-width: var(--container-content);
   margin-inline: auto;
-  padding-inline: 20px;
+  padding-inline: 16px;
   @media (width >= 768px) {
-    padding-inline: 24px;
+    padding-inline: 20px;
   }
 }
 @utility container-wide {
   width: 100%;
   max-width: var(--container-wide);
   margin-inline: auto;
-  padding-inline: 20px;
+  padding-inline: 16px;
   @media (width >= 768px) {
-    padding-inline: 32px;
+    padding-inline: 20px;
   }
 }
 @utility container-narrow {
   width: 100%;
   max-width: var(--container-narrow);
   margin-inline: auto;
-  padding-inline: 20px;
-}
-/* Small uppercase label above headings and inside cards. */
-@utility eyebrow {
-  display: inline-block;
-  font-size: var(--text-eyebrow);
-  line-height: var(--text-eyebrow--line-height);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  padding-inline: 16px;
 }

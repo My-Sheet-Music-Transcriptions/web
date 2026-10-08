@@ -8,7 +8,6 @@ import { catalogue } from '~/components/blocks/catalogue'
 import { Footer } from '~/components/layout/Footer'
 import { Header } from '~/components/layout/Header'
 import { TopBar } from '~/components/layout/TopBar'
-import { MotionProvider } from '~/components/motion/MotionProvider'
 import { Text } from '~/components/typography'
 
 /**
@@ -62,9 +61,7 @@ function mount(name: string, el: Element, props: Record<string, unknown> = {}) {
     )
   const { children, ...rest } = withSamples(props)
   const node = (
-    <MotionProvider>
-      <C {...rest}>{typeof children === 'string' ? renderChildren(children) : undefined}</C>
-    </MotionProvider>
+    <C {...rest}>{typeof children === 'string' ? renderChildren(children) : undefined}</C>
   )
   let root = roots.get(el)
   if (!root) {

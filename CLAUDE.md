@@ -81,8 +81,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description/image
   (the image file must exist in dist), twitter card, `<html lang>`, valid JSON-LD, images with alt/width/height,
   no broken internal links, present in sitemap unless `noindex`.
-- Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`).
-- Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 180 KB (raised from 150 for Motion, the animation library: its features load lazily after hydration).
+- Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`). The one exception
+  is elements marked `data-live-colour`, which keep the live site's colours by decision (filled buttons, pricing headers,
+  the active nav item, the current language, the response-time pill); contrast is checked everywhere else.
+- Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 150 KB.
 - Biome formats and lints everything; `tsc --noEmit` must pass (pages are type-checked against the block props).
 - `meta.ts` is a literal only; pages use the typography components for text (`tests/unit/content.test.ts`).
 - A PR touching anything outside the content paths needs a code-owner approval (`.github/CODEOWNERS`).
@@ -128,8 +130,8 @@ mode: `SITE_LOCALE` unset or `all`); only the English Netlify site builds previe
 ## Design tokens
 
 Defined once in `src/styles/theme.css` (`@theme`, every token with a usage comment; `app.css` only imports).
-Text and fills use the contrast-safe `primary` #1a7f97 and `accent-deep` #b8571c; the live site's #219EBC / #F49946
-survive as decorative `sky` / `accent`. Navy #023047, teal #239c90, ink #444. Font: Montserrat (variable). Radii:
+Text uses the contrast-safe `primary` #1a7f97 and `accent-deep` #b8571c; filled buttons keep the live site's `cta` #E2864D
+and `sky` #219EBC (marked `data-live-colour`), and #F49946 stays the decorative `accent`. Navy #023047, teal #239c90, ink #444. Font: Montserrat (variable). Radii:
 card 12px, pill 28px, field 20px. Containers 1140 / 1200 / 900 px. Breakpoints: md 768, lg 1025 (Elementor's
 tablet/desktop split). Use utilities, never ad-hoc hex values in components. `tests/unit/theme-tokens.test.ts`
 checks names, usage notes and contrast.
@@ -182,10 +184,6 @@ components or layout.
 - TypeScript strict, Biome style (single quotes, no semicolons). Components are function components with typed props.
 - Internal links use the router `<Link>` (preloaded on hover); external ones a plain `<a rel="noopener">`.
 - Images go through `<Picture>` (vite-imagetools `?w=...` import) so they ship as AVIF/WebP with dimensions.
-- Animation uses Motion (`motion/react`): `m.*` components from `motion/react-m` inside `MotionProvider`
-  (`src/components/motion`, LazyMotion in strict mode, features loaded after hydration, reduced motion respected).
-  `AnimatePresence` for things that mount and unmount (drawer, cookie banner), variants for always-rendered panels
-  (Services menu, language menu), `<Reveal>` for scroll-ins. Hover states and the hero photo stay plain CSS.
 - Prefer editing an existing block over adding a near-duplicate. New block = component + story + README section
   in `src/components/blocks/README.md` + export from `blocks/index.tsx`.
 - Do not commit generated files: `routeTree.gen.ts`, `hreflang.generated.json`, `public/og`, `public/robots.txt`.

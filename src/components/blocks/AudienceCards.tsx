@@ -1,6 +1,4 @@
 import { audiences } from '@content/en/data/home'
-import { Reveal } from '~/components/motion/Reveal'
-import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
@@ -13,53 +11,43 @@ const icons = import.meta.glob<PictureSource>('../../assets/images/home/audience
 
 export interface AudienceCardsProps {
   title?: string
-  eyebrow?: string
 }
 
-/** "Who do we work for?": four columns under a hairline, each with its illustration and a link to its page. */
-export function AudienceCards({
-  title = 'Who do we work for?',
-  eyebrow = 'For every musician',
-}: AudienceCardsProps) {
+/** "Who do we work for?": four rounded peach cards, each linking to an audience landing page. */
+export function AudienceCards({ title = 'Who do we work for?' }: AudienceCardsProps) {
   return (
-    <section className="py-section lg:py-section-lg" aria-labelledby="audience-title">
-      <div className="container-content">
-        <SectionHeading id="audience-title" eyebrow={eyebrow}>
+    <section className="pt-[50px] pb-5 md:pt-[90px]" aria-labelledby="audience-title">
+      <div className="mx-auto max-w-[1440px] px-[10px] pt-[10px]">
+        <SectionHeading
+          id="audience-title"
+          className="[&_h2]:text-[26px] [&_h2]:leading-[26px] md:[&_h2]:text-h2 md:[&_h2]:leading-8"
+        >
           {title}
         </SectionHeading>
-        <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
-          {audiences.map((a, i) => {
+        <ul className="mx-auto mt-[30px] grid max-w-[1402px] gap-[30px] px-[10px] md:grid-cols-2 lg:grid-cols-4 lg:px-0">
+          {audiences.map((a) => {
             const key = Object.keys(icons).find((k) => k.includes(`/${a.icon}.`))
             const img = key ? icons[key] : undefined
             return (
-              <Reveal
-                as="li"
+              <li
                 key={a.href}
-                delay={i * 0.06}
-                className="flex flex-col gap-3 border-t border-line pt-6"
+                className="flex flex-col items-center rounded-[35px] bg-orange-tint p-10 text-center shadow-[0_0_10px_5px_rgb(0_0_0/0.11)]"
               >
                 {img ? (
                   <Picture
                     image={img}
                     alt=""
-                    sizes="96px"
-                    className="h-[72px] w-auto self-start object-contain"
+                    sizes="140px"
+                    className="h-[123px] w-auto object-contain lg:h-[113px]"
                   />
                 ) : null}
-                <h3 className="mt-2 text-h3">{a.title}</h3>
-                <p className="flex-1 text-[15px] leading-relaxed text-charcoal">{a.body}</p>
-                <SmartLink
-                  href={a.href}
-                  className="group inline-flex items-center gap-1.5 self-start text-[15px] font-semibold text-primary hover:underline"
-                >
-                  Learn more<span className="sr-only"> about {a.title}</span>
-                  <Icon
-                    name="arrow-right"
-                    size={14}
-                    className="transition-transform duration-200 group-hover:translate-x-1"
-                  />
-                </SmartLink>
-              </Reveal>
+                <h3 className="mt-[14px] text-h3 leading-10 text-[#272727]">
+                  <SmartLink href={a.href} className="hover:text-accent-deep">
+                    {a.title}
+                  </SmartLink>
+                </h3>
+                <p className="text-body text-ink">{a.body}</p>
+              </li>
             )
           })}
         </ul>

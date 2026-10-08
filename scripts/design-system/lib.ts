@@ -122,7 +122,7 @@ export function assetGroupSpecs(): Record<string, AssetGroupSpec> {
     Flags: {
       tile: 'xs',
       readme:
-        '# Flags\n\nRound language flags. Not shown by the components since the 2026 refresh: languages are listed by their own names (`LangSwitcher`, `Footer`), since a flag names a country, not a language.\n',
+        '# Flags\n\nRound language flags for the domain switcher (`TopBar`, `Footer`), 24px, each linking to its sister domain. Order: EN, ES, FR, DE, JA, CA.\n',
       files: icons('src/assets/images/flags'),
     },
   }

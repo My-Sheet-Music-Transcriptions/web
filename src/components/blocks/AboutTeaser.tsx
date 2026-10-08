@@ -1,5 +1,5 @@
-import { type ReactNode, useState } from 'react'
-import { Reveal } from '~/components/motion/Reveal'
+import { type ReactNode, useEffect, useState } from 'react'
+import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
@@ -10,88 +10,112 @@ const photos = import.meta.glob<PictureSource>('../../assets/images/home/office-
   import: 'default',
   query: '?w=560;1000&as=picture',
 })
-const slides = Object.entries(photos).map(([k, img]) => ({
-  id: k,
-  img,
-  alt: k.includes('transcriber')
-    ? 'A transcriber at work in the My Sheet Music Transcriptions office'
-    : 'The customer service team in the My Sheet Music Transcriptions office',
-}))
+/** The live site's order. */
+const order = ['8', '14', '12', 'transcriber', '11', '10', '9']
+const slides = order.flatMap((n) => {
+  const id = `../../assets/images/home/office-${n}.jpg`
+  const img = photos[id]
+  if (!img) return []
+  return [
+    {
+      id,
+      img,
+      alt:
+        n === 'transcriber'
+          ? 'A transcriber at work in the My Sheet Music Transcriptions office'
+          : 'The customer service team in the My Sheet Music Transcriptions office',
+    },
+  ]
+})
 
 export interface AboutTeaserProps {
   title?: string
-  eyebrow?: string
   /** Rich text (`<p>` children) shown next to the photo carousel. */
   children?: ReactNode
   ctaLabel?: string
   ctaHref?: string
 }
 
-/** "Who are we?": office photo carousel beside the team introduction. */
+/**
+ * "Who are we?": office photo carousel beside the team introduction. As on the live site the photos slide
+ * on every 10 s (paused while hovered or focused, and for reduced-motion users), and on desktop the photo
+ * reaches 124px past its column towards the page edge.
+ */
 export function AboutTeaser({
   title = 'Who are we?',
-  eyebrow = 'The team',
   children,
   ctaLabel = 'Read more about us',
   ctaHref = '/about-us',
 }: AboutTeaserProps) {
   const [i, setI] = useState(0)
+  const [paused, setPaused] = useState(false)
   const go = (d: number) => setI((v) => (v + d + slides.length) % slides.length)
-  const current = slides[i]
+  useEffect(() => {
+    if (paused || slides.length < 2) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => setI((v) => (v + 1) % slides.length), 10000)
+    return () => clearInterval(id)
+  }, [paused])
   const arrow =
-    'inline-flex h-10 w-10 items-center justify-center rounded-ui bg-white text-ink hover:bg-surface'
+    'absolute top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-white drop-shadow'
   return (
-    <section
-      className="border-t border-line py-section lg:py-section-lg"
-      aria-labelledby="about-title"
-    >
-      <div className="container-content grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-        <section className="relative" aria-roledescription="carousel" aria-label="Office photos">
-          <Reveal className="overflow-hidden rounded-ui">
-            <div aria-live="polite">
-              {current ? (
-                <Picture
-                  image={current.img}
-                  alt={current.alt}
-                  sizes="(min-width: 1025px) 580px, 100vw"
-                  className="aspect-[3/2] w-full object-cover"
-                />
-              ) : null}
+    <section className="py-[50px]" aria-labelledby="about-title">
+      <div className="mx-auto max-w-[1140px]">
+        <SectionHeading id="about-title">{title}</SectionHeading>
+        <div className="mt-[30px] grid items-center gap-10 px-5 py-[10px] lg:grid-cols-2">
+          <section
+            className="relative"
+            aria-roledescription="carousel"
+            aria-label="Office photos"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            onFocus={() => setPaused(true)}
+            onBlur={() => setPaused(false)}
+          >
+            <div className="overflow-hidden rounded-card lg:ml-[-124px]" aria-live="polite">
+              <div
+                className="flex transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none"
+                style={{ transform: `translateX(-${i * 100}%)` }}
+              >
+                {slides.map((s, n) => (
+                  <Picture
+                    key={s.id}
+                    image={s.img}
+                    alt={n === i ? s.alt : ''}
+                    aria-hidden={n === i ? undefined : 'true'}
+                    sizes="(min-width: 1025px) 654px, 100vw"
+                    className="aspect-[654/437] w-full shrink-0 object-cover"
+                    pictureClassName="contents"
+                  />
+                ))}
+              </div>
             </div>
-          </Reveal>
-          <div className="absolute bottom-3 right-3 flex gap-1.5">
             <button
               type="button"
               onClick={() => go(-1)}
               aria-label="Previous photo"
-              className={arrow}
+              className={`${arrow} left-0`}
             >
-              <Icon name="chevron-left" size={18} />
+              <Icon name="chevron-left" size={25} />
             </button>
-            <button type="button" onClick={() => go(1)} aria-label="Next photo" className={arrow}>
-              <Icon name="chevron-right" size={18} />
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next photo"
+              className={`${arrow} right-0`}
+            >
+              <Icon name="chevron-right" size={25} />
             </button>
-          </div>
-          <p className="sr-only">
-            Photo {i + 1} of {slides.length}
-          </p>
-        </section>
-        <div>
-          <SectionHeading id="about-title" eyebrow={eyebrow}>
-            {title}
-          </SectionHeading>
-          <div className="mt-5 space-y-4 text-charcoal">{children}</div>
-          <SmartLink
-            href={ctaHref}
-            className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
-          >
-            {ctaLabel}
-            <Icon
-              name="arrow-right"
-              size={14}
-              className="transition-transform duration-200 group-hover:translate-x-1"
-            />
-          </SmartLink>
+            <p className="sr-only">
+              Photo {i + 1} of {slides.length}
+            </p>
+          </section>
+          <div className="flex flex-col gap-[14.4px] text-secondary">{children}</div>
+        </div>
+        <div className="mt-[65px] text-center md:mt-[49px]">
+          <Button asChild>
+            <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
+          </Button>
         </div>
       </div>
     </section>

@@ -1,7 +1,8 @@
 import { included } from '@content/en/data/home'
-import { Reveal } from '~/components/motion/Reveal'
+import bg from '~/assets/images/home/included-bg.jpg?w=1000;1600&as=picture'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
-import { SectionHeading } from '~/components/primitives/SectionHeading'
+import { WaveDivider } from '~/components/primitives/WaveDivider'
+import { cn } from '~/lib/cn'
 
 const icons = import.meta.glob<PictureSource>(
   '../../assets/images/icons/{fast-delivery,formats,accuracy}.png',
@@ -10,54 +11,70 @@ const icons = import.meta.glob<PictureSource>(
 
 export interface FeatureCardsProps {
   title?: string
-  eyebrow?: string
 }
 
-/** "What's included?": three columns under a hairline (turnaround, formats, accuracy), each with its icon. */
-export function FeatureCards({
-  title = "What's included?",
-  eyebrow = 'Every order',
-}: FeatureCardsProps) {
+/** "What's included?": three white cards over a studio photo with wavy edges. */
+export function FeatureCards({ title = "What's included?" }: FeatureCardsProps) {
   return (
     <section
-      className="border-t border-line py-section lg:py-section-lg"
+      className="relative isolate my-[50px] overflow-hidden pt-[30px] pb-[113px] text-white md:min-h-[700px] md:pt-[100px] md:pb-[100px]"
       aria-labelledby="included-title"
     >
-      <div className="container-content">
-        <SectionHeading id="included-title" eyebrow={eyebrow}>
+      <Picture
+        image={bg}
+        alt=""
+        sizes="100vw"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+        pictureClassName="contents"
+      />
+      <div className="absolute inset-0 -z-10 bg-[#3a3a3a] opacity-[0.32]" aria-hidden="true" />
+      <WaveDivider position="top" width={138} mobileHeight={20} mobileWidth={266} />
+      <WaveDivider position="bottom" height={39} width={135} mobileHeight={20} mobileWidth={266} />
+      <div className="mx-auto max-w-[1140px] px-[10px] pt-10 md:px-0 md:pt-[50px]">
+        <h2
+          id="included-title"
+          className="text-center text-[28px] font-bold leading-8 text-white md:text-h2 md:leading-8"
+        >
           {title}
-        </SectionHeading>
-        <ul className="mt-10 grid gap-8 md:grid-cols-3 lg:mt-14 lg:gap-10">
-          {included.map((f, i) => {
+        </h2>
+        <ul className="mt-[60px] grid gap-5 md:grid-cols-3">
+          {included.map((f) => {
             const img = icons[`../../assets/images/icons/${f.icon}.png`]
             return (
-              <Reveal
-                as="li"
+              <li
                 key={f.title}
-                delay={i * 0.06}
-                className="flex flex-col gap-3 border-t border-line pt-6"
+                className="flex flex-col items-center justify-center rounded-card bg-white p-5 text-center shadow-[0_0_45px_rgb(0_0_0/0.13)] md:min-h-[267px]"
               >
-                <span className="flex h-14 items-center">
-                  {img ? (
-                    <Picture
-                      image={img}
-                      alt=""
-                      sizes="120px"
-                      className={f.icon === 'formats' ? 'h-12 w-auto' : 'h-14 w-14'}
-                    />
-                  ) : null}
-                </span>
-                <h3 className="mt-2 text-h3">{f.title}</h3>
-                <p className="text-[15px] leading-relaxed text-charcoal">
+                {img ? (
+                  <Picture
+                    image={img}
+                    alt=""
+                    sizes="270px"
+                    className={
+                      f.icon === 'formats'
+                        ? 'h-[61px] w-auto md:h-[63px]'
+                        : 'h-[73px] w-[73px] md:h-[74px] md:w-[74px]'
+                    }
+                  />
+                ) : null}
+                <h3
+                  className={cn(
+                    '-mt-[7px] text-[18px] font-semibold text-[#0c0c0c] md:mt-3',
+                    f.icon === 'fast-delivery' ? 'leading-[21.6px]' : 'leading-9',
+                  )}
+                >
+                  {f.title}
+                </h3>
+                <p className="mt-[10px] text-body whitespace-pre-line text-ink">
                   {f.body}
                   {f.emphasis ? (
                     <>
                       <br />
-                      <strong className="font-bold text-ink">{f.emphasis}</strong>
+                      <strong className="font-bold">{f.emphasis}</strong>
                     </>
                   ) : null}
                 </p>
-              </Reveal>
+              </li>
             )
           })}
         </ul>

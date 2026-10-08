@@ -2,24 +2,21 @@ import type { ComponentPropsWithoutRef } from 'react'
 import { cn } from '~/lib/cn'
 
 export interface CardProps extends ComponentPropsWithoutRef<'div'> {
-  /** `rule` (default): a hairline above, no box. `outline`: a bordered panel for forms and banners. */
-  tone?: 'rule' | 'outline' | 'peach'
+  tone?: 'white' | 'peach' | 'cream' | 'outline'
   padding?: 'none' | 'sm' | 'md' | 'lg'
 }
 
 const tones = {
-  rule: 'border-t border-line',
-  outline: 'rounded-ui border border-line bg-white',
-  peach: 'rounded-ui bg-peach',
+  white: 'bg-white shadow-card',
+  peach: 'bg-peach shadow-card',
+  cream: 'bg-cream shadow-card',
+  outline: 'bg-white border border-line',
 }
-const paddings = { none: '', sm: 'p-5', md: 'p-7', lg: 'p-9' }
+const paddings = { none: '', sm: 'p-4', md: 'p-6', lg: 'p-8' }
 
-/** Flat container: by default a column set off by a hairline, the way every grouped item reads on the site. */
-export function Card({ tone = 'rule', padding = 'none', className, ...props }: CardProps) {
+/** Rounded 12px surface used by rating cards, pricing tiers, reviews and audience tiles. */
+export function Card({ tone = 'white', padding = 'md', className, ...props }: CardProps) {
   return (
-    <div
-      {...props}
-      className={cn(tones[tone], tone === 'rule' ? 'pt-6' : paddings[padding], className)}
-    />
+    <div {...props} className={cn('rounded-card', tones[tone], paddings[padding], className)} />
   )
 }

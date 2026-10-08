@@ -2,7 +2,7 @@
   {
     "path": "/*",
     "resourceSizes": [
-      { "resourceType": "script", "budget": 180 },
+      { "resourceType": "script", "budget": 150 },
       { "resourceType": "stylesheet", "budget": 60 },
       { "resourceType": "font", "budget": 200 },
       { "resourceType": "total", "budget": 1500 }
