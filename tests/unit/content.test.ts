@@ -40,10 +40,10 @@ describe('meta.ts is plain data', () => {
   const ok = `title: 'A page title', description: '${'A description long enough for the schema. '.repeat(2)}', translationKey: 'x'`
   it('accepts a literal with type imports, satisfies and as const', () => {
     const meta = readMetaSource(
-      `import type { PageMetaInput } from '~/content/schema'\n\nexport default { ${ok}, hero: { title: 'H' } } satisfies PageMetaInput\n`,
+      `import type { PageMetaInput } from '~/content/schema'\n\nexport default { ${ok}, updated: '2026-01-01' } satisfies PageMetaInput\n`,
       file,
     )
-    expect(meta).toMatchObject({ title: 'A page title', template: 'page', hero: { title: 'H' } })
+    expect(meta).toMatchObject({ title: 'A page title', type: 'page', updated: '2026-01-01' })
     expect(readMetaSource(`export default { ${ok} } as const`, file).title).toBe('A page title')
   })
   it.each([

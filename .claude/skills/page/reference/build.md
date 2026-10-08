@@ -9,8 +9,8 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
      `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider` for the rest), `**bold**` → plain `<strong>`,
      emphasis → plain `<em>`. Never raw `<p>`, `<h2>`, `<ul>`, `<a>`: the content test refuses them.
    - `"img/<file>"` → the file copied into the page folder and imported with `?w=…&as=picture`.
-   - `PageHeader` → the `hero` in `meta.ts` for the `page` and `service` templates, which render it; a
-     `landing` page writes its own `<PageHeader variant="split" …/>` as its first block.
+   - `PageHeader` → the first block of the page, as in the mockup (a service page passes `icon` and
+     `rating={google}` from `@content/<locale>/data/ratings`; a landing page uses `variant="split"`).
    - `ContactSection` gets `returnTo` = the page path.
    `mockups/gift-card/sections.html` ↔ `content/en/pages/gift-card/index.tsx` + `meta.ts` is the worked
    example. Props are literals (strings, numbers, objects, arrays), picture imports and lists imported from
@@ -35,7 +35,7 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
 4. **Meta** in `meta.ts` per `src/content/schema.ts`: `import type { PageMetaInput } from '~/content/schema'`
    then `export default { … } satisfies PageMetaInput` (or the collection's input type) and nothing else: it
    is read without running it, so only literals. `title` 30–65 chars, `description` 50–160, `translationKey`
-   shared across languages, `template` or the type-specific fields. Structured facts stay in
+   shared across languages, the collection's fields (`shortTitle`, `icon`, `group`… for a service). Structured facts stay in
    `content/<locale>/data/*.ts`; add the page to `data/nav.ts` / `data/footer.ts` where the preview shows
    it; its path leaves any legacy-link list by itself (`src/content/paths.generated.json` is generated).
 5. **Look at the real page while building it.** Start `pnpm dev` once in the background (Bash

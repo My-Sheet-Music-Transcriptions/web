@@ -46,23 +46,6 @@ export const baseSchema = z.object({
 
 export const pageSchema = baseSchema.extend({
   type: z.literal('page').default('page'),
-  /** Which template wraps the page component (index.tsx). */
-  template: z
-    .enum(['home', 'page', 'landing', 'pricing', 'contact', 'reviews', 'about'])
-    .default('page'),
-  /** The page header the template renders from meta (PageHeader band); `landing` pages write their own. */
-  hero: z
-    .object({
-      eyebrow: z.string().optional(),
-      title: z.string(),
-      subtitle: z.string().optional(),
-      /** A sentence or two under the title (light markdown: **bold**, [links](/path)). */
-      lead: z.string().optional(),
-      cta: z.object({ label: z.string(), href: z.string() }).optional(),
-      /** Show the compact Google rating card under the band. */
-      rating: z.boolean().optional(),
-    })
-    .optional(),
 })
 
 export const serviceSchema = baseSchema.extend({
@@ -83,14 +66,6 @@ export const serviceSchema = baseSchema.extend({
   ]),
   priceFrom: z.number().positive().optional(),
   order: z.number().int().default(100),
-  /** The header the service template renders: h1 (defaults to the title), subtitle, rating card (on by default). */
-  hero: z
-    .object({
-      title: z.string().optional(),
-      subtitle: z.string().optional(),
-      rating: z.boolean().default(true),
-    })
-    .optional(),
 })
 
 export const postSchema = baseSchema.extend({

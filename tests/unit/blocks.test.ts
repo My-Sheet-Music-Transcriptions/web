@@ -52,7 +52,7 @@ describe('block index', () => {
   it('finds where each block is used from the pages themselves', () => {
     expect(usage.Hero).toEqual(['home'])
     expect(usage.Steps).toContain('gift-card')
-    // the page template renders PageHeader from meta.ts; the homepage has none
+    // every page but the homepage writes its own PageHeader
     expect(usage.PageHeader).toContain('gift-card')
     expect(usage.PageHeader).not.toContain('home')
   })

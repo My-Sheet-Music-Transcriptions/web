@@ -1,4 +1,4 @@
-import { ContactSection, MediaText, Steps } from '~/components/blocks'
+import { ContactSection, MediaText, PageHeader, Steps } from '~/components/blocks'
 import { Text } from '~/components/typography'
 import card from './gift-card.png?w=480;960&as=picture'
 import mascot from './mascot.png?w=240;480&as=picture'
@@ -6,6 +6,11 @@ import mascot from './mascot.png?w=240;480&as=picture'
 export default function GiftCardPage() {
   return (
     <>
+      <PageHeader
+        title="Gift a transcription!"
+        subtitle="Custom music transcription gift cards for every member of your family and each one of your friends."
+      />
+
       <MediaText
         image={mascot}
         alt="The My Sheet Music Transcriptions mascot holding a gift"

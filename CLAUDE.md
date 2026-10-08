@@ -51,7 +51,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   inside pages and blocks, styled with Tailwind once. Plain `<strong>` / `<em>` are the exceptions, styled in the
   base layer of `theme.css`. Pages never write raw `<p>`, `<h2>`, `<ul>`, `<a>` (`tests/unit/content.test.ts`).
 - `src/components/layout` – TopBar, Header (+MegaMenu, MobileNav), Footer, ConsentBanner, SiteShell.
-- `src/components/templates` – wraps an entry's page component (home, page, landing...). Selected by `meta.ts`.
+- `src/components/layout/EntryPage.tsx` – wraps an entry's page component in `<main>`. There are no templates: a page
+  is blocks only and opens with its own `PageHeader` (`Hero` on the homepage); `meta.ts` holds SEO data only.
 - `src/components/blocks/catalogue.ts` – one entry per block (description, defaults, JSX usage, data source);
   drives the README table, the artifact docs and the `page` skill's previews. Missing entry = type error.
 - `src/i18n/sites/<locale>.ts` – domain, strings, switcher, contact facts per locale. `src/site.ts` exposes the build's
@@ -95,8 +96,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 ## Adding content (short version; the skills have the full checklist)
 
 1. Pick the collection and slug; check `content/<locale>/...` for collisions.
-2. Write `meta.ts` (title, description, translationKey, template/type-specific fields) and compose `index.tsx`
-   from blocks, e.g. `<PageHeader … />`, `<Section title="..."><Text>…</Text></Section>`,
+2. Write `meta.ts` (title, description, translationKey, the collection's fields) and compose `index.tsx`
+   from blocks, opening with `<PageHeader … />` (its h1; `icon` + `rating` on service pages), then e.g. `<Section title="..."><Text>…</Text></Section>`,
    `<Testimonials title="…" items={homeReviews} limit={4} />` (`content/en/pages/gift-card/` is the worked example,
    `content/en/services/piano/` the service one). Blocks never import content: lists (ratings, prices, reviews,
    shared FAQ groups) are imported from `content/<locale>/data/*.ts` in the page and passed as props.

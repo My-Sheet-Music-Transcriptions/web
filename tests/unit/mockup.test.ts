@@ -6,7 +6,6 @@ import {
   flattenChildren,
   type MockupEntry,
   mockupFromEntry,
-  rendersPageHeader,
 } from '../../scripts/design-system/mockup-lib'
 import { parseBlocks, prepareSections } from '../../scripts/design-system/review-lib'
 import { CONTENT_DIR, readAllEntries } from '../../scripts/lib/content-fs'
@@ -35,7 +34,7 @@ const page = (
 ): MockupEntry => ({
   file: 'en/pages/x/index.tsx',
   path: '/x',
-  meta: { type: 'page', title: 'X page title', template: 'page', ...meta },
+  meta: { type: 'page', title: 'X page title', ...meta },
   source: `${head}\n\nexport default function Page() {\n  return (\n    <>\n${jsx}\n    </>\n  )\n}\n`,
 })
 const expr = (code: string): ts.Expression => {
@@ -243,46 +242,35 @@ describe('flattenChildren', () => {
 })
 
 describe('composing the page', () => {
-  it('renders the header from the meta, or the title', () => {
-    expect(rendersPageHeader({ type: 'page', template: 'home' })).toBe(false)
-    expect(rendersPageHeader({ type: 'page', template: 'landing' })).toBe(false)
-    for (const template of ['page', 'pricing', undefined])
-      expect(rendersPageHeader({ type: 'page', template })).toBe(true)
-    expect(rendersPageHeader({ type: 'service' })).toBe(true)
+  it("takes the title from the page's own PageHeader or Hero, else from the meta", () => {
     const plain = mockupFromEntry(page('<Section title="Hi">Text</Section>'))
-    expect(plain.blocks[3]).toEqual({ name: 'Section', props: { title: 'Hi', children: 'Text' } })
-    expect(plain.blocks[2]).toEqual({ name: 'PageHeader', props: { title: 'X page title' } })
-    const withHero = mockupFromEntry(
-      page('<Section title="Hi">Text</Section>', {
-        hero: { title: 'H1', subtitle: 'Sub', eyebrow: 'Eye', rating: true },
-      }),
+    expect(plain.blocks.map((b) => b.name)).toEqual(['TopBar', 'Header', 'Section', 'Footer'])
+    expect(plain.blocks[2]).toEqual({ name: 'Section', props: { title: 'Hi', children: 'Text' } })
+    expect(plain.title).toBe('X page title')
+    const withHeader = mockupFromEntry(
+      page(
+        '<PageHeader title="H1" subtitle="Sub" icon="piano" rating={google} />\n<Section title="Hi">Text</Section>',
+        {},
+        "import { google } from '@content/en/data/ratings'\nimport { Text } from '~/components/typography'",
+      ),
       () => "export const google = { id: 'google', count: '854' }",
     )
-    expect(withHero.blocks[2]).toEqual({
+    expect(withHeader.blocks[2]).toEqual({
       name: 'PageHeader',
       props: {
         title: 'H1',
         subtitle: 'Sub',
-        eyebrow: 'Eye',
+        icon: 'piano',
         rating: { id: 'google', count: '854' },
       },
     })
-    expect(withHero.title).toBe('H1')
-    const landing = mockupFromEntry(
-      page('<PageHeader title="L" variant="split" />', { template: 'landing' }),
-    )
+    expect(withHeader.title).toBe('H1')
+    const landing = mockupFromEntry(page('<PageHeader title="L" variant="split" />'))
     expect(landing.blocks[2]).toEqual({
       name: 'PageHeader',
       props: { title: 'L', variant: 'split' },
     })
-  })
-
-  it('the templates agree with rendersPageHeader', () => {
-    const read = (t: string) => fs.readFileSync(`src/components/templates/${t}.tsx`, 'utf8')
-    expect(read('PageTemplate')).toContain('<PageHeader')
-    expect(read('ServiceTemplate')).toContain('<PageHeader')
-    expect(read('HomeTemplate')).not.toContain('<PageHeader')
-    expect(read('LandingTemplate')).not.toContain('<PageHeader')
+    expect(landing.title).toBe('L')
   })
 
   it('wraps stray prose in a Section with a warning', () => {
@@ -294,13 +282,12 @@ describe('composing the page', () => {
     expect(r.blocks.map((b) => b.name)).toEqual([
       'TopBar',
       'Header',
-      'PageHeader',
       'Section',
       'Steps',
       'Section',
       'Footer',
     ])
-    expect(r.blocks[3]?.props).toEqual({ children: 'Some intro text.' })
+    expect(r.blocks[2]?.props).toEqual({ children: 'Some intro text.' })
     expect(r.warnings.filter((w) => /prose outside a block/.test(w))).toHaveLength(2)
   })
 
@@ -312,11 +299,11 @@ describe('composing the page', () => {
         "import pic from './pic.jpg?w=480&as=picture'\nimport unused from './other.png'",
       ),
     )
-    expect(r.blocks[3]).toEqual({
+    expect(r.blocks[2]).toEqual({
       name: 'MediaText',
       props: { image: 'img/pic.jpg', alt: 'A', caption: true },
     })
-    expect(r.blocks[4]).toEqual({ name: 'ContactSection', props: { id: 'c' } })
+    expect(r.blocks[3]).toEqual({ name: 'ContactSection', props: { id: 'c' } })
     expect(r.images).toEqual(['pic.jpg'])
     expect(r.warnings).toEqual([
       expect.stringMatching(/returnTo/),
@@ -326,9 +313,6 @@ describe('composing the page', () => {
 
   it('refuses what cannot be shown faithfully', () => {
     expect(() => mockupFromEntry(page('<Header />'))).toThrow(/layout comes with every page/)
-    expect(() => mockupFromEntry(page('<PageHeader title="x" />'))).toThrow(
-      /already renders the header/,
-    )
     expect(() => mockupFromEntry(page('<Nope />'))).toThrow(/unknown block <Nope>/)
     expect(() => mockupFromEntry(page('<Steps {...props} />'))).toThrow(/spread/)
     expect(() => mockupFromEntry(page('<Steps steps={items} />'))).toThrow(

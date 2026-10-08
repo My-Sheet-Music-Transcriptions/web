@@ -9,10 +9,5 @@ export default {
   icon: 'guitar',
   group: 'guitar',
   priceFrom: 19,
-  hero: {
-    title: 'Guitar Tab Transcription Service',
-    subtitle:
-      'Get your guitar tab songs transcribed accurately into sheet music and tab by professionals',
-  },
   updated: '2025-12-11',
 } satisfies ServiceMetaInput

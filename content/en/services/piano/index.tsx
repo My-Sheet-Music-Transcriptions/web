@@ -1,11 +1,12 @@
 import { generalFaq } from '@content/en/data/faqs'
-import { counter, platforms } from '@content/en/data/ratings'
+import { counter, google, platforms } from '@content/en/data/ratings'
 import { included, pianoPricing } from '@content/en/data/services'
 import {
   CardGrid,
   ContactSection,
   CtaBand,
   FaqList,
+  PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
@@ -21,6 +22,13 @@ import piano5ThemeOfLoveFinalFantasy4 from './piano-5-theme-of-love-final-fantas
 export default function PianoPage() {
   return (
     <>
+      <PageHeader
+        title="Piano Transcriptions"
+        subtitle="Get your piano songs transcribed accurately into sheet music by professionals"
+        icon="piano"
+        rating={google}
+      />
+
       <Steps
         title="How does it work?"
         layout="columns"

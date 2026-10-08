@@ -14,11 +14,6 @@ import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
 
 const BLOCKS = 'src/components/blocks'
 
-/** The templates that render PageHeader from meta.ts: all but the homepage and landing pages (src/components/templates). */
-export function rendersPageHeader(meta: { type: string; template?: string }): boolean {
-  return !(meta.type === 'page' && (meta.template === 'home' || meta.template === 'landing'))
-}
-
 export interface PropDoc {
   name: string
   optional: boolean
@@ -172,13 +167,8 @@ export function blockUsage(entries = readAllEntries()): Record<string, string[]>
   for (const e of entries) {
     const page = e.locale === DEFAULT_LOCALE ? e.slug : `${e.locale}/${e.slug}`
     const source = fs.readFileSync(path.join(CONTENT_DIR, e.page), 'utf8')
-    for (const name of Object.keys(catalogue)) {
-      // the page and service templates render PageHeader from meta.ts
-      const used =
-        new RegExp(`<${name}\\b`).test(source) ||
-        (name === 'PageHeader' && rendersPageHeader(e.meta as { type: string; template?: string }))
-      if (used) out[name]?.push(page)
-    }
+    for (const name of Object.keys(catalogue))
+      if (new RegExp(`<${name}\\b`).test(source)) out[name]?.push(page)
   }
   return out
 }

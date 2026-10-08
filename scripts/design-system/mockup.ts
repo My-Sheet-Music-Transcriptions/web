@@ -38,7 +38,7 @@ const pageDir = path.join(CONTENT_DIR, entry.dir)
 const result = mockupFromEntry({
   file: entry.page,
   path: entry.path,
-  meta: entry.meta as typeof entry.meta & { template?: string; hero?: { title: string } },
+  meta: entry.meta,
   source: fs.readFileSync(path.join(CONTENT_DIR, entry.page), 'utf8'),
 })
 const slug = entry.locale === 'en' ? entry.slug : `${entry.locale}-${entry.slug}`

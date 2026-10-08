@@ -7,6 +7,7 @@ import {
   FaqList,
   IconGrid,
   MediaText,
+  PageHeader,
   RatingBanner,
   Samples,
   Steps,
@@ -22,6 +23,12 @@ import woodchoppersBall from './woodchoppers-ball.png?w=300;600&as=picture'
 export default function MusicTranscriptionServicePage() {
   return (
     <>
+      <PageHeader
+        title="Music Transcription Service Online"
+        subtitle="Turn audio into sheet music easily!"
+        lead="Learn more about our music notation services and our range of solutions to transform audio recordings into precise and digital sheet music."
+      />
+
       <IconGrid
         items={allServices}
         limit={8}

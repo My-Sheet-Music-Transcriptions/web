@@ -1,11 +1,12 @@
 import { generalFaq } from '@content/en/data/faqs'
-import { counter, platforms } from '@content/en/data/ratings'
+import { counter, google, platforms } from '@content/en/data/ratings'
 import { guitarTabPricing, included } from '@content/en/data/services'
 import {
   CardGrid,
   ContactSection,
   CtaBand,
   FaqList,
+  PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
@@ -21,6 +22,13 @@ import guitarTabSheet5LonelyEyes from './guitar-tab-sheet-5-lonely-eyes.png?w=30
 export default function GuitarTabPage() {
   return (
     <>
+      <PageHeader
+        title="Guitar Tab Transcription Service"
+        subtitle="Get your guitar tab songs transcribed accurately into sheet music and tab by professionals"
+        icon="guitar"
+        rating={google}
+      />
+
       <Steps
         title="How does it work?"
         layout="columns"

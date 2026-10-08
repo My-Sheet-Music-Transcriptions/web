@@ -40,7 +40,6 @@ const preview: Preview = {
           'Primitives',
           'Blocks',
           ['Headers', 'Text & media', 'Lists & grids', 'Reviews & ratings', 'Calls to action'],
-          'Templates',
           'Layout',
         ],
       },

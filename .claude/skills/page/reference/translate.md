@@ -30,7 +30,7 @@ Doing it:
 2. Preview with `pnpm ds:review <locale>-<slug> "<Translated title>" /<translated-path>` as usual. Tell
    the person what is English by necessity (menu, footer, data blocks) so they do not comment on it.
 3. Build: the page folder under `content/<locale>/…`, `translationKey` identical to the source,
-   `title`/`description` in the target language within the length limits, `template` the same. The build
+   `title`/`description` in the target language within the length limits, the same blocks. The build
    serves it at `/<locale>/<translated-path>` on the deploy preview; the live URL is on that language's
    domain. The hreflang map and the language switcher pick the translation up by `translationKey`
    (`tests/unit/content.test.ts` fails on a key used twice in one locale).

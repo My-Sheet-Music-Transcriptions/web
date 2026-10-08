@@ -214,14 +214,15 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
 - [ ] W1.3 **Trailing slash and 404 behaviour on Netlify**: on a deploy preview check `/gift-card` (200, no redirect),
       `/gift-card/` (single 301 to no slash), an unknown path (404 page with status 404); fix with
       `autoSubfolderIndex: false` or rules if needed. Check that the query string (`?gclid=`) survives a 301.
-- [ ] W1.4 **Templates and collections** (each with a story and catalogue entry): `service` (hero, audio/PDF sample,
+- [ ] W1.4 **Collections and their header blocks** (each with a story and catalogue entry; there are no templates, a page
+      is blocks only and opens with its header block): `service` (PageHeader with icon and rating, audio/PDF sample,
       included items, pricing link, FAQ), `post` + blog index with `/<blogIndex>/page/<n>` pagination, `artist`
       (popular), `musician` (endorsed), `partner`, `legal` (long prose with table of contents), `glossary` (terms with
       anchors), FAQ page (from `faqs`, FAQPage JSON-LD), reviews page (from `reviews`). Frontmatter `path` override
       (D8). Prices and counts that appear on several pages go to `content/<locale>/data/*.ts`, as CLAUDE.md wants.
-      *Done 2026-10-08:* `service` (services collection: PageHeader band from meta.ts with the service icon and the Google
-      card; the page composes Steps, RatingBanner, Samples, CtaBand, CardGrid, PricingCards, FaqList) and `landing` (no
-      header from meta; the page opens with `<PageHeader variant="split">`). Shared data: `data/ratings.ts`,
+      *Done 2026-10-08:* `service` (services collection: the page opens with `<PageHeader icon rating>` and composes
+      Steps, RatingBanner, Samples, CtaBand, CardGrid, PricingCards, FaqList) and landing pages (open with
+      `<PageHeader variant="split">`). Templates were removed the same day: `meta.ts` is SEO data only. Shared data: `data/ratings.ts`,
       `data/services.ts` (included, per-service prices, `allServices`), `data/faqs.ts` (shared and category groups),
       `data/reviews.ts`. *Open:* post + blog index, artist, musician, partner, legal, glossary, FAQ page, reviews page.
 - [ ] W1.5 **New blocks the legacy pages need** (confirm while porting): `AudioSample` (native `<audio>`, local file),
@@ -321,7 +322,7 @@ port, else drop from `nav.ts`). One importer run per group (keys, vocal, strings
 editing) while the mapping rules settle, then the rest in one.
 
 *Ported 2026-10-08 ([#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32), English only):* `/piano`,
-`/guitar-tab`, `/trumpet-transcription-service`, `/violin-transcription-service`, on the `service` template that the
+`/guitar-tab`, `/trumpet-transcription-service`, `/violin-transcription-service`, on the service page pattern that the
 importer fills. The es/fr/de/ja twins of `/piano` and `/guitar-tab` follow in their locale waves. 37 to port and 5 to
 verify remain.
 
@@ -329,7 +330,7 @@ verify remain.
 
 Audience and B2B pages (`/artists`, `/b2b`, `/music-educators`, publishers, partners, printing…), use cases (weddings,
 Christmas, auditions, MIDI/YouTube/productions into scores), 9 AI-music pages and 15 notation-software conversion pages
-(two templates, filled from data), 4 glossaries.
+(two page patterns, filled from data), 4 glossaries.
 
 *Ported 2026-10-08 ([#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32)):* `/artists`,
 `/music-educators`, `/sheet-music-printing`, `/partners`, `/endorsed-musicians-and-composers` and

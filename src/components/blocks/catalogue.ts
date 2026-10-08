@@ -115,21 +115,23 @@ export const catalogue = {
   PageHeader: {
     group: 'Blocks',
     category: 'header',
-    useWhen: 'The opening of every page but the homepage: its h1, a subtitle or lead, a button.',
+    useWhen:
+      'The first block of every page but the homepage: its h1, a subtitle or lead, a button.',
     notFor: 'the homepage: Hero.',
     description:
       'Page opening. `band`: dark centred title band with an orange rule, then the instrument icon and the compact rating card when given (service pages). `split`: white, copy and button left, a picture or carousel right (landing pages).',
     defaults: {
       title: 'Piano Transcription Service',
       subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',
+      icon: 'piano',
       rating: google,
     },
     usage:
-      '<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} />',
+      '<PageHeader title="…" subtitle="…" icon="piano" rating={google} />\n<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} />',
     previewHeight: 560,
     dataSource: 'content/<locale>/data/ratings.ts (google)',
     guidelines:
-      'The `page` and `service` templates render the band from meta.ts (`hero`); a `landing` page writes its own `<PageHeader variant="split" …/>` first. One per page.',
+      'The first block of every page but the homepage: the band on content pages (`icon` + `rating` on service pages), `variant="split"` on landing pages. One per page.',
   },
   RatingBanner: {
     group: 'Blocks',

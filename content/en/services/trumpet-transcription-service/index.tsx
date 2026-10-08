@@ -1,11 +1,12 @@
 import { generalFaq } from '@content/en/data/faqs'
-import { counter, platforms } from '@content/en/data/ratings'
+import { counter, google, platforms } from '@content/en/data/ratings'
 import { included, trumpetPricing } from '@content/en/data/services'
 import {
   CardGrid,
   ContactSection,
   CtaBand,
   FaqList,
+  PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
@@ -19,6 +20,13 @@ import trumpet3EtnoViaBairo from './trumpet-3-etno-via-bairo.png?w=300;600&as=pi
 export default function TrumpetTranscriptionServicePage() {
   return (
     <>
+      <PageHeader
+        title="Trumpet Transcription Service"
+        subtitle="Get your trumpet songs transcribed accurately into sheet music by professionals"
+        icon="trumpet"
+        rating={google}
+      />
+
       <Steps
         title="How does it work?"
         layout="columns"

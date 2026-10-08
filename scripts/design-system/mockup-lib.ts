@@ -11,7 +11,6 @@ import {
   unwrap,
   where,
 } from '../lib/ts-literal'
-import { rendersPageHeader } from './blocks-lib'
 import { encodeProps, LAYOUT, WRAPPER_OPEN } from './review-lib'
 
 /**
@@ -30,15 +29,6 @@ export interface MockupEntry {
   meta: {
     type: string
     title: string
-    template?: string
-    hero?: {
-      eyebrow?: string
-      title?: string
-      subtitle?: string
-      lead?: string
-      cta?: { label: string; href: string }
-      rating?: boolean
-    }
   }
   /** The text of index.tsx. */
   source: string
@@ -54,7 +44,7 @@ export interface MockupResult {
   blocks: MockupBlock[]
   /** Pictures the page folder holds, to copy into mockups/<slug>/img/. */
   images: string[]
-  /** The page's H1 (the hero title) or its SEO title. */
+  /** The page's H1 (the title of its PageHeader or Hero) or its SEO title. */
   title: string
   path: string
   warnings: string[]
@@ -62,15 +52,19 @@ export interface MockupResult {
 
 class MockupError extends Error {}
 
+/** The h1 a page writes itself: the `title` of its first PageHeader or Hero block. */
+function pageTitle(blocks: MockupBlock[]): string | undefined {
+  const opening = blocks.find((b) => b.name === 'PageHeader' || b.name === 'Hero')
+  const title = opening?.props?.title
+  return typeof title === 'string' ? title : undefined
+}
+
 const IMAGE_IMPORT = /^\.\/([\w.-]+\.(?:png|jpe?g|webp|gif|svg))(?:\?.*)?$/i
 const BLOCKS_MODULE = '~/components/blocks'
 const TYPOGRAPHY_MODULE = '~/components/typography'
 /** Typography components that make a paragraph of their own; TextLink (and plain <strong>, <em>) are inline. */
 const PARAGRAPHS = ['Text', 'Heading']
 const TYPOGRAPHY = [...PARAGRAPHS, 'TextLink', 'List', 'ListItem', 'Quote', 'Divider']
-
-/** The templates that render PageHeader from meta.ts (see blocks-lib). */
-export { rendersPageHeader }
 
 function fail(message: string, node?: ts.Node): never {
   throw new MockupError(`cannot mockup: ${message}${node ? where(node) : ''}`)
@@ -224,7 +218,7 @@ export function serializeBlocks(blocks: MockupBlock[]): string {
   })
   const out: string[] = [WRAPPER_OPEN]
   for (const [i, line] of lines.entries()) {
-    // The top of the page (TopBar, Header, the hero) sits together; every other block is set off by a blank line.
+    // The top of the page (TopBar, Header, the page's header) sits together; every other block is set off by a blank line.
     if (i > 0 && !['TopBar', 'Header'].includes(blocks[i - 1]?.name ?? '')) out.push('')
     out.push(line)
   }
@@ -374,8 +368,6 @@ export function mockupFromEntry(
     flushProse()
     if ((LAYOUT as readonly string[]).includes(name))
       fail(`<${name}> in the page: the layout comes with every page`, node)
-    if (name === 'PageHeader' && rendersPageHeader(entry.meta))
-      fail('<PageHeader> in the page: this template already renders the header from the meta', node)
     if (!(name in catalogue)) fail(`unknown block <${name}>`, node)
     const props: Record<string, unknown> = {}
     for (const attr of attributesOf(node)) {
@@ -405,29 +397,12 @@ export function mockupFromEntry(
     warnings.push('ContactSection is not the last block; the design system expects it last')
 
   const blocks: MockupBlock[] = [{ name: 'TopBar' }, { name: 'Header' }]
-  if (rendersPageHeader(entry.meta)) {
-    const hero = entry.meta.hero ?? {}
-    const props: Record<string, unknown> = { title: hero.title ?? entry.meta.title }
-    for (const k of ['subtitle', 'eyebrow', 'lead', 'cta'] as const)
-      if (hero[k] !== undefined) props[k] = hero[k]
-    // services show the rating card unless the meta turns it off; pages only when they ask
-    const rating = entry.meta.type === 'service' ? hero.rating !== false : hero.rating === true
-    if (rating) {
-      const locale = /^([a-z]{2})\//.exec(entry.file)?.[1] ?? 'en'
-      try {
-        props.rating = readModuleLiterals(readData(locale, 'ratings'), 'ratings.ts').google
-      } catch {
-        warnings.push(`no content/${locale}/data/ratings.ts: the header's rating card is left out`)
-      }
-    }
-    blocks.push({ name: 'PageHeader', props })
-  }
   blocks.push(...body, { name: 'Footer' })
   return {
     sections: serializeBlocks(blocks),
     blocks,
     images: [...used].sort(),
-    title: entry.meta.hero?.title ?? entry.meta.title,
+    title: pageTitle(body) ?? entry.meta.title,
     path: entry.path,
     warnings,
   }

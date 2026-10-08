@@ -1,3 +1,4 @@
+import { iconPicture } from '~/assets/icons'
 import { Carousel, type Slide } from '~/components/primitives/Carousel'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
@@ -21,8 +22,10 @@ export interface PageHeaderProps {
   rating?: RatingSource
   /** band: dark centred title band (default). split: copy left and pictures right, on white (landing pages). */
   variant?: 'band' | 'split'
-  /** The picture beside the copy (split), or beside the rating card under the band (an instrument icon). */
+  /** The picture beside the copy (split), or beside the rating card under the band. */
   image?: PictureSource
+  /** An illustrated icon by name (src/assets/images/icons) beside the rating card under the band: service pages. */
+  icon?: string
   /** Alt text of the picture; empty when decorative. */
   alt?: string
   /** Two or more pictures beside the copy, as a carousel (split). */
@@ -34,9 +37,9 @@ export interface PageHeaderProps {
 }
 
 /**
- * The opening of every page but the homepage: its h1 with an optional eyebrow, subtitle, lead and button.
- * `band` is the dark centred title band (templates render it from meta.ts), with the rating card and an
- * icon under it when given; `split` sets the copy beside a picture or carousel, as landing pages open.
+ * The opening of every page but the homepage, written first in the page: its h1 with an optional eyebrow,
+ * subtitle, lead and button. `band` is the dark centred title band, with the rating card and an icon under it
+ * when given (service pages); `split` sets the copy beside a picture or carousel, as landing pages open.
  */
 export function PageHeader({
   title,
@@ -47,11 +50,13 @@ export function PageHeader({
   rating,
   variant = 'band',
   image,
+  icon,
   alt = '',
   images,
   tone = 'grey',
   id,
 }: PageHeaderProps) {
+  const picture = image ?? iconPicture(icon)
   if (variant === 'split') {
     const slides = images ?? (image ? [{ image, alt }] : [])
     return (
@@ -127,10 +132,10 @@ export function PageHeader({
         ) : null}
         {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
       </div>
-      {rating || image ? (
+      {rating || picture ? (
         <div className="container-content flex flex-wrap items-center justify-center gap-10 py-10">
-          {image ? (
-            <Picture image={image} alt={alt} sizes="180px" className="h-[180px] w-auto" />
+          {picture ? (
+            <Picture image={picture} alt={alt} sizes="180px" className="h-[180px] w-auto" />
           ) : null}
           {rating ? (
             <div className="w-full max-w-[300px]">

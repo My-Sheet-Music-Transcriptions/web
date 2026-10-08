@@ -1,11 +1,12 @@
 import { generalFaq } from '@content/en/data/faqs'
-import { counter, platforms } from '@content/en/data/ratings'
+import { counter, google, platforms } from '@content/en/data/ratings'
 import { included, violinPricing } from '@content/en/data/services'
 import {
   CardGrid,
   ContactSection,
   CtaBand,
   FaqList,
+  PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
@@ -19,6 +20,13 @@ import violin3HymnMedley from './violin-3-hymn-medley.png?w=300;600&as=picture'
 export default function ViolinTranscriptionServicePage() {
   return (
     <>
+      <PageHeader
+        title="Violin Transcription Service"
+        subtitle="Get your violin songs transcribed accurately into sheet music by professionals"
+        icon="violin"
+        rating={google}
+      />
+
       <Steps
         title="How does it work?"
         layout="columns"

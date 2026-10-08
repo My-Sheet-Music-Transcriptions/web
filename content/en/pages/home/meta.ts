@@ -5,5 +5,4 @@ export default {
   description:
     '100% accurate, fast, hassle-free music transcription service online. Our team of music transcribers will create transcriptions for you.',
   translationKey: 'home',
-  template: 'home',
 } satisfies PageMetaInput

@@ -6,6 +6,7 @@ import {
   FaqList,
   Gallery,
   MediaText,
+  PageHeader,
   RatingBanner,
   Section,
   Steps,
@@ -30,6 +31,12 @@ import whyChoose from './why-choose.jpg?w=480;960&as=picture'
 export default function SheetMusicPrintingPage() {
   return (
     <>
+      <PageHeader
+        title="Sheet Music Printing Services"
+        lead="You know us for our transcriptions, discover our printing services. We offer top-notch services to get your sheet music professionally printed, **including cover art designs, book preparations, and book printing** services."
+        cta={{ label: 'Request this service', href: '#contact' }}
+      />
+
       <Section>
         <Text>
           Our <strong>Graphic Design and Proof-editing departments</strong> combine for an

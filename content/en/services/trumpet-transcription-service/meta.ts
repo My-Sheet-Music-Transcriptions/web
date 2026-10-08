@@ -9,9 +9,5 @@ export default {
   icon: 'trumpet',
   group: 'winds',
   priceFrom: 14,
-  hero: {
-    title: 'Trumpet Transcription Service',
-    subtitle: 'Get your trumpet songs transcribed accurately into sheet music by professionals',
-  },
   updated: '2024-12-17',
 } satisfies ServiceMetaInput
