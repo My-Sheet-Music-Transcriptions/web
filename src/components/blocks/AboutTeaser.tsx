@@ -80,20 +80,22 @@ export function AboutTeaser({
           <SectionHeading id="about-title" eyebrow={eyebrow}>
             {title}
           </SectionHeading>
-          <div className="mt-5 space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
-            {children}
-          </div>
-          <SmartLink
-            href={ctaHref}
-            className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
-          >
-            {ctaLabel}
-            <Icon
-              name="arrow-right"
-              size={14}
-              className="transition-transform duration-200 group-hover:translate-x-1"
-            />
-          </SmartLink>
+          <Reveal delay={0.08}>
+            <div className="mt-5 space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
+              {children}
+            </div>
+            <SmartLink
+              href={ctaHref}
+              className="group mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
+            >
+              {ctaLabel}
+              <Icon
+                name="arrow-right"
+                size={14}
+                className="transition-transform duration-200 group-hover:translate-x-1"
+              />
+            </SmartLink>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -1,3 +1,4 @@
+import { Reveal } from '~/components/motion/Reveal'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 
 const images = import.meta.glob<PictureSource>('../../assets/images/home/strip-*.jpg', {
@@ -33,30 +34,32 @@ export function ImageStrip({
 }: ImageStripProps) {
   return (
     <section aria-label="Examples of our sheet music" className="pb-section">
-      <ul
-        className="flex snap-x gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:thin] focus-visible:outline-3 focus-visible:outline-primary lg:justify-center"
-        // biome-ignore lint/a11y/noNoninteractiveTabindex: a horizontally scrollable region must be keyboard reachable
-        tabIndex={0}
-        aria-label="Scroll through photos of our sheet music"
-      >
-        {items.map((id) => {
-          const img = images[`../../assets/images/home/${id}.jpg`]
-          if (!img) return null
-          return (
-            <li
-              key={id}
-              className="w-[180px] shrink-0 snap-center overflow-hidden rounded-sm md:w-[220px]"
-            >
-              <Picture
-                image={img}
-                alt={alts[id] ?? ''}
-                sizes="220px"
-                className="h-[240px] w-[180px] object-cover md:h-[300px] md:w-[220px]"
-              />
-            </li>
-          )
-        })}
-      </ul>
+      <Reveal>
+        <ul
+          className="flex snap-x gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:thin] focus-visible:outline-3 focus-visible:outline-primary lg:justify-center"
+          // biome-ignore lint/a11y/noNoninteractiveTabindex: a horizontally scrollable region must be keyboard reachable
+          tabIndex={0}
+          aria-label="Scroll through photos of our sheet music"
+        >
+          {items.map((id) => {
+            const img = images[`../../assets/images/home/${id}.jpg`]
+            if (!img) return null
+            return (
+              <li
+                key={id}
+                className="w-[180px] shrink-0 snap-center overflow-hidden rounded-sm md:w-[220px]"
+              >
+                <Picture
+                  image={img}
+                  alt={alts[id] ?? ''}
+                  sizes="220px"
+                  className="h-[240px] w-[180px] object-cover md:h-[300px] md:w-[220px]"
+                />
+              </li>
+            )
+          })}
+        </ul>
+      </Reveal>
     </section>
   )
 }

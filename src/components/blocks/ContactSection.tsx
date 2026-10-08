@@ -169,7 +169,7 @@ export function ContactSection({
           </p>
         </Reveal>
 
-        <div>
+        <Reveal delay={0.08}>
           {status === 'sent' ? (
             <output className="block text-center text-ink" aria-live="polite">
               <p className="text-h3">Thank you! Your request is on its way.</p>
@@ -358,7 +358,7 @@ export function ContactSection({
               </Button>
             </form>
           )}
-        </div>
+        </Reveal>
       </div>
     </section>
   )

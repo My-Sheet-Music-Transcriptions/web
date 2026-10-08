@@ -32,7 +32,7 @@ export function StatsBanner({
         pictureClassName="contents"
       />
       <div className="container-content grid items-center gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-        <div>
+        <Reveal>
           <p className="eyebrow text-accent-light">{eyebrow}</p>
           <h2
             id="stats-title"
@@ -46,7 +46,7 @@ export function StatsBanner({
             </span>
             <span className="mt-2.5 block text-body text-white/80">{counterLabel}</span>
           </p>
-        </div>
+        </Reveal>
         <ul className="grid gap-4 sm:grid-cols-3 sm:gap-0">
           {ratings.map((r, i) => (
             <Reveal as="li" key={r.id} delay={i * 0.06}>

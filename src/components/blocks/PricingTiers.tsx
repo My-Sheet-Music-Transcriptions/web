@@ -37,9 +37,12 @@ export function PricingTiers({
             {title}
           </SectionHeading>
           {children ? (
-            <div className="space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
+            <Reveal
+              delay={0.08}
+              className="space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4"
+            >
               {children}
-            </div>
+            </Reveal>
           ) : null}
         </div>
         <ul className="mt-12 grid gap-10 md:grid-cols-3 lg:mt-14">
@@ -67,11 +70,11 @@ export function PricingTiers({
             </Reveal>
           ))}
         </ul>
-        <div className="mt-10">
+        <Reveal className="mt-10">
           <Button variant="outline" asChild>
             <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
           </Button>
-        </div>
+        </Reveal>
       </div>
     </section>
   )
