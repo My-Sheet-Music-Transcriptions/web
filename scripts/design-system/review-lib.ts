@@ -51,13 +51,21 @@ export function imageSize(file: string): { w: number; h: number } {
   throw new Error(`cannot read the size of ${file}`)
 }
 
-const decode = (s: string) =>
+/** The wrapper every sections.html starts with (white page, ink text, Montserrat). */
+export const WRAPPER_OPEN =
+  '<div style="width: 100%; background: #ffffff; color: #444444; font-family: \'Montserrat Variable\', Montserrat, system-ui, sans-serif;">'
+
+/** Entity-decodes a `data-props` attribute value (the bundle's `JSON.parse(dataset.props)` sees the same). */
+export const decodeProps = (s: string) =>
   s
     .replaceAll('&#39;', "'")
     .replaceAll('&apos;', "'")
     .replaceAll('&quot;', '"')
     .replaceAll('&amp;', '&')
-const encode = (s: string) => s.replaceAll('&', '&amp;').replaceAll("'", '&#39;')
+/** Encodes JSON for a single-quoted `data-props='…'` attribute: `&amp;` and `&#39;`, nothing else. */
+export const encodeProps = (s: string) => s.replaceAll('&', '&amp;').replaceAll("'", '&#39;')
+const decode = decodeProps
+const encode = encodeProps
 
 /** Opening tags with their quoted attributes (a `>` inside a quoted data-props value is fine). */
 const TAG = /<([a-z][\w-]*)((?:\s+[\w:-]+(?:=(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*\/?>/gi
@@ -66,6 +74,37 @@ const ATTR = /([\w:-]+)(?:=(?:"([^"]*)"|'([^']*)'|([^\s"'>]+)))?/g
 function attrs(raw: string) {
   const out: Record<string, string> = {}
   for (const m of raw.matchAll(ATTR)) out[m[1] as string] = m[2] ?? m[3] ?? m[4] ?? ''
+  return out
+}
+
+export interface Block {
+  name: string
+  proposed: boolean
+  /** Parsed `data-props`; undefined when the tag has none. */
+  props?: unknown
+  /** Set when `data-props` is not valid JSON. */
+  propsError?: string
+  /** The opening tag as written. */
+  tag: string
+}
+
+/** The block tags of a sections.html, top to bottom, with their props decoded (no validation). */
+export function parseBlocks(html: string): Block[] {
+  const out: Block[] = []
+  for (const m of html.matchAll(TAG)) {
+    const a = attrs(m[2] ?? '')
+    const name = a['data-msmt'] ?? a['data-proposed']
+    if (!name) continue
+    const block: Block = { name, proposed: a['data-proposed'] !== undefined, tag: m[0] }
+    if (a['data-props'] !== undefined) {
+      try {
+        block.props = JSON.parse(decodeProps(a['data-props']))
+      } catch (e) {
+        block.propsError = (e as Error).message
+      }
+    }
+    out.push(block)
+  }
   return out
 }
 
