@@ -13,7 +13,7 @@ export interface HowItWorksProps {
   id?: string
 }
 
-/** "How does it work?": three numbered step cards (send audio, we transcribe, print & play). */
+/** "How does it work?": three numbered columns under a hairline (send audio, we transcribe, print & play). */
 export function HowItWorks({
   title = 'How does it work?',
   eyebrow = 'Three simple steps',
@@ -22,28 +22,27 @@ export function HowItWorks({
   return (
     <section
       id={id}
-      className="scroll-mt-24 py-section lg:py-section-lg"
+      className="scroll-mt-24 border-t border-line py-section lg:py-section-lg"
       aria-labelledby={`${id}-title`}
     >
       <div className="container-content">
-        <SectionHeading id={`${id}-title`} eyebrow={eyebrow} rule="none">
+        <SectionHeading id={`${id}-title`} eyebrow={eyebrow}>
           {title}
         </SectionHeading>
-        <ol className="mt-12 grid gap-5 md:grid-cols-3 lg:gap-6">
+        <ol className="mt-10 grid gap-8 md:grid-cols-3 lg:mt-14 lg:gap-10">
           {howItWorks.map((step, i) => (
-            <li
-              key={step.title}
-              className="relative flex flex-col rounded-card border border-line bg-surface p-7 lg:p-8"
-            >
-              <span className="eyebrow text-accent-text">Step {i + 1}</span>
+            <li key={step.title} className="flex flex-col gap-3 border-t border-line pt-6">
+              <span className="eyebrow tabular-nums text-muted">
+                {String(i + 1).padStart(2, '0')}
+              </span>
               <Picture
                 image={stepImages[step.image]}
                 alt=""
-                sizes="140px"
-                className="mt-6 h-[120px] w-auto self-start object-contain"
+                sizes="96px"
+                className="h-[72px] w-auto self-start object-contain"
               />
-              <h3 className="mt-6 text-h3">{step.title.replace(/^\d+\.\s*/, '')}</h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-charcoal">{step.body}</p>
+              <h3 className="mt-2 text-h3">{step.title.replace(/^\d+\.\s*/, '')}</h3>
+              <p className="text-[15px] leading-relaxed text-charcoal">{step.body}</p>
             </li>
           ))}
         </ol>

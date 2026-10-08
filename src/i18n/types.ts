@@ -2,11 +2,22 @@ export type Locale = 'en' | 'es' | 'fr' | 'de' | 'ja' | 'ca'
 
 export const LOCALES: readonly Locale[] = ['en', 'es', 'fr', 'de', 'ja', 'ca'] as const
 
+export interface NavLink {
+  label: string
+  href: string
+}
+
+/** The Services panel: a few short columns of links plus highlighted destinations on the right. */
+export interface NavMenu {
+  columns: { title: string; links: NavLink[] }[]
+  features: { title: string; body: string; cta: string; href: string }[]
+}
+
 export interface NavItem {
   label: string
   href: string
-  /** Mega-menu groups shown on hover/focus; a group has a title and a list of links. */
-  groups?: { title: string; href?: string; links: { label: string; href: string }[] }[]
+  /** Panel shown on hover/focus (desktop) or expanded in the phone menu. */
+  menu?: NavMenu
 }
 
 export interface FooterColumnLink {

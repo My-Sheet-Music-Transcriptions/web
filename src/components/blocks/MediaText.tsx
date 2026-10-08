@@ -65,7 +65,7 @@ export function MediaText({
             image={image}
             alt={alt}
             sizes={`(min-width: 768px) ${imageWidth}px, 100vw`}
-            className={cn('h-auto w-full', caption && 'rounded-card shadow-card')}
+            className={cn('h-auto w-full', caption && 'rounded-ui')}
           />
           {caption ? (
             <figcaption className="text-caption italic text-muted">{caption}</figcaption>

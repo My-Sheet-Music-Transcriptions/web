@@ -5,25 +5,26 @@ export interface SectionHeadingProps {
   children: ReactNode
   /** Small uppercase label above the heading (orange on light, peach on dark). */
   eyebrow?: ReactNode
-  /** Short rounded bar under the heading: orange (accent), grey or none. */
+  /** Short bar under the heading: orange (accent), grey, or none (default). */
   rule?: 'accent' | 'grey' | 'none'
   /** Heading level; the homepage uses h2 for every section. */
   as?: 'h1' | 'h2' | 'h3'
   tone?: 'dark' | 'light'
+  /** Left (default) or centered. */
   align?: 'center' | 'left'
   subtitle?: ReactNode
   className?: string
   id?: string
 }
 
-/** Section title with an optional eyebrow, the short brand rule and a subtitle; centered or left-aligned. */
+/** Section title: optional eyebrow, the heading and a subtitle, left-aligned in a 640px measure. */
 export function SectionHeading({
   children,
   eyebrow,
-  rule = 'accent',
+  rule = 'none',
   as: Tag = 'h2',
   tone = 'dark',
-  align = 'center',
+  align = 'left',
   subtitle,
   className,
   id,
@@ -32,22 +33,17 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        'flex flex-col',
-        align === 'center' ? 'items-center text-center' : 'items-start text-left',
+        'flex max-w-[640px] flex-col gap-3.5',
+        align === 'center' ? 'mx-auto items-center text-center' : 'items-start text-left',
         className,
       )}
     >
       {eyebrow ? (
-        <p className={cn('eyebrow mb-4', light ? 'text-accent-light' : 'text-accent-text')}>
-          {eyebrow}
-        </p>
+        <p className={cn('eyebrow', light ? 'text-accent-light' : 'text-accent-text')}>{eyebrow}</p>
       ) : null}
       <Tag
         id={id}
-        className={cn(
-          'max-w-[26ch] text-[32px] leading-[1.1] md:text-h2',
-          light ? 'text-white' : 'text-ink',
-        )}
+        className={cn('text-[30px] leading-[1.1] md:text-h2', light ? 'text-white' : 'text-ink')}
       >
         {children}
       </Tag>
@@ -55,7 +51,7 @@ export function SectionHeading({
         <span
           aria-hidden="true"
           className={cn(
-            'mt-5 block h-1 w-12 rounded-pill',
+            'mt-1 block h-0.5 w-12',
             rule === 'accent' ? 'bg-accent' : light ? 'bg-white/30' : 'bg-line',
           )}
         />
@@ -63,7 +59,7 @@ export function SectionHeading({
       {subtitle ? (
         <p
           className={cn(
-            'mt-5 max-w-2xl text-[17px] leading-relaxed md:text-[18px]',
+            'text-[17px] leading-relaxed md:text-[18px]',
             light ? 'text-white/85' : 'text-charcoal',
           )}
         >

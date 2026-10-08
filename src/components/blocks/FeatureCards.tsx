@@ -12,37 +12,37 @@ export interface FeatureCardsProps {
   eyebrow?: string
 }
 
-/** "What's included?": three white feature cards (turnaround, formats, accuracy) on the warm cream band. */
+/** "What's included?": three columns under a hairline (turnaround, formats, accuracy), each with its icon. */
 export function FeatureCards({
   title = "What's included?",
   eyebrow = 'Every order',
 }: FeatureCardsProps) {
   return (
-    <section className="bg-cream py-section lg:py-section-lg" aria-labelledby="included-title">
+    <section
+      className="border-t border-line py-section lg:py-section-lg"
+      aria-labelledby="included-title"
+    >
       <div className="container-content">
-        <SectionHeading id="included-title" eyebrow={eyebrow} rule="none">
+        <SectionHeading id="included-title" eyebrow={eyebrow}>
           {title}
         </SectionHeading>
-        <ul className="mt-12 grid gap-5 md:grid-cols-3">
+        <ul className="mt-10 grid gap-8 md:grid-cols-3 lg:mt-14 lg:gap-10">
           {included.map((f) => {
             const img = icons[`../../assets/images/icons/${f.icon}.png`]
             return (
-              <li
-                key={f.title}
-                className="flex h-full flex-col rounded-card border border-white bg-white p-7 shadow-card lg:p-8"
-              >
-                <span className="flex h-16 items-center">
+              <li key={f.title} className="flex flex-col gap-3 border-t border-line pt-6">
+                <span className="flex h-14 items-center">
                   {img ? (
                     <Picture
                       image={img}
                       alt=""
                       sizes="120px"
-                      className={f.icon === 'formats' ? 'h-[52px] w-auto' : 'h-[64px] w-[64px]'}
+                      className={f.icon === 'formats' ? 'h-12 w-auto' : 'h-14 w-14'}
                     />
                   ) : null}
                 </span>
-                <h3 className="mt-6 text-h3">{f.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-charcoal">
+                <h3 className="mt-2 text-h3">{f.title}</h3>
+                <p className="text-[15px] leading-relaxed text-charcoal">
                   {f.body}
                   {f.emphasis ? (
                     <>

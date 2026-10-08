@@ -38,7 +38,7 @@ export function ConsentBanner() {
       role="dialog"
       aria-labelledby="consent-title"
       aria-describedby="consent-body"
-      className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-[520px] rounded-card border border-line bg-white p-6 text-left shadow-float"
+      className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-[520px] rounded-ui border border-line bg-white p-6 text-left shadow-float"
     >
       <h2 id="consent-title" className="text-body font-bold text-ink">
         {s.cookieTitle}

@@ -19,7 +19,7 @@ const widths = { content: 'container-content', narrow: 'container-narrow', wide:
 export function Section({
   title,
   eyebrow,
-  rule = 'accent',
+  rule = 'none',
   tone = 'white',
   width = 'content',
   id,
@@ -37,7 +37,7 @@ export function Section({
             id={id ? `${id}-title` : undefined}
             eyebrow={eyebrow}
             rule={rule}
-            className="mb-10"
+            className="mb-10 lg:mb-14"
           >
             {title}
           </SectionHeading>

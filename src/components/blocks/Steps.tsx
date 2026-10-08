@@ -24,7 +24,7 @@ export interface StepsProps {
 
 const tones = { white: 'bg-white', peach: 'bg-peach', cream: 'bg-cream', surface: 'bg-surface' }
 
-/** Numbered vertical timeline: a teal disc with an icon per step, "Step n" eyebrow and one line of text. */
+/** Numbered list: each step is an icon, a "Step n" eyebrow and one line of text, separated by hairlines. */
 export function Steps({ title, eyebrow, steps, tone = 'white', id }: StepsProps) {
   return (
     <section
@@ -43,13 +43,12 @@ export function Steps({ title, eyebrow, steps, tone = 'white', id }: StepsProps)
             {title}
           </SectionHeading>
         ) : null}
-        <div className="relative">
-          <span aria-hidden="true" className="absolute bottom-7 left-[27px] top-7 w-0.5 bg-line" />
-          <ol className="relative m-0 flex list-none flex-col gap-8 p-0">
+        <div>
+          <ol className="m-0 flex list-none flex-col p-0">
             {steps.map((step, i) => (
-              <li key={step.text} className="flex items-start gap-6">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-pill bg-primary text-white shadow-card ring-4 ring-white">
-                  <Icon name={step.icon} size={22} />
+              <li key={step.text} className="flex items-start gap-5 border-t border-line py-6">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-ui bg-primary text-white">
+                  <Icon name={step.icon} size={20} />
                 </span>
                 <div className="pt-1">
                   <span className="eyebrow text-accent-text">Step {i + 1}</span>

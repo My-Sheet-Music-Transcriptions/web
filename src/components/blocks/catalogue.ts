@@ -27,7 +27,7 @@ export const catalogue = {
   Hero: {
     group: 'Blocks',
     description:
-      'Homepage hero: Google rating chip, headline with an orange highlight, two lines of copy, orange + outlined CTAs, and the studio photo slideshow in a rounded frame with the delivery counter and the floating Google rating card.',
+      'Homepage hero on white: headline with an orange highlight, two lines of copy, orange and outlined buttons beside the studio photo slideshow, then a row of three trust facts (Google rating, transcriptions delivered, response time) separated by hairlines.',
     defaults: { slideshow: false },
     mdx: '<Hero />',
     previewHeight: 820,
@@ -38,7 +38,7 @@ export const catalogue = {
   HowItWorks: {
     group: 'Blocks',
     description:
-      'Three numbered step cards (send audio, we transcribe, print & play), each with its illustration.',
+      'Three numbered columns under a hairline (send audio, we transcribe, print & play), each with its illustration.',
     defaults: {},
     mdx: '<HowItWorks />',
     previewHeight: 640,
@@ -47,7 +47,7 @@ export const catalogue = {
   StatsBanner: {
     group: 'Blocks',
     description:
-      'Rounded navy panel over a dimmed piano photo with a big counter and three rating cards (Google, customers, Facebook).',
+      'Full-bleed navy band over a dimmed piano photo: big counter and the three ratings (Google, customers, Facebook) in hairline columns.',
     defaults: {},
     mdx: '<StatsBanner />',
     previewHeight: 760,
@@ -56,7 +56,7 @@ export const catalogue = {
   AudienceCards: {
     group: 'Blocks',
     description:
-      'Four white cards on the cool surface describing who the service is for, each linking to an audience page.',
+      'Four columns under a hairline describing who the service is for, each with its illustration and a link to its audience page.',
     defaults: {},
     mdx: '<AudienceCards />',
     previewHeight: 620,
@@ -65,7 +65,7 @@ export const catalogue = {
   ServiceGrid: {
     group: 'Blocks',
     description:
-      'Grid of instrument tiles linking to service pages, with a "see all services" button.',
+      'Four-column list of services, each row an instrument icon and a name over a hairline, with a "see all services" link.',
     defaults: { limit: 8 },
     mdx: '<ServiceGrid limit={8} />',
     previewHeight: 720,
@@ -76,7 +76,7 @@ export const catalogue = {
   FeatureCards: {
     group: 'Blocks',
     description:
-      '"What\'s included": three white cards (turnaround, formats, accuracy) on the warm cream band.',
+      '"What\'s included": three columns under a hairline (turnaround, formats, accuracy), each with its icon.',
     defaults: {},
     mdx: '<FeatureCards />',
     previewHeight: 640,
@@ -85,7 +85,7 @@ export const catalogue = {
   PricingTiers: {
     group: 'Blocks',
     description:
-      'Three price-from cards with a coloured top edge and a pricing-factor checklist; intro prose sits beside the heading (children).',
+      'Heading beside the intro prose (children), then three price-from columns with a coloured top rule and a pricing-factor checklist.',
     defaults: {},
     children:
       '**There are pricing options for every budget.** The more instruments and the longer or more complex a piece is, the longer it takes to transcribe.\n\nRevisions and transpositions are included in the price.',
@@ -105,7 +105,7 @@ export const catalogue = {
   ReviewCards: {
     group: 'Blocks',
     description:
-      'Customer quote cards (initials avatar, teal stars) on the cool surface and a link to all reviews.',
+      'Customer quotes in two columns, each under a hairline with teal stars and the reviewer below, and a link to all reviews.',
     defaults: { limit: 4 },
     mdx: '<ReviewCards limit={4} />',
     previewHeight: 900,
@@ -116,7 +116,7 @@ export const catalogue = {
   AboutTeaser: {
     group: 'Blocks',
     description:
-      'Office photo carousel beside the left-aligned team introduction (children) and a "read more" button.',
+      'Office photo carousel beside the team introduction (children) and a "read more" link.',
     defaults: {},
     children:
       'We are **a team of 70+ professional transcribers, arrangers, music editors, musicologists, and engineers** with proven experience in all types of musical transcriptions.\n\nWe transcribe **each note by hand and by ear one by one.**',
@@ -127,7 +127,7 @@ export const catalogue = {
   ContactSection: {
     group: 'Blocks',
     description:
-      'Peach section: intro and contact facts beside the request form in a white card. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
+      'Full-bleed peach band: intro and contact facts beside the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
     defaults: {},
     mdx: '<ContactSection />\n<ContactSection variant="gift-card" id="gift-card" title="Request your gift card" />',
     previewHeight: 1180,
@@ -137,7 +137,7 @@ export const catalogue = {
   PageHero: {
     group: 'Blocks',
     description:
-      'Page header for non-home pages on a navy (or dark slate) gradient: eyebrow, title and optional subtitle.',
+      'Page header for non-home pages on a full-bleed navy (or ink) band: eyebrow, title and optional subtitle.',
     defaults: {
       title: 'Piano Transcription Service',
       subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',
@@ -150,7 +150,7 @@ export const catalogue = {
   Section: {
     group: 'Blocks',
     description:
-      'Generic titled section for prose or ad-hoc layouts: optional eyebrow and heading with rule, white/peach/cream/surface background, three widths.',
+      'Generic titled section for prose or ad-hoc layouts: optional eyebrow and left-aligned heading (optional short rule), white/peach/cream/surface background, three widths.',
     defaults: { title: 'Who do we work for?', id: 'demo' },
     children: 'Any prose or layout goes here. Use it for text pages and one-off sections.',
     mdx: '<Section title="…" tone="peach">\n  prose\n</Section>',
@@ -181,7 +181,7 @@ export const catalogue = {
   Steps: {
     group: 'Blocks',
     description:
-      'Numbered vertical timeline: a teal disc with an icon per step, "Step n" eyebrow and one line of text; optional eyebrow and heading.',
+      'Numbered list: each step is a teal icon square, a "Step n" eyebrow and one line of text, separated by hairlines; optional eyebrow and heading.',
     defaults: {
       title: 'How it works',
       id: 'how-it-works',

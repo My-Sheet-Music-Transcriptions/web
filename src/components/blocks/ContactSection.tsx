@@ -2,6 +2,7 @@ import { type FormEvent, useEffect, useId, useRef, useState } from 'react'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
+import { responseTime as response } from '~/content/en/data/home'
 import { cn } from '~/lib/cn'
 import { contactSchema, formDataToObject } from '~/server/contact'
 import { submitContact } from '~/server/contact.functions'
@@ -65,12 +66,12 @@ const prefixes = [
 
 type Errors = Record<string, string>
 
-/** "Contact us": peach section, intro and contact facts on the left, the request form in a white card on the right (server function + no-JS fallback); quote or gift-card fields. */
+/** "Contact us": full-bleed peach band, intro and contact facts on the left, the request form on the right (server function + no-JS fallback); quote or gift-card fields. */
 export function ContactSection({
   title = 'Contact us',
   eyebrow,
   subtitle = 'Request your sheet music or digital notation services',
-  responseTime = 'Average response time: 1-4 hours',
+  responseTime = `Average response time: ${response.value}`,
   id = 'contact',
   variant = 'quote',
   returnTo = '/',
@@ -152,7 +153,7 @@ export function ContactSection({
           <p className="mt-5 max-w-md text-[17px] leading-relaxed text-charcoal md:text-[18px]">
             {subtitle}
           </p>
-          <p className="mt-6 inline-flex items-center gap-2 rounded-pill bg-white px-4 py-2 text-small font-bold text-ink shadow-card">
+          <p className="mt-7 flex items-center gap-2 text-body text-ink">
             <Icon name="send" size={16} className="text-accent-deep" />
             {responseTime}
           </p>
@@ -167,14 +168,14 @@ export function ContactSection({
           </p>
         </div>
 
-        <div className="rounded-card border border-white bg-white p-6 shadow-card md:p-8 lg:p-10">
+        <div>
           {status === 'sent' ? (
             <output className="block text-center text-ink" aria-live="polite">
               <p className="text-h3">Thank you! Your request is on its way.</p>
               <p className="mt-2 text-small text-charcoal">
                 {gift
                   ? 'We will email you shortly to arrange the gift card.'
-                  : 'We usually reply within 1–4 hours with a quote and a delivery estimate.'}
+                  : `We usually reply within ${response.value} with a quote and a delivery estimate.`}
               </p>
             </output>
           ) : (
@@ -277,7 +278,7 @@ export function ContactSection({
                       {...field('file')}
                       type="file"
                       accept="audio/*,video/*,.pdf,image/*,.zip"
-                      className="block w-full rounded-field border border-line bg-white px-3 py-2 text-small text-charcoal file:mr-3 file:rounded-pill file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-[13px] file:font-bold file:text-white"
+                      className="block w-full rounded-ui border border-peach-line bg-white px-3 py-2 text-small text-charcoal file:mr-3 file:rounded-ui file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-[13px] file:font-bold file:text-white"
                     />
                     <Err name="file" />
                   </div>
@@ -351,7 +352,7 @@ export function ContactSection({
                   info@mysheetmusictranscriptions.com.
                 </p>
               ) : null}
-              <Button type="submit" size="block" className="mt-5" disabled={status === 'sending'}>
+              <Button type="submit" size="lg" className="mt-5" disabled={status === 'sending'}>
                 {status === 'sending' ? 'Sending…' : 'Send'}
               </Button>
             </form>
@@ -363,7 +364,7 @@ export function ContactSection({
 }
 
 const inputClass =
-  'block w-full rounded-field border border-line bg-white px-4 py-3 text-body text-ink shadow-[inset_0_1px_2px_rgb(2_48_71/0.04)] transition-[border-color,box-shadow] placeholder:text-muted focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/20 aria-[invalid]:border-[#b3261e]'
+  'block w-full rounded-ui border border-peach-line bg-white px-3.5 py-3 text-body text-ink transition-[border-color,box-shadow] placeholder:text-muted focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/20 aria-[invalid]:border-[#b3261e]'
 
 function Label({
   htmlFor,

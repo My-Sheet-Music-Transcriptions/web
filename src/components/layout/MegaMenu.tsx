@@ -6,14 +6,17 @@ import { cn } from '~/lib/cn'
 import { navItemClass } from './nav-styles'
 
 /**
- * "Services & Samples" drop-down: a button that opens on hover, focus or Enter/Space and lists
- * every service group in columns. Escape closes it and returns focus to the trigger.
+ * The Services panel: a full-width sheet under the header with three short columns of links and the
+ * highlighted destinations on the right. Opens on hover, on Enter/Space/ArrowDown; Escape closes it and
+ * returns focus to the trigger. The panel spans the sticky header's full width.
  */
 export function MegaMenu({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false)
   const id = useId()
   const wrap = useRef<HTMLDivElement>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // A click right after a hover opened the panel keeps it open instead of toggling it shut.
+  const hovered = useRef(false)
 
   const show = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current)
@@ -42,24 +45,40 @@ export function MegaMenu({ item }: { item: NavItem }) {
     }
   }, [open])
 
-  const groups = item.groups ?? []
+  const menu = item.menu
+  if (!menu) return null
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: hover intent only; keyboard users open the menu with the button below
     <div
       ref={wrap}
-      onMouseEnter={show}
-      onMouseLeave={hide}
+      className="h-full"
+      // Hover is for a mouse only: on a touch tablet a tap would fire enter and click together and close it again.
+      onPointerEnter={(e) => {
+        if (e.pointerType !== 'mouse') return
+        hovered.current = true
+        show()
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType !== 'mouse') return
+        hovered.current = false
+        hide()
+      }}
       onBlur={(e) => {
         if (!wrap.current?.contains(e.relatedTarget as Node)) hide()
       }}
     >
       <button
         type="button"
-        className={cn(navItemClass, open && 'bg-surface text-ink')}
+        className={cn(navItemClass, open && 'border-b-primary text-primary')}
         aria-expanded={open}
         aria-controls={id}
         aria-haspopup="true"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          if (hovered.current) {
+            hovered.current = false
+            setOpen(true)
+          } else setOpen((v) => !v)
+        }}
         onKeyDown={(e) => {
           if (e.key === 'ArrowDown') {
             e.preventDefault()
@@ -70,58 +89,49 @@ export function MegaMenu({ item }: { item: NavItem }) {
         {item.label}
         <Icon
           name="chevron-down"
-          size={14}
+          size={12}
           className={cn('transition-transform', open && 'rotate-180')}
         />
       </button>
-      {/* The padding keeps the pointer inside the wrapper while it crosses from the trigger to the panel. */}
       <div
         id={id}
         className={cn(
-          'absolute left-1/2 top-full z-50 w-[min(1120px,calc(100vw-40px))] -translate-x-1/2 pt-3',
+          'absolute inset-x-0 top-full z-50 border-b border-line bg-white shadow-float',
           open ? 'block' : 'hidden',
         )}
       >
-        <div className="rounded-card border border-line bg-white p-8 shadow-float">
-          <div className="grid grid-cols-4 gap-x-10 gap-y-8">
-            {groups.map((g) => (
-              <div key={g.title}>
-                {g.href && g.href !== '#' ? (
-                  <SmartLink
-                    href={g.href}
-                    className="block text-[15px] font-bold text-ink hover:text-primary"
-                  >
-                    {g.title}
-                  </SmartLink>
-                ) : (
-                  <p className="text-[15px] font-bold text-ink">{g.title}</p>
-                )}
-                {g.links.length > 0 && (
-                  <ul className="mt-3 space-y-1.5">
-                    {g.links.map((l) => (
-                      <li key={l.label}>
-                        <SmartLink
-                          href={l.href}
-                          className="block text-small text-charcoal hover:text-primary"
-                        >
-                          {l.label}
-                        </SmartLink>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+        <div className="container-content grid grid-cols-[1.1fr_1.1fr_1fr_1.15fr] gap-12 pb-10 pt-9">
+          {menu.columns.map((col) => (
+            <div key={col.title}>
+              <p className="eyebrow text-muted">{col.title}</p>
+              <ul className="mt-4 space-y-2.5">
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <SmartLink
+                      href={l.href}
+                      className="text-[15px] font-medium text-ink hover:text-primary"
+                    >
+                      {l.label}
+                    </SmartLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <div className="space-y-6 border-l border-line pl-10">
+            {menu.features.map((f) => (
+              <div key={f.title}>
+                <p className="text-[17px] font-bold text-ink">{f.title}</p>
+                <p className="mt-1 text-[14px] leading-relaxed text-charcoal">{f.body}</p>
+                <SmartLink
+                  href={f.href}
+                  className="mt-2 inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary hover:underline"
+                >
+                  {f.cta}
+                  <Icon name="arrow-right" size={14} />
+                </SmartLink>
               </div>
             ))}
-          </div>
-          <div className="mt-8 flex items-center justify-between border-t border-line pt-5">
-            <p className="text-small text-muted">Every instrument, genre and format.</p>
-            <SmartLink
-              href={item.href}
-              className="inline-flex items-center gap-1.5 text-small font-bold text-primary hover:underline"
-            >
-              {item.label}
-              <Icon name="arrow-right" size={14} />
-            </SmartLink>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Button } from '~/components/primitives/Button'
+import { Icon } from '~/components/primitives/Icon'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { Stars } from '~/components/primitives/Stars'
@@ -23,9 +23,9 @@ function monthLabel(date: string) {
   })
 }
 
-/** "Customer Reviews": two-column grid of quote cards with teal stars and a link to all reviews. */
+/** "Customer reviews": quotes in two columns, each under a hairline with teal stars and the reviewer below. */
 export function ReviewCards({
-  title = 'Customer Reviews',
+  title = 'Customer reviews',
   eyebrow = 'What musicians say',
   limit,
   ctaLabel = 'Read all our reviews',
@@ -33,23 +33,25 @@ export function ReviewCards({
 }: ReviewCardsProps) {
   const items = limit ? homeReviews.slice(0, limit) : homeReviews
   return (
-    <section className="bg-surface py-section lg:py-section-lg" aria-labelledby="reviews-title">
+    <section className="py-section lg:py-section-lg" aria-labelledby="reviews-title">
       <div className="container-content">
-        <SectionHeading id="reviews-title" eyebrow={eyebrow} rule="none">
+        <SectionHeading id="reviews-title" eyebrow={eyebrow}>
           {title}
         </SectionHeading>
-        <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:gap-6">
+        <ul className="mt-10 grid md:grid-cols-2 md:gap-x-14 lg:mt-14">
           {items.map((r) => (
             <li key={r.name + r.date}>
               <ReviewCard review={r} />
             </li>
           ))}
         </ul>
-        <div className="mt-12 text-center">
-          <Button asChild>
-            <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
-          </Button>
-        </div>
+        <SmartLink
+          href={ctaHref}
+          className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
+        >
+          {ctaLabel}
+          <Icon name="arrow-right" size={14} />
+        </SmartLink>
       </div>
     </section>
   )
@@ -63,32 +65,14 @@ export function ReviewCard({ review }: { review: Review }) {
   ) : (
     review.name
   )
-  const initials = review.name
-    .split(/\s+/)
-    .map((w) => w[0] ?? '')
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
   return (
-    <article className="flex h-full flex-col rounded-card border border-line bg-white p-7 shadow-card lg:p-8">
-      <header className="flex items-center gap-4">
-        <span
-          aria-hidden="true"
-          className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-[15px] font-bold text-primary-deep"
-        >
-          {initials}
-        </span>
-        <div className="min-w-0">
-          <p className="text-[17px] font-bold text-ink">{name}</p>
-          <p className="mt-0.5 text-small text-muted">
-            {review.role} from {review.country} · {monthLabel(review.date)}
-          </p>
-        </div>
-        <Stars rating={review.rating} color="primary" size={16} className="ml-auto shrink-0" />
-      </header>
-      <blockquote className="mt-5 text-[15px] leading-[1.7] text-charcoal">
-        {review.quote}
-      </blockquote>
+    <article className="flex h-full flex-col gap-3.5 border-t border-line pb-9 pt-7">
+      <Stars rating={review.rating} color="primary" size={16} />
+      <blockquote className="text-[17px] leading-[1.65] text-ink">{review.quote}</blockquote>
+      <p className="text-small text-muted">
+        <span className="font-bold text-ink">{name}</span> · {review.role} from {review.country} ·{' '}
+        {monthLabel(review.date)}
+      </p>
     </article>
   )
 }

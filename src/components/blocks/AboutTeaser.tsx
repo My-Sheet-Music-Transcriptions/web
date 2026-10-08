@@ -1,5 +1,4 @@
 import { type ReactNode, useState } from 'react'
-import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
@@ -27,7 +26,7 @@ export interface AboutTeaserProps {
   ctaHref?: string
 }
 
-/** "Who are we?": office photo carousel beside the left-aligned team introduction. */
+/** "Who are we?": office photo carousel beside the team introduction. */
 export function AboutTeaser({
   title = 'Who are we?',
   eyebrow = 'The team',
@@ -38,36 +37,36 @@ export function AboutTeaser({
   const [i, setI] = useState(0)
   const go = (d: number) => setI((v) => (v + d + slides.length) % slides.length)
   const current = slides[i]
+  const arrow =
+    'inline-flex h-10 w-10 items-center justify-center rounded-ui bg-white text-ink hover:bg-surface'
   return (
-    <section className="py-section lg:py-section-lg" aria-labelledby="about-title">
+    <section
+      className="border-t border-line py-section lg:py-section-lg"
+      aria-labelledby="about-title"
+    >
       <div className="container-content grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <section className="relative" aria-roledescription="carousel" aria-label="Office photos">
-          <div aria-live="polite" className="overflow-hidden rounded-panel shadow-card">
+          <div aria-live="polite" className="overflow-hidden rounded-ui">
             {current ? (
               <Picture
                 image={current.img}
                 alt={current.alt}
-                sizes="(min-width: 1025px) 560px, 100vw"
+                sizes="(min-width: 1025px) 580px, 100vw"
                 className="aspect-[3/2] w-full object-cover"
               />
             ) : null}
           </div>
-          <div className="absolute bottom-4 right-4 flex gap-2">
+          <div className="absolute bottom-3 right-3 flex gap-1.5">
             <button
               type="button"
               onClick={() => go(-1)}
               aria-label="Previous photo"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-pill bg-white/90 text-ink shadow-card backdrop-blur hover:bg-white"
+              className={arrow}
             >
-              <Icon name="chevron-left" size={20} />
+              <Icon name="chevron-left" size={18} />
             </button>
-            <button
-              type="button"
-              onClick={() => go(1)}
-              aria-label="Next photo"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-pill bg-white/90 text-ink shadow-card backdrop-blur hover:bg-white"
-            >
-              <Icon name="chevron-right" size={20} />
+            <button type="button" onClick={() => go(1)} aria-label="Next photo" className={arrow}>
+              <Icon name="chevron-right" size={18} />
             </button>
           </div>
           <p className="sr-only">
@@ -75,17 +74,19 @@ export function AboutTeaser({
           </p>
         </section>
         <div>
-          <SectionHeading id="about-title" eyebrow={eyebrow} rule="none" align="left">
+          <SectionHeading id="about-title" eyebrow={eyebrow}>
             {title}
           </SectionHeading>
-          <div className="mt-6 space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
+          <div className="mt-5 space-y-4 text-body leading-relaxed text-charcoal [&_p]:my-0 [&_strong]:font-bold [&_strong]:text-ink [&_p+p]:mt-4">
             {children}
           </div>
-          <div className="mt-8">
-            <Button variant="outline" asChild>
-              <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
-            </Button>
-          </div>
+          <SmartLink
+            href={ctaHref}
+            className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
+          >
+            {ctaLabel}
+            <Icon name="arrow-right" size={14} />
+          </SmartLink>
         </div>
       </div>
     </section>

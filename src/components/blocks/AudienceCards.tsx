@@ -15,49 +15,39 @@ export interface AudienceCardsProps {
   eyebrow?: string
 }
 
-/** "Who do we work for?": four white cards on the cool surface, each linking to an audience landing page. */
+/** "Who do we work for?": four columns under a hairline, each with its illustration and a link to its page. */
 export function AudienceCards({
   title = 'Who do we work for?',
   eyebrow = 'For every musician',
 }: AudienceCardsProps) {
   return (
-    <section className="bg-surface py-section lg:py-section-lg" aria-labelledby="audience-title">
-      <div className="container-wide">
-        <SectionHeading id="audience-title" eyebrow={eyebrow} rule="none">
+    <section className="py-section lg:py-section-lg" aria-labelledby="audience-title">
+      <div className="container-content">
+        <SectionHeading id="audience-title" eyebrow={eyebrow}>
           {title}
         </SectionHeading>
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
           {audiences.map((a) => {
             const key = Object.keys(icons).find((k) => k.includes(`/${a.icon}.`))
             const img = key ? icons[key] : undefined
             return (
-              <li key={a.href}>
+              <li key={a.href} className="flex flex-col gap-3 border-t border-line pt-6">
+                {img ? (
+                  <Picture
+                    image={img}
+                    alt=""
+                    sizes="96px"
+                    className="h-[72px] w-auto self-start object-contain"
+                  />
+                ) : null}
+                <h3 className="mt-2 text-h3">{a.title}</h3>
+                <p className="flex-1 text-[15px] leading-relaxed text-charcoal">{a.body}</p>
                 <SmartLink
                   href={a.href}
-                  className="group flex h-full flex-col rounded-card border border-line bg-white p-7 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
+                  className="inline-flex items-center gap-1.5 self-start text-[15px] font-semibold text-primary hover:underline"
                 >
-                  {img ? (
-                    <Picture
-                      image={img}
-                      alt=""
-                      sizes="96px"
-                      className="h-[96px] w-auto self-start object-contain"
-                    />
-                  ) : null}
-                  <h3 className="mt-6 text-h3 group-hover:text-primary">{a.title}</h3>
-                  <p className="mt-2 flex-1 text-[15px] leading-relaxed text-charcoal">{a.body}</p>
-                  {/* Decorative: the card itself is the link and its title names it; hidden so the name stays short. */}
-                  <span
-                    aria-hidden="true"
-                    className="mt-5 inline-flex items-center gap-1.5 text-small font-bold text-primary"
-                  >
-                    Learn more
-                    <Icon
-                      name="arrow-right"
-                      size={14}
-                      className="transition-transform group-hover:translate-x-0.5"
-                    />
-                  </span>
+                  Learn more<span className="sr-only"> about {a.title}</span>
+                  <Icon name="arrow-right" size={14} />
                 </SmartLink>
               </li>
             )

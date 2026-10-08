@@ -32,14 +32,14 @@ const languageNames: Record<string, string> = {
 const heading = 'eyebrow text-white/60'
 const link = 'text-small text-footer-text transition-colors hover:text-white'
 
-/** Dark navy footer: four left-aligned columns, then languages, software logos, payment and legal in a bottom band. */
+/** Dark navy footer: four left-aligned columns, then software logos, payment and legal in a bottom band with a hairline above. */
 export function Footer() {
   const site = useSite()
   const s = site.strings
   const languages = site.languageSwitcher.filter((l) => l.locale !== site.locale)
   return (
     <footer className="bg-footer pt-16 text-footer-text">
-      <div className="container-wide grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1fr_1.5fr_1.3fr_1fr]">
+      <div className="container-content grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1fr_1.5fr_1.3fr_1fr]">
         <div>
           <h2 className={heading}>{s.sitemap}</h2>
           <ul className="mt-5 space-y-2">
@@ -106,17 +106,16 @@ export function Footer() {
             ))}
           </ul>
           <h2 className={`mt-8 ${heading}`}>{s.stayConnected}</h2>
-          <ul className="mt-4 flex flex-wrap gap-2">
+          <ul className="mt-4 space-y-2">
             {site.social.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
                   rel="noopener"
-                  aria-label={l.label}
-                  title={l.label}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-pill bg-white/10 text-white transition-colors hover:bg-primary"
+                  className={`inline-flex items-center gap-2 ${link}`}
                 >
-                  <Icon name={l.icon as IconName} size={16} />
+                  <Icon name={l.icon as IconName} size={14} className="text-accent" />
+                  {l.label}
                 </a>
               </li>
             ))}
@@ -142,7 +141,7 @@ export function Footer() {
             alt="Accepted payment methods: PayPal, Discover, Stripe, Visa, American Express, Mastercard"
             width={190}
             height={90}
-            className="mt-4 rounded-xl bg-white/90 p-2"
+            className="mt-4 rounded-sm bg-white p-1.5"
             loading="lazy"
           />
           <h2 className={`mt-8 ${heading}`}>{s.languages}</h2>
@@ -174,7 +173,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-wide mt-14 border-t border-white/10 py-8">
+      <div className="container-content mt-14 border-t border-white/10 py-8">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className={heading}>{s.compatibleWith}</h2>
@@ -196,7 +195,7 @@ export function Footer() {
               <a
                 href="https://msmtmusic.com"
                 rel="noopener"
-                className="inline-block rounded-xl bg-white/10 px-3 py-1.5 transition-colors hover:bg-white/15"
+                className="inline-block border border-white/20 px-3 py-1.5 transition-colors hover:border-white/50"
               >
                 <Picture
                   image={msmtmusic}
@@ -210,7 +209,7 @@ export function Footer() {
               image={accio}
               alt="ACCIÓ – Catalonia Trade & Investment"
               sizes="80px"
-              className="h-auto w-[72px] rounded-md bg-white/90 p-1"
+              className="h-auto w-[72px] rounded-sm bg-white p-1"
             />
           </div>
         </div>

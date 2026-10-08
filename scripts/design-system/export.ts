@@ -103,17 +103,17 @@ const defaultsOf = (file: string, fn: string): Record<string, string> => {
 const layoutDocs: Record<string, { description: string; previewHeight: number }> = {
   TopBar: {
     description:
-      'Thin utility bar above the header: hub login/signup links and the cross-domain language switcher (desktop only).',
+      'Retired: renders nothing. Log in and the language menu now live in the Header; the slot stays so every page keeps the TopBar + Header + blocks + Footer shape.',
     previewHeight: 60,
   },
   Header: {
     description:
-      'Sticky white header: logo, main navigation with the Services mega-menu, orange call to action; hamburger menu below 1025px.',
+      'Sticky white header with a hairline: logo (home), four items (Services panel, Pricing, Reviews, About), language menu, log in and the orange call to action; menu button and drawer below 1025px.',
     previewHeight: 120,
   },
   Footer: {
     description:
-      'Dark four-column footer: sitemap, services, contact details, payment and legal links, languages, software logos.',
+      'Dark navy four-column footer: sitemap, services, contact and social links, payment and languages; software logos and legal links in a bottom band.',
     previewHeight: 820,
   },
 }

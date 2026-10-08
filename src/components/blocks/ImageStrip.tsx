@@ -20,7 +20,7 @@ export interface ImageStripProps {
   items?: string[]
 }
 
-/** Horizontal strip of rounded sheet-music photos; scrolls on touch, no autoplay. */
+/** Horizontal strip of sheet-music photos; scrolls on touch, no autoplay. */
 export function ImageStrip({
   items = [
     'strip-guitar-3',
@@ -34,7 +34,7 @@ export function ImageStrip({
   return (
     <section aria-label="Examples of our sheet music" className="pb-section">
       <ul
-        className="flex snap-x gap-4 overflow-x-auto px-5 pb-2 [scrollbar-width:thin] focus-visible:outline-3 focus-visible:outline-primary lg:justify-center"
+        className="flex snap-x gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:thin] focus-visible:outline-3 focus-visible:outline-primary lg:justify-center"
         // biome-ignore lint/a11y/noNoninteractiveTabindex: a horizontally scrollable region must be keyboard reachable
         tabIndex={0}
         aria-label="Scroll through photos of our sheet music"
@@ -43,12 +43,15 @@ export function ImageStrip({
           const img = images[`../../assets/images/home/${id}.jpg`]
           if (!img) return null
           return (
-            <li key={id} className="w-[220px] shrink-0 snap-center overflow-hidden rounded-card">
+            <li
+              key={id}
+              className="w-[180px] shrink-0 snap-center overflow-hidden rounded-sm md:w-[220px]"
+            >
               <Picture
                 image={img}
                 alt={alts[id] ?? ''}
                 sizes="220px"
-                className="h-[300px] w-[220px] object-cover transition-transform duration-300 hover:scale-[1.03]"
+                className="h-[240px] w-[180px] object-cover md:h-[300px] md:w-[220px]"
               />
             </li>
           )

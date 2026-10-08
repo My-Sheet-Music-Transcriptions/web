@@ -1,4 +1,4 @@
-import { Button } from '~/components/primitives/Button'
+import { Icon } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { SmartLink } from '~/components/primitives/SmartLink'
@@ -7,7 +7,7 @@ import { serviceGrid } from '~/content/en/data/home'
 const icons = import.meta.glob<PictureSource>('../../assets/images/icons/*.png', {
   eager: true,
   import: 'default',
-  query: '?w=130;260&as=picture',
+  query: '?w=88;176&as=picture',
 })
 
 export interface ServiceGridProps {
@@ -19,7 +19,7 @@ export interface ServiceGridProps {
   limit?: number
 }
 
-/** "We transcribe any instrument": grid of instrument tiles linking to service pages. */
+/** "We transcribe any instrument": a four-column list of services, each row an icon and a name over a hairline. */
 export function ServiceGrid({
   title = 'We transcribe any instrument and musical genre',
   eyebrow = 'Services',
@@ -29,41 +29,44 @@ export function ServiceGrid({
 }: ServiceGridProps) {
   const items = limit ? serviceGrid.slice(0, limit) : serviceGrid
   return (
-    <section className="py-section lg:py-section-lg" aria-labelledby="services-title">
+    <section
+      className="border-t border-line py-section lg:py-section-lg"
+      aria-labelledby="services-title"
+    >
       <div className="container-content">
-        <SectionHeading id="services-title" eyebrow={eyebrow} rule="none">
+        <SectionHeading id="services-title" eyebrow={eyebrow}>
           {title}
         </SectionHeading>
-        <ul className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+        <ul className="mt-10 grid gap-x-10 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
           {items.map((s) => {
             const img = icons[`../../assets/images/icons/${s.icon}.png`]
             return (
               <li key={s.label}>
                 <SmartLink
                   href={s.href}
-                  className="group flex h-full flex-col items-center rounded-card border border-line bg-white px-4 py-6 text-center transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
+                  className="flex items-center gap-3.5 border-b border-line py-3.5 text-[15px] font-semibold text-ink hover:text-primary"
                 >
                   {img ? (
                     <Picture
                       image={img}
                       alt=""
-                      sizes="88px"
-                      className="h-[88px] w-[88px] object-contain transition-transform group-hover:scale-105"
+                      sizes="44px"
+                      className="h-11 w-11 shrink-0 object-contain"
                     />
                   ) : null}
-                  <span className="mt-4 block text-h4 font-bold text-ink group-hover:text-primary">
-                    {s.label}
-                  </span>
+                  {s.label}
                 </SmartLink>
               </li>
             )
           })}
         </ul>
-        <div className="mt-10 text-center">
-          <Button variant="outline" asChild>
-            <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
-          </Button>
-        </div>
+        <SmartLink
+          href={ctaHref}
+          className="mt-7 inline-flex items-center gap-1.5 text-[15px] font-semibold text-primary hover:underline"
+        >
+          {ctaLabel}
+          <Icon name="arrow-right" size={14} />
+        </SmartLink>
       </div>
     </section>
   )

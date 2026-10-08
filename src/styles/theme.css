@@ -1,7 +1,7 @@
 /*
- * Design tokens. The palette keeps the brand of mysheetmusictranscriptions.com (teal, orange, navy, peach)
- * but the scale, surfaces, shapes and shadows are the 2026 refresh: larger, tighter display type,
- * cool off-white surfaces, 20px cards and soft layered shadows.
+ * Design tokens. The palette keeps the brand of mysheetmusictranscriptions.com (teal, orange, navy, peach);
+ * the 2026 refresh is flat and editorial: white pages, hairline rules instead of boxes, one small radius,
+ * no card shadows, and only two full-bleed colour bands (navy stats, peach contact).
  * This file is the single source of truth: Storybook's Foundations page and the published Design
  * System artifact are generated from it (src/design-system/theme-parse.ts).
  * Keep the inline comment after a token: it becomes the token's usage note.
@@ -40,10 +40,11 @@
   --color-yellow: #ffb703; /* rating stars */
   --color-peach: #fdebdc; /* warm section background: contact section, included cards */
   --color-peach-deep: #fbe0cb;
+  --color-peach-line: #e6d9cc; /* form field borders on the peach contact band */
   --color-cream: #f7eee7; /* icon discs and warm cards */
   --color-sand: #efe7df;
-  --color-surface: #f4f7f8; /* cool off-white section background (audiences, reviews, hero) */
-  --color-line: #e2e8eb; /* hairlines and card borders */
+  --color-surface: #f4f7f8; /* hover rows and menu items; never a section background */
+  --color-line: #e3e9eb; /* hairlines between sections, columns and list rows */
   --color-footer: #0b1f2c; /* footer background */
   --color-footer-text: #b9c6ce; /* footer links (9.3:1 on footer) */
   --color-google: #4285f4;
@@ -51,11 +52,11 @@
   --color-trustpilot: #00b67a;
 
   /* Type scale (desktop); mobile sizes are set per utility */
-  --text-display: 56px;
-  --text-display--line-height: 1.05;
+  --text-display: 60px;
+  --text-display--line-height: 1.04;
   --text-h2: 40px;
   --text-h2--line-height: 1.1;
-  --text-h3: 22px;
+  --text-h3: 20px;
   --text-h3--line-height: 1.3;
   --text-h4: 17px;
   --text-h4--line-height: 1.35;
@@ -69,20 +70,16 @@
   --text-small--line-height: 1.5;
   --text-caption: 13px;
   --text-caption--line-height: 1.5;
-  --text-eyebrow: 13px;
+  --text-eyebrow: 12px;
   --text-eyebrow--line-height: 1.2;
 
   /* Shape */
-  --radius-card: 20px; /* cards, pricing tiers, review cards, menus */
-  --radius-panel: 32px; /* large framed panels: hero photo, stats banner, about photo */
-  --radius-pill: 999px; /* buttons, chips */
-  --radius-field: 12px; /* form fields */
-  --shadow-card:
-    0 1px 2px 0 rgb(2 48 71 / 0.05), 0 10px 30px -10px rgb(2 48 71 / 0.12); /* cards on light backgrounds */
-  --shadow-float: 0 20px 50px -12px rgb(2 48 71 / 0.25); /* floating card, mega-menu, consent banner */
+  --radius-ui: 6px; /* the one radius: buttons, fields, photos, menus */
+  --radius-sm: 3px; /* small images in strips and badges */
+  --shadow-float: 0 24px 40px -24px rgb(2 48 71 / 0.25); /* open menus and the consent banner only */
 
   /* Layout */
-  --container-content: 1200px;
+  --container-content: 1240px;
   --container-wide: 1320px;
   --container-narrow: 820px;
   --breakpoint-sm: 640px; /* large phones; every breakpoint is in px so they sort correctly */
@@ -90,8 +87,8 @@
   --breakpoint-lg: 1025px; /* tablets end at 1024 */
   --breakpoint-xl: 1280px; /* wide desktop: larger nav type */
   --breakpoint-2xl: 1536px; /* unused, kept in px for ordering */
-  --spacing-section: 64px;
-  --spacing-section-lg: 112px;
+  --spacing-section: 56px;
+  --spacing-section-lg: 96px;
 }
 
 @layer base {
@@ -148,7 +145,7 @@
   margin-inline: auto;
   padding-inline: 20px;
   @media (width >= 768px) {
-    padding-inline: 32px;
+    padding-inline: 24px;
   }
 }
 @utility container-wide {

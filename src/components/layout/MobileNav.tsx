@@ -6,7 +6,7 @@ import { nav } from '~/content/en/data/nav'
 import { cn } from '~/lib/cn'
 import { useSite } from '~/site'
 
-/** Right-hand drawer (dialog) with collapsible service groups, the CTA and the hub links. */
+/** Phone menu (dialog): a full-height white sheet with the four items, Services expandable, then the call to action. */
 export function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
   const site = useSite()
   const panel = useRef<HTMLDivElement>(null)
@@ -27,12 +27,14 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
   }, [open, onClose])
 
   if (!open) return null
+  const row =
+    'flex w-full items-center justify-between border-b border-line py-4 text-[17px] font-semibold text-ink'
   return (
     <div className="fixed inset-0 z-[80] lg:hidden">
       <button
         type="button"
         aria-label={site.strings.closeMenu}
-        className="absolute inset-0 bg-navy-deep/50 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-navy-deep/40"
         onClick={onClose}
         tabIndex={-1}
       />
@@ -42,28 +44,28 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
         role="dialog"
         aria-modal="true"
         aria-label={site.strings.menu}
-        className="absolute inset-y-0 right-0 flex w-[min(380px,92vw)] flex-col rounded-l-[28px] bg-white shadow-float"
+        className="absolute inset-y-0 right-0 flex w-[min(400px,100vw)] flex-col bg-white"
       >
-        <div className="flex h-16 items-center justify-between pl-6 pr-3">
+        <div className="flex h-16 items-center justify-between border-b border-line pl-5 pr-2">
           <span className="eyebrow text-muted">{site.strings.menu}</span>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-pill hover:bg-surface"
+            className="inline-flex h-11 w-11 items-center justify-center"
             aria-label={site.strings.closeMenu}
             onClick={onClose}
           >
             <Icon name="close" size={22} />
           </button>
         </div>
-        <nav aria-label="Main" className="flex-1 overflow-y-auto px-3 pb-6">
-          <ul className="space-y-0.5">
+        <nav aria-label="Main" className="flex-1 overflow-y-auto px-5 pb-6">
+          <ul>
             {nav.map((item) => (
               <li key={item.label}>
-                {item.groups ? (
+                {item.menu ? (
                   <>
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-[17px] font-semibold text-ink hover:bg-surface"
+                      className={cn(row, 'text-left')}
                       aria-expanded={expanded === item.label}
                       onClick={() => setExpanded(expanded === item.label ? null : item.label)}
                     >
@@ -78,55 +80,41 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                       />
                     </button>
                     {expanded === item.label && (
-                      <ul className="mb-2 ml-3 border-l-2 border-line pb-1 pl-3">
-                        <li>
+                      <div className="space-y-6 border-b border-line py-5">
+                        {item.menu.columns.map((col) => (
+                          <div key={col.title}>
+                            <p className="eyebrow text-muted">{col.title}</p>
+                            <ul className="mt-3 space-y-2.5">
+                              {col.links.map((l) => (
+                                <li key={l.label}>
+                                  <SmartLink
+                                    href={l.href}
+                                    className="text-[15px] font-medium text-ink"
+                                    onClick={onClose}
+                                  >
+                                    {l.label}
+                                  </SmartLink>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                        {item.menu.features.map((f) => (
                           <SmartLink
-                            href={item.href}
-                            className="block rounded-lg px-3 py-2 text-small font-bold text-primary"
+                            key={f.title}
+                            href={f.href}
+                            className="flex items-center gap-1.5 text-[15px] font-semibold text-primary"
                             onClick={onClose}
                           >
-                            All services & samples
+                            {f.title}
+                            <Icon name="arrow-right" size={14} />
                           </SmartLink>
-                        </li>
-                        {item.groups.map((g) => (
-                          <li key={g.title} className="mt-1">
-                            {g.href && g.href !== '#' ? (
-                              <SmartLink
-                                href={g.href}
-                                className="block rounded-lg px-3 py-1.5 text-small font-bold text-ink"
-                                onClick={onClose}
-                              >
-                                {g.title}
-                              </SmartLink>
-                            ) : (
-                              <p className="px-3 py-1.5 text-small font-bold text-ink">{g.title}</p>
-                            )}
-                            {g.links.length > 0 && (
-                              <ul className="pl-3">
-                                {g.links.map((l) => (
-                                  <li key={l.label}>
-                                    <SmartLink
-                                      href={l.href}
-                                      className="block rounded-lg px-3 py-1.5 text-small text-charcoal"
-                                      onClick={onClose}
-                                    >
-                                      {l.label}
-                                    </SmartLink>
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </li>
                         ))}
-                      </ul>
+                      </div>
                     )}
                   </>
                 ) : (
-                  <SmartLink
-                    href={item.href}
-                    className="block rounded-xl px-3 py-3 text-[17px] font-semibold text-ink hover:bg-surface"
-                    onClick={onClose}
-                  >
+                  <SmartLink href={item.href} className={row} onClick={onClose}>
                     {item.label}
                   </SmartLink>
                 )}
@@ -140,13 +128,11 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
               {site.strings.requestCta}
             </SmartLink>
           </Button>
-          <div className="mt-4 flex justify-center gap-6 text-small font-medium">
-            <a href={site.hub.login} className="inline-flex items-center gap-1.5 text-ink">
-              <Icon name="users" size={16} className="text-primary" />
+          <div className="mt-4 flex justify-center gap-6 text-small font-semibold">
+            <a href={site.hub.login} className="text-ink">
               {site.strings.login}
             </a>
-            <a href={site.hub.signup} className="inline-flex items-center gap-1.5 text-ink">
-              <Icon name="user-plus" size={16} className="text-primary" />
+            <a href={site.hub.signup} className="text-ink">
               {site.strings.signup}
             </a>
           </div>

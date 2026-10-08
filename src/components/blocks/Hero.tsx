@@ -1,12 +1,10 @@
 import { Button } from '~/components/primitives/Button'
-import { Icon } from '~/components/primitives/Icon'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { Stars } from '~/components/primitives/Stars'
-import { counter, ratings } from '~/content/en/data/home'
+import { counter, ratings, responseTime } from '~/content/en/data/home'
 import { useSite } from '~/site'
 import { HeroSlideshow } from './HeroSlideshow'
-import { RatingCard } from './StatsBanner'
 
 const slides = import.meta.glob<PictureSource>('../../assets/images/home/hero-slide-*.webp', {
   eager: true,
@@ -28,16 +26,16 @@ export interface HeroProps {
 }
 
 /**
- * Homepage hero: a two-column split on a soft gradient. Left, the Google rating chip, the headline with
- * its orange highlight, two lines of copy and two buttons; right, the studio photo slideshow in a
- * rounded frame with the floating Google rating card and the delivery counter. Stacks on phones.
+ * Homepage hero on white: headline with its orange highlight, two lines of copy and two buttons beside the
+ * studio photo slideshow, then a row of three trust facts (Google rating, transcriptions delivered,
+ * response time) separated by hairlines. Stacks on phones.
  */
 export function Hero({
   title = 'Your #1 sheet music transcription service online',
   highlight = '#1',
   lead = 'Get accurate and high-quality sheet music to learn a song, perform, register a composition, educate, or for any music tech application.',
   strong = 'Reliable digital notation services by professional transcribers and music editors.',
-  ctaLabel = 'Learn more',
+  ctaLabel = 'How it works',
   ctaHref = '#how-it-works',
   slideshow = true,
 }: HeroProps) {
@@ -45,74 +43,71 @@ export function Hero({
   const [before, after] =
     highlight && title.includes(highlight) ? title.split(highlight) : [title, null]
   const google = ratings.find((r) => r.id === 'google')
+  const facebook = ratings.find((r) => r.id === 'facebook')
   return (
-    <section className="relative isolate overflow-hidden bg-surface" aria-labelledby="hero-title">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[radial-gradient(60%_80%_at_0%_0%,rgb(26_127_151/0.10),transparent_60%),radial-gradient(50%_60%_at_100%_100%,rgb(244_153_70/0.14),transparent_60%)]"
-      />
-      <div className="container-wide grid items-center gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16 lg:py-24">
-        <div className="max-w-[600px]">
-          {google ? (
-            <a
-              href={google.href}
-              rel="noopener"
-              className="inline-flex items-center gap-2 rounded-pill border border-line bg-white py-1.5 pl-2 pr-4 text-small font-semibold text-ink shadow-card"
+    <section className="pb-14 pt-10 lg:pb-20 lg:pt-[72px]" aria-labelledby="hero-title">
+      <div className="container-content">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16">
+          <div>
+            <h1
+              id="hero-title"
+              className="text-[38px] font-bold leading-[1.06] text-ink md:text-[50px] lg:text-display"
             >
-              <Icon name="google" size={18} className="text-google" />
-              <Stars rating={5} size={14} label={`${google.score} out of 5 stars`} />
-              {google.score} on Google · {google.count} reviews
-            </a>
-          ) : null}
-          <h1
-            id="hero-title"
-            className="mt-6 text-[38px] font-bold leading-[1.08] text-ink md:text-[48px] lg:text-display"
-          >
-            {before}
-            {after !== null && <span className="text-accent-deep">{highlight}</span>}
-            {after}
-          </h1>
-          <p className="mt-6 text-[17px] leading-relaxed text-charcoal md:text-[19px]">{lead}</p>
-          <p className="mt-4 text-[17px] font-semibold leading-relaxed text-ink md:text-[18px]">
-            {strong}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button size="lg" asChild>
-              <SmartLink href={site.routes.contactAnchor}>{site.strings.requestCta}</SmartLink>
-            </Button>
-            <Button variant="outline" size="lg" asChild>
-              <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
-            </Button>
+              {before}
+              {after !== null && <span className="text-accent-deep">{highlight}</span>}
+              {after}
+            </h1>
+            <p className="mt-5 max-w-[34em] text-[17px] leading-relaxed text-charcoal md:mt-6 md:text-[19px]">
+              {lead}
+            </p>
+            <p className="mt-3.5 max-w-[34em] text-[17px] font-semibold leading-relaxed text-ink">
+              {strong}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild>
+                <SmartLink href={site.routes.contactAnchor}>{site.strings.requestCta}</SmartLink>
+              </Button>
+              <Button variant="outline" asChild>
+                <SmartLink href={ctaHref}>{ctaLabel}</SmartLink>
+              </Button>
+            </div>
           </div>
-        </div>
-
-        <div className="relative lg:pb-12 lg:pl-6">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-panel shadow-float lg:aspect-[5/4]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-ui lg:aspect-[5/4]">
             <HeroSlideshow
               slides={Object.values(slides)}
-              sizes="(min-width: 1025px) 640px, (min-width: 768px) 720px, 100vw"
+              sizes="(min-width: 1025px) 580px, (min-width: 768px) 720px, 100vw"
               position="center"
               rotate={slideshow}
             />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent"
-            />
-            <p className="absolute bottom-5 left-5 right-5 text-right text-white lg:bottom-6 lg:right-6">
-              <span className="block text-[34px] font-bold leading-none tabular-nums tracking-tight">
-                {counter.value.toLocaleString('en-US')}
-              </span>
-              <span className="mt-1 block text-small font-medium text-white/90">
-                {counter.label}
-              </span>
-            </p>
           </div>
+        </div>
+        <dl className="mt-10 grid border-t border-line md:grid-cols-3 lg:mt-14">
           {google ? (
-            <div className="absolute -bottom-2 -left-2 z-10 hidden w-[240px] lg:block">
-              <RatingCard source={google} compact />
+            <div className="border-b border-line py-4 md:border-b-0 md:pr-6 md:pt-5">
+              <dt className="sr-only">Rating</dt>
+              <dd className="flex items-center gap-2 text-[20px] font-bold text-ink md:text-[22px]">
+                <Stars rating={5} size={16} label={`${google.score} out of 5 stars`} />
+                {google.score} on Google
+              </dd>
+              <dd className="text-[14px] text-muted">
+                {google.countLabel}
+                {facebook ? `, ${facebook.score} on Facebook too` : ''}
+              </dd>
             </div>
           ) : null}
-        </div>
+          <div className="border-b border-line py-4 md:border-b-0 md:border-l md:px-6 md:pt-5">
+            <dt className="sr-only">Transcriptions</dt>
+            <dd className="text-[20px] font-bold tabular-nums text-ink md:text-[22px]">
+              {counter.value.toLocaleString('en-US')}
+            </dd>
+            <dd className="text-[14px] text-muted">{counter.label}</dd>
+          </div>
+          <div className="border-line py-4 md:border-l md:pl-6 md:pt-5">
+            <dt className="sr-only">Response time</dt>
+            <dd className="text-[20px] font-bold text-ink md:text-[22px]">{responseTime.value}</dd>
+            <dd className="text-[14px] text-muted">{responseTime.label}</dd>
+          </div>
+        </dl>
       </div>
     </section>
   )
