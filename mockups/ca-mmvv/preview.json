@@ -3,5 +3,9 @@
   "path": "/mmvv",
   "locale": "ca",
   "url": "https://claude.ai/artifact/U4NHziF31vrV6KWbDn4L96",
-  "pr": 19
+  "pr": {
+    "number": 19,
+    "url": "https://github.com/My-Sheet-Music-Transcriptions/web/pull/19",
+    "branch": "claude/sharp-pasteur-zx4xlu"
+  }
 }
