@@ -15,7 +15,7 @@ test.describe('homepage', () => {
     await expect(page.getByRole('heading', { level: 1 })).toContainText(
       'sheet music transcription service',
     )
-    await expect(page.getByRole('link', { name: /learn more/i })).toBeVisible()
+    await expect(page.getByRole('main').getByRole('link', { name: /how it works/i })).toBeVisible()
     if (info.project.name !== 'mobile') {
       await expect(
         page.getByRole('banner').getByRole('link', { name: /request your sheet music/i }),
@@ -35,15 +35,16 @@ test.describe('homepage', () => {
   test('language switcher links to the sister domains', async ({ page }) => {
     await open(page)
     const nav = page.getByRole('navigation', { name: 'Language' }).first()
-    await expect(nav.getByRole('link', { name: /^ES /i })).toHaveAttribute(
+    await nav.getByRole('button', { name: /language/i }).click()
+    await expect(nav.getByRole('link', { name: /^Español/ })).toHaveAttribute(
       'href',
       /mistranscripcionesmusicales\.com/,
     )
-    await expect(nav.getByRole('link', { name: /^FR /i })).toHaveAttribute(
+    await expect(nav.getByRole('link', { name: /^Français/ })).toHaveAttribute(
       'href',
       /mapartitionsurmesure\.com/,
     )
-    await expect(nav.getByRole('link', { name: /^JP /i })).toHaveAttribute(
+    await expect(nav.getByRole('link', { name: /^日本語/ })).toHaveAttribute(
       'href',
       /mysheetmusictranscriptions\.jp/,
     )
@@ -60,11 +61,11 @@ test.describe('homepage', () => {
       await expect(dialog).toBeHidden()
     } else {
       const mainNav = page.getByRole('navigation', { name: 'Main' })
-      const services = mainNav.getByRole('button', { name: /services & samples/i })
-      const link = mainNav.getByRole('link', { name: 'Guitar Tabs & Sheets' })
+      const services = mainNav.getByRole('button', { name: /^services/i })
+      const link = mainNav.getByRole('link', { name: 'Jazz & blues' })
       await services.hover()
       await expect(link).toBeVisible()
-      await page.mouse.move(5, 400)
+      await page.mouse.move(5, 880)
       await expect(link).toBeHidden()
       await services.focus()
       await page.keyboard.press('Enter')

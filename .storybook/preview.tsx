@@ -1,16 +1,25 @@
 import type { Preview } from '@storybook/react-vite'
+import { MotionProvider } from '../src/components/motion/MotionProvider'
 import { RouterDecorator } from './router-decorator'
 import '../src/styles/app.css'
 
 const preview: Preview = {
-  decorators: [RouterDecorator],
+  decorators: [
+    RouterDecorator,
+    (Story) => (
+      <MotionProvider>
+        <Story />
+      </MotionProvider>
+    ),
+  ],
   parameters: {
     layout: 'fullscreen',
     backgrounds: {
       options: {
         white: { name: 'White', value: '#ffffff' },
         peach: { name: 'Peach', value: '#fdebdc' },
-        footer: { name: 'Footer', value: '#222222' },
+        surface: { name: 'Surface', value: '#f4f7f8' },
+        footer: { name: 'Footer', value: '#0b1f2c' },
       },
     },
     a11y: {
