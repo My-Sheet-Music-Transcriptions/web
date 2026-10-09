@@ -39,7 +39,8 @@ an ease or a distance:
 | `dropDown`, `dropSide` | A menu panel under its button (`y`) or a submenu beside its row (`x`): 0.2 s in, 0.15 s out. |
 | `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu). |
 | `tickerGroup`, `tickerDigit` | A figure of a revealed block (`Ticker`) rolling up like an odometer: each digit's column from 0 to it over 1.8 s, 0.12 s after the one before. |
-| `starsGroup`, `starPop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. |
+| `starsGroup`, `pop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. `pop` is also an icon popping in (`RevealItem preset="pop"`). |
+| `revealSide`, `drawDown` | A piece sliding in 16px from the left (a step's speech bubble, `preset="side"`), and a line drawing itself from its top over 0.4 s (the timeline, `preset="draw"`). |
 | `entrance-*`, `parallax` (theme.css) | The PageHeader: each piece fading in 40px from the side its variant calls for over 1.4 s as the page opens, the band's rule drawing itself, the homepage's photos sliding in behind their curve and lagging behind it on scroll (see 4). |
 
 A new preset stays subtle:
@@ -90,11 +91,16 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
   - render each item as `<RevealItem as="li">`;
   - pass `cascade` to `BlockShell` (see CardGrid, Steps, Testimonials).
 
+  To bring the pieces of one item in one after another (a sample's title, video, arrow and score; a step's
+  line, icon and bubble), render the item as `<RevealGroup as="li">` and its pieces as `RevealItem`s, each
+  with the `preset` that fits it: `rise` (default), `pop` (an icon), `side` (a speech bubble, from the left)
+  or `draw` (a line, from its top; give it `origin-top`).
+
   Decorations (waves, lines) stay plain elements so they do not move. `RevealItem` is inert when the block is
   not revealed.
 - **Inside a piece**, primitives join the reveal through the variants they inherit, and stay still anywhere
   else (the hero's rating card):
-  - `Stars` pop in one after another (`starsGroup`, `starPop`) once their card has come in;
+  - `Stars` pop in one after another (`starsGroup`, `pop`) once their card has come in;
   - `Ticker` rolls a figure up like an odometer (`tickerGroup`, `tickerDigit`): `<Ticker>{figure}</Ticker>`,
     where the figure is the string the page shows ("71,844"). Each digit's column, 0 up to it, rolls up until
     it shows; separators stay put. CSS draws the rolling digits (`content: attr(data-char)`) and an `sr-only`

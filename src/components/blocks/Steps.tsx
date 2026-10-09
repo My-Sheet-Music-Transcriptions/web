@@ -1,7 +1,7 @@
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { FeatureItem } from '~/components/primitives/FeatureItem'
 import { Icon, type IconName } from '~/components/primitives/Icon'
-import { RevealItem } from '~/components/primitives/Motion'
+import { RevealGroup, RevealItem } from '~/components/primitives/Motion'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import type { CardItem, MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
@@ -18,8 +18,8 @@ export interface StepItem extends CardItem {
 export interface StepsProps extends ShellProps {
   /** The steps, in order: three to seven. */
   items: StepItem[]
-  /** timeline: numbered vertical list (default). columns: side by side, each with its picture or video. */
-  variant?: 'timeline' | 'columns'
+  /** timeline: numbered vertical list (default). bubbles: a vertical line of illustrated icons, each step a speech bubble. columns: side by side, each with its picture or video. */
+  variant?: 'timeline' | 'bubbles' | 'columns'
   /** One wide picture shown instead of the step pictures from 1025px up (columns). */
   illustration?: PictureSource
   /** Alt text of the wide picture. */
@@ -33,8 +33,10 @@ export interface StepsProps extends ShellProps {
 }
 
 /**
- * A process step by step. `timeline`: a numbered vertical list with a glyph or number per step. `columns`:
- * the steps side by side, each with its picture or video (the homepage adds one wide illustration on desktop).
+ * A process step by step. `timeline`: a numbered vertical list with a glyph or number per step. `bubbles`:
+ * a vertical line with each step's illustrated icon on it and its title and text in a speech bubble.
+ * `columns`: the steps side by side, each with its picture or video (the homepage adds one wide
+ * illustration on desktop).
  */
 export function Steps({
   items,
@@ -72,6 +74,58 @@ export function Steps({
                 imageClassName={illustration ? 'lg:hidden' : undefined}
               />
             </RevealItem>
+          ))}
+        </ol>
+      </BlockShell>
+    )
+  if (variant === 'bubbles')
+    return (
+      <BlockShell {...shell} width="narrow" cascade>
+        <ol className="m-0 flex list-none flex-col p-0">
+          {items.map((step, i) => (
+            <RevealGroup
+              as="li"
+              key={step.title ?? step.body}
+              className="flex items-center gap-5 md:gap-8"
+            >
+              {/* The icon sits on a line that runs from the first step to the last; in a revealed block the
+                  line draws itself down to each icon, which pops in, then the bubble slides in beside it. */}
+              <div className="flex w-[72px] shrink-0 flex-col items-center self-stretch md:w-28">
+                <RevealItem
+                  preset="draw"
+                  aria-hidden="true"
+                  className={cn('w-px flex-1 origin-top bg-line', i === 0 && 'invisible')}
+                />
+                <RevealItem
+                  preset="pop"
+                  className="flex w-full items-center justify-center py-2 text-h3 font-bold text-primary"
+                >
+                  {step.icon ? (
+                    <Picture image={step.icon} alt="" sizes="96px" className="w-full" />
+                  ) : step.glyph ? (
+                    <Icon name={step.glyph} size={32} />
+                  ) : (
+                    i + 1
+                  )}
+                </RevealItem>
+                <RevealItem
+                  preset="draw"
+                  aria-hidden="true"
+                  className={cn(
+                    'w-px flex-1 origin-top bg-line',
+                    i === items.length - 1 && 'invisible',
+                  )}
+                />
+              </div>
+              <RevealItem preset="side" className="my-2 min-w-0 flex-1">
+                <FeatureItem
+                  item={{ ...step, icon: undefined }}
+                  surface="bubble"
+                  labels={labels}
+                  videoPoster={videoPoster}
+                />
+              </RevealItem>
+            </RevealGroup>
           ))}
         </ol>
       </BlockShell>

@@ -138,7 +138,7 @@ export const catalogue = {
       ],
     },
     usage:
-      '<Samples items={[{ title: "…", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />',
+      '<Samples items={[{ title: "…", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />\n<Samples variant="columns" items={[{ title: "…", icon: pianoIcon, name: "Piano", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />',
     dataSource: 'content/<locale>/data/labels.ts (mediaLabels)',
     previewHeight: 640,
     guidelines: 'Scores live in the page folder (first page, PNG). Two to four samples.',
@@ -191,7 +191,7 @@ export const catalogue = {
       cta: { label: 'See all services', href: '/services-samples' },
     },
     usage:
-      '<PictureGrid title="…" items={allServices} limit={12} cta={{ label: "See all services", href: "/services-samples" }} />\n<PictureGrid title="…" shape="portrait" columns={5} items={[{ name: "…", image: photo, href: "/…" }]} />\n<PictureGrid variant="marquee" shape="photo" label="…" items={[{ image: photo, alt: "…" }]} />',
+      '<PictureGrid title="…" items={allServices} limit={12} cta={{ label: "See all services", href: "/services-samples" }} />\n<PictureGrid title="…" shape="portrait" columns={5} items={[{ name: "…", image: photo, href: "/…" }]} />\n<PictureGrid variant="marquee" label="…" items={allServices} />\n<PictureGrid variant="marquee" shape="photo" label="…" items={[{ image: photo, alt: "…" }]} />',
     previewHeight: 560,
     dataSource: 'content/<locale>/data/services.ts (allServices)',
     guidelines:
@@ -218,7 +218,7 @@ export const catalogue = {
       ],
     },
     usage:
-      '<Steps title="How it works" items={[{ glyph: "dollar", body: "…" }, { glyph: "gift", body: "…" }]} />\n<Steps variant="columns" items={[{ title: "1. Send us audio", body: "…", image: step1 }]} />',
+      '<Steps title="How it works" items={[{ glyph: "dollar", body: "…" }, { glyph: "gift", body: "…" }]} />\n<Steps variant="bubbles" items={[{ title: "1. You request a quote", body: "…", icon: step1 }]} />\n<Steps variant="columns" items={[{ title: "1. Send us audio", body: "…", image: step1 }]} />',
     dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with videos)',
     previewHeight: 640,
     guidelines:
@@ -263,7 +263,7 @@ export const catalogue = {
       cta: { label: 'Read all our FAQs', href: '/frequent-asked-questions' },
     },
     usage:
-      '<FaqList title="Frequently asked questions" groups={[{ title: "Piano Transcriptions", items: […] }, generalFaq]} />',
+      '<FaqList title="Frequently asked questions" groups={[{ title: "Piano Transcriptions", items: […] }, generalFaq]} />\n<FaqList title="…" jumpLinks groups={[servicesFaq, orderingFaq]} cta={{ label: "See all FAQs", href: "/frequent-asked-questions" }} />',
     previewHeight: 520,
     dataSource: 'content/<locale>/data/faqs.ts (generalFaq and the FAQ page groups)',
     guidelines:

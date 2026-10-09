@@ -1,6 +1,6 @@
 import * as m from 'motion/react-m'
 import { cn } from '~/lib/cn'
-import { starPop, starsGroup } from './Motion'
+import { pop, starsGroup } from './Motion'
 
 export interface StarsProps {
   /** Filled stars; a score with decimals fills the star it reaches (4.9 shows five). */
@@ -51,7 +51,7 @@ export function Stars({
       {STAR_IDS.slice(0, max).map((id, i) => (
         <m.svg
           key={id}
-          variants={starPop}
+          variants={pop}
           data-reveal=""
           aria-hidden="true"
           width={width}
