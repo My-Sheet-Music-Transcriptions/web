@@ -31,6 +31,7 @@
   --color-teal: #239c90; /* pricing header (white large text, 3.3:1); the original #2EC4B6 stays as teal-light */
   --color-teal-light: #2ec4b6;
   --color-blue: #2e97c4; /* pricing "Average"/"Bands" header */
+  --color-sky-tint: #bde3f2; /* the speech bubbles of a timeline step (ink text on it: 8.6:1) */
   --color-azure: #2786d8;
   --color-pine: #1f9b90;
   --color-yellow: #ffb703; /* rating stars */

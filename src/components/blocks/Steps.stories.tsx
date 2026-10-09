@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { mediaLabels } from '~/stories/data'
+import { revealed } from '~/stories/play'
 import { sample } from '~/stories/samples'
 import { Steps, type StepsProps } from './Steps'
 import { storyArgs } from './story-args'
@@ -14,6 +15,31 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+/** A line of illustrated icons, each step in a speech bubble. */
+export const Bubbles: Story = {
+  args: {
+    title: 'How does it work?',
+    variant: 'bubbles',
+    stepLabel: undefined,
+    items: [
+      {
+        title: '1. You request a quote',
+        body: 'Send us the music you want us to transcribe (an audio file or a YouTube link!) and give us all relevant information.',
+        icon: sample.icon,
+      },
+      {
+        title: '2. We assess and adapt',
+        body: '**We are all music transcribers**: we will listen to your music and get back to you with a price quote that suits your needs.',
+        icon: sample.icon,
+      },
+      {
+        title: '3. You place the order',
+        body: 'When all details and price quote have been agreed on, you will place your order securely to get us started.',
+        icon: sample.icon,
+      },
+    ],
+  },
+}
 export const Columns: Story = {
   args: {
     title: 'How does it work?',
@@ -41,6 +67,11 @@ export const Columns: Story = {
       },
     ],
   },
+}
+/** `reveal`: the line draws itself down to each icon, which pops in, then its bubble slides in. */
+export const BubblesRevealed: Story = {
+  args: { ...Bubbles.args, reveal: true },
+  play: ({ canvasElement }) => revealed(canvasElement),
 }
 export const NumberedReasons: Story = {
   args: {

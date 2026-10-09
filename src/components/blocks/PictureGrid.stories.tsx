@@ -58,6 +58,15 @@ export const Photos: Story = {
     ],
   },
 }
+/** The services as a strip of icons that scrolls by on its own, under a page header. */
+export const IconMarquee: Story = {
+  args: {
+    title: undefined,
+    label: 'Our transcription services',
+    variant: 'marquee',
+    cta: undefined,
+  },
+}
 /** The strip of tall photos that scrolls by on its own (hidden on phones). */
 export const Marquee: Story = {
   args: {

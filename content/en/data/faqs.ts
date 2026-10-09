@@ -81,6 +81,7 @@ export const generalFaq: FaqGroup = {
 export const servicesFaq: FaqGroup = {
   title: 'Services',
   id: 'services',
+  tone: 'orange',
   items: [
     {
       question: 'Which songs can be transcribed?',
@@ -118,6 +119,7 @@ export const servicesFaq: FaqGroup = {
 export const orderingFaq: FaqGroup = {
   title: 'Ordering process',
   id: 'ordering-process',
+  tone: 'teal',
   items: [
     {
       question: 'Overall, how does it work?',
@@ -150,6 +152,7 @@ export const orderingFaq: FaqGroup = {
 export const technicalFaq: FaqGroup = {
   title: 'Technical questions',
   id: 'technical-questions',
+  tone: 'blue',
   items: [
     {
       question: 'What is a sheet music .pdf file?',
@@ -188,6 +191,7 @@ export const technicalFaq: FaqGroup = {
 export const aboutFaq: FaqGroup = {
   title: 'About us',
   id: 'about-us',
+  tone: 'navy',
   items: [
     {
       question: 'Who are you?',

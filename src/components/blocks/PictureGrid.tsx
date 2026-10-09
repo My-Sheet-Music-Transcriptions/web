@@ -11,7 +11,7 @@ export interface PictureGridProps extends ShellProps {
   items: PictureItem[]
   /** icon: illustrated icons (services). logo: wide marks in a box. portrait: round photos. photo: square photos. */
   shape?: 'icon' | 'logo' | 'portrait' | 'photo'
-  /** grid (default), or marquee: a strip of tall photos that scrolls by on its own (hidden on phones). */
+  /** grid (default), or marquee: a strip that scrolls by on its own: icons with their names (the services), or tall photos (hidden on phones). */
   variant?: 'grid' | 'marquee'
   /** Pictures per row from desktop up (two on phones). */
   columns?: 2 | 3 | 4 | 5 | 6
@@ -40,8 +40,8 @@ const pictures = {
 
 /**
  * A grid of pictures, each with its name and caption, linked when it has an `href`. `shape`: icon
- * (services), logo, portrait (round) or photo (square). `variant="marquee"`: a strip of tall photos that
- * scrolls by on its own (hidden on phones). `limit` shows the first n.
+ * (services), logo, portrait (round) or photo (square). `variant="marquee"`: a strip that scrolls by on its
+ * own, of icons with their names or of tall photos (hidden on phones). `limit` shows the first n.
  */
 export function PictureGrid({
   items,
@@ -53,39 +53,77 @@ export function PictureGrid({
   ...shell
 }: PictureGridProps) {
   const shown = limit ? items.slice(0, limit) : items
-  if (variant === 'marquee')
+  if (variant === 'marquee') {
+    const icons = shape === 'icon'
     return (
       <BlockShell
         {...shell}
         label={label}
         width="full"
-        spacing="loose"
-        className="hidden overflow-hidden md:block"
+        spacing={icons ? 'normal' : 'loose'}
+        className={cn('overflow-hidden', !icons && 'hidden md:block')}
       >
-        {/* As on the live site: one photo every 8 s, endless (the list is drawn twice and slides by half its
+        {/* As on the live site: one item every 8 s, endless (the list is drawn twice and slides by half its
             width); it stops for reduced-motion visitors and while hovered or focused. */}
-        <div className="group mx-[-80px] flex w-max motion-safe:animate-marquee hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]">
+        <div
+          className="group mx-[-80px] flex w-max motion-safe:animate-marquee hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]"
+          style={{ animationDuration: `${shown.length * 8}s` }}
+        >
           {[0, 1].map((copy) => (
             <ul
               key={copy}
-              className="flex gap-5 pr-5"
+              className={cn('flex', icons ? 'gap-2.5 pr-2.5' : 'gap-5 pr-5')}
               aria-hidden={copy === 1 ? 'true' : undefined}
             >
-              {shown.map((item) => (
-                <li key={keyOf(item)} className="w-[250px] shrink-0">
-                  <Picture
-                    image={item.image}
-                    alt={copy === 0 ? (item.alt ?? item.name ?? '') : ''}
-                    sizes="250px"
-                    className="h-[374px] w-[250px] rounded-card object-cover"
-                  />
-                </li>
-              ))}
+              {shown.map((item) => {
+                if (!icons)
+                  return (
+                    <li key={keyOf(item)} className="w-[250px] shrink-0">
+                      <Picture
+                        image={item.image}
+                        alt={copy === 0 ? (item.alt ?? item.name ?? '') : ''}
+                        sizes="250px"
+                        className="h-[374px] w-[250px] rounded-card object-cover"
+                      />
+                    </li>
+                  )
+                const content = (
+                  <>
+                    <Picture
+                      image={item.image}
+                      alt={copy === 0 ? (item.alt ?? '') : ''}
+                      sizes="100px"
+                      className="mx-auto h-[100px] w-[100px] transition-transform group-hover/item:scale-105"
+                    />
+                    {item.name ? (
+                      <span className="mt-3 block text-h4 font-bold text-ink group-hover/item:text-accent-deep">
+                        {item.name}
+                      </span>
+                    ) : null}
+                  </>
+                )
+                return (
+                  <li key={keyOf(item)} className="w-[160px] shrink-0 text-center">
+                    {item.href ? (
+                      <SmartLink
+                        href={item.href}
+                        className="group/item block"
+                        tabIndex={copy === 1 ? -1 : undefined}
+                      >
+                        {content}
+                      </SmartLink>
+                    ) : (
+                      content
+                    )}
+                  </li>
+                )
+              })}
             </ul>
           ))}
         </div>
       </BlockShell>
     )
+  }
   const p = pictures[shape]
   return (
     <BlockShell {...shell} label={label} cascade>

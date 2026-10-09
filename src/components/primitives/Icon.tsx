@@ -2,6 +2,7 @@ import type { SVGProps } from 'react'
 
 export type IconName =
   | 'arrow-right'
+  | 'arrow-down'
   | 'chevron-down'
   | 'chevron-left'
   | 'chevron-right'
@@ -63,6 +64,7 @@ export type IconName =
 
 const paths: Record<IconName, { d: string; fill?: boolean; viewBox?: string }> = {
   'arrow-right': { d: 'M5 12h14M13 6l6 6-6 6' },
+  'arrow-down': { d: 'M12 5v14M6 13l6 6 6-6' },
   'chevron-down': { d: 'M6 9l6 6 6-6' },
   'chevron-left': { d: 'M15 18l-6-6 6-6' },
   'chevron-right': { d: 'M9 18l6-6-6-6' },

@@ -50,10 +50,22 @@ export const starsGroup: Variants = {
   shown: { transition: { delayChildren: 0.25, staggerChildren: 0.08 } },
 }
 
-/** One star popping in: it grows from half its size with a slight overshoot and fades in. */
-export const starPop: Variants = {
+/** A star or an icon popping in: it grows from half its size with a slight overshoot and fades in. */
+export const pop: Variants = {
   hidden: { opacity: 0, scale: 0.5 },
   shown: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] } },
+}
+
+/** One piece of a revealed block coming in from the left (a speech bubble): it slides 16px and fades in. */
+export const revealSide: Variants = {
+  hidden: { opacity: 0, x: -16 },
+  shown: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+}
+
+/** A line of a revealed block drawing itself downwards (a timeline): it grows from its top over 0.4 s. */
+export const drawDown: Variants = {
+  hidden: { scaleY: 0 },
+  shown: { scaleY: 1, transition: { duration: 0.4, ease: 'easeOut' } },
 }
 
 const opening = { duration: 0.2, ease: 'easeOut' } as const
@@ -85,9 +97,18 @@ export const slideIn: Variants = {
 
 const tags = { div: m.div, li: m.li, p: m.p }
 
+/** How a piece comes in: rising (default), popping, sliding in from the left, or drawn downwards (a line). */
+const presets = { rise: revealPiece, pop, side: revealSide, draw: drawDown }
+
 export interface RevealItemProps {
   /** The element: `li` for an item of a list, `p`, or `div` (default). */
   as?: keyof typeof tags
+  /** How it comes in: `rise` (default), `pop` (an icon), `side` (from the left), `draw` (a line, from its top). */
+  preset?: keyof typeof presets
+  /** An anchor (a FAQ group). */
+  id?: string
+  /** Hidden from screen readers: a decoration (a timeline's line). */
+  'aria-hidden'?: 'true'
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -101,9 +122,26 @@ export interface RevealItemProps {
  * list) passes `cascade` to its BlockShell. `data-reveal` lets theme.css show it as it is where nothing
  * animates (reduced motion, print, no JavaScript).
  */
-export function RevealItem({ as = 'div', ...props }: RevealItemProps) {
+export function RevealItem({ as = 'div', preset = 'rise', ...props }: RevealItemProps) {
   const Tag = tags[as]
-  return <Tag data-reveal="" variants={revealPiece} {...props} />
+  return <Tag data-reveal="" variants={presets[preset]} {...props} />
+}
+
+export interface RevealGroupProps {
+  /** The element: `li` for an item of a list, or `div` (default). */
+  as?: 'div' | 'li'
+  className?: string
+  children?: ReactNode
+}
+
+/**
+ * An item of a revealed block whose own pieces come in one after another (a sample's title, video, arrow and
+ * score; a step's line, icon and bubble): its `RevealItem` children follow each other, 0.08 s apart, once
+ * the items before it have come in. It never hides itself, so it carries no `data-reveal`.
+ */
+export function RevealGroup({ as = 'div', ...props }: RevealGroupProps) {
+  const Tag = tags[as]
+  return <Tag variants={revealGroup} {...props} />
 }
 
 const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']

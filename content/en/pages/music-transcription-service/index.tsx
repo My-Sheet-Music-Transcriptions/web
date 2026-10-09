@@ -6,6 +6,9 @@ import { allServices, included } from '@content/en/data/services'
 import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
 import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
 import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
+import pianoIcon from '~/assets/images/icons/piano.png?w=150;300&as=picture'
+import pianoVocalIcon from '~/assets/images/icons/piano-vocal.png?w=150;300&as=picture'
+import trumpetIcon from '~/assets/images/icons/trumpet.png?w=150;300&as=picture'
 import {
   CardGrid,
   ContactSection,
@@ -20,6 +23,11 @@ import {
 import { Text, TextLink } from '~/components/typography'
 import rocketMan from './rocket-man.png?w=300;600&as=picture'
 import shadowOfYourSmile from './shadow-of-your-smile.png?w=300;600&as=picture'
+import step1 from './step-1-request.png?w=120;240&as=picture'
+import step2 from './step-2-assess.png?w=120;240&as=picture'
+import step3 from './step-3-order.png?w=120;240&as=picture'
+import step4 from './step-4-transcribe.png?w=120;240&as=picture'
+import step5 from './step-5-enjoy.png?w=120;240&as=picture'
 import team1 from './team-1.jpg?w=560;1000&as=picture'
 import team2 from './team-2.jpg?w=560;1000&as=picture'
 import team3 from './team-3.jpg?w=560;1000&as=picture'
@@ -34,19 +42,18 @@ export default function MusicTranscriptionServicePage() {
         lead="Learn more about our music notation services and our range of solutions to transform audio recordings into precise and digital sheet music."
       />
 
-      <PictureGrid
-        items={allServices}
-        limit={8}
-        cta={{ label: 'See all services', href: '#all-services' }}
-      />
+      <PictureGrid variant="marquee" label="Our transcription services" items={allServices} />
 
       <Samples
+        reveal
+        variant="columns"
         videoPoster={videoPoster}
         labels={mediaLabels}
-        tone="cream"
         items={[
           {
             title: 'Piano & Vocal Score',
+            icon: pianoVocalIcon,
+            name: 'Piano - Vocal',
             video: {
               youtube: 'LmnejiLlR-M',
               title: 'Piano & Vocal Score',
@@ -57,6 +64,8 @@ export default function MusicTranscriptionServicePage() {
           },
           {
             title: 'Piano Cover Transcription',
+            icon: pianoIcon,
+            name: 'Piano - Vocal',
             video: {
               youtube: '750BWuHGBNI',
               title: 'Piano Cover Transcription',
@@ -67,6 +76,8 @@ export default function MusicTranscriptionServicePage() {
           },
           {
             title: 'Trumpet Jazz Solo',
+            icon: trumpetIcon,
+            name: 'Trumpet',
             video: {
               youtube: '4OcySBum734',
               title: 'Trumpet Jazz Solo',
@@ -79,36 +90,49 @@ export default function MusicTranscriptionServicePage() {
       />
 
       <Steps
+        reveal
         title="How does it work?"
+        variant="bubbles"
         items={[
           {
             title: '1. You request a quote',
+            icon: step1,
             body: 'Send us the music you want us to transcribe (an audio file or a YouTube link!) and give us all relevant information: instruments, timestamps, difficulty, and arrangement details.',
           },
           {
             title: '2. We assess and adapt',
+            icon: step2,
             body: '**We are all music transcribers**: we will listen to your music and get back to you with a price quote that suits your needs. An in-house specialist is always ready to take care of your project.',
           },
           {
             title: '3. You place the order',
+            icon: step3,
             body: 'When all details and price quote have been agreed on, you will place your order securely to get us started.',
           },
           {
             title: '4. We transcribe',
+            icon: step4,
             body: 'Our professional transcribers will craft your transcription as agreed. We will ensure the process is smooth and keep you updated if we have news or questions.',
           },
           {
             title: '5. You enjoy the music – 100% satisfaction',
+            icon: step5,
             body: 'We will send you the completed transcription in all the formats you need to print it or use it.\n\nWe will make sure everything looks good to you. Adjusting any small details that might have been missed is our job too.',
           },
         ]}
       />
 
-      <CardGrid title="What's included?" image={studioBand} items={included} />
+      <CardGrid reveal title="What's included?" image={studioBand} items={included} />
 
-      <PictureGrid id="all-services" title="Turn any song into sheet music" items={allServices} />
+      <PictureGrid
+        reveal
+        id="all-services"
+        title="Turn any song into sheet music"
+        items={allServices}
+      />
 
       <RatingBanner
+        reveal
         image={pianoBand}
         title="The highest-rated online sheet music transcribers"
         counter={counter}
@@ -116,6 +140,7 @@ export default function MusicTranscriptionServicePage() {
       />
 
       <MediaText
+        reveal
         labels={mediaLabels}
         title="Professional, accurate, and hassle-free"
         align="center"
@@ -154,13 +179,14 @@ export default function MusicTranscriptionServicePage() {
       </MediaText>
 
       <FaqList
+        reveal
         title="Frequently Asked Questions"
         jumpLinks
         groups={[servicesFaq, orderingFaq, technicalFaq, aboutFaq]}
         cta={{ label: 'See all FAQs', href: '/frequent-asked-questions' }}
       />
 
-      <ContactSection form={quoteForm} returnTo="/music-transcription-service" />
+      <ContactSection reveal form={quoteForm} returnTo="/music-transcription-service" />
     </>
   )
 }

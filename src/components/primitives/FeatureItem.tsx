@@ -9,8 +9,8 @@ import { SmartLink } from './SmartLink'
 
 export interface FeatureItemProps {
   item: CardItem
-  /** card: a white card. tile: a peach rounded tile. plain: no surface (a step, a column). */
-  surface?: 'card' | 'tile' | 'plain'
+  /** card: a white card. tile: a peach rounded tile. plain: no surface (a step, a column). bubble: a sky-tinted speech bubble pointing left (a timeline step). */
+  surface?: 'card' | 'tile' | 'plain' | 'bubble'
   /** Centred, or at the start (the default of cards). */
   align?: 'center' | 'start'
   /** The words of the play button: `media` from content/<locale>/data/labels (items with a video). */
@@ -25,17 +25,19 @@ const surfaces = {
   card: '',
   tile: 'rounded-[35px] bg-orange-tint p-10 shadow-[0_0_10px_5px_rgb(0_0_0/0.11)]',
   plain: '',
+  bubble:
+    'relative rounded-card bg-sky-tint p-6 md:p-8 before:absolute before:top-1/2 before:-left-3 before:-translate-y-1/2 before:border-y-[10px] before:border-r-[12px] before:border-y-transparent before:border-r-sky-tint',
 }
 
 /**
  * One item of a grid or a process: its media (an illustrated icon, a picture or a video), a title, a short
  * text in light markdown, a bold line and a link. CardGrid and Steps show their items with it, on one of
- * three surfaces; nothing else draws a feature card.
+ * four surfaces (a card, a tile, plain, a speech bubble); nothing else draws a feature card.
  */
 export function FeatureItem({
   item,
   surface = 'card',
-  align = surface === 'card' ? 'start' : 'center',
+  align = surface === 'card' || surface === 'bubble' ? 'start' : 'center',
   labels,
   videoPoster,
   imageClassName,
