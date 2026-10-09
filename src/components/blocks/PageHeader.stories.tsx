@@ -10,7 +10,7 @@ const meta = {
   component: PageHeader,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<PageHeaderProps>('PageHeader'),
-  // The copy rises in as it opens: axe checks it once it has.
+  // The header drifts into place as it opens: axe checks it once it has.
   play: ({ canvasElement }) => entered(canvasElement),
 } satisfies Meta<typeof PageHeader>
 export default meta

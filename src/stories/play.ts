@@ -11,10 +11,17 @@ export async function revealed(root: HTMLElement) {
   )
 }
 
-/** Waits until the animations that end (the PageHeader's `entrance`) have ended, so axe checks the final colours. */
+/**
+ * Waits until the animations that end on their own (the PageHeader's entrance) have ended, so axe checks the
+ * final layout: not the endless ones (the marquee) nor those the scroll drives (the parallax).
+ */
 export async function entered(root: HTMLElement) {
   const ending = root
     .getAnimations({ subtree: true })
-    .filter((a) => a.effect?.getComputedTiming().endTime !== Number.POSITIVE_INFINITY)
+    .filter(
+      (a) =>
+        a.timeline === document.timeline &&
+        a.effect?.getComputedTiming().endTime !== Number.POSITIVE_INFINITY,
+    )
   await Promise.all(ending.map((a) => a.finished.catch(() => undefined)))
 }

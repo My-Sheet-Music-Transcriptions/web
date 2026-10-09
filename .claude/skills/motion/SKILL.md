@@ -26,7 +26,7 @@ shell or to a primitive, never to one page.
   `primitives/motion-features.ts`, in their own chunk. `domMax` (layout animations, drag) is not loaded. Ask
   before adding it, because it costs another ~10 KB on every page.
 - Do not use the imperative `animate()`, `useAnimate` or `motion/mini`. Use one style: variants on `m`
-  components. The PageHeader's CSS `entrance` (section 4) is the one exception.
+  components. The PageHeader's CSS entrance and parallax (section 4) are the one exception.
 
 ## 2. Presets, not numbers
 
@@ -40,7 +40,7 @@ an ease or a distance:
 | `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu). |
 | `countUp` | A figure of a revealed block (`CountUp`) counting up from zero over 2 s, slowing down onto itself. |
 | `starsGroup`, `starPop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. |
-| `entrance` (theme.css) | The PageHeader as the page opens: `revealGroup` and `revealPiece` in CSS, text moving without fading (see 4). |
+| `entrance-left`, `entrance-right`, `parallax` (theme.css) | The PageHeader: copy and pictures drifting 40px into place over 1.4 s as the page opens; the homepage's photos lagging behind the scroll (see 4). |
 
 A new preset stays subtle:
 - 0.15–0.3 s for controls and 0.6–0.7 s for scroll reveals;
@@ -61,18 +61,18 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
   and so does `ContactSection`. Do not reveal a block that already moves (the marquee strip).
 - **The PageHeader** never takes `reveal`: it holds the page's largest paint, and a Motion reveal would
   prerender it hidden until the JavaScript and the features chunk have loaded (seconds on a slow phone, and
-  the LCP with them). It comes in with the one CSS animation of this kind instead: `entrance` (theme.css) on a
-  container brings each child 24px up into place, 0.08 s after the one before, over 0.6 s, from the first
-  paint (the numbers of `revealPiece` and `revealGroup`: change both together); `entrance-late` starts a
-  container after the copy (the rating card).
-  - **Text never fades, it only moves** (`h1` and `p` take the `settle` keyframes): Chrome never counts an
-    element first painted at opacity 0 as the LCP, not even once it shows, so a fading h1 or lead hands the
-    LCP to whatever paints next (the consent banner, after hydration). The button, the rule, the lockup and
-    the rating card fade as they rise; the pictures stay still. Measured on every English page: the LCP
-    element and time are the same with and without the entrance.
-  - It runs on screen only for visitors who did not ask for reduced motion, so nothing starts hidden for
-    anyone else, and it replays as each page mounts. A story that shows it waits in
-    `play: ({ canvasElement }) => entered(canvasElement)` (src/stories/play.ts) before axe runs.
+  the LCP with them). It drifts into place with CSS instead (theme.css), calmly and all at once, from the
+  first paint: `entrance-left` brings the copy 40px in from the left and `entrance-right` the pictures and the
+  rating card from the right, over 1.4 s. The homepage's photo layer then lags behind the page as it scrolls
+  (`parallax`: a scroll-driven animation, 85% of the page's speed over the first screen, compositor-run, and
+  nothing where browsers lack scroll timelines). The photos centre under their curve.
+  - **Nothing fades, it only moves:** Chrome never counts an element first painted at opacity 0 as the LCP,
+    not even once it shows, so a fading h1 or lead hands the LCP to whatever paints next (the consent banner,
+    after hydration). Measured on every English page: the LCP element and time are the same with and without
+    the motion.
+  - It runs on screen only for visitors who did not ask for reduced motion, and it replays as each page
+    mounts. A story that shows it waits in `play: ({ canvasElement }) => entered(canvasElement)`
+    (src/stories/play.ts) before axe runs; `entered` skips the animations the scroll drives.
 - **How it is driven:** the shell watches itself with `useInView` and switches `animate` from `hidden` to
   `shown`. It does not use `whileInView`: with `whileInView` and `once`, pieces mounted after the reveal (another
   tab's cards) inherit `hidden` and stay invisible. With `animate`, they inherit `shown` and come in on their

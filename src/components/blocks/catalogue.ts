@@ -71,7 +71,7 @@ export const catalogue = {
     useWhen: 'The first block of every page: its h1, a subtitle or lead, a button.',
     notFor: 'a heading further down the page: every block has its own `title`.',
     description:
-      'Page opening. `band`: dark centred title band with an orange rule, then the instrument icon and the compact rating card when given (service pages). `split`: white, copy and button left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the copy, cut by a curve that leaves the copy on white (above it on phones), brand lockup, orange highlight and the floating rating card. As the page opens the copy rises into place piece by piece, then the rating card; the pictures stay still.',
+      'Page opening. `band`: dark centred title band with an orange rule, then the instrument icon and the compact rating card when given (service pages). `split`: white, copy and button left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the copy, cut by a curve that leaves the copy on white (above it on phones), brand lockup, orange highlight and the floating rating card. As the page opens the copy drifts in from the left and the pictures and rating card from the right; the homepage photos lag behind the scroll (parallax).',
     defaults: {
       title: 'Piano Transcription Service',
       subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',

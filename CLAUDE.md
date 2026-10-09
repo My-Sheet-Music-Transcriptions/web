@@ -262,6 +262,7 @@ components or layout.
 - **Motion through Motion.** Animations use Motion (`motion/react`): `m` components and the presets in
   `src/components/primitives/Motion.tsx`, under the `MotionProvider` every root mounts (reduced motion respected).
   A page reveals a block with `reveal`. The one exception is the `PageHeader`, which never takes `reveal`: its copy
-  rises into place as the page opens with a CSS animation (`entrance` in `theme.css`; its text moves but never fades),
-  so its largest paint never waits for JavaScript. Follow the `motion` skill.
+  drifts into place as the page opens with CSS animations (`entrance-left`/`entrance-right`, the homepage photos'
+  `parallax`, in `theme.css`; nothing fades), so its largest paint never waits for JavaScript. Follow the `motion`
+  skill.
 - Do not commit generated files: `routeTree.gen.ts`, `hreflang.generated.json`, `public/og`, `public/robots.txt`.
