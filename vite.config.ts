@@ -1,3 +1,4 @@
+import path from 'node:path'
 import netlify from '@netlify/vite-plugin-tanstack-start'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
@@ -28,6 +29,21 @@ export default defineConfig({
   // that URL is http://localhost:<port>, which Netlify's build image resolves to ::1 first, where the
   // connection hangs (ETIMEDOUT) while the server listens on IPv4 only. Pin both ends to IPv4 loopback.
   preview: { host: '127.0.0.1' },
+  build: {
+    rolldownOptions: {
+      output: {
+        // Byte-identical images (the rhythm-charts and transposing icons) become one asset with several names,
+        // and each build keeps whichever name it emitted first, which varies from run to run: the prerendered
+        // HTML (server build) could point at a file the client build wrote under the other name. Both builds
+        // pick the alphabetically first name instead.
+        assetFileNames: ({ names }) => {
+          if (names.length < 2) return 'assets/[name]-[hash][extname]'
+          const { dir, name, ext } = path.posix.parse(names.reduce((a, b) => (a < b ? a : b)))
+          return path.posix.join('assets', dir, `${name}-[hash]${ext}`)
+        },
+      },
+    },
+  },
   plugins: [
     imagetools({
       defaultDirectives: (url) => {
