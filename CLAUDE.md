@@ -20,6 +20,7 @@ pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
 pnpm lhci                     # Lighthouse CI thresholds (needs a build; finds Chromium itself, CHROME_PATH overrides)
 pnpm release-check            # the full local gate (more than the PR CI runs: see nightly.yml)
 pnpm ds:export                # design-system export for the artifact -> dist/design-system (see below)
+pnpm ds:push                  # after a publish on main: commits artifact.json alone and pushes it straight to main (last push wins)
 pnpm ds:blocks [Block...|--all]    # no args: the index (blocks by category, when to use each, where used); names: props, allowed values, docs + a ready mockup line
 pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, renders it locally (as ds:shot), builds the review page and prints the Artifact publish parameters
 pnpm ds:shot <slug> [--built | --url <url>] [--width 390]   # renders the mockup (or the real page) in headless Chromium at 1440/768/390: pictures per section + problems
@@ -83,7 +84,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   (sitemaps, `_redirects`), `serve-dist.ts`, `lib/content-fs.ts`, `lib/sitemap.ts` (see "Sitemaps" below),
   `lib/chromium.ts` (the Chromium Playwright, Storybook's vitest, `lhci` and `ds:shot` launch: Playwright's own,
   else the one the container ships in `/opt/pw-browsers`; `CHROME_PATH` overrides),
-  `design-system/{export,index,lib}.ts` (artifact export, `ds:index --check` and the publish record),
+  `design-system/{export,index,lib,push}.ts` (artifact export, `ds:index --check`, the publish record and its push to `main`),
   `design-system/{blocks,review,shot,canvas,mockup,status}.ts` + `*-lib.ts` and `preview-lib.ts` (the page-preview tooling).
 - `tests/unit`, `tests/seo` (runs over `dist/client`), `tests/e2e`, `tests/visual` (+ `reference/` captures of the live site).
 - `.claude/skills` – `page` (the whole page workflow; `reference/*.md` hold the recipes per step), the content-manager
@@ -138,7 +139,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 
 Paths decide, not people. `.github/CODEOWNERS` makes `@My-Sheet-Music-Transcriptions/core` the owner of everything
 except `content/`, `mockups/`, `docs/migration/` and `src/design-system/artifact.json` (generated, rewritten when a
-data change forces a republish). The branch rule on `main` requires a code owner's review, so a PR that only touches
+data change forces a republish; the design-system routine pushes it straight to `main` with `pnpm ds:push`, the one
+commit that skips a PR, so the identity it pushes as must be allowed to bypass the branch rule). The branch rule on `main` requires a code owner's review, so a PR that only touches
 those paths merges on green CI, and any other PR (blocks, components, server functions, forms, tests, CI, config,
 these instructions, the skills) waits for core. `.github/workflows/labels.yml` labels every PR `content` and/or
 `engineering` so the blast radius is visible; the `page` skill reads the label and tells the person when an engineer
@@ -222,9 +224,12 @@ The Design System artifact (`src/design-system/artifact.json`, title "My Sheet M
 the real components as `components/bundle.js` (`window.MSMT`, React included) and both preview surfaces load them
 from there (the server copies the files by name, so a file the artifact lacks fails every preview publish).
 The artifact follows `main`: `pnpm ds:index --check` exports and compares the output's hash with the one
-recorded at the last publish (`artifact.json#exportHash`); a scheduled Claude routine runs it on `main` every
-few hours and republishes when it fails (the `publish-design-system` skill), the `page` skill runs it before
-every preview, and nightly CI runs it as an alarm. A PR that changes blocks or tokens does not republish; a
+recorded at the last publish (`artifact.json#exportHash`; the export must hash the same on every run and every
+commit, so nothing in it may depend on the commit, the date or build order); a Claude routine that GitHub starts
+on every merge to `main` runs it, republishes when it fails (the `publish-design-system` skill) and pushes the
+record straight to `main` with `pnpm ds:push`, no PR (merges seconds apart start runs side by side: the last push
+wins, and a push that `main` outran is checked again first). The `page` skill runs the check before every
+preview, and nightly CI runs it as an alarm. A PR that changes blocks or tokens does not republish; a
 branch publishes only when its preview needs a proposed block. Every preview copies the design-system files
 from the artifact version recorded in `artifact.json#publishedVersion`, so a publish from any branch never
 changes an existing preview. Never edit the artifact by hand. CI: PRs and pushes to `main` run only the fast

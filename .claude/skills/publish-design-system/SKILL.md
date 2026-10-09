@@ -12,9 +12,9 @@ turns `src/styles/theme.css`, `src/components/blocks/*` + `catalogue.ts`, the la
 
 How it stays in sync, so you know what the steps below are for:
 
-- **The artifact follows `main`.** The usual publish happens on `main`, after a merge: the scheduled
-  "Design System artifact" routine runs `pnpm ds:index --check` every few hours and publishes when it
-  fails, and the `page` skill does the same before a preview. A PR that changes design-system sources
+- **The artifact follows `main`.** The usual publish happens on `main`, after a merge: the "Design System
+  artifact" routine (a Claude routine GitHub starts on every merge to `main`) runs `pnpm ds:index --check`
+  and publishes when it fails, and the `page` skill does the same before a preview. A PR that changes design-system sources
   does **not** have to republish: no test fails on it. Publish from a branch only when a preview on that
   branch needs the branch's blocks (a proposed block); it is safe, see the next point.
 - **Previews pin a version.** `artifact.json#publishedVersion` is the artifact version the last publish
@@ -24,8 +24,13 @@ How it stays in sync, so you know what the steps below are for:
   output (`exportHash()` in `scripts/design-system/lib.ts`, timestamps left out); `pnpm ds:index --check`
   exports and compares. `publishedFrom` is informational only: a branch commit disappears when its PR is
   squash-merged, so never look it up or try to find "the branch it was published from".
-- **Conflicts in `artifact.json`** between two publishes: take either side, run `pnpm ds:index --check`,
-  and republish if it fails. Both sides are real publishes; the check decides.
+- **On `main` the last record wins.** Merges seconds apart start routine runs side by side, so two
+  publishes can race. The record goes to `main` by a direct push, no PR (`pnpm ds:push`): when `main` moved,
+  it puts this record on top of the new `main`, replacing the record there. Both are real publishes of the
+  same sources, so either is a valid pin. When `main` also moved by other files, it runs the check again on
+  the new `main` first and pushes nothing if the export no longer matches (exit 3: publish again).
+- **Conflicts in `artifact.json`** on a branch: take either side, run `pnpm ds:index --check`, and republish
+  if it fails. Both sides are real publishes; the check decides.
 
 1. `pnpm check && pnpm ds:export "<one-line note for lastChange>"`. Read the summary line: files, uploads,
    pending uploads, bundle size (expect ~560 KB; investigate a jump).
@@ -48,10 +53,16 @@ How it stays in sync, so you know what the steps below are for:
    missing file makes every `ds:review` publish fail.
 5. `pnpm ds:index --published --version <version id from the listing>`: records the version, the export
    hash, the commit and the time in `src/design-system/artifact.json`. Then `pnpm ds:index --check --no-export`
-   must say "in sync". Commit `artifact.json` (on `main`: as its own PR, "Record Design System publish";
-   `artifact.json` is a content path, so it merges on green CI without a core approval; on a branch: with the
-   change that motivated the publish). Tell the user the artifact URL and what changed; the artifact is
-   private until they share it.
+   must say "in sync". Then record it:
+   - **on `main`:** `pnpm ds:push` (add `--trailer "<Key>: <value>"` per attribution line). It commits
+     `artifact.json` alone and pushes it straight to `main`: no branch, no PR. Exit 0: it is on `main`, or
+     `main` already had it. Exit 3: `main` moved past this publish; check out the new `main`
+     (`git fetch origin main && git checkout --force --detach origin/main`) and start again at step 1.
+     A refusal naming the branch rule means the identity pushing may not bypass the rule on `main`: say so
+     and stop, never open a PR instead.
+   - **on a branch:** commit it with the change that motivated the publish.
+
+   Tell the user the artifact URL and what changed; the artifact is private until they share it.
 
 Format rules the export already enforces (keep them when editing the export): `bundle.js` is one classic
 script assigning `window.MSMT`, line 1 the `@ds-bundle` header, no `</script` or `<!--` inside; previews are
