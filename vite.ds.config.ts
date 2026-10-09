@@ -1,3 +1,5 @@
+import crypto from 'node:crypto'
+import fs from 'node:fs'
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import viteReact from '@vitejs/plugin-react'
@@ -13,8 +15,39 @@ import { assetFileNames } from './scripts/lib/asset-names.ts'
 
 const MAX_WIDTH = 1200
 
+/**
+ * Byte-identical pictures under different names (Storybook's own pictures repeat some brand ones: its
+ * flag is the Spanish flag) would reach the bundler as two files with the same bytes, written once under
+ * whichever name it met first, which varies from run to run, and the export hash
+ * (scripts/design-system/lib.ts) with it. Each such picture resolves to the alphabetically first copy.
+ */
+function identicalPictures(): Map<string, string> {
+  const walk = (dir: string): string[] =>
+    fs
+      .readdirSync(dir, { withFileTypes: true })
+      .flatMap((e) =>
+        e.isDirectory()
+          ? walk(path.join(dir, e.name))
+          : /\.(png|jpe?g|webp)$/.test(e.name)
+            ? [path.join(dir, e.name)]
+            : [],
+      )
+  const byHash = new Map<string, string[]>()
+  for (const file of ['src/assets/images', 'src/stories'].flatMap((d) => walk(path.resolve(d)))) {
+    const hash = crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')
+    byHash.set(hash, [...(byHash.get(hash) ?? []), file])
+  }
+  const canonical = new Map<string, string>()
+  for (const files of byHash.values()) {
+    const [first, ...rest] = files.sort()
+    for (const file of rest) canonical.set(file, first as string)
+  }
+  return canonical
+}
+
 /** Keeps the bundle's images small: one width (<= 1200px) in webp per import, instead of every srcset candidate. */
 function capImageWidths(): Plugin {
+  const canonical = identicalPictures()
   return {
     name: 'msmt:cap-image-widths',
     enforce: 'pre',
@@ -24,7 +57,12 @@ function capImageWidths(): Plugin {
       const widths = (m[2] ?? '').split(';').map(Number)
       const fitting = widths.filter((w) => w <= MAX_WIDTH)
       const w = fitting.length ? Math.max(...fitting) : Math.min(...widths)
-      return this.resolve(`${m[1]}?w=${w}&format=webp&as=picture`, importer, { skipSelf: true })
+      const resolved = await this.resolve(`${m[1]}?w=${w}&format=webp&as=picture`, importer, {
+        skipSelf: true,
+      })
+      const [file, query] = resolved?.id.split('?') ?? []
+      const same = file && canonical.get(file)
+      return same ? { ...resolved, id: `${same}?${query}` } : resolved
     },
   }
 }
@@ -35,6 +73,11 @@ export default defineConfig({
     'import.meta.env.SITE_LOCALE': '"en"',
     'import.meta.env.LOCALE_ROUTING': '"domain"',
     'import.meta.env.DEV': 'false',
+    // The package version, not the commit or the date: the export hash (scripts/design-system/lib.ts) must
+    // change only when what the bundle renders changes. design-system.json#lastChange names the commit.
+    __MSMT_VERSION__: JSON.stringify(
+      (JSON.parse(fs.readFileSync('package.json', 'utf8')) as { version: string }).version,
+    ),
   },
   resolve: {
     tsconfigPaths: true,

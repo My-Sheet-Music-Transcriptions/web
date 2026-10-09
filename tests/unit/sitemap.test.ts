@@ -8,12 +8,25 @@ import {
   legacySitemapRedirects,
   SITEMAP_INDEX,
   SITEMAP_NAMES,
+  sitemapIndexXml,
 } from '../../scripts/lib/sitemap'
 import { type Collection, parseMeta } from '../../src/content/schema'
+import { localizePath } from '../../src/i18n/routing'
 import { sites } from '../../src/i18n/sites'
 import { LOCALES, type Locale } from '../../src/i18n/types'
 
 const xml = (source: string) => cheerio.load(source, { xml: true })
+/** The deploy origin of the all-languages fixtures. */
+const ORIGIN = 'https://x.netlify.app'
+const PATH_MODE = { mode: 'path', origin: ORIGIN } as const
+
+/** The <loc>s a sitemap index lists. */
+function indexLocs(source: string): string[] {
+  const $ = xml(source)
+  return $('sitemap > loc')
+    .map((_, l) => $(l).text())
+    .get()
+}
 
 /** Every <loc> of a urlset, with its hreflang alternates. */
 function parseUrlset(source: string): Map<string, Map<string, string>> {
@@ -50,10 +63,24 @@ describe('sitemaps of the content in the repo', () => {
           expect(loc, 'no fragment or query').not.toMatch(/[#?]/)
         }
       }
-      const children = xml(index)('sitemap > loc')
-        .map((_, l) => xml(index)(l).text())
-        .get()
-      expect(children).toEqual(files.map((f) => `${sites[locale].domain}/${f.file}`))
+      expect(index.file).toBe(SITEMAP_INDEX)
+      expect(indexLocs(index.xml)).toEqual(files.map((f) => `${sites[locale].domain}/${f.file}`))
+    },
+  )
+
+  it.each(locales)(
+    '%s, all-languages build: the same pages under /<locale> on the deploy’s origin',
+    (locale) => {
+      const { index, files } = buildSitemaps(locale, all, PATH_MODE)
+      const expected = all
+        .filter((e) => e.locale === locale && !e.meta.draft && !e.meta.noindex)
+        .map((e) => `${ORIGIN}${localizePath(locale, e.path)}`)
+      const listed = files.flatMap((f) => [...parseUrlset(f.xml).keys()])
+      expect([...listed].sort()).toEqual(expected.sort())
+      for (const f of files)
+        expect(f.file).toBe(`${locale}/${SITEMAP_NAMES[f.collection]}-sitemap.xml`)
+      expect(index.file).toBe(`${locale}/${SITEMAP_INDEX}`)
+      expect(indexLocs(index.xml)).toEqual(files.map((f) => `${ORIGIN}/${f.file}`))
     },
   )
 })
@@ -92,24 +119,25 @@ function entry(
   }
 }
 
+const fixture: FsEntry[] = [
+  entry('en', 'home', 'home'),
+  entry('es', 'home', 'home'),
+  entry('ca', 'home', 'home', { updated: '2026-03-01' }),
+  entry('en', 'gift-card', 'gift-card'),
+  entry('es', 'tarjeta-regalo', 'gift-card'),
+  entry('ca', 'targeta-regal', 'gift-card'),
+  entry('en', 'careers', 'careers'),
+  entry('en', 'piano', 'piano', { collection: 'services', updated: '2026-02-01' }),
+  entry('es', 'piano', 'piano', { collection: 'services', noindex: true }),
+  entry('es', 'equipo', 'team'),
+  entry('ca', 'equip', 'team'),
+  entry('ca', 'esborrany', 'draft', { draft: true }),
+  entry('en', 'rock-&-roll', 'rock'),
+]
+
 describe('sitemaps across languages (fixture)', () => {
-  const all: FsEntry[] = [
-    entry('en', 'home', 'home'),
-    entry('es', 'home', 'home'),
-    entry('ca', 'home', 'home', { updated: '2026-03-01' }),
-    entry('en', 'gift-card', 'gift-card'),
-    entry('es', 'tarjeta-regalo', 'gift-card'),
-    entry('ca', 'targeta-regal', 'gift-card'),
-    entry('en', 'careers', 'careers'),
-    entry('en', 'piano', 'piano', { collection: 'services', updated: '2026-02-01' }),
-    entry('es', 'piano', 'piano', { collection: 'services', noindex: true }),
-    entry('es', 'equipo', 'team'),
-    entry('ca', 'equip', 'team'),
-    entry('ca', 'esborrany', 'draft', { draft: true }),
-    entry('en', 'rock-&-roll', 'rock'),
-  ]
   const built = (locale: Locale) => {
-    const { index, files } = buildSitemaps(locale, all)
+    const { index, files } = buildSitemaps(locale, fixture)
     return { index, files, urls: new Map(files.flatMap((f) => [...parseUrlset(f.xml)])) }
   }
   const sitemaps: Partial<Record<Locale, ReturnType<typeof built>>> = {
@@ -159,19 +187,61 @@ describe('sitemaps across languages (fixture)', () => {
       'services-sitemap.xml',
     ])
     expect(site('es').files.map((f) => f.file)).toEqual(['page-sitemap.xml'])
-    const index = xml(site('en').index)
+    const index = xml(site('en').index.xml)
     expect(index('sitemapindex').attr('xmlns')).toBe('http://www.sitemaps.org/schemas/sitemap/0.9')
     expect(
       index('sitemap')
         .map((_, s) => `${index(s).find('loc').text()} ${index(s).find('lastmod').text()}`)
         .get(),
     ).toEqual([`${en}/page-sitemap.xml 2026-01-01`, `${en}/services-sitemap.xml 2026-02-01`])
-    expect(xml(site('ca').index)('sitemap lastmod').text()).toBe('2026-03-01')
+    expect(xml(site('ca').index.xml)('sitemap lastmod').text()).toBe('2026-03-01')
   })
   it('escapes XML', () => {
     expect(site('en').urls.has(`${en}/rock-&-roll`)).toBe(true)
     const file = site('en').files.find((f) => f.file === 'page-sitemap.xml')
     expect(file?.xml).toContain('/rock-&amp;-roll</loc>')
+  })
+})
+
+describe('all-languages sitemaps (fixture)', () => {
+  const built = Object.fromEntries(
+    (['en', 'es', 'ca'] as const).map((l) => [l, buildSitemaps(l, fixture, PATH_MODE)]),
+  ) as Record<'en' | 'es' | 'ca', ReturnType<typeof buildSitemaps>>
+  const urls = new Map(
+    Object.values(built).flatMap(({ files }) => files.flatMap((f) => [...parseUrlset(f.xml)])),
+  )
+
+  it('links each page to its translations under their /<locale> on the same origin', () => {
+    const expected = new Map([
+      ['en', `${ORIGIN}/en/gift-card`],
+      ['es', `${ORIGIN}/es/tarjeta-regalo`],
+      ['ca', `${ORIGIN}/ca/targeta-regal`],
+      ['x-default', `${ORIGIN}/en/gift-card`],
+    ])
+    for (const loc of expected.values()) expect(urls.get(loc)).toEqual(expected)
+    expect(urls.get(`${ORIGIN}/en`)?.get('es')).toBe(`${ORIGIN}/es`)
+  })
+  it('makes every alternate a <loc> listing the same alternates', () => {
+    for (const [loc, alts] of urls)
+      for (const [lang, href] of alts)
+        if (lang !== 'x-default') expect(urls.get(href), `${loc} → ${href}`).toEqual(alts)
+  })
+  it('gives the parent every language’s sitemaps, and no index', () => {
+    const children = Object.values(built).flatMap((b) => b.files)
+    const parent = indexLocs(sitemapIndexXml(children))
+    expect(parent).toEqual([
+      `${ORIGIN}/en/page-sitemap.xml`,
+      `${ORIGIN}/en/services-sitemap.xml`,
+      `${ORIGIN}/es/page-sitemap.xml`,
+      `${ORIGIN}/ca/page-sitemap.xml`,
+    ])
+    expect(parent.some((l) => l.endsWith(`/${SITEMAP_INDEX}`))).toBe(false)
+  })
+  it('sends each language’s WordPress sitemap URLs to its own index', () => {
+    const rules = legacySitemapRedirects(built.es)
+    expect(rules).toContain('/es/sitemap_index.xml  /es/sitemap.xml  301')
+    expect(rules).toContain('/es/services-sitemap.xml  /es/sitemap.xml  301')
+    expect(rules.some((r) => r.startsWith('/es/page-sitemap.xml '))).toBe(false)
   })
 })
 
@@ -184,7 +254,7 @@ describe('sitemap names and legacy redirects', () => {
   it('redirects every legacy sitemap the build does not write to the index, once', () => {
     expect(new Set(LEGACY_SITEMAPS).size).toBe(LEGACY_SITEMAPS.length)
     expect(LEGACY_SITEMAPS).not.toContain(`/${SITEMAP_INDEX}`)
-    const rules = legacySitemapRedirects(['page-sitemap.xml'])
+    const rules = legacySitemapRedirects(buildSitemaps('es', fixture))
     expect(rules).toContain('/sitemap_index.xml  /sitemap.xml  301')
     expect(rules).toContain('/post-sitemap.xml  /sitemap.xml  301')
     expect(rules.some((r) => r.startsWith('/page-sitemap.xml '))).toBe(false)

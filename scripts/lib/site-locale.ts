@@ -22,3 +22,16 @@ export function resolveLocaleRouting(value: string | undefined): {
   if (!value || value === 'all') return { mode: 'path', locale, locales: LOCALES }
   return { mode: 'domain', locale, locales: [locale] }
 }
+
+/**
+ * Origin of an all-languages (path-mode) deploy, for its absolute URLs (canonicals, Open Graph, sitemaps): on Netlify
+ * the site's main address for a production deploy (URL, not the per-branch DEPLOY_PRIME_URL) and the deploy's own for
+ * previews and branch deploys; '' anywhere else.
+ */
+export function deployOrigin(env: Record<string, string | undefined> = process.env): string {
+  const url = env.CONTEXT === 'production' ? env.URL : env.DEPLOY_PRIME_URL
+  return (url ?? '').replace(/\/+$/, '')
+}
+
+/** Where `pnpm serve:dist` serves a build: the origin of the sitemaps of a path build made outside Netlify. */
+export const LOCAL_ORIGIN = 'http://localhost:4173'

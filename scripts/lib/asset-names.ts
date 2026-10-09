@@ -8,8 +8,8 @@ import path from 'node:path'
  * sources could hash differently (scripts/design-system/lib.ts, exportHash). Here every build picks the
  * alphabetically first name. That only helps when both names reach the bundler: vite-imagetools runs one
  * transform for byte-identical sources imported with the same directives and emits it under the name of
- * whichever import started it, so tests/unit/images.test.ts keeps the same picture from sitting under two
- * names in the first place.
+ * whichever import started it. So tests/unit/images.test.ts keeps the same picture from sitting under two
+ * names in the first place, and the design-system build resolves every copy to one file (vite.ds.config.ts).
  */
 export function assetFileNames({ names }: { names: readonly string[] }): string {
   if (names.length < 2) return 'assets/[name]-[hash][extname]'
