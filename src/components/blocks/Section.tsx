@@ -17,8 +17,10 @@ export interface SectionProps extends ShellProps {
 }
 
 /**
- * A titled section for a page's own prose (`Text`, `Heading`, `List`… from ~/components/typography), and,
- * centred with a button, the short band that points somewhere ("Unsure about music notation?").
+ * A titled section for a page's own prose (`Text`, `Heading`, `List`… from ~/components/typography): the
+ * heading with its rule, a white, cream or peach background, three widths, a filled `cta` and outline `links`.
+ * `align="center"` with `rule={false}` is the short band that points somewhere (the glossary, the form, an
+ * email: "Unsure about music notation?").
  */
 export function Section({
   align = 'start',

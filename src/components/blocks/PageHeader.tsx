@@ -45,16 +45,17 @@ export interface PageHeaderProps {
 const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
 
 /**
- * The opening of every page, written first in the page: its h1 with an optional eyebrow, subtitle, lead and
- * button. `band` is the dark centred title band, with the rating card and an icon under it when given
- * (service pages); `split` sets the copy beside a picture or carousel, as landing pages open; `photo` is the
- * homepage: rotating studio photos behind the copy, cut by a curve (above it on phones), the brand lockup and the
- * rating card. As the page opens the header comes in calmly, all at once: the copy fades in from the left, the
- * pictures and the rating card from the right, and the homepage's photos slide in behind their curve, then lag
- * behind it as the page scrolls (parallax). CSS in theme.css (`entrance-left`, `entrance-right`,
- * `entrance-behind`, `parallax`), never `reveal`, which would hide the header until the JavaScript has loaded.
+ * The opening of every page, its h1 first. `band`: the dark centred title band with an orange rule, then the
+ * instrument icon and the compact rating card when given (service pages). `split`: white, the copy and button
+ * left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the
+ * copy, cut by a curve that leaves the copy on white (above it on phones), the brand lockup, the orange
+ * highlight and the floating rating card. It drifts in as the page opens.
  */
 export function PageHeader(props: PageHeaderProps) {
+  // As the page opens the copy fades in from the left and the pictures and rating card from the right; the
+  // homepage photos slide in behind their curve and lag behind it on scroll. CSS (`entrance-left`,
+  // `entrance-right`, `entrance-behind`, `parallax` in theme.css), never `reveal`, which would hide the header,
+  // the page's largest paint, until the JavaScript loads.
   const { variant = 'band' } = props
   if (variant === 'photo') return <PhotoHeader {...props} />
   if (variant === 'split') return <SplitHeader {...props} />

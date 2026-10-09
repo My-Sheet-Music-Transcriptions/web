@@ -134,6 +134,24 @@ export function blockProps(name: string): BlockProps | undefined {
   return result
 }
 
+/**
+ * What block `name` shows, from the doc comment on `export function <Name>` in its source: the one description
+ * Storybook's docs page, `pnpm ds:blocks`, the README table and the artifact all show. Its lines are joined into
+ * one; tests/unit/blocks.test.ts checks every block has one.
+ */
+export function blockDescription(name: string): string {
+  const source = fs.readFileSync(path.join(BLOCKS, `${name}.tsx`), 'utf8')
+  const doc = new RegExp(String.raw`/\*\*((?:(?!\*/)[\s\S])*)\*/\nexport function ${name}\b`).exec(
+    source,
+  )?.[1]
+  return (doc ?? '')
+    .split('\n')
+    .map((line) => line.replace(/^\s*\*\s?/, ''))
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 const literals = (type: string): string[] | undefined => {
   const parts = type.split('|').map((s) => s.trim())
   return parts.every((p) => /^'[^']*'$/.test(p)) ? parts.map((p) => p.slice(1, -1)) : undefined
@@ -231,7 +249,7 @@ export function blockIndex(usage = blockUsage()): string {
       ([, d]) => d.category === category,
     )) {
       const d = doc as BlockDoc
-      out.push(`- ${name}: ${d.description}`)
+      out.push(`- ${name}: ${blockDescription(name)}`)
       out.push(`  use when: ${d.useWhen}`)
       if (d.notFor) out.push(`  not for: ${d.notFor}`)
       out.push(`  ${usageLine(usage[name] ?? [])}`)

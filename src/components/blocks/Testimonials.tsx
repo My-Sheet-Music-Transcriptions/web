@@ -17,7 +17,10 @@ export interface TestimonialsProps extends HeadingProps {
   labels: ReviewLabels
 }
 
-/** Customer quotes in two columns, with stars, over the peach staff lines. */
+/**
+ * Customer quote cards in two columns with teal stars over the peach staff lines, and an optional link to
+ * all reviews. With `reveal` the cards come in one by one and their stars pop in.
+ */
 export function Testimonials({ items, labels, ...shell }: TestimonialsProps) {
   return (
     <BlockShell

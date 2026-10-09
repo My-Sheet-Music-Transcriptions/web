@@ -1,12 +1,12 @@
-import path from 'node:path'
 import netlify from '@netlify/vite-plugin-tanstack-start'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { imagetools } from 'vite-imagetools'
+import { assetFileNames } from './scripts/lib/asset-names.ts'
 import { listPrerenderPages } from './scripts/lib/content-fs.ts'
-import { resolveLocaleRouting } from './scripts/lib/site-locale.ts'
+import { deployOrigin, resolveLocaleRouting } from './scripts/lib/site-locale.ts'
 import { getSiteConfig } from './src/i18n/sites/index.ts'
 
 // SITE_LOCALE=<locale>: production build of one locale for its TLD. Unset or "all": every locale under
@@ -19,9 +19,7 @@ export default defineConfig({
   define: {
     'import.meta.env.SITE_LOCALE': JSON.stringify(locale),
     'import.meta.env.LOCALE_ROUTING': JSON.stringify(mode),
-    'import.meta.env.PREVIEW_ORIGIN': JSON.stringify(
-      mode === 'path' ? (process.env.DEPLOY_PRIME_URL ?? '') : '',
-    ),
+    'import.meta.env.PREVIEW_ORIGIN': JSON.stringify(mode === 'path' ? deployOrigin() : ''),
   },
   resolve: { tsconfigPaths: true },
   server: { port: 3000 },
@@ -30,20 +28,8 @@ export default defineConfig({
   // connection hangs (ETIMEDOUT) while the server listens on IPv4 only. Pin both ends to IPv4 loopback.
   preview: { host: '127.0.0.1' },
   build: {
-    rolldownOptions: {
-      output: {
-        // Byte-identical images under different names become one asset with several names, and each build
-        // keeps whichever name it emitted first, which varies from run to run: the prerendered HTML (server
-        // build) could point at a file the client build wrote under the other name. tests/unit/images.test.ts
-        // keeps such pairs out of src/assets/images and content/; should one slip through, both builds pick
-        // the alphabetically first name.
-        assetFileNames: ({ names }) => {
-          if (names.length < 2) return 'assets/[name]-[hash][extname]'
-          const { dir, name, ext } = path.posix.parse(names.reduce((a, b) => (a < b ? a : b)))
-          return path.posix.join('assets', dir, `${name}-[hash]${ext}`)
-        },
-      },
-    },
+    // One name per deduplicated image asset, the same in every build (scripts/lib/asset-names.ts).
+    rolldownOptions: { output: { assetFileNames } },
   },
   plugins: [
     imagetools({

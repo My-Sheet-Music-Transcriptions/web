@@ -20,8 +20,9 @@ export interface PricingCardsProps extends HeadingProps {
 const headers = { teal: 'bg-teal-light', blue: 'bg-sky', navy: 'bg-navy' }
 
 /**
- * Prices from: three cards with coloured headers, a floating icon and the pricing factors (the homepage),
- * or one wide card with the price beside the numbered factors (a service or landing page).
+ * Prices from: three cards with coloured headers, a floating icon and the pricing factors (the homepage), or
+ * one wide card with the price beside the numbered factors when given one tier (a service or landing page).
+ * Intro prose goes in the children.
  */
 export function PricingCards({ tiers, children, ...shell }: PricingCardsProps) {
   const single = tiers.length === 1 ? tiers[0] : undefined

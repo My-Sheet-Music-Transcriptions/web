@@ -12,7 +12,7 @@ pnpm check                    # biome + tsc + knip + unit tests  (fast, run befo
 pnpm knip                     # dead code: unused files, exports, types, dependencies (knip.ts)
 pnpm check:pr                 # exactly what PR CI runs: check + English build + SEO suite (~1.5 min)
 SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemaps -> dist/client
-pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemaps (what deploy previews ship)
+pnpm build                    # preview build: every locale under /<locale>, noindex, a parent sitemap (what deploy previews ship)
 pnpm serve:dist               # serve dist/client on :4173
 pnpm test:seo                 # SEO conformance over dist/client (needs a build)
 pnpm test:storybook           # every story through axe (contrast included)
@@ -68,8 +68,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/stories` – Storybook's own data and pictures (`data.ts`, `images/`, `samples.ts` resolving `'sample:photo'`…):
   they mimic the app's content but stay separate. Stories, the catalogue examples and the design-system previews
   use them; no story imports `content/` or `src/assets`.
-- `src/components/blocks/catalogue.ts` – one entry per block (description, defaults, JSX usage, data source);
-  drives the README table, the artifact docs and the `page` skill's previews. Missing entry = type error.
+- `src/components/blocks/catalogue.ts` – one entry per block (category, when to use it, defaults, JSX usage, data
+  source); drives the README table, the artifact docs and the `page` skill's previews, and the stories take their
+  default args from it. Missing entry = type error. A block's description is not in it: it is the doc comment on
+  the block's `export function`, read from the source (`blockDescription`), so Storybook shows the same text.
 - `src/i18n/sites/<locale>.ts` – domain, the chrome's strings (menus, footer headings, consent, 404), switcher, contact facts per locale. `src/site.ts` exposes the build's
   locale routing and `useSite()` / `useLocale()` (the page's locale); `src/i18n/routing.ts` is how locales map to URLs.
 - `src/design-system` – `theme-parse.ts` (reads `theme.css` into tokens), `tokens.tsx` (Storybook Foundations),
@@ -114,8 +116,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   imported somewhere (one only its own file uses is fine) and every dependency is used. Delete what it
   reports rather than ignoring it; an export kept for later takes `/** @public */` with the reason.
 - `meta.ts` is a literal only; pages use the typography components for text (`tests/unit/content.test.ts`).
-- No picture under `src/assets/images` or `content/` is byte-identical to another under a different file name,
-  nor stored twice in `src/assets/images` (`tests/unit/images.test.ts`): reuse the file instead of copying it.
+- No picture under `src/assets/images`, `content/` or `src/stories/images` is byte-identical to another under a
+  different file name, nor stored twice in `src/assets/images` (`tests/unit/images.test.ts`): reuse the file
+  instead of copying it.
 - A PR touching anything outside the content paths needs a code-owner approval (`.github/CODEOWNERS`).
 
 ## Adding content (short version; the skills have the full checklist)
@@ -171,7 +174,11 @@ in `content/` (not drafts, not `noindex`), the same list the build prerenders, s
 with no extra step; a new collection must be named in `SITEMAP_NAMES` (type error otherwise). Each URL carries
 hreflang alternates to its translations on the other TLDs, from the same function as the page `<head>`
 (`src/seo/alternates.ts`); `lastmod` is `meta.updated`, else the page folder's last commit. The WordPress sitemap URLs
-(`/sitemap_index.xml`, other Yoast and WordPress names, `LEGACY_SITEMAPS`) 301 to the index. Previews have none.
+(`/sitemap_index.xml`, other Yoast and WordPress names, `LEGACY_SITEMAPS`) 301 to the index. An all-languages build
+(previews, and a Netlify site with no `SITE_LOCALE`, as the English one until its cutover) has the same files under each
+`/<locale>` with URLs on the deploy's origin (`deployOrigin()` in `scripts/lib/site-locale.ts`: the site's address in
+production, the deploy's on previews; also its canonicals), plus a parent `/sitemap.xml` listing every language's
+sitemaps (an index may not list another index); its `robots.txt` still says `Disallow: /`.
 `tests/unit/sitemap.test.ts` (every locale, plus a multi-language fixture) and the SEO suite (sitemaps == indexable
 pages, alternates == `<head>`) keep them complete.
 

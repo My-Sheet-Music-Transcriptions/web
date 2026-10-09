@@ -6,13 +6,14 @@ import { describe, expect, it } from 'vitest'
 /**
  * The bundler emits byte-identical images once, under whichever source name it meets first, and that varies
  * from build to build: the prerendered HTML can then point at a name the client build never wrote (the 404s
- * tests/seo/seo.test.ts catches). So the same picture never sits under two names, and the brand folder holds
- * each picture once. Copies under the same name in several page folders are fine (co-location, translated
- * pages): they build to one file with one name.
+ * tests/seo/seo.test.ts catches), and the design-system export hashes differently for the same sources
+ * (`pnpm ds:index --check`). So the same picture never sits under two names, and the brand folder holds
+ * each picture once. Copies under the same name in several folders are fine (co-location, translated
+ * pages, Storybook's samples): they build to one file with one name.
  */
 
 const ASSETS = 'src/assets/images'
-const ROOTS = [ASSETS, 'content']
+const ROOTS = [ASSETS, 'content', 'src/stories/images']
 const IMAGE = /\.(png|jpe?g|webp|avif|gif|svg|ico)$/i
 
 const byHash = new Map<string, string[]>()

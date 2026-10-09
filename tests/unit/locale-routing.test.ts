@@ -5,7 +5,7 @@ import {
   createRouter,
 } from '@tanstack/react-router'
 import { describe, expect, it } from 'vitest'
-import { resolveLocaleRouting } from '../../scripts/lib/site-locale'
+import { deployOrigin, resolveLocaleRouting } from '../../scripts/lib/site-locale'
 import {
   isLocalized,
   localeFromPathname,
@@ -50,6 +50,22 @@ describe('locale paths', () => {
     expect(resolveLocaleRouting(undefined).mode).toBe('path')
     expect(resolveLocaleRouting('all').locales).toContain('ca')
     expect(() => resolveLocaleRouting('xx')).toThrow()
+  })
+
+  it('takes absolute URLs of a path build from the site’s main address in production, the deploy’s on previews', () => {
+    const netlify = {
+      URL: 'https://x.netlify.app',
+      DEPLOY_PRIME_URL: 'https://main--x.netlify.app',
+    }
+    expect(deployOrigin({ ...netlify, CONTEXT: 'production' })).toBe('https://x.netlify.app')
+    expect(
+      deployOrigin({
+        CONTEXT: 'deploy-preview',
+        URL: 'https://x.netlify.app',
+        DEPLOY_PRIME_URL: 'https://deploy-preview-1--x.netlify.app/',
+      }),
+    ).toBe('https://deploy-preview-1--x.netlify.app')
+    expect(deployOrigin({})).toBe('')
   })
 })
 

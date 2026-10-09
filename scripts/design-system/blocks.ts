@@ -1,5 +1,12 @@
 import { CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
-import { blockIndex, blockProps, blockUsage, type PropDoc, usageLine } from './blocks-lib'
+import {
+  blockDescription,
+  blockIndex,
+  blockProps,
+  blockUsage,
+  type PropDoc,
+  usageLine,
+} from './blocks-lib'
 import { encodeProps, LAYOUT } from './review-lib'
 
 /**
@@ -10,7 +17,8 @@ import { encodeProps, LAYOUT } from './review-lib'
  *                                    values and doc comment, a ready `data-msmt` line built from the
  *                                    catalogue defaults, where its data lives and the guidelines
  *   pnpm ds:blocks --all             the detail of every block
- * The prose comes from catalogue.ts, the props from each block's source, the usage from the pages.
+ * The description and the props come from each block's source, the rest of the prose from catalogue.ts, and
+ * where each block is used from the pages.
  */
 const args = process.argv.slice(2)
 const all = Object.keys(catalogue) as (keyof typeof catalogue)[]
@@ -52,7 +60,7 @@ for (const name of names.filter((n) => n in catalogue)) {
   const block = blockProps(name)
   const out = [
     `## ${name} (${CATEGORIES[doc.category].label})`,
-    doc.description,
+    blockDescription(name),
     `use when: ${doc.useWhen}`,
     ...('notFor' in doc ? [`not for: ${doc.notFor}`] : []),
     usageLine(usage[name] ?? []),

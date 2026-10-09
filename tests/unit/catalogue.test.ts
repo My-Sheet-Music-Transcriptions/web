@@ -1,10 +1,71 @@
 import fs from 'node:fs'
+import ts from 'typescript'
 import { describe, expect, it } from 'vitest'
+import { blockProps, checkProps } from '../../scripts/design-system/blocks-lib'
 import { withBlockTable } from '../../scripts/design-system/readme-lib'
+import { evalTsLiteral, LiteralError, parseTsx } from '../../scripts/lib/ts-literal'
 import { type BlockDoc, CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
 
 const names = Object.keys(catalogue)
 const readme = fs.readFileSync('src/components/blocks/README.md', 'utf8')
+
+/**
+ * What a `usage` snippet gets wrong about block `name`: a prop it does not take, a required one left out, a
+ * literal value outside its type (`variant="tiles"`, a glyph that is not an Icon), children it cannot hold.
+ * The snippet is read as JSX, `…` standing for the words a page writes; a value a page computes (`{google}`,
+ * `[{ image: photo }]`) is checked for its name only.
+ */
+function usageProblems(name: string, usage: string): string[] {
+  const source = `const usage = (\n  <>\n${usage.replaceAll('…', 'x')}\n  </>\n)\n`
+  const syntax = ts.transpileModule(source, {
+    reportDiagnostics: true,
+    compilerOptions: { jsx: ts.JsxEmit.Preserve },
+  }).diagnostics
+  if (syntax?.length)
+    return syntax.map((d) => `not JSX: ${ts.flattenDiagnosticMessageText(d.messageText, ' ')}`)
+  const known = blockProps(name)?.props.map((p) => p.name) ?? []
+  const problems: string[] = []
+  const visit = (node: ts.Node) => {
+    const opening = ts.isJsxElement(node)
+      ? node.openingElement
+      : ts.isJsxSelfClosingElement(node)
+        ? node
+        : undefined
+    if (opening?.tagName.getText() === name) {
+      const props: Record<string, unknown> = {}
+      const computed: string[] = []
+      for (const attr of opening.attributes.properties) {
+        if (!ts.isJsxAttribute(attr)) {
+          problems.push(`<${name} {...}>: write each prop`)
+          continue
+        }
+        const key = attr.name.getText()
+        const init = attr.initializer
+        try {
+          props[key] = !init
+            ? true
+            : ts.isStringLiteral(init)
+              ? init.text
+              : evalTsLiteral((init as ts.JsxExpression).expression as ts.Expression)
+        } catch (e) {
+          if (!(e instanceof LiteralError)) throw e
+          computed.push(key)
+          if (!known.includes(key)) problems.push(`${name} has no prop "${key}"`)
+        }
+      }
+      if (ts.isJsxElement(node) && node.children.some((c) => c.getText().trim()))
+        props.children = 'x'
+      problems.push(
+        ...checkProps(name, props).filter(
+          (p) => !computed.some((key) => p.startsWith(`${name} needs "${key}"`)),
+        ),
+      )
+    }
+    ts.forEachChild(node, visit)
+  }
+  visit(parseTsx(source, `${name}.usage.tsx`))
+  return problems
+}
 
 describe('block catalogue', () => {
   it('documents every block in README.md, with the current table (pnpm ds:export rewrites it)', () => {
@@ -15,6 +76,23 @@ describe('block catalogue', () => {
     for (const [n, doc] of Object.entries(catalogue)) {
       expect(doc.usage.trim().startsWith(`<${n}`), n).toBe(true)
     }
+  })
+  it.each(names)('%s: the usage snippet passes the props the block takes, as a page must', (n) => {
+    expect(usageProblems(n, catalogue[n as keyof typeof catalogue].usage)).toEqual([])
+  })
+  it('catches a wrong usage snippet', () => {
+    expect(usageProblems('CardGrid', '<CardGrid title="…" variant="tiles" item={x} />')).toEqual([
+      'CardGrid has no prop "item"',
+      'CardGrid.variant is "tiles": use one of card, tile, plain',
+    ])
+    expect(
+      usageProblems('Steps', '<Steps items={[{ glyph: "nope", body: "…" }]} />').join(),
+    ).toMatch(/items\[0\]\.glyph is "nope"/)
+    expect(usageProblems('Stats', '<Stats title="…">\n  <Text>…</Text>\n</Stats>')).toEqual([
+      expect.stringMatching(/^Stats has no prop "children": it takes title, /),
+      'Stats needs "items" (Stat[])',
+    ])
+    expect(usageProblems('Section', '<Section title="…">')[0]).toMatch(/^not JSX: /)
   })
   it('has a story and a component file for every block', () => {
     for (const n of names) {

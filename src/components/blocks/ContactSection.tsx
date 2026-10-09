@@ -33,8 +33,10 @@ export interface ContactSectionProps {
 type Errors = Record<string, string>
 
 /**
- * The request form in its peach section (server function + no-JS fallback). Quote or gift-card fields; the
- * optional fields show when the copy names them.
+ * The request form in its peach section under a white wave: title, lead, the teal response-time pill and the
+ * form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone.
+ * `variant="gift-card"`: name, email, amount, currency, details. The optional fields show when the copy names
+ * them. Submits to the contact server function; works without JavaScript.
  */
 export function ContactSection({
   form: copy,

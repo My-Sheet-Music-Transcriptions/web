@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 import viteReact from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
 import { imagetools } from 'vite-imagetools'
+import { assetFileNames } from './scripts/lib/asset-names.ts'
 
 /**
  * Library build of the design system for the published Design System artifact and Design canvas
@@ -126,8 +127,7 @@ export default defineConfig({
       fileName: () => 'bundle.js',
       cssFileName: 'bundle',
     },
-    rollupOptions: {
-      output: { assetFileNames: 'assets/[name]-[hash][extname]' },
-    },
+    // One name per deduplicated image asset, as in the site build (scripts/lib/asset-names.ts).
+    rolldownOptions: { output: { assetFileNames } },
   },
 })

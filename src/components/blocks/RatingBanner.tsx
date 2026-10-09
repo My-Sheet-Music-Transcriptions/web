@@ -17,8 +17,9 @@ export interface RatingBannerProps extends HeadingProps {
 }
 
 /**
- * The big trust moment: a photo band with the transcriptions counter and the rating cards. Revealed, the
- * counter ticks up like an odometer and the stars pop in.
+ * The big trust moment: a full-bleed photo with white wavy edges, a white heading, the transcriptions counter
+ * and a row of rating cards (Google, Trustpilot or customers, Facebook). With `reveal` the counter ticks up like
+ * an odometer and the stars pop in.
  */
 export function RatingBanner({ counter, sources, ...shell }: RatingBannerProps) {
   const locale = useLocale()
