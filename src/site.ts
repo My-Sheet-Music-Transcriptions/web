@@ -23,7 +23,7 @@ export const SITE_LOCALE: Locale = (import.meta.env.SITE_LOCALE as Locale | unde
 /** Locales served by this build. */
 export const SITE_LOCALES: readonly Locale[] = LOCALE_ROUTING === 'path' ? LOCALES : [SITE_LOCALE]
 
-/** Origin of a path build's deploy (Netlify DEPLOY_PRIME_URL), for absolute URLs; '' when unknown. */
+/** Origin of a path build's deploy (scripts/lib/site-locale.ts deployOrigin()), for absolute URLs; '' when unknown. */
 const PREVIEW_ORIGIN = import.meta.env.PREVIEW_ORIGIN ?? ''
 
 /** Locale of a public URL path (the browser's, before the router rewrite). */
