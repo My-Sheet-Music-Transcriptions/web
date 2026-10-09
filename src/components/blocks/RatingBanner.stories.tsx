@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, waitFor, within } from 'storybook/test'
-import { customers, facebook, google } from '~/stories/data'
 import { revealed } from '~/stories/play'
 import { RatingBanner, type RatingBannerProps } from './RatingBanner'
 import { storyArgs } from './story-args'
@@ -22,19 +21,25 @@ export const WithoutCounter: Story = {
   },
 }
 
-/** `reveal`: the cards come in one by one, the counter and the customers figure count up, the stars pop in. */
+/** `reveal`: the cards come in one by one, the counter ticks up like an odometer, the stars pop in. */
 export const Revealed: Story = {
-  args: { reveal: true, sources: [google, customers, facebook] },
+  args: { reveal: true },
   play: async ({ canvasElement, args }) => {
     await revealed(canvasElement)
-    // The counts end on the figures as written.
-    const canvas = within(canvasElement)
+    // Every column of the ticker comes to rest on its digit, and the figure reads as written.
+    const columns = canvasElement.querySelectorAll('[aria-hidden] > [data-char] > [data-reveal]')
+    await expect(columns.length).toBeGreaterThan(0)
     await waitFor(
       async () => {
-        await expect(canvas.getByText(args.counter?.value.toLocaleString('en') ?? '')).toBeVisible()
-        await expect(canvas.getByText(customers.count)).toBeVisible()
+        for (const c of columns)
+          await expect(['none', 'matrix(1, 0, 0, 1, 0, 0)']).toContain(
+            getComputedStyle(c).transform,
+          )
       },
       { timeout: 5000 },
     )
+    await expect(
+      within(canvasElement).getByText(args.counter?.value.toLocaleString('en') ?? ''),
+    ).toBeInTheDocument()
   },
 }

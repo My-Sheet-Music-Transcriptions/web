@@ -1,7 +1,6 @@
 import type { RatingSource } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { Icon, type IconName } from './Icon'
-import { CountUp } from './Motion'
 import { Stars } from './Stars'
 
 const sourceIcon: Record<RatingSource['id'], { icon: IconName; className: string; link: string }> =
@@ -40,9 +39,7 @@ export function RatingCard({ source, compact }: { source: RatingSource; compact?
           className={cn('my-[6px]', compact ? 'gap-[10px]' : 'gap-3')}
         />
       ) : (
-        <p className="mt-[6px] text-h2 leading-8 font-bold text-ink">
-          {source.count ? <CountUp>{source.count}</CountUp> : null}
-        </p>
+        <p className="mt-[6px] text-h2 leading-8 font-bold text-ink">{source.count}</p>
       )}
       {source.countLabel ? (
         <p

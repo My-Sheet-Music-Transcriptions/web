@@ -49,10 +49,10 @@ const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
  * button. `band` is the dark centred title band, with the rating card and an icon under it when given
  * (service pages); `split` sets the copy beside a picture or carousel, as landing pages open; `photo` is the
  * homepage: rotating studio photos behind the copy, cut by a curve (above it on phones), the brand lockup and the
- * rating card. As the page opens the header drifts into place, calmly: the copy from the left, the pictures and
- * the rating card from the right, and the homepage's photos then lag behind the page as it scrolls (parallax).
- * CSS in theme.css (`entrance-left`, `entrance-right`, `parallax`), never `reveal`, which would hide the header
- * until the JavaScript has loaded; nothing fades, so the page's largest paint counts from the first frame.
+ * rating card. As the page opens the header comes in calmly, all at once: the copy fades in from the left, the
+ * pictures and the rating card from the right, and the homepage's photos slide in behind their curve, then lag
+ * behind it as the page scrolls (parallax). CSS in theme.css (`entrance-left`, `entrance-right`,
+ * `entrance-behind`, `parallax`), never `reveal`, which would hide the header until the JavaScript has loaded.
  */
 export function PageHeader(props: PageHeaderProps) {
   const { variant = 'band' } = props
@@ -179,14 +179,14 @@ function PhotoHeader({
       <div className="relative aspect-[390/261] overflow-hidden lg:hidden">
         <Slideshow slides={mobileImages?.map((s) => s.image) ?? photos} sizes="100vw" />
       </div>
-      {/* From desktop up: the photos fill the whole header, cut by the curve that leaves the copy on white; they
-          drift in from the right with their curve, then lag behind the page as it scrolls */}
-      <div className="absolute inset-0 hidden overflow-hidden lg:block">
+      {/* From desktop up: the photos fill the whole header, cut by the curve that leaves the copy on white. The
+          curve stays put: the photos slide in behind it from the right, then lag behind it as the page scrolls */}
+      <div
+        className="absolute inset-0 hidden overflow-hidden mask-cover mask-left mask-no-repeat lg:block"
+        style={{ maskImage: photoCut, WebkitMaskImage: photoCut }}
+      >
         <div className="parallax absolute inset-0">
-          <div
-            className="entrance-right absolute inset-0 mask-cover mask-left mask-no-repeat"
-            style={{ maskImage: photoCut, WebkitMaskImage: photoCut }}
-          >
+          <div className="entrance-behind absolute inset-0">
             <Slideshow slides={photos} sizes="100vw" />
           </div>
         </div>
