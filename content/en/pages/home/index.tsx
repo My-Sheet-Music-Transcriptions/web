@@ -86,6 +86,7 @@ export default function HomePage() {
       />
 
       <Steps
+        reveal
         id="how-it-works"
         title="How does it work?"
         variant="columns"
@@ -114,24 +115,27 @@ export default function HomePage() {
       />
 
       <RatingBanner
+        reveal
         image={pianoBand}
         title="The highest-rated online sheet music transcribers"
         counter={counter}
         sources={homeRatings}
       />
 
-      <CardGrid title="Who do we work for?" variant="tile" columns={4} items={audiences} />
+      <CardGrid reveal title="Who do we work for?" variant="tile" columns={4} items={audiences} />
 
       <PictureGrid
+        reveal
         title="We transcribe any instrument and musical genre"
         items={allServices}
         limit={12}
         cta={{ label: 'See all services', href: '/services-samples' }}
       />
 
-      <CardGrid title="What's included?" image={studioBand} items={included} />
+      <CardGrid reveal title="What's included?" image={studioBand} items={included} />
 
       <PricingCards
+        reveal
         title="Flexible pricing"
         tiers={pricingTiers}
         cta={{ label: 'See the full pricing guide', href: '/pricing' }}
@@ -179,6 +183,7 @@ export default function HomePage() {
       />
 
       <Testimonials
+        reveal
         labels={reviewLabels}
         title="Customer Reviews"
         items={homeReviews}
@@ -186,6 +191,7 @@ export default function HomePage() {
       />
 
       <MediaText
+        reveal
         labels={mediaLabels}
         title="Who are we?"
         align="center"
@@ -246,7 +252,7 @@ export default function HomePage() {
         </Text>
       </MediaText>
 
-      <ContactSection form={quoteForm} />
+      <ContactSection reveal form={quoteForm} />
     </>
   )
 }

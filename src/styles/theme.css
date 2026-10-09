@@ -138,6 +138,15 @@
       transition-duration: 0.01ms !important;
     }
   }
+  /* The pieces of a revealed block (`reveal`, Motion) are prerendered hidden and come in on scroll. Where
+     nothing should move (reduced motion) and on paper they show as they are; without JavaScript the root's
+     <noscript> does the same. */
+  @media (prefers-reduced-motion: reduce), print {
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
 }
 
 @utility container-content {

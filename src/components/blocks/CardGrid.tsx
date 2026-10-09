@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { FeatureItem } from '~/components/primitives/FeatureItem'
+import { RevealItem } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import type { CardItem } from '~/content/types'
 import { cn } from '~/lib/cn'
@@ -45,9 +46,10 @@ export function CardGrid({
       image={image}
       spacing={variant === 'tile' ? 'loose' : 'normal'}
       width={variant === 'tile' ? 'full' : 'content'}
+      cascade
     >
       {tabs ? (
-        <div className="mb-8 flex justify-center gap-3">
+        <RevealItem className="mb-8 flex justify-center gap-3">
           {tabs.map((t, i) => (
             <button
               key={t.label}
@@ -62,7 +64,7 @@ export function CardGrid({
               {t.label}
             </button>
           ))}
-        </div>
+        </RevealItem>
       ) : null}
       <ul
         className={cn(
@@ -71,9 +73,9 @@ export function CardGrid({
         )}
       >
         {shown.map((item) => (
-          <li key={item.title ?? item.body} className="flex">
+          <RevealItem as="li" key={item.title ?? item.body} className="flex">
             <FeatureItem item={item} surface={variant} align={image ? 'center' : undefined} />
-          </li>
+          </RevealItem>
         ))}
       </ul>
     </BlockShell>

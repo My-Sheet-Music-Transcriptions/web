@@ -1,4 +1,5 @@
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
+import { RevealItem } from '~/components/primitives/Motion'
 import { Picture } from '~/components/primitives/Picture'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import type { PictureItem } from '~/content/types'
@@ -87,7 +88,7 @@ export function PictureGrid({
     )
   const p = pictures[shape]
   return (
-    <BlockShell {...shell} label={label}>
+    <BlockShell {...shell} label={label} cascade>
       <ul
         className={cn(
           gridCols(columns, { tablet: Math.min(columns, 4) as 4, phone: 2 }),
@@ -118,7 +119,7 @@ export function PictureGrid({
             </>
           )
           return (
-            <li key={keyOf(item)} className="text-center">
+            <RevealItem as="li" key={keyOf(item)} className="text-center">
               {item.href ? (
                 <SmartLink href={item.href} className="group block">
                   {content}
@@ -126,7 +127,7 @@ export function PictureGrid({
               ) : (
                 content
               )}
-            </li>
+            </RevealItem>
           )
         })}
       </ul>

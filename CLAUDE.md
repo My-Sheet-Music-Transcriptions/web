@@ -86,7 +86,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `.claude/skills` – `page` (the whole page workflow; `reference/*.md` hold the recipes per step), the content-manager
   commands `new-page`, `edit-page`, `translate`, `design`, `publish`, `status`, `site-help` (thin entry points into
   `page`), the engineering skills `component` (adding or changing a block or primitive without duplicating one),
-  `publish-design-system` and `release-check`, and hidden stubs for later phases.
+  `motion` (every animation: the Motion provider, presets, reveals, menus), `publish-design-system` and
+  `release-check`, and hidden stubs for later phases.
 - `docs/content-managers.{md,es.md,ca.md}` – the plain-language guide for content managers and writers (EN/ES/CA);
   `tests/unit/skills.test.ts` keeps the commands, the guides and the skill's reference files in sync.
 - `docs/migration/PLAN.md` – the WordPress → repo migration plan (waves, decisions, cutover runbook), with the URL
@@ -216,7 +217,10 @@ components or layout.
 - **One shell, one vocabulary.** Before touching `src/components`, follow the `component` skill: a prop or `variant` on
   an existing block beats a new shape of a shared item, which beats a new primitive, which beats a new block. Every
   block renders `BlockShell` (section, tone, container, heading with its rule, lead, closing `cta`/`links`, photo
-  band) and picks presets, never pixels. Props say one thing one way: `title`, `eyebrow`, `lead`, `tone`, `variant`,
-  `columns` (desktop), `items` (fields `title`, `body`, `image`, `name`, `alt`, `caption`, `href`), `cta`, `links`,
-  `labels`, `id`. `tests/unit/blocks.test.ts` refuses a hand-made shell and the retired synonyms.
+  band, `reveal`) and picks presets, never pixels. Props say one thing one way: `title`, `eyebrow`, `lead`, `tone`,
+  `variant`, `columns` (desktop), `items` (fields `title`, `body`, `image`, `name`, `alt`, `caption`, `href`), `cta`,
+  `links`, `labels`, `id`, `reveal`. `tests/unit/blocks.test.ts` refuses a hand-made shell and the retired synonyms.
+- **Motion through Motion.** Animations use Motion (`motion/react`): `m` components and the presets in
+  `src/components/primitives/Motion.tsx`, under the `MotionProvider` every root mounts (reduced motion respected).
+  A page reveals a block with `reveal`; never animate the `PageHeader`. Follow the `motion` skill.
 - Do not commit generated files: `routeTree.gen.ts`, `hreflang.generated.json`, `public/og`, `public/robots.txt`.

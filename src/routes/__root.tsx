@@ -3,6 +3,7 @@ import { type ReactNode, useEffect } from 'react'
 import { ErrorPage } from '~/app/ErrorPage'
 import { NotFound } from '~/app/NotFound'
 import { SiteShell } from '~/app/SiteShell'
+import { MotionProvider } from '~/components/primitives/Motion'
 import { DEFAULT_LOCALE, isLocalized, localeFromPathname, localizePath } from '~/i18n/routing'
 import { rootHead } from '~/seo/head'
 import { LOCALE_ROUTING, localeOf, SITE_LOCALE, useSite } from '~/site'
@@ -21,9 +22,11 @@ export const Route = createRootRoute({
   notFoundComponent: NotFound,
   shellComponent: RootDocument,
   component: () => (
-    <SiteShell>
-      <Outlet />
-    </SiteShell>
+    <MotionProvider>
+      <SiteShell>
+        <Outlet />
+      </SiteShell>
+    </MotionProvider>
   ),
 })
 
@@ -37,6 +40,10 @@ function RootDocument({ children }: { children: ReactNode }) {
     <html lang={site.lang}>
       <head>
         <HeadContent />
+        {/* Without JavaScript nothing animates: revealed pieces show as they are. */}
+        <noscript>
+          <style>{'[data-reveal]{opacity:1!important;transform:none!important}'}</style>
+        </noscript>
       </head>
       <body>
         {children}

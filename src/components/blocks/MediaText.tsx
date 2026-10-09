@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { Media, type MediaContent } from '~/components/primitives/Media'
+import { RevealItem } from '~/components/primitives/Motion'
 import { cn } from '~/lib/cn'
 
 export interface MediaTextProps extends ShellProps, MediaContent {
@@ -38,21 +39,23 @@ export function MediaText({
 
   if (align === 'center')
     return (
-      <BlockShell {...shell}>
+      <BlockShell {...shell} cascade>
         <div
           className={cn(
             'grid items-center gap-10 lg:grid-cols-2',
             imageSide === 'right' && 'lg:[&>*:first-child]:order-2',
           )}
         >
-          <Media
-            {...media}
-            label={label}
-            sizes="(min-width: 1025px) 654px, 100vw"
-            frameClassName={imageSide === 'left' ? 'lg:ml-[-124px]' : 'lg:mr-[-124px]'}
-            imageClassName="aspect-[654/437]"
-          />
-          <div className="flex flex-col gap-[14.4px] text-secondary">{children}</div>
+          <RevealItem>
+            <Media
+              {...media}
+              label={label}
+              sizes="(min-width: 1025px) 654px, 100vw"
+              frameClassName={imageSide === 'left' ? 'lg:ml-[-124px]' : 'lg:mr-[-124px]'}
+              imageClassName="aspect-[654/437]"
+            />
+          </RevealItem>
+          <RevealItem className="flex flex-col gap-[14.4px] text-secondary">{children}</RevealItem>
         </div>
       </BlockShell>
     )
@@ -66,15 +69,15 @@ export function MediaText({
             imageSide === 'left' ? 'flex-row' : 'flex-row-reverse',
           )}
         >
-          <div
+          <RevealItem
             className="mx-auto min-w-0 shrink grow-0 basis-auto"
             style={{ width: imageWidth, maxWidth: '100%' }}
           >
             <Media {...media} label={label} sizes={`(min-width: 768px) ${imageWidth}px, 100vw`} />
-          </div>
+          </RevealItem>
           <div className="flex min-w-0 flex-1 basis-[420px] flex-col gap-4">
             {heading}
-            <div className="flex flex-col gap-4 text-ink">{children}</div>
+            <RevealItem className="flex flex-col gap-4 text-ink">{children}</RevealItem>
             {actions ? <div className="mt-4">{actions}</div> : null}
           </div>
         </div>
