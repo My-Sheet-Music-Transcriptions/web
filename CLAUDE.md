@@ -8,7 +8,8 @@ chatting with Claude Code. Read this file before touching anything.
 ```sh
 pnpm dev                      # Vite dev server, every locale under /en, /es... (http://localhost:3000/en)
 pnpm storybook                # design system docs + a11y panel (http://localhost:6006)
-pnpm check                    # biome + tsc + unit tests  (fast, run before every commit)
+pnpm check                    # biome + tsc + knip + unit tests  (fast, run before every commit)
+pnpm knip                     # dead code: unused files, exports, types, dependencies (knip.ts)
 pnpm check:pr                 # exactly what PR CI runs: check + English build + SEO suite (~1.5 min)
 SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemap -> dist/client
 pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemap (what deploy previews ship)
@@ -101,6 +102,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   the active nav item, the current language, the response-time pill); contrast is checked everywhere else.
 - Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 150 KB.
 - Biome formats and lints everything; `tsc --noEmit` must pass (pages are type-checked against the block props).
+- No dead code (`pnpm knip`, config in `knip.ts`): every file is reachable from an entry point, every export is
+  imported somewhere (one only its own file uses is fine) and every dependency is used. Delete what it
+  reports rather than ignoring it; an export kept for later takes `/** @public */` with the reason.
 - `meta.ts` is a literal only; pages use the typography components for text (`tests/unit/content.test.ts`).
 - A PR touching anything outside the content paths needs a code-owner approval (`.github/CODEOWNERS`).
 
@@ -190,7 +194,7 @@ every preview, and nightly CI runs it as an alarm. A PR that changes blocks or t
 branch publishes only when its preview needs a proposed block. Every preview copies the design-system files
 from the artifact version recorded in `artifact.json#publishedVersion`, so a publish from any branch never
 changes an existing preview. Never edit the artifact by hand. CI: PRs and pushes to `main` run only the fast
-checks (lint/types/unit, build, SEO suite); Storybook axe, Playwright e2e + visual, Lighthouse, the link check,
+checks (lint/types/knip/unit, build, SEO suite); Storybook axe, Playwright e2e + visual, Lighthouse, the link check,
 `ds:export` and the artifact sync check run nightly on `main` (`nightly.yml`, also on demand). Run `pnpm test:storybook` and `pnpm test:e2e` locally when touching
 components or layout.
 

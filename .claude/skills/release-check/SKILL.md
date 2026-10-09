@@ -1,12 +1,12 @@
 ---
 name: release-check
-description: Run every gate CI runs (lint, types, unit tests, Storybook axe, build, SEO conformance, design-system export, e2e, Lighthouse) locally and fix what fails before pushing. Use before every push and whenever CI is red.
+description: Run every gate CI runs (lint, types, dead code, unit tests, Storybook axe, build, SEO conformance, design-system export, e2e, Lighthouse) locally and fix what fails before pushing. Use before every push and whenever CI is red.
 ---
 
 # Release check
 
 ```sh
-pnpm check:pr                      # exactly what PR CI runs: lint, typecheck, unit, build (en), SEO suite
+pnpm check:pr                      # exactly what PR CI runs: lint, typecheck, knip, unit, build (en), SEO suite
 pnpm release-check                 # the same plus storybook a11y
 pnpm ds:export                     # design-system export (nightly in CI)
 pnpm ds:index --check              # the Design System artifact vs this export (nightly in CI; a failure means "publish", not "fix")
@@ -17,7 +17,7 @@ Browsers: Storybook's vitest, Playwright and `pnpm lhci` all launch the Chromium
 finds (Playwright's own when installed, else the newest one in `/opt/pw-browsers` or `~/.cache/ms-playwright`,
 `CHROME_PATH` overrides), so never `playwright install` in a cloud session.
 
-CI on a PR runs only lint/types/unit, the build and the SEO suite (minutes: `pnpm check:pr`). Storybook axe,
+CI on a PR runs only lint/types/knip/unit, the build and the SEO suite (minutes: `pnpm check:pr`). Storybook axe,
 e2e + visual, Lighthouse, the link check and the export run nightly on `main` (`.github/workflows/nightly.yml`,
 or trigger it manually from the Actions tab), so run them locally before pushing component or layout changes.
 
@@ -26,6 +26,10 @@ Reading failures:
 - tsc: a page (`content/**/index.tsx`) is type-checked against the real block props: a wrong prop or an
   unknown block is a type error at the page. A new block without a `catalogue.ts` entry is a type error too:
   add the entry (description, defaults, usage, previewHeight), and export it by name from `blocks/index.tsx`.
+- Knip: an unused file, export, type or dependency is dead code: delete it (a helper, a type, a data
+  entry nothing imports any more). An export only its own file uses is not reported; one kept on purpose for
+  later takes `/** @public */` with a comment saying why. A file reached in a way knip cannot see (a config
+  path, an alias) goes in `knip.ts`'s `entry` with a comment, never in an ignore list.
 - Unit tests: `content` fails when a `meta.ts` is not a plain literal (it names the line) or misses a field, and
   when a page writes raw `<p>`/`<h2>`/`<ul>`/`<a>` instead of the typography components.
 - Unit tests: `theme-tokens` fails when a token in `src/styles/theme.css` lacks a usage comment, duplicates a

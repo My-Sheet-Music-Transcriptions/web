@@ -50,8 +50,6 @@ export const customers = {
 } as const
 
 export const platforms = [google, trustpilot, facebook]
-export const homeRatings = [google, customers, facebook]
-export const counter = { value: 71844, label: 'transcriptions delivered since 2011' }
 
 export const reviews = [
   {

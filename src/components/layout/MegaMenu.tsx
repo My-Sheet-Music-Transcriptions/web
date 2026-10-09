@@ -125,6 +125,3 @@ export function MegaMenu({ item }: { item: NavItem }) {
     </div>
   )
 }
-
-/** @deprecated use SmartLink */
-export const NavLink = SmartLink

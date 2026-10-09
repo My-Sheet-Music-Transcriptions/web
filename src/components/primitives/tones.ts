@@ -8,5 +8,3 @@ export const tones = {
   cream: 'bg-cream [--color-primary:var(--color-primary-deep)]',
   peach: 'bg-peach [--color-primary:var(--color-primary-deep)]',
 } as const
-
-export type Tone = keyof typeof tones

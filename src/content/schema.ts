@@ -140,11 +140,18 @@ export type ReviewMeta = z.infer<typeof reviewSchema>
 /** What a meta.ts writes (defaulted fields optional): `export default { … } satisfies PageMetaInput`. */
 export type PageMetaInput = z.input<typeof pageSchema>
 export type ServiceMetaInput = z.input<typeof serviceSchema>
+// `@public`: the collections below have no page yet; their first meta.ts imports these (knip keeps them).
+/** @public */
 export type PostMetaInput = z.input<typeof postSchema>
+/** @public */
 export type FaqMetaInput = z.input<typeof faqSchema>
+/** @public */
 export type ArtistMetaInput = z.input<typeof artistSchema>
+/** @public */
 export type MusicianMetaInput = z.input<typeof musicianSchema>
+/** @public */
 export type PartnerMetaInput = z.input<typeof partnerSchema>
+/** @public */
 export type ReviewMetaInput = z.input<typeof reviewSchema>
 
 export type EntryMeta =

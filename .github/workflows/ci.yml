@@ -1,8 +1,8 @@
 name: CI
 
-# Fast consistency checks on every PR and push to main: lint/types/unit, the static build and the SEO suite
-# (a few minutes). Everything heavier (Storybook axe, Playwright e2e + visual, Lighthouse, link check, the
-# design-system export) runs once a day on main in nightly.yml, or on demand.
+# Fast consistency checks on every PR and push to main: lint/types/knip (dead code)/unit, the static build
+# and the SEO suite (a few minutes). Everything heavier (Storybook axe, Playwright e2e + visual, Lighthouse,
+# link check, the design-system export) runs once a day on main in nightly.yml, or on demand.
 on:
   pull_request:
   push:
@@ -30,6 +30,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
+      - run: pnpm knip
       - run: pnpm test:unit
 
   build:
