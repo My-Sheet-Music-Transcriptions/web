@@ -1,4 +1,4 @@
-import { LogoGrid, PageHeader } from '~/components/blocks'
+import { PageHeader, PictureGrid } from '~/components/blocks'
 import avid from './avid-sibelius.png?w=240;480&as=picture'
 import cantamus from './cantamus.png?w=240;480&as=picture'
 import easysong from './easysong.png?w=240;480&as=picture'
@@ -23,9 +23,9 @@ export default function PartnersPage() {
         lead="At My Sheet Music Transcriptions **we work with the best partners in the music industry** to provide additional services to our customers. See below our current providers and partnerships:"
       />
 
-      <LogoGrid
+      <PictureGrid
+        shape="logo"
         columns={3}
-        showNames
         items={[
           { name: 'Music 4 Humans', image: music4Humans, href: '/music-4-humans' },
           {
@@ -43,10 +43,10 @@ export default function PartnersPage() {
         ]}
       />
 
-      <LogoGrid
+      <PictureGrid
+        shape="logo"
         tone="cream"
         columns={3}
-        showNames
         items={[
           {
             name: 'Avid',

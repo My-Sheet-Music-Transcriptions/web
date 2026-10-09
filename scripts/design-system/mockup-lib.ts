@@ -46,7 +46,7 @@ export interface MockupResult {
   images: string[]
   /** Where a picture comes from when not from the page folder (`src/assets/images/bands/x.jpg`), by file name. */
   sources: Record<string, string>
-  /** The page's H1 (the title of its PageHeader or Hero) or its SEO title. */
+  /** The page's H1 (the title of its PageHeader) or its SEO title. */
   title: string
   path: string
   warnings: string[]
@@ -54,9 +54,9 @@ export interface MockupResult {
 
 class MockupError extends Error {}
 
-/** The h1 a page writes itself: the `title` of its first PageHeader or Hero block. */
+/** The h1 a page writes itself: the `title` of its first PageHeader. */
 function pageTitle(blocks: MockupBlock[]): string | undefined {
-  const opening = blocks.find((b) => b.name === 'PageHeader' || b.name === 'Hero')
+  const opening = blocks.find((b) => b.name === 'PageHeader')
   const title = opening?.props?.title
   return typeof title === 'string' ? title : undefined
 }

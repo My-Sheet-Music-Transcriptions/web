@@ -82,16 +82,18 @@ export function FeatureItem({
   const content = (
     <>
       {media}
-      <h3 className="text-h3 font-bold text-ink">
-        {linked ? (
-          <SmartLink href={item.href as string} className="hover:text-accent-deep">
-            {item.title}
-          </SmartLink>
-        ) : (
-          item.title
-        )}
-      </h3>
-      <div className="mt-3 flex flex-col gap-3 whitespace-pre-line text-ink">
+      {item.title ? (
+        <h3 className="text-h3 font-bold text-ink">
+          {linked ? (
+            <SmartLink href={item.href as string} className="hover:text-accent-deep">
+              {item.title}
+            </SmartLink>
+          ) : (
+            item.title
+          )}
+        </h3>
+      ) : null}
+      <div className={cn('flex flex-col gap-3 whitespace-pre-line text-ink', item.title && 'mt-3')}>
         {lightMarkdown(item.body)}
       </div>
       {item.emphasis ? <p className="mt-1 font-bold text-ink">{item.emphasis}</p> : null}

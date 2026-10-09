@@ -1,11 +1,10 @@
-import { PhotoBand } from '~/components/primitives/PhotoBand'
+import { BlockShell, type HeadingProps } from '~/components/primitives/BlockShell'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
 import type { Counter, RatingSource } from '~/content/types'
-import { useTitleId } from '~/lib/use-title-id'
 import { useLocale } from '~/site'
 
-export interface RatingBannerProps {
+export interface RatingBannerProps extends HeadingProps {
   /** White heading over the photo. */
   title: string
   /** The big number under the heading: pass `counter` from content/<locale>/data/ratings. */
@@ -14,18 +13,15 @@ export interface RatingBannerProps {
   sources: RatingSource[]
   /** The photo behind the band (`~/assets/images/bands/stats-bg.jpg` is the piano every page uses). */
   image: PictureSource
-  /** Anchor id. */
-  id?: string
 }
 
 /** The big trust moment: a photo band with the transcriptions counter and the rating cards. */
-export function RatingBanner({ title, counter, sources, image, id }: RatingBannerProps) {
-  const titleId = useTitleId(id)
+export function RatingBanner({ counter, sources, ...shell }: RatingBannerProps) {
   const locale = useLocale()
   return (
-    <PhotoBand image={image} title={title} titleId={titleId} id={id} preset="stats">
+    <BlockShell {...shell}>
       {counter ? (
-        <p className="mt-[60px]">
+        <p className="mb-10 text-center">
           <span className="block text-[69px] font-semibold leading-[69px]">
             {counter.value.toLocaleString(locale)}
           </span>
@@ -34,13 +30,13 @@ export function RatingBanner({ title, counter, sources, image, id }: RatingBanne
           </span>
         </p>
       ) : null}
-      <ul className="mt-[60px] grid gap-5 md:grid-cols-3">
+      <ul className="grid gap-5 md:grid-cols-3">
         {sources.map((r) => (
           <li key={r.id}>
             <RatingCard source={r} />
           </li>
         ))}
       </ul>
-    </PhotoBand>
+    </BlockShell>
   )
 }

@@ -41,7 +41,7 @@ export interface BlockShellProps extends ShellProps {
   image?: PictureSource
   /** Vertical padding: tight 32px, normal 50px (default), loose 50px on phones and 90px from tablet up. */
   spacing?: 'tight' | 'normal' | 'loose'
-  /** The container: narrow 900px, content 1140px (default), wide 1200px, or full width. */
+  /** The container: narrow 900px, content 1140px (default), wide 1200px, or full (the header's 1440px). */
   width?: 'narrow' | 'content' | 'wide' | 'full'
   /** Heading and buttons centred (default), or at the start of the column. */
   align?: 'center' | 'start'
@@ -67,7 +67,7 @@ const widths = {
   narrow: 'container-narrow',
   content: 'container-content',
   wide: 'container-wide',
-  full: 'w-full',
+  full: 'mx-auto w-full max-w-[1440px] px-4 lg:px-5',
 }
 
 /**

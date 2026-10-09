@@ -2,7 +2,6 @@ import {
   faqGroup,
   google,
   included,
-  logo,
   mediaLabels,
   pianoPricing,
   platforms,
@@ -25,12 +24,12 @@ export const CATEGORIES = {
   },
   list: {
     label: 'Lists & grids',
-    meaning: 'repeated items with a shape: cards, icons, logos, steps, figures, prices, questions',
+    meaning: 'repeated items with a shape: cards, pictures, steps, figures, prices, questions',
   },
   reviews: { label: 'Reviews & ratings', meaning: 'what customers say and the ratings behind it' },
   cta: {
     label: 'Calls to action',
-    meaning: 'a band with a button; the request form (always last)',
+    meaning: 'the request form, always last (a band with one button is a centred Section)',
   },
 } as const
 
@@ -66,39 +65,13 @@ export interface BlockDoc {
 }
 
 export const catalogue = {
-  Hero: {
-    group: 'Blocks',
-    category: 'header',
-    useWhen: 'The homepage opening, with the brand lockup and the Google rating card.',
-    notFor: 'any other page: PageHeader.',
-    description:
-      'Homepage hero: studio photo slideshow cut by a white diagonal, brand lockup, headline with an orange highlight, two lines of copy, teal CTA and the floating rating card. Phones: the photo above the copy, no button or card.',
-    defaults: {
-      title: 'Your #1 sheet music transcription service online',
-      highlight: '#1',
-      lead: 'Get accurate and high-quality sheet music to learn a song, perform, register a composition, educate, or for any music tech application.',
-      strong: 'Reliable digital notation services by professional transcribers and music editors.',
-      cta: { label: 'Learn more', href: '#how-it-works' },
-      images: ['sample:photo'],
-      slideshow: false,
-      rating: google,
-      logo,
-    },
-    usage:
-      '<Hero title="…" highlight="#1" lead="…" strong="…" cta={{ label: "Learn more", href: "#how-it-works" }} images={[slide1, slide2]} rating={google} />',
-    previewHeight: 820,
-    dataSource: 'content/<locale>/data/ratings.ts (google)',
-    guidelines:
-      'Homepage only. Keep the headline under 60 characters; the highlight must be a substring of the title. The photos live in the page folder.',
-  },
   PageHeader: {
     group: 'Blocks',
     category: 'header',
-    useWhen:
-      'The first block of every page but the homepage: its h1, a subtitle or lead, a button.',
-    notFor: 'the homepage: Hero.',
+    useWhen: 'The first block of every page: its h1, a subtitle or lead, a button.',
+    notFor: 'a heading further down the page: every block has its own `title`.',
     description:
-      'Page opening. `band`: dark centred title band with an orange rule, then the instrument icon and the compact rating card when given (service pages). `split`: white, copy and button left, a picture or carousel right (landing pages).',
+      'Page opening. `band`: dark centred title band with an orange rule, then the instrument icon and the compact rating card when given (service pages). `split`: white, copy and button left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the copy (above it on phones), brand lockup, orange highlight and the floating rating card.',
     defaults: {
       title: 'Piano Transcription Service',
       subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',
@@ -106,11 +79,227 @@ export const catalogue = {
       rating: google,
     },
     usage:
-      '<PageHeader title="…" subtitle="…" image={pianoIcon} rating={google} />\n<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} labels={mediaLabels} />',
+      '<PageHeader title="…" subtitle="…" image={pianoIcon} rating={google} />\n<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} labels={mediaLabels} />\n<PageHeader variant="photo" title="…" highlight="#1" lead="…" subtitle="…" cta={{ label: "Learn more", href: "#how-it-works" }} images={[{ image: slide1, alt: "" }]} rating={google} logo={{ … }} />',
     previewHeight: 560,
     dataSource: 'content/<locale>/data/ratings.ts (google), labels.ts (mediaLabels, with images)',
     guidelines:
-      'The first block of every page but the homepage: the band on content pages (the service icon as `image` + `rating` on service pages), `variant="split"` on landing pages. One per page.',
+      'One per page, always first. The band on content pages (the service icon as `image` + `rating` on service pages), `variant="split"` on landing pages, `variant="photo"` on the homepage only (`highlight` must be a substring of the title).',
+  },
+  Section: {
+    group: 'Blocks',
+    category: 'text',
+    useWhen:
+      'Prose with a heading, or one line and one button that point somewhere (`align="center"`).',
+    notFor: 'prose that belongs with a picture or video: MediaText.',
+    description:
+      'Titled section for a page\'s own prose: heading with its rule, white/cream/peach background, three widths, a filled `cta` and outline `links`. `align="center"` with `rule={false}` is the short band that points somewhere (the glossary, the form, an email).',
+    defaults: { title: 'Use cases', id: 'demo' },
+    children: 'Discover our services through educators we’ve worked with in the past.',
+    usage:
+      '<Section title="…" tone="peach">\n  <Text>…</Text>\n  <Heading level={3}>…</Heading>\n</Section>\n<Section align="center" rule={false} width="narrow" tone="cream" title="Unsure about music notation?" cta={{ label: "See our Glossary", href: "/glossary-of-musical-terms" }} />',
+    previewHeight: 360,
+  },
+  MediaText: {
+    group: 'Blocks',
+    category: 'text',
+    useWhen: 'Prose beside media: a picture, a carousel, a before/after pair or a video.',
+    notFor: 'pictures without prose: PictureGrid; a list of steps: Steps.',
+    description:
+      'Prose beside media (picture with caption, carousel, before/after pair with `layout="pair"`, video), optional eyebrow, heading and button; media left or right; `align="center"` puts the heading above and the button below (who we are).',
+    defaults: {
+      title: 'Choose the amount you would like to gift',
+      image: 'sample:photo',
+      alt: 'A transcriber at work',
+      imageSide: 'left',
+      imageWidth: 480,
+      tone: 'cream',
+      caption: '* The text on the card can be 100% customized!',
+      cta: { label: 'Request a gift card', href: '#contact' },
+      id: 'demo',
+    },
+    children:
+      "We will work on your friend's favorite music transcription! The receiver of the voucher can redeem it for any transcription worth the value of the voucher.",
+    usage:
+      '<MediaText image={photo} alt="…" imageSide="right" caption="…">\n  <Text>…</Text>\n</MediaText>',
+    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with a carousel or a video)',
+    previewHeight: 520,
+    guidelines:
+      "Pictures live in the page folder (`import photo from './photo.jpg?w=480;960&as=picture'`). Keep prose to a few short paragraphs; use `cta` only for the section's main action.",
+  },
+  Samples: {
+    group: 'Blocks',
+    category: 'text',
+    useWhen: 'Showing our work: a recording beside the first page of the score we wrote.',
+    notFor: 'a single video with prose: MediaText `video`.',
+    description:
+      'One row per sample: its title and the YouTube video (loaded on click) beside the score picture.',
+    defaults: {
+      labels: mediaLabels,
+      items: [
+        {
+          title: 'Piano cover transcription',
+          video: {
+            youtube: 'CuZZBbxwb1I',
+            title: 'Piano cover transcription',
+            caption: 'Play to compare with the sheet music',
+          },
+          image: 'sample:photo',
+          alt: 'First page of the piano score',
+        },
+      ],
+    },
+    usage:
+      '<Samples items={[{ title: "…", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />',
+    dataSource: 'content/<locale>/data/labels.ts (mediaLabels)',
+    previewHeight: 640,
+    guidelines: 'Scores live in the page folder (first page, PNG). Two to four samples.',
+  },
+  Table: {
+    group: 'Blocks',
+    category: 'text',
+    useWhen: 'Rows and columns of facts: job openings, prices per level.',
+    notFor: 'prices from: PricingCards; cards: CardGrid.',
+    description:
+      'A table with a caption and column headings; links in cells; each row becomes a labelled card on phones.',
+    defaults: {
+      title: 'Job openings',
+      caption: 'General openings',
+      columns: ['Publication date', 'Position', 'Location', 'Type', ''],
+      rows: [
+        [
+          '02/03/2026',
+          'Music Editor',
+          'Hybrid: Terrassa/Barcelona + Remote',
+          'Full-time work contract',
+          { label: 'See more & apply', href: '/job/music-editor' },
+        ],
+      ],
+    },
+    usage: '<Table caption="…" columns={["…"]} rows={[["…", { label: "…", href: "/…" }]]} />',
+    previewHeight: 420,
+  },
+  CardGrid: {
+    group: 'Blocks',
+    category: 'list',
+    useWhen: 'Cards in a row: who we work for, what is included, why us, services with prices.',
+    notFor: 'pictures with only a name or a link: PictureGrid.',
+    description:
+      'Grid of cards (icon or picture, title, text, optional button). `variant`: card (white), tile (peach, the audiences) or plain. With an `image`, white cards over that photo band. `tabs`: the same cards in sets (currencies).',
+    defaults: {
+      title: "What's included?",
+      image: 'sample:photo',
+      items: included,
+    },
+    usage:
+      '<CardGrid title="What\'s included?" image={studioBand} items={included} />\n<CardGrid title="Who do we work for?" variant="tile" columns={4} items={audiences} />',
+    previewHeight: 700,
+    dataSource: 'content/<locale>/data/services.ts (included), home.ts (audiences)',
+    guidelines:
+      'Card text is light markdown (paragraphs, **bold**, [links](/path)). Icons are pictures imported in the data (src/assets/images/icons) or the page folder; the photo band is the studio, `~/assets/images/bands/included-bg.jpg`.',
+  },
+  PictureGrid: {
+    group: 'Blocks',
+    category: 'list',
+    useWhen:
+      'Pictures with a name: services with their icons, partner logos, musicians, our team or our books.',
+    notFor: 'pictures with a text each: CardGrid; one picture beside prose: MediaText.',
+    description:
+      'Grid of pictures, each with its name and caption, linked when it has an `href`. `shape`: icon (services), logo, portrait (round) or photo (square). `variant="marquee"`: a strip of tall photos that scrolls by on its own (hidden on phones). `limit` shows the first n.',
+    defaults: {
+      title: 'We transcribe any instrument and musical genre',
+      items: services,
+      cta: { label: 'See all services', href: '/services-samples' },
+    },
+    usage:
+      '<PictureGrid title="…" items={allServices} limit={12} cta={{ label: "See all services", href: "/services-samples" }} />\n<PictureGrid title="…" shape="portrait" columns={5} items={[{ name: "…", image: photo, href: "/…" }]} />\n<PictureGrid variant="marquee" shape="photo" label="…" items={[{ image: photo, alt: "…" }]} />',
+    previewHeight: 560,
+    dataSource: 'content/<locale>/data/services.ts (allServices)',
+    guidelines:
+      'The name is the line under the picture; a picture without one (a logo, a photo) gets an `alt`. Logos, portraits and photos live in the page folder.',
+  },
+  Steps: {
+    group: 'Blocks',
+    category: 'list',
+    useWhen: 'A process step by step: how ordering works, how a gift card works, why convert.',
+    notFor: 'cards that are not in order: CardGrid.',
+    description:
+      '`timeline`: numbered vertical list with a glyph or number per step. `columns`: steps side by side, each with its picture or video (the homepage adds one wide illustration on desktop).',
+    defaults: {
+      title: 'How it works',
+      id: 'how-it-works',
+      stepLabel: 'Step {n}',
+      items: [
+        { glyph: 'dollar', body: 'Choose how much you want to gift.' },
+        {
+          glyph: 'pen',
+          body: 'Let us know how you would like to customize the card and we will create it for you.',
+        },
+        {
+          glyph: 'music',
+          body: 'The receiver of the voucher can redeem it for any transcription worth the value of the voucher!',
+        },
+      ],
+    },
+    usage:
+      '<Steps title="How it works" items={[{ glyph: "dollar", body: "…" }, { glyph: "gift", body: "…" }]} />\n<Steps variant="columns" items={[{ title: "1. Send us audio", body: "…", image: step1 }]} />',
+    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with videos)',
+    previewHeight: 640,
+    guidelines:
+      'Three to seven steps, one or two sentences each. Glyphs come from the Icon primitive (dollar, pen, music, chat, gift, send, check…).',
+  },
+  Stats: {
+    group: 'Blocks',
+    category: 'list',
+    useWhen: 'Two to four figures that back a claim, each with its one-line label.',
+    notFor: 'our own ratings and counter: RatingBanner.',
+    description:
+      'A row of big teal figures, each above what it measures, under an optional heading.',
+    defaults: {
+      title: 'Turn your music into engaging materials',
+      items: [
+        { value: '25%', label: 'of music listeners in the world are learning an instrument' },
+        { value: '$4,000M', label: "music notation industry's annual revenue" },
+        { value: '2%', label: 'of the listeners are superfans who generate most of the revenue' },
+      ],
+    },
+    usage: '<Stats title="…" items={[{ value: "25%", label: "…" }]} />',
+    previewHeight: 380,
+  },
+  PricingCards: {
+    group: 'Blocks',
+    category: 'list',
+    useWhen: 'Any page that talks about price: price-from cards with the factors.',
+    notFor: 'a price inside a sentence: say it in prose, from data, never typed in.',
+    description:
+      'Three price-from cards with coloured headers, floating icons and pricing factors, or one wide card (price beside numbered factors) when given one tier; intro prose goes in the children.',
+    defaults: {
+      title: 'Flexible pricing for piano',
+      tiers: [pianoPricing],
+      cta: { label: 'Request your sheet music', href: '#contact' },
+    },
+    usage:
+      '<PricingCards title="Flexible pricing" tiers={pricingTiers}>\n  <Text>…</Text>\n</PricingCards>',
+    previewHeight: 620,
+    dataSource: 'content/<locale>/data/home.ts (pricingTiers), services.ts (<service>Pricing)',
+    guidelines: 'Prices live in content/<locale>/data; never type amounts into a page.',
+  },
+  FaqList: {
+    group: 'Blocks',
+    category: 'list',
+    useWhen: 'Questions and answers: a page-specific group, then the shared ones.',
+    description:
+      'Questions that open one at a time (no script), in titled groups with optional jump links, a button, and FAQPage structured data.',
+    defaults: {
+      title: 'Frequently asked questions',
+      groups: [faqGroup],
+      cta: { label: 'Read all our FAQs', href: '/frequent-asked-questions' },
+    },
+    usage:
+      '<FaqList title="Frequently asked questions" groups={[{ title: "Piano Transcriptions", items: […] }, generalFaq]} />',
+    previewHeight: 520,
+    dataSource: 'content/<locale>/data/faqs.ts (generalFaq and the FAQ page groups)',
+    guidelines:
+      'Answers are light markdown (paragraphs, **bold**, [links](/path), "- " lists). One FaqList with structured data per page.',
   },
   RatingBanner: {
     group: 'Blocks',
@@ -144,284 +333,11 @@ export const catalogue = {
       labels: reviewLabels,
       cta: { label: 'Read all our reviews', href: '/customer-reviews' },
     },
-    usage:
-      '<Testimonials title="Customer Reviews" items={homeReviews} limit={4} labels={reviewLabels} />',
+    usage: '<Testimonials title="Customer Reviews" items={homeReviews} labels={reviewLabels} />',
     previewHeight: 760,
     dataSource: 'content/<locale>/data/reviews.ts, labels.ts (reviewLabels)',
     guidelines:
-      'Quotes are verbatim from Trustpilot/Google; add new ones to data/reviews.ts, never inline.',
-  },
-  LogoGrid: {
-    group: 'Blocks',
-    category: 'list',
-    useWhen: 'Who trusts us: partner logos, schools, or the artists we work with.',
-    notFor: 'photos without names or links: Gallery.',
-    description:
-      'Grid of logos (contained) or round portraits, each optionally named and linked, under a heading and a lead.',
-    defaults: {
-      title: 'Musicians who trust us',
-      lead: 'Influencers, performers, and songwriters endorse our services. **Meet the talent in our artist roster.**',
-      shape: 'portrait',
-      showNames: true,
-      items: [
-        { name: 'Lindsey Stirling', image: 'sample:photo', href: '/lindsey-stirling' },
-        { name: 'Gavin Luke', image: 'sample:photo', href: '/gavin-luke' },
-        { name: 'Taylor Davis', image: 'sample:photo', href: '/taylor-davis' },
-        { name: 'George Collier', image: 'sample:photo', href: '/george-collier' },
-      ],
-    },
-    usage:
-      '<LogoGrid title="…" shape="portrait" showNames items={[{ name: "…", image: photo, href: "/…" }]} />',
-    previewHeight: 480,
-    guidelines:
-      'Logos and portraits live in the page folder. Without `showNames` the name is the alt text.',
-  },
-  Stats: {
-    group: 'Blocks',
-    category: 'list',
-    useWhen: 'Two to four figures that back a claim, each with its one-line label.',
-    notFor: 'our own ratings and counter: RatingBanner.',
-    description:
-      'A row of big teal figures, each above what it measures, under an optional heading.',
-    defaults: {
-      title: 'Turn your music into engaging materials',
-      items: [
-        { value: '25%', label: 'of music listeners in the world are learning an instrument' },
-        { value: '$4,000M', label: "music notation industry's annual revenue" },
-        { value: '2%', label: 'of the listeners are superfans who generate most of the revenue' },
-      ],
-    },
-    usage: '<Stats title="…" items={[{ value: "25%", label: "…" }]} />',
-    previewHeight: 380,
-  },
-  Samples: {
-    group: 'Blocks',
-    category: 'text',
-    useWhen: 'Showing our work: a recording beside the first page of the score we wrote.',
-    notFor: 'a single video with prose: MediaText `video`.',
-    description:
-      'One row per sample: its title and the YouTube video (loaded on click) beside the score picture.',
-    defaults: {
-      labels: mediaLabels,
-      items: [
-        {
-          title: 'Piano cover transcription',
-          video: {
-            youtube: 'CuZZBbxwb1I',
-            title: 'Piano cover transcription',
-            caption: 'Play to compare with the sheet music',
-          },
-          image: 'sample:photo',
-          alt: 'First page of the piano score',
-        },
-      ],
-    },
-    usage:
-      '<Samples items={[{ title: "…", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />',
-    dataSource: 'content/<locale>/data/labels.ts (mediaLabels)',
-    previewHeight: 640,
-    guidelines: 'Scores live in the page folder (first page, PNG). Two to four samples.',
-  },
-  CardGrid: {
-    group: 'Blocks',
-    category: 'list',
-    useWhen: 'Cards in a row: who we work for, what is included, why us, services with prices.',
-    notFor: 'links that are only an icon and a label: IconGrid.',
-    description:
-      'Grid of cards (icon or picture, title, text, optional button). `surface`: card (white), tile (peach, the audiences) or plain. `background="photo"`: white cards over the studio photo band. `tabs`: the same cards in sets (currencies).',
-    defaults: {
-      title: "What's included?",
-      background: 'photo',
-      image: 'sample:photo',
-      items: included,
-    },
-    usage:
-      '<CardGrid title="What\'s included?" background="photo" image={studioBand} items={included} />\n<CardGrid title="Who do we work for?" surface="tile" columns={4} items={audiences} />',
-    previewHeight: 700,
-    dataSource: 'content/<locale>/data/services.ts (included), home.ts (audiences)',
-    guidelines:
-      'Card text is light markdown (paragraphs, **bold**, [links](/path)). Icons are pictures imported in the data (src/assets/images/icons) or the page folder; `background="photo"` needs `image` (the studio, `~/assets/images/bands/included-bg.jpg`).',
-  },
-  IconGrid: {
-    group: 'Blocks',
-    category: 'list',
-    useWhen: 'Pointing to service or instrument pages with their icons; `limit` for a short list.',
-    notFor: 'cards with a text each: CardGrid.',
-    description:
-      'Grid of illustrated icons with their labels, each linking to its page, and an optional button.',
-    defaults: {
-      title: 'We transcribe any instrument and musical genre',
-      items: services,
-      cta: { label: 'See all services', href: '/services-samples' },
-    },
-    usage:
-      '<IconGrid title="…" items={serviceGrid} cta={{ label: "See all services", href: "/services-samples" }} />',
-    previewHeight: 560,
-    dataSource: 'content/<locale>/data/home.ts (serviceGrid), services.ts (allServices)',
-  },
-  PricingCards: {
-    group: 'Blocks',
-    category: 'list',
-    useWhen: 'Any page that talks about price: price-from cards with the factors.',
-    notFor: 'a price inside a sentence: say it in prose, from data, never typed in.',
-    description:
-      'Three price-from cards with coloured headers, floating icons and pricing factors, or one wide card (price beside numbered factors) when given one tier; intro prose goes in the children.',
-    defaults: {
-      title: 'Flexible pricing for piano',
-      tiers: [pianoPricing],
-      cta: { label: 'Request your sheet music', href: '#contact' },
-    },
-    usage:
-      '<PricingCards title="Flexible pricing" tiers={pricingTiers}>\n  <Text>…</Text>\n</PricingCards>',
-    previewHeight: 620,
-    dataSource: 'content/<locale>/data/home.ts (pricingTiers), services.ts (<service>Pricing)',
-    guidelines: 'Prices live in content/<locale>/data; never type amounts into a page.',
-  },
-  Steps: {
-    group: 'Blocks',
-    category: 'list',
-    useWhen: 'A process step by step: how ordering works, how a gift card works, why convert.',
-    description:
-      '`timeline`: numbered vertical list with an icon or number per step. `columns`: steps side by side, each with its picture or video (the homepage adds one wide illustration on desktop).',
-    defaults: {
-      title: 'How it works',
-      id: 'how-it-works',
-      stepLabel: 'Step {n}',
-      items: [
-        { icon: 'dollar', text: 'Choose how much you want to gift.' },
-        {
-          icon: 'pen',
-          text: 'Let us know how you would like to customize the card and we will create it for you.',
-        },
-        {
-          icon: 'music',
-          text: 'The receiver of the voucher can redeem it for any transcription worth the value of the voucher!',
-        },
-      ],
-    },
-    usage:
-      '<Steps title="How it works" items={[{ icon: "dollar", text: "…" }, { icon: "gift", text: "…" }]} />\n<Steps layout="columns" items={[{ title: "1. Send us audio", text: "…", image: step1 }]} />',
-    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with videos)',
-    previewHeight: 640,
-    guidelines:
-      'Three to seven steps, one or two sentences each. Icons come from the Icon primitive (dollar, pen, music, chat, gift, send, check…).',
-  },
-  Section: {
-    group: 'Blocks',
-    category: 'text',
-    useWhen:
-      'Prose with a heading: text pages, a one-off paragraph, anything no other block shapes.',
-    notFor: 'prose that belongs with a picture or video: MediaText.',
-    description:
-      'Generic titled section for prose: optional heading with rule, white/peach/cream background, three widths, an optional row of link buttons.',
-    defaults: { title: 'Use cases', id: 'demo' },
-    children: 'Discover our services through educators we’ve worked with in the past.',
-    usage:
-      '<Section title="…" tone="peach">\n  <Text>…</Text>\n  <Heading level={3}>…</Heading>\n  <List>\n    <ListItem>…</ListItem>\n  </List>\n</Section>',
-    previewHeight: 360,
-  },
-  MediaText: {
-    group: 'Blocks',
-    category: 'text',
-    useWhen: 'Prose beside media: a picture, a carousel, a before/after pair or a video.',
-    notFor: 'pictures without prose: Gallery; a list of steps: Steps.',
-    description:
-      'Prose beside media (picture with caption, carousel, before/after pair, video), optional eyebrow, heading and button; media left or right; `align="center"` puts the heading above and the button below (who we are).',
-    defaults: {
-      title: 'Choose the amount you would like to gift',
-      image: 'sample:photo',
-      alt: 'A transcriber at work',
-      imageSide: 'left',
-      imageWidth: 480,
-      tone: 'cream',
-      caption: '* The text on the card can be 100% customized!',
-      cta: { label: 'Request a gift card', href: '#contact' },
-      id: 'demo',
-    },
-    children:
-      "We will work on your friend's favorite music transcription! The receiver of the voucher can redeem it for any transcription worth the value of the voucher.",
-    usage:
-      '<MediaText image={photo} alt="…" imageSide="right" caption="…">\n  <Text>…</Text>\n</MediaText>',
-    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with a carousel or a video)',
-    previewHeight: 520,
-    guidelines:
-      "Pictures live in the page folder (`import photo from './photo.jpg?w=480;960&as=picture'`). Keep prose to a few short paragraphs; use `cta` only for the section's main action.",
-  },
-  Gallery: {
-    group: 'Blocks',
-    category: 'text',
-    useWhen: 'Pictures without prose: a scrolling strip, a grid of portraits, a carousel.',
-    notFor: 'logos or people with names and links: LogoGrid.',
-    description:
-      '`marquee`: strip of photos that scrolls by on its own (paused on hover and for reduced motion; hidden on phones). `grid`: square tiles with optional captions. `carousel`: one photo at a time.',
-    defaults: {
-      variant: 'grid',
-      columns: 3,
-      images: [
-        { image: 'sample:photo', alt: 'A transcriber at work', caption: 'Transcriber' },
-        { image: 'sample:photo', alt: 'A transcriber at work', caption: 'Editor' },
-        { image: 'sample:photo', alt: 'A transcriber at work', caption: 'Arranger' },
-      ],
-    },
-    usage: '<Gallery label="Examples of our sheet music" images={[{ image: photo, alt: "…" }]} />',
-    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, carousel)',
-    previewHeight: 520,
-  },
-  FaqList: {
-    group: 'Blocks',
-    category: 'list',
-    useWhen: 'Questions and answers: a page-specific group, then the shared ones.',
-    description:
-      'Questions that open one at a time (no script), in titled groups with optional jump links, a button, and FAQPage structured data.',
-    defaults: {
-      title: 'Frequently asked questions',
-      groups: [faqGroup],
-      cta: { label: 'Read all our FAQs', href: '/frequent-asked-questions' },
-    },
-    usage:
-      '<FaqList title="Frequently asked questions" groups={[{ title: "Piano Transcriptions", items: […] }, generalFaq]} />',
-    previewHeight: 520,
-    dataSource: 'content/<locale>/data/faqs.ts (generalFaq and the FAQ page groups)',
-    guidelines:
-      'Answers are light markdown (paragraphs, **bold**, [links](/path), "- " lists). One FaqList with structured data per page.',
-  },
-  Table: {
-    group: 'Blocks',
-    category: 'text',
-    useWhen: 'Rows and columns of facts: job openings, prices per level.',
-    notFor: 'prices from: PricingCards; cards: CardGrid.',
-    description:
-      'A table with a caption and column headings; links in cells; each row becomes a labelled card on phones.',
-    defaults: {
-      title: 'Job openings',
-      caption: 'General openings',
-      columns: ['Publication date', 'Position', 'Location', 'Type', ''],
-      rows: [
-        [
-          '02/03/2026',
-          'Music Editor',
-          'Hybrid: Terrassa/Barcelona + Remote',
-          'Full-time work contract',
-          { label: 'See more & apply', href: '/job/music-editor' },
-        ],
-      ],
-    },
-    usage: '<Table caption="…" columns={["…"]} rows={[["…", { label: "…", href: "/…" }]]} />',
-    previewHeight: 420,
-  },
-  CtaBand: {
-    group: 'Blocks',
-    category: 'cta',
-    useWhen: 'One line and one button that point somewhere: the glossary, the form, an email.',
-    notFor: 'the request form itself: ContactSection.',
-    description:
-      'Short centred band on cream or peach: optional eyebrow, a heading, a sentence, a button.',
-    defaults: {
-      title: 'Unsure about music notation?',
-      cta: { label: 'See our Glossary', href: '/glossary-of-musical-terms' },
-    },
-    usage: '<CtaBand title="…" cta={{ label: "…", href: "/…" }} />',
-    previewHeight: 260,
+      'Quotes are verbatim from Trustpilot/Google; add new ones to data/reviews.ts, never inline. Pass only the reviews to show.',
   },
   ContactSection: {
     group: 'Blocks',
@@ -429,7 +345,7 @@ export const catalogue = {
     useWhen: 'The last section of every page that asks for a quote or a gift card.',
     notFor: 'a second form on the same page; one per page.',
     description:
-      'Peach section under a white wave: title, subtitle, the teal response-time pill and the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
+      'Peach section under a white wave: title, lead, the teal response-time pill and the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
     defaults: { form: quoteForm },
     usage:
       '<ContactSection form={quoteForm} returnTo="/piano" />\n<ContactSection form={giftCardForm} variant="gift-card" id="gift-card" />',

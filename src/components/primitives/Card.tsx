@@ -3,6 +3,8 @@ import { cn } from '~/lib/cn'
 import { type Tone, tones } from './tones'
 
 export interface CardProps extends ComponentPropsWithoutRef<'div'> {
+  /** The element: a div, or an article for a card that stands alone (a review). */
+  as?: 'div' | 'article'
   /** The surface: white (default), cream or peach, the same tones as a block's background. */
   tone?: Tone
   padding?: 'none' | 'sm' | 'md' | 'lg'
@@ -18,6 +20,7 @@ const paddings = { none: '', sm: 'p-4', md: 'p-6', lg: 'p-8' }
  * message of the form. Blocks never hand-roll `rounded-card bg-white shadow-…`.
  */
 export function Card({
+  as: Tag = 'div',
   tone = 'white',
   padding = 'md',
   shadow = 'card',
@@ -25,7 +28,7 @@ export function Card({
   ...props
 }: CardProps) {
   return (
-    <div
+    <Tag
       {...props}
       className={cn('rounded-card', tones[tone], shadows[shadow], paddings[padding], className)}
     />
