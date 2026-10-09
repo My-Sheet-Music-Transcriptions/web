@@ -1,17 +1,18 @@
 import { execFileSync } from 'node:child_process'
 import path from 'node:path'
 import { COLLECTIONS, type Collection } from '../../src/content/schema.ts'
-import { localeHref } from '../../src/i18n/routing.ts'
+import { type LocaleRouting, localeHref, localizePath } from '../../src/i18n/routing.ts'
 import type { Locale } from '../../src/i18n/types.ts'
 import { type Alternate, hreflangAlternates } from '../../src/seo/alternates.ts'
 import { buildHreflangMap, CONTENT_DIR, type FsEntry, readAllEntries } from './content-fs.ts'
 
 /**
- * The sitemaps of a production (domain-mode) build, written by scripts/postbuild.ts: an index at /sitemap.xml (what
- * robots.txt and every page's <link rel="sitemap"> name) and one sitemap per collection. They are made from the
- * entries in content/, the same list the build prerenders, so a page is never missed and nothing else (a crawled
- * "/#contact") gets in; each URL carries the hreflang alternates its <head> prints (src/seo/alternates.ts).
- * Previews (path mode) are not indexed and have none.
+ * The sitemaps, written by scripts/postbuild.ts: per locale an index at /sitemap.xml (what robots.txt and every page's
+ * <link rel="sitemap"> name) and one sitemap per collection. They are made from the entries in content/, the same list
+ * the build prerenders, so a page is never missed and nothing else (a crawled "/#contact") gets in; each URL carries
+ * the hreflang alternates its <head> prints (src/seo/alternates.ts). A production build has one locale on its domain;
+ * an all-languages build (path mode: previews, a site with no SITE_LOCALE) has the same files under each /<locale>,
+ * with URLs on the deploy's origin, plus a parent /sitemap.xml over every language's sitemaps.
  */
 
 /** The sitemap index, at the site's root. */
@@ -71,20 +72,34 @@ export interface SitemapUrl {
 }
 
 export interface SitemapFile {
-  /** File name in dist/client, e.g. page-sitemap.xml */
+  /** Path in dist/client: page-sitemap.xml, en/page-sitemap.xml in path mode */
   file: string
+  /** Its URL */
+  loc: string
   collection: Collection
   urls: SitemapUrl[]
   xml: string
 }
 
-/** The index and the non-empty sitemap of each collection of a locale. `all` is every entry of every locale. */
+export interface Sitemaps {
+  /** The locale's index: sitemap.xml, en/sitemap.xml in path mode */
+  index: { file: string; xml: string }
+  files: SitemapFile[]
+}
+
+/**
+ * The index and the non-empty sitemap of each collection of a locale. `all` is every entry of every locale. URLs are
+ * the build's: on the locale's domain in a production build, under /<locale> on `origin` in an all-languages one.
+ */
 export function buildSitemaps(
   locale: Locale,
   all: FsEntry[] = readAllEntries(),
-): { index: string; files: SitemapFile[] } {
+  { mode, origin }: { mode: LocaleRouting; origin: string } = { mode: 'domain', origin: '' },
+): Sitemaps {
   const map = buildHreflangMap(all)
-  const href = (l: Locale, p: string) => localeHref('domain', l, p)
+  const href = (l: Locale, p: string) => localeHref(mode, l, p, origin)
+  // Where this locale's files go: the root of a production build, /<locale> in an all-languages one.
+  const at = (p: string) => (mode === 'path' ? localizePath(locale, p) : p).slice(1)
   const entries = all.filter((e) => e.locale === locale && !e.meta.draft && !e.meta.noindex)
   const files: SitemapFile[] = []
   for (const collection of COLLECTIONS) {
@@ -97,21 +112,33 @@ export function buildSitemaps(
         alternates: hreflangAlternates(e.meta.translationKey, map, href),
       }))
     if (!urls.length) continue
-    const file = `${SITEMAP_NAMES[collection]}-sitemap.xml`
+    const name = `/${SITEMAP_NAMES[collection]}-sitemap.xml`
     if (urls.length > MAX_URLS)
-      throw new Error(`${file}: ${urls.length} URLs, over the ${MAX_URLS} a sitemap may hold`)
-    files.push({ file, collection, urls, xml: urlsetXml(urls) })
+      throw new Error(`${at(name)}: ${urls.length} URLs, over the ${MAX_URLS} a sitemap may hold`)
+    files.push({ file: at(name), loc: href(locale, name), collection, urls, xml: urlsetXml(urls) })
   }
-  const index = indexXml(
-    files.map((f) => ({ loc: href(locale, `/${f.file}`), lastmod: newest(f.urls) })),
-  )
-  return { index, files }
+  return { index: { file: at(`/${SITEMAP_INDEX}`), xml: sitemapIndexXml(files) }, files }
 }
 
-/** Netlify _redirects rules: every WordPress sitemap URL this build did not write goes to the index. */
-export function legacySitemapRedirects(written: readonly string[]): string[] {
-  const served = new Set(written.map((f) => `/${f}`))
-  return LEGACY_SITEMAPS.filter((u) => !served.has(u)).map((u) => `${u}  /${SITEMAP_INDEX}  301`)
+/**
+ * A sitemap index over these sitemaps: a locale's index, or the parent at the root of an all-languages build, which
+ * lists every language's sitemaps themselves (an index may not list another index).
+ */
+export function sitemapIndexXml(files: readonly SitemapFile[]): string {
+  return indexXml(files.map((f) => ({ loc: f.loc, lastmod: newest(f.urls) })))
+}
+
+/**
+ * Netlify _redirects rules: every WordPress sitemap URL a locale's build did not write goes to its index (under
+ * /<locale> in an all-languages build, so previews show what production does).
+ */
+export function legacySitemapRedirects({ index, files }: Sitemaps): string[] {
+  const target = `/${index.file}`
+  const prefix = target.slice(0, -`/${SITEMAP_INDEX}`.length)
+  const served = new Set(files.map((f) => `/${f.file}`))
+  return LEGACY_SITEMAPS.map((u) => `${prefix}${u}`)
+    .filter((u) => !served.has(u))
+    .map((u) => `${u}  ${target}  301`)
 }
 
 let history: boolean | undefined

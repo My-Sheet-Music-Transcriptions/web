@@ -1,6 +1,7 @@
 import montserratWoff2 from '@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url'
 import { resolveEntry } from '~/content'
 import hreflangMap from '~/i18n/hreflang.generated.json'
+import { localizePath } from '~/i18n/routing'
 import type { Locale } from '~/i18n/types'
 import { absoluteUrl, getSiteConfig, LOCALE_ROUTING, SITE_LOCALE } from '~/site'
 import { type Alternate, type HreflangMap, hreflangAlternates } from './alternates'
@@ -51,10 +52,12 @@ export function rootHead(appCss: string, locale: Locale = SITE_LOCALE): HeadResu
       { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-      // Path-mode previews have no sitemap (they are not indexed).
-      ...(LOCALE_ROUTING === 'domain'
-        ? [{ rel: 'sitemap', type: 'application/xml', href: '/sitemap.xml' }]
-        : []),
+      // The locale's sitemap index: the domain's, or its /<locale> one in an all-languages build.
+      {
+        rel: 'sitemap',
+        type: 'application/xml',
+        href: LOCALE_ROUTING === 'path' ? localizePath(locale, '/sitemap.xml') : '/sitemap.xml',
+      },
     ],
     scripts: [
       { type: 'application/ld+json', children: JSON.stringify(organizationJsonLd(locale)) },

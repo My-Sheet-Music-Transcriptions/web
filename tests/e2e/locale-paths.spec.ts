@@ -64,10 +64,28 @@ test('links preload on hover and navigate client-side', async ({ page }, info) =
   ).toBe(true)
 })
 
-test('previews are not indexed', async ({ request }) => {
-  const robots = await request.get('/robots.txt')
-  expect(await robots.text()).toContain('Disallow: /')
-  expect((await request.get('/sitemap.xml')).status()).toBe(404)
+test('previews are not indexed, but name their sitemaps', async ({ request }) => {
+  const robots = await (await request.get('/robots.txt')).text()
+  expect(robots).toContain('Disallow: /')
+  expect(robots).toMatch(/^Sitemap: https?:\/\/\S+\/sitemap\.xml$/m)
+  // The parent lists every language's sitemaps; each language has its own index, as a production domain does.
+  const parent = await request.get('/sitemap.xml')
+  expect(parent.status()).toBe(200)
+  expect(await parent.text()).toMatch(/<loc>[^<]*\/en\/page-sitemap\.xml<\/loc>/)
+  const index = await request.get('/en/sitemap.xml')
+  expect(index.status()).toBe(200)
+  expect(await index.text()).toMatch(/<loc>[^<]*\/en\/page-sitemap\.xml<\/loc>/)
+  expect(await (await request.get('/en/page-sitemap.xml')).text()).toMatch(
+    /<loc>[^<]*\/en\/gift-card<\/loc>/,
+  )
+  const legacy = await request.get('/en/sitemap_index.xml', { maxRedirects: 0 })
+  expect(legacy.status()).toBe(301)
+  expect(legacy.headers().location).toBe('/en/sitemap.xml')
+})
+
+test('pages link their language’s sitemap', async ({ page }) => {
+  await page.goto('/en/gift-card')
+  await expect(page.locator('link[rel="sitemap"]')).toHaveAttribute('href', '/en/sitemap.xml')
 })
 
 test('unknown paths under a locale render its 404 page', async ({ page }) => {

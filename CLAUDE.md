@@ -12,7 +12,7 @@ pnpm check                    # biome + tsc + knip + unit tests  (fast, run befo
 pnpm knip                     # dead code: unused files, exports, types, dependencies (knip.ts)
 pnpm check:pr                 # exactly what PR CI runs: check + English build + SEO suite (~1.5 min)
 SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemaps -> dist/client
-pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemaps (what deploy previews ship)
+pnpm build                    # preview build: every locale under /<locale>, noindex, a parent sitemap (what deploy previews ship)
 pnpm serve:dist               # serve dist/client on :4173
 pnpm test:seo                 # SEO conformance over dist/client (needs a build)
 pnpm test:storybook           # every story through axe (contrast included)
@@ -171,7 +171,11 @@ in `content/` (not drafts, not `noindex`), the same list the build prerenders, s
 with no extra step; a new collection must be named in `SITEMAP_NAMES` (type error otherwise). Each URL carries
 hreflang alternates to its translations on the other TLDs, from the same function as the page `<head>`
 (`src/seo/alternates.ts`); `lastmod` is `meta.updated`, else the page folder's last commit. The WordPress sitemap URLs
-(`/sitemap_index.xml`, other Yoast and WordPress names, `LEGACY_SITEMAPS`) 301 to the index. Previews have none.
+(`/sitemap_index.xml`, other Yoast and WordPress names, `LEGACY_SITEMAPS`) 301 to the index. An all-languages build
+(previews, and a Netlify site with no `SITE_LOCALE`, as the English one until its cutover) has the same files under each
+`/<locale>` with URLs on the deploy's origin (`deployOrigin()` in `scripts/lib/site-locale.ts`: the site's address in
+production, the deploy's on previews; also its canonicals), plus a parent `/sitemap.xml` listing every language's
+sitemaps (an index may not list another index); its `robots.txt` still says `Disallow: /`.
 `tests/unit/sitemap.test.ts` (every locale, plus a multi-language fixture) and the SEO suite (sitemaps == indexable
 pages, alternates == `<head>`) keep them complete.
 

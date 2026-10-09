@@ -1,5 +1,6 @@
 # Several Netlify sites are built from this repository with this one file:
 #   - one site per locale/domain:   NETLIFY_TARGET=site (default), SITE_LOCALE=<locale>
+#     (no SITE_LOCALE: every locale under /<locale>, as on the English site until its cutover)
 #   - the design system (Storybook): NETLIFY_TARGET=storybook
 # Set those variables per site (Site configuration > Environment variables).
 # Deploy Previews: the English site (SITE_LOCALE=en) builds every locale under /en, /es, /ca...
