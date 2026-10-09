@@ -8,6 +8,9 @@ on:
   push:
     branches: [main]
 
+# One run per ref, the newest wins: on main, a push cancels the run of the one before it. The Design System
+# routine pushes its record (src/design-system/artifact.json) seconds after a merge, sometimes twice when
+# merges land together; the newest commit holds everything the older ones did.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true

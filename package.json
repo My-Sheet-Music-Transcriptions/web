@@ -35,6 +35,7 @@
     "ds:build": "vite build -c vite.ds.config.ts",
     "ds:export": "tsx scripts/design-system/export.ts",
     "ds:index": "tsx scripts/design-system/index.ts",
+    "ds:push": "tsx scripts/design-system/push.ts",
     "ds:review": "tsx scripts/design-system/review.ts",
     "ds:shot": "tsx scripts/design-system/shot.ts",
     "ds:canvas": "tsx scripts/design-system/canvas.ts",
