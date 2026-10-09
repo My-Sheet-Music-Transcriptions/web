@@ -67,7 +67,7 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
   drifting 40px from that side (a split header's copy and picture, the homepage's copy), `entrance-up` from
   below (a band's centred copy, the rating cards), `entrance-settle` landing from slightly larger (the icon
   under a band), `entrance-behind` slides the homepage photos in behind their curve, which stays put, and then
-  they lag behind it as the page scrolls (`parallax`: a scroll-driven animation, 70% of the page's speed over
+  they lag behind it as the page scrolls (`parallax`: a scroll-driven animation, 55% of the page's speed over
   the first screen, compositor-run, nothing where browsers lack scroll timelines). `entrance-late` holds a
   piece back 0.35 s for what follows the copy; `entrance-rule` draws the band's orange rule out from its
   centre once the copy has settled. The photos centre under their curve.
@@ -82,6 +82,11 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
   - It runs on screen only for visitors who did not ask for reduced motion, and it replays as each page
     mounts. A story that shows it waits in `play: ({ canvasElement }) => entered(canvasElement)`
     (src/stories/play.ts) before axe runs; `entered` skips the animations the scroll drives.
+- **Photo bands** (a `BlockShell` with `image`: the RatingBanner, a CardGrid over a photo) get a parallax of
+  their own in CSS: the band is a view timeline (`parallax-source`) and its picture (`parallax-band`), drawn
+  30% taller than the band above and below, slides from +30% to −30% of the band's height while the band
+  crosses the screen. Compositor-run, nothing where view timelines are missing, still under reduced motion
+  (so the visual baselines, which run reduced, see the plain picture).
 - **How it is driven:** the shell watches itself with `useInView` and switches `animate` from `hidden` to
   `shown`. It does not use `whileInView`: with `whileInView` and `once`, pieces mounted after the reveal (another
   tab's cards) inherit `hidden` and stay invisible. With `animate`, they inherit `shown` and come in on their

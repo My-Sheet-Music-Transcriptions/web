@@ -257,7 +257,7 @@
 }
 
 /* The photo header's photos lagging behind their curve as the page scrolls (parallax): over the first screen
-   of scrolling they move down 30vh, so they scroll at 70% of the page's speed; the strip this exposes above
+   of scrolling they move down 45vh, so they scroll at 55% of the page's speed; the strip this exposes above
    them is always smaller than what the page has already scrolled off, so it never shows. A scroll-driven animation (no
    JavaScript, run by the compositor) on a layer of its own around the sliding one; where browsers lack scroll
    timelines the photos simply scroll with the page. Still under reduced motion. */
@@ -272,6 +272,36 @@
 }
 @keyframes parallax {
   to {
-    translate: 0 30vh;
+    translate: 0 45vh;
+  }
+}
+
+/* A photo band's picture lagging behind the band as it crosses the screen (parallax, mid-page): the band is the
+   view timeline (`parallax-source`) and its picture (`parallax-band`), drawn 30% taller than the band above and
+   below, slides from 30% of the band's height down to 30% up between the band entering at the foot of the screen
+   and leaving at the top, so it always covers the band and lags behind the page. Compositor-run, no JavaScript;
+   where browsers lack view timelines the picture simply fills the band. Still under reduced motion. */
+@utility parallax-source {
+  view-timeline: --parallax-band block;
+}
+@utility parallax-band {
+  top: 0;
+  height: 100%;
+  @supports (animation-timeline: view()) {
+    @media screen and (prefers-reduced-motion: no-preference) {
+      top: -30%;
+      height: 160%;
+      animation: band-parallax linear both;
+      animation-timeline: --parallax-band;
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+@keyframes band-parallax {
+  from {
+    translate: 0 18.75%;
+  }
+  to {
+    translate: 0 -18.75%;
   }
 }
