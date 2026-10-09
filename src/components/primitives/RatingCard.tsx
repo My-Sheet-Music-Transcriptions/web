@@ -1,6 +1,7 @@
 import type { RatingSource } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { Icon, type IconName } from './Icon'
+import { Stars } from './Stars'
 
 const sourceIcon: Record<RatingSource['id'], { icon: IconName; className: string; link: string }> =
   {
@@ -30,12 +31,12 @@ export function RatingCard({ source, compact }: { source: RatingSource; compact?
         {source.label}
       </p>
       {source.score ? (
-        <Icon
-          name="star-rating"
-          title={source.starsLabel}
-          width={compact ? 144 : 181}
-          height={compact ? 29 : 36}
-          className={cn('text-gold', !compact && 'h-8 w-auto md:h-9')}
+        <Stars
+          rating={Number(source.score)}
+          label={source.starsLabel ?? source.score}
+          color="gold"
+          size={compact ? 19 : 24}
+          className={cn('my-[6px]', compact ? 'gap-[10px]' : 'gap-3')}
         />
       ) : (
         <p className="mt-[6px] text-h2 leading-8 font-bold text-ink">{source.count}</p>

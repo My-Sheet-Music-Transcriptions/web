@@ -1,4 +1,5 @@
 import type { PictureSource } from '~/components/primitives/Picture'
+import type { Video } from '~/components/primitives/VideoEmbed'
 
 /**
  * Shapes of the structured data under content/<locale>/data and of the lists and copy pages pass to blocks
@@ -113,7 +114,7 @@ export interface IconLink {
   icon: PictureSource
 }
 
-/** A card of a CardGrid: an icon or picture, a title, a short body and an optional link. */
+/** A card of a CardGrid: an icon, picture or video, a title, a short body and an optional link. */
 export interface CardItem {
   title: string
   /** Light markdown: paragraphs (blank line), **bold**, [links](/path). */
@@ -122,6 +123,10 @@ export interface CardItem {
   icon?: PictureSource
   /** A picture from the page folder (instead of an icon). */
   image?: PictureSource
+  /** Width of the picture in px (plain items; it fills a card's width otherwise). */
+  imageWidth?: number
+  /** A video instead of a picture. */
+  video?: Video
   /** A line in bold under the body. */
   emphasis?: string
   /** Where the card leads: the title links there, and `linkLabel` adds a button. */

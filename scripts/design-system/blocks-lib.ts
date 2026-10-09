@@ -9,7 +9,9 @@ import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
  * props (with their doc comments and allowed values) and `pnpm ds:review` can reject a wrong prop name,
  * a missing required prop or a value outside a union before anything is published. Light parsing on
  * purpose: the block files keep their props as one `export interface <Name>Props { … }` with one
- * member per line, which tests/unit/blocks.test.ts checks for every block.
+ * member per line, which tests/unit/blocks.test.ts checks for every block. An interface may extend
+ * others (`extends ShellProps`, the props BlockShell gives every block): their members are read from
+ * the files the block imports, and a member the block declares itself wins.
  */
 
 const BLOCKS = 'src/components/blocks'
@@ -47,14 +49,60 @@ function members(body: string): PropDoc[] {
   return out
 }
 
-/** `interface X { … }` and `type X = …` declarations of a source file, by name. */
-function declarations(source: string): Record<string, PropDoc[] | string> {
-  const out: Record<string, PropDoc[] | string> = {}
-  for (const m of source.matchAll(/^(?:export )?interface (\w+) \{\n([\s\S]*?)\n\}/gm))
-    out[m[1] as string] = members(m[2] as string)
+/** An interface's members and the interfaces it extends, as read from its source. */
+interface Declared {
+  members: PropDoc[]
+  extends: string[]
+}
+
+/** `interface X [extends A, B] { … }` and `type X = …` declarations of a source file, by name. */
+function declarations(source: string): Record<string, Declared | string> {
+  const out: Record<string, Declared | string> = {}
+  for (const m of source.matchAll(
+    /^(?:export )?interface (\w+)(?: extends ([\w, ]+))? \{\n([\s\S]*?)\n\}/gm,
+  ))
+    out[m[1] as string] = {
+      members: members(m[3] as string),
+      extends: (m[2] ?? '')
+        .split(',')
+        .map((x) => x.trim())
+        .filter(Boolean),
+    }
   for (const m of source.matchAll(/^(?:export )?type (\w+) =([\s\S]*?)(?=\n\S|\n\n)/gm))
     out[m[1] as string] = (m[2] as string).replace(/\s+/g, ' ').replace(/^ \| /, '').trim()
   return out
+}
+
+/** The declarations of a source file and of every `~/…` module it imports, its own last (they win). */
+function declarationsOf(file: string, seen = new Set<string>()): Record<string, Declared | string> {
+  if (seen.has(file)) return {}
+  seen.add(file)
+  const source = fs.readFileSync(file, 'utf8')
+  const imported: Record<string, Declared | string> = {}
+  for (const m of source.matchAll(/import [^\n]*from '(~\/[^']+|\.\/[^']+)'/g)) {
+    const spec = m[1] as string
+    const base = spec.startsWith('~/')
+      ? `src/${spec.slice(2)}`
+      : path.join(path.dirname(file), spec)
+    const f = [`${base}.tsx`, `${base}.ts`].find((x) => fs.existsSync(x))
+    if (f) Object.assign(imported, declarationsOf(f, seen))
+  }
+  return { ...imported, ...declarations(source) }
+}
+
+/** The members of an interface with those of the interfaces it extends (its own win). */
+function flatten(
+  name: string,
+  all: Record<string, Declared | string>,
+): PropDoc[] | string | undefined {
+  const d = all[name]
+  if (d === undefined || typeof d === 'string') return d
+  const inherited = d.extends.flatMap((x) => {
+    const f = flatten(x, all)
+    return Array.isArray(f) ? f : []
+  })
+  const own = new Set(d.members.map((p) => p.name))
+  return [...inherited.filter((p) => !own.has(p.name)), ...d.members]
 }
 
 const cache = new Map<string, BlockProps | undefined>()
@@ -65,23 +113,16 @@ export function blockProps(name: string): BlockProps | undefined {
   const file = path.join(BLOCKS, `${name}.tsx`)
   let result: BlockProps | undefined
   if (fs.existsSync(file)) {
-    const source = fs.readFileSync(file, 'utf8')
-    const local = declarations(source)
-    const props = local[`${name}Props`]
+    const all = declarationsOf(file)
+    const props = flatten(`${name}Props`, all)
     if (Array.isArray(props)) {
-      // named types from `~/…` imports (IconName from primitives/Icon, item shapes from content/types)
-      const imported: Record<string, PropDoc[] | string> = {}
-      for (const m of source.matchAll(/import [^\n]*from '~\/([^']+)'/g)) {
-        const f = [`src/${m[1]}.tsx`, `src/${m[1]}.ts`].find((x) => fs.existsSync(x))
-        if (f) Object.assign(imported, declarations(fs.readFileSync(f, 'utf8')))
-      }
-      const all = { ...imported, ...local }
+      // named types the props use: item shapes from content/types, unions like IconName or Tone
       const types: Record<string, PropDoc[] | string> = {}
       const collect = (type: string) => {
         for (const word of type.match(/\b[A-Z]\w+/g) ?? [])
           if (all[word] !== undefined && types[word] === undefined && word !== `${name}Props`) {
-            types[word] = all[word] as PropDoc[] | string
-            const t = types[word]
+            const t = flatten(word, all) as PropDoc[] | string
+            types[word] = t
             if (Array.isArray(t)) for (const p of t) collect(p.type)
           }
       }

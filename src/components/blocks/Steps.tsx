@@ -141,7 +141,7 @@ export function Steps({
     >
       <div className="container-narrow">
         {title ? (
-          <SectionHeading id={titleId} rule="accent" className="mb-10">
+          <SectionHeading id={titleId} className="mb-10">
             {title}
           </SectionHeading>
         ) : null}

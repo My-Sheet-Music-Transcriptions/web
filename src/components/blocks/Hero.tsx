@@ -2,8 +2,8 @@ import { Logo } from '~/components/layout/Logo'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
+import { Slideshow } from '~/components/primitives/Slideshow'
 import type { BrandLogo, RatingSource } from '~/content/types'
-import { HeroSlideshow } from './HeroSlideshow'
 
 export interface HeroProps {
   /** The headline (h1). */
@@ -54,16 +54,14 @@ export function Hero({
     <section className="relative" aria-labelledby="hero-title">
       {/* Mobile photo band */}
       <div className="relative aspect-[390/261] overflow-hidden lg:hidden">
-        <HeroSlideshow
-          slides={mobileImages ?? images}
+        <Slideshow
+          slides={slideshow ? (mobileImages ?? images) : (mobileImages ?? images).slice(0, 1)}
           sizes="100vw"
-          position="center"
-          rotate={slideshow}
         />
       </div>
       {/* Desktop: the photo slideshow fills the whole section */}
       <div className="absolute inset-0 hidden overflow-hidden lg:block" aria-hidden="true">
-        <HeroSlideshow slides={images} sizes="100vw" position="left" rotate={slideshow} />
+        <Slideshow slides={slideshow ? images : images.slice(0, 1)} sizes="100vw" position="left" />
       </div>
       <div className="relative">
         <div className="mx-auto flex max-w-[1440px] flex-col px-[14px] pt-[132px] pb-[77px] lg:min-h-[765px] lg:justify-center lg:px-[86px] lg:py-10">

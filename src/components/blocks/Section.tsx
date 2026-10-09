@@ -39,7 +39,7 @@ export function Section({
     >
       <div className={widths[width]}>
         {title ? (
-          <SectionHeading id={titleId} rule={rule} className="mb-10">
+          <SectionHeading id={titleId} rule={rule !== 'none'} className="mb-10">
             {title}
           </SectionHeading>
         ) : null}

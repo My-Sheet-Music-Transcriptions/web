@@ -10,7 +10,8 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** Yellow stars are used on platform rating cards (Google, Facebook). */
+/** Gold stars: the platform rating cards (Google, Facebook, Trustpilot). */
+export const Gold: Story = { args: { color: 'gold', size: 24 } }
 export const Yellow: Story = { args: { color: 'yellow', size: 24 } }
 /** Teal stars are used on customer review cards. */
 export const Primary: Story = { args: { color: 'primary', size: 18 } }
