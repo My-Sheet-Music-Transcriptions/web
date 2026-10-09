@@ -62,6 +62,7 @@ const TECHNICAL = new Set([
   'inputMode',
   'role',
   'viewBox',
+  'preserveAspectRatio',
   'd',
   'fill',
   'stroke',
