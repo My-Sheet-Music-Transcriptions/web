@@ -40,7 +40,7 @@ an ease or a distance:
 | `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu). |
 | `tickerGroup`, `tickerDigit` | A figure of a revealed block (`Ticker`) rolling up like an odometer: each digit's column from 0 to it over 1.8 s, 0.12 s after the one before. |
 | `starsGroup`, `starPop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. |
-| `entrance-left`, `entrance-right`, `entrance-behind`, `parallax` (theme.css) | The PageHeader: copy and pictures fading in 40px from either side over 1.4 s as the page opens, the homepage's photos sliding in behind their curve and lagging behind it on scroll (see 4). |
+| `entrance-*`, `parallax` (theme.css) | The PageHeader: each piece fading in 40px from the side its variant calls for over 1.4 s as the page opens, the band's rule drawing itself, the homepage's photos sliding in behind their curve and lagging behind it on scroll (see 4). |
 
 A new preset stays subtle:
 - 0.15–0.3 s for controls and 0.6–0.7 s for scroll reveals;
@@ -62,16 +62,22 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
 - **The PageHeader** never takes `reveal`: it holds the page's largest paint, and a Motion reveal would
   prerender it hidden until the JavaScript and the features chunk have loaded (seconds on a slow phone, and
   the LCP with them). It comes in with CSS instead (theme.css), calmly and all at once, from the first paint,
-  over 1.4 s: `entrance-left` fades the copy in drifting 40px from the left, `entrance-right` the pictures and
-  the rating card from the right, and on the homepage the curve stays put while the photos slide in behind it
-  (`entrance-behind`) and then lag behind it as the page scrolls (`parallax`: a scroll-driven animation, 85% of
-  the page's speed over the first screen, compositor-run, nothing where browsers lack scroll timelines). The
-  photos centre under their curve.
+  over 1.4 s, each piece from the side its variant calls for: `entrance-left` / `entrance-right` fade a piece in
+  drifting 40px from that side (a split header's copy and picture, the homepage's copy), `entrance-up` from
+  below (a band's centred copy, the rating cards), `entrance-settle` landing from slightly larger (the icon
+  under a band), `entrance-behind` slides the homepage photos in behind their curve, which stays put, and then
+  they lag behind it as the page scrolls (`parallax`: a scroll-driven animation, 85% of the page's speed over
+  the first screen, compositor-run, nothing where browsers lack scroll timelines). `entrance-late` holds a
+  piece back 0.35 s for what follows the copy; `entrance-rule` draws the band's orange rule out from its
+  centre once the copy has settled. The photos centre under their curve.
   - **Fades start at 1%, never 0:** Chrome never counts an element first painted at opacity 0 as the LCP, not
     even once it shows, so a fade from 0 hands the LCP to whatever paints next (the consent banner, after
     hydration: piano at 4x CPU, 330 to 1090 ms). From 1% it is invisible to the eye and counted from the
-    first paint. Measured on every English page: the LCP element and time are the same with and without the
-    entrance.
+    first paint.
+  - **A picture never starts smaller:** Chrome records an image's LCP size as first painted, so an icon
+    growing from `scale(0.9)` (81% of its area) lost the LCP to the consent banner's paragraph the same way.
+    Landing from `scale(1.08)` keeps it the largest paint.
+  - Measured on every English page: the LCP element and time are the same with and without the entrance.
   - It runs on screen only for visitors who did not ask for reduced motion, and it replays as each page
     mounts. A story that shows it waits in `play: ({ canvasElement }) => entered(canvasElement)`
     (src/stories/play.ts) before axe runs; `entered` skips the animations the scroll drives.

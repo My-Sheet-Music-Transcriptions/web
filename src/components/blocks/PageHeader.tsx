@@ -52,10 +52,12 @@ const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
  * highlight and the floating rating card. It drifts in as the page opens.
  */
 export function PageHeader(props: PageHeaderProps) {
-  // As the page opens the copy fades in from the left and the pictures and rating card from the right; the
-  // homepage photos slide in behind their curve and lag behind it on scroll. CSS (`entrance-left`,
-  // `entrance-right`, `entrance-behind`, `parallax` in theme.css), never `reveal`, which would hide the header,
-  // the page's largest paint, until the JavaScript loads.
+  // As the page opens each piece comes in from the side its variant calls for: the band's centred copy rises
+  // and its rule draws itself, then the icon settles and the rating card rises under it; a split header's copy
+  // comes from the left and its picture from the right; the homepage's copy from the left, its photos sliding
+  // in behind their curve (then lagging behind it on scroll) and its floating card rising last. CSS
+  // (`entrance-*` and `parallax` in theme.css), never `reveal`, which would hide the header, the page's largest
+  // paint, until the JavaScript loads.
   const { variant = 'band' } = props
   if (variant === 'photo') return <PhotoHeader {...props} />
   if (variant === 'split') return <SplitHeader {...props} />
@@ -76,7 +78,7 @@ function BandHeader({
   return (
     <header id={id} className="overflow-x-clip">
       <div className="bg-[#434343] px-4 pt-16 pb-20 text-center text-white">
-        <div className="entrance-left">
+        <div className="entrance-up">
           {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
           <h1 className="mx-auto max-w-4xl text-[32px] font-bold leading-tight text-white md:text-display">
             {title}
@@ -84,7 +86,10 @@ function BandHeader({
           {subtitle ? (
             <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-relaxed">{subtitle}</p>
           ) : null}
-          <span aria-hidden="true" className="mx-auto mt-6 block h-px w-[150px] bg-accent" />
+          <span
+            aria-hidden="true"
+            className="entrance-rule mx-auto mt-6 block h-px w-[150px] bg-accent"
+          />
           {lead ? (
             <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed [&_a]:text-accent-light">
               {inlineMarkdown(lead)}
@@ -94,11 +99,17 @@ function BandHeader({
         </div>
       </div>
       {rating || image ? (
-        <div className="entrance-right container-content flex flex-wrap items-center justify-center gap-10 py-10">
+        <div className="container-content flex flex-wrap items-center justify-center gap-10 py-10">
           {image ? (
-            <Picture image={image} alt={alt} sizes="180px" className="h-[180px] w-auto" />
+            <Picture
+              image={image}
+              alt={alt}
+              sizes="180px"
+              className="h-[180px] w-auto"
+              pictureClassName="entrance-settle entrance-late"
+            />
           ) : null}
-          {rating ? <CompactRating source={rating} /> : null}
+          {rating ? <CompactRating source={rating} className="entrance-up entrance-late" /> : null}
         </div>
       ) : null}
     </header>
@@ -221,7 +232,7 @@ function PhotoHeader({
         {rating ? (
           <CompactRating
             source={rating}
-            className="entrance-right absolute right-[120px] bottom-[25px] z-20 hidden lg:block"
+            className="entrance-up entrance-late absolute right-[120px] bottom-[25px] z-20 hidden lg:block"
           />
         ) : null}
       </div>
