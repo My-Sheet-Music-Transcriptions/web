@@ -1,6 +1,7 @@
 import { BlockShell, type HeadingProps } from '~/components/primitives/BlockShell'
 import { Card } from '~/components/primitives/Card'
 import type { Cta } from '~/components/primitives/CtaLink'
+import { RevealItem } from '~/components/primitives/Motion'
 import { Stars } from '~/components/primitives/Stars'
 import type { Review, ReviewLabels } from '~/content/types'
 import { fill } from '~/lib/strings'
@@ -22,12 +23,13 @@ export function Testimonials({ items, labels, ...shell }: TestimonialsProps) {
     <BlockShell
       {...shell}
       className="relative isolate overflow-hidden bg-staff-lines bg-cover bg-left-top"
+      cascade
     >
       <ul className="grid items-start gap-[33px] md:grid-cols-2 md:gap-x-9 md:gap-y-[33px]">
         {items.map((r) => (
-          <li key={r.name + r.quote.slice(0, 24)}>
+          <RevealItem as="li" key={r.name + r.quote.slice(0, 24)}>
             <ReviewCard review={r} labels={labels} />
-          </li>
+          </RevealItem>
         ))}
       </ul>
     </BlockShell>

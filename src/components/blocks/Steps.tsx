@@ -1,6 +1,7 @@
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { FeatureItem } from '~/components/primitives/FeatureItem'
 import { Icon, type IconName } from '~/components/primitives/Icon'
+import { RevealItem } from '~/components/primitives/Motion'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import type { CardItem, MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
@@ -44,14 +45,11 @@ export function Steps({
 }: StepsProps) {
   if (variant === 'columns')
     return (
-      <BlockShell {...shell}>
+      <BlockShell {...shell} cascade>
         {illustration ? (
-          <Picture
-            image={illustration}
-            alt={illustrationAlt}
-            sizes="974px"
-            className="mx-auto mb-10 hidden w-[974px] max-w-full lg:block"
-          />
+          <RevealItem className="mx-auto mb-10 hidden w-[974px] max-w-full lg:block">
+            <Picture image={illustration} alt={illustrationAlt} sizes="974px" className="w-full" />
+          </RevealItem>
         ) : null}
         <ol
           className={cn(
@@ -62,7 +60,7 @@ export function Steps({
           )}
         >
           {items.map((step) => (
-            <li key={step.title ?? step.body}>
+            <RevealItem as="li" key={step.title ?? step.body}>
               <FeatureItem
                 item={step}
                 surface="plain"
@@ -70,13 +68,13 @@ export function Steps({
                 videoPoster={videoPoster}
                 imageClassName={illustration ? 'lg:hidden' : undefined}
               />
-            </li>
+            </RevealItem>
           ))}
         </ol>
       </BlockShell>
     )
   return (
-    <BlockShell {...shell} width="narrow">
+    <BlockShell {...shell} width="narrow" cascade>
       <div className="relative">
         <span
           aria-hidden="true"
@@ -84,7 +82,7 @@ export function Steps({
         />
         <ol className="relative m-0 flex list-none flex-col gap-7 p-0">
           {items.map((step, i) => (
-            <li key={step.title ?? step.body} className="flex items-start gap-6">
+            <RevealItem as="li" key={step.title ?? step.body} className="flex items-start gap-6">
               <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-pill bg-primary text-[20px] font-bold text-white">
                 {step.glyph ? <Icon name={step.glyph} size={24} /> : i + 1}
               </span>
@@ -109,7 +107,7 @@ export function Steps({
                   </>
                 )}
               </div>
-            </li>
+            </RevealItem>
           ))}
         </ol>
       </div>
