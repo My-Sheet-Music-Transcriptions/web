@@ -76,7 +76,3 @@ export function TextLink({ className, ...p }: SmartLinkProps) {
 export function Divider({ className, ...p }: ComponentPropsWithoutRef<'hr'>) {
   return <hr {...p} className={cn('border-line', className)} />
 }
-
-/** Every typography component by name (what the mockup tooling accepts inside prose). */
-export const typography = { Text, Heading, List, ListItem, Quote, TextLink, Divider }
-export type TypographyName = keyof typeof typography

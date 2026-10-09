@@ -66,10 +66,6 @@ export function resolveEntry(locale: Locale, path: string): Entry | undefined {
   return byPath.get(`${locale}:${clean}`)
 }
 
-export function listEntries<C extends Collection>(locale: Locale, collection: C): Entry[] {
-  return entries.filter((e) => e.locale === locale && e.collection === collection)
-}
-
 const bodyCache = new Map<string, BodyComponent>()
 const lazyCache = new Map<string, BodyComponent>()
 

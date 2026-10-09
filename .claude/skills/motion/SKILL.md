@@ -97,7 +97,7 @@ gzipped) and give the difference in the PR.
 ## 7. Checks
 
 ```sh
-pnpm check                         # types (variants are typed), the components rule, unit
+pnpm check                         # types (variants are typed), knip (no unused variants), the components rule, unit
 pnpm test:storybook                # axe; a revealed story waits in `play: ({ canvasElement }) => revealed(canvasElement)` (src/stories/play.ts)
 SITE_LOCALE=en pnpm build && pnpm ds:shot home --built   # pictures in the final state (reduced motion)
 pnpm test:e2e                      # the menus open, close and keep focus, desktop and phone

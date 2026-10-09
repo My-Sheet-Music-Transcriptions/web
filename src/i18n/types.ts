@@ -9,12 +9,6 @@ export interface NavItem {
   groups?: { title: string; href?: string; links: { label: string; href: string }[] }[]
 }
 
-export interface FooterColumnLink {
-  label: string
-  href: string
-  icon?: string
-}
-
 /**
  * The words of the site chrome (top bar, header, menus, footer, consent banner, error and 404 pages), per
  * locale. Only the app (src/app) reads them and passes them to the layout components as props; pages pass

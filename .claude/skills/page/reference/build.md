@@ -57,8 +57,8 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
    runs it rewrites `src/routeTree.gen.ts` with its own variant right after the checks regenerate it, which
    shows up as false type errors.
 6. **All checks green before pushing:** a page that changes only `content/` (and `mockups/`) runs
-   `pnpm check:pr`, exactly what PR CI runs (lint, types, unit, the English build, SEO suite: about a minute
-   and a half); anything outside them (a proposed block, a layout change) runs `pnpm release-check`
+   `pnpm check:pr`, exactly what PR CI runs (lint, types, dead code, unit, the English build, SEO suite: about
+   a minute and a half); anything outside them (a proposed block, a layout change) runs `pnpm release-check`
    (adds Storybook axe), plus `pnpm test:e2e` when layout changed. After the build, `pnpm ds:shot <slug>
    --built` is the last look at the prerendered page itself. Fix failures, never lower a threshold (the
    `release-check` skill reads the failures). A page that cannot pass is not pushed: go back to the person
