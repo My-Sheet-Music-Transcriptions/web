@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import {
   blockIndex,
@@ -92,5 +93,61 @@ describe('block index', () => {
     expect(index).toMatch(/- PageHeader: (.*\n){3} {2}used on: .*\bhome\b/)
     const unused = blockIndex({ ...usage, Section: [] })
     expect(unused).toMatch(/- Section: .*\n(.*\n){2} {2}not used on any page yet/)
+  })
+})
+
+/**
+ * The rules of the `component` skill (.claude/skills/component/SKILL.md) a test can see: every block is a
+ * BlockShell around its own content, and block props speak one vocabulary.
+ */
+describe('blocks stay on one shell and one vocabulary', () => {
+  const source = (name: string) => fs.readFileSync(`src/components/blocks/${name}.tsx`, 'utf8')
+
+  it.each(names.filter((n) => n !== 'PageHeader'))(
+    '%s renders BlockShell and builds no shell by hand',
+    (name) => {
+      const s = source(name)
+      expect(s).toMatch(/<BlockShell\b/)
+      expect(s, 'a hand-made section').not.toMatch(/<section\b/)
+      expect(s, 'a hand-made heading').not.toMatch(/SectionHeading|useTitleId|<h2\b/)
+      expect(s, 'a hand-made container').not.toMatch(
+        /container-(?:content|narrow|wide)|max-w-\[1140px\]/,
+      )
+      expect(s, 'a hand-made tone').not.toMatch(/from '~\/components\/primitives\/tones'/)
+    },
+  )
+
+  /** Words that once meant what the vocabulary now says one way (CLAUDE.md, the component skill). */
+  const retired = [
+    'surface',
+    'background',
+    'imagesLayout',
+    'preset',
+    'strong',
+    'strongMobile',
+    'showNames',
+    'slideshow',
+    'text',
+  ]
+  /** Words only one block may use, for what only it shows. */
+  const own: Record<string, string[]> = {
+    subtitle: ['PageHeader'],
+    shape: ['PictureGrid'],
+    layout: ['MediaText'],
+  }
+
+  it.each(names)('%s props and item fields use the shared words', (name) => {
+    const block = blockProps(name)
+    const fields = [
+      ...(block?.props ?? []),
+      ...Object.values(block?.types ?? {}).flatMap((t) => (Array.isArray(t) ? t : [])),
+    ]
+    for (const f of fields)
+      expect(retired, `${name}: "${f.name}" is a retired synonym`).not.toContain(f.name)
+    for (const p of block?.props ?? []) {
+      const only = own[p.name]
+      if (only) expect(only, `${name}.${p.name}`).toContain(name)
+      if (p.name === 'tone') expect(p.type, `${name}.tone`).toBe('Tone')
+    }
   })
 })

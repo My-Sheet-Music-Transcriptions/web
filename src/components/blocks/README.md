@@ -34,10 +34,31 @@ from their folder and `content/<locale>/data` (`labels.ts` for the words around 
 (a slot or `children` instead of a growing list of props). `tests/unit/components.test.ts` enforces this; Storybook
 shows blocks with its own data (`src/stories`), never the site's.
 
-Adding a block: first look for a block that already does it, and prefer a prop on it (a `variant`, a `layout`,
-an optional field) over a near-duplicate. A new block is a component in its own file with its props typed and
-documented in one `export interface <Name>Props` (one member per line, item shapes in `src/content/types.ts` or
-beside it), a `catalogue.ts` entry (category, one line on when to pick it and when not, a documented example, which
-regenerates this table and feeds `pnpm ds:blocks`), a story titled `Blocks/<Category>/<Name>` built from that example
-(`storyArgs`) plus a story per variant, and the export in `index.tsx`. Shared pieces (a photo band, a carousel, a
-button, a video) are primitives in `src/components/primitives`, not copies.
+## Rules of a component
+
+Before adding or changing a block, follow the `component` skill (`.claude/skills/component/SKILL.md`). In short:
+
+- **Climb the ladder, stop at the first rung that works.** A prop or `variant` on an existing block, then a new
+  shape of a shared item (`CardItem`, `PictureItem`, a `FeatureItem` surface, a `Media` layout), then a new
+  primitive, and only then a new block.
+- **Every block is a `BlockShell` around its own content** (`PageHeader` is the one exception). The shell is the
+  labelled section, tone, container, eyebrow, heading with its rule, lead, closing `cta` and `links`, and the photo
+  band when given an `image`. Blocks pick presets (`spacing`, `width`, `align`, `rule`), never pixels, and extend
+  `ShellProps` instead of repeating it.
+- **One vocabulary:**
+  - `title`, `eyebrow`, `lead`, `tone`, `variant` (the form), `layout` (several pictures), `columns` (desktop),
+    `cta`, `links`, `labels`, `label`, `id`;
+  - `items` with the fields `title`, `body`, `image`, `icon`, `glyph`, `name`, `alt`, `caption`, `href`, `linkLabel`.
+- **Shared pieces are primitives, never copies:** `Media`, `FeatureItem`, `Card`, `Stars`, `CtaLink`, `gridCols`,
+  `tones`.
+- **No words and no pictures in a component:** a page passes them.
+
+A new block ships with:
+
+- its file, with `export interface <Name>Props extends ShellProps` (one member per line, each documented);
+- a `catalogue.ts` entry, which regenerates this table and feeds `pnpm ds:blocks`;
+- a story titled `Blocks/<Category>/<Name>` built from that entry's example (`storyArgs`), plus one per variant;
+- its export in `index.tsx`.
+
+`tests/unit/blocks.test.ts` checks the shell and the vocabulary; `tests/unit/components.test.ts` checks the
+content rule.
