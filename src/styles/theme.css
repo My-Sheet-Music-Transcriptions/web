@@ -34,7 +34,7 @@
   --color-azure: #2786d8;
   --color-pine: #1f9b90;
   --color-yellow: #ffb703; /* rating stars */
-  --color-gold: #ffd800; /* the five-star graphic of the rating cards (RatingCard) */
+  --color-gold: #ffd800; /* the stars of the rating cards (Stars color="gold" in RatingCard) */
   --color-peach: #fdebdc; /* audience cards, contact section */
   --color-peach-deep: #fbe0cb;
   --color-cream: #f7eee7; /* pricing tier card body */

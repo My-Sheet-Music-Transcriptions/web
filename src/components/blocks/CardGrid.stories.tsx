@@ -18,8 +18,8 @@ export const Default: Story = {}
 export const Tiles: Story = {
   args: {
     title: 'Who do we work for?',
-    background: 'none',
-    surface: 'tile',
+    image: undefined,
+    variant: 'tile',
     columns: 4,
     items: withSamples<CardItem[]>(audiences),
   },
@@ -27,7 +27,7 @@ export const Tiles: Story = {
 export const CardsWithLinks: Story = {
   args: {
     title: 'Why do it?',
-    background: 'none',
+    image: undefined,
     columns: 2,
     tone: 'cream',
     items: [
@@ -49,7 +49,7 @@ export const CardsWithLinks: Story = {
 export const PricesInTabs: Story = {
   args: {
     title: 'Services & Pricing',
-    background: 'none',
+    image: undefined,
     columns: 2,
     items: undefined,
     tabs: [

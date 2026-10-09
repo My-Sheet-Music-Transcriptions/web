@@ -1,4 +1,5 @@
 import type { PictureSource } from '~/components/primitives/Picture'
+import type { Video } from '~/components/primitives/VideoEmbed'
 
 /**
  * Shapes of the structured data under content/<locale>/data and of the lists and copy pages pass to blocks
@@ -105,23 +106,37 @@ export interface PricingTier {
   factors: string[]
 }
 
-/** A link with an icon: a service, an instrument, a category. */
-export interface IconLink {
-  label: string
-  href: string
-  /** An illustrated icon from src/assets/images/icons. */
-  icon: PictureSource
+/**
+ * A picture with the line under it: a service's icon, a partner's logo, a musician's portrait, a photo. The
+ * name is what visitors read under the picture; `alt` is for a picture without one (a logo, a photo).
+ */
+export interface PictureItem {
+  /** The icon, logo, portrait or photo: from the page folder or src/assets/images. */
+  image: PictureSource
+  /** The line under the picture ("Piano Transcriptions", "Lindsey Stirling"). */
+  name?: string
+  /** Alt text: what the picture shows when no name says it ("Salisbury University"). */
+  alt?: string
+  /** A second, smaller line under the name ("Sibelius notation software"). */
+  caption?: string
+  /** Where the item leads (its page, their store). */
+  href?: string
 }
 
-/** A card of a CardGrid: an icon or picture, a title, a short body and an optional link. */
+/** A card of a CardGrid or a step of Steps: an icon, picture or video, a title, a short body and a link. */
 export interface CardItem {
-  title: string
+  /** The card's heading; a step that is only a video may go without. */
+  title?: string
   /** Light markdown: paragraphs (blank line), **bold**, [links](/path). */
   body: string
   /** An illustrated icon from src/assets/images/icons. */
   icon?: PictureSource
   /** A picture from the page folder (instead of an icon). */
   image?: PictureSource
+  /** Width of the picture in px (plain items; it fills a card's width otherwise). */
+  imageWidth?: number
+  /** A video instead of a picture. */
+  video?: Video
   /** A line in bold under the body. */
   emphasis?: string
   /** Where the card leads: the title links there, and `linkLabel` adds a button. */
@@ -192,7 +207,7 @@ export interface FieldCopy {
  */
 export interface ContactFormCopy {
   title: string
-  subtitle: string
+  lead: string
   responseTime: string
   /** Accessible name of the form. */
   label: string

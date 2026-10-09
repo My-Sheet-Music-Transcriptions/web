@@ -1,19 +1,18 @@
 import { quoteForm } from '@content/en/data/forms'
-import { audiences, pricingTiers, serviceGrid } from '@content/en/data/home'
+import { audiences, pricingTiers } from '@content/en/data/home'
 import { mediaLabels, reviewLabels } from '@content/en/data/labels'
 import { counter, google, homeRatings } from '@content/en/data/ratings'
 import { homeReviews } from '@content/en/data/reviews'
-import { included } from '@content/en/data/services'
+import { allServices, included } from '@content/en/data/services'
 import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
 import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
 import logo from '~/assets/images/brand/logo.svg'
 import {
   CardGrid,
   ContactSection,
-  Gallery,
-  Hero,
-  IconGrid,
   MediaText,
+  PageHeader,
+  PictureGrid,
   PricingCards,
   RatingBanner,
   Steps,
@@ -56,20 +55,27 @@ import stripPiano10 from './strip-piano-10.jpg?w=250;500&as=picture'
 export default function HomePage() {
   return (
     <>
-      <Hero
+      <PageHeader
+        variant="photo"
         title="Your #1 sheet music transcription service online"
         highlight="#1"
         lead="Get accurate and high-quality sheet music to learn a song, perform, register a composition, educate, or for any music tech application."
-        strong="Reliable digital notation services by professional transcribers and music editors."
-        strongMobile="Reliable, manual digital notation services by professional transcribers and music editors."
+        subtitle="Reliable digital notation services by professional transcribers and music editors."
         cta={{ label: 'Learn more', href: '#how-it-works' }}
-        images={[heroSlide1, heroSlide6, heroSlide2, heroSlide4, heroSlide3, heroSlide5]}
+        images={[
+          { image: heroSlide1, alt: '' },
+          { image: heroSlide6, alt: '' },
+          { image: heroSlide2, alt: '' },
+          { image: heroSlide4, alt: '' },
+          { image: heroSlide3, alt: '' },
+          { image: heroSlide5, alt: '' },
+        ]}
         mobileImages={[
-          heroSlideMobile1,
-          heroSlideMobile2,
-          heroSlideMobile3,
-          heroSlideMobile4,
-          heroSlideMobile5,
+          { image: heroSlideMobile1, alt: '' },
+          { image: heroSlideMobile2, alt: '' },
+          { image: heroSlideMobile3, alt: '' },
+          { image: heroSlideMobile4, alt: '' },
+          { image: heroSlideMobile5, alt: '' },
         ]}
         rating={google}
         logo={{
@@ -82,25 +88,25 @@ export default function HomePage() {
       <Steps
         id="how-it-works"
         title="How does it work?"
-        layout="columns"
+        variant="columns"
         illustration={howItWorks}
         illustrationAlt="Three steps: send us the audio, we transcribe it, print and play the PDF"
         items={[
           {
             title: '1. Send us audio',
-            text: 'We will promptly send you a quote and an estimated delivery time',
+            body: 'We will promptly send you a quote and an estimated delivery time',
             image: step1,
             imageWidth: 177,
           },
           {
             title: '2. We transcribe it for you',
-            text: 'Our team of transcribers will prepare the sheet music as per your requirements',
+            body: 'Our team of transcribers will prepare the sheet music as per your requirements',
             image: step2,
             imageWidth: 188,
           },
           {
             title: '3. Print & Play',
-            text: 'You will be able to use and play your sheet music in PDF and other formats',
+            body: 'You will be able to use and play your sheet music in PDF and other formats',
             image: step3,
             imageWidth: 112,
           },
@@ -114,15 +120,16 @@ export default function HomePage() {
         sources={homeRatings}
       />
 
-      <CardGrid title="Who do we work for?" surface="tile" columns={4} items={audiences} />
+      <CardGrid title="Who do we work for?" variant="tile" columns={4} items={audiences} />
 
-      <IconGrid
+      <PictureGrid
         title="We transcribe any instrument and musical genre"
-        items={serviceGrid}
+        items={allServices}
+        limit={12}
         cta={{ label: 'See all services', href: '/services-samples' }}
       />
 
-      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
+      <CardGrid title="What's included?" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing"
@@ -153,9 +160,11 @@ export default function HomePage() {
         </Text>
       </PricingCards>
 
-      <Gallery
+      <PictureGrid
+        shape="photo"
+        variant="marquee"
         label="Examples of our sheet music"
-        images={[
+        items={[
           { image: stripGuitar3, alt: 'Guitar tab sheet music next to an acoustic guitar' },
           { image: stripPiano10, alt: 'Vocal and piano score on a digital piano' },
           { image: stripPiano5, alt: 'Open piano score on a keyboard' },

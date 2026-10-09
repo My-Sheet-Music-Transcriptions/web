@@ -4,9 +4,9 @@ import { google } from '@content/en/data/ratings'
 import { educatorReviews } from '@content/en/data/reviews'
 import {
   ContactSection,
-  LogoGrid,
   MediaText,
   PageHeader,
+  PictureGrid,
   Section,
   Testimonials,
 } from '~/components/blocks'
@@ -42,17 +42,18 @@ export default function MusicEducatorsPage() {
         ]}
       />
 
-      <LogoGrid
+      <PictureGrid
+        shape="logo"
         id="down"
         title="Trusted by teachers and admins of world-leading music education institutions"
         lead="No more copying to transpose, arrange or adapt your repertoire. With our custom services, focus all your efforts in your students."
         columns={5}
         items={[
-          { name: 'Salisbury University', image: salisbury },
-          { name: 'Texas State University', image: texasState },
-          { name: 'UCSC', image: ucsc },
-          { name: 'Parkview High School Orchestra', image: parkview },
-          { name: 'Hamilton College', image: hamilton },
+          { alt: 'Salisbury University', image: salisbury },
+          { alt: 'Texas State University', image: texasState },
+          { alt: 'UCSC', image: ucsc },
+          { alt: 'Parkview High School Orchestra', image: parkview },
+          { alt: 'Hamilton College', image: hamilton },
         ]}
       />
 
@@ -76,7 +77,7 @@ export default function MusicEducatorsPage() {
         id="high-school"
         eyebrow="High School"
         title="Arrangement for the String Orchestra at Parkview HS, Lilburn GA"
-        imagesLayout="pair"
+        layout="pair"
         images={[
           {
             image: parkviewBefore,
@@ -137,7 +138,7 @@ export default function MusicEducatorsPage() {
         id="universities"
         eyebrow="Universities"
         title="Digitization for the Jazz Studies program at UCSC"
-        imagesLayout="pair"
+        layout="pair"
         images={[
           {
             image: ucscBefore,
@@ -170,7 +171,7 @@ export default function MusicEducatorsPage() {
       <ContactSection
         form={quoteForm}
         title="Contact Us"
-        subtitle="Request our services and unlock the potential of your students by leaving all notation hassle behind. Not sure what you’re looking for? Let us know and our experts will guide you step by step."
+        lead="Request our services and unlock the potential of your students by leaving all notation hassle behind. Not sure what you’re looking for? Let us know and our experts will guide you step by step."
         returnTo="/music-educators"
       />
     </>

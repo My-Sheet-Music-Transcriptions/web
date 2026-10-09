@@ -46,12 +46,14 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/assets/images` – brand-wide pictures (lockup, illustrated icons, photo bands, flags, software logos), imported
   by pages, data files and `src/app`; never by a component.
 - `src/content/{index,schema,types}.ts` – the content loader (globs `content/`), the meta schemas and data types.
-- `src/components/primitives` – Button, Card, Picture, Stars, Icon, SectionHeading, WaveDivider...
+- `src/components/primitives` – `BlockShell` (the frame of every block), `Media`, `FeatureItem`, `Card`, Button, Picture,
+  Stars, Icon, SectionHeading, WaveDivider...
 - `src/components/blocks` – the page-building catalogue, named by what each block does (`PageHeader`, `CardGrid`,
   `FaqList`…) and filed by category, what each shows (headers, text & media, lists & grids, reviews & ratings, calls to
   action), in `catalogue.ts`, the README and Storybook (`Blocks/<Category>/<Name>`). `index.tsx` exports every block by name (pages import them from
   `~/components/blocks`) and the `blocks` map (the preview bundle). Each block has a story next to it, built from
-  its catalogue example. Shared pieces (photo band, carousel, video, button, tones) are primitives.
+  its catalogue example. Every block but `PageHeader` is a `BlockShell` around its own content, and shared pieces
+  (media, feature items, cards, buttons, tones) are primitives: the `component` skill says how to add or change one.
 - `src/components/typography` – `Text`, `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider`: the prose
   inside pages and blocks, styled with Tailwind once. Plain `<strong>` / `<em>` are the exceptions, styled in the
   base layer of `theme.css`. Pages never write raw `<p>`, `<h2>`, `<ul>`, `<a>` (`tests/unit/content.test.ts`).
@@ -60,7 +62,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/app` – the app's side: `SiteShell` (reads the locale's site config, `content/<locale>/data/{nav,footer}.ts` and
   the brand files and passes them to the layout; the design-system bundle mounts the same pieces), `EntryPage` (wraps
   an entry's page component in `<main>`), `NotFound`, `ErrorPage`. There are no templates: a page is blocks only and
-  opens with its own `PageHeader` (`Hero` on the homepage); `meta.ts` holds SEO data only.
+  opens with its own `PageHeader` (`variant="photo"` on the homepage); `meta.ts` holds SEO data only.
 - `src/stories` – Storybook's own data and pictures (`data.ts`, `images/`, `samples.ts` resolving `'sample:photo'`…):
   they mimic the app's content but stay separate. Stories, the catalogue examples and the design-system previews
   use them; no story imports `content/` or `src/assets`.
@@ -83,7 +85,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `tests/unit`, `tests/seo` (runs over `dist/client`), `tests/e2e`, `tests/visual` (+ `reference/` captures of the live site).
 - `.claude/skills` – `page` (the whole page workflow; `reference/*.md` hold the recipes per step), the content-manager
   commands `new-page`, `edit-page`, `translate`, `design`, `publish`, `status`, `site-help` (thin entry points into
-  `page`), the engineering skills `publish-design-system` and `release-check`, and hidden stubs for later phases.
+  `page`), the engineering skills `component` (adding or changing a block or primitive without duplicating one),
+  `publish-design-system` and `release-check`, and hidden stubs for later phases.
 - `docs/content-managers.{md,es.md,ca.md}` – the plain-language guide for content managers and writers (EN/ES/CA);
   `tests/unit/skills.test.ts` keeps the commands, the guides and the skill's reference files in sync.
 - `docs/migration/PLAN.md` – the WordPress → repo migration plan (waves, decisions, cutover runbook), with the URL
@@ -210,6 +213,10 @@ components or layout.
 - TypeScript strict, Biome style (single quotes, no semicolons). Components are function components with typed props.
 - Internal links use the router `<Link>` (preloaded on hover); external ones a plain `<a rel="noopener">`.
 - Images go through `<Picture>` (vite-imagetools `?w=...` import) so they ship as AVIF/WebP with dimensions.
-- Prefer editing an existing block over adding a near-duplicate. New block = component + story + README section
-  in `src/components/blocks/README.md` + export from `blocks/index.tsx`.
+- **One shell, one vocabulary.** Before touching `src/components`, follow the `component` skill: a prop or `variant` on
+  an existing block beats a new shape of a shared item, which beats a new primitive, which beats a new block. Every
+  block renders `BlockShell` (section, tone, container, heading with its rule, lead, closing `cta`/`links`, photo
+  band) and picks presets, never pixels. Props say one thing one way: `title`, `eyebrow`, `lead`, `tone`, `variant`,
+  `columns` (desktop), `items` (fields `title`, `body`, `image`, `name`, `alt`, `caption`, `href`), `cta`, `links`,
+  `labels`, `id`. `tests/unit/blocks.test.ts` refuses a hand-made shell and the retired synonyms.
 - Do not commit generated files: `routeTree.gen.ts`, `hreflang.generated.json`, `public/og`, `public/robots.txt`.

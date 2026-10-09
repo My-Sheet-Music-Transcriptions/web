@@ -3,10 +3,9 @@ import { google } from '@content/en/data/ratings'
 import {
   CardGrid,
   ContactSection,
-  CtaBand,
-  LogoGrid,
   MediaText,
   PageHeader,
+  PictureGrid,
   PricingCards,
   Section,
   Stats,
@@ -52,7 +51,11 @@ export default function ArtistsPage() {
         alt="Songwriting rehearsal"
       />
 
-      <CtaBand
+      <Section
+        align="center"
+        rule={false}
+        width="narrow"
+        tone="cream"
         id="down"
         eyebrow="For artists"
         title="Music Notation Services"
@@ -78,7 +81,7 @@ export default function ArtistsPage() {
         ]}
       />
 
-      <Section title="Boost your music career through music notation" rule="none">
+      <Section title="Boost your music career through music notation" rule={false}>
         <Text className="text-center">
           How? Pick one of the options, or maybe <strong>all three</strong>
         </Text>
@@ -185,12 +188,11 @@ export default function ArtistsPage() {
         </Text>
       </PricingCards>
 
-      <LogoGrid
+      <PictureGrid
         id="musicians"
         title="Musicians who trust us"
         lead="Influencers, performers, and songwriters with thousands of fans endorse our services and trust us with their notation needs. **Meet the talent in our artist roster.**"
         shape="portrait"
-        showNames
         columns={5}
         items={[
           { name: 'George Collier', image: george, href: '/george-collier' },
@@ -209,12 +211,11 @@ export default function ArtistsPage() {
         ]}
       />
 
-      <LogoGrid
+      <PictureGrid
         id="artists"
         title="Artists monetizing their music with our services"
         lead="They generate **thousands** in monthly revenue just through sheet music"
         shape="portrait"
-        showNames
         columns={6}
         tone="cream"
         items={[
@@ -273,16 +274,19 @@ export default function ArtistsPage() {
         </Text>
       </MediaText>
 
-      <CtaBand
-        tone="peach"
-        title="It's your turn now."
-        text="**Did you know thousands of fans request us sheet music to play their favorite band’s songs every month?!**"
-      />
+      <Section align="center" rule={false} width="narrow" tone="peach" title="It's your turn now.">
+        <Text>
+          <strong>
+            Did you know thousands of fans request us sheet music to play their favorite band’s
+            songs every month?!
+          </strong>
+        </Text>
+      </Section>
 
       <ContactSection
         form={quoteForm}
         title="Contact Us"
-        subtitle="Let’s explore ways to unlock new revenue, get fans engaged, optimize rehearsal time, facilitate gig subbing, and give new life to your compositions."
+        lead="Let’s explore ways to unlock new revenue, get fans engaged, optimize rehearsal time, facilitate gig subbing, and give new life to your compositions."
         returnTo="/artists"
       />
     </>
