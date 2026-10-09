@@ -341,7 +341,7 @@ editing) while the mapping rules settle, then the rest in one.
 `/guitar-tab`, `/trumpet-transcription-service`, `/violin-transcription-service`, on the service page pattern that the
 importer fills. The es/fr/de/ja twins of `/piano` and `/guitar-tab` follow in their locale waves.
 
-*Ported 2026-10-09 (English only, no twins):* `/cello-transcription-service`, `/clarinet-transcription-service`,
+*Ported 2026-10-09 ([#58](https://github.com/My-Sheet-Music-Transcriptions/web/pull/58), English only, no twins):* `/cello-transcription-service`, `/clarinet-transcription-service`,
 `/flute-transcription-service`, `/saxophone-transcription-service`, `/harp-transcription-service`,
 `/ukulele-transcription-service`. 31 to port and 5 to verify remain.
 
@@ -355,7 +355,7 @@ Christmas, auditions, MIDI/YouTube/productions into scores), 9 AI-music pages an
 `/music-educators`, `/sheet-music-printing`, `/partners`, `/endorsed-musicians-and-composers` and
 `/convert-from-sibelius-to-musescore` (the model for the other 14 conversion pages).
 
-*Ported 2026-10-09:* the 14 other conversion pages: the 11 `/convert-from-<a>-to-<b>` (one template, its five reasons in
+*Ported 2026-10-09 ([#58](https://github.com/My-Sheet-Music-Transcriptions/web/pull/58)):* the 14 other conversion pages: the 11 `/convert-from-<a>-to-<b>` (one template, its five reasons in
 `content/en/data/conversions.ts`) and the 3 Finale guides `/finale-to-{dorico,musescore,sibelius}` (a second template:
 export and import steps beside screenshots). 25 remain.
 
