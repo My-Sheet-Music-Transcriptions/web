@@ -77,9 +77,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   path, locale, preview URL, canvas URL and PR) – the approved mockup of a page, the single source every preview
   surface and the build start from; `tests/unit/mockups.test.ts` keeps every mockup valid.
 - `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `alternates.ts` (hreflang, shared with the
-  sitemaps), `jsonld.ts`, `og/template.tsx` (Satori).
-- `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG PNGs), `postbuild.ts` (sitemaps, `_redirects`),
-  `serve-dist.ts`, `lib/content-fs.ts`, `lib/sitemap.ts` (see "Sitemaps" below),
+  sitemaps), `jsonld.ts`, `og/template.tsx` (Satori), `og/paths.ts` (every og:image URL; see "Share images" below).
+- `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG images via `lib/og.ts`), `postbuild.ts`
+  (sitemaps, `_redirects`), `serve-dist.ts`, `lib/content-fs.ts`, `lib/sitemap.ts` (see "Sitemaps" below),
   `lib/chromium.ts` (the Chromium Playwright, Storybook's vitest, `lhci` and `ds:shot` launch: Playwright's own,
   else the one the container ships in `/opt/pw-browsers`; `CHROME_PATH` overrides),
   `design-system/{export,index,lib}.ts` (artifact export, `ds:index --check` and the publish record),
@@ -99,10 +99,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 ## Rules that CI enforces
 
 - Slugs are flat and unique per locale across collections; reserved: api, assets, og, faqs, review, 404, storybook.
-- Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description/image
-  (the image file must exist in dist), twitter card, `<html lang>`, valid JSON-LD, images with alt/width/height,
-  no broken internal links, listed once in its collection's sitemap unless `noindex`, with the hreflang alternates of
-  its `<head>`.
+- Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description,
+  exactly one og:image (404 included) that exists in dist at its declared 1200×630, twitter card, `<html lang>`,
+  valid JSON-LD, images with alt/width/height, no broken internal links, listed once in its collection's sitemap
+  unless `noindex`, with the hreflang alternates of its `<head>`.
 - Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`). The one exception
   is elements marked `data-live-colour`, which keep the live site's colours by decision (filled buttons, pricing headers,
   the active nav item, the current language, the response-time pill); contrast is checked everywhere else.
@@ -168,6 +168,18 @@ hreflang alternates to its translations on the other TLDs, from the same functio
 (`/sitemap_index.xml`, other Yoast and WordPress names, `LEGACY_SITEMAPS`) 301 to the index. Previews have none.
 `tests/unit/sitemap.test.ts` (every locale, plus a multi-language fixture) and the SEO suite (sitemaps == indexable
 pages, alternates == `<head>`) keep them complete.
+
+### Share images (og:image)
+
+Every page has one, by construction, and nothing else can set it. `src/seo/og/paths.ts` is the only place an og:image
+URL is made: `head.ts` links it for every entry (and the root route links the locale's site card, so the 404, the
+error page and any future route without an entry get one too), and `prebuild` (`scripts/lib/og.ts`) writes exactly
+those files into `public/og/<locale>/`, rebuilt from scratch each time: a Satori card (`og/template.tsx`) from the
+page's `og.title`/`og.description`, else `title`/`description`, or the page's own picture when `meta.ts` names one,
+`og: { image: { src: 'share.jpg', alt: '…' } }`, a file in the page folder (a file name only: the schema refuses URLs
+and paths) of at least 1200×630, cropped to a 1200×630 JPEG. A missing or too small picture fails the build.
+Images are cached in `.cache/og` by their inputs, the template and logo included. `tests/unit/og.test.ts` and the SEO
+suite (one og:image per page, in dist, at its declared size) keep it so.
 
 ## Design tokens
 

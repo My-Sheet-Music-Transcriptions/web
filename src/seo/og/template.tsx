@@ -1,6 +1,6 @@
 /**
- * Satori template for og:image (1200x630). Satori supports a flexbox subset only:
- * every element with several children needs display:flex.
+ * Satori template for og:image (1200x630): a page's card, or the site card (`kind: 'site'`, no subtitle) that pages
+ * outside content/ share. Satori supports a flexbox subset only: every element with several children needs display:flex.
  */
 export function ogTemplate({
   title,
@@ -65,9 +65,11 @@ export function ogTemplate({
         >
           {title}
         </div>
-        <div style={{ display: 'flex', fontSize: 26, lineHeight: 1.4, color: '#5a5a5a' }}>
-          {subtitle.length > 140 ? `${subtitle.slice(0, 137)}…` : subtitle}
-        </div>
+        {subtitle ? (
+          <div style={{ display: 'flex', fontSize: 26, lineHeight: 1.4, color: '#5a5a5a' }}>
+            {subtitle.length > 140 ? `${subtitle.slice(0, 137)}…` : subtitle}
+          </div>
+        ) : null}
       </div>
       <div
         style={{
