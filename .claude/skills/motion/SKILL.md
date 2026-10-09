@@ -108,10 +108,18 @@ pnpm test:visual                   # reduced motion: the page must look as it di
 watch the motion itself, use `pnpm dev`, Netlify's deploy preview, or a Playwright page without
 `reducedMotion` that scrolls and takes pictures.
 
-## 8. The API
+## 8. The API and the official skill
 
-Motion's docs are published as Markdown for agents: `https://motion.dev/docs/<page>.md` (for example
-`react-lazy-motion.md`, `react-motion-config.md`, `react-animate-presence.md`), indexed in
-`https://motion.dev/llms.txt`. Motion also publishes an official agent kit (`npx motion-ai`, open source). It is
-not installed here. Its free React guide does not cover `LazyMotion`, `m`, reduced motion or variants, which
-are the rules above.
+- **The official skill:** Motion's own skill is vendored as `motion-dev` (from `motion-ai` 14.1.0; its
+  README.md says what was left out). Read its `best-practices/` for animation craft and API rules. Where it
+  differs from this skill, this skill wins:
+  - **`m`, not `motion`:** use `m` from `motion/react-m` under `LazyMotion strict`. Its examples use
+    `motion.div`, which throws here.
+  - **`x`/`y`, not `transform`:** it prefers `transform` strings, so animations run through WAAPI. Our presets
+    keep `x`, `y` and `scale`, because Motion's reduced-motion mode only stops those keys (it makes
+    positional keys instant). A `transform` string would still move for visitors who asked for less motion.
+  - **No MCP:** its docs search, spring generation, audits and transition editor need Motion's MCP servers,
+    which are not configured here.
+- **The docs:** Motion's docs are published as Markdown for agents, at `https://motion.dev/docs/<page>.md`
+  (for example `react-lazy-motion.md`, `react-motion-config.md`, `react-animate-presence.md`), indexed in
+  `https://motion.dev/llms.txt`.

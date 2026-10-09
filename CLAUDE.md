@@ -86,8 +86,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `.claude/skills` – `page` (the whole page workflow; `reference/*.md` hold the recipes per step), the content-manager
   commands `new-page`, `edit-page`, `translate`, `design`, `publish`, `status`, `site-help` (thin entry points into
   `page`), the engineering skills `component` (adding or changing a block or primitive without duplicating one),
-  `motion` (every animation: the Motion provider, presets, reveals, menus), `publish-design-system` and
-  `release-check`, and hidden stubs for later phases.
+  `motion` (every animation: the Motion provider, presets, reveals, menus) with Motion's official `motion-dev`
+  skill vendored beside it, `publish-design-system` and `release-check`, and hidden stubs for later phases.
 - `docs/content-managers.{md,es.md,ca.md}` – the plain-language guide for content managers and writers (EN/ES/CA);
   `tests/unit/skills.test.ts` keeps the commands, the guides and the skill's reference files in sync.
 - `docs/migration/PLAN.md` – the WordPress → repo migration plan (waves, decisions, cutover runbook), with the URL
