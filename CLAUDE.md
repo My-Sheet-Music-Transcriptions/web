@@ -114,8 +114,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   imported somewhere (one only its own file uses is fine) and every dependency is used. Delete what it
   reports rather than ignoring it; an export kept for later takes `/** @public */` with the reason.
 - `meta.ts` is a literal only; pages use the typography components for text (`tests/unit/content.test.ts`).
-- No picture under `src/assets/images` or `content/` is byte-identical to another under a different file name,
-  nor stored twice in `src/assets/images` (`tests/unit/images.test.ts`): reuse the file instead of copying it.
+- No picture under `src/assets/images`, `content/` or `src/stories/images` is byte-identical to another under a
+  different file name, nor stored twice in `src/assets/images` (`tests/unit/images.test.ts`): reuse the file
+  instead of copying it.
 - A PR touching anything outside the content paths needs a code-owner approval (`.github/CODEOWNERS`).
 
 ## Adding content (short version; the skills have the full checklist)

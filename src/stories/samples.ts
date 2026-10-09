@@ -1,15 +1,16 @@
 import type { PictureSource } from '~/components/primitives/Picture'
-import flag from './images/flag.png?w=46;92&as=picture'
-import icon from './images/icon.png?w=150;300&as=picture'
+import flag from './images/es.png?w=46;92&as=picture'
 import logo from './images/logo.svg'
-import mark from './images/mark.png?w=58;116;192&as=picture'
-import photo from './images/photo.jpg?w=480;960&as=picture'
+import mark from './images/musescore.png?w=58;116;192&as=picture'
+import photo from './images/office-transcriber.jpg?w=480;960&as=picture'
+import icon from './images/piano.png?w=150;300&as=picture'
 
 /**
  * Storybook's pictures, by marker: `'sample:photo'` (a studio photo), `'sample:icon'` (an illustrated icon),
  * `'sample:logo'` (the lockup, an SVG URL), `'sample:mark'` (a partner mark), `'sample:flag'`. The fixtures
  * (./data.ts) and the catalogue examples name them; stories and the design-system bundle resolve them here.
- * These files are Storybook's own copies: no story shows a picture of the site.
+ * These files are Storybook's own copies: no story imports a picture of the site. A copy keeps its original's
+ * file name (tests/unit/images.test.ts): the design-system bundle ships both, as one file under one name.
  */
 const samples: Record<string, unknown> = {
   'sample:photo': photo,

@@ -9,5 +9,5 @@ interface ImportMetaEnv {
   readonly VITE_GTM_ID?: string
 }
 
-/** Injected by vite.ds.config.ts (git short sha + date). */
+/** Injected by vite.ds.config.ts (the package version). */
 declare const __MSMT_VERSION__: string
