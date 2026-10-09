@@ -29,6 +29,33 @@ export const revealPiece: Variants = {
   shown: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 }
 
+/** A figure of a revealed block ticking up (Ticker): its digits roll in one after another, left to right. */
+export const tickerGroup: Variants = {
+  hidden: {},
+  shown: { transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
+}
+
+/**
+ * One digit of a Ticker: its column of digits, from 0 up to it (`custom`), rolls up until it shows, slowing down
+ * calmly onto it.
+ */
+export const tickerDigit: Variants = {
+  hidden: (digit: number) => ({ y: `${(digit / (digit + 1)) * 100}%` }),
+  shown: { y: '0%', transition: { duration: 1.8, ease: [0.33, 1, 0.68, 1] } },
+}
+
+/** The stars of a rating in a revealed block: they pop in one after another as their card settles. */
+export const starsGroup: Variants = {
+  hidden: {},
+  shown: { transition: { delayChildren: 0.25, staggerChildren: 0.08 } },
+}
+
+/** One star popping in: it grows from half its size with a slight overshoot and fades in. */
+export const starPop: Variants = {
+  hidden: { opacity: 0, scale: 0.5 },
+  shown: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] } },
+}
+
 const opening = { duration: 0.2, ease: 'easeOut' } as const
 const closing = { duration: 0.15, ease: 'easeIn' } as const
 
@@ -77,4 +104,51 @@ export interface RevealItemProps {
 export function RevealItem({ as = 'div', ...props }: RevealItemProps) {
   const Tag = tags[as]
   return <Tag data-reveal="" variants={revealPiece} {...props} />
+}
+
+const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+/**
+ * A figure that ticks up like an odometer when its block is revealed (`reveal`): each digit's column rolls up
+ * from 0 to it, one after another, slowing down onto it; separators stay put. Still where nothing animates (a
+ * block that is not revealed, reduced motion, print, no JavaScript: the columns carry `data-reveal`). CSS draws
+ * the rolling digits (`content: attr()`), so the page's text, crawlers and screen readers get the figure once,
+ * as written.
+ */
+export function Ticker({ children, className }: { children: string; className?: string }) {
+  return (
+    <m.span variants={tickerGroup} className={className}>
+      <span className="sr-only">{children}</span>
+      <span aria-hidden="true" className="inline-flex">
+        {[...children].map((char, i) =>
+          DIGITS.includes(char) ? (
+            <span
+              // biome-ignore lint/suspicious/noArrayIndexKey: a figure's characters are positional
+              key={i}
+              data-char={char}
+              className="relative overflow-hidden before:invisible before:content-[attr(data-char)]"
+            >
+              <m.span
+                data-reveal=""
+                custom={Number(char)}
+                variants={tickerDigit}
+                className="absolute inset-x-0 bottom-0 flex flex-col items-center"
+              >
+                {DIGITS.slice(0, Number(char) + 1).map((d) => (
+                  <span key={d} data-char={d} className="before:content-[attr(data-char)]" />
+                ))}
+              </m.span>
+            </span>
+          ) : (
+            <span
+              // biome-ignore lint/suspicious/noArrayIndexKey: a figure's characters are positional
+              key={i}
+              data-char={char}
+              className="before:content-[attr(data-char)]"
+            />
+          ),
+        )}
+      </span>
+    </m.span>
+  )
 }

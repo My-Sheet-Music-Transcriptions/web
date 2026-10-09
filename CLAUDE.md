@@ -268,5 +268,7 @@ components or layout.
   `links`, `labels`, `id`, `reveal`. `tests/unit/blocks.test.ts` refuses a hand-made shell and the retired synonyms.
 - **Motion through Motion.** Animations use Motion (`motion/react`): `m` components and the presets in
   `src/components/primitives/Motion.tsx`, under the `MotionProvider` every root mounts (reduced motion respected).
-  A page reveals a block with `reveal`; never animate the `PageHeader`. Follow the `motion` skill.
+  A page reveals a block with `reveal`. The one exception is the `PageHeader`, which never takes `reveal`: its copy
+  comes in as the page opens with CSS animations (`entrance-*` and the homepage photos' `parallax` in `theme.css`;
+  fades start at 1%, never 0), so its largest paint never waits for JavaScript. Follow the `motion` skill.
 - Do not commit generated files: `routeTree.gen.ts`, `hreflang.generated.json`, `public/og`, `public/robots.txt`.

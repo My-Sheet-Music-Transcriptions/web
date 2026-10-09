@@ -26,7 +26,7 @@ shell or to a primitive, never to one page.
   `primitives/motion-features.ts`, in their own chunk. `domMax` (layout animations, drag) is not loaded. Ask
   before adding it, because it costs another ~10 KB on every page.
 - Do not use the imperative `animate()`, `useAnimate` or `motion/mini`. Use one style: variants on `m`
-  components.
+  components. The PageHeader's CSS entrance and parallax (section 4) are the one exception.
 
 ## 2. Presets, not numbers
 
@@ -38,6 +38,9 @@ an ease or a distance:
 | `revealGroup`, `revealPiece` | A revealed block: pieces 0.08 s apart, each rising 24px and fading in over 0.6 s. |
 | `dropDown`, `dropSide` | A menu panel under its button (`y`) or a submenu beside its row (`x`): 0.2 s in, 0.15 s out. |
 | `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu). |
+| `tickerGroup`, `tickerDigit` | A figure of a revealed block (`Ticker`) rolling up like an odometer: each digit's column from 0 to it over 1.8 s, 0.12 s after the one before. |
+| `starsGroup`, `starPop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. |
+| `entrance-*`, `parallax` (theme.css) | The PageHeader: each piece fading in 40px from the side its variant calls for over 1.4 s as the page opens, the band's rule drawing itself, the homepage's photos sliding in behind their curve and lagging behind it on scroll (see 4). |
 
 A new preset stays subtle:
 - 0.15–0.3 s for controls and 0.6–0.7 s for scroll reveals;
@@ -55,8 +58,29 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
 ## 4. Reveals
 
 - **On a page:** `reveal` on a block brings it in as it scrolls into view. Every `BlockShell` block takes it,
-  and so does `ContactSection`. Do not reveal `PageHeader` (it holds the largest paint) or a block that already
-  moves (the marquee strip).
+  and so does `ContactSection`. Do not reveal a block that already moves (the marquee strip).
+- **The PageHeader** never takes `reveal`: it holds the page's largest paint, and a Motion reveal would
+  prerender it hidden until the JavaScript and the features chunk have loaded (seconds on a slow phone, and
+  the LCP with them). It comes in with CSS instead (theme.css), calmly and all at once, from the first paint,
+  over 1.4 s, each piece from the side its variant calls for: `entrance-left` / `entrance-right` fade a piece in
+  drifting 40px from that side (a split header's copy and picture, the homepage's copy), `entrance-up` from
+  below (a band's centred copy, the rating cards), `entrance-settle` landing from slightly larger (the icon
+  under a band), `entrance-behind` slides the homepage photos in behind their curve, which stays put, and then
+  they lag behind it as the page scrolls (`parallax`: a scroll-driven animation, 85% of the page's speed over
+  the first screen, compositor-run, nothing where browsers lack scroll timelines). `entrance-late` holds a
+  piece back 0.35 s for what follows the copy; `entrance-rule` draws the band's orange rule out from its
+  centre once the copy has settled. The photos centre under their curve.
+  - **Fades start at 1%, never 0:** Chrome never counts an element first painted at opacity 0 as the LCP, not
+    even once it shows, so a fade from 0 hands the LCP to whatever paints next (the consent banner, after
+    hydration: piano at 4x CPU, 330 to 1090 ms). From 1% it is invisible to the eye and counted from the
+    first paint.
+  - **A picture never starts smaller:** Chrome records an image's LCP size as first painted, so an icon
+    growing from `scale(0.9)` (81% of its area) lost the LCP to the consent banner's paragraph the same way.
+    Landing from `scale(1.08)` keeps it the largest paint.
+  - Measured on every English page: the LCP element and time are the same with and without the entrance.
+  - It runs on screen only for visitors who did not ask for reduced motion, and it replays as each page
+    mounts. A story that shows it waits in `play: ({ canvasElement }) => entered(canvasElement)`
+    (src/stories/play.ts) before axe runs; `entered` skips the animations the scroll drives.
 - **How it is driven:** the shell watches itself with `useInView` and switches `animate` from `hidden` to
   `shown`. It does not use `whileInView`: with `whileInView` and `once`, pieces mounted after the reveal (another
   tab's cards) inherit `hidden` and stay invisible. With `animate`, they inherit `shown` and come in on their
@@ -68,13 +92,23 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
 
   Decorations (waves, lines) stay plain elements so they do not move. `RevealItem` is inert when the block is
   not revealed.
+- **Inside a piece**, primitives join the reveal through the variants they inherit, and stay still anywhere
+  else (the hero's rating card):
+  - `Stars` pop in one after another (`starsGroup`, `starPop`) once their card has come in;
+  - `Ticker` rolls a figure up like an odometer (`tickerGroup`, `tickerDigit`): `<Ticker>{figure}</Ticker>`,
+    where the figure is the string the page shows ("71,844"). Each digit's column, 0 up to it, rolls up until
+    it shows; separators stay put. CSS draws the rolling digits (`content: attr(data-char)`) and an `sr-only`
+    copy carries the figure, so the page's text reads it once. The columns rest at `transform: none`, so
+    `data-reveal` shows the figure where nothing animates. The RatingBanner's counter uses it; the
+    customers figure stays still.
 - The section starts once, when its top passes the lowest sixth of the screen (`viewport.once`).
 
 ## 5. What the prerendered page shows
 
 - **Revealed pieces** are prerendered with `opacity: 0`. `RevealItem` marks them `data-reveal`. theme.css shows
   them as they are under reduced motion and in print, and the root's `<noscript>` does the same without
-  JavaScript. Anything that starts hidden in the HTML must carry `data-reveal`, so use `RevealItem`.
+  JavaScript. Anything that starts hidden in the HTML must carry `data-reveal`, so use `RevealItem` (the
+  `Stars` mark each star themselves, the `Ticker` each column).
 - **Menus and panels that open and close** use `initial={false}`, `animate={open ? 'open' : 'closed'}` and
   variants that end in `display: 'none'` (`transitionEnd`). The closed state is prerendered, so the links stay
   crawlable, and it ends unfocusable. Keep `AnimatePresence` for what really leaves the DOM (the phone menu

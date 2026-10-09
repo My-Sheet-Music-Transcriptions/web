@@ -49,9 +49,15 @@ const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
  * instrument icon and the compact rating card when given (service pages). `split`: white, the copy and button
  * left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the
  * copy, cut by a curve that leaves the copy on white (above it on phones), the brand lockup, the orange
- * highlight and the floating rating card.
+ * highlight and the floating rating card. It drifts in as the page opens.
  */
 export function PageHeader(props: PageHeaderProps) {
+  // As the page opens each piece comes in from the side its variant calls for: the band's centred copy rises
+  // and its rule draws itself, then the icon settles and the rating card rises under it; a split header's copy
+  // comes from the left and its picture from the right; the homepage's copy from the left, its photos sliding
+  // in behind their curve (then lagging behind it on scroll) and its floating card rising last. CSS
+  // (`entrance-*` and `parallax` in theme.css), never `reveal`, which would hide the header, the page's largest
+  // paint, until the JavaScript loads.
   const { variant = 'band' } = props
   if (variant === 'photo') return <PhotoHeader {...props} />
   if (variant === 'split') return <SplitHeader {...props} />
@@ -70,29 +76,40 @@ function BandHeader({
   id,
 }: PageHeaderProps) {
   return (
-    <header id={id}>
+    <header id={id} className="overflow-x-clip">
       <div className="bg-[#434343] px-4 pt-16 pb-20 text-center text-white">
-        {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
-        <h1 className="mx-auto max-w-4xl text-[32px] font-bold leading-tight text-white md:text-display">
-          {title}
-        </h1>
-        {subtitle ? (
-          <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-relaxed">{subtitle}</p>
-        ) : null}
-        <span aria-hidden="true" className="mx-auto mt-6 block h-px w-[150px] bg-accent" />
-        {lead ? (
-          <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed [&_a]:text-accent-light">
-            {inlineMarkdown(lead)}
-          </p>
-        ) : null}
-        {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
+        <div className="entrance-up">
+          {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
+          <h1 className="mx-auto max-w-4xl text-[32px] font-bold leading-tight text-white md:text-display">
+            {title}
+          </h1>
+          {subtitle ? (
+            <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-relaxed">{subtitle}</p>
+          ) : null}
+          <span
+            aria-hidden="true"
+            className="entrance-rule mx-auto mt-6 block h-px w-[150px] bg-accent"
+          />
+          {lead ? (
+            <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed [&_a]:text-accent-light">
+              {inlineMarkdown(lead)}
+            </p>
+          ) : null}
+          {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
+        </div>
       </div>
       {rating || image ? (
         <div className="container-content flex flex-wrap items-center justify-center gap-10 py-10">
           {image ? (
-            <Picture image={image} alt={alt} sizes="180px" className="h-[180px] w-auto" />
+            <Picture
+              image={image}
+              alt={alt}
+              sizes="180px"
+              className="h-[180px] w-auto"
+              pictureClassName="entrance-settle entrance-late"
+            />
           ) : null}
-          {rating ? <CompactRating source={rating} /> : null}
+          {rating ? <CompactRating source={rating} className="entrance-up entrance-late" /> : null}
         </div>
       ) : null}
     </header>
@@ -114,9 +131,9 @@ function SplitHeader({
 }: PageHeaderProps) {
   const several = !!images && images.length > 1
   return (
-    <header id={id} className="bg-white">
+    <header id={id} className="overflow-x-clip bg-white">
       <div className="container-content grid items-center gap-10 py-12 md:py-16 lg:grid-cols-2">
-        <div className="flex flex-col items-start">
+        <div className="entrance-left flex flex-col items-start">
           {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-deep')}>{eyebrow}</p> : null}
           <h1 className="text-[32px] font-bold leading-tight text-ink md:text-display">{title}</h1>
           {subtitle ? <p className="mt-4 text-[20px] font-bold text-ink">{subtitle}</p> : null}
@@ -126,16 +143,18 @@ function SplitHeader({
           {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
           {rating ? <CompactRating source={rating} className="mt-8" /> : null}
         </div>
-        <Media
-          image={image}
-          alt={alt}
-          images={images}
-          labels={labels}
-          label={title}
-          priority
-          sizes="(min-width: 1025px) 560px, 100vw"
-          imageClassName={several ? 'aspect-[3/2]' : 'rounded-card object-cover'}
-        />
+        <div className="entrance-right min-w-0">
+          <Media
+            image={image}
+            alt={alt}
+            images={images}
+            labels={labels}
+            label={title}
+            priority
+            sizes="(min-width: 1025px) 560px, 100vw"
+            imageClassName={several ? 'aspect-[3/2]' : 'rounded-card object-cover'}
+          />
+        </div>
       </div>
     </header>
   )
@@ -143,8 +162,9 @@ function SplitHeader({
 
 /**
  * The curve that cuts the photos beside the copy (photo, from desktop up), traced from the live site's slides:
- * one cubic in the 1600×806 frame they were cut for. As a mask sized and anchored like the photos (`cover`,
- * left), it meets the copy where the slides' own cut did, and any plain photo gets it.
+ * one cubic in the 1600×806 frame they were cut for. As a mask sized and anchored as that frame (`cover`, left),
+ * it meets the copy where the slides' own cut did, and any plain photo gets it. The photos under it stay
+ * centred, so a narrow desktop crops both sides of the photo rather than its right, where the subject is.
  */
 const photoCut = `url("data:image/svg+xml,${encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="806"><path d="M976 0C935 78 831 483 459 806H1600V0Z"/></svg>',
@@ -166,21 +186,26 @@ function PhotoHeader({
     highlight && title.includes(highlight) ? title.split(highlight) : [title, null]
   const photos = images.map((s) => s.image)
   return (
-    <header id={id} className="relative">
+    <header id={id} className="relative overflow-x-clip">
       {/* Phones: the photos above the copy */}
       <div className="relative aspect-[390/261] overflow-hidden lg:hidden">
         <Slideshow slides={mobileImages?.map((s) => s.image) ?? photos} sizes="100vw" />
       </div>
-      {/* From desktop up: the photos fill the whole header, cut by the curve that leaves the copy on white */}
+      {/* From desktop up: the photos fill the whole header, cut by the curve that leaves the copy on white. The
+          curve stays put: the photos slide in behind it from the right, then lag behind it as the page scrolls */}
       <div
         className="absolute inset-0 hidden overflow-hidden mask-cover mask-left mask-no-repeat lg:block"
         style={{ maskImage: photoCut, WebkitMaskImage: photoCut }}
       >
-        <Slideshow slides={photos} sizes="100vw" position="left" />
+        <div className="parallax absolute inset-0">
+          <div className="entrance-behind absolute inset-0">
+            <Slideshow slides={photos} sizes="100vw" />
+          </div>
+        </div>
       </div>
       <div className="relative">
         <div className="mx-auto flex max-w-[1440px] flex-col px-[14px] pt-[132px] pb-[77px] lg:min-h-[765px] lg:justify-center lg:px-[86px] lg:py-10">
-          <div className="max-w-[459px]">
+          <div className="entrance-left max-w-[459px]">
             {logo ? <Logo logo={logo} width={340} className="hidden lg:inline-flex" /> : null}
             <h1 className="text-[28px] font-bold leading-[1.4] text-ink lg:mt-5 lg:text-display lg:leading-[46px]">
               {before}
@@ -207,7 +232,7 @@ function PhotoHeader({
         {rating ? (
           <CompactRating
             source={rating}
-            className="absolute right-[120px] bottom-[25px] z-20 hidden lg:block"
+            className="entrance-up entrance-late absolute right-[120px] bottom-[25px] z-20 hidden lg:block"
           />
         ) : null}
       </div>

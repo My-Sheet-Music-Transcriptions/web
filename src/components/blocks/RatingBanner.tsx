@@ -1,5 +1,5 @@
 import { BlockShell, type HeadingProps } from '~/components/primitives/BlockShell'
-import { RevealItem } from '~/components/primitives/Motion'
+import { RevealItem, Ticker } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
 import type { Counter, RatingSource } from '~/content/types'
@@ -18,7 +18,8 @@ export interface RatingBannerProps extends HeadingProps {
 
 /**
  * The big trust moment: a full-bleed photo with white wavy edges, a white heading, the transcriptions counter
- * and a row of rating cards (Google, Trustpilot or customers, Facebook).
+ * and a row of rating cards (Google, Trustpilot or customers, Facebook). With `reveal` the counter ticks up like
+ * an odometer and the stars pop in.
  */
 export function RatingBanner({ counter, sources, ...shell }: RatingBannerProps) {
   const locale = useLocale()
@@ -26,9 +27,9 @@ export function RatingBanner({ counter, sources, ...shell }: RatingBannerProps) 
     <BlockShell {...shell} cascade>
       {counter ? (
         <RevealItem as="p" className="mb-10 text-center">
-          <span className="block text-[69px] font-semibold leading-[69px]">
+          <Ticker className="block text-[69px] font-semibold leading-[69px]">
             {counter.value.toLocaleString(locale)}
-          </span>
+          </Ticker>
           <span className="block text-body leading-10 text-white md:text-[19px] md:leading-[47.5px]">
             {counter.label}
           </span>

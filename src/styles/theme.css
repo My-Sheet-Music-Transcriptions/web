@@ -173,3 +173,102 @@
   margin-inline: auto;
   padding-inline: 16px;
 }
+
+/* The PageHeader coming in as the page opens, calmly and all at once, each piece from the side its variant
+   calls for, over 1.4 s: `entrance-left` and `entrance-right` fade a piece in drifting 40px from that side (the
+   copy and the picture of a split header, the copy of the photo header), `entrance-up` from below (the centred
+   copy of a title band, the rating cards), `entrance-settle` landing from slightly larger (the icon under a
+   band: never from smaller, because a picture painted smaller can lose the LCP to what paints next), and
+   `entrance-behind` slides the homepage photos in behind their curve, which stays put. `entrance-late` holds
+   a piece back 0.35 s, for what follows the copy (the rating card, the icon), and `entrance-rule` draws the band's
+   orange rule out from its centre once the copy has settled. CSS, not Motion, so it starts with the first paint
+   instead of waiting for the JavaScript; opacity and transforms only, which the compositor runs while the page
+   hydrates. The fades start at 1%, not 0: Chrome never counts an element first painted at opacity 0 as the
+   largest paint (LCP), and the header's h1, lead or picture usually is it. Still under reduced motion and on
+   paper. */
+@utility entrance-left {
+  @media screen and (prefers-reduced-motion: no-preference) {
+    animation: drift-from-left 1.4s cubic-bezier(0.33, 1, 0.68, 1) var(--entrance-delay, 0s) both;
+  }
+}
+@utility entrance-right {
+  @media screen and (prefers-reduced-motion: no-preference) {
+    animation: drift-from-right 1.4s cubic-bezier(0.33, 1, 0.68, 1) var(--entrance-delay, 0s) both;
+  }
+}
+@utility entrance-up {
+  @media screen and (prefers-reduced-motion: no-preference) {
+    animation: drift-from-below 1.4s cubic-bezier(0.33, 1, 0.68, 1) var(--entrance-delay, 0s) both;
+  }
+}
+@utility entrance-settle {
+  @media screen and (prefers-reduced-motion: no-preference) {
+    animation: settle 1.4s cubic-bezier(0.33, 1, 0.68, 1) var(--entrance-delay, 0s) both;
+  }
+}
+@utility entrance-behind {
+  @media screen and (prefers-reduced-motion: no-preference) {
+    animation: slide-from-right 1.4s cubic-bezier(0.33, 1, 0.68, 1) var(--entrance-delay, 0s) both;
+  }
+}
+@utility entrance-rule {
+  @media screen and (prefers-reduced-motion: no-preference) {
+    animation: draw 0.8s cubic-bezier(0.33, 1, 0.68, 1) 0.6s both;
+  }
+}
+@utility entrance-late {
+  --entrance-delay: 0.35s;
+}
+@keyframes drift-from-left {
+  from {
+    opacity: 0.01;
+    transform: translateX(-40px);
+  }
+}
+@keyframes drift-from-right {
+  from {
+    opacity: 0.01;
+    transform: translateX(40px);
+  }
+}
+@keyframes drift-from-below {
+  from {
+    opacity: 0.01;
+    transform: translateY(40px);
+  }
+}
+@keyframes settle {
+  from {
+    opacity: 0.01;
+    transform: scale(1.08);
+  }
+}
+@keyframes slide-from-right {
+  from {
+    transform: translateX(40px);
+  }
+}
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* The photo header's photos lagging behind their curve as the page scrolls (parallax): over the first screen
+   of scrolling they move down 15vh, so they scroll at 85% of the page's speed. A scroll-driven animation (no
+   JavaScript, run by the compositor) on a layer of its own around the sliding one; where browsers lack scroll
+   timelines the photos simply scroll with the page. Still under reduced motion. */
+@utility parallax {
+  @supports (animation-timeline: scroll()) {
+    @media screen and (prefers-reduced-motion: no-preference) {
+      animation: parallax linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+  }
+}
+@keyframes parallax {
+  to {
+    translate: 0 15vh;
+  }
+}
