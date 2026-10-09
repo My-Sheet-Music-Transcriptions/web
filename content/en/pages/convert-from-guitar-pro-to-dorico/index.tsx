@@ -13,24 +13,24 @@ import {
 import { Text } from '~/components/typography'
 import soundToScore from './sound-to-score.png?w=480;960&as=picture'
 
-export default function ConvertSibeliusToMusescorePage() {
+export default function ConvertGuitarProToDoricoPage() {
   return (
     <>
       <PageHeader
         eyebrow="Enjoy your music compositions:"
-        title="Convert from Sibelius to MuseScore"
-        lead="We convert your Sibelius files to **MuseScore format**, and deliver high-quality, ready-to-use files **adapted to any version**."
+        title="Convert from Guitar Pro to Dorico"
+        lead="We convert your Guitar Pro files to **Dorico format**, and deliver high-quality, ready-to-use files **adapted to any version**."
         cta={{ label: 'Learn more', href: '#down' }}
       />
 
       <MediaText
         id="down"
-        title="Why convert your Sibelius files to MuseScore format?"
+        title="Why convert your Guitar Pro files to Dorico format?"
         image={soundToScore}
         alt="Sound waves turning into a printed score"
       >
         <Text>
-          There are many reasons to convert your Sibelius files to MuseScore format. Specially for
+          There are many reasons to convert your Guitar Pro files to Dorico format. Specially for
           musicians, educators, and composers looking to switch software without losing quality or
           detail. It can certainly be a tedious and time-consuming process, but{' '}
           <strong>we’ll make it easy and fast for you</strong>!
@@ -59,7 +59,7 @@ export default function ConvertSibeliusToMusescorePage() {
         sources={platforms}
       />
 
-      <ContactSection form={quoteForm} returnTo="/convert-from-sibelius-to-musescore" />
+      <ContactSection form={quoteForm} returnTo="/convert-from-guitar-pro-to-dorico" />
     </>
   )
 }
