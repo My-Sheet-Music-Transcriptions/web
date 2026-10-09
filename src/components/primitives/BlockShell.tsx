@@ -87,7 +87,7 @@ const widths = {
  * The frame of every block: a `<section>` labelled by its heading, the tone, the container, the heading area
  * (eyebrow, h2 with its short rule, lead), the content and the closing buttons (`cta` filled, `links`
  * outline). With an `image` it is the photo band: the photo darkened by a 32% grey veil, white wavy edges
- * and a white heading. With `reveal` it comes in as it scrolls into view (Motion): heading, content and
+ * and a white heading, the photo lagging behind the band as it scrolls (parallax, theme.css). With `reveal` it comes in as it scrolls into view (Motion): heading, content and
  * buttons rise and fade in one after another. Blocks render their content inside it and never rebuild any of
  * this by hand.
  */
@@ -173,7 +173,7 @@ export function BlockShell({
       className={cn(
         'scroll-mt-20',
         image
-          ? 'relative isolate my-[50px] overflow-hidden py-[100px] text-white md:py-[110px]'
+          ? 'parallax-source relative isolate my-[50px] overflow-hidden py-[100px] text-white md:py-[110px]'
           : [spacings[spacing], tones[tone]],
         className,
       )}
@@ -182,13 +182,15 @@ export function BlockShell({
     >
       {image ? (
         <>
-          <Picture
-            image={image}
-            alt=""
-            sizes="100vw"
-            className="absolute inset-0 -z-20 h-full w-full object-cover"
-            pictureClassName="contents"
-          />
+          <div className="parallax-band absolute inset-x-0 -z-20" aria-hidden="true">
+            <Picture
+              image={image}
+              alt=""
+              sizes="100vw"
+              className="absolute inset-0 h-full w-full object-cover"
+              pictureClassName="contents"
+            />
+          </div>
           <div className="absolute inset-0 -z-10 bg-[#3a3a3a] opacity-[0.32]" aria-hidden="true" />
           <WaveDivider position="top" width={138} mobileHeight={20} mobileWidth={266} />
           <WaveDivider position="bottom" width={135} mobileHeight={20} mobileWidth={266} />
