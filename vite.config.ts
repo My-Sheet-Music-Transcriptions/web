@@ -58,8 +58,9 @@ export default defineConfig({
     tailwindcss(),
     tanstackStart({
       srcDirectory: 'src',
-      // Path-mode previews are not indexed: no sitemap.
-      sitemap: { enabled: mode === 'domain', host: site.domain, outputPath: 'sitemap.xml' },
+      // The sitemaps are written by scripts/postbuild.ts from content/ (scripts/lib/sitemap.ts), not from the
+      // prerender's crawl. Off explicitly: left out, this option defaults to on.
+      sitemap: { enabled: false },
       prerender: {
         enabled: true,
         crawlLinks: true,

@@ -1,0 +1,194 @@
+import { execFileSync } from 'node:child_process'
+import path from 'node:path'
+import { COLLECTIONS, type Collection } from '../../src/content/schema.ts'
+import { localeHref } from '../../src/i18n/routing.ts'
+import type { Locale } from '../../src/i18n/types.ts'
+import { type Alternate, hreflangAlternates } from '../../src/seo/alternates.ts'
+import { buildHreflangMap, CONTENT_DIR, type FsEntry, readAllEntries } from './content-fs.ts'
+
+/**
+ * The sitemaps of a production (domain-mode) build, written by scripts/postbuild.ts: an index at /sitemap.xml (what
+ * robots.txt and every page's <link rel="sitemap"> name) and one sitemap per collection. They are made from the
+ * entries in content/, the same list the build prerenders, so a page is never missed and nothing else (a crawled
+ * "/#contact") gets in; each URL carries the hreflang alternates its <head> prints (src/seo/alternates.ts).
+ * Previews (path mode) are not indexed and have none.
+ */
+
+/** The sitemap index, at the site's root. */
+export const SITEMAP_INDEX = 'sitemap.xml'
+
+/**
+ * The sitemap of each collection, /<name>-sitemap.xml. Named like the WordPress sites' Yoast sitemaps, so the URLs
+ * Search Console knows keep answering with the same kind of page. A new collection is a type error until it is named.
+ */
+export const SITEMAP_NAMES: Record<Collection, string> = {
+  pages: 'page',
+  services: 'services',
+  posts: 'post',
+  faqs: 'faqs',
+  artists: 'artists',
+  musicians: 'musicians',
+  partners: 'partner',
+  reviews: 'review',
+}
+
+/**
+ * Sitemap URLs of the WordPress sites (docs/migration/redirects.md): Yoast's index and the child sitemaps of the
+ * types the inventories saw, plus Yoast's taxonomy and author ones, and WordPress core's (the Catalan site). One list
+ * for every domain, one by one because Netlify's _redirects has no wildcard inside a name.
+ */
+export const LEGACY_SITEMAPS: readonly string[] = [
+  '/sitemap_index.xml',
+  ...[
+    'page',
+    'post',
+    'services',
+    'popular',
+    'endorsed',
+    'partner',
+    'product',
+    'faqs',
+    'review',
+    'team',
+    'category',
+    'post_tag',
+    'author',
+  ].map((type) => `/${type}-sitemap.xml`),
+  '/wp-sitemap.xml',
+  '/wp-sitemap-posts-page-1.xml',
+  '/wp-sitemap-posts-post-1.xml',
+  '/wp-sitemap-taxonomies-category-1.xml',
+  '/wp-sitemap-users-1.xml',
+]
+
+/** The protocol's limit per sitemap file. */
+const MAX_URLS = 50_000
+
+export interface SitemapUrl {
+  loc: string
+  lastmod?: string
+  alternates: Alternate[]
+}
+
+export interface SitemapFile {
+  /** File name in dist/client, e.g. page-sitemap.xml */
+  file: string
+  collection: Collection
+  urls: SitemapUrl[]
+  xml: string
+}
+
+/** The index and the non-empty sitemap of each collection of a locale. `all` is every entry of every locale. */
+export function buildSitemaps(
+  locale: Locale,
+  all: FsEntry[] = readAllEntries(),
+): { index: string; files: SitemapFile[] } {
+  const map = buildHreflangMap(all)
+  const href = (l: Locale, p: string) => localeHref('domain', l, p)
+  const entries = all.filter((e) => e.locale === locale && !e.meta.draft && !e.meta.noindex)
+  const files: SitemapFile[] = []
+  for (const collection of COLLECTIONS) {
+    const urls = entries
+      .filter((e) => e.collection === collection)
+      .sort((a, b) => (a.path < b.path ? -1 : 1))
+      .map((e) => ({
+        loc: href(locale, e.path),
+        lastmod: e.meta.updated ?? gitLastModified(e.dir),
+        alternates: hreflangAlternates(e.meta.translationKey, map, href),
+      }))
+    if (!urls.length) continue
+    const file = `${SITEMAP_NAMES[collection]}-sitemap.xml`
+    if (urls.length > MAX_URLS)
+      throw new Error(`${file}: ${urls.length} URLs, over the ${MAX_URLS} a sitemap may hold`)
+    files.push({ file, collection, urls, xml: urlsetXml(urls) })
+  }
+  const index = indexXml(
+    files.map((f) => ({ loc: href(locale, `/${f.file}`), lastmod: newest(f.urls) })),
+  )
+  return { index, files }
+}
+
+/** Netlify _redirects rules: every WordPress sitemap URL this build did not write goes to the index. */
+export function legacySitemapRedirects(written: readonly string[]): string[] {
+  const served = new Set(written.map((f) => `/${f}`))
+  return LEGACY_SITEMAPS.filter((u) => !served.has(u)).map((u) => `${u}  /${SITEMAP_INDEX}  301`)
+}
+
+let history: boolean | undefined
+
+/** Whether git has this checkout's history; a shallow clone would date every page by its one commit. */
+export function hasGitHistory(): boolean {
+  if (history === undefined)
+    try {
+      const shallow = execFileSync('git', ['rev-parse', '--is-shallow-repository'], {
+        encoding: 'utf8',
+      })
+      history = shallow.trim() === 'false'
+    } catch {
+      history = false
+    }
+  return history
+}
+
+/** Date of the last commit touching the page folder (its text, meta or pictures); none without git history. */
+function gitLastModified(dir: string): string | undefined {
+  if (!hasGitHistory()) return undefined
+  try {
+    const out = execFileSync(
+      'git',
+      ['log', '-1', '--format=%cs', '--', path.posix.join(CONTENT_DIR, dir)],
+      { encoding: 'utf8' },
+    ).trim()
+    return out || undefined
+  } catch {
+    return undefined
+  }
+}
+
+function newest(urls: SitemapUrl[]): string | undefined {
+  return urls.reduce<string | undefined>(
+    (max, u) => (u.lastmod && (!max || u.lastmod > max) ? u.lastmod : max),
+    undefined,
+  )
+}
+
+const XML_HEAD = '<?xml version="1.0" encoding="UTF-8"?>'
+const SITEMAP_NS = 'http://www.sitemaps.org/schemas/sitemap/0.9'
+
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
+function urlsetXml(urls: SitemapUrl[]): string {
+  const lines = [
+    XML_HEAD,
+    `<urlset xmlns="${SITEMAP_NS}" xmlns:xhtml="http://www.w3.org/1999/xhtml">`,
+  ]
+  for (const u of urls) {
+    lines.push('  <url>', `    <loc>${escapeXml(u.loc)}</loc>`)
+    if (u.lastmod) lines.push(`    <lastmod>${u.lastmod}</lastmod>`)
+    for (const a of u.alternates)
+      lines.push(
+        `    <xhtml:link rel="alternate" hreflang="${escapeXml(a.hreflang)}" href="${escapeXml(a.href)}"/>`,
+      )
+    lines.push('  </url>')
+  }
+  lines.push('</urlset>', '')
+  return lines.join('\n')
+}
+
+function indexXml(sitemaps: { loc: string; lastmod?: string }[]): string {
+  const lines = [XML_HEAD, `<sitemapindex xmlns="${SITEMAP_NS}">`]
+  for (const s of sitemaps) {
+    lines.push('  <sitemap>', `    <loc>${escapeXml(s.loc)}</loc>`)
+    if (s.lastmod) lines.push(`    <lastmod>${s.lastmod}</lastmod>`)
+    lines.push('  </sitemap>')
+  }
+  lines.push('</sitemapindex>', '')
+  return lines.join('\n')
+}
