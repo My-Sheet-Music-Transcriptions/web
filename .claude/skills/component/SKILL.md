@@ -125,7 +125,7 @@ Components hold no words and no pictures: no copy, alt text, aria words, default
 ## 8. Checks
 
 ```sh
-pnpm check              # biome, types over every page, unit (guards, components rule, mockup round-trips)
+pnpm check              # biome, types over every page, knip (no unused prop types or exports), unit (guards, components rule, mockup round-trips)
 pnpm test:storybook     # axe on every story, contrast included
 SITE_LOCALE=en pnpm build && pnpm ds:shot <slug> --built   # each page that uses it, 1440/768/390, looked at
 pnpm test:visual        # homepage; re-capture (--update-snapshots) only after looking at the diff

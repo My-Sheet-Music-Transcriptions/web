@@ -28,7 +28,7 @@ export interface PageHeaderProps {
   image?: PictureSource
   /** Alt text of the picture; empty when decorative. */
   alt?: string
-  /** Several pictures: a carousel beside the copy (split), the rotating photos behind it (photo). */
+  /** Several pictures: a carousel beside the copy (split), the plain photos rotating behind it (photo). */
   images?: Slide[]
   /** The photos above the copy on phones (photo); `images` when left out. */
   mobileImages?: Slide[]
@@ -48,10 +48,10 @@ const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
  * The opening of every page, written first in the page: its h1 with an optional eyebrow, subtitle, lead and
  * button. `band` is the dark centred title band, with the rating card and an icon under it when given
  * (service pages); `split` sets the copy beside a picture or carousel, as landing pages open; `photo` is the
- * homepage: rotating studio photos behind the copy (above it on phones), the brand lockup and the rating card.
- * As the page opens its copy rises into place piece by piece, then the rating card; the pictures stay still and
- * the text never fades, so the page's largest paint counts from the first frame (`entrance` in theme.css: CSS,
- * never `reveal`, which would hide the header until the JavaScript has loaded).
+ * homepage: rotating studio photos behind the copy, cut by a curve (above it on phones), the brand lockup and the
+ * rating card. As the page opens its copy rises into place piece by piece, then the rating card; the pictures
+ * stay still and the text never fades, so the page's largest paint counts from the first frame (`entrance` in
+ * theme.css: CSS, never `reveal`, which would hide the header until the JavaScript has loaded).
  */
 export function PageHeader(props: PageHeaderProps) {
   const { variant = 'band' } = props
@@ -143,6 +143,15 @@ function SplitHeader({
   )
 }
 
+/**
+ * The curve that cuts the photos beside the copy (photo, from desktop up), traced from the live site's slides:
+ * one cubic in the 1600×806 frame they were cut for. As a mask sized and anchored like the photos (`cover`,
+ * left), it meets the copy where the slides' own cut did, and any plain photo gets it.
+ */
+const photoCut = `url("data:image/svg+xml,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="806"><path d="M976 0C935 78 831 483 459 806H1600V0Z"/></svg>',
+)}")`
+
 function PhotoHeader({
   title,
   highlight,
@@ -164,8 +173,11 @@ function PhotoHeader({
       <div className="relative aspect-[390/261] overflow-hidden lg:hidden">
         <Slideshow slides={mobileImages?.map((s) => s.image) ?? photos} sizes="100vw" />
       </div>
-      {/* From desktop up: the photos fill the whole header, cut by the white diagonal that holds the copy */}
-      <div className="absolute inset-0 hidden overflow-hidden lg:block">
+      {/* From desktop up: the photos fill the whole header, cut by the curve that leaves the copy on white */}
+      <div
+        className="absolute inset-0 hidden overflow-hidden mask-cover mask-left mask-no-repeat lg:block"
+        style={{ maskImage: photoCut, WebkitMaskImage: photoCut }}
+      >
         <Slideshow slides={photos} sizes="100vw" position="left" />
       </div>
       <div className="relative">
