@@ -49,6 +49,9 @@ const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
  * button. `band` is the dark centred title band, with the rating card and an icon under it when given
  * (service pages); `split` sets the copy beside a picture or carousel, as landing pages open; `photo` is the
  * homepage: rotating studio photos behind the copy (above it on phones), the brand lockup and the rating card.
+ * As the page opens its copy rises into place piece by piece, then the rating card; the pictures stay still and
+ * the text never fades, so the page's largest paint counts from the first frame (`entrance` in theme.css: CSS,
+ * never `reveal`, which would hide the header until the JavaScript has loaded).
  */
 export function PageHeader(props: PageHeaderProps) {
   const { variant = 'band' } = props
@@ -70,7 +73,7 @@ function BandHeader({
 }: PageHeaderProps) {
   return (
     <header id={id}>
-      <div className="bg-[#434343] px-4 pt-16 pb-20 text-center text-white">
+      <div className="entrance bg-[#434343] px-4 pt-16 pb-20 text-center text-white">
         {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
         <h1 className="mx-auto max-w-4xl text-[32px] font-bold leading-tight text-white md:text-display">
           {title}
@@ -91,7 +94,7 @@ function BandHeader({
           {image ? (
             <Picture image={image} alt={alt} sizes="180px" className="h-[180px] w-auto" />
           ) : null}
-          {rating ? <CompactRating source={rating} /> : null}
+          {rating ? <CompactRating source={rating} className="entrance entrance-late" /> : null}
         </div>
       ) : null}
     </header>
@@ -115,7 +118,7 @@ function SplitHeader({
   return (
     <header id={id} className="bg-white">
       <div className="container-content grid items-center gap-10 py-12 md:py-16 lg:grid-cols-2">
-        <div className="flex flex-col items-start">
+        <div className="entrance flex flex-col items-start">
           {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-deep')}>{eyebrow}</p> : null}
           <h1 className="text-[32px] font-bold leading-tight text-ink md:text-display">{title}</h1>
           {subtitle ? <p className="mt-4 text-[20px] font-bold text-ink">{subtitle}</p> : null}
@@ -167,7 +170,7 @@ function PhotoHeader({
       </div>
       <div className="relative">
         <div className="mx-auto flex max-w-[1440px] flex-col px-[14px] pt-[132px] pb-[77px] lg:min-h-[765px] lg:justify-center lg:px-[86px] lg:py-10">
-          <div className="max-w-[459px]">
+          <div className="entrance max-w-[459px]">
             {logo ? <Logo logo={logo} width={340} className="hidden lg:inline-flex" /> : null}
             <h1 className="text-[28px] font-bold leading-[1.4] text-ink lg:mt-5 lg:text-display lg:leading-[46px]">
               {before}
@@ -194,7 +197,7 @@ function PhotoHeader({
         {rating ? (
           <CompactRating
             source={rating}
-            className="absolute right-[120px] bottom-[25px] z-20 hidden lg:block"
+            className="entrance entrance-late absolute right-[120px] bottom-[25px] z-20 hidden lg:block"
           />
         ) : null}
       </div>

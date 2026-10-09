@@ -26,7 +26,7 @@ shell or to a primitive, never to one page.
   `primitives/motion-features.ts`, in their own chunk. `domMax` (layout animations, drag) is not loaded. Ask
   before adding it, because it costs another ~10 KB on every page.
 - Do not use the imperative `animate()`, `useAnimate` or `motion/mini`. Use one style: variants on `m`
-  components.
+  components. The PageHeader's CSS `entrance` (section 4) is the one exception.
 
 ## 2. Presets, not numbers
 
@@ -38,6 +38,7 @@ an ease or a distance:
 | `revealGroup`, `revealPiece` | A revealed block: pieces 0.08 s apart, each rising 24px and fading in over 0.6 s. |
 | `dropDown`, `dropSide` | A menu panel under its button (`y`) or a submenu beside its row (`x`): 0.2 s in, 0.15 s out. |
 | `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu). |
+| `entrance` (theme.css) | The PageHeader as the page opens: `revealGroup` and `revealPiece` in CSS, text moving without fading (see 4). |
 
 A new preset stays subtle:
 - 0.15–0.3 s for controls and 0.6–0.7 s for scroll reveals;
@@ -55,8 +56,21 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
 ## 4. Reveals
 
 - **On a page:** `reveal` on a block brings it in as it scrolls into view. Every `BlockShell` block takes it,
-  and so does `ContactSection`. Do not reveal `PageHeader` (it holds the largest paint) or a block that already
-  moves (the marquee strip).
+  and so does `ContactSection`. Do not reveal a block that already moves (the marquee strip).
+- **The PageHeader** never takes `reveal`: it holds the page's largest paint, and a Motion reveal would
+  prerender it hidden until the JavaScript and the features chunk have loaded (seconds on a slow phone, and
+  the LCP with them). It comes in with the one CSS animation of this kind instead: `entrance` (theme.css) on a
+  container brings each child 24px up into place, 0.08 s after the one before, over 0.6 s, from the first
+  paint (the numbers of `revealPiece` and `revealGroup`: change both together); `entrance-late` starts a
+  container after the copy (the rating card).
+  - **Text never fades, it only moves** (`h1` and `p` take the `settle` keyframes): Chrome never counts an
+    element first painted at opacity 0 as the LCP, not even once it shows, so a fading h1 or lead hands the
+    LCP to whatever paints next (the consent banner, after hydration). The button, the rule, the lockup and
+    the rating card fade as they rise; the pictures stay still. Measured on every English page: the LCP
+    element and time are the same with and without the entrance.
+  - It runs on screen only for visitors who did not ask for reduced motion, so nothing starts hidden for
+    anyone else, and it replays as each page mounts. A story that shows it waits in
+    `play: ({ canvasElement }) => entered(canvasElement)` (src/stories/play.ts) before axe runs.
 - **How it is driven:** the shell watches itself with `useInView` and switches `animate` from `hidden` to
   `shown`. It does not use `whileInView`: with `whileInView` and `once`, pieces mounted after the reveal (another
   tab's cards) inherit `hidden` and stay invisible. With `animate`, they inherit `shown` and come in on their

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { google, logo, mediaLabels } from '~/stories/data'
+import { entered } from '~/stories/play'
 import { sample } from '~/stories/samples'
 import { PageHeader, type PageHeaderProps } from './PageHeader'
 import { storyArgs } from './story-args'
@@ -9,6 +10,8 @@ const meta = {
   component: PageHeader,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<PageHeaderProps>('PageHeader'),
+  // The copy rises in as it opens: axe checks it once it has.
+  play: ({ canvasElement }) => entered(canvasElement),
 } satisfies Meta<typeof PageHeader>
 export default meta
 type Story = StoryObj<typeof meta>
