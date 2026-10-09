@@ -151,10 +151,10 @@ export const audiences = [
 ]
 
 export const services = [
-  { label: 'Piano Transcriptions', href: '/piano', icon: 'sample:icon' },
-  { label: 'Guitar Tab Transcriptions', href: '/guitar-tab', icon: 'sample:icon' },
-  { label: 'Trumpet Transcriptions', href: '/trumpet-transcription-service', icon: 'sample:icon' },
-  { label: 'Violin Transcriptions', href: '/violin-transcription-service', icon: 'sample:icon' },
+  { name: 'Piano Transcriptions', href: '/piano', image: 'sample:icon' },
+  { name: 'Guitar Tab Transcriptions', href: '/guitar-tab', image: 'sample:icon' },
+  { name: 'Trumpet Transcriptions', href: '/trumpet-transcription-service', image: 'sample:icon' },
+  { name: 'Violin Transcriptions', href: '/violin-transcription-service', image: 'sample:icon' },
 ]
 
 export const pianoPricing = {
@@ -245,7 +245,7 @@ const formCommon = {
 export const quoteForm = {
   ...formCommon,
   title: 'Contact us',
-  subtitle: 'Request your sheet music or digital notation services',
+  lead: 'Request your sheet music or digital notation services',
   label: 'Request your sheet music',
   sentBody: 'We usually reply within 1–4 hours with a quote and a delivery estimate.',
   link: {
@@ -265,7 +265,7 @@ export const quoteForm = {
 export const giftCardForm = {
   ...formCommon,
   title: 'Request your gift card',
-  subtitle: 'Tell us the amount and who it is for.',
+  lead: 'Tell us the amount and who it is for.',
   label: 'Request your gift card',
   sentBody: 'We will email you shortly to arrange the gift card.',
   amount: { label: 'Amount', placeholder: 'Write the amount' },

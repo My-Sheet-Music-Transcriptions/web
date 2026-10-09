@@ -54,22 +54,22 @@ export default function GiftCardPage() {
         stepLabel="Step {n}"
         id="how-it-works"
         items={[
-          { icon: 'dollar', text: 'Choose how much you want to gift.' },
+          { glyph: 'dollar', body: 'Choose how much you want to gift.' },
           {
-            icon: 'pen',
-            text: 'Let us know how you would like to customize the card and we will create it for you.',
+            glyph: 'pen',
+            body: 'Let us know how you would like to customize the card and we will create it for you.',
           },
           {
-            icon: 'music',
-            text: 'The receiver of the voucher can redeem it for any transcription worth the value of the voucher!',
+            glyph: 'music',
+            body: 'The receiver of the voucher can redeem it for any transcription worth the value of the voucher!',
           },
           {
-            icon: 'chat',
-            text: 'We can get in touch with the receiver of the voucher or they can contact us to arrange the details of the transcription.',
+            glyph: 'chat',
+            body: 'We can get in touch with the receiver of the voucher or they can contact us to arrange the details of the transcription.',
           },
           {
-            icon: 'gift',
-            text: 'You just gifted a new transcription to a special person! Let’s keep music alive!',
+            glyph: 'gift',
+            body: 'You just gifted a new transcription to a special person! Let’s keep music alive!',
           },
         ]}
       />

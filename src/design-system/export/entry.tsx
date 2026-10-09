@@ -12,7 +12,7 @@ import { withSamples } from '~/stories/samples'
  * Browser bundle of the design system (`window.MSMT`). Used by the published Design System
  * artifact's previews and by Design canvas mockups to render the real blocks.
  *
- *   MSMT.mount('Hero', element, { title: '...' })      // render a block into an element
+ *   MSMT.mount('PageHeader', element, { title: '...' })      // render a block into an element
  *   MSMT.renderAll()                                   // mount every [data-msmt] element
  *   <div data-msmt="Testimonials" data-props='{"title":"Reviews","items":[…]}'></div>
  */

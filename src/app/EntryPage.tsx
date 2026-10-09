@@ -3,7 +3,7 @@ import type { Locale } from '~/i18n/types'
 
 /**
  * Resolves an entry by locale and path and renders its page component inside the main landmark. There are no
- * templates: a page is blocks only, and opens with its own `PageHeader` (or `Hero` on the homepage). The body
+ * templates: a page is blocks only, and opens with its own `PageHeader` (`variant="photo"` on the homepage). The body
  * comes from the cache the route loader filled, so there is no Suspense boundary: the whole page is in the first
  * HTML flush.
  */

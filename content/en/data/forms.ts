@@ -30,7 +30,7 @@ const common = {
 export const quoteForm: ContactFormCopy = {
   ...common,
   title: 'Contact us',
-  subtitle: 'Request your sheet music or digital notation services',
+  lead: 'Request your sheet music or digital notation services',
   label: 'Request your sheet music',
   sentBody: 'We usually reply within 1–4 hours with a quote and a delivery estimate.',
   link: {
@@ -100,7 +100,7 @@ export const quoteForm: ContactFormCopy = {
 export const giftCardForm: ContactFormCopy = {
   ...common,
   title: 'Request your gift card',
-  subtitle: 'Tell us the amount and who it is for. We create the card and send it to you.',
+  lead: 'Tell us the amount and who it is for. We create the card and send it to you.',
   label: 'Request your gift card',
   sentBody: 'We will email you shortly to arrange the gift card.',
   amount: { label: 'Amount', placeholder: 'Write the amount' },

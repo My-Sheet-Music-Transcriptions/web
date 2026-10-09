@@ -19,4 +19,5 @@ export const Peach: Story = {
   parameters: { backgrounds: { default: 'white' } },
 }
 export const Cream: Story = { args: { tone: 'cream' } }
-export const Outline: Story = { args: { tone: 'outline' } }
+/** The wide shadow of white cards over a photo band. */
+export const Band: Story = { args: { shadow: 'band' } }

@@ -1,6 +1,6 @@
 import { mediaLabels } from '@content/en/data/labels'
-import { CtaBand, Gallery, MediaText, PageHeader, Section, Table } from '~/components/blocks'
-import { Text } from '~/components/typography'
+import { MediaText, PageHeader, PictureGrid, Section, Table } from '~/components/blocks'
+import { Text, TextLink } from '~/components/typography'
 import office8 from './office-8.jpg?w=560;1000&as=picture'
 import office9 from './office-9.jpg?w=560;1000&as=picture'
 import office10 from './office-10.jpg?w=560;1000&as=picture'
@@ -84,11 +84,11 @@ export default function CareersPage() {
         <Text>Our music sounds as good as ever: come and play your part!</Text>
       </Section>
 
-      <Gallery
-        variant="grid"
+      <PictureGrid
+        shape="photo"
         columns={6}
         label="The My Sheet Music Transcriptions team"
-        images={[
+        items={[
           { image: teamOriol, alt: 'Oriol, Founder & CEO' },
           { image: teamRoc, alt: 'Roc, My Sheet Music Transcriptions team' },
           { image: teamArnau, alt: 'Arnau, My Sheet Music Transcriptions team' },
@@ -311,14 +311,26 @@ export default function CareersPage() {
         </Text>
       </MediaText>
 
-      <CtaBand
+      <Section
+        align="center"
+        rule={false}
+        width="narrow"
         tone="peach"
         title="No job openings for you?"
-        text={
-          '**Don’t worry.** We still review unsolicited applications and, if you wish, keep your information in case there’s a suitable vacancy in the future.\n\nPlease use this email address to contact us if you don’t see a suitable position for you right now: [job@mysheetmusictranscriptions.com](mailto:job@mysheetmusictranscriptions.com)'
-        }
         cta={{ label: 'Apply now', href: 'mailto:job@mysheetmusictranscriptions.com' }}
-      />
+      >
+        <Text>
+          <strong>Don’t worry.</strong> We still review unsolicited applications and, if you wish,
+          keep your information in case there’s a suitable vacancy in the future.
+        </Text>
+        <Text>
+          Please use this email address to contact us if you don’t see a suitable position for you
+          right now:{' '}
+          <TextLink href="mailto:job@mysheetmusictranscriptions.com">
+            job@mysheetmusictranscriptions.com
+          </TextLink>
+        </Text>
+      </Section>
     </>
   )
 }

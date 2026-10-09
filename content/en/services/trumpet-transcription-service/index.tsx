@@ -9,12 +9,12 @@ import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=pi
 import {
   CardGrid,
   ContactSection,
-  CtaBand,
   FaqList,
   PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
+  Section,
   Steps,
 } from '~/components/blocks'
 import trumpet from './trumpet.png?w=180;360&as=picture'
@@ -36,11 +36,11 @@ export default function TrumpetTranscriptionServicePage() {
         videoPoster={videoPoster}
         labels={mediaLabels}
         title="How does it work?"
-        layout="columns"
+        variant="columns"
         items={[
           {
             title: 'Send us the music',
-            text: 'All we need is a video or an audio file',
+            body: 'All we need is a video or an audio file',
             image: trumpet,
           },
           {
@@ -49,11 +49,11 @@ export default function TrumpetTranscriptionServicePage() {
               title: 'Trumpet Transcription Service',
               caption: 'Play to compare with the sheet music',
             },
-            text: 'We transcribe **your favorite trumpet songs** for you. We transcribe the **most iconic trumpet parts** and the coolest **trumpet solos** you can dream of. We also create **trumpet covers** of your favorite songs and **adapt** any music you wish to play – we can make any tune sound snazzy on the trumpet.\n\nOur professional trumpet players and transcribers will create **custom sheet music** for you.',
+            body: 'We transcribe **your favorite trumpet songs** for you. We transcribe the **most iconic trumpet parts** and the coolest **trumpet solos** you can dream of. We also create **trumpet covers** of your favorite songs and **adapt** any music you wish to play – we can make any tune sound snazzy on the trumpet.\n\nOur professional trumpet players and transcribers will create **custom sheet music** for you.',
           },
           {
             title: 'Receive the trumpet sheet!',
-            text: 'We send you the score in a printable format',
+            body: 'We send you the score in a printable format',
             image: trumpet1WoodchoppersBall,
           },
         ]}
@@ -93,12 +93,16 @@ export default function TrumpetTranscriptionServicePage() {
         ]}
       />
 
-      <CtaBand
+      <Section
+        align="center"
+        rule={false}
+        width="narrow"
+        tone="cream"
         title="Unsure about music notation?"
         cta={{ label: 'See our Glossary', href: '/glossary-of-musical-terms' }}
       />
 
-      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
+      <CardGrid title="What's included?" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing for trumpet"

@@ -198,6 +198,11 @@ peach sections, teal and orange accents, Montserrat throughout, rounded cards wi
 Pages are built from **blocks**. Every section of a page mockup or artboard mirrors exactly one block of this
 system, in order, so that the approved design can be written as a page component, one block per section.
 
+Every block shares one frame: a white, cream or peach section, a centred heading with a short orange rule (white,
+over a photo band with wavy edges, when the block has a photo), an optional short line above it and a sentence
+under it, the block's content, and a closing button. Blocks differ in what they list, never in that frame: a
+design that needs a new frame, spacing or heading style is a change to the system, not to one page.
+
 ## Using the live components
 
 This system ships its real React components as one classic script: \`components/bundle.js\` (global

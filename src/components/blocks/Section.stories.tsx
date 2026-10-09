@@ -21,3 +21,16 @@ export const PeachWithLinks: Story = {
     ],
   },
 }
+/** One line and one button that point somewhere (the band the live site puts between sections). */
+export const CentredBand: Story = {
+  args: {
+    align: 'center',
+    rule: false,
+    width: 'narrow',
+    tone: 'cream',
+    eyebrow: 'For artists',
+    title: 'Unsure about music notation?',
+    children: undefined,
+    cta: { label: 'See our Glossary', href: '/glossary-of-musical-terms' },
+  },
+}

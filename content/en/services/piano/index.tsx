@@ -9,12 +9,12 @@ import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=pi
 import {
   CardGrid,
   ContactSection,
-  CtaBand,
   FaqList,
   PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
+  Section,
   Steps,
 } from '~/components/blocks'
 import piano from './piano.png?w=180;360&as=picture'
@@ -38,11 +38,11 @@ export default function PianoPage() {
         videoPoster={videoPoster}
         labels={mediaLabels}
         title="How does it work?"
-        layout="columns"
+        variant="columns"
         items={[
           {
             title: 'Send us the music',
-            text: 'All we need is a video or an audio file',
+            body: 'All we need is a video or an audio file',
             image: piano,
           },
           {
@@ -51,11 +51,11 @@ export default function PianoPage() {
               title: 'Piano Transcriptions',
               caption: 'Play to compare with the sheet music',
             },
-            text: 'We transcribe your favorite **piano covers**; **piano accompaniments** for singing auditions; **jazz piano solos** to enjoy at home; **classical piano** pieces; **original piano compositions**; **piano & vocal** scores to sing along with friends… you name it!\n\nOur in-house pianists will create **custom sheet music** for you. Whether you want an **exact note-for-note** transcription, an **arrangement**, or an **affordable chart** that you can follow at your band rehearsal, we will take care of all your needs.',
+            body: 'We transcribe your favorite **piano covers**; **piano accompaniments** for singing auditions; **jazz piano solos** to enjoy at home; **classical piano** pieces; **original piano compositions**; **piano & vocal** scores to sing along with friends… you name it!\n\nOur in-house pianists will create **custom sheet music** for you. Whether you want an **exact note-for-note** transcription, an **arrangement**, or an **affordable chart** that you can follow at your band rehearsal, we will take care of all your needs.',
           },
           {
             title: 'Receive the piano sheet!',
-            text: 'We send you the score in a printable format',
+            body: 'We send you the score in a printable format',
             image: piano1ManOfWar,
           },
         ]}
@@ -115,12 +115,16 @@ export default function PianoPage() {
         ]}
       />
 
-      <CtaBand
+      <Section
+        align="center"
+        rule={false}
+        width="narrow"
+        tone="cream"
         title="Unsure about music notation?"
         cta={{ label: 'See our Glossary', href: '/glossary-of-musical-terms' }}
       />
 
-      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
+      <CardGrid title="What's included?" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing for piano"
