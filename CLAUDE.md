@@ -10,8 +10,8 @@ pnpm dev                      # Vite dev server, every locale under /en, /es... 
 pnpm storybook                # design system docs + a11y panel (http://localhost:6006)
 pnpm check                    # biome + tsc + unit tests  (fast, run before every commit)
 pnpm check:pr                 # exactly what PR CI runs: check + English build + SEO suite (~1.5 min)
-SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemap -> dist/client
-pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemap (what deploy previews ship)
+SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemaps -> dist/client
+pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemaps (what deploy previews ship)
 pnpm serve:dist               # serve dist/client on :4173
 pnpm test:seo                 # SEO conformance over dist/client (needs a build)
 pnpm test:storybook           # every story through axe (contrast included)
@@ -76,8 +76,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `mockups/<slug>/sections.html` (+ `img/`, `sections.<variant>.html` for design options, `preview.json` with title,
   path, locale, preview URL, canvas URL and PR) – the approved mockup of a page, the single source every preview
   surface and the build start from; `tests/unit/mockups.test.ts` keeps every mockup valid.
-- `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `jsonld.ts`, `og/template.tsx` (Satori).
-- `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG PNGs), `serve-dist.ts`, `lib/content-fs.ts`,
+- `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `alternates.ts` (hreflang, shared with the
+  sitemaps), `jsonld.ts`, `og/template.tsx` (Satori).
+- `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG PNGs), `postbuild.ts` (sitemaps, `_redirects`),
+  `serve-dist.ts`, `lib/content-fs.ts`, `lib/sitemap.ts` (see "Sitemaps" below),
   `lib/chromium.ts` (the Chromium Playwright, Storybook's vitest, `lhci` and `ds:shot` launch: Playwright's own,
   else the one the container ships in `/opt/pw-browsers`; `CHROME_PATH` overrides),
   `design-system/{export,index,lib}.ts` (artifact export, `ds:index --check` and the publish record),
@@ -98,7 +100,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - Slugs are flat and unique per locale across collections; reserved: api, assets, og, faqs, review, 404, storybook.
 - Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description/image
   (the image file must exist in dist), twitter card, `<html lang>`, valid JSON-LD, images with alt/width/height,
-  no broken internal links, present in sitemap unless `noindex`.
+  no broken internal links, listed once in its collection's sitemap unless `noindex`, with the hreflang alternates of
+  its `<head>`.
 - Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`). The one exception
   is elements marked `data-live-colour`, which keep the live site's colours by decision (filled buttons, pricing headers,
   the active nav item, the current language, the response-time pill); contrast is checked everywhere else.
@@ -149,6 +152,19 @@ mode: `SITE_LOCALE` unset or `all`); only the English Netlify site builds previe
   `absoluteUrl(locale, path)`. The language switcher uses `localeSwitchHref` (falls back to the live site for a
   locale with no pages yet). Locale codes are reserved slugs.
 - `/api`, `/assets` and `/og` are shared and never prefixed.
+
+### Sitemaps
+
+Every production build writes, after prerendering (`scripts/postbuild.ts` → `scripts/lib/sitemap.ts`), an index at
+`/sitemap.xml` (named by `robots.txt` and every page's `<link rel="sitemap">`) and one sitemap per collection,
+`/<name>-sitemap.xml` (Yoast's names: `page`, `post`, `services`…, `SITEMAP_NAMES`). They are made from the entries
+in `content/` (not drafts, not `noindex`), the same list the build prerenders, so a new page or collection is listed
+with no extra step; a new collection must be named in `SITEMAP_NAMES` (type error otherwise). Each URL carries
+hreflang alternates to its translations on the other TLDs, from the same function as the page `<head>`
+(`src/seo/alternates.ts`); `lastmod` is `meta.updated`, else the page folder's last commit. The WordPress sitemap URLs
+(`/sitemap_index.xml`, other Yoast and WordPress names, `LEGACY_SITEMAPS`) 301 to the index. Previews have none.
+`tests/unit/sitemap.test.ts` (every locale, plus a multi-language fixture) and the SEO suite (sitemaps == indexable
+pages, alternates == `<head>`) keep them complete.
 
 ## Design tokens
 

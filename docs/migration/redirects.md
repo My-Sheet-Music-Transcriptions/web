@@ -12,7 +12,7 @@ live sites answered in 2025–2026, and old slugs. **It is incomplete until step
 
 Status legend: **live** = the live site answered this redirect in 2025–2026 (archived) · **planned** = new rule needed
 because the URL stops existing · **verify** = an archived URL whose current behaviour is unknown; check it before adding
-a rule.
+a rule · **done** = the build already writes this rule.
 
 ## How rules will ship (built in W1, see the plan)
 
@@ -62,7 +62,7 @@ Trailing slash: WordPress canonicals have no trailing slash (`/pricing`). The ne
 | `/shop/*` | `https://catalog.mysheetmusictranscriptions.com/shop/:splat` | live | the live site already sends at least one product there (decision D4/D6) |
 | `/shop` | `https://catalog.mysheetmusictranscriptions.com/` | planned | D4 |
 | `/catalog` | `https://catalog.mysheetmusictranscriptions.com/` | live | |
-| `/sitemap_index.xml`, `/sitemap.xml` → kept, `/*-sitemap.xml` | `/sitemap.xml` | planned | Search Console has the Yoast sitemaps registered |
+| `/sitemap_index.xml`, `/*-sitemap.xml` not served by the new site, `/wp-sitemap*.xml` | `/sitemap.xml` | done | Search Console has the Yoast sitemaps registered. The new site keeps Yoast's names for its own per-collection sitemaps (`/page-sitemap.xml`, `/services-sitemap.xml`…); every other WordPress sitemap URL goes to the index. Every domain, from `LEGACY_SITEMAPS` in `scripts/lib/sitemap.ts` |
 | `/feed`, `/music-blog/feed` | RSS feed or `/music-blog` | planned | decision D11 |
 | `/cart`, `/checkout`, `/my-account/*`, `/my-dashboard` | hub or `/` | planned | WooCommerce endpoints (D4) |
 | `/wp-admin/*`, `/wp-login.php`, `/xmlrpc.php`, `/wp-json/*` | (none: 404) | planned | |

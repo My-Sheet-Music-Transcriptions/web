@@ -26,12 +26,13 @@ import pianoIcon from '~/assets/images/icons/piano.png?w=150;300&as=picture'
 import pianoTrioIcon from '~/assets/images/icons/piano-trio.png?w=150;300&as=picture'
 import pianoVocalIcon from '~/assets/images/icons/piano-vocal.png?w=150;300&as=picture'
 import pricingMelodicIcon from '~/assets/images/icons/pricing-melodic.png?w=150;300&as=picture'
+// Also the transposing icon: the live site shows the same picture for both, and two identical files would be emitted
+// under one name at random, breaking the other name's links.
 import rhythmChartsIcon from '~/assets/images/icons/rhythm-charts.png?w=150;300&as=picture'
 import saxophoneIcon from '~/assets/images/icons/saxophone.png?w=150;300&as=picture'
 import stringQuartetIcon from '~/assets/images/icons/string-quartet.png?w=150;300&as=picture'
 import stringsIcon from '~/assets/images/icons/strings.png?w=150;300&as=picture'
 import synthesiaIcon from '~/assets/images/icons/synthesia.png?w=150;300&as=picture'
-import transposingIcon from '~/assets/images/icons/transposing.png?w=150;300&as=picture'
 import tromboneIcon from '~/assets/images/icons/trombone.png?w=150;300&as=picture'
 import trumpetIcon from '~/assets/images/icons/trumpet.png?w=150;300&as=picture'
 import ukuleleIcon from '~/assets/images/icons/ukulele.png?w=150;300&as=picture'
@@ -210,7 +211,7 @@ export const allServices: PictureItem[] = [
   {
     name: 'Sheet Music Transposing',
     href: '/sheet-music-transposing-service',
-    image: transposingIcon,
+    image: rhythmChartsIcon,
   },
   { name: 'Big Band Arrangements', href: '/big-band-arrangement-service', image: hornsIcon },
   {
