@@ -16,8 +16,9 @@ export interface MediaTextProps extends ShellProps, MediaContent {
 }
 
 /**
- * Prose beside media: a picture, a carousel, a before/after pair or a video. The free-form middle of a page:
- * a product with its caption and button, a use case, who we are.
+ * Prose beside media: a picture with its caption, a carousel, a before/after pair (`layout="pair"`) or a
+ * video, left or right, with an optional eyebrow, heading and button. `align="center"` puts the heading above
+ * and the button below (who we are).
  */
 export function MediaText({
   image,

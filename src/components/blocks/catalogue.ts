@@ -38,12 +38,13 @@ export type BlockCategory = keyof typeof CATEGORIES
 /**
  * The block manifest: one entry per block in `blocks`. It drives the generated README table, the
  * published Design System artifact (docs + live previews) and the mockup skill. A block without an
- * entry is a type error, so the catalogue can never fall behind the code.
+ * entry is a type error, so the catalogue can never fall behind the code. What the catalogue does not
+ * repeat comes from the block's own source: its description is the doc comment on `export function
+ * <Name>` (the one Storybook shows too) and its props are `<Name>Props`. The stories take their
+ * default args from here (`storyArgs`), and tests/unit/catalogue.test.ts checks every `usage` line
+ * against the props.
  */
 export interface BlockDoc {
-  group: 'Blocks'
-  /** One sentence, what the block is for. */
-  description: string
   /** What it shows (see CATEGORIES). */
   category: BlockCategory
   /** One line: the need that makes this the block to pick. */
@@ -66,12 +67,9 @@ export interface BlockDoc {
 
 export const catalogue = {
   PageHeader: {
-    group: 'Blocks',
     category: 'header',
     useWhen: 'The first block of every page: its h1, a subtitle or lead, a button.',
     notFor: 'a heading further down the page: every block has its own `title`.',
-    description:
-      'Page opening. `band`: dark centred title band with an orange rule, then the instrument icon and the compact rating card when given (service pages). `split`: white, copy and button left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the copy, cut by a curve that leaves the copy on white (above it on phones), brand lockup, orange highlight and the floating rating card.',
     defaults: {
       title: 'Piano Transcription Service',
       subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',
@@ -86,13 +84,10 @@ export const catalogue = {
       'One per page, always first. The band on content pages (the service icon as `image` + `rating` on service pages), `variant="split"` on landing pages, `variant="photo"` on the homepage only (`highlight` must be a substring of the title).',
   },
   Section: {
-    group: 'Blocks',
     category: 'text',
     useWhen:
       'Prose with a heading, or one line and one button that point somewhere (`align="center"`).',
     notFor: 'prose that belongs with a picture or video: MediaText.',
-    description:
-      'Titled section for a page\'s own prose: heading with its rule, white/cream/peach background, three widths, a filled `cta` and outline `links`. `align="center"` with `rule={false}` is the short band that points somewhere (the glossary, the form, an email).',
     defaults: { title: 'Use cases', id: 'demo' },
     children: 'Discover our services through educators we’ve worked with in the past.',
     usage:
@@ -100,12 +95,9 @@ export const catalogue = {
     previewHeight: 360,
   },
   MediaText: {
-    group: 'Blocks',
     category: 'text',
     useWhen: 'Prose beside media: a picture, a carousel, a before/after pair or a video.',
     notFor: 'pictures without prose: PictureGrid; a list of steps: Steps.',
-    description:
-      'Prose beside media (picture with caption, carousel, before/after pair with `layout="pair"`, video), optional eyebrow, heading and button; media left or right; `align="center"` puts the heading above and the button below (who we are).',
     defaults: {
       title: 'Choose the amount you would like to gift',
       image: 'sample:photo',
@@ -127,12 +119,9 @@ export const catalogue = {
       "Pictures live in the page folder (`import photo from './photo.jpg?w=480;960&as=picture'`). Keep prose to a few short paragraphs; use `cta` only for the section's main action.",
   },
   Samples: {
-    group: 'Blocks',
     category: 'text',
     useWhen: 'Showing our work: a recording beside the first page of the score we wrote.',
     notFor: 'a single video with prose: MediaText `video`.',
-    description:
-      'One row per sample: its title and the YouTube video (loaded on click) beside the score picture.',
     defaults: {
       labels: mediaLabels,
       items: [
@@ -155,12 +144,9 @@ export const catalogue = {
     guidelines: 'Scores live in the page folder (first page, PNG). Two to four samples.',
   },
   Table: {
-    group: 'Blocks',
     category: 'text',
     useWhen: 'Rows and columns of facts: job openings, prices per level.',
     notFor: 'prices from: PricingCards; cards: CardGrid.',
-    description:
-      'A table with a caption and column headings; links in cells; each row becomes a labelled card on phones.',
     defaults: {
       title: 'Job openings',
       caption: 'General openings',
@@ -179,12 +165,9 @@ export const catalogue = {
     previewHeight: 420,
   },
   CardGrid: {
-    group: 'Blocks',
     category: 'list',
     useWhen: 'Cards in a row: who we work for, what is included, why us, services with prices.',
     notFor: 'pictures with only a name or a link: PictureGrid.',
-    description:
-      'Grid of cards (icon or picture, title, text, optional button). `variant`: card (white), tile (peach, the audiences) or plain. With an `image`, white cards over that photo band. `tabs`: the same cards in sets (currencies).',
     defaults: {
       title: "What's included?",
       image: 'sample:photo',
@@ -198,13 +181,10 @@ export const catalogue = {
       'Card text is light markdown (paragraphs, **bold**, [links](/path)). Icons are pictures imported in the data (src/assets/images/icons) or the page folder; the photo band is the studio, `~/assets/images/bands/included-bg.jpg`.',
   },
   PictureGrid: {
-    group: 'Blocks',
     category: 'list',
     useWhen:
       'Pictures with a name: services with their icons, partner logos, musicians, our team or our books.',
     notFor: 'pictures with a text each: CardGrid; one picture beside prose: MediaText.',
-    description:
-      'Grid of pictures, each with its name and caption, linked when it has an `href`. `shape`: icon (services), logo, portrait (round) or photo (square). `variant="marquee"`: a strip of tall photos that scrolls by on its own (hidden on phones). `limit` shows the first n.',
     defaults: {
       title: 'We transcribe any instrument and musical genre',
       items: services,
@@ -218,12 +198,9 @@ export const catalogue = {
       'The name is the line under the picture; a picture without one (a logo, a photo) gets an `alt`. Logos, portraits and photos live in the page folder.',
   },
   Steps: {
-    group: 'Blocks',
     category: 'list',
     useWhen: 'A process step by step: how ordering works, how a gift card works, why convert.',
     notFor: 'cards that are not in order: CardGrid.',
-    description:
-      '`timeline`: numbered vertical list with a glyph or number per step. `columns`: steps side by side, each with its picture or video (the homepage adds one wide illustration on desktop).',
     defaults: {
       title: 'How it works',
       id: 'how-it-works',
@@ -248,12 +225,9 @@ export const catalogue = {
       'Three to seven steps, one or two sentences each. Glyphs come from the Icon primitive (dollar, pen, music, chat, gift, send, check…).',
   },
   Stats: {
-    group: 'Blocks',
     category: 'list',
     useWhen: 'Two to four figures that back a claim, each with its one-line label.',
     notFor: 'our own ratings and counter: RatingBanner.',
-    description:
-      'A row of big teal figures, each above what it measures, under an optional heading.',
     defaults: {
       title: 'Turn your music into engaging materials',
       items: [
@@ -266,12 +240,9 @@ export const catalogue = {
     previewHeight: 380,
   },
   PricingCards: {
-    group: 'Blocks',
     category: 'list',
     useWhen: 'Any page that talks about price: price-from cards with the factors.',
     notFor: 'a price inside a sentence: say it in prose, from data, never typed in.',
-    description:
-      'Three price-from cards with coloured headers, floating icons and pricing factors, or one wide card (price beside numbered factors) when given one tier; intro prose goes in the children.',
     defaults: {
       title: 'Flexible pricing for piano',
       tiers: [pianoPricing],
@@ -284,11 +255,8 @@ export const catalogue = {
     guidelines: 'Prices live in content/<locale>/data; never type amounts into a page.',
   },
   FaqList: {
-    group: 'Blocks',
     category: 'list',
     useWhen: 'Questions and answers: a page-specific group, then the shared ones.',
-    description:
-      'Questions that open one at a time (no script), in titled groups with optional jump links, a button, and FAQPage structured data.',
     defaults: {
       title: 'Frequently asked questions',
       groups: [faqGroup],
@@ -302,12 +270,9 @@ export const catalogue = {
       'Answers are light markdown (paragraphs, **bold**, [links](/path), "- " lists). One FaqList with structured data per page.',
   },
   RatingBanner: {
-    group: 'Blocks',
     category: 'reviews',
     useWhen: 'A big trust moment mid-page: the counter and the rating cards over a photo.',
     notFor: 'quotes from customers: Testimonials.',
-    description:
-      'Full-bleed piano photo with white wavy edges, a white heading, the big counter and a row of rating cards (Google, Trustpilot or customers, Facebook).',
     defaults: {
       title: 'The highest-rated online sheet music transcribers',
       counter: { value: 71844, label: 'transcriptions delivered since 2011' },
@@ -321,12 +286,9 @@ export const catalogue = {
       'One per page. Numbers live in data/ratings.ts; never type them into a page. `image` is the piano photo every page imports from `~/assets/images/bands/stats-bg.jpg`.',
   },
   Testimonials: {
-    group: 'Blocks',
     category: 'reviews',
     useWhen: 'Quotes that back a claim: a few customer reviews with stars.',
     notFor: 'ratings and counts: RatingBanner.',
-    description:
-      'Customer quote cards in two columns with teal stars over the peach staff lines, and an optional link to all reviews.',
     defaults: {
       title: 'Customer Reviews',
       items: reviews.slice(0, 2),
@@ -340,12 +302,9 @@ export const catalogue = {
       'Quotes are verbatim from Trustpilot/Google; add new ones to data/reviews.ts, never inline. Pass only the reviews to show.',
   },
   ContactSection: {
-    group: 'Blocks',
     category: 'cta',
     useWhen: 'The last section of every page that asks for a quote or a gift card.',
     notFor: 'a second form on the same page; one per page.',
-    description:
-      'Peach section under a white wave: title, lead, the teal response-time pill and the request form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone. `variant="gift-card"`: name, email, amount, currency, details. Submits to the contact server function; works without JavaScript.',
     defaults: { form: quoteForm },
     usage:
       '<ContactSection form={quoteForm} returnTo="/piano" />\n<ContactSection form={giftCardForm} variant="gift-card" id="gift-card" />',

@@ -27,8 +27,9 @@ export interface CardGridProps extends ShellProps {
 }
 
 /**
- * A grid of cards, each an icon or picture with a title and a short text: who we work for, what is
- * included, why choose us, services with their prices. One block for every "cards in a row" section.
+ * A grid of cards, each an icon or picture with a title, a short text and an optional button. `variant`:
+ * card (white), tile (peach, the audiences) or plain. With an `image`, white cards over that photo band.
+ * `tabs`: the same cards in sets (currencies).
  */
 export function CardGrid({
   items = [],

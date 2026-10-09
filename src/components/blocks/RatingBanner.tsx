@@ -16,7 +16,10 @@ export interface RatingBannerProps extends HeadingProps {
   image: PictureSource
 }
 
-/** The big trust moment: a photo band with the transcriptions counter and the rating cards. */
+/**
+ * The big trust moment: a full-bleed photo with white wavy edges, a white heading, the transcriptions counter
+ * and a row of rating cards (Google, Trustpilot or customers, Facebook).
+ */
 export function RatingBanner({ counter, sources, ...shell }: RatingBannerProps) {
   const locale = useLocale()
   return (

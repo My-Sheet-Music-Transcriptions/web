@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { type BlockDoc, catalogue } from '../../src/components/blocks/catalogue'
 import { FONT_FILES, parseTheme, toArtifactTokens } from '../../src/design-system/theme-parse'
+import { blockDescription } from './blocks-lib'
 import { COMP, OUT, PROJ, writeIndex } from './lib'
 import { blockTable, withBlockTable } from './readme-lib'
 
@@ -144,14 +145,14 @@ for (const [name, doc] of Object.entries(catalogue) as [string, BlockDoc][]) {
     : '_No props._'
   fs.writeFileSync(
     path.join(dir, 'README.md'),
-    `# ${name}\n\n${doc.description}\n\n## Usage (page component)\n\n\`\`\`tsx\n${doc.usage}\n\`\`\`\n\n## Props\n\n${propsTable}\n${doc.children ? '\nChildren: prose, written as `<Text>` paragraphs (`<strong>`/`<em>` inside) in a page; light markdown (paragraphs, **bold**) in a mockup.\n' : ''}${doc.dataSource ? `\nData: \`${doc.dataSource}\`\n` : ''}${doc.guidelines ? `\n## Guidelines\n\n${doc.guidelines}\n` : ''}\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}" data-props='${JSON.stringify({ ...doc.defaults, ...(doc.children ? { children: '…' } : {}) })}'></div>\n\`\`\`\n`,
+    `# ${name}\n\n${blockDescription(name)}\n\n## Usage (page component)\n\n\`\`\`tsx\n${doc.usage}\n\`\`\`\n\n## Props\n\n${propsTable}\n${doc.children ? '\nChildren: prose, written as `<Text>` paragraphs (`<strong>`/`<em>` inside) in a page; light markdown (paragraphs, **bold**) in a mockup.\n' : ''}${doc.dataSource ? `\nData: \`${doc.dataSource}\`\n` : ''}${doc.guidelines ? `\n## Guidelines\n\n${doc.guidelines}\n` : ''}\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}" data-props='${JSON.stringify({ ...doc.defaults, ...(doc.children ? { children: '…' } : {}) })}'></div>\n\`\`\`\n`,
   )
   fs.writeFileSync(
     path.join(dir, 'preview.html'),
     previewHtml(
       name,
       { ...doc.defaults, ...(doc.children ? { children: doc.children } : {}) },
-      doc.group,
+      'Blocks',
       doc.previewHeight,
     ),
   )

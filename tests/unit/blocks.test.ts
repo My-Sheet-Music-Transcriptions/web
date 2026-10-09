@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import {
+  blockDescription,
   blockIndex,
   blockProps,
   blockUsage,
@@ -22,6 +23,13 @@ describe('block props', () => {
     const doc = catalogue[name] as { defaults: object; children?: string }
     const props = { ...doc.defaults, ...(doc.children ? { children: doc.children } : {}) }
     expect(checkProps(name, props)).toEqual([])
+  })
+
+  it.each(names)('%s describes itself in the doc comment of its function', (name) => {
+    const description = blockDescription(name)
+    expect(description.length, description).toBeGreaterThanOrEqual(40)
+    expect(description.length, description).toBeLessThanOrEqual(500)
+    expect(description, 'no JSDoc tags in the description').not.toMatch(/(^|\s)@\w/)
   })
 
   it('reads the props a block inherits (ShellProps from BlockShell, MediaContent from Media)', () => {

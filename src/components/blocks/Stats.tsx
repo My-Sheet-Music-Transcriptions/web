@@ -7,7 +7,7 @@ export interface StatsProps extends ShellProps {
   items: Stat[]
 }
 
-/** A row of big figures that back a claim (market numbers, results), each with its one-line label. */
+/** A row of big teal figures that back a claim, each above its one-line label, under an optional heading. */
 export function Stats({ items, ...shell }: StatsProps) {
   return (
     <BlockShell {...shell} cascade>

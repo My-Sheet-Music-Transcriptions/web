@@ -39,9 +39,9 @@ const pictures = {
 }
 
 /**
- * Pictures in a row, each with its name: the instruments and services we transcribe (icons that link),
- * partner logos, the musicians who trust us (portraits), our team or our books (photos), or the strip of
- * sheet music photos that scrolls by on the homepage.
+ * A grid of pictures, each with its name and caption, linked when it has an `href`. `shape`: icon
+ * (services), logo, portrait (round) or photo (square). `variant="marquee"`: a strip of tall photos that
+ * scrolls by on its own (hidden on phones). `limit` shows the first n.
  */
 export function PictureGrid({
   items,
