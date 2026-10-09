@@ -54,7 +54,7 @@ export function Thing({ items, ...shell }: ThingProps) {
   - `align`: `center` or `start`;
   - `rule`: on or off.
 - **What a block never writes:** a `<section>`, an `<h2>`, `SectionHeading`, `useTitleId`, a lead `<p>`, a CTA row, `py-[…]`, or `container-*`/`max-w-[1140px]`.
-- **What `className` is for:** a texture or visibility (`bg-staff-lines`, `hidden md:block`), or clearance for a decoration (the form's wave). Never for spacing tweaks.
+- **What `className` is for:** visibility (`hidden md:block`), or room or a frame for a decoration (the form's wave, Testimonials' staff lines). Never for spacing tweaks.
 - **When the heading sits elsewhere** (beside a picture), pass children as a function: `{({ heading, actions }) => …}` (see MediaText).
 - **Narrower props:**
   - A block that needs a title redeclares `title: string` (Testimonials).

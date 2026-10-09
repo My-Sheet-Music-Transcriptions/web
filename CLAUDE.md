@@ -250,7 +250,7 @@ components or layout.
   no copy (text, alt, aria labels, placeholders, defaults), no picture imports or lookups, no `content/` data, no
   site strings. Every word a visitor reads and every picture arrives through props or `children`: pages pass them
   directly (from their folder and `content/<locale>/data`), and `src/app` passes the chrome's from the site config.
-  The design system's own marks are not content: the `Icon` glyph set, colours, textures (`bg-staff-lines`), the
+  The design system's own marks are not content: the `Icon` glyph set, colours, textures and drawn decorations (the staff lines behind Testimonials), the
   numbers and punctuation it formats. `tests/unit/components.test.ts` lists every breach with file:line.
 - **Co-location, no external assets.** Everything a page or component needs sits next to it: a page's images
   in its folder, a block's story and docs beside the block. Nothing on the site or in the artifacts references a

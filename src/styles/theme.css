@@ -40,6 +40,7 @@
   --color-peach-deep: #fbe0cb;
   --color-cream: #f7eee7; /* pricing tier card body */
   --color-sand: #efe7df;
+  --color-staff: #d87b55; /* the staff lines Testimonials draws behind its cards, at 20% (stroke-staff/20) */
   --color-line: #e5e5e5;
   --color-footer: #222222;
   --color-footer-text: #c9c9c9;
@@ -87,9 +88,6 @@
   --breakpoint-2xl: 1536px; /* unused, kept in px for ordering */
   --spacing-section: 50px;
   --spacing-section-lg: 90px;
-
-  /* Textures (components never import a picture; a decorative background is a token) */
-  --background-image-staff-lines: url("../assets/images/bands/reviews-lines.png"); /* the peach staff lines behind Testimonials */
 
   /* Motion */
   --animate-marquee: marquee 80s linear infinite; /* homepage photo strip: one photo every 8 s, as live */
@@ -141,12 +139,13 @@
     }
   }
   /* The pieces of a revealed block (`reveal`, Motion) are prerendered hidden and come in on scroll. Where
-     nothing should move (reduced motion) and on paper they show as they are; without JavaScript the root's
-     <noscript> does the same. */
+     nothing should move (reduced motion) and on paper they show as they are, lines fully drawn (no dashes);
+     without JavaScript the root's <noscript> does the same. */
   @media (prefers-reduced-motion: reduce), print {
     [data-reveal] {
       opacity: 1 !important;
       transform: none !important;
+      stroke-dasharray: none !important;
     }
   }
 }

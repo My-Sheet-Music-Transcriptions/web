@@ -42,7 +42,11 @@ function RootDocument({ children }: { children: ReactNode }) {
         <HeadContent />
         {/* Without JavaScript nothing animates: revealed pieces show as they are. */}
         <noscript>
-          <style>{'[data-reveal]{opacity:1!important;transform:none!important}'}</style>
+          <style>
+            {
+              '[data-reveal]{opacity:1!important;transform:none!important;stroke-dasharray:none!important}'
+            }
+          </style>
         </noscript>
       </head>
       <body>

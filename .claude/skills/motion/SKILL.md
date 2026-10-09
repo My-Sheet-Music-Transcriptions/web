@@ -41,6 +41,7 @@ an ease or a distance:
 | `tickerGroup`, `tickerDigit` | A figure of a revealed block (`Ticker`) rolling up like an odometer: each digit's column from 0 to it over 1.8 s, 0.12 s after the one before. |
 | `starsGroup`, `pop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. `pop` is also an icon popping in (`RevealItem preset="pop"`). |
 | `revealSide`, `drawDown` | A piece sliding in 16px from the left (a step's speech bubble, `preset="side"`), and a line drawing itself from its top over 0.4 s (the timeline, `preset="draw"`). |
+| `drawGroup`, `drawLine` | The staff lines behind Testimonials painting themselves, start to end, 0.12 s apart, over 1.8 s each (`pathLength` on `m.path`: only the dashes change, never the layout). |
 | `entrance-*`, `parallax` (theme.css) | The PageHeader: each piece fading in 40px from the side its variant calls for over 1.4 s as the page opens, the band's rule drawing itself, the homepage's photos sliding in behind their curve and lagging behind it on scroll (see 4). |
 
 A new preset stays subtle:
@@ -96,8 +97,12 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
   with the `preset` that fits it: `rise` (default), `pop` (an icon), `side` (a speech bubble, from the left)
   or `draw` (a line, from its top; give it `origin-top`).
 
-  Decorations (waves, lines) stay plain elements so they do not move. `RevealItem` is inert when the block is
-  not revealed.
+  Decorations (waves, lines) stay plain elements so they do not move. The one exception is a decoration drawn
+  as SVG strokes that paints itself in: Testimonials' staff lines, `m.path`s with `drawLine` under an `m.svg`
+  with `drawGroup`, each carrying `data-reveal` (theme.css then drops their dashes where nothing animates). Put
+  such an SVG in the shell's `cascade` group, not in a `RevealItem`: a piece that rises has a transform, and an
+  absolutely placed decoration would then cover the piece instead of the section. `RevealItem` is inert when
+  the block is not revealed.
 - **Inside a piece**, primitives join the reveal through the variants they inherit, and stay still anywhere
   else (the hero's rating card):
   - `Stars` pop in one after another (`starsGroup`, `pop`) once their card has come in;

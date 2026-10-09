@@ -68,6 +68,26 @@ export const drawDown: Variants = {
   shown: { scaleY: 1, transition: { duration: 0.4, ease: 'easeOut' } },
 }
 
+/** The lines behind a revealed block (the staff lines behind Testimonials): drawn one after another. */
+export const drawGroup: Variants = {
+  hidden: {},
+  shown: { transition: { staggerChildren: 0.12 } },
+}
+
+/**
+ * One of those lines painting itself from its start, unhurried at both ends, like a pen across the page. Only
+ * the stroke's dashes change (`pathLength`), never the layout. `custom` is the share of the line the section
+ * shows (a line can run on past its edge): that share is drawn over 1.8 s, the rest, unseen, at once.
+ */
+export const drawLine: Variants = {
+  hidden: { pathLength: 0 },
+  shown: (shown = 1) => ({
+    pathLength: shown,
+    transition: { duration: 1.8, ease: [0.65, 0, 0.35, 1] },
+    transitionEnd: { pathLength: 1 },
+  }),
+}
+
 const opening = { duration: 0.2, ease: 'easeOut' } as const
 const closing = { duration: 0.15, ease: 'easeIn' } as const
 
