@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import * as cheerio from 'cheerio'
 import fg from 'fast-glob'
+import sharp from 'sharp'
 import { describe, expect, it } from 'vitest'
 import { resolveSiteLocale } from '../../scripts/lib/site-locale'
 import { LEGACY_SITEMAPS } from '../../scripts/lib/sitemap'
@@ -100,15 +101,25 @@ describe.each(pages.map((p) => [p.route, p] as const))('%s', (_route, p) => {
     expect(c.startsWith(site.domain)).toBe(true)
     expect(c.endsWith('/') && c !== `${site.domain}/`).toBe(false)
   })
-  it('has Open Graph and Twitter tags with an image that exists', () => {
+  it('has Open Graph and Twitter tags', () => {
     if (is404(p)) return
-    for (const prop of ['og:title', 'og:description', 'og:image', 'og:url', 'og:type']) {
+    for (const prop of ['og:title', 'og:description', 'og:url', 'og:type']) {
       expect($(`meta[property="${prop}"]`).attr('content'), prop).toBeTruthy()
     }
+  })
+  it('has one og:image, in dist at its declared size (the 404 included)', async () => {
     expect($('meta[name="twitter:card"]').attr('content')).toBe('summary_large_image')
-    const img = $('meta[property="og:image"]').attr('content') ?? ''
-    expect(img.startsWith(site.domain)).toBe(true)
-    expect(existsInDist(img.slice(site.domain.length)), `og:image ${img} not in dist`).toBe(true)
+    const images = $('meta[property="og:image"]')
+    expect(images.length).toBe(1)
+    const img = images.attr('content') ?? ''
+    expect($('meta[name="twitter:image"]').attr('content')).toBe(img)
+    expect(img.startsWith(`${site.domain}/og/`), img).toBe(true)
+    const file = path.join(DIST, img.slice(site.domain.length))
+    expect(fs.existsSync(file), `og:image ${img} not in dist`).toBe(true)
+    const { width, height } = await sharp(file).metadata()
+    expect(`${width}x${height}`).toBe(
+      `${$('meta[property="og:image:width"]').attr('content')}x${$('meta[property="og:image:height"]').attr('content')}`,
+    )
   })
   it('has valid JSON-LD', () => {
     const scripts = $('script[type="application/ld+json"]')

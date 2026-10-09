@@ -41,7 +41,9 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
 4. **Meta** in `meta.ts` per `src/content/schema.ts`: `import type { PageMetaInput } from '~/content/schema'`
    then `export default { … } satisfies PageMetaInput` (or the collection's input type) and nothing else: it
    is read without running it, so only literals. `title` 30–65 chars, `description` 50–160, `translationKey`
-   shared across languages, the collection's fields (`shortTitle`, `icon`, `group`… for a service). Structured facts stay in
+   shared across languages, the collection's fields (`shortTitle`, `icon`, `group`… for a service). The share picture
+   (og:image) is made by the build from the title and description; only when the person wants a photo instead, put
+   it in the folder (at least 1200×630) and name it: `og: { image: { src: 'share.jpg', alt: '…' } }`. Structured facts stay in
    `content/<locale>/data/*.ts`; add the page to `data/nav.ts` / `data/footer.ts` where the preview shows
    it; its path leaves any legacy-link list by itself (`src/content/paths.generated.json` is generated).
 5. **Look at the real page while building it.** Start `pnpm dev` once in the background (Bash
@@ -55,8 +57,8 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
    runs it rewrites `src/routeTree.gen.ts` with its own variant right after the checks regenerate it, which
    shows up as false type errors.
 6. **All checks green before pushing:** a page that changes only `content/` (and `mockups/`) runs
-   `pnpm check:pr`, exactly what PR CI runs (lint, types, unit, the English build, SEO suite: about a minute
-   and a half); anything outside them (a proposed block, a layout change) runs `pnpm release-check`
+   `pnpm check:pr`, exactly what PR CI runs (lint, types, dead code, unit, the English build, SEO suite: about
+   a minute and a half); anything outside them (a proposed block, a layout change) runs `pnpm release-check`
    (adds Storybook axe), plus `pnpm test:e2e` when layout changed. After the build, `pnpm ds:shot <slug>
    --built` is the last look at the prerendered page itself. Fix failures, never lower a threshold (the
    `release-check` skill reads the failures). A page that cannot pass is not pushed: go back to the person

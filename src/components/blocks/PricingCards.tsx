@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { BlockShell, type HeadingProps } from '~/components/primitives/BlockShell'
 import { Card } from '~/components/primitives/Card'
 import type { Cta } from '~/components/primitives/CtaLink'
+import { RevealItem } from '~/components/primitives/Motion'
 import { Picture } from '~/components/primitives/Picture'
 import type { PricingTier } from '~/content/types'
 import { cn } from '~/lib/cn'
@@ -25,11 +26,19 @@ const headers = { teal: 'bg-teal-light', blue: 'bg-sky', navy: 'bg-navy' }
 export function PricingCards({ tiers, children, ...shell }: PricingCardsProps) {
   const single = tiers.length === 1 ? tiers[0] : undefined
   return (
-    <BlockShell {...shell} spacing="tight">
+    <BlockShell {...shell} spacing="tight" cascade>
       {children ? (
-        <div className="flex flex-col gap-[14.4px] text-ink md:px-[45px]">{children}</div>
+        <RevealItem className="flex flex-col gap-[14.4px] text-ink md:px-[45px]">
+          {children}
+        </RevealItem>
       ) : null}
-      {single ? <SingleTier tier={single} /> : <Tiers tiers={tiers} />}
+      {single ? (
+        <RevealItem>
+          <SingleTier tier={single} />
+        </RevealItem>
+      ) : (
+        <Tiers tiers={tiers} />
+      )}
     </BlockShell>
   )
 }
@@ -40,7 +49,7 @@ function Tiers({ tiers }: { tiers: PricingTier[] }) {
       {tiers.map((t) => {
         const img = t.icon
         return (
-          <li key={t.id ?? t.title} className="flex">
+          <RevealItem as="li" key={t.id ?? t.title} className="flex">
             <Card
               padding="none"
               shadow="band"
@@ -87,7 +96,7 @@ function Tiers({ tiers }: { tiers: PricingTier[] }) {
                 )}
               </div>
             </Card>
-          </li>
+          </RevealItem>
         )
       })}
     </ul>

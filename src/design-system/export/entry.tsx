@@ -5,6 +5,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { SiteFooter, SiteHeader, SiteTopBar } from '~/app/SiteShell'
 import { blocks } from '~/components/blocks'
 import { catalogue } from '~/components/blocks/catalogue'
+import { MotionProvider } from '~/components/primitives/Motion'
 import { lightMarkdown } from '~/lib/light-markdown'
 import { withSamples } from '~/stories/samples'
 
@@ -33,7 +34,11 @@ function mount(name: string, el: Element, props: Record<string, unknown> = {}) {
       `MSMT: unknown component "${name}". Known: ${Object.keys(components).join(', ')}`,
     )
   const { children, ...rest } = withSamples(props) as Record<string, unknown>
-  const node = <C {...rest}>{typeof children === 'string' ? lightMarkdown(children) : undefined}</C>
+  const node = (
+    <MotionProvider>
+      <C {...rest}>{typeof children === 'string' ? lightMarkdown(children) : undefined}</C>
+    </MotionProvider>
+  )
   let root = roots.get(el)
   if (!root) {
     root = createRoot(el)

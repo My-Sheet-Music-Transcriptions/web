@@ -1,14 +1,17 @@
-import type { ReactNode } from 'react'
+import { useInView } from 'motion/react'
+import * as m from 'motion/react-m'
+import { type ReactNode, useRef } from 'react'
 import { cn } from '~/lib/cn'
 import { inlineMarkdown } from '~/lib/light-markdown'
 import { useTitleId } from '~/lib/use-title-id'
 import { type Cta, CtaLink } from './CtaLink'
+import { RevealItem, revealGroup } from './Motion'
 import { Picture, type PictureSource } from './Picture'
 import { SectionHeading } from './SectionHeading'
 import { type Tone, tones } from './tones'
 import { WaveDivider } from './WaveDivider'
 
-/** The heading area every block takes: its title, the lines above and under it, and its anchor. */
+/** The heading area every block takes: its title, the lines above and under it, its anchor and its entrance. */
 export interface HeadingProps {
   /** The section's heading (h2). */
   title?: string
@@ -18,6 +21,8 @@ export interface HeadingProps {
   lead?: string
   /** Anchor id (`how-it-works` for `#how-it-works`). */
   id?: string
+  /** Comes in as it scrolls into view: the heading, then the content (card by card in a list), then the buttons rise and fade in. */
+  reveal?: boolean
 }
 
 /** What every block on a plain background takes: its heading area, its background and its closing button. */
@@ -52,11 +57,19 @@ export interface BlockShellProps extends ShellProps {
   /** Extra classes of the section (a background texture, hidden on phones). */
   className?: string
   /**
+   * With `reveal`, the content's own pieces (`RevealItem`: each card of a list) come in one after another,
+   * instead of the content as one piece.
+   */
+  cascade?: boolean
+  /**
    * The block's content, under the heading. A function gets the heading and the buttons to place them itself
    * (MediaText sets its heading beside the picture), and the shell then renders neither.
    */
   children?: ReactNode | ((parts: ShellParts) => ReactNode)
 }
+
+/** A revealed block starts once its top passes the lowest sixth of the screen, and only the first time. */
+const viewport = { once: true, margin: '0px 0px -15% 0px' } as const
 
 const spacings = {
   tight: 'py-8',
@@ -74,7 +87,9 @@ const widths = {
  * The frame of every block: a `<section>` labelled by its heading, the tone, the container, the heading area
  * (eyebrow, h2 with its short rule, lead), the content and the closing buttons (`cta` filled, `links`
  * outline). With an `image` it is the photo band: the photo darkened by a 32% grey veil, white wavy edges
- * and a white heading. Blocks render their content inside it and never rebuild any of this by hand.
+ * and a white heading. With `reveal` it comes in as it scrolls into view (Motion): heading, content and
+ * buttons rise and fade in one after another. Blocks render their content inside it and never rebuild any of
+ * this by hand.
  */
 export function BlockShell({
   title,
@@ -91,14 +106,21 @@ export function BlockShell({
   rule = !image,
   label,
   className,
+  reveal,
+  cascade,
   children,
 }: BlockShellProps) {
   const titleId = useTitleId(id)
+  // `animate` (not `whileInView`): pieces that mount later (another tab's cards) inherit "shown" and come in too.
+  const section = useRef<HTMLElement>(null)
+  const seen = useInView(section, viewport)
   const light = !!image
   const center = align === 'center'
   const heading =
     title || eyebrow || lead ? (
-      <div className={cn('flex flex-col', center ? 'items-center text-center' : 'items-start')}>
+      <RevealItem
+        className={cn('flex flex-col', center ? 'items-center text-center' : 'items-start')}
+      >
         {eyebrow ? (
           <p
             className={cn(
@@ -125,20 +147,28 @@ export function BlockShell({
             {inlineMarkdown(lead)}
           </p>
         ) : null}
-      </div>
+      </RevealItem>
     ) : null
   const actions =
     cta || links?.length ? (
-      <div className={cn('flex flex-wrap gap-4', center ? 'justify-center' : 'justify-start')}>
+      <RevealItem
+        className={cn('flex flex-wrap gap-4', center ? 'justify-center' : 'justify-start')}
+      >
         {cta ? <CtaLink cta={cta} /> : null}
         {links?.map((l) => (
           <CtaLink key={l.href} cta={l} variant="outline" />
         ))}
-      </div>
+      </RevealItem>
     ) : null
 
   return (
-    <section
+    <m.section
+      {...(reveal && {
+        ref: section,
+        initial: 'hidden',
+        animate: seen ? 'shown' : 'hidden',
+        variants: revealGroup,
+      })}
       id={id}
       className={cn(
         'scroll-mt-20',
@@ -170,11 +200,19 @@ export function BlockShell({
         ) : (
           <>
             {heading}
-            {children ? <div className={cn(heading && 'mt-10')}>{children}</div> : null}
+            {children ? (
+              cascade ? (
+                <m.div variants={revealGroup} className={cn(heading && 'mt-10')}>
+                  {children}
+                </m.div>
+              ) : (
+                <RevealItem className={cn(heading && 'mt-10')}>{children}</RevealItem>
+              )
+            ) : null}
             {actions ? <div className={cn((heading || children) && 'mt-10')}>{actions}</div> : null}
           </>
         )}
       </div>
-    </section>
+    </m.section>
   )
 }

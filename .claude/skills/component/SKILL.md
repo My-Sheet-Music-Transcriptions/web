@@ -45,7 +45,9 @@ export function Thing({ items, ...shell }: ThingProps) {
   - the tone and the container;
   - eyebrow, h2 with its orange rule, and the `lead`;
   - the closing `cta` (filled) and `links` (outline);
-  - with an `image`, the photo band (veil, white wavy edges, white heading).
+  - with an `image`, the photo band (veil, white wavy edges, white heading);
+  - with `reveal`, the entrance on scroll (heading, content, buttons). A block with a list passes `cascade` and
+    renders each item as `<RevealItem as="li">` so its cards come in one by one (the `motion` skill).
 - **Blocks pick presets, never pixels:**
   - `spacing`: `tight`, `normal` or `loose`;
   - `width`: `narrow`, `content`, `wide` or `full`;
@@ -71,6 +73,7 @@ export function Thing({ items, ...shell }: ThingProps) {
 | `gridCols(columns, { tablet, phone })` | The grid of any list. `columns` always means desktop. |
 | `tones` / `Tone` | Backgrounds. Tinted tones deepen `primary` and `accent-deep` so text stays AA. |
 | `lightMarkdown`, `inlineMarkdown`, `fill`, `useAutoAdvance` | Prose kept as data, words with `{placeholders}`, and anything that rotates. |
+| `RevealItem`, the variants in `Motion.tsx` | Anything that animates: reveals, menus, panels. Follow the `motion` skill. |
 
 ## 5. The vocabulary
 
@@ -91,6 +94,7 @@ A prop that means one of these takes this name; any other name for it is a synon
 | `labels` | The words of controls, from `data/labels.ts`. |
 | `label` | The accessible name of an untitled section. |
 | `id` | The anchor. |
+| `reveal` | Comes in as it scrolls into view. |
 
 Item fields have their own names:
 
@@ -121,7 +125,7 @@ Components hold no words and no pictures: no copy, alt text, aria words, default
 ## 8. Checks
 
 ```sh
-pnpm check              # biome, types over every page, unit (guards, components rule, mockup round-trips)
+pnpm check              # biome, types over every page, knip (no unused prop types or exports), unit (guards, components rule, mockup round-trips)
 pnpm test:storybook     # axe on every story, contrast included
 SITE_LOCALE=en pnpm build && pnpm ds:shot <slug> --built   # each page that uses it, 1440/768/390, looked at
 pnpm test:visual        # homepage; re-capture (--update-snapshots) only after looking at the diff

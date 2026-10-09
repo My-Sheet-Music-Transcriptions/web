@@ -4,7 +4,7 @@ Static-first rebuild of the My Sheet Music Transcriptions sites (one codebase, o
 Content lives in this repository as React pages under [`content/`](./content) and is changed by chatting with Claude
 Code; there is no CMS.
 
-- Stack: TypeScript, React 19, TanStack Start (static prerender + selective SSR), Tailwind v4, Biome, Vitest, Playwright, Storybook 10 (+ axe), Lighthouse CI, Satori OG images, Netlify.
+- Stack: TypeScript, React 19, TanStack Start (static prerender + selective SSR), Tailwind v4, Biome, Knip, Vitest, Playwright, Storybook 10 (+ axe), Lighthouse CI, Satori OG images, Netlify.
 - Start here: [`CLAUDE.md`](./CLAUDE.md) (how the repo is organised and how to add content), Storybook (`pnpm storybook`) for the design system.
 
 ```sh
