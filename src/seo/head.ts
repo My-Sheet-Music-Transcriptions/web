@@ -1,10 +1,9 @@
 import montserratWoff2 from '@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url'
 import { resolveEntry } from '~/content'
 import hreflangMap from '~/i18n/hreflang.generated.json'
-import { DEFAULT_LOCALE } from '~/i18n/routing'
-import { sites } from '~/i18n/sites'
 import type { Locale } from '~/i18n/types'
 import { absoluteUrl, getSiteConfig, LOCALE_ROUTING, SITE_LOCALE } from '~/site'
+import { type Alternate, type HreflangMap, hreflangAlternates } from './alternates'
 import { entryJsonLd, organizationJsonLd, websiteJsonLd } from './jsonld'
 
 type Meta = Record<string, string>
@@ -107,15 +106,8 @@ export function entryHead(locale: Locale = SITE_LOCALE, path = '/'): HeadResult 
 }
 
 /** hreflang alternates of a translation: every locale's URL (its TLD in production, /<locale>/... in previews). */
-export function alternatesFor(translationKey: string): { hreflang: string; href: string }[] {
-  const map = (hreflangMap as Record<string, Partial<Record<Locale, string>>>)[translationKey] ?? {}
-  const out: { hreflang: string; href: string }[] = []
-  for (const [l, path] of Object.entries(map))
-    if (path) out.push({ hreflang: sites[l as Locale].lang, href: absoluteUrl(l as Locale, path) })
-  if (out.length < 2) return []
-  const def = map[DEFAULT_LOCALE]
-  if (def) out.push({ hreflang: 'x-default', href: absoluteUrl(DEFAULT_LOCALE, def) })
-  return out
+export function alternatesFor(translationKey: string): Alternate[] {
+  return hreflangAlternates(translationKey, hreflangMap as HreflangMap, absoluteUrl)
 }
 
 function ogLocale(lang: string): string {
