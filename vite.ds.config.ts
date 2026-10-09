@@ -1,9 +1,9 @@
-import { execSync } from 'node:child_process'
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import viteReact from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
 import { imagetools } from 'vite-imagetools'
+import { assetFileNames } from './scripts/lib/asset-names.ts'
 
 /**
  * Library build of the design system for the published Design System artifact and Design canvas
@@ -29,21 +29,12 @@ function capImageWidths(): Plugin {
   }
 }
 
-function version() {
-  try {
-    return `${execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim()} ${new Date().toISOString().slice(0, 10)}`
-  } catch {
-    return new Date().toISOString().slice(0, 10)
-  }
-}
-
 export default defineConfig({
   define: {
     'process.env.NODE_ENV': '"production"',
     'import.meta.env.SITE_LOCALE': '"en"',
     'import.meta.env.LOCALE_ROUTING': '"domain"',
     'import.meta.env.DEV': 'false',
-    __MSMT_VERSION__: JSON.stringify(version()),
   },
   resolve: {
     tsconfigPaths: true,
@@ -93,8 +84,7 @@ export default defineConfig({
       fileName: () => 'bundle.js',
       cssFileName: 'bundle',
     },
-    rollupOptions: {
-      output: { assetFileNames: 'assets/[name]-[hash][extname]' },
-    },
+    // One name per deduplicated image asset, as in the site build (scripts/lib/asset-names.ts).
+    rolldownOptions: { output: { assetFileNames } },
   },
 })

@@ -8,6 +8,3 @@ interface ImportMetaEnv {
   readonly PREVIEW_ORIGIN?: string
   readonly VITE_GTM_ID?: string
 }
-
-/** Injected by vite.ds.config.ts (git short sha + date). */
-declare const __MSMT_VERSION__: string

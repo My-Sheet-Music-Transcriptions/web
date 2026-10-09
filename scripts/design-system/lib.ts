@@ -170,9 +170,10 @@ const VOLATILE: Record<string, (text: string) => string> = {
 
 /**
  * Short content hash of the export output: every file under `project/` (the artifact's files), with the
- * volatile fields of the index left out. Two exports of the same sources hash the same (Vite's asset
- * names are content hashes), so the hash says whether the published artifact renders what the repo
- * renders, without listing which sources feed the export.
+ * volatile fields of the index left out. Two exports of the same sources hash the same, whatever the commit
+ * or the day: Vite's asset names are content hashes, an image with several names always takes the same one
+ * (scripts/lib/asset-names.ts), and only the index's `lastChange` names a commit or a time. So the hash says
+ * whether the published artifact renders what the repo renders, without listing which sources feed the export.
  */
 export function exportHash(dir: string = PROJ): string {
   if (!fs.existsSync(dir)) throw new Error(`${dir} is missing: run pnpm ds:export first`)

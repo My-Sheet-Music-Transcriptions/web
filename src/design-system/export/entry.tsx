@@ -67,7 +67,6 @@ function renderAll(scope: ParentNode = document) {
 }
 
 const api = {
-  version: __MSMT_VERSION__,
   components: Object.keys(components),
   catalogue,
   mount,
