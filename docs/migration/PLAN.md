@@ -1,7 +1,8 @@
 # WordPress → this repo: migration plan
 
-Status: **W1.4–W1.6 under way.** Fourteen English pages are in the repo: home, `/gift-card` and the twelve ported on
-2026-10-08 ahead of their waves (see the [session log](#10-session-log)); nothing is cut over.
+Status: **W1.4–W1.6 under way.** Thirty-four English pages are in the repo: home, `/gift-card`, the twelve ported on
+2026-10-08 and the twenty of 2026-10-09, ahead of their waves (see the [session log](#10-session-log)); nothing is cut
+over.
 Written 2026-10-08. This file is the general plan; the specifics live in the files it links to. Follow it wave by wave
 in later sessions: tick the checklists here, fill the **PR** column of the inventories, and add a line to the
 [session log](#10-session-log) at the end of every session.
@@ -270,6 +271,15 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       | af_jobs_table | `Table` |
       | slides | `CardGrid` with `linkLabel` |
       | form | `ContactSection` |
+      | numbered how-to steps (big numerals) beside a screenshot | `MediaText align="center"`, one `Text` per step opening with `**n.**` |
+      | two image-box "tips" | `CardGrid columns={2}`, the pictures as `icon` |
+      | heading + text before the form ("What if this doesn't work?") | `ContactSection title lead` |
+
+      *Learned 2026-10-09 (20 pages):* the live site itself answered from the cloud session (plain HTTPS, real HTML, services
+      included), so pages came straight from it; pictures through Chromium as `wordpress.md` says. A page's Elementor
+      widgets in order (heading, text-editor, image, video, icon-box, `custom_acf_accordion` → `.elementor-accordion-item`)
+      turn into light markdown mechanically: bold markers with their spaces moved outside, `<em>` dropped, same-site URLs
+      made paths. On every service page checked, the second FAQ group equals `generalFaq` word for word.
 - [ ] W1.7 **Parity checks (the replacement for human review)**: `scripts/parity.ts <locale>` compares each ported
       page with its WordPress original (the cached HTML from W1.6, archived capture as fallback) and writes
       `docs/migration/parity/<locale>.md`, committed with the batch: visible text of the main content area (Elementor's
@@ -329,8 +339,11 @@ editing) while the mapping rules settle, then the rest in one.
 
 *Ported 2026-10-08 ([#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32), English only):* `/piano`,
 `/guitar-tab`, `/trumpet-transcription-service`, `/violin-transcription-service`, on the service page pattern that the
-importer fills. The es/fr/de/ja twins of `/piano` and `/guitar-tab` follow in their locale waves. 37 to port and 5 to
-verify remain.
+importer fills. The es/fr/de/ja twins of `/piano` and `/guitar-tab` follow in their locale waves.
+
+*Ported 2026-10-09 (English only, no twins):* `/cello-transcription-service`, `/clarinet-transcription-service`,
+`/flute-transcription-service`, `/saxophone-transcription-service`, `/harp-transcription-service`,
+`/ukulele-transcription-service`. 31 to port and 5 to verify remain.
 
 ### W4 · English landing pages (45)
 
@@ -340,7 +353,11 @@ Christmas, auditions, MIDI/YouTube/productions into scores), 9 AI-music pages an
 
 *Ported 2026-10-08 ([#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32)):* `/artists`,
 `/music-educators`, `/sheet-music-printing`, `/partners`, `/endorsed-musicians-and-composers` and
-`/convert-from-sibelius-to-musescore` (the model for the other 14 conversion pages). 39 remain.
+`/convert-from-sibelius-to-musescore` (the model for the other 14 conversion pages).
+
+*Ported 2026-10-09:* the 14 other conversion pages: the 11 `/convert-from-<a>-to-<b>` (one template, its five reasons in
+`content/en/data/conversions.ts`) and the 3 Finale guides `/finale-to-{dorico,musescore,sibelius}` (a second template:
+export and import steps beside screenshots). 25 remain.
 
 ### W5 · English blog (126 posts + index)
 
@@ -458,3 +475,4 @@ Not blocking the start; each is resolved in W0.4 or before the wave named:
 | 2026-10-09 | Sitemaps | Sitemaps made from `content/` instead of TanStack's prerender crawl (which had listed `/#contact` and published `pages.json`): an index at `/sitemap.xml` and one sitemap per collection with Yoast's names, hreflang alternates from the same function as the `<head>`, `lastmod` omitted on a shallow clone; the WordPress sitemap URLs 301 to the index (sitemap half of W1.10); unit test over every locale plus a multi-language fixture, SEO suite checks sitemaps == indexable pages and alternates == `<head>` | RSS (rest of W1.10); W1.1's redirect pipeline adds its rules to the `_redirects` file `postbuild.ts` now writes in domain mode |
 | 2026-10-09 | Sitemaps in all-languages mode | msmt-web.netlify.app builds every locale under `/<locale>` (no `SITE_LOCALE` on its production deploy), which had no sitemap: each locale now gets its index and per-collection sitemaps under its prefix, a parent `/sitemap.xml` lists them all, `robots.txt` (still `Disallow: /`) names it and old WordPress sitemap URLs redirect per locale; canonicals and sitemap URLs use the site's address on production deploys instead of `main--msmt-web.netlify.app` | Set `SITE_LOCALE=en` on the English Netlify site at its cutover (production build of one locale) |
 | 2026-10-09 | Music transcription page matched to live | `/music-transcription-service` compared section by section with the live page (REST API + headless captures at 1440/390): the services now scroll by as an icon strip under the header (`PictureGrid variant="marquee"` takes icons), the three samples sit side by side with the instrument's icon and name, an arrow and the score (`Samples variant="columns"`), the steps are a line of the live page's illustrated icons with sky-blue speech bubbles (`Steps variant="bubbles"`, `FeatureItem` surface `bubble`, `sky-tint` token) and the FAQ jump links are the live page's colour-coded pills (`FaqGroup.tone`). Every other section already matched. The live page labels the Rocket Man piano cover "Piano - Vocal"; kept verbatim | Republish the design system after the merge; the same blocks serve the FAQ page and the other transcription pages |
+| 2026-10-09 | 20 more English ports | From the live pages (they answered directly; pictures through Chromium), verbatim, existing blocks only: the 11 remaining `/convert-from-*` pages (shared reasons in `data/conversions.ts`; the Sibelius → MuseScore picture renamed `sound-to-score.png` with a true alt), the 3 `/finale-to-*` guides, and the cello, clarinet, flute, saxophone, harp and ukulele services (pricing tiers in `data/services.ts`, `includedLongerDelivery` for the 2-3 days of harp and ukulele). D13 applied: the Finale descriptions (300+ characters) cut after their second sentence, their extra `<h1>`s are block headings. Live copy errors kept verbatim for the owner to fix later with `/edit-page`: the `/convert-from-sibelius-to-guitar-pro` description says "Dorico format"; harp FAQ "Can you transcribe for any type of accordion?"; flute FAQ "this flut song"; cello FAQs speak of a "trumpet transcription" and "that violin part" (as on violin); the flute page's step text is the piano & vocal one. The invisible "Contact us" heading of the Finale forms (white on white live) is left out | The AI-music pages (9, one template), the rest of W3 in groups, then W2's core pages with their twins |
