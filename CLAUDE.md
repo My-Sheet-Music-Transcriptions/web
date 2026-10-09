@@ -68,8 +68,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/stories` – Storybook's own data and pictures (`data.ts`, `images/`, `samples.ts` resolving `'sample:photo'`…):
   they mimic the app's content but stay separate. Stories, the catalogue examples and the design-system previews
   use them; no story imports `content/` or `src/assets`.
-- `src/components/blocks/catalogue.ts` – one entry per block (description, defaults, JSX usage, data source);
-  drives the README table, the artifact docs and the `page` skill's previews. Missing entry = type error.
+- `src/components/blocks/catalogue.ts` – one entry per block (category, when to use it, defaults, JSX usage, data
+  source); drives the README table, the artifact docs and the `page` skill's previews, and the stories take their
+  default args from it. Missing entry = type error. A block's description is not in it: it is the doc comment on
+  the block's `export function`, read from the source (`blockDescription`), so Storybook shows the same text.
 - `src/i18n/sites/<locale>.ts` – domain, the chrome's strings (menus, footer headings, consent, 404), switcher, contact facts per locale. `src/site.ts` exposes the build's
   locale routing and `useSite()` / `useLocale()` (the page's locale); `src/i18n/routing.ts` is how locales map to URLs.
 - `src/design-system` – `theme-parse.ts` (reads `theme.css` into tokens), `tokens.tsx` (Storybook Foundations),

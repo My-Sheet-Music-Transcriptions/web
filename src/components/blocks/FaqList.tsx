@@ -14,8 +14,8 @@ export interface FaqListProps extends ShellProps {
 }
 
 /**
- * Questions and answers that open one at a time (native `<details>`, no script), in titled groups, with
- * the FAQPage structured data search engines read.
+ * Questions that open one at a time (native `<details>`, no script), in titled groups with optional jump
+ * links and a button, with the FAQPage structured data search engines read.
  */
 export function FaqList({ groups, jumpLinks = false, jsonLd = true, ...shell }: FaqListProps) {
   const data = {

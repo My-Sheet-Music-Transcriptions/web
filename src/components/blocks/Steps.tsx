@@ -32,7 +32,10 @@ export interface StepsProps extends ShellProps {
   videoPoster?: PictureSource
 }
 
-/** A process step by step: how to order, how a gift card works, what happens to your audio. */
+/**
+ * A process step by step. `timeline`: a numbered vertical list with a glyph or number per step. `columns`:
+ * the steps side by side, each with its picture or video (the homepage adds one wide illustration on desktop).
+ */
 export function Steps({
   items,
   variant = 'timeline',

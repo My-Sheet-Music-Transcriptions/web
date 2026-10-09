@@ -16,7 +16,10 @@ export interface TableProps extends ShellProps {
   children?: ReactNode
 }
 
-/** Rows and columns of facts: job openings, prices per level, formats. On phones each row is a card. */
+/**
+ * A table of facts with a caption and column headings, links in cells; on phones each row becomes a
+ * labelled card.
+ */
 export function Table({ caption, columns, rows, children, ...shell }: TableProps) {
   return (
     <BlockShell {...shell}>

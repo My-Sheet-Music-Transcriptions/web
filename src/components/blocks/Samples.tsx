@@ -24,7 +24,10 @@ export interface SamplesProps extends ShellProps {
   videoPoster?: PictureSource
 }
 
-/** Our work, to compare: each sample's recording beside the score we wrote from it. */
+/**
+ * Our work, to compare: one row per sample, its title and the YouTube recording (loaded on click) beside the
+ * score we wrote from it.
+ */
 export function Samples({ items, labels, videoPoster, ...shell }: SamplesProps) {
   return (
     <BlockShell {...shell}>

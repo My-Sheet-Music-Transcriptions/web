@@ -1,10 +1,11 @@
 import { type BlockDoc, CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
-import { blockProps } from './blocks-lib'
+import { blockDescription, blockProps } from './blocks-lib'
 
 /**
  * The block table of src/components/blocks/README.md and of the artifact's brand book: one row per block,
- * grouped by category in page order, generated from the catalogue and the props interfaces. `pnpm ds:export`
- * writes it; tests/unit/catalogue.test.ts checks the committed README carries the current one.
+ * grouped by category in page order, generated from the catalogue and each block's source (its description and
+ * props). `pnpm ds:export` writes it; tests/unit/catalogue.test.ts checks the committed README carries the
+ * current one.
  */
 export function blockTable(): string {
   const rows: string[] = []
@@ -13,7 +14,7 @@ export function blockTable(): string {
       if (doc.category !== category) continue
       const props = blockProps(name)?.props.map((p) => p.name) ?? []
       rows.push(
-        `| \`${name}\` | ${label} | ${doc.description} | ${props.join(', ') || '–'} | ${doc.dataSource ?? '–'} |`,
+        `| \`${name}\` | ${label} | ${blockDescription(name)} | ${props.join(', ') || '–'} | ${doc.dataSource ?? '–'} |`,
       )
     }
   return [
