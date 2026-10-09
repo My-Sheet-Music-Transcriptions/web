@@ -26,7 +26,6 @@ import heroSlide4 from './hero-slide-4.webp?w=1000;1600;2000&as=picture'
 import heroSlide5 from './hero-slide-5.webp?w=1000;1600;2000&as=picture'
 import heroSlide6 from './hero-slide-6.webp?w=1000;1600;2000&as=picture'
 import heroSlideMobile1 from './hero-slide-mobile-1.webp?w=480;800&as=picture'
-import heroSlideMobile2 from './hero-slide-mobile-2.webp?w=480;800&as=picture'
 import heroSlideMobile3 from './hero-slide-mobile-3.webp?w=480;800&as=picture'
 import heroSlideMobile4 from './hero-slide-mobile-4.webp?w=480;800&as=picture'
 import heroSlideMobile5 from './hero-slide-mobile-5.webp?w=480;800&as=picture'
@@ -37,6 +36,7 @@ import office10 from './office-10.jpg?w=560;1000&as=picture'
 import office11 from './office-11.jpg?w=560;1000&as=picture'
 import office12 from './office-12.jpg?w=560;1000&as=picture'
 import office14 from './office-14.jpg?w=560;1000&as=picture'
+import officePianoTranscribers from './office-piano-transcribers.webp?w=480;800&as=picture'
 import officeTranscriber from './office-transcriber.jpg?w=560;1000&as=picture'
 import step1 from './step-1-send-audio.png?w=240;403&as=picture'
 import step2 from './step-2-transcribe.png?w=240;403&as=picture'
@@ -72,7 +72,7 @@ export default function HomePage() {
         ]}
         mobileImages={[
           { image: heroSlideMobile1, alt: '' },
-          { image: heroSlideMobile2, alt: '' },
+          { image: officePianoTranscribers, alt: '' },
           { image: heroSlideMobile3, alt: '' },
           { image: heroSlideMobile4, alt: '' },
           { image: heroSlideMobile5, alt: '' },

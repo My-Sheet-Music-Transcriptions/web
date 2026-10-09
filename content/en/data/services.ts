@@ -31,7 +31,6 @@ import saxophoneIcon from '~/assets/images/icons/saxophone.png?w=150;300&as=pict
 import stringQuartetIcon from '~/assets/images/icons/string-quartet.png?w=150;300&as=picture'
 import stringsIcon from '~/assets/images/icons/strings.png?w=150;300&as=picture'
 import synthesiaIcon from '~/assets/images/icons/synthesia.png?w=150;300&as=picture'
-import transposingIcon from '~/assets/images/icons/transposing.png?w=150;300&as=picture'
 import tromboneIcon from '~/assets/images/icons/trombone.png?w=150;300&as=picture'
 import trumpetIcon from '~/assets/images/icons/trumpet.png?w=150;300&as=picture'
 import ukuleleIcon from '~/assets/images/icons/ukulele.png?w=150;300&as=picture'
@@ -210,7 +209,7 @@ export const allServices: PictureItem[] = [
   {
     name: 'Sheet Music Transposing',
     href: '/sheet-music-transposing-service',
-    image: transposingIcon,
+    image: rhythmChartsIcon,
   },
   { name: 'Big Band Arrangements', href: '/big-band-arrangement-service', image: hornsIcon },
   {
