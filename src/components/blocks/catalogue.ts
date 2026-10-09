@@ -307,7 +307,7 @@ export const catalogue = {
     useWhen: 'A big trust moment mid-page: the counter and the rating cards over a photo.',
     notFor: 'quotes from customers: Testimonials.',
     description:
-      'Full-bleed piano photo with white wavy edges, a white heading, the big counter and a row of rating cards (Google, Trustpilot or customers, Facebook).',
+      'Full-bleed piano photo with white wavy edges, a white heading, the big counter and a row of rating cards (Google, Trustpilot or customers, Facebook). With `reveal` the counter and the customers figure count up and the stars pop in.',
     defaults: {
       title: 'The highest-rated online sheet music transcribers',
       counter: { value: 71844, label: 'transcriptions delivered since 2011' },
@@ -326,7 +326,7 @@ export const catalogue = {
     useWhen: 'Quotes that back a claim: a few customer reviews with stars.',
     notFor: 'ratings and counts: RatingBanner.',
     description:
-      'Customer quote cards in two columns with teal stars over the peach staff lines, and an optional link to all reviews.',
+      'Customer quote cards in two columns with teal stars over the peach staff lines, and an optional link to all reviews. With `reveal` the cards come in one by one and their stars pop in.',
     defaults: {
       title: 'Customer Reviews',
       items: reviews.slice(0, 2),

@@ -38,6 +38,8 @@ an ease or a distance:
 | `revealGroup`, `revealPiece` | A revealed block: pieces 0.08 s apart, each rising 24px and fading in over 0.6 s. |
 | `dropDown`, `dropSide` | A menu panel under its button (`y`) or a submenu beside its row (`x`): 0.2 s in, 0.15 s out. |
 | `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu). |
+| `countUp` | A figure of a revealed block (`CountUp`) counting up from zero over 2 s, slowing down onto itself. |
+| `starsGroup`, `starPop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. |
 | `entrance` (theme.css) | The PageHeader as the page opens: `revealGroup` and `revealPiece` in CSS, text moving without fading (see 4). |
 
 A new preset stays subtle:
@@ -82,13 +84,22 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
 
   Decorations (waves, lines) stay plain elements so they do not move. `RevealItem` is inert when the block is
   not revealed.
+- **Inside a piece**, primitives join the reveal through the variants they inherit, and stay still anywhere
+  else (the hero's rating card):
+  - `Stars` pop in one after another (`starsGroup`, `starPop`) once their card has come in;
+  - `CountUp` counts a figure up from zero (`countUp`): `<CountUp>{figure}</CountUp>`, where the figure is the
+    string the page shows ("71,844"). The animated `--count` drives React's own text node in `onUpdate`, the
+    count ends on the figure as written, and anything but a whole number stays still. The prerendered page
+    shows the figure, and under reduced motion it never counts (`useReducedMotionConfig`: a changing figure
+    is motion even though nothing moves). The RatingBanner's counter and its customers card use it.
 - The section starts once, when its top passes the lowest sixth of the screen (`viewport.once`).
 
 ## 5. What the prerendered page shows
 
 - **Revealed pieces** are prerendered with `opacity: 0`. `RevealItem` marks them `data-reveal`. theme.css shows
   them as they are under reduced motion and in print, and the root's `<noscript>` does the same without
-  JavaScript. Anything that starts hidden in the HTML must carry `data-reveal`, so use `RevealItem`.
+  JavaScript. Anything that starts hidden in the HTML must carry `data-reveal`, so use `RevealItem` (the
+  `Stars` mark each star themselves).
 - **Menus and panels that open and close** use `initial={false}`, `animate={open ? 'open' : 'closed'}` and
   variants that end in `display: 'none'` (`transitionEnd`). The closed state is prerendered, so the links stay
   crawlable, and it ends unfocusable. Keep `AnimatePresence` for what really leaves the DOM (the phone menu

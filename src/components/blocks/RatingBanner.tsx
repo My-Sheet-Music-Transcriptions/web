@@ -1,5 +1,5 @@
 import { BlockShell, type HeadingProps } from '~/components/primitives/BlockShell'
-import { RevealItem } from '~/components/primitives/Motion'
+import { CountUp, RevealItem } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
 import type { Counter, RatingSource } from '~/content/types'
@@ -16,16 +16,19 @@ export interface RatingBannerProps extends HeadingProps {
   image: PictureSource
 }
 
-/** The big trust moment: a photo band with the transcriptions counter and the rating cards. */
+/**
+ * The big trust moment: a photo band with the transcriptions counter and the rating cards. Revealed, the
+ * counter and the customers figure count up and the stars pop in.
+ */
 export function RatingBanner({ counter, sources, ...shell }: RatingBannerProps) {
   const locale = useLocale()
   return (
     <BlockShell {...shell} cascade>
       {counter ? (
         <RevealItem as="p" className="mb-10 text-center">
-          <span className="block text-[69px] font-semibold leading-[69px]">
+          <CountUp className="block text-[69px] font-semibold leading-[69px]">
             {counter.value.toLocaleString(locale)}
-          </span>
+          </CountUp>
           <span className="block text-body leading-10 text-white md:text-[19px] md:leading-[47.5px]">
             {counter.label}
           </span>

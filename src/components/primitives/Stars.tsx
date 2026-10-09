@@ -1,4 +1,6 @@
+import * as m from 'motion/react-m'
 import { cn } from '~/lib/cn'
+import { starPop, starsGroup } from './Motion'
 
 export interface StarsProps {
   /** Filled stars; a score with decimals fills the star it reaches (4.9 shows five). */
@@ -27,7 +29,8 @@ const BOX = { x: 636.6, y: 402.6, w: 85.6, h: 79.4 }
 
 /**
  * Accessible star rating: one inline SVG per star (the live site's star, filled up to `rating`, outlined
- * after) and a text label for assistive tech. The rating cards and the review cards both use it.
+ * after) and a text label for assistive tech. The rating cards and the review cards both use it. In a revealed
+ * block (`reveal`) the stars pop in one after another as their card comes in; still everywhere else.
  */
 export function Stars({
   rating = 5,
@@ -39,14 +42,17 @@ export function Stars({
 }: StarsProps) {
   const width = Math.round(((size * BOX.w) / BOX.h) * 10) / 10
   return (
-    <span
+    <m.span
       role="img"
       aria-label={label}
+      variants={starsGroup}
       className={cn('inline-flex items-center gap-1', colors[color], className)}
     >
       {STAR_IDS.slice(0, max).map((id, i) => (
-        <svg
+        <m.svg
           key={id}
+          variants={starPop}
+          data-reveal=""
           aria-hidden="true"
           width={width}
           height={size}
@@ -56,8 +62,8 @@ export function Stars({
           strokeWidth={i < rating ? 0 : 4}
         >
           <path d={STAR} />
-        </svg>
+        </m.svg>
       ))}
-    </span>
+    </m.span>
   )
 }
