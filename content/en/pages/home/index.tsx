@@ -1,19 +1,18 @@
 import { quoteForm } from '@content/en/data/forms'
-import { audiences, pricingTiers, serviceGrid } from '@content/en/data/home'
+import { audiences, pricingTiers } from '@content/en/data/home'
 import { mediaLabels, reviewLabels } from '@content/en/data/labels'
 import { counter, google, homeRatings } from '@content/en/data/ratings'
 import { homeReviews } from '@content/en/data/reviews'
-import { included } from '@content/en/data/services'
+import { allServices, included } from '@content/en/data/services'
 import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
 import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
 import logo from '~/assets/images/brand/logo.svg'
 import {
   CardGrid,
   ContactSection,
-  Gallery,
-  Hero,
-  IconGrid,
   MediaText,
+  PageHeader,
+  PictureGrid,
   PricingCards,
   RatingBanner,
   Steps,
@@ -27,7 +26,6 @@ import heroSlide4 from './hero-slide-4.webp?w=1000;1600;2000&as=picture'
 import heroSlide5 from './hero-slide-5.webp?w=1000;1600;2000&as=picture'
 import heroSlide6 from './hero-slide-6.webp?w=1000;1600;2000&as=picture'
 import heroSlideMobile1 from './hero-slide-mobile-1.webp?w=480;800&as=picture'
-import heroSlideMobile2 from './hero-slide-mobile-2.webp?w=480;800&as=picture'
 import heroSlideMobile3 from './hero-slide-mobile-3.webp?w=480;800&as=picture'
 import heroSlideMobile4 from './hero-slide-mobile-4.webp?w=480;800&as=picture'
 import heroSlideMobile5 from './hero-slide-mobile-5.webp?w=480;800&as=picture'
@@ -38,6 +36,7 @@ import office10 from './office-10.jpg?w=560;1000&as=picture'
 import office11 from './office-11.jpg?w=560;1000&as=picture'
 import office12 from './office-12.jpg?w=560;1000&as=picture'
 import office14 from './office-14.jpg?w=560;1000&as=picture'
+import officePianoTranscribers from './office-piano-transcribers.webp?w=480;800&as=picture'
 import officeTranscriber from './office-transcriber.jpg?w=560;1000&as=picture'
 import step1 from './step-1-send-audio.png?w=240;403&as=picture'
 import step2 from './step-2-transcribe.png?w=240;403&as=picture'
@@ -56,20 +55,27 @@ import stripPiano10 from './strip-piano-10.jpg?w=250;500&as=picture'
 export default function HomePage() {
   return (
     <>
-      <Hero
+      <PageHeader
+        variant="photo"
         title="Your #1 sheet music transcription service online"
         highlight="#1"
         lead="Get accurate and high-quality sheet music to learn a song, perform, register a composition, educate, or for any music tech application."
-        strong="Reliable digital notation services by professional transcribers and music editors."
-        strongMobile="Reliable, manual digital notation services by professional transcribers and music editors."
+        subtitle="Reliable digital notation services by professional transcribers and music editors."
         cta={{ label: 'Learn more', href: '#how-it-works' }}
-        images={[heroSlide1, heroSlide6, heroSlide2, heroSlide4, heroSlide3, heroSlide5]}
+        images={[
+          { image: heroSlide1, alt: '' },
+          { image: heroSlide6, alt: '' },
+          { image: heroSlide2, alt: '' },
+          { image: heroSlide4, alt: '' },
+          { image: heroSlide3, alt: '' },
+          { image: heroSlide5, alt: '' },
+        ]}
         mobileImages={[
-          heroSlideMobile1,
-          heroSlideMobile2,
-          heroSlideMobile3,
-          heroSlideMobile4,
-          heroSlideMobile5,
+          { image: heroSlideMobile1, alt: '' },
+          { image: officePianoTranscribers, alt: '' },
+          { image: heroSlideMobile3, alt: '' },
+          { image: heroSlideMobile4, alt: '' },
+          { image: heroSlideMobile5, alt: '' },
         ]}
         rating={google}
         logo={{
@@ -80,27 +86,28 @@ export default function HomePage() {
       />
 
       <Steps
+        reveal
         id="how-it-works"
         title="How does it work?"
-        layout="columns"
+        variant="columns"
         illustration={howItWorks}
         illustrationAlt="Three steps: send us the audio, we transcribe it, print and play the PDF"
         items={[
           {
             title: '1. Send us audio',
-            text: 'We will promptly send you a quote and an estimated delivery time',
+            body: 'We will promptly send you a quote and an estimated delivery time',
             image: step1,
             imageWidth: 177,
           },
           {
             title: '2. We transcribe it for you',
-            text: 'Our team of transcribers will prepare the sheet music as per your requirements',
+            body: 'Our team of transcribers will prepare the sheet music as per your requirements',
             image: step2,
             imageWidth: 188,
           },
           {
             title: '3. Print & Play',
-            text: 'You will be able to use and play your sheet music in PDF and other formats',
+            body: 'You will be able to use and play your sheet music in PDF and other formats',
             image: step3,
             imageWidth: 112,
           },
@@ -108,23 +115,27 @@ export default function HomePage() {
       />
 
       <RatingBanner
+        reveal
         image={pianoBand}
         title="The highest-rated online sheet music transcribers"
         counter={counter}
         sources={homeRatings}
       />
 
-      <CardGrid title="Who do we work for?" surface="tile" columns={4} items={audiences} />
+      <CardGrid reveal title="Who do we work for?" variant="tile" columns={4} items={audiences} />
 
-      <IconGrid
+      <PictureGrid
+        reveal
         title="We transcribe any instrument and musical genre"
-        items={serviceGrid}
+        items={allServices}
+        limit={12}
         cta={{ label: 'See all services', href: '/services-samples' }}
       />
 
-      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
+      <CardGrid reveal title="What's included?" image={studioBand} items={included} />
 
       <PricingCards
+        reveal
         title="Flexible pricing"
         tiers={pricingTiers}
         cta={{ label: 'See the full pricing guide', href: '/pricing' }}
@@ -153,9 +164,11 @@ export default function HomePage() {
         </Text>
       </PricingCards>
 
-      <Gallery
+      <PictureGrid
+        shape="photo"
+        variant="marquee"
         label="Examples of our sheet music"
-        images={[
+        items={[
           { image: stripGuitar3, alt: 'Guitar tab sheet music next to an acoustic guitar' },
           { image: stripPiano10, alt: 'Vocal and piano score on a digital piano' },
           { image: stripPiano5, alt: 'Open piano score on a keyboard' },
@@ -170,6 +183,7 @@ export default function HomePage() {
       />
 
       <Testimonials
+        reveal
         labels={reviewLabels}
         title="Customer Reviews"
         items={homeReviews}
@@ -177,6 +191,7 @@ export default function HomePage() {
       />
 
       <MediaText
+        reveal
         labels={mediaLabels}
         title="Who are we?"
         align="center"
@@ -237,7 +252,7 @@ export default function HomePage() {
         </Text>
       </MediaText>
 
-      <ContactSection form={quoteForm} />
+      <ContactSection reveal form={quoteForm} />
     </>
   )
 }

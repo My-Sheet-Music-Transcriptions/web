@@ -94,7 +94,7 @@ export function assetGroupSpecs(): Record<string, AssetGroupSpec> {
     'Instrument icons': {
       tile: 'm',
       readme:
-        '# Instrument icons\n\nFlat colour illustrations of instruments and services, used by `IconGrid`, `PricingCards` and the service page header (by file name, e.g. `piano`). Shown at 56–180px; do not place them on dark backgrounds or recolour them.\n',
+        '# Instrument icons\n\nFlat colour illustrations of instruments and services, used by `PictureGrid`, `PricingCards` and the service page header (by file name, e.g. `piano`). Shown at 56–180px; do not place them on dark backgrounds or recolour them.\n',
       files: icons(
         'src/assets/images/icons',
         (f) => !/^(accuracy|formats|fast-delivery|pricing-|audience-)/.test(f),

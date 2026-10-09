@@ -1,3 +1,4 @@
+import path from 'node:path'
 import netlify from '@netlify/vite-plugin-tanstack-start'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
@@ -28,6 +29,22 @@ export default defineConfig({
   // that URL is http://localhost:<port>, which Netlify's build image resolves to ::1 first, where the
   // connection hangs (ETIMEDOUT) while the server listens on IPv4 only. Pin both ends to IPv4 loopback.
   preview: { host: '127.0.0.1' },
+  build: {
+    rolldownOptions: {
+      output: {
+        // Byte-identical images under different names become one asset with several names, and each build
+        // keeps whichever name it emitted first, which varies from run to run: the prerendered HTML (server
+        // build) could point at a file the client build wrote under the other name. tests/unit/images.test.ts
+        // keeps such pairs out of src/assets/images and content/; should one slip through, both builds pick
+        // the alphabetically first name.
+        assetFileNames: ({ names }) => {
+          if (names.length < 2) return 'assets/[name]-[hash][extname]'
+          const { dir, name, ext } = path.posix.parse(names.reduce((a, b) => (a < b ? a : b)))
+          return path.posix.join('assets', dir, `${name}-[hash]${ext}`)
+        },
+      },
+    },
+  },
   plugins: [
     imagetools({
       defaultDirectives: (url) => {
@@ -42,8 +59,9 @@ export default defineConfig({
     tailwindcss(),
     tanstackStart({
       srcDirectory: 'src',
-      // Path-mode previews are not indexed: no sitemap.
-      sitemap: { enabled: mode === 'domain', host: site.domain, outputPath: 'sitemap.xml' },
+      // The sitemaps are written by scripts/postbuild.ts from content/ (scripts/lib/sitemap.ts), not from the
+      // prerender's crawl. Off explicitly: left out, this option defaults to on.
+      sitemap: { enabled: false },
       prerender: {
         enabled: true,
         crawlLinks: true,

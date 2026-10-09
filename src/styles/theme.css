@@ -34,7 +34,7 @@
   --color-azure: #2786d8;
   --color-pine: #1f9b90;
   --color-yellow: #ffb703; /* rating stars */
-  --color-gold: #ffd800; /* the five-star graphic of the rating cards (RatingCard) */
+  --color-gold: #ffd800; /* the stars of the rating cards (Stars color="gold" in RatingCard) */
   --color-peach: #fdebdc; /* audience cards, contact section */
   --color-peach-deep: #fbe0cb;
   --color-cream: #f7eee7; /* pricing tier card body */
@@ -136,6 +136,15 @@
     *::after {
       animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
+    }
+  }
+  /* The pieces of a revealed block (`reveal`, Motion) are prerendered hidden and come in on scroll. Where
+     nothing should move (reduced motion) and on paper they show as they are; without JavaScript the root's
+     <noscript> does the same. */
+  @media (prefers-reduced-motion: reduce), print {
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 }

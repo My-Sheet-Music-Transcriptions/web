@@ -2,8 +2,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import * as cheerio from 'cheerio'
 import fg from 'fast-glob'
+import sharp from 'sharp'
 import { describe, expect, it } from 'vitest'
 import { resolveSiteLocale } from '../../scripts/lib/site-locale'
+import { LEGACY_SITEMAPS } from '../../scripts/lib/sitemap'
 import { sites } from '../../src/i18n/sites'
 
 /**
@@ -24,6 +26,33 @@ const is404 = (p: { route: string }) => p.route === '/404'
 const indexable = pages.filter(
   (p) => !is404(p) && !/noindex/.test(p.$('meta[name="robots"]').attr('content') ?? ''),
 )
+/** The sitemap index's children and every URL they list, with its hreflang alternates ("lang href", sorted). */
+let sitemapCache: { children: string[]; urls: Map<string, string[]> } | undefined
+function sitemaps() {
+  if (sitemapCache) return sitemapCache
+  const read = (file: string) =>
+    cheerio.load(fs.readFileSync(path.join(DIST, file), 'utf8'), { xml: true })
+  const index = read('sitemap.xml')
+  const children = index('sitemapindex > sitemap > loc')
+    .map((_, l) => index(l).text())
+    .get()
+  const urls = new Map<string, string[]>()
+  for (const child of children) {
+    const $ = read(child.slice(site.domain.length))
+    $('url').each((_, u) => {
+      const loc = $(u).find('loc').text()
+      const alts = $(u)
+        .find('xhtml\\:link')
+        .map((_, l) => `${$(l).attr('hreflang')} ${$(l).attr('href')}`)
+        .get()
+        .sort()
+      expect(urls.has(loc), `${loc} listed twice`).toBe(false)
+      urls.set(loc, alts)
+    })
+  }
+  sitemapCache = { children, urls }
+  return sitemapCache
+}
 const existsInDist = (urlPath: string) => {
   const clean = urlPath.split(/[?#]/)[0] ?? ''
   if (clean === '/' || clean === '') return true
@@ -37,10 +66,13 @@ describe('prerendered output', () => {
     expect(pages.some((p) => p.route === '/')).toBe(true)
     expect(pages.some(is404)).toBe(true)
   })
-  it('ships robots.txt pointing at the sitemap and a sitemap.xml', () => {
+  it('ships robots.txt pointing at the sitemap index and a sitemap.xml', () => {
     const robots = fs.readFileSync(path.join(DIST, 'robots.txt'), 'utf8')
     expect(robots).toContain(`Sitemap: ${site.domain}/sitemap.xml`)
     expect(fs.existsSync(path.join(DIST, 'sitemap.xml'))).toBe(true)
+  })
+  it('does not publish the prerender page list', () => {
+    expect(fs.existsSync(path.join(DIST, 'pages.json'))).toBe(false)
   })
 })
 
@@ -69,15 +101,25 @@ describe.each(pages.map((p) => [p.route, p] as const))('%s', (_route, p) => {
     expect(c.startsWith(site.domain)).toBe(true)
     expect(c.endsWith('/') && c !== `${site.domain}/`).toBe(false)
   })
-  it('has Open Graph and Twitter tags with an image that exists', () => {
+  it('has Open Graph and Twitter tags', () => {
     if (is404(p)) return
-    for (const prop of ['og:title', 'og:description', 'og:image', 'og:url', 'og:type']) {
+    for (const prop of ['og:title', 'og:description', 'og:url', 'og:type']) {
       expect($(`meta[property="${prop}"]`).attr('content'), prop).toBeTruthy()
     }
+  })
+  it('has one og:image, in dist at its declared size (the 404 included)', async () => {
     expect($('meta[name="twitter:card"]').attr('content')).toBe('summary_large_image')
-    const img = $('meta[property="og:image"]').attr('content') ?? ''
-    expect(img.startsWith(site.domain)).toBe(true)
-    expect(existsInDist(img.slice(site.domain.length)), `og:image ${img} not in dist`).toBe(true)
+    const images = $('meta[property="og:image"]')
+    expect(images.length).toBe(1)
+    const img = images.attr('content') ?? ''
+    expect($('meta[name="twitter:image"]').attr('content')).toBe(img)
+    expect(img.startsWith(`${site.domain}/og/`), img).toBe(true)
+    const file = path.join(DIST, img.slice(site.domain.length))
+    expect(fs.existsSync(file), `og:image ${img} not in dist`).toBe(true)
+    const { width, height } = await sharp(file).metadata()
+    expect(`${width}x${height}`).toBe(
+      `${$('meta[property="og:image:width"]').attr('content')}x${$('meta[property="og:image:height"]').attr('content')}`,
+    )
   })
   it('has valid JSON-LD', () => {
     const scripts = $('script[type="application/ld+json"]')
@@ -159,34 +201,53 @@ describe.each(pages.map((p) => [p.route, p] as const))('%s', (_route, p) => {
     })
     expect(missing, `anchors without a target in ${p.route}`).toEqual([])
   })
-  it('is listed in the sitemap unless noindex', () => {
+  it('is listed in the sitemaps unless noindex, with the hreflang alternates of its head', () => {
     if (is404(p)) return
-    const sitemap = fs.readFileSync(path.join(DIST, 'sitemap.xml'), 'utf8')
     const url = `${site.domain}${p.route === '/' ? '/' : p.route}`
-    const listed = sitemap.includes(`<loc>${url}</loc>`) || sitemap.includes(`<loc>${url}/</loc>`)
+    const listed = sitemaps().urls.get(url)
     const noindex = /noindex/.test($('meta[name="robots"]').attr('content') ?? '')
-    expect(listed, `${url} ${noindex ? 'must not' : 'must'} be in sitemap.xml`).toBe(!noindex)
+    expect(!!listed, `${url} ${noindex ? 'must not' : 'must'} be in the sitemaps`).toBe(!noindex)
+    if (!listed) return
+    const head = $('link[rel="alternate"][hreflang]')
+      .map((_, l) => `${$(l).attr('hreflang')} ${$(l).attr('href')}`)
+      .get()
+      .sort()
+    expect(listed, `${url}: sitemap alternates vs <head>`).toEqual(head)
+  })
+  it('links the sitemap index', () => {
+    expect($('link[rel="sitemap"]').attr('href')).toBe('/sitemap.xml')
   })
 })
 
-describe('sitemap', () => {
-  it('only lists pages that exist in dist', () => {
-    const sitemap = fs.readFileSync(path.join(DIST, 'sitemap.xml'), 'utf8')
-    const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1] ?? '')
-    expect(locs.length).toBeGreaterThan(0)
-    for (const loc of locs) {
-      expect(loc.startsWith(site.domain), loc).toBe(true)
-      expect(
-        existsInDist(loc.slice(site.domain.length) || '/'),
-        `${loc} in sitemap but not in dist`,
-      ).toBe(true)
+describe('sitemaps', () => {
+  it('index sitemaps that exist, on this domain', () => {
+    const { children } = sitemaps()
+    expect(children.length).toBeGreaterThan(0)
+    for (const child of children) {
+      expect(child, child).toMatch(new RegExp(`^${site.domain}/[a-z_-]+-sitemap\\.xml$`))
+      expect(existsInDist(child.slice(site.domain.length)), `${child} not in dist`).toBe(true)
     }
-    expect(indexable.length).toBeLessThanOrEqual(locs.length)
   })
-  it('uses the right language codes in alternate refs', () => {
-    const sitemap = fs.readFileSync(path.join(DIST, 'sitemap.xml'), 'utf8')
-    const langs = new Set([...sitemap.matchAll(/hreflang="([^"]+)"/g)].map((m) => m[1]))
+  it('list exactly the indexable pages', () => {
+    const listed = [...sitemaps().urls.keys()].sort()
+    const expected = indexable.map((p) => `${site.domain}${p.route === '/' ? '/' : p.route}`).sort()
+    expect(listed).toEqual(expected)
+  })
+  it('use the right language codes in alternate refs', () => {
     const allowed = new Set([...Object.values(sites).map((s) => s.lang), 'x-default'])
-    for (const l of langs) expect(allowed.has(l as string), `unexpected hreflang ${l}`).toBe(true)
+    for (const [loc, alts] of sitemaps().urls)
+      for (const alt of alts) {
+        const lang = alt.split(' ')[0] ?? ''
+        expect(allowed.has(lang), `unexpected hreflang ${lang} on ${loc}`).toBe(true)
+      }
+  })
+  it('send the WordPress sitemap URLs to the index', () => {
+    const rules = fs.readFileSync(path.join(DIST, '_redirects'), 'utf8')
+    for (const legacy of LEGACY_SITEMAPS) {
+      if (existsInDist(legacy)) continue
+      expect(rules, legacy).toMatch(
+        new RegExp(`^${legacy.replace(/\./g, '\\.')}\\s+/sitemap\\.xml\\s+301$`, 'm'),
+      )
+    }
   })
 })

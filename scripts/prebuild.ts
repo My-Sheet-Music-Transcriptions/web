@@ -27,9 +27,9 @@ fs.writeFileSync(
 // Stale from an older checkout (it now goes straight to dist/client, see postbuild.ts).
 fs.rmSync('public/_redirects', { force: true })
 
+// Every og:image the <head> can link, the site card of a locale with no pages yet included (its 404).
 for (const l of locales) {
   const entries = entriesFor(l)
-  if (!entries.length) continue
   const made = await buildOgImages(entries, sites[l])
   console.log(`[prebuild] ${l} (${mode}): ${entries.length} entries, ${made} OG images rendered`)
 }

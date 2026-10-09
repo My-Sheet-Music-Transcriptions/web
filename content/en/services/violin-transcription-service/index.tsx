@@ -9,12 +9,12 @@ import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=pi
 import {
   CardGrid,
   ContactSection,
-  CtaBand,
   FaqList,
   PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
+  Section,
   Steps,
 } from '~/components/blocks'
 import violin from './violin.png?w=180;360&as=picture'
@@ -36,11 +36,11 @@ export default function ViolinTranscriptionServicePage() {
         videoPoster={videoPoster}
         labels={mediaLabels}
         title="How does it work?"
-        layout="columns"
+        variant="columns"
         items={[
           {
             title: 'Send us the music',
-            text: 'All we need is a video or an audio file',
+            body: 'All we need is a video or an audio file',
             image: violin,
           },
           {
@@ -49,11 +49,11 @@ export default function ViolinTranscriptionServicePage() {
               title: 'Violin Transcription Service',
               caption: 'Play to compare with the sheet music',
             },
-            text: 'We transcribe **your favorite violin songs** for you. We transcribe the most iconic violin songs, from **old-time pop** and **folk classics** to **virtuoso violin pieces, violin covers,** and anything that you might need! We will also include **dynamic & expression marks** for you (bowing, fingering, and position indications can be added on request).\n\nOur professional violin players and transcribers will create **custom sheet music for you.**',
+            body: 'We transcribe **your favorite violin songs** for you. We transcribe the most iconic violin songs, from **old-time pop** and **folk classics** to **virtuoso violin pieces, violin covers,** and anything that you might need! We will also include **dynamic & expression marks** for you (bowing, fingering, and position indications can be added on request).\n\nOur professional violin players and transcribers will create **custom sheet music for you.**',
           },
           {
             title: 'Receive the violin sheet!',
-            text: 'We send you the score in a printable format',
+            body: 'We send you the score in a printable format',
             image: violin1BohemianRhapsody,
           },
         ]}
@@ -93,12 +93,16 @@ export default function ViolinTranscriptionServicePage() {
         ]}
       />
 
-      <CtaBand
+      <Section
+        align="center"
+        rule={false}
+        width="narrow"
+        tone="cream"
         title="Unsure about music notation?"
         cta={{ label: 'See our Glossary', href: '/glossary-of-musical-terms' }}
       />
 
-      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
+      <CardGrid title="What's included?" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing for violin"

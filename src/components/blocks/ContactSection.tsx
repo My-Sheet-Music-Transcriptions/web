@@ -1,6 +1,9 @@
 import { type FormEvent, useEffect, useId, useRef, useState } from 'react'
+import { BlockShell } from '~/components/primitives/BlockShell'
 import { Button } from '~/components/primitives/Button'
+import { Card } from '~/components/primitives/Card'
 import { Icon } from '~/components/primitives/Icon'
+import { RevealItem } from '~/components/primitives/Motion'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import { WaveDivider } from '~/components/primitives/WaveDivider'
 import type { ContactFormCopy, FieldCopy } from '~/content/types'
@@ -15,14 +18,16 @@ export interface ContactSectionProps {
   form: ContactFormCopy
   /** This page's own heading, instead of the copy's ("Let's make music together"). */
   title?: string
-  /** This page's own line under the heading. */
-  subtitle?: string
+  /** This page's own line under the heading, instead of the copy's. */
+  lead?: string
   /** Anchor id of the section (also where the no-JS fallback returns to). */
   id?: string
   /** `quote` (default): music link, instruments, file, message, phone. `gift-card`: amount, currency, details. */
   variant?: 'quote' | 'gift-card'
   /** Path of the page hosting the form, for the no-JS fallback redirect. */
   returnTo?: string
+  /** Comes in as it scrolls into view: the heading, the response-time line, then the form rise and fade in. */
+  reveal?: boolean
 }
 
 type Errors = Record<string, string>
@@ -34,10 +39,11 @@ type Errors = Record<string, string>
 export function ContactSection({
   form: copy,
   title,
-  subtitle,
+  lead,
   id = 'contact',
   variant = 'quote',
   returnTo = '/',
+  reveal,
 }: ContactSectionProps) {
   const gift = variant === 'gift-card'
   const returnPath = usePublicPath(returnTo)
@@ -106,46 +112,39 @@ export function ContactSection({
   )
 
   return (
-    <section
+    <BlockShell
       id={id}
-      className="relative scroll-mt-20 bg-[rgb(244_153_70/0.23)] pt-[110px] pb-[117px] md:pb-[133px]"
-      aria-labelledby={`${uid}-title`}
+      title={title ?? copy.title}
+      lead={lead ?? copy.lead}
+      tone="peach"
+      width="narrow"
+      spacing="loose"
+      className="relative pt-[110px] md:pt-[110px]"
+      reveal={reveal}
+      cascade
     >
       <WaveDivider position="top" height={86} width={300} mobileHeight={44} />
-      <div className="mx-auto max-w-[880px] px-5 md:px-0">
-        <h2
-          id={`${uid}-title`}
-          className="text-center text-[28px] leading-8 md:text-h2 md:leading-8"
-        >
-          {title ?? copy.title}
-        </h2>
-        <p className="mt-5 text-center text-[20px] leading-[30px] font-light text-secondary">
-          {subtitle ?? copy.subtitle}
-        </p>
-        <p
-          data-live-colour=""
-          className="mx-[-10px] mt-[44px] flex items-center justify-center gap-x-0 rounded-[25px] bg-[linear-gradient(266deg,#2ec4b6_0%,#2e97c4_100%)] pt-1.5 pr-2.5 pb-3 pl-2.5 text-body leading-8 font-bold text-white md:mx-auto md:w-[430px] md:pt-0.5 md:pr-10 md:pb-2 md:pl-[42px]"
-        >
-          <Icon name="fa-paper-plane" size={25} className="mt-2 hidden shrink-0 md:block" />
-          <span className="mt-2 flex-1 text-center">{copy.responseTime}</span>
-        </p>
-        <span
-          aria-hidden="true"
-          className="mx-auto mt-[25px] block h-px w-1/2 bg-accent md:w-1/5"
-        />
+      <RevealItem
+        as="p"
+        data-live-colour=""
+        className="mx-[-10px] flex items-center justify-center gap-x-0 rounded-[25px] bg-[linear-gradient(266deg,#2ec4b6_0%,#2e97c4_100%)] pt-1.5 pr-2.5 pb-3 pl-2.5 text-body leading-8 font-bold text-white md:mx-auto md:w-[430px] md:pt-0.5 md:pr-10 md:pb-2 md:pl-[42px]"
+      >
+        <Icon name="fa-paper-plane" size={25} className="mt-2 hidden shrink-0 md:block" />
+        <span className="mt-2 flex-1 text-center">{copy.responseTime}</span>
+      </RevealItem>
 
+      <RevealItem>
         {status === 'sent' ? (
-          <output
-            className="mt-10 block rounded-card bg-white p-8 text-center text-ink shadow-card"
-            aria-live="polite"
-          >
-            <p className="text-h3">{copy.sentTitle}</p>
-            <p className="mt-2 text-small">{copy.sentBody}</p>
-          </output>
+          <Card padding="lg" className="mt-10 text-center text-ink">
+            <output className="block" aria-live="polite">
+              <p className="text-h3">{copy.sentTitle}</p>
+              <p className="mt-2 text-small">{copy.sentBody}</p>
+            </output>
+          </Card>
         ) : (
           <form
             ref={formRef}
-            className="mt-4 md:mt-[35px]"
+            className="mt-6 md:mt-[35px]"
             aria-label={copy.label}
             method="post"
             action="/api/contact"
@@ -336,8 +335,8 @@ export function ContactSection({
             </Button>
           </form>
         )}
-      </div>
-    </section>
+      </RevealItem>
+    </BlockShell>
   )
 }
 

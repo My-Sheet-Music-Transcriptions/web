@@ -10,9 +10,9 @@ import {
   CardGrid,
   ContactSection,
   FaqList,
-  IconGrid,
   MediaText,
   PageHeader,
+  PictureGrid,
   RatingBanner,
   Samples,
   Steps,
@@ -34,7 +34,7 @@ export default function MusicTranscriptionServicePage() {
         lead="Learn more about our music notation services and our range of solutions to transform audio recordings into precise and digital sheet music."
       />
 
-      <IconGrid
+      <PictureGrid
         items={allServices}
         limit={8}
         cta={{ label: 'See all services', href: '#all-services' }}
@@ -83,30 +83,30 @@ export default function MusicTranscriptionServicePage() {
         items={[
           {
             title: '1. You request a quote',
-            text: 'Send us the music you want us to transcribe (an audio file or a YouTube link!) and give us all relevant information: instruments, timestamps, difficulty, and arrangement details.',
+            body: 'Send us the music you want us to transcribe (an audio file or a YouTube link!) and give us all relevant information: instruments, timestamps, difficulty, and arrangement details.',
           },
           {
             title: '2. We assess and adapt',
-            text: '**We are all music transcribers**: we will listen to your music and get back to you with a price quote that suits your needs. An in-house specialist is always ready to take care of your project.',
+            body: '**We are all music transcribers**: we will listen to your music and get back to you with a price quote that suits your needs. An in-house specialist is always ready to take care of your project.',
           },
           {
             title: '3. You place the order',
-            text: 'When all details and price quote have been agreed on, you will place your order securely to get us started.',
+            body: 'When all details and price quote have been agreed on, you will place your order securely to get us started.',
           },
           {
             title: '4. We transcribe',
-            text: 'Our professional transcribers will craft your transcription as agreed. We will ensure the process is smooth and keep you updated if we have news or questions.',
+            body: 'Our professional transcribers will craft your transcription as agreed. We will ensure the process is smooth and keep you updated if we have news or questions.',
           },
           {
             title: '5. You enjoy the music – 100% satisfaction',
-            text: 'We will send you the completed transcription in all the formats you need to print it or use it.\n\nWe will make sure everything looks good to you. Adjusting any small details that might have been missed is our job too.',
+            body: 'We will send you the completed transcription in all the formats you need to print it or use it.\n\nWe will make sure everything looks good to you. Adjusting any small details that might have been missed is our job too.',
           },
         ]}
       />
 
-      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
+      <CardGrid title="What's included?" image={studioBand} items={included} />
 
-      <IconGrid id="all-services" title="Turn any song into sheet music" items={allServices} />
+      <PictureGrid id="all-services" title="Turn any song into sheet music" items={allServices} />
 
       <RatingBanner
         image={pianoBand}

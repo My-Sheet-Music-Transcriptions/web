@@ -1,5 +1,5 @@
 import { quoteForm } from '@content/en/data/forms'
-import { ContactSection, LogoGrid, PageHeader, Section } from '~/components/blocks'
+import { ContactSection, PageHeader, PictureGrid, Section } from '~/components/blocks'
 import { Text } from '~/components/typography'
 import caitlinDeVille from './caitlin-de-ville.png?w=180;360&as=picture'
 import cameronCody from './cameron-cody.png?w=180;360&as=picture'
@@ -42,9 +42,8 @@ export default function EndorsedMusiciansPage() {
         </Text>
       </Section>
 
-      <LogoGrid
+      <PictureGrid
         shape="portrait"
-        showNames
         columns={5}
         items={[
           { name: 'Katherine Cordova', image: katherineCordova, href: '/katherine-cordova' },

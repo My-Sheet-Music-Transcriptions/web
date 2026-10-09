@@ -1,11 +1,11 @@
 import montserratWoff2 from '@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url'
 import { resolveEntry } from '~/content'
 import hreflangMap from '~/i18n/hreflang.generated.json'
-import { DEFAULT_LOCALE } from '~/i18n/routing'
-import { sites } from '~/i18n/sites'
 import type { Locale } from '~/i18n/types'
 import { absoluteUrl, getSiteConfig, LOCALE_ROUTING, SITE_LOCALE } from '~/site'
+import { type Alternate, type HreflangMap, hreflangAlternates } from './alternates'
 import { entryJsonLd, organizationJsonLd, websiteJsonLd } from './jsonld'
+import { entryOgImage, OG_SIZE, siteOgImage } from './og/paths'
 
 type Meta = Record<string, string>
 type LinkTag = Record<string, string>
@@ -23,7 +23,10 @@ export function pageTitle(title: string, locale: Locale = SITE_LOCALE): string {
   return site.titleTemplate.replace('%s', title)
 }
 
-/** Root <head>: charset, viewport, stylesheet, icons, site-wide JSON-LD. */
+/**
+ * Root <head>: charset, viewport, stylesheet, icons, site-wide JSON-LD, and the site card as the og:image of any page
+ * whose route sets none (404, error page): an entry's own tags replace these (the deepest route wins per name).
+ */
 export function rootHead(appCss: string, locale: Locale = SITE_LOCALE): HeadResult {
   const site = getSiteConfig(locale)
   return {
@@ -34,6 +37,7 @@ export function rootHead(appCss: string, locale: Locale = SITE_LOCALE): HeadResu
       { property: 'og:site_name', content: site.siteName },
       { property: 'og:locale', content: ogLocale(site.lang) },
       { name: 'twitter:card', content: 'summary_large_image' },
+      ...ogImageMeta(absoluteUrl(locale, siteOgImage(locale)), site.siteName),
     ],
     links: [
       {
@@ -73,10 +77,6 @@ export function entryHead(locale: Locale = SITE_LOCALE, path = '/'): HeadResult 
   const m = entry.meta
   const title = pageTitle(m.seoTitle ?? m.title, locale)
   const canonical = absoluteUrl(locale, entry.path)
-  const ogImage = absoluteUrl(
-    locale,
-    m.og?.image?.src ?? `/og/${entry.locale}/${entry.collection}/${entry.slug}.png`,
-  )
   const meta: Meta[] = [
     { title },
     { name: 'description', content: m.description },
@@ -84,13 +84,9 @@ export function entryHead(locale: Locale = SITE_LOCALE, path = '/'): HeadResult 
     { property: 'og:url', content: canonical },
     { property: 'og:title', content: m.og?.title ?? title },
     { property: 'og:description', content: m.og?.description ?? m.description },
-    { property: 'og:image', content: ogImage },
-    { property: 'og:image:width', content: '1200' },
-    { property: 'og:image:height', content: '630' },
-    { property: 'og:image:alt', content: m.og?.image?.alt ?? m.title },
+    ...ogImageMeta(absoluteUrl(locale, entryOgImage(entry)), m.og?.image?.alt ?? m.title),
     { name: 'twitter:title', content: m.og?.title ?? title },
     { name: 'twitter:description', content: m.og?.description ?? m.description },
-    { name: 'twitter:image', content: ogImage },
   ]
   if (m.noindex) meta.push({ name: 'robots', content: 'noindex, nofollow' })
   if (entry.collection === 'posts' && 'date' in m)
@@ -107,15 +103,19 @@ export function entryHead(locale: Locale = SITE_LOCALE, path = '/'): HeadResult 
 }
 
 /** hreflang alternates of a translation: every locale's URL (its TLD in production, /<locale>/... in previews). */
-export function alternatesFor(translationKey: string): { hreflang: string; href: string }[] {
-  const map = (hreflangMap as Record<string, Partial<Record<Locale, string>>>)[translationKey] ?? {}
-  const out: { hreflang: string; href: string }[] = []
-  for (const [l, path] of Object.entries(map))
-    if (path) out.push({ hreflang: sites[l as Locale].lang, href: absoluteUrl(l as Locale, path) })
-  if (out.length < 2) return []
-  const def = map[DEFAULT_LOCALE]
-  if (def) out.push({ hreflang: 'x-default', href: absoluteUrl(DEFAULT_LOCALE, def) })
-  return out
+export function alternatesFor(translationKey: string): Alternate[] {
+  return hreflangAlternates(translationKey, hreflangMap as HreflangMap, absoluteUrl)
+}
+
+/** og:image and twitter:image: always a file the build wrote (src/seo/og/paths.ts), never a URL from content. */
+function ogImageMeta(url: string, alt: string): Meta[] {
+  return [
+    { property: 'og:image', content: url },
+    { property: 'og:image:width', content: String(OG_SIZE.width) },
+    { property: 'og:image:height', content: String(OG_SIZE.height) },
+    { property: 'og:image:alt', content: alt },
+    { name: 'twitter:image', content: url },
+  ]
 }
 
 function ogLocale(lang: string): string {

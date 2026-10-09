@@ -7,7 +7,7 @@
     "at": "2026-10-07T18:25:00Z"
   },
   "publishedBy": "Josep Jaume Rey",
-  "publishedFrom": "cd08234",
+  "publishedFrom": "a26a850",
   "assets": {
     "Brand/logo.svg": {
       "blob": "7c0b1235a713e45bbb5a9759cca53073",
@@ -200,9 +200,195 @@
       "size": 10472,
       "type": "image/png",
       "sha256": "b9df20537327d5227af993fe4cc8d8dae1584bfd56706c19033cea16de93991b"
+    },
+    "Instrument icons/accordion.png": {
+      "blob": "cc1559e840c8c9691ebf0f8668a08b0d",
+      "size": 32477,
+      "type": "image/png",
+      "sha256": "1952f451bcb20b16834d4624473690f9b5e6894337155805c831b94b83e012bb"
+    },
+    "Instrument icons/arrangement.png": {
+      "blob": "ca0649fcb85127682f13088311eb30ce",
+      "size": 32735,
+      "type": "image/png",
+      "sha256": "639ea4f6dfa304157e5e999a886efe9e46985ae3ac156d2ad2460e750a70fd6d"
+    },
+    "Instrument icons/backing-vocals.png": {
+      "blob": "9f77678202a83239240059c30117c769",
+      "size": 33096,
+      "type": "image/png",
+      "sha256": "c6a727a7512a71f73ec65c6f49b6daafe25a3727364da92e759e0a770f7b8c82"
+    },
+    "Instrument icons/bass.png": {
+      "blob": "fa6850f5803059bb75abb3a60666d2ec",
+      "size": 46340,
+      "type": "image/png",
+      "sha256": "ec86da69048c8ea0680781db8ebe0b85670ef56d59a5ef47c51042081b27fc4f"
+    },
+    "Instrument icons/blues-piano.png": {
+      "blob": "6a683281d7df4d37b3a3cac577c83ead",
+      "size": 25588,
+      "type": "image/png",
+      "sha256": "987c9082f89c69768e2ef932cbbe0ceda3de00f25c86734be6b8c8999912574e"
+    },
+    "Instrument icons/brass-band.png": {
+      "blob": "8dcfc91f2046fe0e32af2fd3b0cf7b14",
+      "size": 80516,
+      "type": "image/png",
+      "sha256": "d250db3f38bdc7bf4ebf207c9ec6e39f3dd22457233077e97f3825d0a32fa780"
+    },
+    "Instrument icons/cello.png": {
+      "blob": "ae11c4ccb872c812a04387c2bd68b429",
+      "size": 29324,
+      "type": "image/png",
+      "sha256": "da8c523408b62dd474fcbab7817e1fc306d875e04f6da1866ddab3d71725b3bc"
+    },
+    "Instrument icons/chord-charts.png": {
+      "blob": "2286a3aaec2b9d5fcad455729880946e",
+      "size": 23677,
+      "type": "image/png",
+      "sha256": "ed4fc1c996d0b24af24e0ac491d91329412d33958e38474dd2b5112b914cceec"
+    },
+    "Instrument icons/clarinet.png": {
+      "blob": "a71958eb3f610a2b9ad60ed3ef5893a9",
+      "size": 26430,
+      "type": "image/png",
+      "sha256": "a62d4121cddb86f3e87d3d3b94857ad8a6181ed44ffe262ccc4f880cc0b8999f"
+    },
+    "Instrument icons/copying.png": {
+      "blob": "2dbac9cfd78378adec9e8f33e24052c2",
+      "size": 36016,
+      "type": "image/png",
+      "sha256": "891705b7984cdb4f88433dc2dd0cf6538b1ce60975cc984c0d68d0eaea8061ac"
+    },
+    "Instrument icons/flute.png": {
+      "blob": "c1cbad4d202297df68fcb797019b3199",
+      "size": 65513,
+      "type": "image/png",
+      "sha256": "9d3119fee21bab06d0f8ef2c2a22846c158e3b5ab61853f717e7f06a3e0af2e3"
+    },
+    "Instrument icons/harp.png": {
+      "blob": "e0e039389fdc38d717ddb24c55031cdf",
+      "size": 40926,
+      "type": "image/png",
+      "sha256": "525c165f54327b2783481304209f1e6ba3d0f2cec14ae018413ffe60a3645262"
+    },
+    "Instrument icons/horns.png": {
+      "blob": "e60b6a53113bf845d686639d2fad514a",
+      "size": 60538,
+      "type": "image/png",
+      "sha256": "d9eb101bc5418c88c355dba7ad562a03649fe5b6b03bf2418425909ac59a6e74"
+    },
+    "Instrument icons/jazz-piano.png": {
+      "blob": "5d7d356a2abd1f10641fd8e1bcbd25dc",
+      "size": 26669,
+      "type": "image/png",
+      "sha256": "bc5c6f2a971dd39dca0d9f651caaf89c3b41669359c8fdf6269c6ec9b2dc321d"
+    },
+    "Instrument icons/keyboard.png": {
+      "blob": "7cd7f03d998b7618a6a45cd01f42d208",
+      "size": 20883,
+      "type": "image/png",
+      "sha256": "d2feb9035a79e5d1886fc13530c35c37c18f0d22bd9df3e05a35cdf5721345c8"
+    },
+    "Instrument icons/lap-steel-guitar.png": {
+      "blob": "2f297462df1503ca5cc74a942b078ed6",
+      "size": 99715,
+      "type": "image/png",
+      "sha256": "0c9d2bac083db2b136ca52c3d79f4f34354c0eed3b176a1c865f76944bf61b87"
+    },
+    "Instrument icons/mandolin.png": {
+      "blob": "9da49dd6dab1753ff0bd5e68f3e77285",
+      "size": 85939,
+      "type": "image/png",
+      "sha256": "562dcd0cdcd33f33876c0fed8d8de82979a589e6a4e3112b4dd297cc349ee2b7"
+    },
+    "Instrument icons/organ.png": {
+      "blob": "eebf43c80a2121a9419407c098ec2307",
+      "size": 48549,
+      "type": "image/png",
+      "sha256": "bdf11264091a7501fc9ec83d0a9d66e80a759562d3c6706508eccb14e39267f5"
+    },
+    "Instrument icons/piano-trio.png": {
+      "blob": "0176c82b505866c81e5e981a30426f50",
+      "size": 26011,
+      "type": "image/png",
+      "sha256": "dda7d07c8c0e643748f30182618c5e9c95396eb658936cbff795c3fe66c14fdf"
+    },
+    "Instrument icons/rhythm-charts.png": {
+      "blob": "b89080c18c36c0390aaa1ddc1a11ac27",
+      "size": 19382,
+      "type": "image/png",
+      "sha256": "5c1996cb4787e12fa85a251ecfd9022841d6716c9ca93aa14a002984f8ec7412"
+    },
+    "Instrument icons/soundslice.png": {
+      "blob": "6957ed8a2135a61cdcaf17c59b220844",
+      "size": 31066,
+      "type": "image/png",
+      "sha256": "6b03b8773340749a3139dfe118c1a36bcc1345227840a16ec4dc55c77729aac8"
+    },
+    "Instrument icons/string-quartet.png": {
+      "blob": "16d3faa24dd8f3afd004fe4be0af2eb6",
+      "size": 66616,
+      "type": "image/png",
+      "sha256": "1e62129b406cd16b2ca62e5ef0c629a5f0882e2aa81ffa32d17d1a9c476c8810"
+    },
+    "Instrument icons/synthesia.png": {
+      "blob": "8d6d581c08a26a4539939c07f978357b",
+      "size": 23321,
+      "type": "image/png",
+      "sha256": "ea2d021f4da0fe5e9f0263999c1b7c7f3ec338779fb91106084ed16da8e74b0c"
+    },
+    "Instrument icons/transposing.png": {
+      "blob": "2f0874857103bf7f5c6924a687aa691a",
+      "size": 19382,
+      "type": "image/png",
+      "sha256": "5c1996cb4787e12fa85a251ecfd9022841d6716c9ca93aa14a002984f8ec7412"
+    },
+    "Instrument icons/trombone.png": {
+      "blob": "f52390693e8f43fd161721edca93e27d",
+      "size": 78151,
+      "type": "image/png",
+      "sha256": "eaaa25acfe846238bdec770c6d2e5a53c5d04dd6e63a3c2beb05bb25cf4165e1"
+    },
+    "Instrument icons/ukulele.png": {
+      "blob": "f6d9232b904117fe8977c905a0bef8aa",
+      "size": 45647,
+      "type": "image/png",
+      "sha256": "2433b5b590755681af2ea85edfa780dd0f5e9c3eb310e4dba502da09dc54a609"
+    },
+    "Feature icons/audience-business.png": {
+      "blob": "0b7b92bdf0c6b9eeb10471a0f7b89be8",
+      "size": 47587,
+      "type": "image/png",
+      "sha256": "c496c09e0dc856674c005d9440a40f0741876f5887fd21ee6bdb45d5cb390ff3"
+    },
+    "Feature icons/audience-artists.png": {
+      "blob": "c8cf12f6c78d1e8af8e2908c10c760a6",
+      "size": 99421,
+      "type": "image/png",
+      "sha256": "3882959d8fdb5339d1eacbb84f96589c156189db3ca136f3aa3ab984ff17bd97"
+    },
+    "Feature icons/audience-educators.png": {
+      "blob": "f87ae3a870f8314e56aa3766dcb5faa1",
+      "size": 63953,
+      "type": "image/png",
+      "sha256": "a98f761cec5f17988d0693dbc108926e6455d7f5c25472600ff83320de91a135"
+    },
+    "Feature icons/audience-all.webp": {
+      "blob": "76df28b9a0e46eac5982bc77aee53a1c",
+      "size": 37302,
+      "type": "image/webp",
+      "sha256": "eb43c4510a0c94651b9768dfa4f39d129f61ae256c046d50987765458933bdbf"
+    },
+    "Flags/ja.png": {
+      "blob": "7ae0b16695b0be12e5ec4215539111f5",
+      "size": 10472,
+      "type": "image/png",
+      "sha256": "b9df20537327d5227af993fe4cc8d8dae1584bfd56706c19033cea16de93991b"
     }
   },
-  "publishedAt": "2026-10-08T14:52:23.829Z",
-  "publishedVersion": "1791471138-a631",
-  "exportHash": "7fa9283bbfb7eede"
+  "publishedAt": "2026-10-09T02:49:27.805Z",
+  "publishedVersion": "1791514160-21a0",
+  "exportHash": "1d1bd72f5f1eb336"
 }

@@ -71,11 +71,12 @@ describe('ds:mockup reproduces the committed gift-card mockup', () => {
 })
 
 describe('the homepage', () => {
-  it('has no PageHeader, keeps the prose children and resolves the data', () => {
+  it('opens with the photo PageHeader, keeps the prose children and resolves the data', () => {
     const result = mockupFromEntry(entryOf('home'))
     const names = result.blocks.map((b) => b.name)
-    expect(names.slice(0, 3)).toEqual(['TopBar', 'Header', 'Hero'])
-    expect(names).not.toContain('PageHeader')
+    expect(names.slice(0, 3)).toEqual(['TopBar', 'Header', 'PageHeader'])
+    expect(result.blocks[2]?.props?.variant).toBe('photo')
+    expect(result.title).toBe('Your #1 sheet music transcription service online')
     expect(names.at(-1)).toBe('Footer')
     const pricing = result.blocks.find((b) => b.name === 'PricingCards')?.props ?? {}
     const children = pricing.children as string
@@ -242,7 +243,7 @@ describe('flattenChildren', () => {
 })
 
 describe('composing the page', () => {
-  it("takes the title from the page's own PageHeader or Hero, else from the meta", () => {
+  it("takes the title from the page's own PageHeader, else from the meta", () => {
     const plain = mockupFromEntry(page('<Section title="Hi">Text</Section>'))
     expect(plain.blocks.map((b) => b.name)).toEqual(['TopBar', 'Header', 'Section', 'Footer'])
     expect(plain.blocks[2]).toEqual({ name: 'Section', props: { title: 'Hi', children: 'Text' } })
@@ -373,11 +374,11 @@ describe('every page passes its blocks the words they need', () => {
       for (const b of mockupFromEntry(entryOf(slug)).blocks) {
         const p = (b.props ?? {}) as Record<string, unknown>
         const slides = Array.isArray(p.images) ? p.images.length : 0
+        // the photo PageHeader's rotating photos are decorative: no controls to name
         const carousel =
-          (['MediaText', 'PageHeader'].includes(b.name) &&
-            slides > 1 &&
-            p.imagesLayout !== 'pair') ||
-          (b.name === 'Gallery' && p.variant === 'carousel')
+          (b.name === 'MediaText' || (b.name === 'PageHeader' && p.variant !== 'photo')) &&
+          slides > 1 &&
+          p.layout !== 'pair'
         if (carousel && !p.labels) missing.push(`${slug}: <${b.name}> without labels`)
       }
     expect(missing).toEqual([])

@@ -1,7 +1,7 @@
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
-import { chromiumExecutable } from './scripts/lib/chromium'
+import { chromiumExecutable } from './scripts/lib/chromium.ts'
 
 export default defineConfig({
   test: {
@@ -36,7 +36,6 @@ export default defineConfig({
             provider: playwright({ launchOptions: { executablePath: chromiumExecutable() } }),
             instances: [{ browser: 'chromium' }],
           },
-          setupFiles: ['.storybook/vitest.setup.ts'],
         },
       },
     ],

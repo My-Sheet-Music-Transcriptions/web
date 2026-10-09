@@ -11,8 +11,8 @@ pnpm storybook                # design system docs + a11y panel (http://localhos
 pnpm check                    # biome + tsc + knip + unit tests  (fast, run before every commit)
 pnpm knip                     # dead code: unused files, exports, types, dependencies (knip.ts)
 pnpm check:pr                 # exactly what PR CI runs: check + English build + SEO suite (~1.5 min)
-SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemap -> dist/client
-pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemap (what deploy previews ship)
+SITE_LOCALE=en pnpm build     # production build of one locale: prebuild (hreflang, robots, OG) + prerender + sitemaps -> dist/client
+pnpm build                    # preview build: every locale under /<locale>, noindex, no sitemaps (what deploy previews ship)
 pnpm serve:dist               # serve dist/client on :4173
 pnpm test:seo                 # SEO conformance over dist/client (needs a build)
 pnpm test:storybook           # every story through axe (contrast included)
@@ -47,12 +47,14 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/assets/images` – brand-wide pictures (lockup, illustrated icons, photo bands, flags, software logos), imported
   by pages, data files and `src/app`; never by a component.
 - `src/content/{index,schema,types}.ts` – the content loader (globs `content/`), the meta schemas and data types.
-- `src/components/primitives` – Button, Card, Picture, Stars, Icon, SectionHeading, WaveDivider...
+- `src/components/primitives` – `BlockShell` (the frame of every block), `Media`, `FeatureItem`, `Card`, Button, Picture,
+  Stars, Icon, SectionHeading, WaveDivider...
 - `src/components/blocks` – the page-building catalogue, named by what each block does (`PageHeader`, `CardGrid`,
   `FaqList`…) and filed by category, what each shows (headers, text & media, lists & grids, reviews & ratings, calls to
   action), in `catalogue.ts`, the README and Storybook (`Blocks/<Category>/<Name>`). `index.tsx` exports every block by name (pages import them from
   `~/components/blocks`) and the `blocks` map (the preview bundle). Each block has a story next to it, built from
-  its catalogue example. Shared pieces (photo band, carousel, video, button, tones) are primitives.
+  its catalogue example. Every block but `PageHeader` is a `BlockShell` around its own content, and shared pieces
+  (media, feature items, cards, buttons, tones) are primitives: the `component` skill says how to add or change one.
 - `src/components/typography` – `Text`, `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider`: the prose
   inside pages and blocks, styled with Tailwind once. Plain `<strong>` / `<em>` are the exceptions, styled in the
   base layer of `theme.css`. Pages never write raw `<p>`, `<h2>`, `<ul>`, `<a>` (`tests/unit/content.test.ts`).
@@ -61,7 +63,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/app` – the app's side: `SiteShell` (reads the locale's site config, `content/<locale>/data/{nav,footer}.ts` and
   the brand files and passes them to the layout; the design-system bundle mounts the same pieces), `EntryPage` (wraps
   an entry's page component in `<main>`), `NotFound`, `ErrorPage`. There are no templates: a page is blocks only and
-  opens with its own `PageHeader` (`Hero` on the homepage); `meta.ts` holds SEO data only.
+  opens with its own `PageHeader` (`variant="photo"` on the homepage); `meta.ts` holds SEO data only.
 - `src/stories` – Storybook's own data and pictures (`data.ts`, `images/`, `samples.ts` resolving `'sample:photo'`…):
   they mimic the app's content but stay separate. Stories, the catalogue examples and the design-system previews
   use them; no story imports `content/` or `src/assets`.
@@ -75,8 +77,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `mockups/<slug>/sections.html` (+ `img/`, `sections.<variant>.html` for design options, `preview.json` with title,
   path, locale, preview URL, canvas URL and PR) – the approved mockup of a page, the single source every preview
   surface and the build start from; `tests/unit/mockups.test.ts` keeps every mockup valid.
-- `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `jsonld.ts`, `og/template.tsx` (Satori).
-- `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG PNGs), `serve-dist.ts`, `lib/content-fs.ts`,
+- `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `alternates.ts` (hreflang, shared with the
+  sitemaps), `jsonld.ts`, `og/template.tsx` (Satori), `og/paths.ts` (every og:image URL; see "Share images" below).
+- `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG images via `lib/og.ts`), `postbuild.ts`
+  (sitemaps, `_redirects`), `serve-dist.ts`, `lib/content-fs.ts`, `lib/sitemap.ts` (see "Sitemaps" below),
   `lib/chromium.ts` (the Chromium Playwright, Storybook's vitest, `lhci` and `ds:shot` launch: Playwright's own,
   else the one the container ships in `/opt/pw-browsers`; `CHROME_PATH` overrides),
   `design-system/{export,index,lib}.ts` (artifact export, `ds:index --check` and the publish record),
@@ -84,7 +88,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `tests/unit`, `tests/seo` (runs over `dist/client`), `tests/e2e`, `tests/visual` (+ `reference/` captures of the live site).
 - `.claude/skills` – `page` (the whole page workflow; `reference/*.md` hold the recipes per step), the content-manager
   commands `new-page`, `edit-page`, `translate`, `design`, `publish`, `status`, `site-help` (thin entry points into
-  `page`), the engineering skills `publish-design-system` and `release-check`, and hidden stubs for later phases.
+  `page`), the engineering skills `component` (adding or changing a block or primitive without duplicating one),
+  `motion` (every animation: the Motion provider, presets, reveals, menus) with Motion's official `motion-dev`
+  skill vendored beside it, `publish-design-system` and `release-check`, and hidden stubs for later phases.
 - `docs/content-managers.{md,es.md,ca.md}` – the plain-language guide for content managers and writers (EN/ES/CA);
   `tests/unit/skills.test.ts` keeps the commands, the guides and the skill's reference files in sync.
 - `docs/migration/PLAN.md` – the WordPress → repo migration plan (waves, decisions, cutover runbook), with the URL
@@ -94,9 +100,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 ## Rules that CI enforces
 
 - Slugs are flat and unique per locale across collections; reserved: api, assets, og, faqs, review, 404, storybook.
-- Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description/image
-  (the image file must exist in dist), twitter card, `<html lang>`, valid JSON-LD, images with alt/width/height,
-  no broken internal links, present in sitemap unless `noindex`.
+- Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description,
+  exactly one og:image (404 included) that exists in dist at its declared 1200×630, twitter card, `<html lang>`,
+  valid JSON-LD, images with alt/width/height, no broken internal links, listed once in its collection's sitemap
+  unless `noindex`, with the hreflang alternates of its `<head>`.
 - Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`). The one exception
   is elements marked `data-live-colour`, which keep the live site's colours by decision (filled buttons, pricing headers,
   the active nav item, the current language, the response-time pill); contrast is checked everywhere else.
@@ -106,6 +113,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   imported somewhere (one only its own file uses is fine) and every dependency is used. Delete what it
   reports rather than ignoring it; an export kept for later takes `/** @public */` with the reason.
 - `meta.ts` is a literal only; pages use the typography components for text (`tests/unit/content.test.ts`).
+- No picture under `src/assets/images` or `content/` is byte-identical to another under a different file name,
+  nor stored twice in `src/assets/images` (`tests/unit/images.test.ts`): reuse the file instead of copying it.
 - A PR touching anything outside the content paths needs a code-owner approval (`.github/CODEOWNERS`).
 
 ## Adding content (short version; the skills have the full checklist)
@@ -150,6 +159,31 @@ mode: `SITE_LOCALE` unset or `all`); only the English Netlify site builds previe
   `absoluteUrl(locale, path)`. The language switcher uses `localeSwitchHref` (falls back to the live site for a
   locale with no pages yet). Locale codes are reserved slugs.
 - `/api`, `/assets` and `/og` are shared and never prefixed.
+
+### Sitemaps
+
+Every production build writes, after prerendering (`scripts/postbuild.ts` → `scripts/lib/sitemap.ts`), an index at
+`/sitemap.xml` (named by `robots.txt` and every page's `<link rel="sitemap">`) and one sitemap per collection,
+`/<name>-sitemap.xml` (Yoast's names: `page`, `post`, `services`…, `SITEMAP_NAMES`). They are made from the entries
+in `content/` (not drafts, not `noindex`), the same list the build prerenders, so a new page or collection is listed
+with no extra step; a new collection must be named in `SITEMAP_NAMES` (type error otherwise). Each URL carries
+hreflang alternates to its translations on the other TLDs, from the same function as the page `<head>`
+(`src/seo/alternates.ts`); `lastmod` is `meta.updated`, else the page folder's last commit. The WordPress sitemap URLs
+(`/sitemap_index.xml`, other Yoast and WordPress names, `LEGACY_SITEMAPS`) 301 to the index. Previews have none.
+`tests/unit/sitemap.test.ts` (every locale, plus a multi-language fixture) and the SEO suite (sitemaps == indexable
+pages, alternates == `<head>`) keep them complete.
+
+### Share images (og:image)
+
+Every page has one, by construction, and nothing else can set it. `src/seo/og/paths.ts` is the only place an og:image
+URL is made: `head.ts` links it for every entry (and the root route links the locale's site card, so the 404, the
+error page and any future route without an entry get one too), and `prebuild` (`scripts/lib/og.ts`) writes exactly
+those files into `public/og/<locale>/`, rebuilt from scratch each time: a Satori card (`og/template.tsx`) from the
+page's `og.title`/`og.description`, else `title`/`description`, or the page's own picture when `meta.ts` names one,
+`og: { image: { src: 'share.jpg', alt: '…' } }`, a file in the page folder (a file name only: the schema refuses URLs
+and paths) of at least 1200×630, cropped to a 1200×630 JPEG. A missing or too small picture fails the build.
+Images are cached in `.cache/og` by their inputs, the template and logo included. `tests/unit/og.test.ts` and the SEO
+suite (one og:image per page, in dist, at its declared size) keep it so.
 
 ## Design tokens
 
@@ -214,6 +248,13 @@ components or layout.
 - TypeScript strict, Biome style (single quotes, no semicolons). Components are function components with typed props.
 - Internal links use the router `<Link>` (preloaded on hover); external ones a plain `<a rel="noopener">`.
 - Images go through `<Picture>` (vite-imagetools `?w=...` import) so they ship as AVIF/WebP with dimensions.
-- Prefer editing an existing block over adding a near-duplicate. New block = component + story + README section
-  in `src/components/blocks/README.md` + export from `blocks/index.tsx`.
+- **One shell, one vocabulary.** Before touching `src/components`, follow the `component` skill: a prop or `variant` on
+  an existing block beats a new shape of a shared item, which beats a new primitive, which beats a new block. Every
+  block renders `BlockShell` (section, tone, container, heading with its rule, lead, closing `cta`/`links`, photo
+  band, `reveal`) and picks presets, never pixels. Props say one thing one way: `title`, `eyebrow`, `lead`, `tone`,
+  `variant`, `columns` (desktop), `items` (fields `title`, `body`, `image`, `name`, `alt`, `caption`, `href`), `cta`,
+  `links`, `labels`, `id`, `reveal`. `tests/unit/blocks.test.ts` refuses a hand-made shell and the retired synonyms.
+- **Motion through Motion.** Animations use Motion (`motion/react`): `m` components and the presets in
+  `src/components/primitives/Motion.tsx`, under the `MotionProvider` every root mounts (reduced motion respected).
+  A page reveals a block with `reveal`; never animate the `PageHeader`. Follow the `motion` skill.
 - Do not commit generated files: `routeTree.gen.ts`, `hreflang.generated.json`, `public/og`, `public/robots.txt`.

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { fill } from '~/lib/strings'
+import { useAutoAdvance } from '~/lib/use-auto-advance'
 import { Icon } from './Icon'
 import { Picture, type PictureSource } from './Picture'
 
@@ -27,6 +28,8 @@ export interface CarouselProps {
   frameClassName?: string
   /** Extra classes of each picture (its aspect ratio). */
   imageClassName?: string
+  /** Load the first picture first (the carousel opens the page). */
+  priority?: boolean
 }
 
 /**
@@ -42,17 +45,12 @@ export function Carousel({
   interval = 10,
   frameClassName,
   imageClassName,
+  priority,
 }: CarouselProps) {
-  const [i, setI] = useState(0)
   const [paused, setPaused] = useState(false)
   const n = slides.length
+  const [i, setI] = useAutoAdvance(n, interval, paused)
   const go = (d: number) => setI((v) => (v + d + n) % n)
-  useEffect(() => {
-    if (paused || n < 2) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const id = setInterval(() => setI((v) => (v + 1) % n), interval * 1000)
-    return () => clearInterval(id)
-  }, [paused, n, interval])
   const arrow =
     'absolute top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-white drop-shadow'
   return (
@@ -79,6 +77,7 @@ export function Carousel({
               alt={k === i ? s.alt : ''}
               aria-hidden={k === i ? undefined : 'true'}
               sizes={sizes}
+              priority={priority && k === 0}
               className={cn('w-full shrink-0 object-cover', imageClassName)}
               pictureClassName="contents"
             />

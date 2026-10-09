@@ -1,57 +1,44 @@
 import type { ReactNode } from 'react'
-import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
-import { SectionHeading } from '~/components/primitives/SectionHeading'
-import { tones } from '~/components/primitives/tones'
+import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
+import type { Cta } from '~/components/primitives/CtaLink'
 import { cn } from '~/lib/cn'
-import { useTitleId } from '~/lib/use-title-id'
 
-export interface SectionProps {
-  title?: string
-  rule?: 'accent' | 'grey' | 'none'
-  /** Background: white (default), cream or peach. */
-  tone?: 'white' | 'peach' | 'cream'
+export interface SectionProps extends ShellProps {
+  /** How the prose sits under the heading: at the start (default), or centred (a short band that points somewhere). */
+  align?: 'start' | 'center'
+  /** The short orange rule under the heading. */
+  rule?: boolean
+  /** Column width: content 1140px (default), narrow 900px, wide 1200px. */
   width?: 'content' | 'narrow' | 'wide'
-  /** A row of buttons under the prose (jump links to the sections below, related pages). */
+  /** Outline buttons beside the `cta` (jump links to the sections below, related pages). */
   links?: Cta[]
-  /** Anchor id. */
-  id?: string
-  children: ReactNode
+  /** The page's own prose: `Text`, `Heading`, `List`… from ~/components/typography. */
+  children?: ReactNode
 }
 
-const widths = { content: 'container-content', narrow: 'container-narrow', wide: 'container-wide' }
-
-/** Generic titled section for a page's own prose (`Text`, `Heading`, `List`… from ~/components/typography). */
+/**
+ * A titled section for a page's own prose (`Text`, `Heading`, `List`… from ~/components/typography), and,
+ * centred with a button, the short band that points somewhere ("Unsure about music notation?").
+ */
 export function Section({
-  title,
-  rule = 'accent',
-  tone = 'white',
+  align = 'start',
+  rule = true,
   width = 'content',
-  links,
-  id,
   children,
+  ...shell
 }: SectionProps) {
-  const titleId = useTitleId(id)
   return (
-    <section
-      className={cn('scroll-mt-20 py-16', tones[tone])}
-      aria-labelledby={title ? titleId : undefined}
-      id={id}
-    >
-      <div className={widths[width]}>
-        {title ? (
-          <SectionHeading id={titleId} rule={rule} className="mb-10">
-            {title}
-          </SectionHeading>
-        ) : null}
-        <div className="flex flex-col gap-4 text-charcoal">{children}</div>
-        {links?.length ? (
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            {links.map((l) => (
-              <CtaLink key={l.href} cta={l} variant="outline" />
-            ))}
-          </div>
-        ) : null}
-      </div>
-    </section>
+    <BlockShell {...shell} rule={rule} width={width}>
+      {children ? (
+        <div
+          className={cn(
+            'flex flex-col gap-4 text-charcoal',
+            align === 'center' && 'mx-auto max-w-3xl items-center text-center',
+          )}
+        >
+          {children}
+        </div>
+      ) : null}
+    </BlockShell>
   )
 }

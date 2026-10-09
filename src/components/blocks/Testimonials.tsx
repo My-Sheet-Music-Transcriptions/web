@@ -1,60 +1,38 @@
+import { BlockShell, type HeadingProps } from '~/components/primitives/BlockShell'
+import { Card } from '~/components/primitives/Card'
 import type { Cta } from '~/components/primitives/CtaLink'
-import { CtaLink } from '~/components/primitives/CtaLink'
-import { SectionHeading } from '~/components/primitives/SectionHeading'
+import { RevealItem } from '~/components/primitives/Motion'
 import { Stars } from '~/components/primitives/Stars'
 import type { Review, ReviewLabels } from '~/content/types'
-import { inlineMarkdown } from '~/lib/light-markdown'
 import { fill } from '~/lib/strings'
-import { useTitleId } from '~/lib/use-title-id'
 import { useLocale } from '~/site'
 
-export interface TestimonialsProps {
+export interface TestimonialsProps extends HeadingProps {
   title: string
-  /** A sentence under the title; **bold** and [links](/path) kept. */
-  lead?: string
   /** The reviews, verbatim: a list from content/<locale>/data/reviews. */
   items: Review[]
-  /** Show only the first n reviews. */
-  limit?: number
   /** Button under the cards ("Read all our reviews"). */
   cta?: Cta
   /** The words around each review (stars, "{role} from {country}"): `reviews` from content/<locale>/data/labels. */
   labels: ReviewLabels
-  /** Anchor id. */
-  id?: string
 }
 
 /** Customer quotes in two columns, with stars, over the peach staff lines. */
-export function Testimonials({ title, lead, items, limit, cta, labels, id }: TestimonialsProps) {
-  const titleId = useTitleId(id)
-  const shown = limit ? items.slice(0, limit) : items
+export function Testimonials({ items, labels, ...shell }: TestimonialsProps) {
   return (
-    <section
-      id={id}
-      className="relative isolate overflow-hidden bg-staff-lines bg-cover bg-left-top pt-[30px] pb-[50px] md:pt-[60px]"
-      aria-labelledby={titleId}
+    <BlockShell
+      {...shell}
+      className="relative isolate overflow-hidden bg-staff-lines bg-cover bg-left-top"
+      cascade
     >
-      <div className="mx-auto max-w-[1140px] px-5 md:px-[10px]">
-        <SectionHeading id={titleId}>{title}</SectionHeading>
-        {lead ? (
-          <p className="mx-auto mb-6 max-w-3xl text-center text-[18px] leading-relaxed text-ink">
-            {inlineMarkdown(lead)}
-          </p>
-        ) : null}
-        <ul className="mt-[23px] grid items-start gap-[33px] md:grid-cols-2 md:gap-x-9 md:gap-y-[33px]">
-          {shown.map((r) => (
-            <li key={r.name + r.quote.slice(0, 24)}>
-              <ReviewCard review={r} labels={labels} />
-            </li>
-          ))}
-        </ul>
-        {cta ? (
-          <div className="mt-[62px] text-center md:mt-[59px]">
-            <CtaLink cta={cta} />
-          </div>
-        ) : null}
-      </div>
-    </section>
+      <ul className="grid items-start gap-[33px] md:grid-cols-2 md:gap-x-9 md:gap-y-[33px]">
+        {items.map((r) => (
+          <RevealItem as="li" key={r.name + r.quote.slice(0, 24)}>
+            <ReviewCard review={r} labels={labels} />
+          </RevealItem>
+        ))}
+      </ul>
+    </BlockShell>
   )
 }
 
@@ -82,7 +60,7 @@ export function ReviewCard({ review, labels }: { review: Review; labels: ReviewL
       ? fill(labels.roleFrom, { role: review.role, country: review.country })
       : (review.role ?? review.country ?? '')
   return (
-    <article className="rounded-card bg-white pb-10 shadow-[0_0_4px_rgb(0_0_0/0.17)]">
+    <Card as="article" padding="none" className="pb-10">
       <div className="p-px md:mx-[14px]">
         <header className="border-b border-[#e1e8ed] px-[15px] pt-[15px] pb-6 text-[#202020]">
           <p className="text-[20px] leading-[38px] font-semibold">{name}</p>
@@ -107,6 +85,6 @@ export function ReviewCard({ review, labels }: { review: Review; labels: ReviewL
           {review.quote}
         </blockquote>
       </div>
-    </article>
+    </Card>
   )
 }

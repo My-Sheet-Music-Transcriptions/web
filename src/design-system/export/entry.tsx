@@ -5,6 +5,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { SiteFooter, SiteHeader, SiteTopBar } from '~/app/SiteShell'
 import { blocks } from '~/components/blocks'
 import { catalogue } from '~/components/blocks/catalogue'
+import { MotionProvider } from '~/components/primitives/Motion'
 import { lightMarkdown } from '~/lib/light-markdown'
 import { withSamples } from '~/stories/samples'
 
@@ -12,7 +13,7 @@ import { withSamples } from '~/stories/samples'
  * Browser bundle of the design system (`window.MSMT`). Used by the published Design System
  * artifact's previews and by Design canvas mockups to render the real blocks.
  *
- *   MSMT.mount('Hero', element, { title: '...' })      // render a block into an element
+ *   MSMT.mount('PageHeader', element, { title: '...' })      // render a block into an element
  *   MSMT.renderAll()                                   // mount every [data-msmt] element
  *   <div data-msmt="Testimonials" data-props='{"title":"Reviews","items":[…]}'></div>
  */
@@ -33,7 +34,11 @@ function mount(name: string, el: Element, props: Record<string, unknown> = {}) {
       `MSMT: unknown component "${name}". Known: ${Object.keys(components).join(', ')}`,
     )
   const { children, ...rest } = withSamples(props) as Record<string, unknown>
-  const node = <C {...rest}>{typeof children === 'string' ? lightMarkdown(children) : undefined}</C>
+  const node = (
+    <MotionProvider>
+      <C {...rest}>{typeof children === 'string' ? lightMarkdown(children) : undefined}</C>
+    </MotionProvider>
+  )
   let root = roots.get(el)
   if (!root) {
     root = createRoot(el)

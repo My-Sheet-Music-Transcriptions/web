@@ -26,19 +26,20 @@ import pianoIcon from '~/assets/images/icons/piano.png?w=150;300&as=picture'
 import pianoTrioIcon from '~/assets/images/icons/piano-trio.png?w=150;300&as=picture'
 import pianoVocalIcon from '~/assets/images/icons/piano-vocal.png?w=150;300&as=picture'
 import pricingMelodicIcon from '~/assets/images/icons/pricing-melodic.png?w=150;300&as=picture'
+// Also the transposing icon: the live site shows the same picture for both, and two identical files would be emitted
+// under one name at random, breaking the other name's links.
 import rhythmChartsIcon from '~/assets/images/icons/rhythm-charts.png?w=150;300&as=picture'
 import saxophoneIcon from '~/assets/images/icons/saxophone.png?w=150;300&as=picture'
 import stringQuartetIcon from '~/assets/images/icons/string-quartet.png?w=150;300&as=picture'
 import stringsIcon from '~/assets/images/icons/strings.png?w=150;300&as=picture'
 import synthesiaIcon from '~/assets/images/icons/synthesia.png?w=150;300&as=picture'
-import transposingIcon from '~/assets/images/icons/transposing.png?w=150;300&as=picture'
 import tromboneIcon from '~/assets/images/icons/trombone.png?w=150;300&as=picture'
 import trumpetIcon from '~/assets/images/icons/trumpet.png?w=150;300&as=picture'
 import ukuleleIcon from '~/assets/images/icons/ukulele.png?w=150;300&as=picture'
 import violinIcon from '~/assets/images/icons/violin.png?w=150;300&as=picture'
 import vocalIcon from '~/assets/images/icons/vocal.png?w=150;300&as=picture'
 import vocalEnsembleIcon from '~/assets/images/icons/vocal-ensemble.png?w=150;300&as=picture'
-import type { CardItem, IconLink, PricingTier } from '~/content/types'
+import type { CardItem, PictureItem, PricingTier } from '~/content/types'
 
 /** "What's included?": the three reassurances of the homepage and of every service page. */
 export const included: CardItem[] = [
@@ -97,125 +98,125 @@ export const violinPricing: PricingTier = {
   factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
 }
 
-/** Every service with its icon, in the live site's order (the service grids of /music-transcription-service). */
-export const allServices: IconLink[] = [
-  { label: 'Piano Transcriptions', href: '/piano', icon: pianoIcon },
-  { label: 'Piano & Vocal Transcriptions', href: '/piano-vocal', icon: pianoVocalIcon },
+/** Every service with its icon, in the live site's order (the homepage shows the first 12, /music-transcription-service all). */
+export const allServices: PictureItem[] = [
+  { name: 'Piano Transcriptions', href: '/piano', image: pianoIcon },
+  { name: 'Piano & Vocal Transcriptions', href: '/piano-vocal', image: pianoVocalIcon },
   {
-    label: 'Vocal Lead Sheet Transcriptions',
+    name: 'Vocal Lead Sheet Transcriptions',
     href: '/vocal-lead-sheet-transcription-service',
-    icon: vocalIcon,
+    image: vocalIcon,
   },
   {
-    label: 'Vocal Ensemble Transcriptions',
+    name: 'Vocal Ensemble Transcriptions',
     href: '/vocal-ensemble-transcription-service',
-    icon: vocalEnsembleIcon,
+    image: vocalEnsembleIcon,
   },
-  { label: 'Guitar Tab Transcriptions', href: '/guitar-tab', icon: guitarIcon },
-  { label: 'Trumpet Transcriptions', href: '/trumpet-transcription-service', icon: trumpetIcon },
+  { name: 'Guitar Tab Transcriptions', href: '/guitar-tab', image: guitarIcon },
+  { name: 'Trumpet Transcriptions', href: '/trumpet-transcription-service', image: trumpetIcon },
   {
-    label: 'Saxophone Transcriptions',
+    name: 'Saxophone Transcriptions',
     href: '/saxophone-transcription-service',
-    icon: saxophoneIcon,
+    image: saxophoneIcon,
   },
-  { label: 'Drums Transcriptions', href: '/drums-transcription-service', icon: drumsIcon },
-  { label: 'Violin Transcriptions', href: '/violin-transcription-service', icon: violinIcon },
-  { label: 'String Orchestra Transcription Service', href: '/string-orchestra', icon: violinIcon },
-  { label: 'Orchestration Services', href: '/orchestration-service', icon: orchestrationIcon },
+  { name: 'Drums Transcriptions', href: '/drums-transcription-service', image: drumsIcon },
+  { name: 'Violin Transcriptions', href: '/violin-transcription-service', image: violinIcon },
+  { name: 'String Orchestra Transcription Service', href: '/string-orchestra', image: violinIcon },
+  { name: 'Orchestration Services', href: '/orchestration-service', image: orchestrationIcon },
   {
-    label: 'Strings Transcription Service',
+    name: 'Strings Transcription Service',
     href: '/strings-transcription-service',
-    icon: stringsIcon,
+    image: stringsIcon,
   },
-  { label: 'Music Arrangements', href: '/music-arrangement-service', icon: arrangementIcon },
+  { name: 'Music Arrangements', href: '/music-arrangement-service', image: arrangementIcon },
   {
-    label: 'Backing Vocals Transcriptions',
+    name: 'Backing Vocals Transcriptions',
     href: '/backing-vocals-transcription-service',
-    icon: backingVocalsIcon,
+    image: backingVocalsIcon,
   },
   {
-    label: 'Piano Jazz Solo Transcriptions',
+    name: 'Piano Jazz Solo Transcriptions',
     href: '/jazz-piano-solo-transcriptions',
-    icon: jazzPianoIcon,
+    image: jazzPianoIcon,
   },
   {
-    label: 'Piano Blues Transcriptions',
+    name: 'Piano Blues Transcriptions',
     href: '/blues-piano-transcription-service',
-    icon: bluesPianoIcon,
+    image: bluesPianoIcon,
   },
   {
-    label: 'Piano Jazz Trio Transcriptions',
+    name: 'Piano Jazz Trio Transcriptions',
     href: '/piano-jazz-trio-transcriptions',
-    icon: pianoTrioIcon,
+    image: pianoTrioIcon,
   },
-  { label: 'Jazz Solo Transcriptions', href: '/jazz-transcription-service', icon: jazzPianoIcon },
+  { name: 'Jazz Solo Transcriptions', href: '/jazz-transcription-service', image: jazzPianoIcon },
   {
-    label: 'Lead Sheet Transcriptions',
+    name: 'Lead Sheet Transcriptions',
     href: '/lead-sheet-transcription-service',
-    icon: vocalEnsembleIcon,
+    image: vocalEnsembleIcon,
   },
-  { label: 'Nashville Numbers Charts', href: '/nashville-numbers-charts', icon: rhythmChartsIcon },
-  { label: 'Bass Transcriptions', href: '/bass-tab-transcription-service', icon: bassIcon },
-  { label: 'Ukulele Transcriptions', href: '/ukulele-transcription-service', icon: ukuleleIcon },
+  { name: 'Nashville Numbers Charts', href: '/nashville-numbers-charts', image: rhythmChartsIcon },
+  { name: 'Bass Transcriptions', href: '/bass-tab-transcription-service', image: bassIcon },
+  { name: 'Ukulele Transcriptions', href: '/ukulele-transcription-service', image: ukuleleIcon },
   {
-    label: 'Mandolin & Oud Transcription Service',
+    name: 'Mandolin & Oud Transcription Service',
     href: '/mandolin-and-oud-tabs-sheets',
-    icon: mandolinIcon,
+    image: mandolinIcon,
   },
   {
-    label: 'Lap Steel Guitar Transcription Service',
+    name: 'Lap Steel Guitar Transcription Service',
     href: '/lap-steel-guitar-transcription-service',
-    icon: lapSteelGuitarIcon,
+    image: lapSteelGuitarIcon,
   },
   {
-    label: 'Horn Section Transcriptions',
+    name: 'Horn Section Transcriptions',
     href: '/horn-section-transcription-service',
-    icon: pricingMelodicIcon,
+    image: pricingMelodicIcon,
   },
-  { label: 'Flute Transcription Service', href: '/flute-transcription-service', icon: fluteIcon },
-  { label: 'Clarinet Transcriptions', href: '/clarinet-transcription-service', icon: clarinetIcon },
+  { name: 'Flute Transcription Service', href: '/flute-transcription-service', image: fluteIcon },
+  { name: 'Clarinet Transcriptions', href: '/clarinet-transcription-service', image: clarinetIcon },
   {
-    label: 'Trombone Transcription Service',
+    name: 'Trombone Transcription Service',
     href: '/trombone-transcription-service',
-    icon: tromboneIcon,
+    image: tromboneIcon,
   },
-  { label: 'Horns Transcription Service', href: '/horns-transcription-service', icon: hornsIcon },
+  { name: 'Horns Transcription Service', href: '/horns-transcription-service', image: hornsIcon },
   {
-    label: 'String Quartet Transcriptions',
+    name: 'String Quartet Transcriptions',
     href: '/string-quartet-transcription-service',
-    icon: stringQuartetIcon,
+    image: stringQuartetIcon,
   },
-  { label: 'Cello Transcriptions', href: '/cello-transcription-service', icon: celloIcon },
+  { name: 'Cello Transcriptions', href: '/cello-transcription-service', image: celloIcon },
   {
-    label: 'Concert & Brass Band Transcriptions',
+    name: 'Concert & Brass Band Transcriptions',
     href: '/concert-brass-band-transcriptions',
-    icon: brassBandIcon,
+    image: brassBandIcon,
   },
   {
-    label: 'Marching Band Transcriptions',
+    name: 'Marching Band Transcriptions',
     href: '/marching-band-transcription-service',
-    icon: hornsIcon,
+    image: hornsIcon,
   },
-  { label: 'Full Band Transcriptions', href: '/full-band-transcription-service', icon: hornsIcon },
+  { name: 'Full Band Transcriptions', href: '/full-band-transcription-service', image: hornsIcon },
   {
-    label: 'Accordion Transcriptions',
+    name: 'Accordion Transcriptions',
     href: '/accordion-transcription-service',
-    icon: accordionIcon,
+    image: accordionIcon,
   },
-  { label: 'Harp Transcriptions', href: '/harp-transcription-service', icon: harpIcon },
-  { label: 'Organ Transcriptions', href: '/organ-transcription-service', icon: organIcon },
-  { label: 'Synthesia Transcriptions', href: '/synthesia-piano-tutorials', icon: synthesiaIcon },
-  { label: 'Chord Charts Transcriptions', href: '/chord-charts', icon: chordChartsIcon },
-  { label: 'Keyboard Transcriptions', href: '/keyboard-transcription-service', icon: keyboardIcon },
+  { name: 'Harp Transcriptions', href: '/harp-transcription-service', image: harpIcon },
+  { name: 'Organ Transcriptions', href: '/organ-transcription-service', image: organIcon },
+  { name: 'Synthesia Transcriptions', href: '/synthesia-piano-tutorials', image: synthesiaIcon },
+  { name: 'Chord Charts Transcriptions', href: '/chord-charts', image: chordChartsIcon },
+  { name: 'Keyboard Transcriptions', href: '/keyboard-transcription-service', image: keyboardIcon },
   {
-    label: 'Sheet Music Transposing',
+    name: 'Sheet Music Transposing',
     href: '/sheet-music-transposing-service',
-    icon: transposingIcon,
+    image: rhythmChartsIcon,
   },
-  { label: 'Big Band Arrangements', href: '/big-band-arrangement-service', icon: hornsIcon },
+  { name: 'Big Band Arrangements', href: '/big-band-arrangement-service', image: hornsIcon },
   {
-    label: 'Music Copying & Digitizing',
+    name: 'Music Copying & Digitizing',
     href: '/music-copying-digitizing-service',
-    icon: copyingIcon,
+    image: copyingIcon,
   },
 ]

@@ -221,7 +221,7 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       anchors), FAQ page (from `faqs`, FAQPage JSON-LD), reviews page (from `reviews`). Frontmatter `path` override
       (D8). Prices and counts that appear on several pages go to `content/<locale>/data/*.ts`, as CLAUDE.md wants.
       *Done 2026-10-08:* `service` (services collection: the page opens with `<PageHeader icon rating>` and composes
-      Steps, RatingBanner, Samples, CtaBand, CardGrid, PricingCards, FaqList) and landing pages (open with
+      Steps, RatingBanner, Samples, Section, CardGrid, PricingCards, FaqList) and landing pages (open with
       `<PageHeader variant="split">`). Templates were removed the same day: `meta.ts` is SEO data only, and components
       hold no words or pictures (the page passes them, from `data/labels.ts`, `data/forms.ts` and its folder; the
       importer must emit them). Shared data: `data/ratings.ts`,
@@ -233,8 +233,8 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       *Done 2026-10-08, with semantic names (catalogue in `src/components/blocks`, by role):* `FaqList` (native
       accordion + FAQPage JSON-LD), `VideoEmbed` (primitive: click-to-load facade on youtube-nocookie, used by `Samples`,
       `Steps` and `MediaText`), `Samples` (video beside the score), `Table` (covers the comparison and price tables),
-      `PricingCards` (one wide card per service), plus `LogoGrid`, `Stats`, `CtaBand`, `Gallery`, `CardGrid` tabs
-      (currencies). *Open:* `AudioSample`, `PdfSample` (no page of the first batch had audio or PDFs).
+      `PricingCards` (one wide card per service), plus `PictureGrid` (logos, portraits, photos, service icons),
+      `Stats`, `CardGrid` tabs (currencies). *Open:* `AudioSample`, `PdfSample` (no page of the first batch had audio or PDFs).
 - [ ] W1.6 **Importer, run in bulk without input**: `scripts/import-wp.ts --locale <l> [--wave <W> | <path>…]` ports
       every eligible row of the inventory in one run. Per page: reads it (REST API `/wp-json/wp/v2/<type>?slug=` with
       `yoast_head_json`, or the WXR export) into `.cache/wp/` (git-ignored); downloads its media at the original size
@@ -255,15 +255,17 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       | Elementor widget | Block |
       |---|---|
       | heading + text-editor | `Section` prose, or the `title` of the block it introduces |
-      | image + text-editor / image-box | `MediaText` (image-carousel → `images`; before/after → `imagesLayout="pair"`) |
-      | uael-video + score image ("Play to compare") | `Samples`; inside "How does it work?" → `Steps layout="columns"` |
+      | image + text-editor / image-box | `MediaText` (image-carousel → `images`; before/after → `layout="pair"`) |
+      | uael-video + score image ("Play to compare") | `Samples`; inside "How does it work?" → `Steps variant="columns"` |
       | uael-timeline | `Steps` (timeline) |
       | counter + three rating boxes | `RatingBanner` (numbers from `data/ratings.ts`) |
-      | icon-box "What's included" | `CardGrid background="photo" items={included}` |
+      | icon-box "What's included" | `CardGrid image={studioBand} items={included}` |
       | "Flexible pricing for …" headings | `PricingCards` with one tier from `data/services.ts` |
       | custom_acf_accordion | `FaqList` (the shared "Music services" group is identical on every service page) |
-      | loop-grid / loop-carousel of services | `IconGrid items={allServices}` |
-      | image-box grids of people or logos | `LogoGrid` (portrait / logo) |
+      | loop-grid / loop-carousel of services | `PictureGrid items={allServices}` (`limit` for a short list) |
+      | image-box grids of people or logos | `PictureGrid shape="portrait"` / `"logo"` (`name`, or `alt` alone) |
+      | image grid, scrolling photo strip | `PictureGrid shape="photo"` (`variant="marquee"` for the strip) |
+      | centred heading + one button band | `Section align="center" rule={false} width="narrow"` |
       | nested-tabs ($ / €) | `CardGrid tabs` |
       | af_jobs_table | `Table` |
       | slides | `CardGrid` with `linkLabel` |
@@ -279,7 +281,9 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
 - [ ] W1.8 **Forms** (D12): generalize `/api/contact` for the other forms; alert on delivery failures.
 - [ ] W1.9 **Consent and analytics** (D7); update the cookie and privacy policies for the new processors (Netlify,
       Resend, analytics) in the same PR as the consent change.
-- [ ] W1.10 **RSS** `/feed` (D11); `/sitemap_index.xml` and Yoast child sitemaps → `/sitemap.xml`.
+- [ ] W1.10 **RSS** `/feed` (D11).
+- [x] W1.10 Sitemaps split like Yoast's (index at `/sitemap.xml`, one per collection, `scripts/lib/sitemap.ts`);
+      `/sitemap_index.xml` and the other Yoast and WordPress sitemap URLs → `/sitemap.xml` (`LEGACY_SITEMAPS`).
 - [ ] W1.11 **Structured data parity**: Organization/LocalBusiness (address, phones per locale), `AggregateRating` only
       where Google's review-snippet policy allows it, FAQPage, BlogPosting, BreadcrumbList; compare with Yoast's output.
 - [ ] W1.12 **Build cost**: every merge to `main` rebuilds every locale's Netlify site; extend
@@ -450,3 +454,5 @@ Not blocking the start; each is resolved in W0.4 or before the wave named:
 | 2026-10-08 | Plan | Researched the six sites (archives; live access blocked), wrote this plan, the inventories and the redirect draft; Catalan reworked as the pilot launch; porting made fully automatic (importer + parity checks, one human go/no-go per domain); review pass: recommendations are defaults, D5 applied to the inventories, hreflang handled by porting twins together, Spanish cut over before English, `legacyOrigin` dropped at cutover | W0.1 inputs from the owner; W1.1–W1.3 can start in parallel |
 | 2026-10-08 | Blocks + first ports | Block catalogue reshaped into semantic blocks filed by role (Storybook `Blocks/<Role>/<Name>`); blocks take their data as props; `service` and `landing` templates. Ported English-only, verbatim, pictures in the page folders: `/piano`, `/guitar-tab`, `/trumpet-transcription-service`, `/violin-transcription-service`, `/music-transcription-service`, `/artists`, `/music-educators`, `/sheet-music-printing`, `/convert-from-sibelius-to-musescore`, `/careers`, `/partners`, `/endorsed-musicians-and-composers`. Exception to principle 6: `/piano` and `/guitar-tab` have es/fr/de/ja twins, ported later in their waves. Titles shortened where they broke the 65-character rule (D13); review counts from data (854, not the captures' 791). `/faqs/*` rule added to the redirect map | Same pattern for the remaining W3 services (a `scripts/import-wp.ts` for the service template is now a small step), then W4 conversion pages from the Sibelius → MuseScore page |
 | 2026-10-08 | Components refactor | Blocks filed by category (Headers, Text & media, Lists & grids, Reviews & ratings, Calls to action); the four page templates removed (every page opens with its own `PageHeader`, `meta.ts` is SEO only); components made agnostic of the content (no copy, no pictures, no site strings: pages pass them from `data/labels.ts`, `data/forms.ts` and their folder; `src/app` wires the chrome, which now reads each locale's own `nav.ts`/`footer.ts`); Storybook has its own data in `src/stories`; `tests/unit/components.test.ts` enforces the rule | Remaining W3 services and W4 conversion pages through an importer that emits the new page shape |
+| 2026-10-09 | One block shell | Every story's DOM and screenshots reviewed: 18 blocks became 14 on one `BlockShell` (section, tone, container, heading, lead, closing buttons, photo band) with presets instead of pixels; `PictureGrid` replaces IconGrid/LogoGrid/Gallery, `Section` absorbs CtaBand, `PageHeader variant="photo"` replaces Hero, CardGrid and Steps share `FeatureItem`, media goes through `Media`; one prop vocabulary (`variant`, `lead`, `body`…) guarded by `tests/unit/blocks.test.ts`; the `component` skill documents the ladder (prop → item shape → primitive → block). Homepage 403px shorter at 1440px, visual baselines re-captured | The importer emits the new names (`PictureGrid`, centred `Section`, `variant`), remaining W3 services and W4 pages |
+| 2026-10-09 | Sitemaps | Sitemaps made from `content/` instead of TanStack's prerender crawl (which had listed `/#contact` and published `pages.json`): an index at `/sitemap.xml` and one sitemap per collection with Yoast's names, hreflang alternates from the same function as the `<head>`, `lastmod` omitted on a shallow clone; the WordPress sitemap URLs 301 to the index (sitemap half of W1.10); unit test over every locale plus a multi-language fixture, SEO suite checks sitemaps == indexable pages and alternates == `<head>` | RSS (rest of W1.10); W1.1's redirect pipeline adds its rules to the `_redirects` file `postbuild.ts` now writes in domain mode |

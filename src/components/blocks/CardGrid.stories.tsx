@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { userEvent, within } from 'storybook/test'
 import type { CardItem } from '~/content/types'
 import { audiences } from '~/stories/data'
+import { revealed } from '~/stories/play'
 import { sample, withSamples } from '~/stories/samples'
 import { CardGrid, type CardGridProps } from './CardGrid'
 import { storyArgs } from './story-args'
@@ -18,8 +20,8 @@ export const Default: Story = {}
 export const Tiles: Story = {
   args: {
     title: 'Who do we work for?',
-    background: 'none',
-    surface: 'tile',
+    image: undefined,
+    variant: 'tile',
     columns: 4,
     items: withSamples<CardItem[]>(audiences),
   },
@@ -27,7 +29,7 @@ export const Tiles: Story = {
 export const CardsWithLinks: Story = {
   args: {
     title: 'Why do it?',
-    background: 'none',
+    image: undefined,
     columns: 2,
     tone: 'cream',
     items: [
@@ -49,7 +51,7 @@ export const CardsWithLinks: Story = {
 export const PricesInTabs: Story = {
   args: {
     title: 'Services & Pricing',
-    background: 'none',
+    image: undefined,
     columns: 2,
     items: undefined,
     tabs: [
@@ -84,5 +86,28 @@ export const PricesInTabs: Story = {
         ],
       },
     ],
+  },
+}
+
+/** `reveal`: the heading, then each card one after another, rise and fade in as the grid scrolls into view. */
+export const Revealed: Story = {
+  args: { ...Tiles.args, reveal: true },
+  play: async ({ canvasElement }) => revealed(canvasElement),
+}
+
+/** Cards that arrive later (another tab) come in too. */
+export const RevealedTabs: Story = {
+  args: {
+    ...PricesInTabs.args,
+    reveal: true,
+    tabs: PricesInTabs.args?.tabs?.map((t, i) => ({
+      ...t,
+      items: t.items.map((item) => ({ ...item, title: `${item.title}${i ? ' (EUR)' : ''}` })),
+    })),
+  },
+  play: async ({ canvasElement }) => {
+    await revealed(canvasElement)
+    await userEvent.click(within(canvasElement).getByRole('button', { name: '€' }))
+    await revealed(canvasElement)
   },
 }

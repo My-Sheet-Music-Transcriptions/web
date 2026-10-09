@@ -253,7 +253,7 @@ describe('publishing', () => {
         'components/bundle.css',
         'components/fonts.css',
         'components/index.d.ts',
-        'components/Hero/preview.html',
+        'components/PageHeader/preview.html',
         'components/assets/a.webp',
         'fonts/m.woff2',
       ],

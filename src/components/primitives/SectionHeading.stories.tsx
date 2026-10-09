@@ -10,17 +10,15 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** Orange rule: most homepage sections. */
-export const AccentRule: Story = {}
-/** Grey rule: "How does it work?" and "We transcribe any instrument". */
-export const GreyRule: Story = { args: { rule: 'grey' } }
-export const WithSubtitle: Story = {
-  args: { children: 'Pricing', subtitle: 'There are pricing options for every budget.' },
-}
-export const OnDark: Story = {
+/** Centred with the orange rule: every section. */
+export const Centred: Story = {}
+/** At the start of a column: a heading beside a picture. */
+export const Start: Story = { args: { align: 'start' } }
+/** White, without the rule: over a photo band. */
+export const OnPhoto: Story = {
   args: {
     tone: 'light',
-    rule: 'none',
+    rule: false,
     children: 'The highest-rated online sheet music transcribers',
   },
   parameters: { backgrounds: { default: 'footer' } },

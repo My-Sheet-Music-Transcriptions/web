@@ -17,13 +17,13 @@ export const Default: Story = {}
 export const Columns: Story = {
   args: {
     title: 'How does it work?',
-    layout: 'columns',
+    variant: 'columns',
     labels: mediaLabels,
     videoPoster: sample.photo,
     items: [
       {
         title: 'Send us the music',
-        text: 'All we need is a video or an audio file',
+        body: 'All we need is a video or an audio file',
         image: sample.photo,
       },
       {
@@ -32,11 +32,11 @@ export const Columns: Story = {
           title: 'Piano sample',
           caption: 'Play to compare with the sheet music',
         },
-        text: 'We transcribe your favorite **piano covers**… you name it!',
+        body: 'We transcribe your favorite **piano covers**… you name it!',
       },
       {
         title: 'Receive the piano sheet!',
-        text: 'We send you the score in a printable format',
+        body: 'We send you the score in a printable format',
         image: sample.photo,
       },
     ],
@@ -48,11 +48,11 @@ export const NumberedReasons: Story = {
     items: [
       {
         title: '1. Work Across Any Platform',
-        text: 'Open, edit, and use your music in whichever software fits.',
+        body: 'Open, edit, and use your music in whichever software fits.',
       },
       {
         title: '2. Collaborate Without Barriers',
-        text: 'Share your work with performers, teachers, or colleagues.',
+        body: 'Share your work with performers, teachers, or colleagues.',
       },
     ],
   },

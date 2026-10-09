@@ -9,12 +9,12 @@ import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=pi
 import {
   CardGrid,
   ContactSection,
-  CtaBand,
   FaqList,
   PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
+  Section,
   Steps,
 } from '~/components/blocks'
 import guitar from './guitar.png?w=180;360&as=picture'
@@ -38,11 +38,11 @@ export default function GuitarTabPage() {
         videoPoster={videoPoster}
         labels={mediaLabels}
         title="How does it work?"
-        layout="columns"
+        variant="columns"
         items={[
           {
             title: 'Send us the music',
-            text: 'All we need is a video or an audio file',
+            body: 'All we need is a video or an audio file',
             image: guitar,
           },
           {
@@ -51,11 +51,11 @@ export default function GuitarTabPage() {
               title: 'Guitar Tab Transcription Service',
               caption: 'Play to compare with the sheet music',
             },
-            text: 'We transcribe your favorite **guitar tunes, lines, chords, and riffs!** From **epic solos** to beautiful **fingerstyle songs** and **covers** – you will be able to play any piece you want.\n\nOur in-house guitar players will create **custom sheet music and tabs** for you. Whether you want to **play alone**, in a **band**, or **accompany** a group of friends, we will **customize the score** to suit you perfectly.',
+            body: 'We transcribe your favorite **guitar tunes, lines, chords, and riffs!** From **epic solos** to beautiful **fingerstyle songs** and **covers** – you will be able to play any piece you want.\n\nOur in-house guitar players will create **custom sheet music and tabs** for you. Whether you want to **play alone**, in a **band**, or **accompany** a group of friends, we will **customize the score** to suit you perfectly.',
           },
           {
             title: 'Receive the guitar tab sheet!',
-            text: 'We send you the score in a printable format',
+            body: 'We send you the score in a printable format',
             image: guitarTabSheet1Alone,
           },
         ]}
@@ -115,12 +115,16 @@ export default function GuitarTabPage() {
         ]}
       />
 
-      <CtaBand
+      <Section
+        align="center"
+        rule={false}
+        width="narrow"
+        tone="cream"
         title="Unsure about guitar terminology?"
         cta={{ label: 'See our guitar glossary', href: '/glossary-guitar-tabs' }}
       />
 
-      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
+      <CardGrid title="What's included?" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing for guitar tab"

@@ -8,9 +8,9 @@ import {
   CardGrid,
   ContactSection,
   FaqList,
-  Gallery,
   MediaText,
   PageHeader,
+  PictureGrid,
   RatingBanner,
   Section,
   Steps,
@@ -56,52 +56,52 @@ export default function SheetMusicPrintingPage() {
 
       <Steps
         title="How does it work?"
-        layout="columns"
+        variant="columns"
         tone="cream"
         items={[
           {
-            text: "**OPTIONAL** In case you haven't got the sheet music to be added in the book, **we can transcribe it for you!**",
+            body: "**OPTIONAL** In case you haven't got the sheet music to be added in the book, **we can transcribe it for you!**",
             image: step0,
             imageWidth: 140,
           },
           {
-            text: "You **contact us** with your personalized request and send us all the **necessary material** to craft the book (the sheet music, any images you'd like to add, further instructions and ideas...)",
+            body: "You **contact us** with your personalized request and send us all the **necessary material** to craft the book (the sheet music, any images you'd like to add, further instructions and ideas...)",
             image: step1,
             imageWidth: 140,
           },
           {
-            text: 'We give you a **fully customized price quote** tailored to all your needs',
+            body: 'We give you a **fully customized price quote** tailored to all your needs',
             image: step2,
             imageWidth: 140,
           },
           {
-            text: 'Our **Proof-editing Department** takes care of proof-editing and engraving your work, if needed',
+            body: 'Our **Proof-editing Department** takes care of proof-editing and engraving your work, if needed',
             image: step3,
             imageWidth: 140,
           },
           {
-            text: 'Simultaneously, our **Graphic Design Department** starts crafting the general book layout, as well as the front/back covers, table of contents, and such',
+            body: 'Simultaneously, our **Graphic Design Department** starts crafting the general book layout, as well as the front/back covers, table of contents, and such',
             image: step4,
             imageWidth: 140,
           },
           {
-            text: "Once you're fully satisfied with the final look, we proceed to merge everything into a high-quality and **professional-looking PDF file**",
+            body: "Once you're fully satisfied with the final look, we proceed to merge everything into a high-quality and **professional-looking PDF file**",
             image: step5,
             imageWidth: 140,
           },
           {
-            text: 'If you want, we can also take care of **printing** your book with top-notch editorial standards and **shipping** it anywhere in the EU or US',
+            body: 'If you want, we can also take care of **printing** your book with top-notch editorial standards and **shipping** it anywhere in the EU or US',
             image: step6,
             imageWidth: 140,
           },
         ]}
       />
 
-      <Gallery
-        variant="grid"
+      <PictureGrid
+        shape="photo"
         columns={3}
         label="Sheet music books we prepared and printed"
-        images={[
+        items={[
           { image: book1, alt: 'A printed sheet music book' },
           { image: book2, alt: 'A printed sheet music book, open' },
           { image: book3, alt: 'A sheet music book cover' },

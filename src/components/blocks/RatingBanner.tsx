@@ -1,11 +1,11 @@
-import { PhotoBand } from '~/components/primitives/PhotoBand'
+import { BlockShell, type HeadingProps } from '~/components/primitives/BlockShell'
+import { RevealItem } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
 import type { Counter, RatingSource } from '~/content/types'
-import { useTitleId } from '~/lib/use-title-id'
 import { useLocale } from '~/site'
 
-export interface RatingBannerProps {
+export interface RatingBannerProps extends HeadingProps {
   /** White heading over the photo. */
   title: string
   /** The big number under the heading: pass `counter` from content/<locale>/data/ratings. */
@@ -14,33 +14,30 @@ export interface RatingBannerProps {
   sources: RatingSource[]
   /** The photo behind the band (`~/assets/images/bands/stats-bg.jpg` is the piano every page uses). */
   image: PictureSource
-  /** Anchor id. */
-  id?: string
 }
 
 /** The big trust moment: a photo band with the transcriptions counter and the rating cards. */
-export function RatingBanner({ title, counter, sources, image, id }: RatingBannerProps) {
-  const titleId = useTitleId(id)
+export function RatingBanner({ counter, sources, ...shell }: RatingBannerProps) {
   const locale = useLocale()
   return (
-    <PhotoBand image={image} title={title} titleId={titleId} id={id} preset="stats">
+    <BlockShell {...shell} cascade>
       {counter ? (
-        <p className="mt-[60px]">
+        <RevealItem as="p" className="mb-10 text-center">
           <span className="block text-[69px] font-semibold leading-[69px]">
             {counter.value.toLocaleString(locale)}
           </span>
           <span className="block text-body leading-10 text-white md:text-[19px] md:leading-[47.5px]">
             {counter.label}
           </span>
-        </p>
+        </RevealItem>
       ) : null}
-      <ul className="mt-[60px] grid gap-5 md:grid-cols-3">
+      <ul className="grid gap-5 md:grid-cols-3">
         {sources.map((r) => (
-          <li key={r.id}>
+          <RevealItem as="li" key={r.id}>
             <RatingCard source={r} />
-          </li>
+          </RevealItem>
         ))}
       </ul>
-    </PhotoBand>
+    </BlockShell>
   )
 }

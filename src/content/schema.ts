@@ -21,6 +21,20 @@ export type Collection = (typeof COLLECTIONS)[number]
 
 const seoImage = z.object({ src: z.string(), alt: z.string().min(3) })
 
+/**
+ * A page's own og:image instead of its Satori card: a picture in the page folder, at least 1200x630, which the build
+ * crops to 1200x630 (scripts/lib/og.ts). A file name only: no URL, no path, so it cannot point outside the page.
+ */
+const ogImage = z.object({
+  src: z
+    .string()
+    .regex(
+      /^[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp|avif)$/i,
+      'a picture file in the page folder, e.g. "share.jpg"',
+    ),
+  alt: z.string().min(3),
+})
+
 export const baseSchema = z.object({
   title: z.string().min(3).max(120),
   /** Meta description: Google shows ~155 chars; the SEO suite enforces 50–160. */
@@ -29,11 +43,12 @@ export const baseSchema = z.object({
   translationKey: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
   /** Override the <title>; defaults to title. */
   seoTitle: z.string().min(10).max(70).optional(),
+  /** Share card overrides. Without `image` the build draws one with Satori from the (og) title and description. */
   og: z
     .object({
       title: z.string().optional(),
       description: z.string().optional(),
-      image: seoImage.optional(),
+      image: ogImage.optional(),
     })
     .optional(),
   noindex: z.boolean().default(false),

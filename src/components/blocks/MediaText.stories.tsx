@@ -36,7 +36,7 @@ export const BeforeAfter: Story = {
     image: undefined,
     caption: undefined,
     tone: 'white',
-    imagesLayout: 'pair',
+    layout: 'pair',
     images: [
       { image: sample.photo, alt: 'The original duet', caption: 'Before' },
       { image: sample.icon, alt: 'The arrangement', caption: 'After' },

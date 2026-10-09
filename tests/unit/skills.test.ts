@@ -26,7 +26,14 @@ const commands = skills.filter((d) => {
   const fm = frontmatter(d)
   return (
     fm['user-invocable'] !== 'false' &&
-    !['page', 'publish-design-system', 'release-check'].includes(d)
+    ![
+      'page',
+      'component',
+      'motion',
+      'motion-dev',
+      'publish-design-system',
+      'release-check',
+    ].includes(d)
   )
 })
 const guides = [
