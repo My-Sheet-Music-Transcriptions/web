@@ -108,6 +108,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 150 KB.
 - Biome formats and lints everything; `tsc --noEmit` must pass (pages are type-checked against the block props).
 - `meta.ts` is a literal only; pages use the typography components for text (`tests/unit/content.test.ts`).
+- No picture under `src/assets/images` or `content/` is byte-identical to another under a different file name,
+  nor stored twice in `src/assets/images` (`tests/unit/images.test.ts`): reuse the file instead of copying it.
 - A PR touching anything outside the content paths needs a code-owner approval (`.github/CODEOWNERS`).
 
 ## Adding content (short version; the skills have the full checklist)

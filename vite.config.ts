@@ -32,10 +32,11 @@ export default defineConfig({
   build: {
     rolldownOptions: {
       output: {
-        // Byte-identical images (the rhythm-charts and transposing icons) become one asset with several names,
-        // and each build keeps whichever name it emitted first, which varies from run to run: the prerendered
-        // HTML (server build) could point at a file the client build wrote under the other name. Both builds
-        // pick the alphabetically first name instead.
+        // Byte-identical images under different names become one asset with several names, and each build
+        // keeps whichever name it emitted first, which varies from run to run: the prerendered HTML (server
+        // build) could point at a file the client build wrote under the other name. tests/unit/images.test.ts
+        // keeps such pairs out of src/assets/images and content/; should one slip through, both builds pick
+        // the alphabetically first name.
         assetFileNames: ({ names }) => {
           if (names.length < 2) return 'assets/[name]-[hash][extname]'
           const { dir, name, ext } = path.posix.parse(names.reduce((a, b) => (a < b ? a : b)))
