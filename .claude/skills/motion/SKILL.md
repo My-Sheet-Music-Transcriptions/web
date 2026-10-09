@@ -67,7 +67,7 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
   drifting 40px from that side (a split header's copy and picture, the homepage's copy), `entrance-up` from
   below (a band's centred copy, the rating cards), `entrance-settle` landing from slightly larger (the icon
   under a band), `entrance-behind` slides the homepage photos in behind their curve, which stays put, and then
-  they lag behind it as the page scrolls (`parallax`: a scroll-driven animation, 85% of the page's speed over
+  they lag behind it as the page scrolls (`parallax`: a scroll-driven animation, 70% of the page's speed over
   the first screen, compositor-run, nothing where browsers lack scroll timelines). `entrance-late` holds a
   piece back 0.35 s for what follows the copy; `entrance-rule` draws the band's orange rule out from its
   centre once the copy has settled. The photos centre under their curve.

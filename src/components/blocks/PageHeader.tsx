@@ -188,13 +188,16 @@ function PhotoHeader({
   return (
     <header id={id} className="relative overflow-x-clip">
       {/* Phones: the photos above the copy */}
-      <div className="relative aspect-[390/261] overflow-hidden lg:hidden">
+      <div className="relative aspect-[390/261] overflow-hidden md:hidden">
         <Slideshow slides={mobileImages?.map((s) => s.image) ?? photos} sizes="100vw" />
       </div>
-      {/* From desktop up: the photos fill the whole header, cut by the curve that leaves the copy on white. The
-          curve stays put: the photos slide in behind it from the right, then lag behind it as the page scrolls */}
+      {/* From tablets up: the photos fill the whole header, cut by the curve that leaves the copy on white. The
+          curve stays put: the photos slide in behind it from the right, then lag behind it as the page scrolls.
+          The header's height, padding, copy width, type and logo all scale with the viewport between 768 and
+          1440 (the live site's design width, where every clamp lands on its design pixel), so the curve keeps
+          the same proportions on a tablet or a laptop */}
       <div
-        className="absolute inset-0 hidden overflow-hidden mask-cover mask-left mask-no-repeat lg:block"
+        className="absolute inset-0 hidden overflow-hidden mask-cover mask-left mask-no-repeat md:block"
         style={{ maskImage: photoCut, WebkitMaskImage: photoCut }}
       >
         <div className="parallax absolute inset-0">
@@ -204,36 +207,41 @@ function PhotoHeader({
         </div>
       </div>
       <div className="relative">
-        <div className="mx-auto flex max-w-[1440px] flex-col px-[14px] pt-[132px] pb-[77px] lg:min-h-[765px] lg:justify-center lg:px-[86px] lg:py-10">
-          <div className="entrance-left max-w-[459px]">
-            {logo ? <Logo logo={logo} width={340} className="hidden lg:inline-flex" /> : null}
-            <h1 className="text-[28px] font-bold leading-[1.4] text-ink lg:mt-5 lg:text-display lg:leading-[46px]">
+        <div className="mx-auto flex max-w-[1440px] flex-col px-[14px] pt-[132px] pb-[77px] md:min-h-[clamp(520px,53.2vw,765px)] md:justify-center md:px-[clamp(24px,6.05vw,86px)] md:py-10">
+          <div className="entrance-left max-w-[459px] md:max-w-[clamp(300px,32vw,459px)]">
+            {logo ? (
+              <Logo
+                logo={logo}
+                width={340}
+                className="hidden md:inline-flex md:w-[clamp(220px,23.7vw,340px)] md:[&>img]:h-auto md:[&>img]:w-full"
+              />
+            ) : null}
+            <h1 className="text-[28px] font-bold leading-[1.4] text-ink md:mt-5 md:text-[clamp(28px,2.8vw,40px)] md:leading-[1.15]">
               {before}
-              {after !== null && <span className="lg:text-orange">{highlight}</span>}
+              {after !== null && <span className="md:text-orange">{highlight}</span>}
               {after}
             </h1>
             {lead ? (
-              <p className="mt-5 text-[20px] font-light leading-[30px] text-secondary lg:font-normal">
+              <p className="mt-5 text-[20px] font-light leading-[30px] text-secondary md:text-[clamp(16px,1.4vw,20px)] md:font-normal md:leading-normal">
                 {inlineMarkdown(lead)}
               </p>
             ) : null}
             {subtitle ? (
-              <p className="mt-[14px] text-[20px] font-light leading-[30px] text-secondary lg:font-bold">
+              <p className="mt-[14px] text-[20px] font-light leading-[30px] text-secondary md:text-[clamp(16px,1.4vw,20px)] md:font-bold md:leading-normal">
                 {subtitle}
               </p>
             ) : null}
             {cta ? (
-              <div className="mt-[34px] hidden lg:block">
+              <div className="mt-[34px] hidden md:block">
                 <CtaLink cta={cta} variant="primary" />
               </div>
             ) : null}
           </div>
         </div>
         {rating ? (
-          <CompactRating
-            source={rating}
-            className="entrance-up entrance-late absolute right-[120px] bottom-[25px] z-20 hidden lg:block"
-          />
+          <div className="entrance-up entrance-late absolute right-[clamp(24px,8.4vw,120px)] bottom-[25px] z-20 hidden w-[clamp(240px,20.9vw,300px)] md:block">
+            <CompactRating source={rating} />
+          </div>
         ) : null}
       </div>
     </header>

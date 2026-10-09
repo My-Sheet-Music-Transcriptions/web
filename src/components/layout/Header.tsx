@@ -23,14 +23,14 @@ export interface HeaderProps {
   account: { login: Link; signup: Link }
   /** What sits beside the menu button on phones: the language switcher. */
   languages?: ReactNode
-  /** On the homepage the desktop logo waits for the first scroll (the hero carries the lockup). */
+  /** On the homepage the logo waits for the first scroll from tablets up (the hero carries the lockup). */
   home?: boolean
 }
 
 /**
- * Sticky white header: logo, main navigation with one mega-menu, orange CTA. On the homepage the desktop
- * logo fades in only once the page scrolls (the hero carries the lockup), as on the live site; its slot
- * stays so the navigation does not move.
+ * Sticky white header: logo, main navigation with one mega-menu, orange CTA from `nav` (1400px, where they fit
+ * on one line), the phone menu below. On the homepage the logo fades in only once the page scrolls, from
+ * tablets up (the hero carries the lockup), as on the live site; its slot stays so the navigation does not move.
  */
 export function Header({ logo, nav, cta, labels, account, languages, home = false }: HeaderProps) {
   const [open, setOpen] = useState(false)
@@ -49,18 +49,18 @@ export function Header({ logo, nav, cta, labels, account, languages, home = fals
         scrolled && 'shadow-[0_2px_12px_rgba(0,0,0,0.08)]',
       )}
     >
-      <div className="mx-auto flex h-[57px] max-w-[1440px] items-center justify-between gap-4 px-4 lg:h-[71px] lg:px-5">
+      <div className="mx-auto flex h-[57px] max-w-[1440px] items-center justify-between gap-4 px-4 nav:h-[71px] nav:px-5">
         <Logo
           logo={logo}
           width={183}
           priority
           className={cn(
-            'w-[150px] transition-opacity duration-300 lg:ml-[10px] lg:w-[183px] [&_img]:h-auto [&_img]:w-full',
-            home && !scrolled && 'lg:pointer-events-none lg:opacity-0',
+            'w-[150px] transition-opacity duration-300 nav:ml-[10px] nav:w-[183px] [&_img]:h-auto [&_img]:w-full',
+            home && !scrolled && 'md:pointer-events-none md:opacity-0',
           )}
         />
 
-        <nav aria-label={labels.main} className="hidden lg:block">
+        <nav aria-label={labels.main} className="hidden nav:block">
           <ul className="flex items-center gap-[5px]">
             {nav.map((item) =>
               item.groups ? (
@@ -83,13 +83,13 @@ export function Header({ logo, nav, cta, labels, account, languages, home = fals
           </ul>
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden nav:block">
           <Button asChild>
             <SmartLink href={cta.href}>{cta.label}</SmartLink>
           </Button>
         </div>
 
-        <div className="flex items-center gap-3 lg:hidden">
+        <div className="flex items-center gap-3 nav:hidden">
           {languages}
           <button
             type="button"

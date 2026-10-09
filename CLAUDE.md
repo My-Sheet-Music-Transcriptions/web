@@ -200,7 +200,7 @@ Defined once in `src/styles/theme.css` (`@theme`, every token with a usage comme
 Text uses the contrast-safe `primary` #1a7f97 and `accent-deep` #b8571c; filled buttons keep the live site's `cta` #E2864D
 and `sky` #219EBC (marked `data-live-colour`), and #F49946 stays the decorative `accent`. Navy #023047, teal #239c90, ink #444. Font: Montserrat (variable). Radii:
 card 12px, pill 28px, field 20px. Containers 1140 / 1200 / 900 px. Breakpoints: md 768, lg 1025 (Elementor's
-tablet/desktop split). Use utilities, never ad-hoc hex values in components. `tests/unit/theme-tokens.test.ts`
+tablet/desktop split), nav 1400 (the desktop menu fits on one line; the phone menu below). Use utilities, never ad-hoc hex values in components. `tests/unit/theme-tokens.test.ts`
 checks names, usage notes and contrast.
 
 ## Design System artifact and the page workflow
