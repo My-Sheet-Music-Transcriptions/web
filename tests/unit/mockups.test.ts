@@ -57,7 +57,7 @@ describe('mockups', () => {
   it('reads image headers', () => {
     expect(imageSize('content/en/pages/home/office-8.jpg')).toEqual({ w: 1000, h: 668 })
     expect(imageSize('src/assets/images/icons/audience-all.webp')).toEqual({ w: 735, h: 727 })
-    expect(imageSize('src/assets/images/hero/hero-slide-1.webp')).toEqual({ w: 1600, h: 806 })
+    expect(imageSize('content/en/pages/home/hero-slide-1.webp')).toEqual({ w: 1600, h: 806 })
     expect(imageSize('content/en/pages/home/step-1-send-audio.png')).toEqual({ w: 403, h: 403 })
   })
 })

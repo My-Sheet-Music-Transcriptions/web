@@ -7,7 +7,8 @@ export interface StarsProps {
   color?: 'yellow' | 'primary' | 'trustpilot'
   size?: number
   className?: string
-  label?: string
+  /** What the stars say to screen readers ("5 out of 5 stars"). */
+  label: string
 }
 
 const STAR_IDS = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
@@ -25,7 +26,7 @@ export function Stars({
   return (
     <span
       role="img"
-      aria-label={label ?? `${rating} out of ${max} stars`}
+      aria-label={label}
       className={cn('inline-flex items-center gap-1', colors[color], className)}
     >
       {STAR_IDS.slice(0, max).map((id, i) => (

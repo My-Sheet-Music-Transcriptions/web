@@ -1,26 +1,9 @@
-import { footer } from '@content/en/data/footer'
-import accio from '~/assets/images/logos/accio.png?w=100;200&as=picture'
-import msmtmusic from '~/assets/images/logos/msmtmusic.png?w=192;384&as=picture'
-import payment from '~/assets/images/logos/payment.svg'
 import { Arrowed } from '~/components/layout/Arrowed'
 import { Icon, type IconName } from '~/components/primitives/Icon'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SmartLink } from '~/components/primitives/SmartLink'
-import { sites } from '~/i18n/sites'
-import { localeSwitchHref } from '~/i18n/switch'
+import type { FooterData } from '~/content/types'
 import { cn } from '~/lib/cn'
-import { useSite } from '~/site'
-
-const flags = import.meta.glob<PictureSource>('../../assets/images/flags/*.png', {
-  eager: true,
-  import: 'default',
-  query: '?w=46;92&as=picture',
-})
-const logos = import.meta.glob<PictureSource>('../../assets/images/logos/*.png', {
-  eager: true,
-  import: 'default',
-  query: '?w=58;116&as=picture',
-})
 
 /** Phone icon colours, as on the live site. */
 const phoneIcon: Record<string, string> = {
@@ -65,11 +48,46 @@ function FaIcon({ icon, className }: { icon: string; className?: string }) {
 const heading = 'text-center text-body leading-[28.8px] font-semibold tracking-[1.6px] text-white'
 const link = 'text-[13px] font-medium text-[#94a3a3] hover:text-white'
 
+/** The footer's column headings. */
+export interface FooterHeadings {
+  sitemap: string
+  languages: string
+  services: string
+  contactUs: string
+  stayConnected: string
+  aboutUs: string
+  paymentSecurity: string
+  compatibleWith: string
+  providedBy: string
+}
+
+/** A sister site in the languages list: where it goes, its words ("View this site in Spanish") and flag. */
+export interface FooterLanguage {
+  href: string
+  lang: string
+  label: string
+  flag?: PictureSource
+}
+
+export interface FooterProps {
+  headings: FooterHeadings
+  /** The columns: links, payment text and marks (content/<locale>/data/footer.ts). */
+  data: FooterData
+  languages: FooterLanguage[]
+  email: string
+  phones: { label: string; number: string; icon?: string }[]
+  social: { label: string; href: string; icon: string }[]
+}
+
 /** Dark four-column footer with sitemap, services, contact details, payment, social and legal links. */
-export function Footer() {
-  const site = useSite()
-  const s = site.strings
-  const languages = site.languageSwitcher.filter((l) => l.locale !== site.locale)
+export function Footer({
+  headings: s,
+  data: footer,
+  languages,
+  email,
+  phones,
+  social,
+}: FooterProps) {
   return (
     <footer className="bg-footer pt-[65px] pb-[73px]">
       <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-y-[5px] md:grid-cols-2 lg:grid-cols-4 lg:gap-y-0">
@@ -101,22 +119,12 @@ export function Footer() {
           </ul>
           <h2 className={cn(heading, 'mt-[50px]')}>{s.languages}</h2>
           <ul className="mt-5 -ml-3 space-y-[6px] md:ml-[-12px]">
-            {languages.map(({ locale }) => {
-              const t = sites[locale]
-              const name = {
-                es: 'Spanish',
-                fr: 'French',
-                de: 'German',
-                ja: 'Japanese',
-                ca: 'Catalan',
-                en: 'English',
-              }[locale]
-              const flag = flags[`../../assets/images/flags/${locale === 'ja' ? 'jp' : locale}.png`]
+            {languages.map(({ href, lang, label, flag }) => {
               return (
-                <li key={locale}>
+                <li key={lang}>
                   <a
-                    href={localeSwitchHref(locale)}
-                    hrefLang={t.lang}
+                    href={href}
+                    hrefLang={lang}
                     className="flex h-12 items-center gap-[22px] text-[13px] leading-[26px] font-semibold text-[#94a3a3] hover:text-white md:gap-[14px]"
                   >
                     {flag ? (
@@ -127,7 +135,7 @@ export function Footer() {
                         className="h-[23px] w-[23px] rounded-full md:h-[18px] md:w-[18px]"
                       />
                     ) : null}
-                    {s.viewSiteIn} {name}
+                    {label}
                   </a>
                 </li>
               )
@@ -153,14 +161,14 @@ export function Footer() {
           <ul className="mt-[15px] space-y-[15px]">
             <li>
               <a
-                href={`mailto:${site.contact.email}`}
+                href={`mailto:${email}`}
                 className="flex items-center text-[13px] leading-[22px] font-medium text-[#bababa] hover:text-white md:text-[12px]"
               >
                 <Icon name="fa-envelope" size={14} width={18} className="shrink-0 text-accent" />
-                <span className="pl-[5px]">{site.contact.email}</span>
+                <span className="pl-[5px]">{email}</span>
               </a>
             </li>
-            {site.contact.phones.map((p) => (
+            {phones.map((p) => (
               <li key={p.label}>
                 <a
                   href={`tel:${p.number.replace(/[^\d+]/g, '')}`}
@@ -181,7 +189,7 @@ export function Footer() {
           </ul>
           <h2 className={cn(heading, 'mt-10')}>{s.stayConnected}</h2>
           <ul className="mt-[15px] space-y-[15px]">
-            {site.social.map((l) => (
+            {social.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
@@ -222,8 +230,8 @@ export function Footer() {
             {footer.paymentText}
           </p>
           <img
-            src={payment}
-            alt="Accepted payment methods: PayPal, Discover, Stripe, Visa, American Express, Mastercard"
+            src={footer.payment.image}
+            alt={footer.payment.alt}
             width={216}
             height={73}
             className="mx-auto mt-[34px] h-[83px] w-[248px] md:h-[73px] md:w-[216px]"
@@ -241,8 +249,13 @@ export function Footer() {
           <h2 className={cn(heading, 'mt-5')}>{s.compatibleWith}</h2>
           <ul className="mt-[30px] flex flex-wrap justify-start gap-x-4 gap-y-[35px] pl-[3px] md:justify-center md:gap-y-3 md:pl-0">
             {footer.compatible.map((c) => (
-              <li key={c.logo} className="flex w-[58px] flex-col items-center md:w-[38px]">
-                <LogoImg id={c.logo} />
+              <li key={c.label} className="flex w-[58px] flex-col items-center md:w-[38px]">
+                <Picture
+                  image={c.image}
+                  alt=""
+                  sizes="58px"
+                  className="h-[57px] w-auto object-contain md:h-[34px]"
+                />
                 <span className="mt-[10px] text-[10px] leading-5 font-semibold text-[#aaaaaa]">
                   {c.label}
                 </span>
@@ -250,35 +263,25 @@ export function Footer() {
             ))}
           </ul>
           <h2 className={cn(heading, 'mt-6')}>{s.providedBy}</h2>
-          <a href="https://msmtmusic.com" rel="noopener" className="mt-[7px] block">
+          <a href={footer.providedBy.href} rel="noopener" className="mt-[7px] block">
             <Picture
-              image={msmtmusic}
-              alt="msmtmusic"
+              image={footer.providedBy.image}
+              alt={footer.providedBy.alt}
               sizes="192px"
               className="mx-auto h-[47px] w-[192px] md:h-[41px] md:w-[167px]"
             />
           </a>
-          <Picture
-            image={accio}
-            alt="ACCIÓ – Catalonia Trade & Investment"
-            sizes="100px"
-            className="mx-auto mt-5 hidden h-[51px] w-[100px] opacity-50 md:block"
-          />
+          {footer.badges.map((b) => (
+            <Picture
+              key={b.alt}
+              image={b.image}
+              alt={b.alt}
+              sizes="100px"
+              className="mx-auto mt-5 hidden h-[51px] w-[100px] opacity-50 md:block"
+            />
+          ))}
         </div>
       </div>
     </footer>
-  )
-}
-
-function LogoImg({ id }: { id: string }) {
-  const img = logos[`../../assets/images/logos/${id}.png`]
-  if (!img) return null
-  return (
-    <Picture
-      image={img}
-      alt=""
-      sizes="58px"
-      className="h-[57px] w-auto object-contain md:h-[34px]"
-    />
   )
 }

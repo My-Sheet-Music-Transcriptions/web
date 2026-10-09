@@ -9,9 +9,5 @@ export default {
   icon: 'piano',
   group: 'keys',
   priceFrom: 19,
-  hero: {
-    title: 'Piano Transcriptions',
-    subtitle: 'Get your piano songs transcribed accurately into sheet music by professionals',
-  },
   updated: '2024-08-19',
 } satisfies ServiceMetaInput

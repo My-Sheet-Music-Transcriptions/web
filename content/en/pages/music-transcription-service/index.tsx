@@ -1,12 +1,18 @@
 import { aboutFaq, orderingFaq, servicesFaq, technicalFaq } from '@content/en/data/faqs'
+import { quoteForm } from '@content/en/data/forms'
+import { mediaLabels } from '@content/en/data/labels'
 import { counter, platforms } from '@content/en/data/ratings'
 import { allServices, included } from '@content/en/data/services'
+import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import {
   CardGrid,
   ContactSection,
   FaqList,
   IconGrid,
   MediaText,
+  PageHeader,
   RatingBanner,
   Samples,
   Steps,
@@ -22,6 +28,12 @@ import woodchoppersBall from './woodchoppers-ball.png?w=300;600&as=picture'
 export default function MusicTranscriptionServicePage() {
   return (
     <>
+      <PageHeader
+        title="Music Transcription Service Online"
+        subtitle="Turn audio into sheet music easily!"
+        lead="Learn more about our music notation services and our range of solutions to transform audio recordings into precise and digital sheet music."
+      />
+
       <IconGrid
         items={allServices}
         limit={8}
@@ -29,6 +41,8 @@ export default function MusicTranscriptionServicePage() {
       />
 
       <Samples
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         tone="cream"
         items={[
           {
@@ -90,17 +104,19 @@ export default function MusicTranscriptionServicePage() {
         ]}
       />
 
-      <CardGrid title="What's included?" background="photo" items={included} />
+      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
 
       <IconGrid id="all-services" title="Turn any song into sheet music" items={allServices} />
 
       <RatingBanner
+        image={pianoBand}
         title="The highest-rated online sheet music transcribers"
         counter={counter}
         sources={platforms}
       />
 
       <MediaText
+        labels={mediaLabels}
         title="Professional, accurate, and hassle-free"
         align="center"
         imageSide="left"
@@ -144,7 +160,7 @@ export default function MusicTranscriptionServicePage() {
         cta={{ label: 'See all FAQs', href: '/frequent-asked-questions' }}
       />
 
-      <ContactSection returnTo="/music-transcription-service" />
+      <ContactSection form={quoteForm} returnTo="/music-transcription-service" />
     </>
   )
 }

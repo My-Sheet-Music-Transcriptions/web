@@ -1,4 +1,5 @@
-import { CtaBand, Gallery, MediaText, Section, Table } from '~/components/blocks'
+import { mediaLabels } from '@content/en/data/labels'
+import { CtaBand, Gallery, MediaText, PageHeader, Section, Table } from '~/components/blocks'
 import { Text } from '~/components/typography'
 import office8 from './office-8.jpg?w=560;1000&as=picture'
 import office9 from './office-9.jpg?w=560;1000&as=picture'
@@ -62,6 +63,12 @@ import you from './you.webp?w=180;360&as=picture'
 export default function CareersPage() {
   return (
     <>
+      <PageHeader
+        title="Work with us!"
+        lead="Be part of the **My Sheet Music Transcriptions** team in Terrassa/Barcelona or join us remotely!"
+        cta={{ label: 'Job openings', href: '#job-openings' }}
+      />
+
       <Section title="Join our band">
         <Text>
           We are the go-to production company for new sheet music editions and transcriptions.
@@ -265,6 +272,7 @@ export default function CareersPage() {
       />
 
       <MediaText
+        labels={mediaLabels}
         title="About the hiring process"
         align="center"
         imageSide="left"

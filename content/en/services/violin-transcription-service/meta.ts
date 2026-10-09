@@ -9,9 +9,5 @@ export default {
   icon: 'violin',
   group: 'strings',
   priceFrom: 19,
-  hero: {
-    title: 'Violin Transcription Service',
-    subtitle: 'Get your violin songs transcribed accurately into sheet music by professionals',
-  },
   updated: '2025-06-09',
 } satisfies ServiceMetaInput

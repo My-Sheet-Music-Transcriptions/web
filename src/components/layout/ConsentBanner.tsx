@@ -1,16 +1,25 @@
 import { useEffect, useState } from 'react'
 import { Button } from '~/components/primitives/Button'
 import { SmartLink } from '~/components/primitives/SmartLink'
-import { useSite } from '~/site'
+import type { Link } from '~/content/types'
 
 const KEY = 'msmt-consent'
+
+export interface ConsentBannerProps {
+  title: string
+  body: string
+  /** The two buttons' words. */
+  accept: string
+  deny: string
+  /** The policies under the buttons (cookies, privacy). */
+  links: Link[]
+}
 
 /**
  * Cookie consent. Analytics (GTM) loads only after "Accept". The choice is kept in localStorage;
  * nothing is sent anywhere until the visitor decides.
  */
-export function ConsentBanner() {
-  const site = useSite()
+export function ConsentBanner({ title, body, accept, deny, links }: ConsentBannerProps) {
   const [visible, setVisible] = useState(false)
   useEffect(() => {
     try {
@@ -31,7 +40,6 @@ export function ConsentBanner() {
   }
 
   if (!visible) return null
-  const s = site.strings
   return (
     <section
       data-consent-banner
@@ -41,14 +49,14 @@ export function ConsentBanner() {
       className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-[520px] rounded-card bg-white p-5 text-left shadow-float"
     >
       <h2 id="consent-title" className="text-body font-bold text-ink">
-        {s.cookieTitle}
+        {title}
       </h2>
       <p id="consent-body" className="mt-2 text-[13px] leading-5 text-[#444]">
-        {s.cookieBody}
+        {body}
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <Button variant="primary" size="sm" onClick={() => decide('granted')}>
-          {s.accept}
+          {accept}
         </Button>
         <Button
           variant="ghost"
@@ -56,17 +64,18 @@ export function ConsentBanner() {
           className="border border-line"
           onClick={() => decide('denied')}
         >
-          {s.deny}
+          {deny}
         </Button>
       </div>
       <p className="mt-3 text-caption leading-5">
-        <SmartLink href="/cookies" className="text-primary underline">
-          {s.cookiesPolicy}
-        </SmartLink>
-        <span className="px-2 text-muted">·</span>
-        <SmartLink href="/gdpr" className="text-primary underline">
-          {s.privacyPolicy}
-        </SmartLink>
+        {links.map((l, i) => (
+          <span key={l.href}>
+            {i > 0 ? <span className="px-2 text-muted">·</span> : null}
+            <SmartLink href={l.href} className="text-primary underline">
+              {l.label}
+            </SmartLink>
+          </span>
+        ))}
       </p>
     </section>
   )

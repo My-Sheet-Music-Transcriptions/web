@@ -3,7 +3,7 @@ import { Hero, type HeroProps } from './Hero'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Opening/Hero',
+  title: 'Blocks/Headers/Hero',
   component: Hero,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<HeroProps>('Hero'),

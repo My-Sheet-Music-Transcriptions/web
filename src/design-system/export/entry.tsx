@@ -2,13 +2,11 @@ import './asset-base'
 import './entry.css'
 import type { ComponentType } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
+import { SiteFooter, SiteHeader, SiteTopBar } from '~/app/SiteShell'
 import { blocks } from '~/components/blocks'
 import { catalogue } from '~/components/blocks/catalogue'
-import { Footer } from '~/components/layout/Footer'
-import { Header } from '~/components/layout/Header'
-import { TopBar } from '~/components/layout/TopBar'
 import { lightMarkdown } from '~/lib/light-markdown'
-import { withSamples } from '../samples'
+import { withSamples } from '~/stories/samples'
 
 /**
  * Browser bundle of the design system (`window.MSMT`). Used by the published Design System
@@ -18,8 +16,14 @@ import { withSamples } from '../samples'
  *   MSMT.renderAll()                                   // mount every [data-msmt] element
  *   <div data-msmt="Testimonials" data-props='{"title":"Reviews","items":[…]}'></div>
  */
+// The layout comes as the app composes it (the site's own nav, footer and words), as on the real page.
 // biome-ignore lint/suspicious/noExplicitAny: heterogeneous component map
-const components: Record<string, ComponentType<any>> = { ...blocks, Header, Footer, TopBar }
+const components: Record<string, ComponentType<any>> = {
+  ...blocks,
+  Header: SiteHeader,
+  Footer: SiteFooter,
+  TopBar: SiteTopBar,
+}
 const roots = new WeakMap<Element, Root>()
 
 function mount(name: string, el: Element, props: Record<string, unknown> = {}) {

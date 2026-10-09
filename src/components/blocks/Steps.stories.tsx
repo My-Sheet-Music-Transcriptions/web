@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import photo from '~/assets/images/samples/office-transcriber.jpg?w=480;960&as=picture'
+import { mediaLabels } from '~/stories/data'
+import { sample } from '~/stories/samples'
 import { Steps, type StepsProps } from './Steps'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/How/Steps',
+  title: 'Blocks/Lists & grids/Steps',
   component: Steps,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<StepsProps>('Steps'),
@@ -17,8 +18,14 @@ export const Columns: Story = {
   args: {
     title: 'How does it work?',
     layout: 'columns',
+    labels: mediaLabels,
+    videoPoster: sample.photo,
     items: [
-      { title: 'Send us the music', text: 'All we need is a video or an audio file', image: photo },
+      {
+        title: 'Send us the music',
+        text: 'All we need is a video or an audio file',
+        image: sample.photo,
+      },
       {
         video: {
           youtube: 'M0GQtolLnEU',
@@ -30,7 +37,7 @@ export const Columns: Story = {
       {
         title: 'Receive the piano sheet!',
         text: 'We send you the score in a printable format',
-        image: photo,
+        image: sample.photo,
       },
     ],
   },

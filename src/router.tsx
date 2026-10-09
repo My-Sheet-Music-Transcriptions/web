@@ -1,6 +1,6 @@
 import { createRouter, type RouterHistory } from '@tanstack/react-router'
-import { DefaultCatchBoundary } from '~/components/layout/DefaultCatchBoundary'
-import { NotFound } from '~/components/layout/NotFound'
+import { ErrorPage } from '~/app/ErrorPage'
+import { NotFound } from '~/app/NotFound'
 import { localePrefixRewrite } from '~/i18n/routing'
 import { LOCALE_ROUTING } from '~/site'
 import { routeTree } from './routeTree.gen'
@@ -14,7 +14,7 @@ export function getRouter() {
     defaultPreload: 'intent',
     defaultPreloadDelay: 50,
     defaultPreloadStaleTime: 30_000,
-    defaultErrorComponent: DefaultCatchBoundary,
+    defaultErrorComponent: ErrorPage,
     defaultNotFoundComponent: NotFound,
     scrollRestoration: true,
     // Path-mode previews: /<locale>/... in the address bar, locale-free paths inside the router.

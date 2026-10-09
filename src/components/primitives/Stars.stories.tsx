@@ -5,6 +5,7 @@ const meta = {
   title: 'Primitives/Stars',
   component: Stars,
   parameters: { layout: 'centered' },
+  args: { label: '5 out of 5 stars' },
 } satisfies Meta<typeof Stars>
 export default meta
 type Story = StoryObj<typeof meta>

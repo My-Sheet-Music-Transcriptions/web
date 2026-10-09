@@ -1,15 +1,25 @@
-import type { Locale } from '~/i18n/types'
-import type { RatingSource } from './types'
+import type { Locale, NavItem } from '~/i18n/types'
+import type { FooterData } from './types'
 
 /**
- * The few data lists templates need (blocks get theirs from the page): the ratings of each locale, read from
- * content/<locale>/data/ratings.ts.
+ * The data lists the layout needs (blocks get theirs from the page): the navigation and the footer of each
+ * locale, read from content/<locale>/data/{nav,footer}.ts. A locale without data files yet shows the English
+ * ones (the scaffolds of the locales still to be ported).
  */
-const ratings = import.meta.glob<{ google?: RatingSource }>('/content/*/data/ratings.ts', {
+const navs = import.meta.glob<{ nav: NavItem[] }>('/content/*/data/nav.ts', { eager: true })
+const footers = import.meta.glob<{ footer: FooterData }>('/content/*/data/footer.ts', {
   eager: true,
 })
 
-/** The Google rating of a locale (the compact card of page headers); undefined where there is none. */
-export function googleRating(locale: Locale): RatingSource | undefined {
-  return ratings[`/content/${locale}/data/ratings.ts`]?.google
+/** The main navigation of a locale. */
+export function navFor(locale: Locale): NavItem[] {
+  return (navs[`/content/${locale}/data/nav.ts`] ?? navs['/content/en/data/nav.ts'])?.nav ?? []
+}
+
+/** The footer columns of a locale. */
+export function footerFor(locale: Locale): FooterData {
+  const found =
+    footers[`/content/${locale}/data/footer.ts`] ?? footers['/content/en/data/footer.ts']
+  if (!found) throw new Error('content/en/data/footer.ts is missing')
+  return found.footer
 }

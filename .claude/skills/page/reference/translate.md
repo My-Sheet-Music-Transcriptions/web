@@ -11,11 +11,13 @@ What is ready today, to tell the person plainly before promising a translated pa
   it (or shared ones re-imported). The slug is the translated URL as the live site of that language uses it
   (check it there; keep it if the page exists, choose a short translated slug otherwise; slugs are unique per
   locale and never a locale code or a reserved word, `pnpm exec tsx scripts/check-slugs.ts`).
-- The **header, footer, menu and the blocks that read structured data** (ratings, prices, services, reviews)
-  still come from the English data files (`content/en/data/*.ts` is imported directly by the layout and
-  those blocks). Until a language is scaffolded (the planned `add-locale` work: per-locale data files and
-  strings), a translated page shows an English menu and footer. Say so, and offer: translate the page now
-  and live with the English frame on the preview, or wait for the language scaffold.
+- The **menu and footer** come from `content/<locale>/data/{nav,footer}.ts` and the chrome's words from
+  `src/i18n/sites/<locale>.ts`; a language without those files yet shows the English ones. The page's own
+  words around its blocks (`labels.ts`, `forms.ts`) and its lists (ratings, prices, reviews) are imported by
+  the page from `content/<locale>/data/`, so a translation imports the target language's files, creating
+  them (translated from `content/en/data/`) when they do not exist yet. Until a language is scaffolded (the
+  planned `add-locale` work: its data files and strings), say what stays English on the preview, and offer:
+  translate the page now and live with the English frame, or wait for the language scaffold.
 - A language with no `pages/home` yet has no home page on its site: the language switcher sends people to
   the live legacy site for that language (`localeSwitchHref`), and `SmartLink` links to pages that are not
   ported yet go to the legacy site too. Nothing breaks; the person should know the translated page will sit
@@ -30,7 +32,7 @@ Doing it:
 2. Preview with `pnpm ds:review <locale>-<slug> "<Translated title>" /<translated-path>` as usual. Tell
    the person what is English by necessity (menu, footer, data blocks) so they do not comment on it.
 3. Build: the page folder under `content/<locale>/…`, `translationKey` identical to the source,
-   `title`/`description` in the target language within the length limits, `template` the same. The build
+   `title`/`description` in the target language within the length limits, the same blocks. The build
    serves it at `/<locale>/<translated-path>` on the deploy preview; the live URL is on that language's
    domain. The hreflang map and the language switcher pick the translation up by `translationKey`
    (`tests/unit/content.test.ts` fails on a key used twice in one locale).

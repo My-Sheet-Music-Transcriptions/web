@@ -3,7 +3,7 @@ import { storyArgs } from './story-args'
 import { Table, type TableProps } from './Table'
 
 const meta = {
-  title: 'Blocks/Story/Table',
+  title: 'Blocks/Text & media/Table',
   component: Table,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<TableProps>('Table'),

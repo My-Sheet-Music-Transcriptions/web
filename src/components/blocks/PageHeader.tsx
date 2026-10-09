@@ -2,7 +2,7 @@ import { Carousel, type Slide } from '~/components/primitives/Carousel'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
-import type { RatingSource } from '~/content/types'
+import type { MediaLabels, RatingSource } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { inlineMarkdown } from '~/lib/light-markdown'
 
@@ -21,12 +21,14 @@ export interface PageHeaderProps {
   rating?: RatingSource
   /** band: dark centred title band (default). split: copy left and pictures right, on white (landing pages). */
   variant?: 'band' | 'split'
-  /** The picture beside the copy (split), or beside the rating card under the band (an instrument icon). */
+  /** The picture beside the copy (split), or beside the rating card under the band (a service's icon). */
   image?: PictureSource
   /** Alt text of the picture; empty when decorative. */
   alt?: string
   /** Two or more pictures beside the copy, as a carousel (split). */
   images?: Slide[]
+  /** The words of the carousel arrows: `media` from content/<locale>/data/labels (with `images`). */
+  labels?: MediaLabels
   /** Background of the band. */
   tone?: 'grey' | 'navy'
   /** Anchor id. */
@@ -34,9 +36,9 @@ export interface PageHeaderProps {
 }
 
 /**
- * The opening of every page but the homepage: its h1 with an optional eyebrow, subtitle, lead and button.
- * `band` is the dark centred title band (templates render it from meta.ts), with the rating card and an
- * icon under it when given; `split` sets the copy beside a picture or carousel, as landing pages open.
+ * The opening of every page but the homepage, written first in the page: its h1 with an optional eyebrow,
+ * subtitle, lead and button. `band` is the dark centred title band, with the rating card and an icon under it
+ * when given (service pages); `split` sets the copy beside a picture or carousel, as landing pages open.
  */
 export function PageHeader({
   title,
@@ -49,6 +51,7 @@ export function PageHeader({
   image,
   alt = '',
   images,
+  labels,
   tone = 'grey',
   id,
 }: PageHeaderProps) {
@@ -83,6 +86,7 @@ export function PageHeader({
             <Carousel
               slides={slides}
               label={title}
+              labels={labels}
               sizes="(min-width: 1025px) 560px, 100vw"
               interval={6}
               imageClassName="aspect-[3/2]"

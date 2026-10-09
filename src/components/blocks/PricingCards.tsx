@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { iconPicture } from '~/assets/icons'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
 import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
@@ -54,7 +53,7 @@ function Tiers({ tiers }: { tiers: PricingTier[] }) {
   return (
     <ul className="mt-[92px] grid gap-y-[121px] md:mt-[162px] md:grid-cols-3 md:gap-x-5">
       {tiers.map((t) => {
-        const img = iconPicture(t.icon)
+        const img = t.icon
         return (
           <li
             key={t.id ?? t.title}
@@ -81,7 +80,7 @@ function Tiers({ tiers }: { tiers: PricingTier[] }) {
               {t.title}
             </h3>
             <div className="flex flex-1 flex-col pt-[5px] text-center text-ink">
-              <p className="text-[18px] leading-9">from</p>
+              {t.fromLabel ? <p className="text-[18px] leading-9">{t.fromLabel}</p> : null}
               <p className="mt-1 text-price font-bold leading-[46px]">{t.from}</p>
               <p className="-mt-0.5 text-[18px] leading-9">{t.unit}</p>
               {t.factorsLabel ? (
@@ -112,7 +111,7 @@ function SingleTier({ tier }: { tier: PricingTier }) {
     <div className="mx-auto mt-12 grid max-w-[900px] overflow-hidden rounded-card bg-white shadow-band md:grid-cols-2">
       <div className="flex flex-col items-center justify-center gap-1 bg-cream px-8 py-10 text-center text-ink">
         {tier.title ? <h3 className="mb-2 text-h3 font-bold">{tier.title}</h3> : null}
-        <p className="text-[18px] leading-9">from</p>
+        {tier.fromLabel ? <p className="text-[18px] leading-9">{tier.fromLabel}</p> : null}
         <p className="text-price font-bold leading-[46px] text-ink">{tier.from}</p>
         <p className="text-[18px] font-bold leading-9">{tier.unit}</p>
         {tier.note ? <p className="mt-4 max-w-[320px] text-small italic">{tier.note}</p> : null}

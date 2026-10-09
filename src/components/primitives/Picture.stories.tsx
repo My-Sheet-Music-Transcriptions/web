@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import office from '~/assets/images/samples/office-transcriber.jpg?w=400;800&as=picture'
+import { sample } from '~/stories/samples'
 import { Picture } from './Picture'
 
 const meta = {
@@ -7,7 +7,7 @@ const meta = {
   component: Picture,
   parameters: { layout: 'padded' },
   args: {
-    image: office,
+    image: sample.photo,
     alt: 'The customer service team at their desks',
     sizes: '(min-width: 768px) 600px, 100vw',
     className: 'max-w-[600px] rounded-card',

@@ -3,7 +3,7 @@ import { Stats, type StatsProps } from './Stats'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Proof/Stats',
+  title: 'Blocks/Lists & grids/Stats',
   component: Stats,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<StatsProps>('Stats'),

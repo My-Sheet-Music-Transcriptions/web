@@ -3,7 +3,7 @@ import { FaqList, type FaqListProps } from './FaqList'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Story/FaqList',
+  title: 'Blocks/Lists & grids/FaqList',
   component: FaqList,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<FaqListProps>('FaqList'),

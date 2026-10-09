@@ -1,11 +1,12 @@
-import { audiences } from '@content/en/data/home'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import photo from '~/assets/images/samples/office-transcriber.jpg?w=480;960&as=picture'
+import type { CardItem } from '~/content/types'
+import { audiences } from '~/stories/data'
+import { sample, withSamples } from '~/stories/samples'
 import { CardGrid, type CardGridProps } from './CardGrid'
 import { storyArgs } from './story-args'
 
 const meta = {
-  title: 'Blocks/Offer/CardGrid',
+  title: 'Blocks/Lists & grids/CardGrid',
   component: CardGrid,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<CardGridProps>('CardGrid'),
@@ -20,7 +21,7 @@ export const Tiles: Story = {
     background: 'none',
     surface: 'tile',
     columns: 4,
-    items: audiences,
+    items: withSamples<CardItem[]>(audiences),
   },
 }
 export const CardsWithLinks: Story = {
@@ -57,12 +58,12 @@ export const PricesInTabs: Story = {
         items: [
           {
             title: 'Cover Art Design',
-            image: photo,
+            image: sample.photo,
             body: 'Art creation for the front and back cover.\n\n**Cost:** ~$80-130 USD',
           },
           {
             title: 'Book Preparation',
-            image: photo,
+            image: sample.photo,
             body: 'Merging and layout preparation.\n\n**Cost:** ~$170-220 USD',
           },
         ],
@@ -72,12 +73,12 @@ export const PricesInTabs: Story = {
         items: [
           {
             title: 'Cover Art Design',
-            image: photo,
+            image: sample.photo,
             body: 'Art creation for the front and back cover.\n\n**Cost:** usually ~80-130 EUR VAT inc.',
           },
           {
             title: 'Book Preparation',
-            image: photo,
+            image: sample.photo,
             body: 'Merging and layout preparation.\n\n**Cost:** usually ~150-200 EUR VAT inc.',
           },
         ],

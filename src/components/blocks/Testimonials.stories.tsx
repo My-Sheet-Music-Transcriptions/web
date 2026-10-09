@@ -3,7 +3,7 @@ import { storyArgs } from './story-args'
 import { Testimonials, type TestimonialsProps } from './Testimonials'
 
 const meta = {
-  title: 'Blocks/Proof/Testimonials',
+  title: 'Blocks/Reviews & ratings/Testimonials',
   component: Testimonials,
   parameters: { layout: 'fullscreen' },
   args: storyArgs<TestimonialsProps>('Testimonials'),

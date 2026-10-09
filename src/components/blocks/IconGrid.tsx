@@ -1,4 +1,3 @@
-import { iconPicture } from '~/assets/icons'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
 import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
@@ -42,7 +41,7 @@ export function IconGrid({ title, items, limit, columns = 4, cta, id }: IconGrid
           )}
         >
           {shown.map((s) => {
-            const img = iconPicture(s.icon)
+            const img = s.icon
             return (
               <li key={s.href + s.label} className="p-[10px] text-center">
                 <SmartLink href={s.href} className="group inline-flex flex-col items-center">

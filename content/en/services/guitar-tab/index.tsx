@@ -1,11 +1,17 @@
 import { generalFaq } from '@content/en/data/faqs'
-import { counter, platforms } from '@content/en/data/ratings'
+import { quoteForm } from '@content/en/data/forms'
+import { mediaLabels } from '@content/en/data/labels'
+import { counter, google, platforms } from '@content/en/data/ratings'
 import { guitarTabPricing, included } from '@content/en/data/services'
+import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import {
   CardGrid,
   ContactSection,
   CtaBand,
   FaqList,
+  PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
@@ -21,7 +27,16 @@ import guitarTabSheet5LonelyEyes from './guitar-tab-sheet-5-lonely-eyes.png?w=30
 export default function GuitarTabPage() {
   return (
     <>
+      <PageHeader
+        title="Guitar Tab Transcription Service"
+        subtitle="Get your guitar tab songs transcribed accurately into sheet music and tab by professionals"
+        image={guitar}
+        rating={google}
+      />
+
       <Steps
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         title="How does it work?"
         layout="columns"
         items={[
@@ -47,12 +62,15 @@ export default function GuitarTabPage() {
       />
 
       <RatingBanner
+        image={pianoBand}
         title="#1 Musician’s choice guitar tab transcription service online"
         counter={counter}
         sources={platforms}
       />
 
       <Samples
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         items={[
           {
             title: 'Guitar jazz lead + comping',
@@ -102,7 +120,7 @@ export default function GuitarTabPage() {
         cta={{ label: 'See our guitar glossary', href: '/glossary-guitar-tabs' }}
       />
 
-      <CardGrid title="What's included?" background="photo" items={included} />
+      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing for guitar tab"
@@ -224,7 +242,7 @@ export default function GuitarTabPage() {
         cta={{ label: 'Read all our FAQs', href: '/frequent-asked-questions' }}
       />
 
-      <ContactSection returnTo="/guitar-tab" />
+      <ContactSection form={quoteForm} returnTo="/guitar-tab" />
     </>
   )
 }

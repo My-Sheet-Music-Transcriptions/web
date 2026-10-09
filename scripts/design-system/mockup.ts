@@ -38,7 +38,7 @@ const pageDir = path.join(CONTENT_DIR, entry.dir)
 const result = mockupFromEntry({
   file: entry.page,
   path: entry.path,
-  meta: entry.meta as typeof entry.meta & { template?: string; hero?: { title: string } },
+  meta: entry.meta,
   source: fs.readFileSync(path.join(CONTENT_DIR, entry.page), 'utf8'),
 })
 const slug = entry.locale === 'en' ? entry.slug : `${entry.locale}-${entry.slug}`
@@ -51,7 +51,7 @@ if (fs.existsSync(sectionsFile) && !force)
 
 const imgDir = path.join(dir, 'img')
 for (const img of result.images) {
-  const from = path.join(pageDir, img)
+  const from = result.sources[img] ?? path.join(pageDir, img)
   if (!fs.existsSync(from))
     throw new Error(`cannot mockup: ${from} (imported by the page) does not exist`)
   fs.mkdirSync(imgDir, { recursive: true })

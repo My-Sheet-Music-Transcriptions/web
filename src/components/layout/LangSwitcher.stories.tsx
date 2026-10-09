@@ -1,21 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { languages } from '~/stories/data'
 import { LangSwitcher } from './LangSwitcher'
 
 const meta = {
   title: 'Layout/LangSwitcher',
   component: LangSwitcher,
   parameters: { layout: 'centered' },
+  args: languages,
 } satisfies Meta<typeof LangSwitcher>
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** Links to the sister domains' homepages unless the page has translations. */
+/** The app passes one link per sister site; the current language is highlighted. */
 export const Default: Story = {}
-export const WithTranslations: Story = {
-  args: {
-    alternates: {
-      es: 'https://www.mistranscripcionesmusicales.com/precios',
-      fr: 'https://mapartitionsurmesure.com/tarifs',
-    },
-  },
+export const OnDark: Story = {
+  args: { tone: 'light' },
+  parameters: { backgrounds: { default: 'footer' } },
 }

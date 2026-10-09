@@ -165,7 +165,7 @@ for (const [name, doc] of Object.entries(layoutDocs)) {
   fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(
     path.join(dir, 'README.md'),
-    `# ${name}\n\n${doc.description}\n\nNo props: content comes from \`content/<locale>/data/nav.ts\`, \`footer.ts\` and \`src/i18n/sites/<locale>.ts\`.\n\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}"></div>\n\`\`\`\n`,
+    `# ${name}\n\n${doc.description}\n\nMounted as the app composes it (\`src/app/SiteShell.tsx\`): the locale's \`content/<locale>/data/nav.ts\`, \`footer.ts\` and \`src/i18n/sites/<locale>.ts\`. No props here.\n\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}"></div>\n\`\`\`\n`,
   )
   fs.writeFileSync(
     path.join(dir, 'preview.html'),
@@ -260,14 +260,17 @@ TopBar + Header + blocks + Footer; \`ContactSection\` is always the last block w
 
 - Prices, review counts, ratings, phone numbers and nav links live in \`content/<locale>/data/*.ts\` and are
   never typed into a page. A mockup shows the real numbers from there or \`[PLACEHOLDER]\`.
+- Blocks hold no words or pictures of their own: every word (the form's labels, the carousel's buttons) and
+  every picture is a prop. A mockup passes them, from \`content/<locale>/data/labels.ts\` and \`forms.ts\`.
 - Unknown copy is \`[PLACEHOLDER]\`, never invented. Reviews are verbatim quotes with name, role, country, month.
 - British/American spelling follows the live site (American). The brand is written "My Sheet Music Transcriptions".
 
 ## Assets
 
 Brand lockup (\`logo.svg\`), favicon, instrument and feature icons, notation-software logos and language flags are
-in the asset groups, each with a README of usage rules. Photos used by the blocks ship inside
-\`components/assets/\` (webp, at most 1200px wide) and are referenced by the bundle only.
+in the asset groups, each with a README of usage rules. Components hold no picture of their own: a page passes its
+photos (shared ones from \`src/assets/images/bands\`), a name from the config or the data picks a brand file, and the
+sample photo of the previews ships inside \`components/assets/\` (webp, at most 1200px wide).
 
 ## Source
 

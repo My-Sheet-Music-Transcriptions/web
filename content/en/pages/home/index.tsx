@@ -1,7 +1,12 @@
+import { quoteForm } from '@content/en/data/forms'
 import { audiences, pricingTiers, serviceGrid } from '@content/en/data/home'
+import { mediaLabels, reviewLabels } from '@content/en/data/labels'
 import { counter, google, homeRatings } from '@content/en/data/ratings'
 import { homeReviews } from '@content/en/data/reviews'
 import { included } from '@content/en/data/services'
+import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import logo from '~/assets/images/brand/logo.svg'
 import {
   CardGrid,
   ContactSection,
@@ -15,6 +20,17 @@ import {
   Testimonials,
 } from '~/components/blocks'
 import { Text } from '~/components/typography'
+import heroSlide1 from './hero-slide-1.webp?w=1000;1600;2000&as=picture'
+import heroSlide2 from './hero-slide-2.webp?w=1000;1600;2000&as=picture'
+import heroSlide3 from './hero-slide-3.webp?w=1000;1600;2000&as=picture'
+import heroSlide4 from './hero-slide-4.webp?w=1000;1600;2000&as=picture'
+import heroSlide5 from './hero-slide-5.webp?w=1000;1600;2000&as=picture'
+import heroSlide6 from './hero-slide-6.webp?w=1000;1600;2000&as=picture'
+import heroSlideMobile1 from './hero-slide-mobile-1.webp?w=480;800&as=picture'
+import heroSlideMobile2 from './hero-slide-mobile-2.webp?w=480;800&as=picture'
+import heroSlideMobile3 from './hero-slide-mobile-3.webp?w=480;800&as=picture'
+import heroSlideMobile4 from './hero-slide-mobile-4.webp?w=480;800&as=picture'
+import heroSlideMobile5 from './hero-slide-mobile-5.webp?w=480;800&as=picture'
 import howItWorks from './how-it-works.jpg?w=700;974;1460&as=picture'
 import office8 from './office-8.jpg?w=560;1000&as=picture'
 import office9 from './office-9.jpg?w=560;1000&as=picture'
@@ -40,7 +56,28 @@ import stripPiano10 from './strip-piano-10.jpg?w=250;500&as=picture'
 export default function HomePage() {
   return (
     <>
-      <Hero rating={google} />
+      <Hero
+        title="Your #1 sheet music transcription service online"
+        highlight="#1"
+        lead="Get accurate and high-quality sheet music to learn a song, perform, register a composition, educate, or for any music tech application."
+        strong="Reliable digital notation services by professional transcribers and music editors."
+        strongMobile="Reliable, manual digital notation services by professional transcribers and music editors."
+        cta={{ label: 'Learn more', href: '#how-it-works' }}
+        images={[heroSlide1, heroSlide6, heroSlide2, heroSlide4, heroSlide3, heroSlide5]}
+        mobileImages={[
+          heroSlideMobile1,
+          heroSlideMobile2,
+          heroSlideMobile3,
+          heroSlideMobile4,
+          heroSlideMobile5,
+        ]}
+        rating={google}
+        logo={{
+          image: logo,
+          alt: 'My Sheet Music Transcriptions logo',
+          label: 'My Sheet Music Transcriptions – home',
+        }}
+      />
 
       <Steps
         id="how-it-works"
@@ -71,6 +108,7 @@ export default function HomePage() {
       />
 
       <RatingBanner
+        image={pianoBand}
         title="The highest-rated online sheet music transcribers"
         counter={counter}
         sources={homeRatings}
@@ -84,7 +122,7 @@ export default function HomePage() {
         cta={{ label: 'See all services', href: '/services-samples' }}
       />
 
-      <CardGrid title="What's included?" background="photo" items={included} />
+      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing"
@@ -132,12 +170,14 @@ export default function HomePage() {
       />
 
       <Testimonials
+        labels={reviewLabels}
         title="Customer Reviews"
         items={homeReviews}
         cta={{ label: 'Read all our reviews', href: '/customer-reviews' }}
       />
 
       <MediaText
+        labels={mediaLabels}
         title="Who are we?"
         align="center"
         imageSide="left"
@@ -197,7 +237,7 @@ export default function HomePage() {
         </Text>
       </MediaText>
 
-      <ContactSection />
+      <ContactSection form={quoteForm} />
     </>
   )
 }

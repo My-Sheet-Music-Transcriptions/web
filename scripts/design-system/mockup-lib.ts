@@ -11,7 +11,6 @@ import {
   unwrap,
   where,
 } from '../lib/ts-literal'
-import { rendersPageHeader } from './blocks-lib'
 import { encodeProps, LAYOUT, WRAPPER_OPEN } from './review-lib'
 
 /**
@@ -30,15 +29,6 @@ export interface MockupEntry {
   meta: {
     type: string
     title: string
-    template?: string
-    hero?: {
-      eyebrow?: string
-      title?: string
-      subtitle?: string
-      lead?: string
-      cta?: { label: string; href: string }
-      rating?: boolean
-    }
   }
   /** The text of index.tsx. */
   source: string
@@ -52,9 +42,11 @@ export interface MockupBlock {
 export interface MockupResult {
   sections: string
   blocks: MockupBlock[]
-  /** Pictures the page folder holds, to copy into mockups/<slug>/img/. */
+  /** Pictures the page uses, by file name, to copy into mockups/<slug>/img/. */
   images: string[]
-  /** The page's H1 (the hero title) or its SEO title. */
+  /** Where a picture comes from when not from the page folder (`src/assets/images/bands/x.jpg`), by file name. */
+  sources: Record<string, string>
+  /** The page's H1 (the title of its PageHeader or Hero) or its SEO title. */
   title: string
   path: string
   warnings: string[]
@@ -62,15 +54,35 @@ export interface MockupResult {
 
 class MockupError extends Error {}
 
-const IMAGE_IMPORT = /^\.\/([\w.-]+\.(?:png|jpe?g|webp|gif|svg))(?:\?.*)?$/i
+/** The h1 a page writes itself: the `title` of its first PageHeader or Hero block. */
+function pageTitle(blocks: MockupBlock[]): string | undefined {
+  const opening = blocks.find((b) => b.name === 'PageHeader' || b.name === 'Hero')
+  const title = opening?.props?.title
+  return typeof title === 'string' ? title : undefined
+}
+
+/** A picture import: from the page folder (`./x.jpg`) or a brand-wide file (`~/assets/images/bands/x.jpg`). */
+const IMAGE_IMPORT =
+  /^(\.\/|~\/assets\/images\/(?:[\w-]+\/)*)([\w.-]+\.(?:png|jpe?g|webp|gif|svg))(?:\?.*)?$/i
+
+/**
+ * The file name a picture import gets in mockups/<slug>/img/, and where to copy it from when it is not in the
+ * page folder: `./mascot.png` stays `mascot.png`; `~/assets/images/icons/piano.png` is `icons-piano.png`, so it
+ * never collides with a page's own `piano.png`.
+ */
+export function mockupPicture(specifier: string): { file: string; source?: string } | undefined {
+  const m = IMAGE_IMPORT.exec(specifier)
+  if (!m) return undefined
+  const [, dir, file] = m as unknown as [string, string, string]
+  if (dir === './') return { file }
+  const folder = dir.replace(/\/$/, '').split('/').pop() ?? 'assets'
+  return { file: `${folder}-${file}`, source: `src/${dir.slice(2)}${file}` }
+}
 const BLOCKS_MODULE = '~/components/blocks'
 const TYPOGRAPHY_MODULE = '~/components/typography'
 /** Typography components that make a paragraph of their own; TextLink (and plain <strong>, <em>) are inline. */
 const PARAGRAPHS = ['Text', 'Heading']
 const TYPOGRAPHY = [...PARAGRAPHS, 'TextLink', 'List', 'ListItem', 'Quote', 'Divider']
-
-/** The templates that render PageHeader from meta.ts (see blocks-lib). */
-export { rendersPageHeader }
 
 function fail(message: string, node?: ts.Node): never {
   throw new MockupError(`cannot mockup: ${message}${node ? where(node) : ''}`)
@@ -224,7 +236,7 @@ export function serializeBlocks(blocks: MockupBlock[]): string {
   })
   const out: string[] = [WRAPPER_OPEN]
   for (const [i, line] of lines.entries()) {
-    // The top of the page (TopBar, Header, the hero) sits together; every other block is set off by a blank line.
+    // The top of the page (TopBar, Header, the page's header) sits together; every other block is set off by a blank line.
     if (i > 0 && !['TopBar', 'Header'].includes(blocks[i - 1]?.name ?? '')) out.push('')
     out.push(line)
   }
@@ -246,10 +258,12 @@ function readPage(
   warnings: string[],
 ): {
   imports: Record<string, string>
+  sources: Record<string, string>
   data: Record<string, unknown>
   nodes: readonly ts.JsxChild[]
 } {
   const imports: Record<string, string> = {}
+  const sources: Record<string, string> = {}
   const data: Record<string, unknown> = {}
   const pageLocale = /^([a-z]{2})\//.exec(sf.fileName)?.[1]
   let fn: ts.FunctionLikeDeclaration | undefined
@@ -262,9 +276,10 @@ function readPage(
       const from = (s.moduleSpecifier as ts.StringLiteral).text
       const clause = s.importClause
       if (!clause || clause.isTypeOnly) continue
-      const picture = IMAGE_IMPORT.exec(from)
+      const picture = mockupPicture(from)
       if (picture && clause.name && !clause.namedBindings) {
-        imports[clause.name.text] = picture[1] as string
+        imports[clause.name.text] = picture.file
+        if (picture.source) sources[picture.file] = picture.source
         continue
       }
       if ((from === BLOCKS_MODULE || from === TYPOGRAPHY_MODULE) && !clause.name) continue
@@ -276,7 +291,16 @@ function readPage(
           warnings.push(`${from}: data of another locale than the page (${pageLocale})`)
         let values: Record<string, unknown>
         try {
-          values = readModuleLiterals(readData(locale, file), `content/${locale}/data/${file}.ts`)
+          values = readModuleLiterals(
+            readData(locale, file),
+            `content/${locale}/data/${file}.ts`,
+            (specifier) => {
+              const p = mockupPicture(specifier)
+              if (!p) return specifier
+              if (p.source) sources[p.file] = p.source
+              return `img/${p.file}`
+            },
+          )
         } catch (e) {
           if (e instanceof LiteralError) fail(e.message, s)
           return fail(`cannot read ${from}: ${(e as Error).message}`, s)
@@ -318,8 +342,8 @@ function readPage(
     if (!returned) fail('the page component may only "return (<>…</>)"', fn.body)
   } else returned = fn.body
   const jsx = unwrap(returned as ts.Expression)
-  if (ts.isJsxFragment(jsx)) return { imports, data, nodes: jsx.children }
-  if (isElement(jsx)) return { imports, data, nodes: [jsx] }
+  if (ts.isJsxFragment(jsx)) return { imports, sources, data, nodes: jsx.children }
+  if (isElement(jsx)) return { imports, sources, data, nodes: [jsx] }
   return fail('the page must return a fragment of blocks (<>…</>)', jsx)
 }
 
@@ -337,7 +361,11 @@ export function mockupFromEntry(
   const warnings: string[] = []
   const used = new Set<string>()
   const body: MockupBlock[] = []
-  const { imports, data, nodes } = readPage(parseTsx(entry.source, entry.file), readData, warnings)
+  const { imports, sources, data, nodes } = readPage(
+    parseTsx(entry.source, entry.file),
+    readData,
+    warnings,
+  )
   let prose: ts.JsxChild[] = []
   const flushProse = () => {
     if (!prose.length) return
@@ -374,8 +402,6 @@ export function mockupFromEntry(
     flushProse()
     if ((LAYOUT as readonly string[]).includes(name))
       fail(`<${name}> in the page: the layout comes with every page`, node)
-    if (name === 'PageHeader' && rendersPageHeader(entry.meta))
-      fail('<PageHeader> in the page: this template already renders the header from the meta', node)
     if (!(name in catalogue)) fail(`unknown block <${name}>`, node)
     const props: Record<string, unknown> = {}
     for (const attr of attributesOf(node)) {
@@ -405,29 +431,13 @@ export function mockupFromEntry(
     warnings.push('ContactSection is not the last block; the design system expects it last')
 
   const blocks: MockupBlock[] = [{ name: 'TopBar' }, { name: 'Header' }]
-  if (rendersPageHeader(entry.meta)) {
-    const hero = entry.meta.hero ?? {}
-    const props: Record<string, unknown> = { title: hero.title ?? entry.meta.title }
-    for (const k of ['subtitle', 'eyebrow', 'lead', 'cta'] as const)
-      if (hero[k] !== undefined) props[k] = hero[k]
-    // services show the rating card unless the meta turns it off; pages only when they ask
-    const rating = entry.meta.type === 'service' ? hero.rating !== false : hero.rating === true
-    if (rating) {
-      const locale = /^([a-z]{2})\//.exec(entry.file)?.[1] ?? 'en'
-      try {
-        props.rating = readModuleLiterals(readData(locale, 'ratings'), 'ratings.ts').google
-      } catch {
-        warnings.push(`no content/${locale}/data/ratings.ts: the header's rating card is left out`)
-      }
-    }
-    blocks.push({ name: 'PageHeader', props })
-  }
   blocks.push(...body, { name: 'Footer' })
   return {
     sections: serializeBlocks(blocks),
     blocks,
     images: [...used].sort(),
-    title: entry.meta.hero?.title ?? entry.meta.title,
+    sources,
+    title: pageTitle(body) ?? entry.meta.title,
     path: entry.path,
     warnings,
   }

@@ -1,3 +1,5 @@
+import { quoteForm } from '@content/en/data/forms'
+import { mediaLabels, reviewLabels } from '@content/en/data/labels'
 import { google } from '@content/en/data/ratings'
 import { educatorReviews } from '@content/en/data/reviews'
 import {
@@ -28,6 +30,7 @@ export default function MusicEducatorsPage() {
   return (
     <>
       <PageHeader
+        labels={mediaLabels}
         variant="split"
         title="Services for Music Educators"
         lead="You teach it, we write it. Transcription, arrangement, part separation, and adaptation. **For all levels and settings.**"
@@ -69,6 +72,7 @@ export default function MusicEducatorsPage() {
       </Section>
 
       <MediaText
+        labels={mediaLabels}
         id="high-school"
         eyebrow="High School"
         title="Arrangement for the String Orchestra at Parkview HS, Lilburn GA"
@@ -101,6 +105,7 @@ export default function MusicEducatorsPage() {
       </MediaText>
 
       <MediaText
+        labels={mediaLabels}
         id="music-education-schools"
         eyebrow="Apps & Tech Tools"
         title="We prep your sheet music for upload to the latest music ed tools"
@@ -128,6 +133,7 @@ export default function MusicEducatorsPage() {
       </MediaText>
 
       <MediaText
+        labels={mediaLabels}
         id="universities"
         eyebrow="Universities"
         title="Digitization for the Jazz Studies program at UCSC"
@@ -155,12 +161,14 @@ export default function MusicEducatorsPage() {
       </MediaText>
 
       <Testimonials
+        labels={reviewLabels}
         title="Top-rated by your music education colleagues"
         lead="Read first-hand reviews from teachers, educators, and band directors just like you."
         items={educatorReviews}
       />
 
       <ContactSection
+        form={quoteForm}
         title="Contact Us"
         subtitle="Request our services and unlock the potential of your students by leaving all notation hassle behind. Not sure what you’re looking for? Let us know and our experts will guide you step by step."
         returnTo="/music-educators"

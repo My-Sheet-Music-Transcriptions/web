@@ -1,5 +1,14 @@
+import { quoteForm } from '@content/en/data/forms'
 import { platforms } from '@content/en/data/ratings'
-import { ContactSection, CtaBand, MediaText, RatingBanner, Steps } from '~/components/blocks'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import {
+  ContactSection,
+  CtaBand,
+  MediaText,
+  PageHeader,
+  RatingBanner,
+  Steps,
+} from '~/components/blocks'
 import { Text } from '~/components/typography'
 import screens from './sibelius-musescore-screens.png?w=480;960&as=picture'
 
@@ -10,6 +19,13 @@ import screens from './sibelius-musescore-screens.png?w=480;960&as=picture'
 export default function ConvertSibeliusToMusescorePage() {
   return (
     <>
+      <PageHeader
+        eyebrow="Enjoy your music compositions:"
+        title="Convert from Sibelius to MuseScore"
+        lead="We convert your Sibelius files to **MuseScore format**, and deliver high-quality, ready-to-use files **adapted to any version**."
+        cta={{ label: 'Learn more', href: '#down' }}
+      />
+
       <MediaText
         id="down"
         title="Why convert your Sibelius files to MuseScore format?"
@@ -57,11 +73,12 @@ export default function ConvertSibeliusToMusescorePage() {
       />
 
       <RatingBanner
+        image={pianoBand}
         title="Welcome to the most popular worldwide music transcription service"
         sources={platforms}
       />
 
-      <ContactSection returnTo="/convert-from-sibelius-to-musescore" />
+      <ContactSection form={quoteForm} returnTo="/convert-from-sibelius-to-musescore" />
     </>
   )
 }

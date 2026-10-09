@@ -5,7 +5,9 @@ import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { tones } from '~/components/primitives/tones'
 import { type Video, VideoEmbed } from '~/components/primitives/VideoEmbed'
+import type { MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
+import { fill } from '~/lib/strings'
 import { useTitleId } from '~/lib/use-title-id'
 
 export interface MediaTextProps {
@@ -35,6 +37,10 @@ export interface MediaTextProps {
   align?: 'start' | 'center'
   /** Background: white (default), cream or peach. */
   tone?: 'white' | 'cream' | 'peach'
+  /** The words of the carousel arrows and the play button: `media` from content/<locale>/data/labels. */
+  labels?: MediaLabels
+  /** The still shown over each video until it is played (`~/assets/images/brand/video-poster.jpg`). */
+  videoPoster?: PictureSource
   /** Anchor id. */
   id?: string
   /** Prose: `<Text>` paragraphs from ~/components/typography. */
@@ -59,6 +65,8 @@ export function MediaText({
   cta,
   align = 'start',
   tone = 'white',
+  labels,
+  videoPoster,
   id,
   children,
 }: MediaTextProps) {
@@ -81,8 +89,8 @@ export function MediaText({
             )}
           >
             <Media
-              {...{ image, alt, images, imagesLayout, video, caption }}
-              label={title ? `Photos: ${title}` : 'Photos'}
+              {...{ image, alt, images, imagesLayout, video, caption, labels, videoPoster }}
+              label={title ?? images?.[0]?.alt ?? ''}
               sizes="(min-width: 1025px) 654px, 100vw"
               frameClassName={imageSide === 'left' ? 'lg:ml-[-124px]' : 'lg:mr-[-124px]'}
               imageClassName="aspect-[654/437]"
@@ -115,8 +123,8 @@ export function MediaText({
           style={{ width: imageWidth, maxWidth: '100%' }}
         >
           <Media
-            {...{ image, alt, images, imagesLayout, video, caption }}
-            label={title ? `Photos: ${title}` : 'Photos'}
+            {...{ image, alt, images, imagesLayout, video, caption, labels, videoPoster }}
+            label={title ?? images?.[0]?.alt ?? ''}
             sizes={`(min-width: 768px) ${imageWidth}px, 100vw`}
           />
         </div>
@@ -146,17 +154,30 @@ function Media({
   imagesLayout,
   video,
   caption,
+  labels,
+  videoPoster,
   label,
   sizes,
   frameClassName,
   imageClassName,
-}: Pick<MediaTextProps, 'image' | 'alt' | 'images' | 'imagesLayout' | 'video' | 'caption'> & {
+}: Pick<
+  MediaTextProps,
+  'image' | 'alt' | 'images' | 'imagesLayout' | 'video' | 'caption' | 'labels' | 'videoPoster'
+> & {
   label: string
   sizes: string
   frameClassName?: string
   imageClassName?: string
 }) {
-  if (video) return <VideoEmbed {...video} className="w-full" />
+  if (video)
+    return (
+      <VideoEmbed
+        {...video}
+        poster={videoPoster}
+        playLabel={labels && fill(labels.play, { title: video.title })}
+        className="w-full"
+      />
+    )
   if (images?.length && imagesLayout === 'pair')
     return (
       <div className="grid grid-cols-2 gap-4">
@@ -180,6 +201,7 @@ function Media({
       <Carousel
         slides={images}
         label={label}
+        labels={labels}
         sizes={sizes}
         frameClassName={frameClassName}
         imageClassName={imageClassName}

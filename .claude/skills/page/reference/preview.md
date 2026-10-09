@@ -8,7 +8,7 @@ worked example: read it before writing a mockup.
 ## Writing sections.html
 
 1. Pick the blocks, then read only those. `pnpm ds:blocks` prints the index: every block grouped by its
-   role in a page (opening, proof, offer, how, story, closing), one line of what it is, when to pick it and
+   category (headers, text & media, lists & grids, reviews & ratings, calls to action), one line of what it is, when to pick it and
    when not, and the pages that already use it. Walk the page top to bottom choosing one block per section
    from the index. Then `pnpm ds:blocks PageHeader MediaText Steps` (the ones you picked) prints each one's
    detail: every prop with its type, allowed values and doc comment, a ready `<div data-msmt=…>` line to
@@ -38,7 +38,10 @@ worked example: read it before writing a mockup.
    One `<div data-msmt="<Block>" data-props='{…}'></div>` per real block, in page order; `children` is the
    prose as one string (blank line = new paragraph, `**bold**`). `data-props` is JSON in single quotes: write
    an apostrophe as `&#39;`, never a raw `'`. TopBar and Header first, Footer last; ContactSection last of
-   the content blocks when present.
+   the content blocks when present. Blocks hold no words of their own, so their props carry them too:
+   `ContactSection` its `form` (the words of `quoteForm` in `content/<locale>/data/forms.ts`), a block with a
+   carousel or video its `labels` (`mediaLabels` in `labels.ts`), `Testimonials` its `labels` (`reviewLabels`).
+   `pnpm ds:blocks <Block>` prints a ready line with them.
 4. A proposed block is `<section data-proposed="<Name>" data-props='{…}'>` whose props are what the block
    would take, drawn inside as fluid plain markup (flex-wrap, max-width 1140px, 16px side padding, real
    `<label>`/`<input>`/`<button>`, 4.5:1 text) with the token values: text #444444, primary #1a7f97, CTA fill

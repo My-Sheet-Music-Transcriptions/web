@@ -19,7 +19,7 @@ pnpm test:e2e | test:visual   # Playwright (needs a build; serves dist itself)
 pnpm lhci                     # Lighthouse CI thresholds (needs a build; finds Chromium itself, CHROME_PATH overrides)
 pnpm release-check            # the full local gate (more than the PR CI runs: see nightly.yml)
 pnpm ds:export                # design-system export for the artifact -> dist/design-system (see below)
-pnpm ds:blocks [Block...|--all]    # no args: the index (blocks by role, when to use each, where used); names: props, allowed values, docs + a ready mockup line
+pnpm ds:blocks [Block...|--all]    # no args: the index (blocks by category, when to use each, where used); names: props, allowed values, docs + a ready mockup line
 pnpm ds:review <slug> ["<Title>"]  # checks mockups/<slug>/sections.html, renders it locally (as ds:shot), builds the review page and prints the Artifact publish parameters
 pnpm ds:shot <slug> [--built | --url <url>] [--width 390]   # renders the mockup (or the real page) in headless Chromium at 1440/768/390: pictures per section + problems
 pnpm ds:canvas <slug> [--canvas <canvas.json>] | --pull <Board.dc.html>   # design mode: the mockup as a Design canvas, and back
@@ -38,23 +38,35 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   faqs, artists, musicians, partners, reviews. The folder name is the URL slug (`pages/home/` is `/`, `faqs/x/` is
   `/faqs/x`). `meta.ts` is plain data: read statically by `scripts/lib/ts-literal.ts` (never run in Node) and
   validated by `src/content/schema.ts` (zod) at build and in unit tests.
-- `content/<locale>/data/*.ts` – structured data blocks read (nav, footer, pricing, ratings, reviews).
-  Numbers that appear in several places (review counts, prices) live here once.
+- `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
+  words blocks show around their content (`labels.ts`: carousel and video controls, review lines; `forms.ts`: the
+  request forms) and the locale's menus and footer (`nav.ts`, `footer.ts`, read by `src/app`). Numbers that appear in
+  several places (review counts, prices) live here once. Plain literals, read statically like `meta.ts`; they may
+  import pictures from `~/assets/images` (icons, logos).
+- `src/assets/images` – brand-wide pictures (lockup, illustrated icons, photo bands, flags, software logos), imported
+  by pages, data files and `src/app`; never by a component.
 - `src/content/{index,schema,types}.ts` – the content loader (globs `content/`), the meta schemas and data types.
 - `src/components/primitives` – Button, Card, Picture, Stars, Icon, SectionHeading, WaveDivider...
 - `src/components/blocks` – the page-building catalogue, named by what each block does (`PageHeader`, `CardGrid`,
-  `FaqList`…) and filed by role (opening, proof, offer, how, story, closing) in `catalogue.ts`, the README and
-  Storybook (`Blocks/<Role>/<Name>`). `index.tsx` exports every block by name (pages import them from
+  `FaqList`…) and filed by category, what each shows (headers, text & media, lists & grids, reviews & ratings, calls to
+  action), in `catalogue.ts`, the README and Storybook (`Blocks/<Category>/<Name>`). `index.tsx` exports every block by name (pages import them from
   `~/components/blocks`) and the `blocks` map (the preview bundle). Each block has a story next to it, built from
   its catalogue example. Shared pieces (photo band, carousel, video, button, tones) are primitives.
 - `src/components/typography` – `Text`, `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider`: the prose
   inside pages and blocks, styled with Tailwind once. Plain `<strong>` / `<em>` are the exceptions, styled in the
   base layer of `theme.css`. Pages never write raw `<p>`, `<h2>`, `<ul>`, `<a>` (`tests/unit/content.test.ts`).
-- `src/components/layout` – TopBar, Header (+MegaMenu, MobileNav), Footer, ConsentBanner, SiteShell.
-- `src/components/templates` – wraps an entry's page component (home, page, landing...). Selected by `meta.ts`.
+- `src/components/layout` – TopBar, Header (+MegaMenu, MobileNav), Footer, ConsentBanner, LangSwitcher, Logo: props
+  only, with `children`/slots where composition helps (the top bar's and header's language switcher).
+- `src/app` – the app's side: `SiteShell` (reads the locale's site config, `content/<locale>/data/{nav,footer}.ts` and
+  the brand files and passes them to the layout; the design-system bundle mounts the same pieces), `EntryPage` (wraps
+  an entry's page component in `<main>`), `NotFound`, `ErrorPage`. There are no templates: a page is blocks only and
+  opens with its own `PageHeader` (`Hero` on the homepage); `meta.ts` holds SEO data only.
+- `src/stories` – Storybook's own data and pictures (`data.ts`, `images/`, `samples.ts` resolving `'sample:photo'`…):
+  they mimic the app's content but stay separate. Stories, the catalogue examples and the design-system previews
+  use them; no story imports `content/` or `src/assets`.
 - `src/components/blocks/catalogue.ts` – one entry per block (description, defaults, JSX usage, data source);
   drives the README table, the artifact docs and the `page` skill's previews. Missing entry = type error.
-- `src/i18n/sites/<locale>.ts` – domain, strings, switcher, contact facts per locale. `src/site.ts` exposes the build's
+- `src/i18n/sites/<locale>.ts` – domain, the chrome's strings (menus, footer headings, consent, 404), switcher, contact facts per locale. `src/site.ts` exposes the build's
   locale routing and `useSite()` / `useLocale()` (the page's locale); `src/i18n/routing.ts` is how locales map to URLs.
 - `src/design-system` – `theme-parse.ts` (reads `theme.css` into tokens), `tokens.tsx` (Storybook Foundations),
   `export/` (browser bundle entry, router shim, cover), `review/` (shell + page template of the HTML preview
@@ -95,14 +107,17 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 ## Adding content (short version; the skills have the full checklist)
 
 1. Pick the collection and slug; check `content/<locale>/...` for collisions.
-2. Write `meta.ts` (title, description, translationKey, template/type-specific fields) and compose `index.tsx`
-   from blocks, e.g. `<PageHeader … />`, `<Section title="..."><Text>…</Text></Section>`,
-   `<Testimonials title="…" items={homeReviews} limit={4} />` (`content/en/pages/gift-card/` is the worked example,
-   `content/en/services/piano/` the service one). Blocks never import content: lists (ratings, prices, reviews,
-   shared FAQ groups) are imported from `content/<locale>/data/*.ts` in the page and passed as props.
+2. Write `meta.ts` (title, description, translationKey, the collection's fields) and compose `index.tsx`
+   from blocks, opening with `<PageHeader … />` (its h1; the service icon as `image` + `rating` on service pages),
+   then e.g. `<Section title="..."><Text>…</Text></Section>`, `<Testimonials title="…" items={homeReviews}
+   labels={reviewLabels} />`, `<ContactSection form={quoteForm} returnTo="/x" />` (`content/en/pages/gift-card/`
+   is the worked example, `content/en/services/piano/` the service one). The page passes every word and picture:
+   lists (ratings, prices, reviews, shared FAQ groups) and shared words (`labels.ts`, `forms.ts`) are imported from
+   `content/<locale>/data/*.ts` and passed as props.
 3. Put the page's images in its folder (`content/<locale>/<collection>/<slug>/`), import them in `index.tsx`
    (`import mascot from './mascot.png?w=240;480&as=picture'`) and pass them to blocks as props; never raw `<img>`.
-   Only brand-wide assets (logo, icons, flags, software logos) live in `src/assets/images/`.
+   Only brand-wide assets (logo, icons, photo bands, flags, software logos) live in `src/assets/images/`; a page
+   imports those the same way (`import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'`).
 4. Content goes live through the `page` skill (checks, draft PR + Netlify preview, then auto-merge on acceptance);
    engineering changes go through `pnpm release-check` and a PR with a Netlify preview and a core approval.
 
@@ -181,6 +196,12 @@ components or layout.
 
 ## Conventions
 
+- **Components are agnostic of the content.** A component (`src/components/**`) holds no words and no pictures:
+  no copy (text, alt, aria labels, placeholders, defaults), no picture imports or lookups, no `content/` data, no
+  site strings. Every word a visitor reads and every picture arrives through props or `children`: pages pass them
+  directly (from their folder and `content/<locale>/data`), and `src/app` passes the chrome's from the site config.
+  The design system's own marks are not content: the `Icon` glyph set, colours, textures (`bg-staff-lines`), the
+  numbers and punctuation it formats. `tests/unit/components.test.ts` lists every breach with file:line.
 - **Co-location, no external assets.** Everything a page or component needs sits next to it: a page's images
   in its folder, a block's story and docs beside the block. Nothing on the site or in the artifacts references a
   third-party URL at runtime: no hotlinked images, no CDN scripts, no Google Fonts (Montserrat is self-hosted).

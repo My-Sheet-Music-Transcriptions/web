@@ -1,4 +1,5 @@
-import { ContactSection, MediaText, Steps } from '~/components/blocks'
+import { giftCardForm } from '@content/en/data/forms'
+import { ContactSection, MediaText, PageHeader, Steps } from '~/components/blocks'
 import { Text } from '~/components/typography'
 import card from './gift-card.png?w=480;960&as=picture'
 import mascot from './mascot.png?w=240;480&as=picture'
@@ -6,6 +7,11 @@ import mascot from './mascot.png?w=240;480&as=picture'
 export default function GiftCardPage() {
   return (
     <>
+      <PageHeader
+        title="Gift a transcription!"
+        subtitle="Custom music transcription gift cards for every member of your family and each one of your friends."
+      />
+
       <MediaText
         image={mascot}
         alt="The My Sheet Music Transcriptions mascot holding a gift"
@@ -45,6 +51,7 @@ export default function GiftCardPage() {
 
       <Steps
         title="How it works"
+        stepLabel="Step {n}"
         id="how-it-works"
         items={[
           { icon: 'dollar', text: 'Choose how much you want to gift.' },
@@ -68,11 +75,10 @@ export default function GiftCardPage() {
       />
 
       <ContactSection
+        form={giftCardForm}
         variant="gift-card"
         id="gift-card"
         returnTo="/gift-card"
-        title="Request your gift card"
-        subtitle="Tell us the amount and who it is for. We create the card and send it to you."
       />
     </>
   )

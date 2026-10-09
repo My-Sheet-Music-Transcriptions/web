@@ -8,28 +8,34 @@ export const google: RatingSource = {
   id: 'google',
   label: '5.0 on Google Reviews',
   score: '5.0',
+  starsLabel: '5.0 out of 5 stars',
   count: '854',
   countLabel: '854 reviews',
   href: 'https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@41.54571,1.98091,17z/data=!4m7!3m6!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.54571!4d1.98091!9m1!1b1',
   linkLabel: 'See on Google',
+  moreLabel: 'See more',
 }
 
 export const trustpilot: RatingSource = {
   id: 'trustpilot',
   label: '4.9 on Trustpilot',
   score: '4.9',
+  starsLabel: '4.9 out of 5 stars',
   href: 'https://www.trustpilot.com/review/mysheetmusictranscriptions.com',
   linkLabel: 'See on Trustpilot',
+  moreLabel: 'See more',
 }
 
 export const facebook: RatingSource = {
   id: 'facebook',
   label: '5.0 on Facebook Reviews',
   score: '5.0',
+  starsLabel: '5.0 out of 5 stars',
   count: '300',
   countLabel: '300 reviews',
   href: 'https://www.facebook.com/mysheetmusictranscriptions/reviews/',
   linkLabel: 'See on Facebook',
+  moreLabel: 'See more',
 }
 
 export const customers: RatingSource = {

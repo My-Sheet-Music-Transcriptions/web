@@ -1,8 +1,8 @@
 import { createRootRoute, HeadContent, Outlet, redirect, Scripts } from '@tanstack/react-router'
 import { type ReactNode, useEffect } from 'react'
-import { DefaultCatchBoundary } from '~/components/layout/DefaultCatchBoundary'
-import { NotFound } from '~/components/layout/NotFound'
-import { SiteShell } from '~/components/layout/SiteShell'
+import { ErrorPage } from '~/app/ErrorPage'
+import { NotFound } from '~/app/NotFound'
+import { SiteShell } from '~/app/SiteShell'
 import { DEFAULT_LOCALE, isLocalized, localeFromPathname, localizePath } from '~/i18n/routing'
 import { rootHead } from '~/seo/head'
 import { LOCALE_ROUTING, localeOf, SITE_LOCALE, useSite } from '~/site'
@@ -17,7 +17,7 @@ export const Route = createRootRoute({
   },
   loader: ({ location }) => ({ locale: localeOf(location.publicHref) }),
   head: ({ loaderData }) => rootHead(appCss, loaderData?.locale ?? SITE_LOCALE),
-  errorComponent: DefaultCatchBoundary,
+  errorComponent: ErrorPage,
   notFoundComponent: NotFound,
   shellComponent: RootDocument,
   component: () => (

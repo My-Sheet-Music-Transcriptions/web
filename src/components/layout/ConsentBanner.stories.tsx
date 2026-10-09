@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { consent } from '~/stories/data'
 import { ConsentBanner } from './ConsentBanner'
 
 const meta = {
   title: 'Layout/ConsentBanner',
   component: ConsentBanner,
   parameters: { layout: 'fullscreen' },
+  args: consent,
   decorators: [
     (Story) => {
       try {

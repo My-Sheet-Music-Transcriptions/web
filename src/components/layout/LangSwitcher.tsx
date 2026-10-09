@@ -1,62 +1,64 @@
 import { Fragment } from 'react'
-import { sites } from '~/i18n/sites'
-import { localeSwitchHref } from '~/i18n/switch'
 import { cn } from '~/lib/cn'
-import { useSite } from '~/site'
+
+/** One language of the switcher: its short label, where it goes and its full name for screen readers. */
+export interface LanguageLink {
+  /** "EN", "ES"… */
+  label: string
+  href: string
+  /** BCP-47 language of the target ("es"). */
+  lang: string
+  /** Accessible name ("ES – Mis Transcripciones Musicales"). */
+  title: string
+  /** The language of the page being shown. */
+  current?: boolean
+}
 
 export interface LangSwitcherProps {
-  /** translationKey of the current page: links go to the page's translation when one exists. */
-  translationKey?: string
-  /** locale -> locale-free path of this page's translations (from the hreflang map). */
-  alternates?: Partial<Record<string, string>>
+  /** Accessible name of the navigation ("Language"). */
+  label: string
+  items: LanguageLink[]
   className?: string
   tone?: 'dark' | 'light'
 }
 
 /**
- * "EN | ES | FR | DE | JP" switcher; the current locale is highlighted in orange. Links go to the other
- * locale's TLD in production and to /<locale>/... in previews (localeSwitchHref). Plain <a>: changing
+ * "EN | ES | FR | DE | JP" switcher; the current language is highlighted in orange. Plain <a>: changing
  * language is a full document change (<html lang>, strings), not a client-side navigation.
  */
-export function LangSwitcher({ alternates = {}, className, tone = 'dark' }: LangSwitcherProps) {
-  const site = useSite()
+export function LangSwitcher({ label, items, className, tone = 'dark' }: LangSwitcherProps) {
   return (
     <nav
-      aria-label="Language"
+      aria-label={label}
       className={cn(
         'flex items-center text-small leading-[21px]',
         tone === 'light' ? 'text-white' : 'text-ink',
         className,
       )}
     >
-      {site.languageSwitcher.map(({ locale, label }, i) => {
-        const target = sites[locale]
-        const href = localeSwitchHref(locale, alternates[locale] ?? '/')
-        const current = locale === site.locale
-        return (
-          <Fragment key={locale}>
-            {i > 0 && (
-              <span aria-hidden="true" className="px-1">
-                |
-              </span>
+      {items.map((item, i) => (
+        <Fragment key={item.lang}>
+          {i > 0 && (
+            <span aria-hidden="true" className="px-1">
+              |
+            </span>
+          )}
+          <a
+            href={item.href}
+            hrefLang={item.lang}
+            lang={item.lang}
+            aria-current={item.current ? 'true' : undefined}
+            data-live-colour={item.current ? '' : undefined}
+            aria-label={item.title}
+            className={cn(
+              'rounded hover:underline',
+              item.current ? 'text-accent' : tone === 'light' ? '' : 'text-[#575757]',
             )}
-            <a
-              href={href}
-              hrefLang={target.lang}
-              lang={target.lang}
-              aria-current={current ? 'true' : undefined}
-              data-live-colour={current ? '' : undefined}
-              aria-label={`${label} – ${target.siteName}`}
-              className={cn(
-                'rounded hover:underline',
-                current ? 'text-accent' : tone === 'light' ? '' : 'text-[#575757]',
-              )}
-            >
-              {label}
-            </a>
-          </Fragment>
-        )
-      })}
+          >
+            {item.label}
+          </a>
+        </Fragment>
+      ))}
     </nav>
   )
 }

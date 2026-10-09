@@ -1,11 +1,10 @@
-import lines from '~/assets/images/bands/reviews-lines.png?w=1440;2880&as=picture'
 import type { Cta } from '~/components/primitives/CtaLink'
 import { CtaLink } from '~/components/primitives/CtaLink'
-import { Picture } from '~/components/primitives/Picture'
 import { SectionHeading } from '~/components/primitives/SectionHeading'
 import { Stars } from '~/components/primitives/Stars'
-import type { Review } from '~/content/types'
+import type { Review, ReviewLabels } from '~/content/types'
 import { inlineMarkdown } from '~/lib/light-markdown'
+import { fill } from '~/lib/strings'
 import { useTitleId } from '~/lib/use-title-id'
 import { useLocale } from '~/site'
 
@@ -19,28 +18,22 @@ export interface TestimonialsProps {
   limit?: number
   /** Button under the cards ("Read all our reviews"). */
   cta?: Cta
+  /** The words around each review (stars, "{role} from {country}"): `reviews` from content/<locale>/data/labels. */
+  labels: ReviewLabels
   /** Anchor id. */
   id?: string
 }
 
 /** Customer quotes in two columns, with stars, over the peach staff lines. */
-export function Testimonials({ title, lead, items, limit, cta, id }: TestimonialsProps) {
+export function Testimonials({ title, lead, items, limit, cta, labels, id }: TestimonialsProps) {
   const titleId = useTitleId(id)
   const shown = limit ? items.slice(0, limit) : items
   return (
     <section
       id={id}
-      className="relative isolate overflow-hidden pt-[30px] pb-[50px] md:pt-[60px]"
+      className="relative isolate overflow-hidden bg-staff-lines bg-cover bg-left-top pt-[30px] pb-[50px] md:pt-[60px]"
       aria-labelledby={titleId}
     >
-      {/* The live site's peach staff lines behind the section (background-size: cover from the top left). */}
-      <Picture
-        image={lines}
-        alt=""
-        sizes="100vw"
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-left-top"
-        pictureClassName="contents"
-      />
       <div className="mx-auto max-w-[1140px] px-5 md:px-[10px]">
         <SectionHeading id={titleId}>{title}</SectionHeading>
         {lead ? (
@@ -51,7 +44,7 @@ export function Testimonials({ title, lead, items, limit, cta, id }: Testimonial
         <ul className="mt-[23px] grid items-start gap-[33px] md:grid-cols-2 md:gap-x-9 md:gap-y-[33px]">
           {shown.map((r) => (
             <li key={r.name + r.quote.slice(0, 24)}>
-              <ReviewCard review={r} />
+              <ReviewCard review={r} labels={labels} />
             </li>
           ))}
         </ul>
@@ -75,7 +68,7 @@ function monthLabel(date: string, locale: string) {
 }
 
 /** One review: name (linked to the original), stars, who and when, and the quote. */
-export function ReviewCard({ review }: { review: Review }) {
+export function ReviewCard({ review, labels }: { review: Review; labels: ReviewLabels }) {
   const locale = useLocale()
   const name = review.sourceUrl ? (
     <a href={review.sourceUrl} rel="noopener" className="hover:text-accent-deep hover:underline">
@@ -84,13 +77,22 @@ export function ReviewCard({ review }: { review: Review }) {
   ) : (
     review.name
   )
-  const who = [review.role, review.country].filter(Boolean).join(' from ')
+  const who =
+    review.role && review.country
+      ? fill(labels.roleFrom, { role: review.role, country: review.country })
+      : (review.role ?? review.country ?? '')
   return (
     <article className="rounded-card bg-white pb-10 shadow-[0_0_4px_rgb(0_0_0/0.17)]">
       <div className="p-px md:mx-[14px]">
         <header className="border-b border-[#e1e8ed] px-[15px] pt-[15px] pb-6 text-[#202020]">
           <p className="text-[20px] leading-[38px] font-semibold">{name}</p>
-          <Stars rating={review.rating} color="primary" size={22} className="h-[30px] gap-[5px]" />
+          <Stars
+            rating={review.rating}
+            label={fill(labels.stars, { rating: review.rating })}
+            color="primary"
+            size={22}
+            className="h-[30px] gap-[5px]"
+          />
           {who || review.date ? (
             <p className="text-body leading-8 md:text-[18px] md:leading-[44px]">
               {who}

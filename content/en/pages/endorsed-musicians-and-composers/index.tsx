@@ -1,4 +1,5 @@
-import { ContactSection, LogoGrid, Section } from '~/components/blocks'
+import { quoteForm } from '@content/en/data/forms'
+import { ContactSection, LogoGrid, PageHeader, Section } from '~/components/blocks'
 import { Text } from '~/components/typography'
 import caitlinDeVille from './caitlin-de-ville.png?w=180;360&as=picture'
 import cameronCody from './cameron-cody.png?w=180;360&as=picture'
@@ -25,6 +26,11 @@ import taylorDavis from './taylor-davis.webp?w=180;360&as=picture'
 export default function EndorsedMusiciansPage() {
   return (
     <>
+      <PageHeader
+        title="My Sheet Music Transcriptions Artists"
+        subtitle="Composers, arrangers, songwriters, and Youtube cover artists"
+      />
+
       <Section width="narrow">
         <Text className="text-center text-[18px]">
           Meet some of the most celebrated and extraordinarily gifted artists with whom we have
@@ -73,7 +79,7 @@ export default function EndorsedMusiciansPage() {
         ]}
       />
 
-      <ContactSection returnTo="/endorsed-musicians-and-composers" />
+      <ContactSection form={quoteForm} returnTo="/endorsed-musicians-and-composers" />
     </>
   )
 }

@@ -32,15 +32,14 @@ const preview: Preview = {
       },
     },
     options: {
-      // Blocks are filed by role, in page order (src/components/blocks/catalogue.ts ROLE_LABELS).
+      // Blocks are filed by category, in page order (src/components/blocks/catalogue.ts CATEGORIES).
       storySort: {
         order: [
           'Foundations',
           'Typography',
           'Primitives',
           'Blocks',
-          ['Opening', 'Proof', 'Offer', 'How', 'Story', 'Closing'],
-          'Templates',
+          ['Headers', 'Text & media', 'Lists & grids', 'Reviews & ratings', 'Calls to action'],
           'Layout',
         ],
       },

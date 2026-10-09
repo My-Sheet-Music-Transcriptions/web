@@ -1,11 +1,17 @@
 import { generalFaq } from '@content/en/data/faqs'
-import { counter, platforms } from '@content/en/data/ratings'
+import { quoteForm } from '@content/en/data/forms'
+import { mediaLabels } from '@content/en/data/labels'
+import { counter, google, platforms } from '@content/en/data/ratings'
 import { included, violinPricing } from '@content/en/data/services'
+import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import {
   CardGrid,
   ContactSection,
   CtaBand,
   FaqList,
+  PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
@@ -19,7 +25,16 @@ import violin3HymnMedley from './violin-3-hymn-medley.png?w=300;600&as=picture'
 export default function ViolinTranscriptionServicePage() {
   return (
     <>
+      <PageHeader
+        title="Violin Transcription Service"
+        subtitle="Get your violin songs transcribed accurately into sheet music by professionals"
+        image={violin}
+        rating={google}
+      />
+
       <Steps
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         title="How does it work?"
         layout="columns"
         items={[
@@ -45,12 +60,15 @@ export default function ViolinTranscriptionServicePage() {
       />
 
       <RatingBanner
+        image={pianoBand}
         title="#1 Musician’s choice violin transcription service online"
         counter={counter}
         sources={platforms}
       />
 
       <Samples
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         items={[
           {
             title: 'Violin solo - fiddle',
@@ -80,7 +98,7 @@ export default function ViolinTranscriptionServicePage() {
         cta={{ label: 'See our Glossary', href: '/glossary-of-musical-terms' }}
       />
 
-      <CardGrid title="What's included?" background="photo" items={included} />
+      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing for violin"
@@ -166,7 +184,7 @@ export default function ViolinTranscriptionServicePage() {
         cta={{ label: 'Read all our FAQs', href: '/frequent-asked-questions' }}
       />
 
-      <ContactSection returnTo="/violin-transcription-service" />
+      <ContactSection form={quoteForm} returnTo="/violin-transcription-service" />
     </>
   )
 }

@@ -15,6 +15,56 @@ export interface FooterColumnLink {
   icon?: string
 }
 
+/**
+ * The words of the site chrome (top bar, header, menus, footer, consent banner, error and 404 pages), per
+ * locale. Only the app (src/app) reads them and passes them to the layout components as props; pages pass
+ * the words of their blocks themselves. `{name}` placeholders are filled with `fill()` (src/lib/strings).
+ */
+export interface Strings {
+  nav: {
+    login: string
+    signup: string
+    requestCta: string
+    skipToContent: string
+    menu: string
+    closeMenu: string
+    /** Accessible name of the main navigation. */
+    main: string
+    /** Accessible name of the language switcher. */
+    language: string
+    /** The link at the top of an expanded menu group on phones. */
+    allServices: string
+  }
+  footer: {
+    sitemap: string
+    languages: string
+    viewSiteIn: string
+    services: string
+    contactUs: string
+    stayConnected: string
+    aboutUs: string
+    paymentSecurity: string
+    compatibleWith: string
+    providedBy: string
+  }
+  brand: {
+    /** Accessible name of the logo link: `{brand}`. */
+    home: string
+    /** Alt text of the lockup: `{brand}`. */
+    logoAlt: string
+  }
+  errorPage: { title: string; body: string; retry: string; home: string; back: string }
+  notFound: { title: string; body: string; backHome: string }
+  cookies: {
+    title: string
+    body: string
+    accept: string
+    deny: string
+    cookiesPolicy: string
+    privacyPolicy: string
+  }
+}
+
 export interface SiteConfig {
   locale: Locale
   /** BCP-47 language used in <html lang> and hreflang. */
@@ -34,12 +84,16 @@ export interface SiteConfig {
   /** Paths that must not be prerendered (served by a function). */
   ssrOnlyPaths: string[]
   hub: { login: string; signup: string }
-  /** Order and labels of the cross-domain language switcher. */
-  languageSwitcher: { locale: Locale; label: string }[]
-  strings: Record<string, string>
+  /** Order, labels and names of the cross-domain language switcher (the footer lists them by name). */
+  languageSwitcher: { locale: Locale; label: string; name: string }[]
+  /** Every word the components show that is not content: typed, so a locale cannot miss one. */
+  strings: Strings
   /** External profiles used by JSON-LD sameAs and the footer. */
   social: { label: string; href: string; icon: string }[]
-  contact: { email: string; phones: { label: string; number: string; icon?: string }[] }
+  contact: {
+    email: string
+    phones: { label: string; number: string; icon?: string }[]
+  }
   /** Whether this locale is the x-default for hreflang. */
   isDefault: boolean
   /**

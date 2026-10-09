@@ -1,23 +1,38 @@
-import { nav } from '@content/en/data/nav'
-import { useEffect, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
 import { SmartLink } from '~/components/primitives/SmartLink'
+import type { BrandLogo, Link } from '~/content/types'
+import type { NavItem } from '~/i18n/types'
 import { cn } from '~/lib/cn'
-import { useSite } from '~/site'
 import { Arrowed } from './Arrowed'
-import { LangSwitcher } from './LangSwitcher'
 import { Logo } from './Logo'
 import { MegaMenu } from './MegaMenu'
-import { MobileNav } from './MobileNav'
+import { type MenuLabels, MobileNav } from './MobileNav'
+
+export interface HeaderProps {
+  /** The brand lockup, linked home. */
+  logo: BrandLogo
+  /** The main navigation (one level of groups opens the mega-menu). */
+  nav: NavItem[]
+  /** The orange button ("Request your sheet music"). */
+  cta: Link
+  /** The menus' words for screen readers and the phone menu. */
+  labels: MenuLabels
+  /** The hub's login and sign-up links, in the phone menu. */
+  account: { login: Link; signup: Link }
+  /** What sits beside the menu button on phones: the language switcher. */
+  languages?: ReactNode
+  /** On the homepage the desktop logo waits for the first scroll (the hero carries the lockup). */
+  home?: boolean
+}
 
 /**
  * Sticky white header: logo, main navigation with one mega-menu, orange CTA. On the homepage the desktop
  * logo fades in only once the page scrolls (the hero carries the lockup), as on the live site; its slot
  * stays so the navigation does not move.
  */
-export function Header({ home = false }: { home?: boolean }) {
-  const site = useSite()
+export function Header({ logo, nav, cta, labels, account, languages, home = false }: HeaderProps) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
@@ -36,6 +51,7 @@ export function Header({ home = false }: { home?: boolean }) {
     >
       <div className="mx-auto flex h-[57px] max-w-[1440px] items-center justify-between gap-4 px-4 lg:h-[71px] lg:px-5">
         <Logo
+          logo={logo}
           width={183}
           priority
           className={cn(
@@ -44,7 +60,7 @@ export function Header({ home = false }: { home?: boolean }) {
           )}
         />
 
-        <nav aria-label="Main" className="hidden lg:block">
+        <nav aria-label={labels.main} className="hidden lg:block">
           <ul className="flex items-center gap-[5px]">
             {nav.map((item) =>
               item.groups ? (
@@ -69,25 +85,32 @@ export function Header({ home = false }: { home?: boolean }) {
 
         <div className="hidden lg:block">
           <Button asChild>
-            <SmartLink href={site.routes.contactAnchor}>{site.strings.requestCta}</SmartLink>
+            <SmartLink href={cta.href}>{cta.label}</SmartLink>
           </Button>
         </div>
 
         <div className="flex items-center gap-3 lg:hidden">
-          <LangSwitcher className="text-[13px]" />
+          {languages}
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded text-ink"
             aria-expanded={open}
             aria-controls="mobile-menu"
-            aria-label={site.strings.menu}
+            aria-label={labels.menu}
             onClick={() => setOpen(true)}
           >
             <Icon name="fa-bars" size={24} />
           </button>
         </div>
       </div>
-      <MobileNav open={open} onClose={() => setOpen(false)} />
+      <MobileNav
+        open={open}
+        onClose={() => setOpen(false)}
+        nav={nav}
+        cta={cta}
+        labels={labels}
+        account={account}
+      />
     </header>
   )
 }

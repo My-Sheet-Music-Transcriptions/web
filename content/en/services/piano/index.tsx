@@ -1,11 +1,17 @@
 import { generalFaq } from '@content/en/data/faqs'
-import { counter, platforms } from '@content/en/data/ratings'
+import { quoteForm } from '@content/en/data/forms'
+import { mediaLabels } from '@content/en/data/labels'
+import { counter, google, platforms } from '@content/en/data/ratings'
 import { included, pianoPricing } from '@content/en/data/services'
+import studioBand from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import {
   CardGrid,
   ContactSection,
   CtaBand,
   FaqList,
+  PageHeader,
   PricingCards,
   RatingBanner,
   Samples,
@@ -21,7 +27,16 @@ import piano5ThemeOfLoveFinalFantasy4 from './piano-5-theme-of-love-final-fantas
 export default function PianoPage() {
   return (
     <>
+      <PageHeader
+        title="Piano Transcriptions"
+        subtitle="Get your piano songs transcribed accurately into sheet music by professionals"
+        image={piano}
+        rating={google}
+      />
+
       <Steps
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         title="How does it work?"
         layout="columns"
         items={[
@@ -47,12 +62,15 @@ export default function PianoPage() {
       />
 
       <RatingBanner
+        image={pianoBand}
         title="#1 Musician’s choice piano transcription service online"
         counter={counter}
         sources={platforms}
       />
 
       <Samples
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         items={[
           {
             title: 'Piano solo arrangement',
@@ -102,7 +120,7 @@ export default function PianoPage() {
         cta={{ label: 'See our Glossary', href: '/glossary-of-musical-terms' }}
       />
 
-      <CardGrid title="What's included?" background="photo" items={included} />
+      <CardGrid title="What's included?" background="photo" image={studioBand} items={included} />
 
       <PricingCards
         title="Flexible pricing for piano"
@@ -223,7 +241,7 @@ export default function PianoPage() {
         cta={{ label: 'Read all our FAQs', href: '/frequent-asked-questions' }}
       />
 
-      <ContactSection returnTo="/piano" />
+      <ContactSection form={quoteForm} returnTo="/piano" />
     </>
   )
 }

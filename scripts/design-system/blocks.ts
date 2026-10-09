@@ -1,10 +1,10 @@
-import { catalogue } from '../../src/components/blocks/catalogue'
+import { CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
 import { blockIndex, blockProps, blockUsage, type PropDoc, usageLine } from './blocks-lib'
 import { encodeProps, LAYOUT } from './review-lib'
 
 /**
  * What whoever composes a page needs to know about the blocks, without opening their code, in two tiers:
- *   pnpm ds:blocks                   the index: every block by role (where it sits in a page), one line of
+ *   pnpm ds:blocks                   the index: every block by category (what it shows), one line of
  *                                    purpose, when to pick it and when not, and the pages that use it
  *   pnpm ds:blocks MediaText Steps   the detail of the blocks picked: every prop with its type, allowed
  *                                    values and doc comment, a ready `data-msmt` line built from the
@@ -51,7 +51,7 @@ for (const name of names.filter((n) => n in catalogue)) {
   const doc = catalogue[name as keyof typeof catalogue]
   const block = blockProps(name)
   const out = [
-    `## ${name} (${doc.role})`,
+    `## ${name} (${CATEGORIES[doc.category].label})`,
     doc.description,
     `use when: ${doc.useWhen}`,
     ...('notFor' in doc ? [`not for: ${doc.notFor}`] : []),

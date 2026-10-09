@@ -1,4 +1,4 @@
-import { LogoGrid } from '~/components/blocks'
+import { LogoGrid, PageHeader } from '~/components/blocks'
 import avid from './avid-sibelius.png?w=240;480&as=picture'
 import cantamus from './cantamus.png?w=240;480&as=picture'
 import easysong from './easysong.png?w=240;480&as=picture'
@@ -18,6 +18,11 @@ import soundslice from './soundslice.png?w=240;480&as=picture'
 export default function PartnersPage() {
   return (
     <>
+      <PageHeader
+        title="Our Partners"
+        lead="At My Sheet Music Transcriptions **we work with the best partners in the music industry** to provide additional services to our customers. See below our current providers and partnerships:"
+      />
+
       <LogoGrid
         columns={3}
         showNames

@@ -29,10 +29,10 @@ export async function processContact(fd: FormData): Promise<ContactResult> {
     if (file.size > MAX_UPLOAD_BYTES)
       return {
         ok: false,
-        errors: { file: 'The file is larger than 25 MB. Please send it by email instead.' },
+        errors: { file: 'fileSize' },
       }
     if (!ALLOWED_UPLOAD_TYPES.some((t) => file.type.startsWith(t)))
-      return { ok: false, errors: { file: 'Please attach an audio, video, PDF or image file.' } }
+      return { ok: false, errors: { file: 'fileType' } }
     attachment = { name: file.name, type: file.type, bytes: await file.arrayBuffer() }
   }
   await deliverContact(input, attachment)

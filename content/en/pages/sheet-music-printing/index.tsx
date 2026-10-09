@@ -1,11 +1,16 @@
 import { generalFaq } from '@content/en/data/faqs'
+import { quoteForm } from '@content/en/data/forms'
+import { mediaLabels } from '@content/en/data/labels'
 import { counter, platforms } from '@content/en/data/ratings'
+import pianoBand from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import videoPoster from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import {
   CardGrid,
   ContactSection,
   FaqList,
   Gallery,
   MediaText,
+  PageHeader,
   RatingBanner,
   Section,
   Steps,
@@ -30,6 +35,12 @@ import whyChoose from './why-choose.jpg?w=480;960&as=picture'
 export default function SheetMusicPrintingPage() {
   return (
     <>
+      <PageHeader
+        title="Sheet Music Printing Services"
+        lead="You know us for our transcriptions, discover our printing services. We offer top-notch services to get your sheet music professionally printed, **including cover art designs, book preparations, and book printing** services."
+        cta={{ label: 'Request this service', href: '#contact' }}
+      />
+
       <Section>
         <Text>
           Our <strong>Graphic Design and Proof-editing departments</strong> combine for an
@@ -174,6 +185,8 @@ export default function SheetMusicPrintingPage() {
       </MediaText>
 
       <MediaText
+        videoPoster={videoPoster}
+        labels={mediaLabels}
         title="Materials and Finishes"
         video={{ youtube: '2m9LBweAHXU', title: 'Materials and finishes of our sheet music books' }}
         cta={{ label: 'See pricing guide', href: '/pricing' }}
@@ -193,6 +206,7 @@ export default function SheetMusicPrintingPage() {
       </MediaText>
 
       <RatingBanner
+        image={pianoBand}
         title="The highest-rated online sheet music transcribers"
         counter={counter}
         sources={platforms}
@@ -238,7 +252,7 @@ export default function SheetMusicPrintingPage() {
         cta={{ label: 'Read all our FAQs', href: '/frequent-asked-questions' }}
       />
 
-      <ContactSection returnTo="/sheet-music-printing" />
+      <ContactSection form={quoteForm} returnTo="/sheet-music-printing" />
     </>
   )
 }

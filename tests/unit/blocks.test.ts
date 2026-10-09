@@ -5,7 +5,7 @@ import {
   blockUsage,
   checkProps,
 } from '../../scripts/design-system/blocks-lib'
-import { catalogue, ROLES } from '../../src/components/blocks/catalogue'
+import { CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
 
 /**
  * `pnpm ds:blocks` and the prop checks of `pnpm ds:review` read each block's `<Name>Props` interface from
@@ -52,15 +52,15 @@ describe('block index', () => {
   it('finds where each block is used from the pages themselves', () => {
     expect(usage.Hero).toEqual(['home'])
     expect(usage.Steps).toContain('gift-card')
-    // the page template renders PageHeader from meta.ts; the homepage has none
+    // every page but the homepage writes its own PageHeader
     expect(usage.PageHeader).toContain('gift-card')
     expect(usage.PageHeader).not.toContain('home')
   })
 
-  it('lists every block once, grouped by role in page order', () => {
+  it('lists every block once, grouped by category in page order', () => {
     for (const n of names) expect(index.match(new RegExp(`^- ${n}: `, 'gm'))).toHaveLength(1)
-    const headings = [...index.matchAll(/^## (\w+): /gm)].map((m) => m[1])
-    expect(headings).toEqual(Object.keys(ROLES))
+    const headings = [...index.matchAll(/^## ([^:]+): /gm)].map((m) => m[1])
+    expect(headings).toEqual(Object.values(CATEGORIES).map((c) => c.label))
     const at = (n: string) => index.indexOf(`- ${n}: `)
     expect(at('PageHeader')).toBeLessThan(at('Testimonials'))
     expect(at('Testimonials')).toBeLessThan(at('ContactSection'))

@@ -4,12 +4,12 @@ import { useSite } from '~/site'
 
 export function NotFound() {
   const site = useSite()
-  const s = site.strings
+  const s = site.strings.notFound
   return (
     <main id="main" className="container-content py-24 text-center">
       <p className="font-bold text-accent-deep text-h3">404</p>
-      <h1 className="text-display mt-2">{s.notFoundTitle}</h1>
-      <p className="mt-4 text-ink">{s.notFoundBody}</p>
+      <h1 className="text-display mt-2">{s.title}</h1>
+      <p className="mt-4 text-ink">{s.body}</p>
       <div className="mt-8">
         <Button asChild>
           <Link to="/">{s.backHome}</Link>

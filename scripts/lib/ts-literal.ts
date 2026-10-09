@@ -48,9 +48,10 @@ function propertyName(name: ts.PropertyName, src: string): string {
 
 /**
  * The value of a literal expression: strings, numbers, booleans, null, `undefined`, negation, arrays, plain
- * objects, identifiers listed in `identifiers` (the mockup maps image imports to "img/<file>" and data imports
- * to their values) and fields of those (`piano.faq`, `ratings[0]`). Anything else (calls, template
- * substitutions, spreads, JSX…) throws a LiteralError with the line.
+ * objects (with `...known` spreads of an object already known), identifiers listed in `identifiers` (the mockup
+ * maps image imports to "img/<file>" and data imports to their values) and fields of those (`piano.faq`,
+ * `ratings[0]`). Anything else (calls, template substitutions, array spreads, JSX…) throws a LiteralError with
+ * the line.
  */
 export function evalTsLiteral(
   node: ts.Expression,
@@ -83,7 +84,12 @@ export function evalTsLiteral(
         out[propertyName(p.name, src)] = evalTsLiteral(p.initializer, identifiers, src)
       else if (ts.isShorthandPropertyAssignment(p))
         out[p.name.text] = evalTsLiteral(p.name, identifiers, src)
-      else fail(`only plain "key: value" pairs in objects ${ONLY}`, p, src)
+      else if (ts.isSpreadAssignment(p)) {
+        const v = evalTsLiteral(p.expression, identifiers, src)
+        if (!v || typeof v !== 'object' || Array.isArray(v))
+          fail(`a spread of something that is not an object ${ONLY}`, p, src)
+        Object.assign(out, v)
+      } else fail(`only plain "key: value" pairs in objects ${ONLY}`, p, src)
     }
     return out
   }
@@ -159,18 +165,36 @@ export function readDefaultExportLiteral(text: string, file: string): unknown {
   return evalTsLiteral(value, {}, file)
 }
 
+/** A picture import in a data module: a brand-wide file under src/assets/images (`?w=…&as=picture` welcome). */
+export const DATA_PICTURE = /^~\/assets\/images\/[\w./-]+\.(?:png|jpe?g|webp|gif|svg)(?:\?.*)?$/i
+
 /**
- * A data module (content/<locale>/data/*.ts): type-only imports and top-level `const`s (exported or not,
- * `satisfies`/`as const` welcome), each a literal that may name the consts above it. Returns every const by
- * name; anything else (functions, other imports, `let`, expressions) throws a LiteralError with the line.
+ * A data module (content/<locale>/data/*.ts): type-only imports, picture imports (`import piano from
+ * '~/assets/images/icons/piano.png?w=150;300&as=picture'`, whose value is `picture(specifier)`, or the specifier
+ * itself) and top-level `const`s (exported or not, `satisfies`/`as const` welcome), each a literal that may name
+ * the consts and pictures above it. Returns every const by name; anything else (functions, other imports,
+ * `let`, expressions) throws a LiteralError with the line.
  */
-export function readModuleLiterals(text: string, file: string): Record<string, unknown> {
+export function readModuleLiterals(
+  text: string,
+  file: string,
+  picture: (specifier: string) => unknown = (specifier) => specifier,
+): Record<string, unknown> {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
   const values: Record<string, unknown> = {}
+  const pictures: Record<string, unknown> = {}
   for (const s of sf.statements) {
     if (ts.isImportDeclaration(s)) {
       if (isTypeOnlyImport(s)) continue
-      throw new LiteralError(`${file}: a data file may only import types${where(s)}`)
+      const from = (s.moduleSpecifier as ts.StringLiteral).text
+      const clause = s.importClause
+      if (clause?.name && !clause.namedBindings && DATA_PICTURE.test(from)) {
+        pictures[clause.name.text] = picture(from)
+        continue
+      }
+      throw new LiteralError(
+        `${file}: a data file may only import types and pictures from ~/assets/images${where(s)}`,
+      )
     }
     if (ts.isInterfaceDeclaration(s) || ts.isTypeAliasDeclaration(s)) continue
     if (
@@ -181,7 +205,7 @@ export function readModuleLiterals(text: string, file: string): Record<string, u
       for (const d of s.declarationList.declarations)
         values[(d.name as ts.Identifier).text] = evalTsLiteral(
           d.initializer as ts.Expression,
-          values,
+          { ...pictures, ...values },
           file,
         )
       continue
