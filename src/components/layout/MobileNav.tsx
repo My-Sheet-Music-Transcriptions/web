@@ -54,7 +54,7 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
       {open ? (
         <m.div
           key="menu"
-          className="fixed inset-0 z-[60] lg:hidden"
+          className="fixed inset-0 z-[60] nav:hidden"
           initial="closed"
           animate="open"
           exit="closed"

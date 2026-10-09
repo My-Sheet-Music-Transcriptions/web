@@ -82,6 +82,7 @@
   --breakpoint-md: 768px; /* Elementor mobile ends at 767 */
   --breakpoint-lg: 1025px; /* Elementor tablet ends at 1024 */
   --breakpoint-xl: 1280px; /* wide desktop */
+  --breakpoint-nav: 1400px; /* the desktop menu (logo, seven items, the button) needs 1390px on one line: the phone menu below */
   --breakpoint-2xl: 1536px; /* unused, kept in px for ordering */
   --spacing-section: 50px;
   --spacing-section-lg: 90px;
@@ -255,7 +256,8 @@
 }
 
 /* The photo header's photos lagging behind their curve as the page scrolls (parallax): over the first screen
-   of scrolling they move down 15vh, so they scroll at 85% of the page's speed. A scroll-driven animation (no
+   of scrolling they move down 30vh, so they scroll at 70% of the page's speed; the strip this exposes above
+   them is always smaller than what the page has already scrolled off, so it never shows. A scroll-driven animation (no
    JavaScript, run by the compositor) on a layer of its own around the sliding one; where browsers lack scroll
    timelines the photos simply scroll with the page. Still under reduced motion. */
 @utility parallax {
@@ -269,6 +271,6 @@
 }
 @keyframes parallax {
   to {
-    translate: 0 15vh;
+    translate: 0 30vh;
   }
 }
