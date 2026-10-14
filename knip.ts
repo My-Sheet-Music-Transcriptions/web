@@ -14,6 +14,10 @@ const config: KnipConfig = {
     // vite.ds.config.ts: the design-system bundle's lib entry and its @tanstack/react-router alias.
     'src/design-system/export/entry.tsx',
     'src/design-system/export/router-shim.tsx',
+    // vite.admin.config.ts: the CMS preview bundle's lib entry; scripts/lib/vite-data-pages.ts writes the import of
+    // BlockPage into every data page's module.
+    'src/admin/preview.tsx',
+    'src/content/BlockPage.tsx',
     // .storybook/main.ts: the builder's viteConfigPath and the server-function stand-in (an alias).
     '.storybook/vite.config.ts',
     '.storybook/mocks/contact.functions.ts',
@@ -26,6 +30,9 @@ const config: KnipConfig = {
     '@fontsource/montserrat',
     // .storybook/main.ts names it as a string; @storybook/react-vite brings it.
     '@storybook/builder-vite',
+    // vite.admin.config.ts copies their prebuilt browser files into dist/client/admin by path.
+    'decap-cms',
+    'netlify-identity-widget',
   ],
 }
 

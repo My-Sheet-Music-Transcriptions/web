@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import fg from 'fast-glob'
+import { DATA_PAGE_FILE, splitDataPage } from '../../src/content/data-page.ts'
 import {
   COLLECTIONS,
   type Collection,
@@ -17,8 +18,9 @@ import { readDefaultExportLiteral } from './ts-literal.ts'
 
 /**
  * Node-side view of content/ for build scripts and vite.config.ts (no import.meta.glob here). A page is a folder
- * content/<locale>/<collection>/<slug>/ with meta.ts (a plain literal, read statically: it never runs) and
- * index.tsx (the page component, compiled by Vite), plus its pictures.
+ * content/<locale>/<collection>/<slug>/ with its pictures and either meta.ts (a plain literal, read statically: it
+ * never runs) and index.tsx (the page component, compiled by Vite), or page.json, a data page edited in the CMS
+ * (src/content/data-page.ts: the meta fields and the blocks in one file).
  */
 
 export interface FsEntry {
@@ -29,10 +31,12 @@ export interface FsEntry {
   url: string
   /** The page folder relative to content/, e.g. en/pages/gift-card */
   dir: string
-  /** dir + '/meta.ts' */
+  /** dir + '/meta.ts' (or '/page.json') */
   file: string
-  /** dir + '/index.tsx' */
+  /** dir + '/index.tsx' (or '/page.json') */
   page: string
+  /** A hand-built page (index.tsx + meta.ts) or a data page (page.json, edited in the CMS). */
+  kind: 'tsx' | 'data'
   meta: EntryMeta
 }
 
@@ -48,22 +52,42 @@ export function readMetaSource(text: string, file: string): EntryMeta {
   return parseMeta(collection, readDefaultExportLiteral(text, file), file)
 }
 
+/** Parses and validates a page.json's meta; `file` is relative to content/ (<locale>/<collection>/<slug>/page.json). */
+export function readDataPageSource(text: string, file: string): EntryMeta {
+  const collection = file.split('/')[1] as Collection
+  if (!COLLECTIONS.includes(collection)) throw new Error(`Unknown collection folder in ${file}`)
+  let data: unknown
+  try {
+    data = JSON.parse(text)
+  } catch (e) {
+    throw new Error(`${file}: invalid JSON (${(e as Error).message})`)
+  }
+  return parseMeta(collection, splitDataPage(data, file).meta, file)
+}
+
 export function readAllEntries(): FsEntry[] {
   const metas = fg.sync(`*/${COLLECTION_GLOB}/*/meta.ts`, { cwd: ROOT })
   const pages = fg.sync(`*/${COLLECTION_GLOB}/*/index.tsx`, { cwd: ROOT })
+  const dataPages = fg.sync(`*/${COLLECTION_GLOB}/*/${DATA_PAGE_FILE}`, { cwd: ROOT })
   for (const rel of pages)
     if (!metas.includes(rel.replace(/index\.tsx$/, 'meta.ts')))
       throw new Error(
         `${CONTENT_DIR}/${rel} has no meta.ts beside it (title, description, translationKey…)`,
       )
-  return metas.map((rel) => {
+  for (const rel of dataPages)
+    if (metas.includes(rel.replace(DATA_PAGE_FILE, 'meta.ts')))
+      throw new Error(
+        `${CONTENT_DIR}/${path.posix.dirname(rel)} has both a page.json and a meta.ts: a page is one or the other`,
+      )
+  const entry = (rel: string, kind: FsEntry['kind']): FsEntry => {
     const [locale, collection, slug] = rel.split('/') as [Locale, Collection, string]
     if (!LOCALES.includes(locale)) throw new Error(`Unknown locale folder in ${rel}`)
     const dir = path.posix.dirname(rel)
-    const page = `${dir}/index.tsx`
-    if (!pages.includes(page))
+    const page = kind === 'data' ? rel : `${dir}/index.tsx`
+    if (!fs.existsSync(path.join(ROOT, page)))
       throw new Error(`${CONTENT_DIR}/${rel} has no index.tsx beside it (the page component)`)
-    const meta = readMetaSource(fs.readFileSync(path.join(ROOT, rel), 'utf8'), rel)
+    const text = fs.readFileSync(path.join(ROOT, rel), 'utf8')
+    const meta = kind === 'data' ? readDataPageSource(text, rel) : readMetaSource(text, rel)
     const site = sites[locale]
     const p = pathFor(collection, slug, site.routes)
     return {
@@ -75,9 +99,14 @@ export function readAllEntries(): FsEntry[] {
       dir,
       file: rel,
       page,
+      kind,
       meta,
     }
-  })
+  }
+  return [
+    ...metas.map((rel) => entry(rel, 'tsx')),
+    ...dataPages.map((rel) => entry(rel, 'data')),
+  ].sort((a, b) => (a.dir < b.dir ? -1 : a.dir > b.dir ? 1 : 0))
 }
 
 export function entriesFor(locale: Locale): FsEntry[] {

@@ -98,6 +98,7 @@ describe('buildOgImages', () => {
       path: `/${slug}`,
       url: `${sites.en.domain}/${slug}`,
       dir: `en/pages/${slug}`,
+      kind: 'tsx',
       file,
       page: `en/pages/${slug}/index.tsx`,
       meta,

@@ -362,7 +362,8 @@ describe('composing the page', () => {
 })
 
 describe('every page passes its blocks the words they need', () => {
-  const pages = entries.filter((e) => e.locale === 'en').map((e) => e.slug)
+  // Data pages (page.json) are edited in the CMS: they have no index.tsx to make a mockup from.
+  const pages = entries.filter((e) => e.locale === 'en' && e.kind === 'tsx').map((e) => e.slug)
 
   it('round-trips every page into a mockup (literal props, data and pictures only)', () => {
     for (const slug of pages) expect(() => mockupFromEntry(entryOf(slug)), slug).not.toThrow()

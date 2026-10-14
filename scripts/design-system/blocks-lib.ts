@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { type BlockDoc, CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
+import { splitDataPage } from '../../src/content/data-page'
 import { DEFAULT_LOCALE } from '../../src/i18n/routing'
 import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
 
@@ -219,15 +220,19 @@ export function checkProps(name: string, props: unknown): string[] {
 
 // --- the index: every block by category, with where it is used (computed from the pages, never written down)
 
-/** Pages using each block, as `slug` (`<locale>/<slug>` outside the default locale), from each page's index.tsx. */
+/** Pages using each block, as `slug` (`<locale>/<slug>` outside the default locale), from each index.tsx or page.json. */
 export function blockUsage(entries = readAllEntries()): Record<string, string[]> {
   const out: Record<string, string[]> = {}
   for (const name of Object.keys(catalogue)) out[name] = []
   for (const e of entries) {
     const page = e.locale === DEFAULT_LOCALE ? e.slug : `${e.locale}/${e.slug}`
     const source = fs.readFileSync(path.join(CONTENT_DIR, e.page), 'utf8')
-    for (const name of Object.keys(catalogue))
-      if (new RegExp(`<${name}\\b`).test(source)) out[name]?.push(page)
+    const used =
+      e.kind === 'data'
+        ? (name: string) =>
+            splitDataPage(JSON.parse(source), e.page).blocks.some((b) => b.type === name)
+        : (name: string) => new RegExp(`<${name}\\b`).test(source)
+    for (const name of Object.keys(catalogue)) if (used(name)) out[name]?.push(page)
   }
   return out
 }

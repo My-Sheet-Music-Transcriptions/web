@@ -33,6 +33,10 @@ if (matches.length > 1)
   )
 const entry = matches[0]
 if (!entry) throw new Error('unreachable')
+if (entry.kind === 'data')
+  throw new Error(
+    `${CONTENT_DIR}/${entry.page} is a data page, edited in the CMS (/admin): it has no index.tsx to make a mockup from`,
+  )
 
 const pageDir = path.join(CONTENT_DIR, entry.dir)
 const result = mockupFromEntry({

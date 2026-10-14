@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import ts from 'typescript'
 import { describe, expect, it } from 'vitest'
 import {
@@ -6,14 +7,17 @@ import {
   CONTENT_DIR,
   checkSlugs,
   readAllEntries,
+  readDataPageSource,
   readMetaSource,
 } from '../../scripts/lib/content-fs'
 import { parseTsx, where } from '../../scripts/lib/ts-literal'
+import { blocks } from '../../src/components/blocks'
+import { mapPictures, splitDataPage } from '../../src/content/data-page'
 import { pathFor, RESERVED_SLUGS } from '../../src/content/schema'
 
 describe('content collections', () => {
   const all = readAllEntries()
-  it('parses every meta.ts against its schema, beside its index.tsx', () => {
+  it('parses every meta.ts (beside its index.tsx) and page.json against its schema', () => {
     expect(all.length).toBeGreaterThan(0)
     for (const e of all) {
       expect(e.meta.title.length).toBeGreaterThan(0)
@@ -81,7 +85,11 @@ const RAW_TEXT_TAGS = [
 ]
 
 describe('pages write text with the typography components', () => {
-  it.each(readAllEntries().map((e) => e.page))('%s', (page) => {
+  it.each(
+    readAllEntries()
+      .filter((e) => e.kind === 'tsx')
+      .map((e) => e.page),
+  )('%s', (page) => {
     const sf = parseTsx(fs.readFileSync(`${CONTENT_DIR}/${page}`, 'utf8'), page)
     const raw: string[] = []
     const visit = (n: ts.Node) => {
@@ -94,6 +102,39 @@ describe('pages write text with the typography components', () => {
     }
     visit(sf)
     expect(raw).toEqual([])
+  })
+})
+
+describe('data pages (page.json, edited in the CMS)', () => {
+  const data = readAllEntries().filter((e) => e.kind === 'data')
+  it.each(data.map((e) => e.page))(
+    '%s uses catalogue blocks and pictures of its folder',
+    (page) => {
+      const { blocks: list } = splitDataPage(
+        JSON.parse(fs.readFileSync(`${CONTENT_DIR}/${page}`, 'utf8')),
+        page,
+      )
+      const problems: string[] = []
+      for (const block of list) {
+        if (!(block.type in blocks)) problems.push(`unknown block "${block.type}"`)
+        if (block.body !== undefined && typeof block.body !== 'string')
+          problems.push(`${block.type}: "body" is light markdown text`)
+        mapPictures(block, (name) => {
+          if (!fs.existsSync(`${CONTENT_DIR}/${path.posix.dirname(page)}/${name}`))
+            problems.push(`${block.type}: picture "${name}" is not in the page folder`)
+        })
+      }
+      expect(problems).toEqual([])
+    },
+  )
+  it('refuses a page.json without a blocks list', () => {
+    expect(() => readDataPageSource('{"title":"T"}', 'en/pages/x/page.json')).toThrow(/blocks/)
+    expect(() => readDataPageSource('{', 'en/pages/x/page.json')).toThrow(/invalid JSON/)
+  })
+  it('validates its meta against the collection schema', () => {
+    expect(() => readDataPageSource('{"title":"T","blocks":[]}', 'en/pages/x/page.json')).toThrow(
+      /Invalid meta/,
+    )
   })
 })
 

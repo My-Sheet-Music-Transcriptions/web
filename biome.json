@@ -71,5 +71,15 @@
     "linter": {
       "enabled": false
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["content/**/page.json"],
+      "json": {
+        "formatter": {
+          "expand": "always"
+        }
+      }
+    }
+  ]
 }

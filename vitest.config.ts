@@ -2,11 +2,14 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 import { chromiumExecutable } from './scripts/lib/chromium.ts'
+import { dataPages } from './scripts/lib/vite-data-pages.ts'
 
 export default defineConfig({
   test: {
     projects: [
       {
+        // Data pages (page.json) load through the same plugin as in the site build.
+        plugins: [dataPages()],
         resolve: { tsconfigPaths: true },
         test: {
           name: 'unit',

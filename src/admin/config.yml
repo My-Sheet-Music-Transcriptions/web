@@ -1,0 +1,159 @@
+# Decap CMS (/admin): the pilot of the file-based CMS. It edits data pages, content/<locale>/<collection>/<slug>/page.json
+# (src/content/data-page.ts), never the hand-built pages (index.tsx + meta.ts), which it does not list.
+# Logins: Netlify Identity through Git Gateway (an email and a password, no GitHub account). Every change is a pull
+# request (editorial workflow) with its Netlify deploy preview, merged by the branch rule like any content PR.
+# Locally: `pnpm build && pnpm serve:dist`, `npx decap-server` in another terminal, then http://localhost:4173/admin/
+# (local_backend writes straight to the working copy, no login).
+
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: 'CMS: create {{collection}} “{{slug}}”'
+    update: 'CMS: update {{collection}} “{{slug}}”'
+    delete: 'CMS: delete {{collection}} “{{slug}}”'
+    uploadMedia: 'CMS: upload “{{path}}”'
+    deleteMedia: 'CMS: delete “{{path}}”'
+local_backend: true
+publish_mode: editorial_workflow
+
+# Every picture lives in its page's folder (the collection's media_folder below); this global one is unused.
+media_folder: content/media
+public_folder: ''
+
+collections:
+  - name: pages-en
+    label: Pages (English)
+    label_singular: Page
+    description: >-
+      Pages people edit here. Hand-built pages (the homepage, landing pages) are changed by asking Claude.
+    folder: content/en/pages
+    path: '{{slug}}/page'
+    extension: json
+    format: json
+    create: true
+    slug: '{{slug}}'
+    media_folder: ''
+    public_folder: ''
+    summary: '{{title}}'
+    fields:
+      - { name: title, label: Title, widget: string, hint: 'The page name in search results and the browser tab (3–120 characters).', pattern: ['^.{3,120}$', '3 to 120 characters'] }
+      - { name: description, label: Description, widget: text, hint: 'The line Google shows under the title.', pattern: ['^[\s\S]{50,160}$', '50 to 160 characters'] }
+      - { name: translationKey, label: Translation key, widget: string, hint: 'The same key on every language version of this page links them (lowercase, dashes). A key no other language uses keeps the page on its own.', pattern: ['^[a-z0-9][a-z0-9-]*$', 'lowercase letters, numbers and dashes'] }
+      - { name: updated, label: Last updated, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, required: false }
+      - { name: draft, label: Draft (hidden from the site), widget: boolean, required: false }
+      - name: blocks
+        label: Sections
+        label_singular: section
+        widget: list
+        summary: '{{fields.title}}'
+        types:
+          - label: Page header
+            name: PageHeader
+            widget: object
+            summary: '{{fields.title}}'
+            fields:
+              - { name: title, label: Title (the page’s h1), widget: string }
+              - { name: eyebrow, label: Line above the title, widget: string, required: false }
+              - { name: lead, label: Lead, widget: text, required: false, hint: '**bold** and [links](/path) are kept.' }
+              - name: cta
+                label: Button
+                widget: object
+                required: false
+                collapsed: true
+                hint: 'Leave both empty for no button.'
+                fields:
+                  - { name: label, label: Label, widget: string, required: false }
+                  - { name: href, label: Link, widget: string, required: false, hint: 'A path like /gift-card, or #section-id' }
+
+          - label: Text section
+            name: Section
+            widget: object
+            summary: '{{fields.title}}'
+            fields:
+              - { name: title, label: Heading, widget: string, required: false }
+              - { name: id, label: Anchor id, widget: string, required: false, hint: 'For links to #this-id' }
+              - { name: body, label: Text, widget: text, hint: 'Blank line between paragraphs; lines starting with "- " make a list; **bold** and [links](/path).' }
+              - { name: tone, label: Background, widget: select, options: [white, cream, peach], required: false }
+              - { name: align, label: Alignment, widget: select, options: [start, center], required: false }
+              - { name: width, label: Width, widget: select, options: [content, narrow, wide], required: false }
+              - { name: rule, label: Orange rule under the heading, widget: boolean, default: true, required: false }
+              - name: cta
+                label: Button
+                widget: object
+                required: false
+                collapsed: true
+                hint: 'Leave both empty for no button.'
+                fields:
+                  - { name: label, label: Label, widget: string, required: false }
+                  - { name: href, label: Link, widget: string, required: false }
+
+          - label: Text and pictures
+            name: MediaText
+            widget: object
+            summary: '{{fields.title}}'
+            fields:
+              - { name: title, label: Heading, widget: string, required: false }
+              - { name: id, label: Anchor id, widget: string, required: false }
+              - { name: body, label: Text, widget: text, hint: 'Blank line between paragraphs; **bold** and [links](/path).' }
+              - { name: image, label: Picture, widget: image, required: false, choose_url: false }
+              - { name: alt, label: Picture description (alt text), widget: string, required: false }
+              - name: images
+                label: Several pictures (a carousel)
+                widget: list
+                required: false
+                summary: '{{fields.alt}}'
+                fields:
+                  - { name: image, label: Picture, widget: image, choose_url: false }
+                  - { name: alt, label: Description (alt text), widget: string }
+              - { name: imageSide, label: Picture side, widget: select, options: [left, right], required: false }
+              - { name: align, label: Alignment, widget: select, options: [start, center], required: false }
+              - { name: tone, label: Background, widget: select, options: [white, cream, peach], required: false }
+              - name: cta
+                label: Button
+                widget: object
+                required: false
+                collapsed: true
+                hint: 'Leave both empty for no button.'
+                fields:
+                  - { name: label, label: Label, widget: string, required: false }
+                  - { name: href, label: Link, widget: string, required: false }
+
+          - label: Picture grid
+            name: PictureGrid
+            widget: object
+            summary: '{{fields.label}}'
+            fields:
+              - { name: title, label: Heading, widget: string, required: false }
+              - { name: label, label: What the pictures are (for screen readers), widget: string, required: false }
+              - { name: shape, label: Shape, widget: select, options: [photo, portrait, logo, icon], default: photo }
+              - { name: columns, label: Pictures per row (2–6), widget: number, value_type: int, min: 2, max: 6, required: false }
+              - name: items
+                label: Pictures
+                widget: list
+                summary: '{{fields.alt}}'
+                fields:
+                  - { name: image, label: Picture, widget: image, choose_url: false }
+                  - { name: alt, label: Description (alt text), widget: string }
+                  - { name: name, label: Name under the picture, widget: string, required: false }
+
+          - label: Table
+            name: Table
+            widget: object
+            summary: '{{fields.title}} {{fields.caption}}'
+            fields:
+              - { name: title, label: Heading, widget: string, required: false }
+              - { name: id, label: Anchor id, widget: string, required: false }
+              - { name: body, label: Text above the table, widget: text, required: false }
+              - { name: caption, label: Caption, widget: string, required: false }
+              - { name: columns, label: Column headings, widget: list, field: { name: column, label: Heading, widget: string, required: false } }
+              - name: rows
+                label: Rows
+                widget: list
+                summary: '{{fields.cells}}'
+                fields:
+                  - name: cells
+                    label: Cells
+                    widget: list
+                    hint: 'One per column. A link cell is written [Label](/path).'
+                    field: { name: cell, label: Cell, widget: string, required: false }
