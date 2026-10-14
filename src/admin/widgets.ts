@@ -65,8 +65,13 @@ for (const [file, meta] of Object.entries(metas)) {
 const languageOf = (code: string) => CMS_LOCALES.find((l) => l.code === code)?.label ?? code
 const KEY = /^[a-z0-9][a-z0-9-]*$/
 
-/** The collection's language: `pages-<locale>`. */
+/** The collection's language: `pages-<locale>`, `home-<locale>`. */
 const localeOf = (props: WidgetProps) => String(props.collection.get('name')).split('-').pop() ?? ''
+/** The entry's page folder: `content/<locale>/pages/<slug>/page.json` (a new entry has no path yet). */
+const slugOf = (entry: Immutable) =>
+  String(entry.get('path') ?? '')
+    .split('/')
+    .at(-2) ?? ''
 
 function translationKey({ createClass, h }: Decap) {
   return createClass({
@@ -76,7 +81,7 @@ function translationKey({ createClass, h }: Decap) {
         return { error: { message: 'Lowercase letters, numbers and dashes only.' } }
       const locale = localeOf(this.props)
       const clash = (pagesByKey.get(value) ?? []).find(
-        (p) => p.locale === locale && p.slug !== entry.get('slug'),
+        (p) => p.locale === locale && p.slug !== slugOf(entry),
       )
       return clash
         ? { error: { message: `“${clash.title}” already uses this key in ${languageOf(locale)}.` } }
@@ -86,7 +91,7 @@ function translationKey({ createClass, h }: Decap) {
       const { value = '', forID, classNameWrapper, onChange, entry } = this.props
       const locale = localeOf(this.props)
       const others = (pagesByKey.get(value) ?? []).filter(
-        (p) => !(p.locale === locale && p.slug === entry.get('slug')),
+        (p) => !(p.locale === locale && p.slug === slugOf(entry)),
       )
       const note = !value
         ? ''

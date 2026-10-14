@@ -65,7 +65,9 @@ export function Thing({ items, ...shell }: ThingProps) {
 
 | Piece | Use it for |
 |---|---|
-| `Media` (+ `MediaContent` props) | One picture with caption, a carousel, a before/after pair, a video with poster and play label. Blocks never wire `Carousel` or `VideoEmbed` themselves. |
+| `Media` (+ `MediaContent` props) | One picture with caption, a carousel, a before/after pair, a video with poster and play label, an audio recording. Blocks never wire `Carousel`, `VideoEmbed` or `AudioPlayer` themselves. |
+| `PriceTag` | Every price: the coloured header, "from", the price and its unit (PricingCards' tiers, Samples' pricing chart). |
+| `Tabs` | The pill buttons that switch a block between sets (`tabs` on CardGrid and Samples). |
 | `FeatureItem` | Icon, picture or video, then title, body (light markdown), bold line and link, on a `card`, `tile` or `plain` surface (CardGrid, Steps). |
 | `Card` | Every rounded surface: `tone`, `shadow` `card`/`band`, `as="article"`. Never hand-roll `rounded-card bg-white shadow-…`. |
 | `Stars`, `RatingCard` | Every star rating and every platform card. |

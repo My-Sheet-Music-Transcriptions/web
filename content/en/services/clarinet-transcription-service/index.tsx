@@ -106,7 +106,7 @@ export default function ClarinetTranscriptionServicePage() {
 
       <PricingCards
         title="Flexible pricing for clarinet"
-        tiers={[clarinetPricing]}
+        tiers={clarinetPricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 

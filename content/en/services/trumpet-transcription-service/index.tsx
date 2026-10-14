@@ -106,7 +106,7 @@ export default function TrumpetTranscriptionServicePage() {
 
       <PricingCards
         title="Flexible pricing for trumpet"
-        tiers={[trumpetPricing]}
+        tiers={trumpetPricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 

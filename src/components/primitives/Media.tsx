@@ -1,6 +1,7 @@
 import type { MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { fill } from '~/lib/strings'
+import { type Audio, AudioPlayer } from './AudioPlayer'
 import { Carousel, type Slide } from './Carousel'
 import { Picture, type PictureSource } from './Picture'
 import { type Video, VideoEmbed } from './VideoEmbed'
@@ -19,6 +20,8 @@ export interface MediaContent {
   layout?: 'carousel' | 'pair'
   /** A video instead of a picture. */
   video?: Video
+  /** A recording instead of a picture: an audio player. */
+  audio?: Audio
   /** The words of the carousel arrows and the play button: `media` from content/<locale>/data/labels. */
   labels?: MediaLabels
   /** The still shown over the video until it is played (`~/assets/images/brand/video-poster.jpg`). */
@@ -40,9 +43,9 @@ export interface MediaProps extends MediaContent {
 }
 
 /**
- * The one place that decides how media shows: a video behind its poster and play button, a carousel or a
- * before/after pair of pictures, or one picture with its caption. Page headers, MediaText, feature cards and
- * steps all show their media through it.
+ * The one place that decides how media shows: a video behind its poster and play button, a recording in an
+ * audio player, a carousel or a before/after pair of pictures, or one picture with its caption. Page headers,
+ * MediaText, samples, feature cards and steps all show their media through it.
  */
 export function Media({
   image,
@@ -51,6 +54,7 @@ export function Media({
   images,
   layout = 'carousel',
   video,
+  audio,
   labels,
   videoPoster,
   sizes,
@@ -66,6 +70,15 @@ export function Media({
         {...video}
         poster={videoPoster}
         playLabel={labels && fill(labels.play, { title: video.title })}
+        className={cn('w-full', className)}
+      />
+    )
+  if (audio)
+    return (
+      <AudioPlayer
+        {...audio}
+        playLabel={labels?.listen && fill(labels.listen, { title: audio.title })}
+        pauseLabel={labels?.pause}
         className={cn('w-full', className)}
       />
     )

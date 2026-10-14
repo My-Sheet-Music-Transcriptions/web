@@ -70,25 +70,18 @@ describe('ds:mockup reproduces the committed gift-card mockup', () => {
   })
 })
 
-describe('the homepage', () => {
-  it('opens with the photo PageHeader, keeps the prose children and resolves the data', () => {
-    const result = mockupFromEntry(entryOf('home'))
+describe('a service page', () => {
+  // The homepage is a data page (page.json, edited in the CMS): the piano page is the hand-built page with the most data.
+  it('opens with its PageHeader and resolves the data it imports', () => {
+    const result = mockupFromEntry(entryOf('piano'))
     const names = result.blocks.map((b) => b.name)
     expect(names.slice(0, 3)).toEqual(['TopBar', 'Header', 'PageHeader'])
-    expect(result.blocks[2]?.props?.variant).toBe('photo')
-    expect(result.title).toBe('Your #1 sheet music transcription service online')
     expect(names.at(-1)).toBe('Footer')
     const pricing = result.blocks.find((b) => b.name === 'PricingCards')?.props ?? {}
-    const children = pricing.children as string
-    expect(children).toMatch(/^\*\*There are pricing options for every budget\.\*\* The more/)
-    expect(children.split('\n\n')).toHaveLength(4)
-    expect((pricing.tiers as { from: string }[]).map((t) => t.from)).toEqual([
-      '$19 USD',
-      '$30 USD',
-      '$15 USD',
-    ])
-    expect(result.images).toContain('office-8.jpg')
-    expect(result.warnings).toEqual([])
+    expect((pricing.tiers as { from: string }[]).map((t) => typeof t.from)).toEqual(['string'])
+    const included = result.blocks.find((b) => b.name === 'CardGrid')?.props ?? {}
+    expect((included.items as { title: string }[]).length).toBeGreaterThan(0)
+    expect(result.warnings).toEqual([expect.stringMatching(/returnTo/)])
   })
 })
 

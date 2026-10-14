@@ -1,0 +1,235 @@
+{
+  "title": "My Sheet Music Transcriptions • Music Transcription Service",
+  "description": "100% accurate, fast, hassle-free music transcription service online. Our team of music transcribers will create transcriptions for you.",
+  "translationKey": "home",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "photo",
+      "title": "Your #1 sheet music transcription service online",
+      "highlight": "#1",
+      "lead": "Get accurate and high-quality sheet music to learn a song, perform, register a composition, educate, or for any music tech application.",
+      "subtitle": "Reliable digital notation services by professional transcribers and music editors.",
+      "cta": {
+        "label": "Learn more",
+        "href": "#how-it-works"
+      },
+      "images": [
+        {
+          "image": "hero-slide-1.webp"
+        },
+        {
+          "image": "hero-slide-6.webp"
+        },
+        {
+          "image": "hero-slide-2.webp"
+        },
+        {
+          "image": "hero-slide-4.webp"
+        },
+        {
+          "image": "hero-slide-3.webp"
+        },
+        {
+          "image": "hero-slide-5.webp"
+        }
+      ],
+      "mobileImages": [
+        {
+          "image": "hero-slide-mobile-1.webp"
+        },
+        {
+          "image": "office-piano-transcribers.webp"
+        },
+        {
+          "image": "hero-slide-mobile-3.webp"
+        },
+        {
+          "image": "hero-slide-mobile-4.webp"
+        },
+        {
+          "image": "hero-slide-mobile-5.webp"
+        }
+      ],
+      "rating": "google",
+      "logo": "logo"
+    },
+    {
+      "type": "Steps",
+      "reveal": true,
+      "id": "how-it-works",
+      "title": "How does it work?",
+      "variant": "columns",
+      "illustration": "how-it-works.jpg",
+      "illustrationAlt": "Three steps: send us the audio, we transcribe it, print and play the PDF",
+      "items": [
+        {
+          "title": "1. Send us audio",
+          "body": "We will promptly send you a quote and an estimated delivery time",
+          "image": "step-1-send-audio.png",
+          "imageWidth": 177
+        },
+        {
+          "title": "2. We transcribe it for you",
+          "body": "Our team of transcribers will prepare the sheet music as per your requirements",
+          "image": "step-2-transcribe.png",
+          "imageWidth": 188
+        },
+        {
+          "title": "3. Print & Play",
+          "body": "You will be able to use and play your sheet music in PDF and other formats",
+          "image": "step-3-print-play.jpg",
+          "imageWidth": 112
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "reveal": true,
+      "image": "pianoBand",
+      "title": "The highest-rated online sheet music transcribers",
+      "counter": "counter",
+      "sources": "homeRatings"
+    },
+    {
+      "type": "CardGrid",
+      "reveal": true,
+      "title": "Who do we work for?",
+      "variant": "tile",
+      "columns": 4,
+      "items": "audiences"
+    },
+    {
+      "type": "ServiceGrid",
+      "reveal": true,
+      "title": "We transcribe any instrument and musical genre",
+      "items": "allServices",
+      "limit": 12,
+      "cta": {
+        "label": "See all services",
+        "href": "/services-samples"
+      }
+    },
+    {
+      "type": "CardGrid",
+      "reveal": true,
+      "title": "What's included?",
+      "image": "studioBand",
+      "items": "included"
+    },
+    {
+      "type": "PricingCards",
+      "reveal": true,
+      "title": "Flexible pricing",
+      "tiers": "pricingTiers",
+      "cta": {
+        "label": "See the full pricing guide",
+        "href": "/pricing"
+      },
+      "body": "**There are pricing options for every budget.** The more instruments and the longer or more complex a piece is, the longer it takes to transcribe. The simpler and more schematic the required notation can be, the less time it takes.\n\nWe are a team of professional musicians, performers, editors, and musicologists with extensive experience. **Your score will be 100% personalized, tailored to your needs, and crafted note by note manually by our professional transcribers**. The process will be coordinated by our customer service specialists, who will keep you informed at all times.\n\nRevisions and transpositions are included in the price, as well as all the digital formats you may need.\n\nBelow you will find a price guide, but please contact us for customized proposals:"
+    },
+    {
+      "type": "PictureStrip",
+      "label": "Examples of our sheet music",
+      "items": [
+        {
+          "image": "strip-guitar-3.jpg",
+          "alt": "Guitar tab sheet music next to an acoustic guitar"
+        },
+        {
+          "image": "strip-piano-10.jpg",
+          "alt": "Vocal and piano score on a digital piano"
+        },
+        {
+          "image": "strip-piano-5.jpg",
+          "alt": "Open piano score on a keyboard"
+        },
+        {
+          "image": "strip-piano-8.jpg",
+          "alt": "Pianist playing from a printed score"
+        },
+        {
+          "image": "strip-piano-7.jpg",
+          "alt": "Close-up of a handwritten-style piano score"
+        },
+        {
+          "image": "strip-piano-6.jpg",
+          "alt": "Piano sheet music book open on a music stand"
+        },
+        {
+          "image": "strip-piano-9.jpg",
+          "alt": "Printed lead sheet on a wooden table next to a plant"
+        },
+        {
+          "image": "strip-guitar-4.jpg",
+          "alt": "Sheet music pages on a table with a guitar"
+        },
+        {
+          "image": "strip-piano-3.jpg",
+          "alt": "Piano songbook open on a stand above a digital keyboard"
+        },
+        {
+          "image": "strip-piano-4.jpg",
+          "alt": "Piano score resting on the keys of a piano"
+        }
+      ]
+    },
+    {
+      "type": "Testimonials",
+      "reveal": true,
+      "title": "Customer Reviews",
+      "items": "homeReviews",
+      "cta": {
+        "label": "Read all our reviews",
+        "href": "/customer-reviews"
+      }
+    },
+    {
+      "type": "MediaText",
+      "reveal": true,
+      "title": "Who are we?",
+      "align": "center",
+      "imageSide": "left",
+      "images": [
+        {
+          "image": "office-8.jpg",
+          "alt": "The customer service team in the My Sheet Music Transcriptions office"
+        },
+        {
+          "image": "office-14.jpg",
+          "alt": "The customer service team in the My Sheet Music Transcriptions office"
+        },
+        {
+          "image": "office-12.jpg",
+          "alt": "The customer service team in the My Sheet Music Transcriptions office"
+        },
+        {
+          "image": "office-transcriber.jpg",
+          "alt": "A transcriber at work in the My Sheet Music Transcriptions office"
+        },
+        {
+          "image": "office-11.jpg",
+          "alt": "The customer service team in the My Sheet Music Transcriptions office"
+        },
+        {
+          "image": "office-10.jpg",
+          "alt": "The customer service team in the My Sheet Music Transcriptions office"
+        },
+        {
+          "image": "office-9.jpg",
+          "alt": "The customer service team in the My Sheet Music Transcriptions office"
+        }
+      ],
+      "cta": {
+        "label": "Read more about us",
+        "href": "/about-us"
+      },
+      "body": "We are **a team of 70+ professional transcribers, arrangers, music editors, musicologists, and engineers** with proven experience in all types of musical transcriptions, arrangements, digitizations, and their music applications.\n\nWhy do we do it? To create opportunities and facilitate the preservation, usefulness, and accessibility of musical brilliance.\n\nHow do we like to do it? Bridging the gap between audio and music notation through a combination of expertise, experience, optimization, and commitment to quality!\n\nWe transcribe **each note by hand and by ear one by one.** We don't use any kind of automatic transcription software. It's a slow process but it gives **great results, reliable notation, and tailored solutions**."
+    },
+    {
+      "type": "ContactSection",
+      "reveal": true,
+      "form": "quoteForm"
+    }
+  ]
+}

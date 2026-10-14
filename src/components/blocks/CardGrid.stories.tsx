@@ -5,12 +5,12 @@ import { audiences } from '~/stories/data'
 import { revealed } from '~/stories/play'
 import { sample, withSamples } from '~/stories/samples'
 import { CardGrid, type CardGridProps } from './CardGrid'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Lists & grids/CardGrid',
   component: CardGrid,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('CardGrid') },
   args: storyArgs<CardGridProps>('CardGrid'),
 } satisfies Meta<typeof CardGrid>
 export default meta
@@ -44,6 +44,40 @@ export const CardsWithLinks: Story = {
         body: 'A vocal lead sheet transcription with lyrics offers **legal protection**.',
         href: '#learn',
         linkLabel: 'Learn more',
+      },
+    ],
+  },
+}
+/** Five plain items in a row: an icon, a title and a line each (the discounts of the pricing page). */
+export const FivePlain: Story = {
+  args: {
+    title: 'Available discounts',
+    image: undefined,
+    variant: 'plain',
+    columns: 5,
+    items: [
+      {
+        title: 'Regular customers',
+        body: 'Get **special deals** as a returning customer',
+        icon: sample.icon,
+      },
+      {
+        title: 'Bulk orders',
+        body: '5-20% discounts for bulk orders and large song batches',
+        icon: sample.icon,
+      },
+      { title: 'Bring a friend', body: '5% off for you and your friend', icon: sample.icon },
+      {
+        title: 'Music businesses',
+        body: '**B2B** custom pricing and solutions',
+        icon: sample.icon,
+        href: '#b2b',
+      },
+      {
+        title: 'Music artists',
+        body: 'Explore **partnership** options with us',
+        icon: sample.icon,
+        href: '#artists',
       },
     ],
   },

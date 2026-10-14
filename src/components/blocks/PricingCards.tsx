@@ -4,6 +4,7 @@ import { Card } from '~/components/primitives/Card'
 import type { Cta } from '~/components/primitives/CtaLink'
 import { RevealItem } from '~/components/primitives/Motion'
 import { Picture } from '~/components/primitives/Picture'
+import { PriceTag } from '~/components/primitives/PriceTag'
 import type { PricingTier } from '~/content/types'
 import { cn } from '~/lib/cn'
 
@@ -16,8 +17,6 @@ export interface PricingCardsProps extends HeadingProps {
   /** Button under the cards ("See the full pricing guide"). */
   cta?: Cta
 }
-
-const headers = { teal: 'bg-teal-light', blue: 'bg-sky', navy: 'bg-navy' }
 
 /**
  * Prices from: three cards with coloured headers, a floating icon and the pricing factors (the homepage), or
@@ -67,19 +66,8 @@ function Tiers({ tiers }: { tiers: PricingTier[] }) {
                   className="absolute left-1/2 top-[-83px] h-[104px] w-[105px] -translate-x-1/2 md:h-[106px] md:w-[107px]"
                 />
               ) : null}
-              <h3
-                data-live-colour=""
-                className={cn(
-                  'rounded-t-card py-[22px] text-center text-[26px] font-bold leading-[26px] text-white',
-                  headers[t.tone ?? 'teal'],
-                )}
-              >
-                {t.title}
-              </h3>
-              <div className="flex flex-1 flex-col pt-[5px] text-center text-ink">
-                {t.fromLabel ? <p className="text-[18px] leading-9">{t.fromLabel}</p> : null}
-                <p className="mt-1 text-price font-bold leading-[46px]">{t.from}</p>
-                <p className="-mt-0.5 text-[18px] leading-9">{t.unit}</p>
+              <PriceTag title={t.title} tone={t.tone} price={t} />
+              <div className="flex flex-1 flex-col text-center text-ink">
                 {t.factorsLabel ? (
                   <p className="mt-5 text-body font-bold leading-8">{t.factorsLabel}</p>
                 ) : null}

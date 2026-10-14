@@ -3,12 +3,12 @@ import { mediaLabels } from '~/stories/data'
 import { revealed } from '~/stories/play'
 import { sample } from '~/stories/samples'
 import { Steps, type StepsProps } from './Steps'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Lists & grids/Steps',
   component: Steps,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('Steps') },
   args: storyArgs<StepsProps>('Steps'),
 } satisfies Meta<typeof Steps>
 export default meta

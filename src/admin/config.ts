@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import { cmsBlocks } from '../components/blocks/cms.ts'
 import type { AnyCmsBlock } from '../content/cms-fields.ts'
 import { decapField } from '../content/cms-fields.ts'
@@ -17,7 +18,7 @@ import { CMS_LOCALES } from './locales.ts'
  * Imported by Node directly (the admin build's config): relative imports with extensions and type imports only.
  */
 
-const blockTypes = Object.entries(cmsBlocks as Record<string, AnyCmsBlock>).map(
+const blockTypes = Object.entries(cmsBlocks as unknown as Record<string, AnyCmsBlock>).map(
   ([name, block]) => ({
     name,
     label: block.label,
@@ -26,6 +27,22 @@ const blockTypes = Object.entries(cmsBlocks as Record<string, AnyCmsBlock>).map(
     fields: Object.entries(block.fields).map(([field, f]) => decapField(field, f)),
   }),
 )
+
+/** Every page's fields: its meta, then its blocks. */
+const fields = [
+  ...Object.entries(metaFields).map(([name, f]) => decapField(name, f)),
+  {
+    name: 'blocks',
+    label: 'Blocks',
+    label_singular: 'block',
+    widget: 'list',
+    summary: '{{fields.title}}',
+    types: blockTypes,
+  },
+]
+
+/** A language's homepage, when it is a data page (run from the repository root, as the build and tests are). */
+const homeFile = (locale: string) => `content/${locale}/pages/home/page.json`
 
 export const decapConfig = {
   backend: {
@@ -46,32 +63,36 @@ export const decapConfig = {
   public_folder: '',
   // The brand on the login page (Decap 3.17's `show_in_header` draws nothing).
   logo: { src: '/admin/logo.svg' },
-  // A page's language is the collection it is in: one per language, `<Language> · Pages`, so that a language's
-  // collections sit together in the sidebar as more kinds (posts, the homepage) join them.
-  collections: CMS_LOCALES.map(({ code, label }) => ({
-    name: `pages-${code}`,
-    label: `${label} · Pages`,
-    label_singular: `${label} page`,
-    description: `Pages in ${label}. Hand-built pages (the homepage, landing pages) are changed by asking Claude.`,
-    folder: `content/${code}/pages`,
-    path: '{{slug}}/page',
-    extension: 'json',
-    format: 'json',
-    create: true,
-    slug: '{{slug}}',
-    media_folder: '',
-    public_folder: '',
-    summary: '{{title}}',
-    fields: [
-      ...Object.entries(metaFields).map(([name, f]) => decapField(name, f)),
-      {
-        name: 'blocks',
-        label: 'Sections',
-        label_singular: 'section',
-        widget: 'list',
-        summary: '{{fields.title}}',
-        types: blockTypes,
-      },
-    ],
-  })),
+  // A page's language is the collection it is in, so that a language's collections sit together in the sidebar:
+  // `<Language> · Home` (a single entry: the language's homepage, once it is a data page), then `<Language> · Pages`.
+  collections: CMS_LOCALES.flatMap(({ code, label }) => [
+    ...(fs.existsSync(homeFile(code))
+      ? [
+          {
+            name: `home-${code}`,
+            label: `${label} · Home`,
+            description: `The homepage in ${label}.`,
+            media_folder: '',
+            public_folder: '',
+            files: [{ name: `home-${code}`, label: 'Homepage', file: homeFile(code), fields }],
+          },
+        ]
+      : []),
+    {
+      name: `pages-${code}`,
+      label: `${label} · Pages`,
+      label_singular: `${label} page`,
+      description: `Pages in ${label}. Hand-built pages (landing pages, service pages) are changed by asking Claude.`,
+      folder: `content/${code}/pages`,
+      path: '{{slug}}/page',
+      extension: 'json',
+      format: 'json',
+      create: true,
+      slug: '{{slug}}',
+      media_folder: '',
+      public_folder: '',
+      summary: '{{title}}',
+      fields,
+    },
+  ]),
 }

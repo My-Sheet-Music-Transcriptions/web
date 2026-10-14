@@ -1,7 +1,9 @@
+import fs from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { mediaLabels, reviewLabels } from '../../content/en/data/labels'
 import { decapConfig } from '../../src/admin/config'
+import { blocks } from '../../src/components/blocks'
 import { cmsBlocks } from '../../src/components/blocks/cms'
 import type { PageHeaderProps } from '../../src/components/blocks/PageHeader'
 import type { TableProps } from '../../src/components/blocks/Table'
@@ -54,13 +56,18 @@ describe('checking stored blocks against their CMS fields', () => {
   })
   it('names every problem: unknown blocks and fields, missing and wrong values, half a button', () => {
     const message = problems([
-      { type: 'CardGrid' },
-      { type: 'PageHeader', subtitle: 'not offered' },
+      { type: 'Hero' },
+      { type: 'PageHeader', colour: 'not offered' },
       { type: 'Section', tone: 'blue', cta: { label: 'Go' } },
       { type: 'PictureGrid', columns: 9, items: [{ image: 'https://x.com/a.jpg' }] },
+      { type: 'PricingCards', title: 'P', tiers: 'myPrices' },
+      {
+        type: 'Samples',
+        items: [{ title: 'S', image: 'a.png', alt: 'A', audio: { src: 'a.wav.exe', title: 'A' } }],
+      },
     ])
-    expect(message).toMatch(/blocks\[0\]: "CardGrid" is not a CMS block/)
-    expect(message).toMatch(/blocks\[1\] \(PageHeader\)\.subtitle: not a field here/)
+    expect(message).toMatch(/blocks\[0\]: "Hero" is not a CMS block/)
+    expect(message).toMatch(/blocks\[1\] \(PageHeader\)\.colour: not a field here/)
     expect(message).toMatch(/blocks\[1\] \(PageHeader\)\.title: required/)
     expect(message).toMatch(/blocks\[2\] \(Section\)\.tone: expected one of white, cream, peach/)
     expect(message).toMatch(/blocks\[2\] \(Section\)\.cta\.href: required/)
@@ -68,11 +75,22 @@ describe('checking stored blocks against their CMS fields', () => {
       /blocks\[3\] \(PictureGrid\)\.columns: expected a whole number from 2 to 6/,
     )
     expect(message).toMatch(/blocks\[3\] \(PictureGrid\)\.items\[0\]\.image: expected a picture/)
+    expect(message).toMatch(
+      /blocks\[4\] \(PricingCards\)\.tiers: expected one of pricingTiers, pianoPricing/,
+    )
+    expect(message).toMatch(/blocks\[5\] \(Samples\)\.items\[0\]\.audio\.src: expected a recording/)
   })
   it('lets the CMS preview render a block still being filled in', () => {
     expect(() => splitDataPage(page([{ type: 'PageHeader' }]), 'x', { check: false })).not.toThrow()
   })
 })
+
+/** Resolvers that mark what they were asked for. */
+const marks = {
+  picture: (f: string) => `<${f}>`,
+  file: (f: string) => `[${f}]`,
+  data: (f: string, n: string) => `{${f}.${n}}`,
+}
 
 describe('resolveBlock', () => {
   it('resolves picture fields at any depth, and nothing else', () => {
@@ -82,11 +100,72 @@ describe('resolveBlock', () => {
       alt: 'b.jpg',
       images: [{ image: 'c.png', alt: 'C' }],
     }
-    expect(resolveBlock(block, (f) => `<${f}>`)).toEqual({
+    expect(resolveBlock(block, marks)).toEqual({
       type: 'MediaText',
       image: '<a.jpg>',
       alt: 'b.jpg',
       images: [{ image: '<c.png>', alt: 'C' }],
+    })
+  })
+  it('resolves recordings and the lists picked by name, in tabs too', () => {
+    const block = {
+      type: 'Samples',
+      tabs: [
+        {
+          label: 'USD',
+          items: [
+            {
+              title: 'Easy',
+              audio: { src: 'easy.mp3', title: 'Easy' },
+              image: 'score.png',
+              alt: 'S',
+            },
+          ],
+        },
+      ],
+    }
+    expect(resolveBlock(block, marks)).toEqual({
+      type: 'Samples',
+      tabs: [
+        {
+          label: 'USD',
+          items: [
+            {
+              title: 'Easy',
+              audio: { src: '[easy.mp3]', title: 'Easy' },
+              image: '<score.png>',
+              alt: 'S',
+            },
+          ],
+        },
+      ],
+    })
+    expect(
+      resolveBlock({ type: 'PricingCards', title: 'P', tiers: 'pianoPricing' }, marks),
+    ).toEqual({ type: 'PricingCards', title: 'P', tiers: '{services.pianoPricing}' })
+    expect(resolveBlock({ type: 'RatingBanner', sources: 'nope' }, marks).sources).toBe('nope')
+  })
+  it('turns a FAQ’s stored groups into FaqGroups: the shared ones by name, the page’s own as written', () => {
+    const block = {
+      type: 'FaqList',
+      groups: [
+        { shared: 'generalFaq' },
+        { title: 'Piano', id: 'piano', items: [{ question: 'Q?', answer: 'A.' }] },
+        { title: 'Empty' },
+      ],
+    }
+    expect(resolveBlock(block, marks).groups).toEqual([
+      '{faqs.generalFaq}',
+      { title: 'Piano', id: 'piano', items: [{ question: 'Q?', answer: 'A.' }] },
+      { title: 'Empty', id: undefined, items: [] },
+    ])
+  })
+  it('sets a preset’s own props over the writer’s', () => {
+    expect(resolveBlock({ type: 'PictureStrip', label: 'L', variant: 'grid' }, marks)).toEqual({
+      type: 'PictureStrip',
+      label: 'L',
+      variant: 'marquee',
+      shape: 'photo',
     })
   })
   it('turns stored table rows into cells, and [label](href) into link cells', () => {
@@ -95,21 +174,34 @@ describe('resolveBlock', () => {
       columns: ['Position', ''],
       rows: [{ cells: ['Music Editor', '[Apply](/job/music-editor)'] }],
     }
-    expect(resolveBlock(block, (f) => f).rows).toEqual([
+    expect(resolveBlock(block, marks).rows).toEqual([
       ['Music Editor', { label: 'Apply', href: '/job/music-editor' }],
     ])
   })
 })
 
 describe('Decap configuration', () => {
-  const blocksField = decapConfig.collections[0]?.fields.find(
-    (f) => f.name === 'blocks',
-  ) as unknown as {
+  interface Collection {
+    name: string
+    folder?: string
+    fields?: { name: string }[]
+    files?: { name: string; file: string; fields: { name: string }[] }[]
+  }
+  const collections = decapConfig.collections as unknown as Collection[]
+  const pages = collections.filter((c) => c.name.startsWith('pages-'))
+  const blocksField = pages[0]?.fields?.find((f) => f.name === 'blocks') as unknown as {
     types: {
       name: string
       fields: { name: string; required: boolean; fields?: { required: boolean }[] }[]
     }[]
   }
+  it('offers every block of the catalogue, in its order, then presets of them', () => {
+    const names = Object.keys(cmsBlocks)
+    expect(names.filter((n) => n in blocks)).toEqual(Object.keys(blocks))
+    for (const [name, entry] of Object.entries(cmsBlocks))
+      if (!(name in blocks))
+        expect(Object.keys(blocks)).toContain((entry as { block?: string }).block)
+  })
   it('offers exactly the CMS blocks, with their fields', () => {
     expect(blocksField.types.map((t) => t.name)).toEqual(Object.keys(cmsBlocks))
     for (const t of blocksField.types)
@@ -125,15 +217,24 @@ describe('Decap configuration', () => {
     expect(cta?.fields?.every((f) => !f.required)).toBe(true)
   })
   it('has one collection of pages per site language, each in its own folder', () => {
-    expect(decapConfig.collections.map((c) => c.name).sort()).toEqual(
-      LOCALES.map((l) => `pages-${l}`).sort(),
-    )
-    for (const c of decapConfig.collections)
-      expect(c.folder).toBe(`content/${c.name.replace('pages-', '')}/pages`)
+    expect(pages.map((c) => c.name).sort()).toEqual(LOCALES.map((l) => `pages-${l}`).sort())
+    for (const c of pages) expect(c.folder).toBe(`content/${c.name.replace('pages-', '')}/pages`)
   })
-  it('opens every page with the meta fields, then its sections', () => {
-    for (const c of decapConfig.collections)
-      expect(c.fields.map((f) => f.name)).toEqual([...Object.keys(metaFields), 'blocks'])
+  it('has a Home entry for each language whose homepage is a data page', () => {
+    const homes = collections.filter((c) => c.name.startsWith('home-'))
+    expect(homes.map((c) => c.name)).toEqual(
+      LOCALES.filter((l) => fs.existsSync(`content/${l}/pages/home/page.json`)).map(
+        (l) => `home-${l}`,
+      ),
+    )
+    expect(homes.map((c) => c.name)).toContain('home-en')
+    for (const c of homes)
+      expect(c.files?.[0]?.file).toMatch(/^content\/\w+\/pages\/home\/page\.json$/)
+  })
+  it('opens every page with the meta fields, then its blocks', () => {
+    for (const c of collections)
+      for (const fields of c.fields ? [c.fields] : (c.files ?? []).map((f) => f.fields))
+        expect(fields.map((f) => f.name)).toEqual([...Object.keys(metaFields), 'blocks'])
   })
 })
 
@@ -167,7 +268,7 @@ describe('BlockPage', () => {
       body: 'Open **now**.',
     }
     const html = renderToStaticMarkup(
-      <BlockPage words={words} blocks={[resolveBlock(table, (f) => f)]} />,
+      <BlockPage words={words} blocks={[resolveBlock(table, marks)]} />,
     )
     expect(html).toContain('<strong>now</strong>')
     expect(html).toMatch(/<a [^>]*href="[^"]*\/job\/music-editor"[^>]*>Apply<\/a>/)

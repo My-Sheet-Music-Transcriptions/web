@@ -35,6 +35,10 @@ export interface MediaLabels {
   position: string
   /** "Play the video: {title}" */
   play: string
+  /** "Play the recording: {title}" (an audio sample); the recording's title without it. */
+  listen?: string
+  /** "Pause" (an audio sample playing); the recording's title without it. */
+  pause?: string
   /** What screen readers call a carousel ("carousel"). */
   carousel: string
 }
@@ -87,20 +91,28 @@ export interface Stat {
   label: string
 }
 
-export interface PricingTier {
-  id?: string
-  /** Coloured header of the card (the tier's name); a single card may go without. */
-  title?: string
-  tone?: 'teal' | 'blue' | 'navy'
-  /** Icon floating above the card: an illustrated icon from src/assets/images/icons. */
-  icon?: PictureSource
+/** The colour of a price header: the pricing tiers' teal, blue and navy. */
+export type PriceTone = 'teal' | 'blue' | 'navy'
+
+/** A price as written, with its unit: what every price on the site is made of (a tier, a priced sample). */
+export interface Price {
   /** The word before the price ("from"). */
   fromLabel?: string
   /** The price, as written ("$19 USD", "$19-35+USD"). */
   from: string
+  /** What the price is per ("per minute of music"). */
   unit: string
-  /** Line under the factors ("*minimum charge of $49 USD"), or beside the price on a single card. */
+  /** A line beside or under the price ("*minimum charge of $49 USD"). */
   note?: string
+}
+
+export interface PricingTier extends Price {
+  id?: string
+  /** Coloured header of the card (the tier's name); a single card may go without. */
+  title?: string
+  tone?: PriceTone
+  /** Icon floating above the card: an illustrated icon from src/assets/images/icons. */
+  icon?: PictureSource
   /** Heading of the factor list ("Pricing factors:", "Our piano rates are based on"). */
   factorsLabel?: string
   factors: string[]

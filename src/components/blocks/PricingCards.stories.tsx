@@ -3,12 +3,12 @@ import type { PricingTier } from '~/content/types'
 import { pricingTiers } from '~/stories/data'
 import { withSamples } from '~/stories/samples'
 import { PricingCards, type PricingCardsProps } from './PricingCards'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Lists & grids/PricingCards',
   component: PricingCards,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('PricingCards') },
   args: storyArgs<PricingCardsProps>('PricingCards'),
 } satisfies Meta<typeof PricingCards>
 export default meta

@@ -106,7 +106,7 @@ export default function HarpTranscriptionServicePage() {
 
       <PricingCards
         title="Flexible pricing for harp"
-        tiers={[harpPricing]}
+        tiers={harpPricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 

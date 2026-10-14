@@ -3,6 +3,7 @@ import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { FeatureItem } from '~/components/primitives/FeatureItem'
 import { RevealItem } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
+import { Tabs } from '~/components/primitives/Tabs'
 import type { CardItem } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { gridCols } from '~/lib/grid'
@@ -18,8 +19,8 @@ export interface CardGridProps extends ShellProps {
   items?: CardItem[]
   /** Instead of items: sets of cards behind buttons (one per currency, per audience…). */
   tabs?: CardTab[]
-  /** Cards per row from desktop up (two on tablets, one on phones). */
-  columns?: 2 | 3 | 4
+  /** Cards per row from desktop up (two on tablets, one on phones; five fit plain items only). */
+  columns?: 2 | 3 | 4 | 5
   /** card: white cards with a soft shadow (default). tile: peach rounded tiles. plain: no surface. */
   variant?: 'card' | 'tile' | 'plain'
   /** A full-bleed photo behind the cards: the photo band, its cards centred (`~/assets/images/bands/included-bg.jpg`). */
@@ -49,27 +50,10 @@ export function CardGrid({
       width={variant === 'tile' ? 'full' : 'content'}
       cascade
     >
-      {tabs ? (
-        <RevealItem className="mb-8 flex justify-center gap-3">
-          {tabs.map((t, i) => (
-            <button
-              key={t.label}
-              type="button"
-              aria-pressed={i === tab}
-              onClick={() => setTab(i)}
-              className={cn(
-                'min-w-14 rounded-pill border-2 border-primary px-5 py-2 font-bold',
-                i === tab ? 'bg-primary text-white' : 'bg-white text-primary',
-              )}
-            >
-              {t.label}
-            </button>
-          ))}
-        </RevealItem>
-      ) : null}
+      {tabs ? <Tabs tabs={tabs.map((t) => t.label)} active={tab} onChange={setTab} /> : null}
       <ul
         className={cn(
-          gridCols(columns, { tablet: 2 }),
+          gridCols(columns, { tablet: columns === 5 ? 3 : 2 }),
           variant === 'tile' ? 'gap-[30px]' : 'gap-6',
         )}
       >

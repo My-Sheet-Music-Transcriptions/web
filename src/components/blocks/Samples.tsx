@@ -1,53 +1,92 @@
+import { useState } from 'react'
+import type { Audio } from '~/components/primitives/AudioPlayer'
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { Card } from '~/components/primitives/Card'
+import { CtaLink } from '~/components/primitives/CtaLink'
 import { Icon } from '~/components/primitives/Icon'
 import { Media } from '~/components/primitives/Media'
 import { RevealGroup, RevealItem } from '~/components/primitives/Motion'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
+import { PriceTag } from '~/components/primitives/PriceTag'
+import { Tabs } from '~/components/primitives/Tabs'
 import type { Video } from '~/components/primitives/VideoEmbed'
-import type { MediaLabels } from '~/content/types'
+import type { MediaLabels, Price, PriceTone } from '~/content/types'
 import { gridCols } from '~/lib/grid'
 
-/** One piece we transcribed: the recording and the first page of our score. */
+/** One piece we transcribed: the recording (a video or an audio file) and the first page of our score. */
 export interface Sample {
-  /** What it is ("Piano cover transcription"). */
+  /** What it is ("Piano cover transcription"), or, when priced, the level or instrument ("Easy", "Guitar tabs"). */
   title: string
   /** The recording on YouTube. */
-  video: Video
+  video?: Video
+  /** The recording as an audio file from the page folder, instead of a video. */
+  audio?: Audio
   /** The first page of the score, from the page folder. */
   image: PictureSource
   /** Alt text of the score ("Piano score of On Eagle's Wings, page 1"). */
   alt: string
-  /** An illustrated icon of the instrument(s), shown with `name` over the video (columns). */
+  /** An illustrated icon of the instrument(s), shown with `name` over the recording (columns). */
   icon?: PictureSource
   /** The instrument(s) the icon shows, beside it ("Piano - Vocal") (columns). */
   name?: string
+  /** The price of this kind of transcription: the title becomes a coloured header above it (a pricing chart). */
+  price?: Price
+  /** The colour of the price header (teal by default). */
+  tone?: PriceTone
+  /** Where the sample leads: its service page, as a button under the score. */
+  href?: string
+  /** The button's words ("Go to guitar tabs page"). */
+  linkLabel?: string
+}
+
+/** One set of samples to switch to: the same samples priced in another currency. */
+export interface SampleTab {
+  label: string
+  items: Sample[]
 }
 
 export interface SamplesProps extends ShellProps {
-  items: Sample[]
-  /** rows (default): one row per sample, the video beside the score. columns: the samples side by side, each video above its score with an arrow between. */
+  items?: Sample[]
+  /** Instead of items: sets of samples behind buttons (one per currency). */
+  tabs?: SampleTab[]
+  /** rows (default): one row per sample, the video beside the score. columns: the samples side by side, each recording above its score with an arrow between. */
   variant?: 'rows' | 'columns'
-  /** The words of the carousel arrows and the play button: `media` from content/<locale>/data/labels. */
+  /** The words of the carousel arrows and the play buttons: `media` from content/<locale>/data/labels. */
   labels?: MediaLabels
   /** The still shown over each video until it is played (`~/assets/images/brand/video-poster.jpg`). */
   videoPoster?: PictureSource
 }
 
 /**
- * Our work, to compare: each sample's title, the YouTube recording (loaded on click) and the score we wrote
- * from it. `rows`: the recording beside the score, one row per sample. `columns`: the samples side by side,
- * the recording in a card with the instrument's icon and name, an arrow, then the score.
+ * Our work, to compare: each sample's title, the recording (a YouTube video loaded on click, or an audio file
+ * in a player) and the score we wrote from it. `rows`: the recording beside the score, one row per sample.
+ * `columns`: side by side, the recording in a card with the instrument's icon and name, an arrow, then the
+ * score. A `price` turns the title into a coloured price header, a link adds a button, and `tabs` switch the
+ * samples between currencies: a pricing chart.
  */
-export function Samples({ items, variant = 'rows', labels, videoPoster, ...shell }: SamplesProps) {
+export function Samples({
+  items = [],
+  tabs,
+  variant = 'rows',
+  labels,
+  videoPoster,
+  ...shell
+}: SamplesProps) {
+  const [tab, setTab] = useState(0)
+  const shown = tabs ? (tabs[tab]?.items ?? []) : items
   if (variant === 'columns')
     return (
       <BlockShell {...shell} cascade>
+        {tabs ? <Tabs tabs={tabs.map((t) => t.label)} active={tab} onChange={setTab} /> : null}
         <ul className={`${gridCols(3, { tablet: 3 })} gap-x-8 gap-y-14`}>
-          {items.map((s) => (
+          {shown.map((s) => (
             <RevealGroup as="li" key={s.title} className="flex flex-col items-center gap-5">
-              <RevealItem>
-                <h3 className="text-center text-h3 font-bold text-ink">{s.title}</h3>
+              <RevealItem className="w-full">
+                {s.price ? (
+                  <PriceTag title={s.title} tone={s.tone} price={s.price} surface="cream" />
+                ) : (
+                  <h3 className="text-center text-h3 font-bold text-ink">{s.title}</h3>
+                )}
               </RevealItem>
               <RevealItem className="w-full">
                 <Card padding="sm" shadow="band">
@@ -64,7 +103,13 @@ export function Samples({ items, variant = 'rows', labels, videoPoster, ...shell
                       {s.name}
                     </p>
                   ) : null}
-                  <Media video={s.video} labels={labels} videoPoster={videoPoster} sizes="360px" />
+                  <Media
+                    video={s.video}
+                    audio={s.audio}
+                    labels={labels}
+                    videoPoster={videoPoster}
+                    sizes="360px"
+                  />
                 </Card>
               </RevealItem>
               <RevealItem preset="pop" className="flex">
@@ -80,6 +125,11 @@ export function Samples({ items, variant = 'rows', labels, videoPoster, ...shell
                   />
                 </Card>
               </RevealItem>
+              {s.href && s.linkLabel ? (
+                <RevealItem>
+                  <CtaLink cta={{ label: s.linkLabel, href: s.href }} />
+                </RevealItem>
+              ) : null}
             </RevealGroup>
           ))}
         </ul>
@@ -87,12 +137,28 @@ export function Samples({ items, variant = 'rows', labels, videoPoster, ...shell
     )
   return (
     <BlockShell {...shell}>
+      {tabs ? <Tabs tabs={tabs.map((t) => t.label)} active={tab} onChange={setTab} /> : null}
       <ul className="flex flex-col gap-14">
-        {items.map((s) => (
+        {shown.map((s) => (
           <li key={s.title} className="grid items-center gap-8 md:grid-cols-[3fr_2fr]">
             <div className="flex flex-col gap-4">
-              <h3 className="text-center text-h3 font-bold text-ink md:text-left">{s.title}</h3>
-              <Media video={s.video} labels={labels} videoPoster={videoPoster} sizes="560px" />
+              {s.price ? (
+                <PriceTag title={s.title} tone={s.tone} price={s.price} surface="cream" />
+              ) : (
+                <h3 className="text-center text-h3 font-bold text-ink md:text-left">{s.title}</h3>
+              )}
+              <Media
+                video={s.video}
+                audio={s.audio}
+                labels={labels}
+                videoPoster={videoPoster}
+                sizes="560px"
+              />
+              {s.href && s.linkLabel ? (
+                <div className="flex justify-center md:justify-start">
+                  <CtaLink cta={{ label: s.linkLabel, href: s.href }} />
+                </div>
+              ) : null}
             </div>
             <Picture
               image={s.image}

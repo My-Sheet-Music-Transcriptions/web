@@ -106,7 +106,7 @@ export default function UkuleleTranscriptionServicePage() {
 
       <PricingCards
         title="Flexible pricing for ukulele"
-        tiers={[ukulelePricing]}
+        tiers={ukulelePricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 

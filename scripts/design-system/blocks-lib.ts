@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { type BlockDoc, CATEGORIES, catalogue } from '../../src/components/blocks/catalogue'
+import { cmsBlocks, isCmsBlock } from '../../src/components/blocks/cms'
 import { splitDataPage } from '../../src/content/data-page'
 import { DEFAULT_LOCALE } from '../../src/i18n/routing'
 import { CONTENT_DIR, readAllEntries } from '../lib/content-fs'
@@ -220,6 +221,10 @@ export function checkProps(name: string, props: unknown): string[] {
 
 // --- the index: every block by category, with where it is used (computed from the pages, never written down)
 
+/** The catalogue block a CMS block type renders: its own name, or a preset's block (src/components/blocks/cms.ts). */
+const blockOf = (type: string): string =>
+  isCmsBlock(type) ? ((cmsBlocks[type] as { block?: string }).block ?? type) : type
+
 /** Pages using each block, as `slug` (`<locale>/<slug>` outside the default locale), from each index.tsx or page.json. */
 export function blockUsage(entries = readAllEntries()): Record<string, string[]> {
   const out: Record<string, string[]> = {}
@@ -230,7 +235,7 @@ export function blockUsage(entries = readAllEntries()): Record<string, string[]>
     const used =
       e.kind === 'data'
         ? (name: string) =>
-            splitDataPage(JSON.parse(source), e.page).blocks.some((b) => b.type === name)
+            splitDataPage(JSON.parse(source), e.page).blocks.some((b) => blockOf(b.type) === name)
         : (name: string) => new RegExp(`<${name}\\b`).test(source)
     for (const name of Object.keys(catalogue)) if (used(name)) out[name]?.push(page)
   }

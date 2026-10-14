@@ -107,7 +107,7 @@ describe('pages write text with the typography components', () => {
 describe('data pages (page.json, edited in the CMS)', () => {
   const data = readAllEntries().filter((e) => e.kind === 'data')
   it.each(data.map((e) => e.page))(
-    '%s matches the CMS fields of its blocks and names pictures of its folder',
+    '%s matches the CMS fields of its blocks and names pictures of its folder and data of its locale',
     (page) => {
       // splitDataPage checks every block against its CMS fields (src/components/blocks/cms.ts).
       const { blocks: list } = splitDataPage(
@@ -115,11 +115,25 @@ describe('data pages (page.json, edited in the CMS)', () => {
         page,
       )
       const missing: string[] = []
-      for (const block of list)
-        resolveBlock(block, (name) => {
+      const locale = page.split('/')[0]
+      for (const block of list) {
+        const inFolder = (what: string) => (name: string) => {
           if (!fs.existsSync(`${CONTENT_DIR}/${path.posix.dirname(page)}/${name}`))
-            missing.push(`${block.type}: picture "${name}" is not in the page folder`)
+            missing.push(`${block.type}: ${what} "${name}" is not in the page folder`)
+        }
+        resolveBlock(block, {
+          picture: inFolder('picture'),
+          file: inFolder('recording'),
+          data(file, name) {
+            const source = `${CONTENT_DIR}/${locale}/data/${file}.ts`
+            if (
+              !fs.existsSync(source) ||
+              !new RegExp(`export const ${name}\\b`).test(fs.readFileSync(source, 'utf8'))
+            )
+              missing.push(`${block.type}: "${name}" is not exported by ${locale}/data/${file}.ts`)
+          },
         })
+      }
       expect(missing).toEqual([])
     },
   )

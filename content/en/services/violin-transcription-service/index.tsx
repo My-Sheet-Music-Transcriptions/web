@@ -106,7 +106,7 @@ export default function ViolinTranscriptionServicePage() {
 
       <PricingCards
         title="Flexible pricing for violin"
-        tiers={[violinPricing]}
+        tiers={violinPricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 
