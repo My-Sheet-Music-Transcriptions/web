@@ -6,7 +6,8 @@ import fs from 'node:fs'
  * is published to dist/client:
  *   NETLIFY_TARGET=site      (default) the locale site selected by SITE_LOCALE; production deploys build
  *                            that one locale for its TLD (with no SITE_LOCALE, as on the English site until
- *                            its cutover: every locale under /<locale>), deploy previews and branch deploys
+ *                            its cutover: every locale under /<locale>; with SITE_LOCALE=multi, every
+ *                            locale's domain from this one site, scripts/build-multi.ts), deploy previews and branch deploys
  *                            of the English site build every locale under /<locale> (path mode, see
  *                            src/i18n/routing.ts) and the other locale sites skip them
  *                            (scripts/netlify-ignore.sh)
@@ -25,14 +26,8 @@ if (target === 'storybook') {
   const preview =
     process.env.CONTEXT === 'deploy-preview' || process.env.CONTEXT === 'branch-deploy'
   if (preview) {
-    // SPIKE (do not merge as is): previews of this branch run the multi-domain build, answering English on
-    // the preview's own host so the host rules can be tried on Netlify (scripts/build-multi.ts).
-    const host = process.env.DEPLOY_PRIME_URL ?? ''
-    execSync('pnpm build:multi', {
-      stdio: 'inherit',
-      env: { ...process.env, SITE_HOSTS_EN: host },
-    })
-    console.log(`[netlify-build] preview (spike): multi-domain build, English on ${host}`)
+    execSync('pnpm build', { stdio: 'inherit', env: { ...process.env, SITE_LOCALE: 'all' } })
+    console.log('[netlify-build] preview: every locale under /<locale> -> dist/client')
   } else if (process.env.SITE_LOCALE === 'multi') {
     // Each locale's hosts come from SITE_HOSTS_<LOCALE> when set, else from its site config (scripts/build-multi.ts).
     run('pnpm build:multi')

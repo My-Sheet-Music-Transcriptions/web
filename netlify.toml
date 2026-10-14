@@ -1,6 +1,9 @@
 # Several Netlify sites are built from this repository with this one file:
 #   - one site per locale/domain:   NETLIFY_TARGET=site (default), SITE_LOCALE=<locale>
 #     (no SITE_LOCALE: every locale under /<locale>, as on the English site until its cutover)
+#   - or one site for every domain: SITE_LOCALE=multi, each domain added to the site as a domain alias;
+#     SITE_HOSTS_<LOCALE> (e.g. SITE_HOSTS_ES="staging.example.es") overrides a locale's domains to try other hosts
+#     (scripts/build-multi.ts, scripts/lib/host-rules.ts)
 #   - the design system (Storybook): NETLIFY_TARGET=storybook
 # Set those variables per site (Site configuration > Environment variables).
 # Deploy Previews: the English site (SITE_LOCALE=en) builds every locale under /en, /es, /ca...
