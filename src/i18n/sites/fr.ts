@@ -7,6 +7,7 @@ export const fr: SiteConfig = {
   locale: 'fr',
   lang: 'fr',
   domain: 'https://mapartitionsurmesure.com',
+  aliases: ['https://www.mapartitionsurmesure.com'],
   siteName: 'Ma Partition Sur Mesure',
   titleTemplate: '%s • Ma Partition Sur Mesure',
   brand: 'Ma Partition Sur Mesure',

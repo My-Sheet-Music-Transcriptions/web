@@ -7,6 +7,7 @@ export const ja: SiteConfig = {
   locale: 'ja',
   lang: 'ja',
   domain: 'https://mysheetmusictranscriptions.jp',
+  aliases: ['https://www.mysheetmusictranscriptions.jp'],
   siteName: 'My Sheet Music Transcriptions Japan',
   titleTemplate: '%s • My Sheet Music Transcriptions Japan',
   brand: 'My Sheet Music Transcriptions Japan',

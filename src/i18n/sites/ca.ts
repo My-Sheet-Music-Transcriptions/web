@@ -7,6 +7,7 @@ export const ca: SiteConfig = {
   locale: 'ca',
   lang: 'ca',
   domain: 'https://lamevapartitura.cat',
+  aliases: ['https://www.lamevapartitura.cat'],
   siteName: 'La Meva Partitura',
   titleTemplate: '%s • La Meva Partitura',
   brand: 'La Meva Partitura',

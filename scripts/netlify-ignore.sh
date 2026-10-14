@@ -4,7 +4,7 @@
 # preview already serves every locale under /<locale> (see scripts/netlify-build.ts).
 # Storybook and every production deploy always build.
 if [ "${NETLIFY_TARGET:-site}" = "site" ] && [ "$CONTEXT" != "production" ] \
-  && [ -n "$SITE_LOCALE" ] && [ "$SITE_LOCALE" != "en" ]; then
+  && [ -n "$SITE_LOCALE" ] && [ "$SITE_LOCALE" != "en" ] && [ "$SITE_LOCALE" != "multi" ]; then
   echo "[netlify-ignore] $SITE_LOCALE: previews are built by the English site under /$SITE_LOCALE"
   exit 0
 fi

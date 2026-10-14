@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "tsx scripts/prebuild.ts && vite build --configLoader native && vite build -c vite.admin.config.ts --configLoader native --logLevel warn && tsx scripts/postbuild.ts",
+    "build:multi": "tsx scripts/build-multi.ts",
     "build:hreflang": "tsx scripts/build-hreflang.ts",
     "preview": "vite preview",
     "serve:dist": "tsx scripts/serve-dist.ts",

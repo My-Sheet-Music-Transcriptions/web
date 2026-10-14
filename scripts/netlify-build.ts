@@ -6,7 +6,8 @@ import fs from 'node:fs'
  * is published to dist/client:
  *   NETLIFY_TARGET=site      (default) the locale site selected by SITE_LOCALE; production deploys build
  *                            that one locale for its TLD (with no SITE_LOCALE, as on the English site until
- *                            its cutover: every locale under /<locale>), deploy previews and branch deploys
+ *                            its cutover: every locale under /<locale>; with SITE_LOCALE=multi, every
+ *                            locale's domain from this one site, scripts/build-multi.ts), deploy previews and branch deploys
  *                            of the English site build every locale under /<locale> (path mode, see
  *                            src/i18n/routing.ts) and the other locale sites skip them
  *                            (scripts/netlify-ignore.sh)
@@ -27,6 +28,10 @@ if (target === 'storybook') {
   if (preview) {
     execSync('pnpm build', { stdio: 'inherit', env: { ...process.env, SITE_LOCALE: 'all' } })
     console.log('[netlify-build] preview: every locale under /<locale> -> dist/client')
+  } else if (process.env.SITE_LOCALE === 'multi') {
+    // Each locale's hosts come from SITE_HOSTS_<LOCALE> when set, else from its site config (scripts/build-multi.ts).
+    run('pnpm build:multi')
+    console.log('[netlify-build] site (multi): every domain from one site -> dist/client')
   } else {
     run('pnpm build')
     console.log(`[netlify-build] site (${process.env.SITE_LOCALE || 'all'}) -> dist/client`)

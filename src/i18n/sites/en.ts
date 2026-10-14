@@ -4,6 +4,7 @@ export const en: SiteConfig = {
   locale: 'en',
   lang: 'en',
   domain: 'https://www.mysheetmusictranscriptions.com',
+  aliases: ['https://mysheetmusictranscriptions.com'],
   siteName: 'My Sheet Music Transcriptions',
   titleTemplate: '%s • My Sheet Music Transcriptions',
   brand: 'My Sheet Music Transcriptions',

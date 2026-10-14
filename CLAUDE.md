@@ -174,9 +174,12 @@ unowned list in CODEOWNERS and `CONTENT_PATHS` in the labels workflow identical.
 
 ## Locales and URLs
 
-Production is one build and one Netlify site per locale, each on its own TLD (`SITE_LOCALE=es` → domain mode, no
-prefix). Deploy previews, branch deploys and `pnpm dev` are one build with every locale under `/<locale>` (path
-mode: `SITE_LOCALE` unset or `all`); only the English Netlify site builds previews (`scripts/netlify-ignore.sh`).
+Production is one build per locale, each on its own TLD (`SITE_LOCALE=es` → domain mode, no prefix), served either
+by one Netlify site per locale or by one site for every domain (`SITE_LOCALE=multi`, `scripts/build-multi.ts`: each
+locale's domain build under `dist/client/<locale>/`, and a `_redirects` that rewrites each host to its folder, made by
+`scripts/lib/host-rules.ts`; the hosts are each locale's `domain` + `aliases`, or `SITE_HOSTS_<LOCALE>` to try others).
+Deploy previews, branch deploys and `pnpm dev` are one build with every locale under `/<locale>` (path mode:
+`SITE_LOCALE` unset or `all`); only the English (or multi) Netlify site builds previews (`scripts/netlify-ignore.sh`).
 
 - Routes, content paths and hrefs are always locale-free: `<Link to="/pricing">`, `<SmartLink href="/#contact">`,
   `<TextLink href="/gift-card">` in a page. In path mode the router's URL rewrite (`localePrefixRewrite`) adds the current
