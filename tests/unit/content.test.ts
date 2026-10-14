@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import ts from 'typescript'
 import { describe, expect, it } from 'vitest'
 import {
@@ -6,14 +7,16 @@ import {
   CONTENT_DIR,
   checkSlugs,
   readAllEntries,
+  readDataPageSource,
   readMetaSource,
 } from '../../scripts/lib/content-fs'
 import { parseTsx, where } from '../../scripts/lib/ts-literal'
+import { resolveBlock, splitDataPage } from '../../src/content/data-page'
 import { pathFor, RESERVED_SLUGS } from '../../src/content/schema'
 
 describe('content collections', () => {
   const all = readAllEntries()
-  it('parses every meta.ts against its schema, beside its index.tsx', () => {
+  it('parses every meta.ts (beside its index.tsx) and page.json against its schema', () => {
     expect(all.length).toBeGreaterThan(0)
     for (const e of all) {
       expect(e.meta.title.length).toBeGreaterThan(0)
@@ -81,7 +84,11 @@ const RAW_TEXT_TAGS = [
 ]
 
 describe('pages write text with the typography components', () => {
-  it.each(readAllEntries().map((e) => e.page))('%s', (page) => {
+  it.each(
+    readAllEntries()
+      .filter((e) => e.kind === 'tsx')
+      .map((e) => e.page),
+  )('%s', (page) => {
     const sf = parseTsx(fs.readFileSync(`${CONTENT_DIR}/${page}`, 'utf8'), page)
     const raw: string[] = []
     const visit = (n: ts.Node) => {
@@ -94,6 +101,36 @@ describe('pages write text with the typography components', () => {
     }
     visit(sf)
     expect(raw).toEqual([])
+  })
+})
+
+describe('data pages (page.json, edited in the CMS)', () => {
+  const data = readAllEntries().filter((e) => e.kind === 'data')
+  it.each(data.map((e) => e.page))(
+    '%s matches the CMS fields of its blocks and names pictures of its folder',
+    (page) => {
+      // splitDataPage checks every block against its CMS fields (src/components/blocks/cms.ts).
+      const { blocks: list } = splitDataPage(
+        JSON.parse(fs.readFileSync(`${CONTENT_DIR}/${page}`, 'utf8')),
+        page,
+      )
+      const missing: string[] = []
+      for (const block of list)
+        resolveBlock(block, (name) => {
+          if (!fs.existsSync(`${CONTENT_DIR}/${path.posix.dirname(page)}/${name}`))
+            missing.push(`${block.type}: picture "${name}" is not in the page folder`)
+        })
+      expect(missing).toEqual([])
+    },
+  )
+  it('refuses a page.json without a blocks list', () => {
+    expect(() => readDataPageSource('{"title":"T"}', 'en/pages/x/page.json')).toThrow(/blocks/)
+    expect(() => readDataPageSource('{', 'en/pages/x/page.json')).toThrow(/invalid JSON/)
+  })
+  it('validates its meta against the collection schema', () => {
+    expect(() => readDataPageSource('{"title":"T","blocks":[]}', 'en/pages/x/page.json')).toThrow(
+      /Invalid meta/,
+    )
   })
 })
 

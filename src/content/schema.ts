@@ -190,6 +190,8 @@ export const RESERVED_SLUGS = [
   'robots.txt',
   '404',
   'storybook',
+  // The CMS admin (vite.admin.config.ts).
+  'admin',
   // Locale prefixes of path-mode previews (src/i18n/routing.ts).
   'en',
   'es',

@@ -10,11 +10,14 @@ import { sites } from '../../src/i18n/sites'
 
 /**
  * SEO conformance over the prerendered output. Every HTML file in dist/client must carry the
- * elements search engines and social networks need. Run after `pnpm build`.
+ * elements search engines and social networks need. Run after `pnpm build`. The CMS admin (/admin, noindex,
+ * vite.admin.config.ts) is not a page of the site.
  */
 const DIST = path.resolve(process.env.DIST_DIR ?? 'dist/client')
 const site = sites[resolveSiteLocale(process.env.SITE_LOCALE)]
-const files = fg.sync('**/*.html', { cwd: DIST, ignore: ['assets/**', '_next/**'] }).sort()
+const files = fg
+  .sync('**/*.html', { cwd: DIST, ignore: ['assets/**', '_next/**', 'admin/**'] })
+  .sort()
 const pages = files.map((f) => {
   const html = fs.readFileSync(path.join(DIST, f), 'utf8')
   const $ = cheerio.load(html)

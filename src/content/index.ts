@@ -11,24 +11,38 @@ export interface Entry {
   slug: string
   path: string
   meta: EntryMeta
-  /** The page component's module key, /content/<locale>/<collection>/<slug>/index.tsx */
+  /** The page component's module key: /content/<locale>/<collection>/<slug>/index.tsx, or its page.json */
   file: string
 }
 
 type BodyComponent = ComponentType
 
-// A page is a folder content/<locale>/<collection>/<slug>/ (outside src/: the content managers' folder) with
-// meta.ts (read eagerly: tiny plain data) and index.tsx (read lazily: one chunk per page), its pictures beside them.
+// A page is a folder content/<locale>/<collection>/<slug>/ (outside src/: the content managers' folder), either
+// hand-built, with meta.ts (read eagerly: tiny plain data) and index.tsx (read lazily: one chunk per page), or a data
+// page edited in the CMS, page.json (src/content/data-page.ts: its meta read eagerly, its blocks lazily as a page
+// component, by scripts/lib/vite-data-pages.ts). Its pictures sit beside them.
 // Root-absolute patterns: Vite resolves them against the project root.
-const metas = import.meta.glob<unknown>(
-  '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/meta.ts',
-  { eager: true, import: 'default' },
-)
-const bodies = import.meta.glob<{ default: BodyComponent }>(
-  '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/index.tsx',
-)
+const metas = {
+  ...import.meta.glob<unknown>(
+    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/meta.ts',
+    { eager: true, import: 'default' },
+  ),
+  ...import.meta.glob<unknown>(
+    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/page.json',
+    { eager: true, import: 'default', query: '?meta' },
+  ),
+}
+const bodies = {
+  ...import.meta.glob<{ default: BodyComponent }>(
+    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/index.tsx',
+  ),
+  ...import.meta.glob<{ default: BodyComponent }>(
+    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/page.json',
+    { query: '?page' },
+  ),
+}
 
-const FILE_RE = /^\/content\/([a-z]{2})\/([a-z]+)\/([a-z0-9-]+)\/meta\.ts$/
+const FILE_RE = /^\/content\/([a-z]{2})\/([a-z]+)\/([a-z0-9-]+)\/(meta\.ts|page\.json)$/
 
 function parseFile(file: string): { locale: Locale; collection: Collection; slug: string } | null {
   const m = FILE_RE.exec(file)
@@ -43,7 +57,7 @@ const allEntries: Entry[] = Object.entries(metas)
     const parsed = parseFile(file)
     if (!parsed)
       throw new Error(
-        `Content file does not match content/<locale>/<collection>/<slug>/meta.ts: ${file}`,
+        `Content file does not match content/<locale>/<collection>/<slug>/{meta.ts,page.json}: ${file}`,
       )
     const meta = parseMeta(parsed.collection, data, file)
     return {

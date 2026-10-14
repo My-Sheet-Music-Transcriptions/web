@@ -13,7 +13,8 @@ import { sites } from '../../src/i18n/sites'
  */
 
 const ROOT = 'src/components'
-const SKIP = /\.stories\.tsx$|\/(catalogue|story-args)\.tsx?$/
+// catalogue and cms hold the words of the design-system docs and of the CMS's forms, not of the site.
+const SKIP = /\.stories\.tsx$|\/(catalogue|cms|story-args)\.tsx?$/
 
 const walk = (dir: string): string[] =>
   fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {

@@ -113,6 +113,7 @@ function entry(
     path,
     url: `${sites[locale].domain}${path}`,
     dir: `${locale}/${collection}/${slug}`,
+    kind: 'tsx',
     file,
     page: `${locale}/${collection}/${slug}/index.tsx`,
     meta,

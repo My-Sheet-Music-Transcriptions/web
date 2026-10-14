@@ -25,6 +25,12 @@
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
+# The CMS admin (vite.admin.config.ts): never indexed.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 [[headers]]
   for = "/*"
   [headers.values]

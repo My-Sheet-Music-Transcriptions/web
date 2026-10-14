@@ -1,6 +1,7 @@
 import { createRootRoute, HeadContent, Outlet, redirect, Scripts } from '@tanstack/react-router'
 import { type ReactNode, useEffect } from 'react'
 import { ErrorPage } from '~/app/ErrorPage'
+import { identityRedirect } from '~/app/identity-redirect'
 import { NotFound } from '~/app/NotFound'
 import { SiteShell } from '~/app/SiteShell'
 import { MotionProvider } from '~/components/primitives/Motion'
@@ -39,6 +40,8 @@ function RootDocument({ children }: { children: ReactNode }) {
   return (
     <html lang={site.lang}>
       <head>
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: a fixed string of ours, no user input */}
+        <script dangerouslySetInnerHTML={{ __html: identityRedirect }} />
         <HeadContent />
         {/* Without JavaScript nothing animates: revealed pieces show as they are. */}
         <noscript>

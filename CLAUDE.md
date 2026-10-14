@@ -1,6 +1,6 @@
 # My Sheet Music Transcriptions – web
 
-One codebase, one static build per locale/domain. No CMS: content is React pages in this repo (`content/`) and is changed by
+One codebase, one static build per locale/domain. No CMS (beyond the Decap pilot below): content is React pages in this repo (`content/`) and is changed by
 chatting with Claude Code. Read this file before touching anything.
 
 ## Commands
@@ -40,6 +40,18 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   faqs, artists, musicians, partners, reviews. The folder name is the URL slug (`pages/home/` is `/`, `faqs/x/` is
   `/faqs/x`). `meta.ts` is plain data: read statically by `scripts/lib/ts-literal.ts` (never run in Node) and
   validated by `src/content/schema.ts` (zod) at build and in unit tests.
+- **CMS pages (`page.json`, pilot; "data pages" in the code).** A page folder may instead hold one `page.json`:
+  the meta fields at the top level and `blocks`, a list of `{ "type": "<Block>", …props }` with `body` (light markdown) as the block's children and
+  pictures by file name. It renders exactly as the equivalent `index.tsx` would (`src/content/data-page.ts`,
+  `src/content/BlockPage.tsx`, the Vite plugin `scripts/lib/vite-data-pages.ts`), and people edit it in Decap CMS at
+  `/admin` (`src/admin/`: `config.ts` becomes Decap's `config.yml` at build, `preview.tsx` renders the entry with the
+  real blocks; built by `vite.admin.config.ts` into `dist/client/admin`; Netlify Identity logins, every save a PR).
+  The blocks the CMS offers and what writers fill in on each are `src/components/blocks/cms.ts`, fields typed by the
+  block's props (`src/content/cms-fields.ts`: a field that does not fit its prop does not compile); Decap's forms,
+  the check of every `page.json` (build and unit tests) and its rendering are all made from it. To offer a block in
+  the CMS, add it there. A folder is one
+  kind or the other; `content/en/pages/careers/` is the pilot. `ds:mockup` does not apply to data pages; to make one
+  hand-built, turn its blocks into JSX in an `index.tsx` + `meta.ts`.
 - `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
   words blocks show around their content (`labels.ts`: carousel and video controls, review lines; `forms.ts`: the
   request forms) and the locale's menus and footer (`nav.ts`, `footer.ts`, read by `src/app`). Numbers that appear in
@@ -102,7 +114,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 
 ## Rules that CI enforces
 
-- Slugs are flat and unique per locale across collections; reserved: api, assets, og, faqs, review, 404, storybook.
+- Slugs are flat and unique per locale across collections; reserved: api, assets, og, faqs, review, 404, storybook, admin.
 - Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description,
   exactly one og:image (404 included) that exists in dist at its declared 1200×630, twitter card, `<html lang>`,
   valid JSON-LD, images with alt/width/height, no broken internal links, listed once in its collection's sitemap

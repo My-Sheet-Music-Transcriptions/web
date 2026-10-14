@@ -7,6 +7,7 @@ import { imagetools } from 'vite-imagetools'
 import { assetFileNames } from './scripts/lib/asset-names.ts'
 import { listPrerenderPages } from './scripts/lib/content-fs.ts'
 import { deployOrigin, resolveLocaleRouting } from './scripts/lib/site-locale.ts'
+import { dataPages } from './scripts/lib/vite-data-pages.ts'
 import { getSiteConfig } from './src/i18n/sites/index.ts'
 
 // SITE_LOCALE=<locale>: production build of one locale for its TLD. Unset or "all": every locale under
@@ -32,6 +33,7 @@ export default defineConfig({
     rolldownOptions: { output: { assetFileNames } },
   },
   plugins: [
+    dataPages(),
     imagetools({
       defaultDirectives: (url) => {
         // Every image ships as AVIF/WebP (+ original format) in a <picture>, unless the import says otherwise.
