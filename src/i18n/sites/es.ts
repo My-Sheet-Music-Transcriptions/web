@@ -7,6 +7,7 @@ export const es: SiteConfig = {
   locale: 'es',
   lang: 'es',
   domain: 'https://www.mistranscripcionesmusicales.com',
+  aliases: ['https://mistranscripcionesmusicales.com'],
   siteName: 'Mis Transcripciones Musicales',
   titleTemplate: '%s • Mis Transcripciones Musicales',
   brand: 'Mis Transcripciones Musicales',

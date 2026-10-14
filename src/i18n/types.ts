@@ -72,6 +72,8 @@ export interface SiteConfig {
   lang: string
   /** Absolute origin without trailing slash; also the sitemap host. */
   domain: string
+  /** Other origins of the same site (the apex or www twin): a multi-domain build 301s them to `domain`. */
+  aliases: string[]
   /** Shown in <title> templates and schema.org Organization. */
   siteName: string
   titleTemplate: string
