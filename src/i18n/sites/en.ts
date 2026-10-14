@@ -47,6 +47,10 @@ export const en: SiteConfig = {
       providedBy: 'Provided by',
     },
     brand: { home: '{brand} – home', logoAlt: '{brand} logo' },
+    share: {
+      tagline: '100% accurate sheet music transcriptions',
+      labels: { posts: 'Blog', services: 'Service', faqs: 'FAQ' },
+    },
     errorPage: {
       title: 'Something went wrong',
       body: 'Please try again. If the problem persists, contact us by email.',

@@ -1,7 +1,7 @@
 import type { SiteConfig } from '../types.ts'
 import { en } from './en.ts'
 
-/** Scaffold: inherits English strings until the de port (Iteration 3). */
+/** Scaffold: inherits English strings until the de port (Iteration 3), but for the share cards' words. */
 export const de: SiteConfig = {
   ...en,
   locale: 'de',
@@ -13,6 +13,13 @@ export const de: SiteConfig = {
   logo: 'de',
   currency: 'EUR',
   routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
+  strings: {
+    ...en.strings,
+    share: {
+      tagline: '100 % genaue Notentranskriptionen',
+      labels: { posts: 'Blog', services: 'Service', faqs: 'FAQ' },
+    },
+  },
   isDefault: false,
   legacyOrigin: 'https://meinemusiktranskription.de',
 }

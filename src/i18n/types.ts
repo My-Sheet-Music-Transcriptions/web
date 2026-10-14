@@ -47,6 +47,13 @@ export interface Strings {
     /** Alt text of the lockup: `{brand}`. */
     logoAlt: string
   }
+  /** The words of the Satori share cards (og:image, src/seo/og/template.tsx) the build draws for every page. */
+  share: {
+    /** The line in the card's bottom-right corner, beside the brand. */
+    tagline: string
+    /** The pill above a page's title, by collection; collections not named here get none. */
+    labels: { posts: string; services: string; faqs: string }
+  }
   errorPage: { title: string; body: string; retry: string; home: string; back: string }
   notFound: { title: string; body: string; backHome: string }
   cookies: {

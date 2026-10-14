@@ -1,22 +1,24 @@
 /**
- * Satori template for og:image (1200x630): a page's card, or the site card (`kind: 'site'`, no subtitle) that pages
- * outside content/ share. Satori supports a flexbox subset only: every element with several children needs display:flex.
+ * Satori template for og:image (1200x630): a page's card, or the site card (no subtitle, no label) that pages
+ * outside content/ share. Every word and the logo come from the page's locale (scripts/lib/og.ts passes them).
+ * Satori supports a flexbox subset only: every element with several children needs display:flex.
  */
 export function ogTemplate({
   title,
   subtitle,
-  kind,
+  label,
   brand,
+  tagline,
   logoData,
 }: {
   title: string
   subtitle: string
-  kind: string
+  /** The pill above the title (the collection's name in the locale), or '' for none. */
+  label: string
   brand: string
+  tagline: string
   logoData: string
 }) {
-  const label =
-    kind === 'posts' ? 'Blog' : kind === 'services' ? 'Service' : kind === 'faqs' ? 'FAQ' : ''
   return (
     <div
       style={{
@@ -81,7 +83,7 @@ export function ogTemplate({
         }}
       >
         <span>{brand}</span>
-        <span>100% accurate sheet music transcriptions</span>
+        <span>{tagline}</span>
       </div>
     </div>
   )

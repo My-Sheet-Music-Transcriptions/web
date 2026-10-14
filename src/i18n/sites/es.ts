@@ -1,7 +1,7 @@
 import type { SiteConfig } from '../types.ts'
 import { en } from './en.ts'
 
-/** Scaffold: inherits English strings until the es port (Iteration 3). */
+/** Scaffold: inherits English strings until the es port (Iteration 3), but for the share cards' words. */
 export const es: SiteConfig = {
   ...en,
   locale: 'es',
@@ -13,6 +13,13 @@ export const es: SiteConfig = {
   logo: 'es',
   currency: 'EUR',
   routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
+  strings: {
+    ...en.strings,
+    share: {
+      tagline: 'Transcripciones de partituras 100 % precisas',
+      labels: { posts: 'Blog', services: 'Servicio', faqs: 'Preguntas frecuentes' },
+    },
+  },
   isDefault: false,
   legacyOrigin: 'https://www.mistranscripcionesmusicales.com',
 }
