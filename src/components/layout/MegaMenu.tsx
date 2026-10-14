@@ -1,7 +1,7 @@
 import * as m from 'motion/react-m'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { Icon } from '~/components/primitives/Icon'
-import { dropDown, dropSide } from '~/components/primitives/Motion'
+import { closedPanel, dropDown, dropSide } from '~/components/primitives/Motion'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import type { NavItem } from '~/i18n/types'
 import { cn } from '~/lib/cn'
@@ -17,7 +17,7 @@ const row =
  * The drop-down of a main-menu item with groups ("Services & Samples"), as on the live site: the item links
  * to its page, and its caret button opens, on hover, focus or Enter/Space, a list of the groups under it;
  * a group with links opens them beside its row on hover or focus. Escape closes it and returns focus to the
- * caret. The links stay in the page while closed, so they are prerendered.
+ * caret. The links stay in the page while closed, so they are prerendered, hidden (`closedPanel`).
  */
 export function MegaMenu({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false)
@@ -105,7 +105,10 @@ export function MegaMenu({ item }: { item: NavItem }) {
         initial={false}
         animate={open ? 'open' : 'closed'}
         variants={dropDown}
-        className="absolute top-full left-0 z-50 w-max min-w-[290px] rounded-card border border-line bg-white shadow-float"
+        className={cn(
+          'absolute top-full left-0 z-50 w-max min-w-[290px] rounded-card border border-line bg-white shadow-float',
+          !open && closedPanel,
+        )}
       >
         {(item.groups ?? []).map((g) => (
           <MenuGroup
@@ -171,7 +174,10 @@ function MenuGroup({
           initial={false}
           animate={open ? 'open' : 'closed'}
           variants={dropSide}
-          className="absolute top-0 left-full w-max min-w-[190px] rounded-card border border-line bg-white shadow-float"
+          className={cn(
+            'absolute top-0 left-full w-max min-w-[190px] rounded-card border border-line bg-white shadow-float',
+            !open && closedPanel,
+          )}
         >
           {g.links.map((l) => (
             <li key={l.label} className="border-b border-line last:border-b-0">

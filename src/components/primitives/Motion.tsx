@@ -91,17 +91,26 @@ export const drawLine: Variants = {
 const opening = { duration: 0.2, ease: 'easeOut' } as const
 const closing = { duration: 0.15, ease: 'easeIn' } as const
 
-/** A menu panel dropping open under its button, and closing. */
+/** A menu panel dropping open under its button, and closing. Hide it when closed with `closedPanel`. */
 export const dropDown: Variants = {
-  open: { opacity: 1, y: 0, display: 'block', transition: opening },
-  closed: { opacity: 0, y: -8, transition: closing, transitionEnd: { display: 'none' } },
+  open: { opacity: 1, y: 0, transition: opening },
+  closed: { opacity: 0, y: -8, transition: closing },
 }
 
-/** A submenu sliding open beside its row, and closing. */
+/** A submenu sliding open beside its row, and closing. Hide it when closed with `closedPanel`. */
 export const dropSide: Variants = {
-  open: { opacity: 1, x: 0, display: 'block', transition: opening },
-  closed: { opacity: 0, x: -8, transition: closing, transitionEnd: { display: 'none' } },
+  open: { opacity: 1, x: 0, transition: opening },
+  closed: { opacity: 0, x: -8, transition: closing },
 }
+
+/**
+ * The class of a `dropDown` or `dropSide` panel while it is closed: hidden, not just transparent, so its links
+ * take no clicks or focus and leave the accessibility tree. CSS hides it once the 0.15 s fade-out is over, and a
+ * reopen mid-fade cancels that. Motion's `transitionEnd` is not used for this: a close that interrupts the
+ * opening animation (Enter, then Escape at once) often never applies it, leaving invisible, clickable links.
+ * The prerendered HTML carries it too, so closed panels are hidden before Motion loads.
+ */
+export const closedPanel = 'invisible transition-[visibility] delay-150 duration-0'
 
 /** A backdrop fading in and out with what it sits behind. */
 export const fade: Variants = {

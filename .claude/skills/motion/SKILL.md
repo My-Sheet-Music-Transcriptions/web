@@ -126,11 +126,13 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
   JavaScript. Anything that starts hidden in the HTML must carry `data-reveal`, so use `RevealItem` (the
   `Stars` mark each star themselves, the `Ticker` each column).
 - **Menus and panels that open and close** use `initial={false}`, `animate={open ? 'open' : 'closed'}` and
-  variants that end in `display: 'none'` (`transitionEnd`). The closed state is prerendered, so the links stay
-  crawlable, and it ends unfocusable. Keep `AnimatePresence` for what really leaves the DOM (the phone menu
+  the `closedPanel` class while closed (`!open && closedPanel`), which hides the panel with CSS once its fade-out
+  ends. Never hide it with `transitionEnd`: a close that interrupts the opening animation (Enter, then Escape at
+  once) often never applies it, and the invisible links stay clickable. The closed state is prerendered, so the
+  links stay crawlable, and it ends unfocusable. Keep `AnimatePresence` for what really leaves the DOM (the phone menu
   dialog).
 - **Focus and ARIA never wait on an animation.** Set `aria-expanded` and move focus at once. A closed panel ends
-  in `display: none`.
+  hidden (`closedPanel`).
 
 ## 6. Budget
 

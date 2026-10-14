@@ -83,6 +83,14 @@ test.describe('homepage', () => {
       await page.keyboard.press('Escape')
       await expect(group).toBeHidden()
       await expect(services).toBeFocused()
+      // Escape while the list is still opening hides it too, not just fades it: its links take no clicks.
+      for (let round = 0; round < 5; round++) {
+        await page.keyboard.press('Enter')
+        await page.keyboard.press('Escape')
+        await expect(group).toBeHidden()
+      }
+      await page.keyboard.press('Enter')
+      await expect(group).toBeVisible()
     }
   })
 
