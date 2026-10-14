@@ -35,6 +35,16 @@ export interface HostSite {
 
 const trim = (origin: string) => origin.replace(/\/+$/, '')
 
+/**
+ * Origins from a `SITE_HOSTS_<LOCALE>` variable: comma or space separated, primary first, bare hosts get https
+ * ("staging.example.es, https://example.es" -> both as https origins). Unset or blank: undefined.
+ */
+export function parseHosts(value: string | undefined): string[] | undefined {
+  const hosts = (value ?? '').split(/[\s,]+/).filter(Boolean)
+  if (!hosts.length) return undefined
+  return hosts.map((h) => trim(/^https?:\/\//.test(h) ? h : `https://${h}`))
+}
+
 export function hostRules(sites: readonly HostSite[]): string[] {
   const rules: string[] = []
   const folders = sites.map((s) => s.folder)

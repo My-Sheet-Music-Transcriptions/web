@@ -4,7 +4,7 @@ import path from 'node:path'
 import { sites } from '../src/i18n/sites/index.ts'
 import { LOCALES, type Locale } from '../src/i18n/types.ts'
 import { entriesFor } from './lib/content-fs.ts'
-import { type HostSite, hostRules, pagesIn } from './lib/host-rules.ts'
+import { type HostSite, hostRules, pagesIn, parseHosts } from './lib/host-rules.ts'
 
 /**
  * Multi-domain build (`SITE_LOCALE=multi`): one Netlify site serves every locale's domain. Each locale with pages is
@@ -14,8 +14,9 @@ import { type HostSite, hostRules, pagesIn } from './lib/host-rules.ts'
  * (scripts/lib/host-rules.ts). The server bundle (quote form, server functions) is the last build's; English is
  * built last so a request that reaches it renders English.
  *
- * `MULTI_ORIGINS` (JSON, `{"en": ["https://deploy-preview-1--site.netlify.app"]}`) replaces the domains of the site
- * config, so a deploy preview can answer on its own hosts.
+ * `SITE_HOSTS_<LOCALE>` (Netlify environment variables, e.g. `SITE_HOSTS_ES="staging.example.es, example.es"`,
+ * primary first) replaces that locale's domains from the site config (`domain` + `aliases`), so the site can be
+ * tried on any host before a real domain moves.
  */
 const DIST = 'dist/client'
 const STAGE = '.cache/multi'
@@ -29,11 +30,11 @@ const SHARED = new Set([
   'apple-touch-icon.png',
 ])
 
-const override = process.env.MULTI_ORIGINS
-  ? (JSON.parse(process.env.MULTI_ORIGINS) as Partial<Record<Locale, string[]>>)
-  : undefined
 const origins = (locale: Locale): string[] =>
-  override ? (override[locale] ?? []) : [sites[locale].domain, ...sites[locale].aliases]
+  parseHosts(process.env[`SITE_HOSTS_${locale.toUpperCase()}`]) ?? [
+    sites[locale].domain,
+    ...sites[locale].aliases,
+  ]
 
 const locales = LOCALES.filter((l) => entriesFor(l).length && origins(l).length).sort(
   (a, b) => Number(a === 'en') - Number(b === 'en'),

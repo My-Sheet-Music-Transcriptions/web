@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { hostRules, pagesIn } from '../../scripts/lib/host-rules'
+import { hostRules, pagesIn, parseHosts } from '../../scripts/lib/host-rules'
 
 const es = {
   folder: 'es',
@@ -63,5 +63,20 @@ describe('pagesIn', () => {
       fs.writeFileSync(path.join(dir, f), '')
     }
     expect(pagesIn(dir)).toEqual({ pages: ['/', '/faqs/x', '/precios'], files: ['robots.txt'] })
+  })
+})
+
+describe('parseHosts', () => {
+  it('reads SITE_HOSTS_<LOCALE>: primary first, https added to bare hosts', () => {
+    expect(parseHosts(' staging.example.es, https://example.es/ ')).toEqual([
+      'https://staging.example.es',
+      'https://example.es',
+    ])
+    expect(parseHosts('a.test b.test')).toEqual(['https://a.test', 'https://b.test'])
+  })
+
+  it('is undefined when unset or blank, so the site config applies', () => {
+    expect(parseHosts(undefined)).toBeUndefined()
+    expect(parseHosts('  ')).toBeUndefined()
   })
 })

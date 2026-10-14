@@ -27,13 +27,14 @@ if (target === 'storybook') {
   if (preview) {
     // SPIKE (do not merge as is): previews of this branch run the multi-domain build, answering English on
     // the preview's own host so the host rules can be tried on Netlify (scripts/build-multi.ts).
-    const multiOrigins = JSON.stringify({ en: [process.env.DEPLOY_PRIME_URL] })
+    const host = process.env.DEPLOY_PRIME_URL ?? ''
     execSync('pnpm build:multi', {
       stdio: 'inherit',
-      env: { ...process.env, MULTI_ORIGINS: multiOrigins },
+      env: { ...process.env, SITE_HOSTS_EN: host },
     })
-    console.log(`[netlify-build] preview (spike): multi-domain build on ${multiOrigins}`)
+    console.log(`[netlify-build] preview (spike): multi-domain build, English on ${host}`)
   } else if (process.env.SITE_LOCALE === 'multi') {
+    // Each locale's hosts come from SITE_HOSTS_<LOCALE> when set, else from its site config (scripts/build-multi.ts).
     run('pnpm build:multi')
     console.log('[netlify-build] site (multi): every domain from one site -> dist/client')
   } else {
