@@ -26,7 +26,7 @@ How to use it: when a page is ported, put the PR link in the **PR** column (and 
 
 | Path | WP type | Target | Action | Translations | Title (archived) | Archived | Notes | PR |
 |---|---|---|---|---|---|---|---|---|
-| [`/about-us`](https://www.mysheetmusictranscriptions.com/about-us) | page | pages | port | de `/uber-uns` · es `/sobre-nosotros` · fr `/qui-sommes-nous` · ja `/about-us` | About Us | 2026-05 | [#64](https://github.com/My-Sheet-Music-Transcriptions/web/pull/64) | |
+| [`/about-us`](https://www.mysheetmusictranscriptions.com/about-us) | page | pages | port | de `/uber-uns` · es `/sobre-nosotros` · fr `/qui-sommes-nous` · ja `/about-us` | About Us | 2026-05 |  | [#64](https://github.com/My-Sheet-Music-Transcriptions/web/pull/64) |
 | [`/careers`](https://www.mysheetmusictranscriptions.com/careers) | linked | pages | port |  | Careers | 2026-05 |  | [#32](https://github.com/My-Sheet-Music-Transcriptions/web/pull/32) |
 | [`/contact`](https://www.mysheetmusictranscriptions.com/contact) | page | pages | port | de `/kontakt` · es `/contacto` · fr `/contact` · ja `/contact` | Contact | 2026-05 |  | |
 | [`/cookies`](https://www.mysheetmusictranscriptions.com/cookies) | linked | pages | port | de `/cookie-richtlinien` · es `/politica-de-cookies` · fr `/politique-de-cookies` · ja `/cookies-policy` | Cookies Policy | 2026-08 |  | |
