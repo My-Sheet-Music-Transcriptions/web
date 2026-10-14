@@ -38,6 +38,7 @@ an ease or a distance:
 | `revealGroup`, `revealPiece` | A revealed block: pieces 0.08 s apart, each rising 24px and fading in over 0.6 s. |
 | `dropDown`, `dropSide` | A menu panel under its button (`y`) or a submenu beside its row (`x`): 0.2 s in, 0.15 s out. |
 | `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu). |
+| `toast` | A small panel that pops up and goes away (the consent banner): it rises 16px and fades in over 0.3 s, and sinks back out over 0.15 s, under `AnimatePresence`. |
 | `tickerGroup`, `tickerDigit` | A figure of a revealed block (`Ticker`) rolling up like an odometer: each digit's column from 0 to it over 1.8 s, 0.12 s after the one before. |
 | `starsGroup`, `pop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. `pop` is also an icon popping in (`RevealItem preset="pop"`). |
 | `revealSide`, `drawDown` | A piece sliding in 16px from the left (a step's speech bubble, `preset="side"`), and a line drawing itself from its top over 0.4 s (the timeline, `preset="draw"`). |

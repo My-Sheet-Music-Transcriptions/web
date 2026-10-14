@@ -115,6 +115,15 @@ export const slideIn: Variants = {
   closed: { x: '100%', transition: { duration: 0.2, ease: 'easeIn' } },
 }
 
+/**
+ * A small panel that pops up over the page and goes away on its own (the consent banner): it rises 16px into
+ * place and fades in, and sinks back out when dismissed. Paired with `AnimatePresence`, since it unmounts.
+ */
+export const toast: Variants = {
+  closed: { opacity: 0, y: 16, transition: closing },
+  open: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
+}
+
 const tags = { div: m.div, li: m.li, p: m.p }
 
 /** How a piece comes in: rising (default), popping, sliding in from the left, or drawn downwards (a line). */
