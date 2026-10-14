@@ -5,9 +5,19 @@ import pianoIcon from '~/assets/images/icons/piano.png?w=150;300&as=picture'
 import saxophoneIcon from '~/assets/images/icons/saxophone.png?w=150;300&as=picture'
 import ukuleleIcon from '~/assets/images/icons/ukulele.png?w=150;300&as=picture'
 import violinIcon from '~/assets/images/icons/violin.png?w=150;300&as=picture'
-import { CardGrid, FaqList, PageHeader, Section, Steps, Testimonials } from '~/components/blocks'
+import {
+  CardGrid,
+  FaqList,
+  MediaText,
+  PageHeader,
+  Section,
+  Testimonials,
+} from '~/components/blocks'
 import { Text } from '~/components/typography'
-import hero from './office-piano-transcribers.webp?w=480;800&as=picture'
+import hero from './keyboard-sheet-music.jpg?w=560;1120&as=picture'
+import transcriber from './office-transcriber.jpg?w=480;960&as=picture'
+import guitar from './strip-guitar-3.jpg?w=1000;1600&as=picture'
+import pianoSheet from './strip-piano-9.jpg?w=360;668&as=picture'
 
 export default function InstrumentShopPage() {
   return (
@@ -18,10 +28,17 @@ export default function InstrumentShopPage() {
         lead="Play the music you love, on an instrument chosen by musicians who write it down every day."
         cta={{ label: 'Browse the collection', href: '#collection' }}
         image={hero}
-        alt="A transcriber playing an acoustic guitar at his desk in the studio"
+        alt="A page of piano sheet music transcribed by My Sheet Music Transcriptions resting on a keyboard"
       />
 
-      <Section title="Why we started selling instruments" id="why">
+      <MediaText
+        title="Why we started selling instruments"
+        id="why"
+        image={transcriber}
+        alt="A transcriber playing an acoustic guitar at his desk in the studio"
+        imageSide="right"
+        imageWidth={480}
+      >
         <Text>
           Every week we transcribe hundreds of songs for people who want to play them. And every
           week someone writes to us with the same question: “I have the sheet music now, but which
@@ -34,7 +51,7 @@ export default function InstrumentShopPage() {
           result is a small shop with a short list of instruments we trust, each one tested by
           someone on our team.
         </Text>
-      </Section>
+      </MediaText>
 
       <CardGrid
         title="What makes it different"
@@ -66,6 +83,7 @@ export default function InstrumentShopPage() {
         title="The collection"
         id="collection"
         columns={3}
+        image={guitar}
         items={[
           {
             title: 'Digital piano, 88 weighted keys',
@@ -100,25 +118,28 @@ export default function InstrumentShopPage() {
         ]}
       />
 
-      <Steps
+      <MediaText
         title="How it works"
         id="how-it-works"
         tone="cream"
-        items={[
-          {
-            title: 'Choose your instrument',
-            body: 'Pick it from the collection, or take the four-question quiz and let us suggest one.',
-          },
-          {
-            title: 'Tell us your three songs',
-            body: 'Any song, any style. We’ll arrange them for your instrument and your level.',
-          },
-          {
-            title: 'Receive everything together',
-            body: 'Your instrument arrives at your door, and your sheet music arrives in your inbox the same week.',
-          },
-        ]}
-      />
+        image={pianoSheet}
+        alt="Pages of sheet music on a wooden desk next to a potted plant"
+        imageSide="left"
+        imageWidth={360}
+      >
+        <Text>
+          <strong>1. Choose your instrument.</strong> Pick it from the collection, or take the
+          four-question quiz and let us suggest one.
+        </Text>
+        <Text>
+          <strong>2. Tell us your three songs.</strong> Any song, any style. We’ll arrange them for
+          your instrument and your level.
+        </Text>
+        <Text>
+          <strong>3. Receive everything together.</strong> Your instrument arrives at your door, and
+          your sheet music arrives in your inbox the same week.
+        </Text>
+      </MediaText>
 
       <Testimonials
         title="What our first customers say"
