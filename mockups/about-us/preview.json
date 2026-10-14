@@ -1,0 +1,12 @@
+{
+  "title": "About Us",
+  "path": "/about-us",
+  "locale": "en",
+  "url": "https://claude.ai/artifact/WGVzinzt8HTacS8FfQvsLF",
+  "source": "en/pages/about-us",
+  "pr": {
+    "number": 64,
+    "url": "https://github.com/My-Sheet-Music-Transcriptions/web/pull/64",
+    "branch": "claude/migrate-about-us-gcav8h"
+  }
+}
