@@ -128,7 +128,7 @@ export default function GuitarTabPage() {
 
       <PricingCards
         title="Flexible pricing for guitar tab"
-        tiers={[guitarTabPricing]}
+        tiers={guitarTabPricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 

@@ -81,96 +81,116 @@ export const includedLongerDelivery: CardItem[] = [
   },
 ]
 
-/** The price card of each service page ("Flexible pricing for …"). */
-export const pianoPricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$19-35+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our piano rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+/** The price card of each service page ("Flexible pricing for …"), as the list of one PricingCards takes. */
+export const pianoPricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$19-35+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our piano rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const guitarTabPricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$19-35+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our guitar tab rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const guitarTabPricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$19-35+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our guitar tab rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const trumpetPricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$14-29+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our trumpet rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const trumpetPricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$14-29+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our trumpet rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const violinPricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$19-29+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our violin rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const violinPricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$19-29+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our violin rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const celloPricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$19-29+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our cello rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const celloPricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$19-29+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our cello rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const clarinetPricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$14-29+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our clarinet rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const clarinetPricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$14-29+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our clarinet rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const flutePricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$10-25+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our flute rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const flutePricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$10-25+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our flute rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const saxophonePricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$14-29+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our saxophone rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const saxophonePricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$14-29+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our saxophone rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const harpPricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$19-35+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our harp rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const harpPricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$19-35+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our harp rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
-export const ukulelePricing: PricingTier = {
-  fromLabel: 'from',
-  from: '$19-35+USD',
-  unit: 'per minute of music',
-  note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
-  factorsLabel: 'Our ukulele rates are based on',
-  factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
-}
+export const ukulelePricing: PricingTier[] = [
+  {
+    fromLabel: 'from',
+    from: '$19-35+USD',
+    unit: 'per minute of music',
+    note: 'Every transcription is different and our prices reflect the time and skill required to transcribe the music accurately',
+    factorsLabel: 'Our ukulele rates are based on',
+    factors: ['Difficulty', 'Music density and complexity', 'Song length', 'Instrumentation'],
+  },
+]
 
 /** Every service with its icon, in the live site's order (the homepage shows the first 12, /music-transcription-service all). */
 export const allServices: PictureItem[] = [

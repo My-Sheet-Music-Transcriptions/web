@@ -106,7 +106,7 @@ export default function FluteTranscriptionServicePage() {
 
       <PricingCards
         title="Flexible pricing for flute"
-        tiers={[flutePricing]}
+        tiers={flutePricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 

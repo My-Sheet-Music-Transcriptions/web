@@ -3,12 +3,12 @@ import { google, logo, mediaLabels } from '~/stories/data'
 import { entered } from '~/stories/play'
 import { sample } from '~/stories/samples'
 import { PageHeader, type PageHeaderProps } from './PageHeader'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Headers/PageHeader',
   component: PageHeader,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('PageHeader') },
   args: storyArgs<PageHeaderProps>('PageHeader'),
   // The header drifts into place as it opens: axe checks it once it has.
   play: ({ canvasElement }) => entered(canvasElement),

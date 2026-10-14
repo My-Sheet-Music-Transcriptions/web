@@ -9,6 +9,8 @@ export const mediaLabels: MediaLabels = {
   next: 'Next photo',
   position: 'Photo {n} of {total}',
   play: 'Play the video: {title}',
+  listen: 'Play the recording: {title}',
+  pause: 'Pause',
   carousel: 'carousel',
 }
 

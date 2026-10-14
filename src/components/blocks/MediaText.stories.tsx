@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { mediaLabels } from '~/stories/data'
 import { sample } from '~/stories/samples'
 import { MediaText, type MediaTextProps } from './MediaText'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Text & media/MediaText',
   component: MediaText,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('MediaText') },
   args: storyArgs<MediaTextProps>('MediaText'),
 } satisfies Meta<typeof MediaText>
 export default meta

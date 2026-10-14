@@ -16,7 +16,8 @@ const REQUEST = new RegExp(`/${DATA_PAGE_FILE.replace('.', '\\.')}\\?(meta|page)
  * Data pages (src/content/data-page.ts) in the Vite build: `page.json?meta` is the page's meta alone (the content
  * index reads every page's meta eagerly, so the blocks stay out of it), and `page.json?page` is the page component,
  * as an index.tsx would be: each picture imported through vite-imagetools at its field's or its block's widths, each
- * data field's export imported from content/<locale>/data, the blocks rendered by BlockPage with the locale's block words (content/<locale>/data/labels.ts).
+ * recording as its URL, each data field's export imported from content/<locale>/data, the blocks rendered by
+ * BlockPage with the locale's block words (content/<locale>/data/labels.ts).
  */
 export function dataPages(): Plugin {
   let root = process.cwd()
@@ -48,18 +49,24 @@ export function dataPages(): Plugin {
       const locale = rel.split('/')[1]
       const imports: string[] = []
       const modules = new Map<string, string>()
+      const inFolder = (block: string, name: string) => {
+        const found = path.join(dir, name)
+        if (!fs.existsSync(found))
+          throw new Error(`${rel}: ${block} names "${name}", which is not in the page folder`)
+        return found
+      }
       const resolved = blocks.map((block) =>
         resolveBlock(block, {
           picture(name, widths) {
-            const picture = path.join(dir, name)
-            if (!fs.existsSync(picture))
-              throw new Error(
-                `${rel}: ${block.type} names "${name}", which is not in the page folder`,
-              )
             const id = `picture${imports.length}`
             imports.push(
-              `import ${id} from ${JSON.stringify(`${picture}?w=${widths ?? pictureWidths(block.type)}&as=picture`)}`,
+              `import ${id} from ${JSON.stringify(`${inFolder(block.type, name)}?w=${widths ?? pictureWidths(block.type)}&as=picture`)}`,
             )
+            return `__${id}__`
+          },
+          file(name) {
+            const id = `file${imports.length}`
+            imports.push(`import ${id} from ${JSON.stringify(`${inFolder(block.type, name)}?url`)}`)
             return `__${id}__`
           },
           data(dataFile, name) {
@@ -79,7 +86,7 @@ export function dataPages(): Plugin {
         }),
       )
       const data = JSON.stringify(resolved, null, 2).replace(
-        /"__((?:picture\d+)|(?:data\d+\.\w+))__"/g,
+        /"__((?:picture|file)\d+|data\d+\.\w+)__"/g,
         '$1',
       )
       return [

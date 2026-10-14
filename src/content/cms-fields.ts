@@ -1,12 +1,13 @@
 import type { PictureSource } from '../components/primitives/Picture.tsx'
+import type { FaqGroup, FaqItem } from './types.ts'
 
 /**
  * The CMS fields of a block (src/components/blocks/cms.ts): what a writer can fill in for each prop, in one typed
  * vocabulary that three things are made from, so they cannot disagree:
  *   - Decap's form for the block (`decapField`, written into /admin/config.yml by vite.admin.config.ts),
  *   - the check of every stored page.json (`checkFields`, at build and in the unit tests),
- *   - the props the block gets from what was stored (`decodeFields`: pictures, lists from the locale's data, table
- *     rows).
+ *   - the props the block gets from what was stored (`decodeFields`: pictures, recordings, lists from the locale's
+ *     data, table rows).
  * Each field carries the type of the value it produces, and `CmsFields<Props>` only accepts a field for a prop of a
  * matching type (a required prop needs a required field), so a field that no longer fits its block is a type error.
  *
@@ -20,6 +21,7 @@ type Kind =
   | 'boolean'
   | 'select'
   | 'image'
+  | 'file'
   | 'data'
   | 'object'
   | 'list'
@@ -98,6 +100,9 @@ export const picture = <R extends boolean = false>(
   label: string,
   o?: Opts<R> & { widths?: string },
 ) => make<PictureSource, R>('image', label, o)
+/** A recording of the page folder (an mp3), stored as its file name, which a block gets as its URL. */
+export const sound = <R extends boolean = false>(label: string, o?: Opts<R>) =>
+  make<string, R>('file', label, o)
 /**
  * One of a few lists or values kept in code, in content/<locale>/data/<file>.ts (the reviews, the prices, a form's
  * words), offered by export name in a menu and stored as that name; the block gets the export of the page's locale.
@@ -166,6 +171,35 @@ export const tableRows = <R extends boolean = false>(label: string, o?: Opts<R>)
       ),
   })
 
+/**
+ * A FAQ's groups: each either one of the shared groups kept in code (`shared`, a data field the CMS types by its
+ * sources) or the page's own questions, written in place; the block gets FaqGroups either way.
+ */
+export const faqGroups = <R extends boolean = false>(
+  label: string,
+  shared: Field<FaqGroup>,
+  o?: Opts<R>,
+) =>
+  make<FaqGroup[], R>('list', label, {
+    ...o,
+    summary: '{{fields.shared}} {{fields.title}}',
+    fields: {
+      shared,
+      title: line('Heading', { hint: 'Of the page’s own questions, written below.' }),
+      id: line('Anchor id', { hint: 'For the jump buttons: lowercase, dashes.' }),
+      items: list(
+        'Questions',
+        {
+          question: line('Question', { required: true }),
+          answer: prose('Answer', { required: true }),
+        },
+        { summary: '{{fields.question}}' },
+      ),
+    },
+    decode: (groups: { shared?: FaqGroup; title?: string; id?: string; items?: FaqItem[] }[]) =>
+      groups.map((g): FaqGroup => g.shared ?? { title: g.title, id: g.id, items: g.items ?? [] }),
+  })
+
 // --- A block's fields, typed by its props ---------------------------------------------------------------------
 
 /** Props the CMS never sets: `children` is the `body` field, `labels` comes from the locale's words. */
@@ -183,7 +217,7 @@ export type CmsFields<P> = {
 } & ('children' extends keyof P ? { body?: Field<string> } : { body?: never })
 
 export interface CmsBlock<P = unknown> {
-  /** The block's name in the CMS's "Add section" menu. */
+  /** The block's name in the CMS's "Add block" menu. */
   label: string
   /**
    * A preset: the catalogue block it renders, when the entry's own name is not one (a `ServiceGrid` is a
@@ -213,6 +247,7 @@ const WIDGETS: Record<Kind, string> = {
   boolean: 'boolean',
   select: 'select',
   image: 'image',
+  file: 'file',
   data: 'select',
   object: 'object',
   list: 'list',
@@ -237,7 +272,7 @@ export function decapField(name: string, f: Field, inOptional = false): Record<s
     ...(f.default !== undefined && { default: f.default }),
     ...(f.options && { options: f.options }),
     ...(f.kind === 'number' && { value_type: 'int', min: f.min, max: f.max }),
-    ...(f.kind === 'image' && { choose_url: false }),
+    ...((f.kind === 'image' || f.kind === 'file') && { choose_url: false }),
     ...(f.kind === 'object' && !f.required && { collapsed: true }),
     ...(f.summary && { summary: f.summary }),
     ...(fields && { fields }),
@@ -253,6 +288,12 @@ const PICTURE = /^[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp|avif)$/i
 /** A picture of the page folder, as an image field names it. */
 export const isPictureName = (value: unknown): value is string =>
   typeof value === 'string' && PICTURE.test(value)
+
+const SOUND = /^[a-z0-9][a-z0-9._-]*\.(mp3|m4a|ogg|wav)$/i
+
+/** A recording of the page folder, as a file field names it. */
+export const isSoundName = (value: unknown): value is string =>
+  typeof value === 'string' && SOUND.test(value)
 
 const isRecord = (v: unknown): v is Record<string, unknown> =>
   !!v && typeof v === 'object' && !Array.isArray(v)
@@ -278,6 +319,8 @@ export function checkField(f: Field, value: unknown, at: string): string[] {
         : [`${at}: expected one of ${f.options?.join(', ')}`]
     case 'image':
       return isPictureName(value) ? [] : [`${at}: expected a picture's file name (photo.jpg)`]
+    case 'file':
+      return isSoundName(value) ? [] : [`${at}: expected a recording's file name (piece.mp3)`]
     case 'object':
       return isRecord(value)
         ? checkFields(f.fields ?? {}, value, at)
@@ -311,14 +354,18 @@ export function checkFields(fields: Fields, value: Record<string, unknown>, at: 
   ]
 }
 
-/** How stored names become values: a picture of the page folder, an export of the locale's data. */
+/** How stored names become values: a picture or a recording of the page folder, an export of the locale's data. */
 export interface Resolve {
   /** `widths`: the field's own srcset widths, when it has them. */
   picture(file: string, widths?: string): unknown
+  file(file: string): unknown
   data(file: string, name: string): unknown
 }
 
-/** A stored group of fields as the block's props: pictures and data through `resolve`, decoders applied. */
+/**
+ * A stored group of fields as the block's props: pictures, recordings and data through `resolve` at any depth, then
+ * each field's decoder on the result (a table's rows, a FAQ's groups).
+ */
 export function decodeFields(
   fields: Fields,
   value: Record<string, unknown>,
@@ -326,20 +373,21 @@ export function decodeFields(
 ): Record<string, unknown> {
   const decode = (f: Field | undefined, v: unknown): unknown => {
     if (!f || v === undefined) return v
-    if (f.decode) return (f.decode as (s: unknown) => unknown)(v)
-    if (f.kind === 'image') return isPictureName(v) ? resolve.picture(v, f.widths) : v
-    if (f.kind === 'data' && typeof v === 'string' && f.sources?.[v])
-      return resolve.data(f.sources[v], v)
-    if (f.kind === 'object' && isRecord(v)) return decodeFields(f.fields ?? {}, v, resolve)
-    if (f.kind === 'list' && Array.isArray(v))
-      return v.map((item) =>
+    let out: unknown = v
+    if (f.kind === 'image') out = isPictureName(v) ? resolve.picture(v, f.widths) : v
+    else if (f.kind === 'file') out = isSoundName(v) ? resolve.file(v) : v
+    else if (f.kind === 'data')
+      out = typeof v === 'string' && f.sources?.[v] ? resolve.data(f.sources[v], v) : v
+    else if (f.kind === 'object' && isRecord(v)) out = decodeFields(f.fields ?? {}, v, resolve)
+    else if (f.kind === 'list' && Array.isArray(v))
+      out = v.map((item) =>
         f.of
           ? decode(f.of, item)
           : isRecord(item)
             ? decodeFields(f.fields ?? {}, item, resolve)
             : item,
       )
-    return v
+    return f.decode ? (f.decode as (s: unknown) => unknown)(out) : out
   }
   const empties = Object.entries(fields).flatMap(([k, f]) =>
     f.empty !== undefined && value[k] === undefined ? [[k, f.empty] as const] : [],

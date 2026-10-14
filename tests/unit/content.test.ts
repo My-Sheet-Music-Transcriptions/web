@@ -116,12 +116,14 @@ describe('data pages (page.json, edited in the CMS)', () => {
       )
       const missing: string[] = []
       const locale = page.split('/')[0]
-      for (const block of list)
+      for (const block of list) {
+        const inFolder = (what: string) => (name: string) => {
+          if (!fs.existsSync(`${CONTENT_DIR}/${path.posix.dirname(page)}/${name}`))
+            missing.push(`${block.type}: ${what} "${name}" is not in the page folder`)
+        }
         resolveBlock(block, {
-          picture(name) {
-            if (!fs.existsSync(`${CONTENT_DIR}/${path.posix.dirname(page)}/${name}`))
-              missing.push(`${block.type}: picture "${name}" is not in the page folder`)
-          },
+          picture: inFolder('picture'),
+          file: inFolder('recording'),
           data(file, name) {
             const source = `${CONTENT_DIR}/${locale}/data/${file}.ts`
             if (
@@ -131,6 +133,7 @@ describe('data pages (page.json, edited in the CMS)', () => {
               missing.push(`${block.type}: "${name}" is not exported by ${locale}/data/${file}.ts`)
           },
         })
+      }
       expect(missing).toEqual([])
     },
   )

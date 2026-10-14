@@ -3,12 +3,12 @@ import type { ContactFormCopy } from '~/content/types'
 import { giftCardForm } from '~/stories/data'
 import { withSamples } from '~/stories/samples'
 import { ContactSection, type ContactSectionProps } from './ContactSection'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Calls to action/ContactSection',
   component: ContactSection,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('ContactSection') },
   args: storyArgs<ContactSectionProps>('ContactSection'),
 } satisfies Meta<typeof ContactSection>
 export default meta

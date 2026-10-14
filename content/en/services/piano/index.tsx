@@ -128,7 +128,7 @@ export default function PianoPage() {
 
       <PricingCards
         title="Flexible pricing for piano"
-        tiers={[pianoPricing]}
+        tiers={pianoPricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 

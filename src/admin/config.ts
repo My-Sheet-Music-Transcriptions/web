@@ -28,13 +28,13 @@ const blockTypes = Object.entries(cmsBlocks as unknown as Record<string, AnyCmsB
   }),
 )
 
-/** Every page's fields: its meta, then its sections. */
+/** Every page's fields: its meta, then its blocks. */
 const fields = [
   ...Object.entries(metaFields).map(([name, f]) => decapField(name, f)),
   {
     name: 'blocks',
-    label: 'Sections',
-    label_singular: 'section',
+    label: 'Blocks',
+    label_singular: 'block',
     widget: 'list',
     summary: '{{fields.title}}',
     types: blockTypes,

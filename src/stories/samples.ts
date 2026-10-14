@@ -1,4 +1,5 @@
 import type { PictureSource } from '~/components/primitives/Picture'
+import audio from './audio/piano-easy.mp3'
 import flag from './images/es.png?w=46;92&as=picture'
 import logo from './images/logo.svg'
 import mark from './images/musescore.png?w=58;116;192&as=picture'
@@ -8,7 +9,8 @@ import icon from './images/piano.png?w=150;300&as=picture'
 /**
  * Storybook's pictures, by marker: `'sample:photo'` (a studio photo), `'sample:icon'` (an illustrated icon),
  * `'sample:logo'` (the lockup, an SVG URL), `'sample:mark'` (a partner mark), `'sample:flag'`. The fixtures
- * (./data.ts) and the catalogue examples name them; stories and the design-system bundle resolve them here.
+ * (./data.ts) and the catalogue examples name them; stories and the design-system bundle resolve them here;
+ * `'sample:audio'` is a few seconds of a piano recording (an mp3 URL).
  * These files are Storybook's own copies: no story imports a picture of the site. A copy keeps its original's
  * file name (tests/unit/images.test.ts): the design-system bundle ships both, as one file under one name.
  */
@@ -18,6 +20,7 @@ const samples: Record<string, unknown> = {
   'sample:logo': logo,
   'sample:mark': mark,
   'sample:flag': flag,
+  'sample:audio': audio,
 }
 
 /** The pictures themselves, for stories that pass one directly. */
@@ -27,6 +30,7 @@ export const sample = {
   mark: mark as PictureSource,
   flag: flag as PictureSource,
   logo: logo as string,
+  audio: audio as string,
 }
 
 /** `value` with every sample marker (in lists and objects too) replaced by its picture. */
