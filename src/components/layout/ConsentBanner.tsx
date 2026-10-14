@@ -1,5 +1,8 @@
+import { AnimatePresence } from 'motion/react'
+import * as m from 'motion/react-m'
 import { useEffect, useState } from 'react'
 import { Button } from '~/components/primitives/Button'
+import { toast } from '~/components/primitives/Motion'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import type { Link } from '~/content/types'
 
@@ -17,7 +20,8 @@ export interface ConsentBannerProps {
 
 /**
  * Cookie consent. Analytics (GTM) loads only after "Accept". The choice is kept in localStorage;
- * nothing is sent anywhere until the visitor decides.
+ * nothing is sent anywhere until the visitor decides. It rises into place once the page has hydrated and sinks
+ * away once they have chosen; centred along the bottom on phones and tablets, in the bottom right corner on desktop.
  */
 export function ConsentBanner({ title, body, accept, deny, links }: ConsentBannerProps) {
   const [visible, setVisible] = useState(false)
@@ -39,45 +43,53 @@ export function ConsentBanner({ title, body, accept, deny, links }: ConsentBanne
     setVisible(false)
   }
 
-  if (!visible) return null
   return (
-    <section
-      data-consent-banner
-      role="dialog"
-      aria-labelledby="consent-title"
-      aria-describedby="consent-body"
-      className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-[520px] rounded-card bg-white p-5 text-left shadow-float"
-    >
-      <h2 id="consent-title" className="text-body font-bold text-ink">
-        {title}
-      </h2>
-      <p id="consent-body" className="mt-2 text-[13px] leading-5 text-[#444]">
-        {body}
-      </p>
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Button variant="primary" size="sm" onClick={() => decide('granted')}>
-          {accept}
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="border border-line"
-          onClick={() => decide('denied')}
+    <AnimatePresence>
+      {visible ? (
+        <m.section
+          key="consent"
+          data-consent-banner
+          initial="closed"
+          animate="open"
+          exit="closed"
+          variants={toast}
+          role="dialog"
+          aria-labelledby="consent-title"
+          aria-describedby="consent-body"
+          className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-[520px] lg:inset-x-auto lg:right-6 lg:bottom-6 lg:w-[400px] rounded-card bg-white p-5 text-left shadow-float"
         >
-          {deny}
-        </Button>
-      </div>
-      <p className="mt-3 text-caption leading-5">
-        {links.map((l, i) => (
-          <span key={l.href}>
-            {i > 0 ? <span className="px-2 text-muted">·</span> : null}
-            <SmartLink href={l.href} className="text-primary underline">
-              {l.label}
-            </SmartLink>
-          </span>
-        ))}
-      </p>
-    </section>
+          <h2 id="consent-title" className="text-body font-bold text-ink">
+            {title}
+          </h2>
+          <p id="consent-body" className="mt-2 text-[13px] leading-5 text-[#444]">
+            {body}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Button variant="primary" size="sm" onClick={() => decide('granted')}>
+              {accept}
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="border border-line"
+              onClick={() => decide('denied')}
+            >
+              {deny}
+            </Button>
+          </div>
+          <p className="mt-3 text-caption leading-5">
+            {links.map((l, i) => (
+              <span key={l.href}>
+                {i > 0 ? <span className="px-2 text-muted">·</span> : null}
+                <SmartLink href={l.href} className="text-primary underline">
+                  {l.label}
+                </SmartLink>
+              </span>
+            ))}
+          </p>
+        </m.section>
+      ) : null}
+    </AnimatePresence>
   )
 }
 
