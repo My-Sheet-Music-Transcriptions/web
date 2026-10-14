@@ -19,10 +19,9 @@ describe('host rules of a multi-domain build', () => {
     expect(rules[1]).toBe('https://example.es/*  https://www.example.es/:splat  301!')
   })
 
-  it('rewrites every page to its folder and 301s its trailing slash', () => {
+  it('rewrites every page to its folder', () => {
     expect(rules).toContain('https://www.example.es/  /es/index.html  200!')
     expect(rules).toContain('https://www.example.es/precios  /es/precios/index.html  200!')
-    expect(rules).toContain('https://www.example.es/precios/  /precios  301!')
     expect(rules).toContain('https://www.example.es/faqs/envio  /es/faqs/envio/index.html  200!')
   })
 
@@ -37,10 +36,14 @@ describe('host rules of a multi-domain build', () => {
     expect(rules.at(-1)).toBe('https://www.example.es/*  /es/404.html  404')
   })
 
-  it('never rewrites the shared paths', () => {
-    expect(rules.filter((r) => /\/(assets|og|admin|api)\b/.test(r.split(/\s+/)[0] ?? ''))).toEqual(
-      [],
-    )
+  it('never rewrites the shared files and passes the function paths through', () => {
+    expect(rules.filter((r) => /\/(assets|og|admin)\b/.test(r.split(/\s+/)[0] ?? ''))).toEqual([])
+    expect(rules).toContain('https://www.example.es/api/*  /api/:splat  200')
+    expect(rules).toContain('https://www.example.es/_serverFn/*  /_serverFn/:splat  200')
+  })
+
+  it('answers 404 on the build folders, so no page has a second URL', () => {
+    expect(rules).toContain('https://www.example.es/es/*  /es/404.html  404!')
   })
 })
 

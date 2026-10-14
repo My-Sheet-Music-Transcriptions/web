@@ -9,11 +9,17 @@ import path from 'node:path'
  *
  * Per host, in the order Netlify matches them (first match wins):
  *   1. every alias host (apex or www twin) 301s to the primary host, path kept;
- *   2. the locale's own redirects (legacy sitemaps, content redirects), host-prefixed;
- *   3. one forced rewrite per page (`/precios` -> `/es/precios/index.html`) and its trailing-slash 301;
- *   4. one forced rewrite per root file of the locale (robots.txt, sitemaps);
- *   5. the locale's 404 page for anything else, unforced so shared files (/assets, /og, /admin) are still served.
+ *   2. the server function paths pass through to the function (a host's catch-all 404 would swallow them);
+ *   3. the build folders themselves (`/en/...`) answer 404, so no page has a second URL;
+ *   4. the locale's own redirects (legacy sitemaps, content redirects), host-prefixed;
+ *   5. one forced rewrite per page (`/precios` -> `/es/precios/index.html`); Netlify ignores a trailing slash
+ *      when matching, so `/precios/` takes the same rule;
+ *   6. one forced rewrite per root file of the locale (robots.txt, sitemaps);
+ *   7. the locale's 404 page for anything else, unforced so shared files (/assets, /og, /admin) are still served.
  */
+
+/** Paths answered by the server function (the quote form's no-JS POST and TanStack server functions). */
+const FUNCTION_PATHS = ['/api', '/_serverFn']
 export interface HostSite {
   /** Folder under dist/client that holds this locale's build. */
   folder: string
@@ -31,12 +37,15 @@ const trim = (origin: string) => origin.replace(/\/+$/, '')
 
 export function hostRules(sites: readonly HostSite[]): string[] {
   const rules: string[] = []
+  const folders = sites.map((s) => s.folder)
   for (const site of sites) {
     const [primary, ...aliases] = site.origins.map(trim)
     if (!primary) throw new Error(`[host-rules] ${site.folder}: no origin`)
     const dir = `/${site.folder}`
     rules.push(`# ${site.folder}: ${primary}`)
     for (const alias of aliases) rules.push(`${alias}/*  ${primary}/:splat  301!`)
+    for (const fn of FUNCTION_PATHS) rules.push(`${primary}${fn}/*  ${fn}/:splat  200`)
+    for (const other of folders) rules.push(`${primary}/${other}/*  ${dir}/404.html  404!`)
     for (const line of site.redirects) {
       const [from, ...rest] = line.trim().split(/\s+/)
       if (!from || from.startsWith('#')) continue
@@ -48,7 +57,6 @@ export function hostRules(sites: readonly HostSite[]): string[] {
         continue
       }
       rules.push(`${primary}${page}  ${dir}${page}/index.html  200!`)
-      rules.push(`${primary}${page}/  ${page}  301!`)
     }
     for (const file of site.files) rules.push(`${primary}/${file}  ${dir}/${file}  200!`)
     rules.push(`${primary}/*  ${dir}/404.html  404`)
