@@ -149,3 +149,31 @@ export const educatorReviews: Review[] = [
       'Such a great service - needed a song transcribed quickly for an audition and they did a fantastic job! Really recommend!',
   },
 ]
+
+/** The instrument shop's first customers (the instrument-shop page), verbatim from the shop's draft copy. */
+export const shopReviews: Review[] = [
+  {
+    name: 'Laura',
+    country: 'Valencia',
+    rating: 5,
+    source: 'email',
+    quote:
+      'I bought the digital piano for my daughter and she asked for songs from her favourite film. Three weeks later she played one for the whole family.',
+  },
+  {
+    name: 'Mark',
+    country: 'Leeds',
+    rating: 5,
+    source: 'email',
+    quote:
+      'I hadn’t touched a guitar in fifteen years. Having the songs I actually wanted to play, written for my level, made all the difference.',
+  },
+  {
+    name: 'Anna',
+    country: 'Barcelona',
+    rating: 5,
+    source: 'email',
+    quote:
+      'The violin arrived perfectly set up. My teacher couldn’t believe it came from an online shop.',
+  },
+]
