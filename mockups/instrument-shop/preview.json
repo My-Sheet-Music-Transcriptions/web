@@ -3,5 +3,10 @@
   "path": "/instrument-shop",
   "locale": "en",
   "url": "https://claude.ai/artifact/FUDQPwdW6yAez9zX714aJ9",
-  "source": "en/pages/instrument-shop"
+  "source": "en/pages/instrument-shop",
+  "pr": {
+    "number": 66,
+    "url": "https://github.com/My-Sheet-Music-Transcriptions/web/pull/66",
+    "branch": "claude/instrument-shop-page-i6tzua"
+  }
 }
