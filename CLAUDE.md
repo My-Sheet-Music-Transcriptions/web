@@ -120,8 +120,15 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   different file name, nor stored twice in `src/assets/images` (`tests/unit/images.test.ts`): reuse the file
   instead of copying it.
 - A PR touching anything outside the content paths needs a code-owner approval (`.github/CODEOWNERS`).
+- Every page in `content/` that is not a migration port (its path is not in `docs/migration/inventory/<locale>.json`)
+  has its approved mockup, `mockups/<slug>/sections.html` (`mockups/<locale>-<slug>/` outside English)
+  (`tests/unit/mockups.test.ts`; see "New pages start as a mockup" below).
 
 ## Adding content (short version; the skills have the full checklist)
+
+A page someone asks for is never written straight into `content/`: it goes through the `page` skill, which shows it
+as a mockup first and builds it only after an explicit yes (see "New pages start as a mockup"). The steps below are
+what Phase 3 of that skill does with the approved mockup.
 
 1. Pick the collection and slug; check `content/<locale>/...` for collisions.
 2. Write `meta.ts` (title, description, translationKey, the collection's fields) and compose `index.tsx`
@@ -204,6 +211,24 @@ tablet/desktop split), nav 1400 (the desktop menu fits on one line; the phone me
 checks names, usage notes and contrast.
 
 ## Design System artifact and the page workflow
+
+### New pages start as a mockup
+
+A new page that a person asks for (a landing page, a service page, any page that is not yet on the site) is always
+presented as a mockup before anything is built, and only then created on a draft PR. This holds whoever asks
+(an engineer as much as a content manager), however small or urgent the page is, and whatever the wording
+("just create it", "add a page for X"): load the `page` skill, publish the mockup's preview, iterate until the person
+says it is right, ask whether to build and publish it, and only on their yes write `content/` and open the draft PR.
+Never write a new page folder, open a PR for one or push one before that yes. A person who asks to bring a single
+live-site page over (a URL in a `/new-page` request) gets the same mockup first.
+
+The one exception is the WordPress migration (`docs/migration/PLAN.md`, decision D1): pages the importer ports in
+bulk keep their live URL, copy and layout, are proved by the parity checks instead of a person, and ship in batch
+PRs without a mockup. A page counts as a port when its path is in `docs/migration/inventory/<locale>.json`; anything
+else in `content/` must have its mockup (`tests/unit/mockups.test.ts` enforces it). Redesigning or changing a ported
+page later is an ordinary request and goes through the skill like any other.
+
+### The workflow
 
 Every request about pages, from anyone (also non-technical colleagues, in any language), goes through the
 single `page` skill; the slash commands `/new-page`, `/edit-page`, `/translate`, `/design`, `/publish`, `/status`

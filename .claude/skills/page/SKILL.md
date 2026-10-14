@@ -23,6 +23,10 @@ language (English, Spanish, Catalan, French, German or Japanese: whatever they w
   address, the live page), never a home page or a PR. A link that arrives minutes after they last heard from
   you also goes out as a push notification (`PushNotification`, when available).
 - Every request gets a preview the person can click before anything is built, even a single changed word.
+  A **new page** is always a mockup first and a draft PR only after their yes, whoever asks and however it
+  is worded ("just create it" included): no page folder, branch or PR before the mockup is approved. The one
+  exception is the bulk WordPress migration (importer + parity checks, `docs/migration/PLAN.md` D1), which
+  does not go through this skill; `tests/unit/mockups.test.ts` refuses a non-migration page without its mockup.
   What they see is always a published artifact, never a screenshot, image or description in words.
 - One preview artifact per page, updated in place; one canvas per page. Never a second one for the same page.
 - Never publish unasked, never lower a quality threshold, nothing reaches `main` before the person has

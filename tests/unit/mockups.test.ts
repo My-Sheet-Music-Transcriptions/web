@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { imageSize, prepareSections } from '../../scripts/design-system/review-lib'
+import { readAllEntries } from '../../scripts/lib/content-fs'
 
 /**
  * Every committed mockup (mockups/<slug>/sections.html) must still pass the ds:review checks: known
@@ -13,7 +14,32 @@ const slugs = fs.existsSync(root)
   ? fs.readdirSync(root).filter((d) => fs.existsSync(path.join(root, d, 'sections.html')))
   : []
 
+/**
+ * A new page a person asks for is shown as a mockup before it is built (CLAUDE.md, "New pages start as a
+ * mockup"), so it keeps its approved mockup: mockups/<slug>/ in English, mockups/<locale>-<slug>/ otherwise.
+ * The one exception is the migration: a page whose path is in docs/migration/inventory/<locale>.json is a
+ * port of the live site (docs/migration/PLAN.md, D1), checked by parity instead of by a person.
+ */
+const inventory = (locale: string): Set<string> => {
+  const file = `docs/migration/inventory/${locale}.json`
+  if (!fs.existsSync(file)) return new Set()
+  const rows = JSON.parse(fs.readFileSync(file, 'utf8')) as { path: string }[]
+  return new Set(rows.map((r) => r.path))
+}
+const newPages = readAllEntries().filter((e) => !inventory(e.locale).has(e.path))
+
 describe('mockups', () => {
+  it.each(newPages.map((e) => [e.dir, e] as const))(
+    '%s is not a migration port, so it has its approved mockup',
+    (_, e) => {
+      const slug = e.locale === 'en' ? e.slug : `${e.locale}-${e.slug}`
+      expect(
+        fs.existsSync(path.join(root, slug, 'sections.html')),
+        `content/${e.dir} (${e.path}) is a new page: build it from an approved mockups/${slug}/sections.html (the page skill)`,
+      ).toBe(true)
+    },
+  )
+
   it.each(slugs)('%s passes the ds:review checks', (slug) => {
     const html = fs.readFileSync(path.join(root, slug, 'sections.html'), 'utf8')
     const { errors, labels } = prepareSections(html, path.join(root, slug, 'img'))

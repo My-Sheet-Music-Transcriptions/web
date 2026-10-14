@@ -12,4 +12,5 @@ Request as typed: $ARGUMENTS
 - A live-site URL in the request means: bring that page over with its copy and pictures (the skill's
   `reference/wordpress.md`), keeping its address.
 - No language named: ask which site, with the English site as the recommended default.
+- Always the mockup first, then the draft PR after their yes, even when they say "just create it".
 - Nothing else named: go straight to Phase 1's questions (which page, what for, what goes on it).
