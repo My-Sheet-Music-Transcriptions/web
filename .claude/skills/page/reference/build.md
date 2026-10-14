@@ -47,7 +47,7 @@ page's `index.tsx` with exactly its props; each `data-proposed` section is built
    shared across languages, the collection's fields (`shortTitle`, `icon`, `group`… for a service). The share picture
    (og:image) is made by the build from the title and description; only when the person wants a photo instead, put
    it in the folder (at least 1200×630) and name it: `og: { image: { src: 'share.jpg', alt: '…' } }`. Structured facts stay in
-   `content/<locale>/data/*.ts`; add the page to `data/nav.ts` / `data/footer.ts` where the preview shows
+   `content/<locale>/data/*.ts`; add the page to `data/menu.json` (the CMS's `<Language> · Menu`) / `data/footer.ts` where the preview shows
    it; its path leaves any legacy-link list by itself (`src/content/paths.generated.json` is generated).
 5. **Look at the real page while building it.** Start `pnpm dev` once in the background (Bash
    `run_in_background`; ready in about ten seconds at http://localhost:3000, every locale under its prefix)

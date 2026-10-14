@@ -234,8 +234,15 @@ describe('Decap configuration', () => {
     for (const c of homes)
       expect(c.files?.[0]?.file).toMatch(/^content\/\w+\/pages\/home\/page\.json$/)
   })
+  it('has a Menu entry for each language with its own menu', () => {
+    const menus = collections.filter((c) => c.name.startsWith('menu-'))
+    expect(menus.map((c) => c.name)).toEqual(
+      LOCALES.filter((l) => fs.existsSync(`content/${l}/data/menu.json`)).map((l) => `menu-${l}`),
+    )
+    expect(menus.map((c) => c.name)).toEqual(expect.arrayContaining(['menu-en', 'menu-es']))
+  })
   it('opens every page with the meta fields (then a service’s own), then its blocks', () => {
-    for (const c of collections)
+    for (const c of collections.filter((c) => !c.name.startsWith('menu-')))
       for (const fields of c.fields ? [c.fields] : (c.files ?? []).map((f) => f.fields))
         expect(fields.map((f) => f.name)).toEqual([
           ...Object.keys(metaFields),

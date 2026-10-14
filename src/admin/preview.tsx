@@ -7,6 +7,7 @@ import { MotionProvider } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { type BlockBrand, BlockPage, type BlockWords } from '~/content/BlockPage'
 import { resolveBlock, splitDataPage } from '~/content/data-page'
+import { menuToNav, parseMenu } from '~/content/menu'
 import { CMS_LOCALES } from './locales'
 import { type Decap, registerWidgets } from './widgets'
 
@@ -82,12 +83,63 @@ function render(el: Element, data: unknown, assetUrl: (file: string) => string, 
   } catch (e) {
     node = <pre style={{ padding: 24, whiteSpace: 'pre-wrap' }}>{String(e)}</pre>
   }
+  draw(el, node)
+}
+
+function draw(el: Element, node: React.ReactNode) {
   let root = roots.get(el)
   if (!root) {
     root = createRoot(el)
     roots.set(el, root)
   }
   root.render(node)
+}
+
+/** A language's menu (`menu-<locale>`) as an outline: each item, its sections and their links, and where each goes. */
+function renderMenu(el: Element, data: unknown) {
+  let node: React.ReactNode
+  try {
+    const nav = menuToNav(parseMenu({ items: [], ...(data as object) }, 'the menu being edited'))
+    const to = (href?: string) => href && <small style={{ color: '#667' }}> → {href}</small>
+    node = (
+      <ol
+        style={{
+          padding: '24px 24px 24px 48px',
+          listStyle: 'decimal',
+          lineHeight: 1.6,
+          fontFamily: 'Montserrat Variable, sans-serif',
+        }}
+      >
+        {nav.map((item) => (
+          <li key={`${item.label} ${item.href}`}>
+            <strong>{item.label}</strong>
+            {to(item.href)}
+            {item.groups && (
+              <ul style={{ paddingLeft: 24, listStyle: 'disc' }}>
+                {item.groups.map((g) => (
+                  <li key={`${g.title} ${g.href}`}>
+                    {g.title}
+                    {to(g.href)}
+                    <ul style={{ paddingLeft: 24, listStyle: 'circle' }}>
+                      {g.links.map((l) => (
+                        <li key={`${l.label} ${l.href}`}>
+                          {l.label}
+                          {to(l.href)}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ol>
+    )
+  } catch (e) {
+    node = <pre style={{ padding: 24, whiteSpace: 'pre-wrap' }}>{String(e)}</pre>
+  }
+  draw(el, node)
 }
 
 // Decap's globals (decap-cms.js, loaded first by src/admin/index.html).
@@ -113,10 +165,12 @@ if (decap.CMS && decap.createClass && decap.h) {
   CMS.registerPreviewStyle(
     new URL('preview.css', (document.currentScript as HTMLScriptElement).src).href,
   )
-  // One per collection of pages, and per homepage (a file collection's template goes by its file's name).
+  // One per collection of pages, per homepage and per menu (a file collection's template goes by its file's name).
   for (const [name, locale] of CMS_LOCALES.flatMap(({ code }) => [
     [`pages-${code}`, code] as const,
+    [`services-${code}`, code] as const,
     [`home-${code}`, code] as const,
+    [`menu-${code}`, code] as const,
   ]))
     CMS.registerPreviewTemplate(
       name,
@@ -130,7 +184,8 @@ if (decap.CMS && decap.createClass && decap.h) {
         draw(this: { el?: Element; props: DecapPreviewProps }) {
           if (!this.el) return
           const data = this.props.entry.getIn(['data'])?.toJS()
-          render(this.el, data, (file) => this.props.getAsset(file).toString(), locale)
+          if (name.startsWith('menu-')) renderMenu(this.el, data)
+          else render(this.el, data, (file) => this.props.getAsset(file).toString(), locale)
         },
         render(this: { el?: Element }) {
           return h('div', {

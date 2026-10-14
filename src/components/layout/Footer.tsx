@@ -262,15 +262,19 @@ export function Footer({
               </li>
             ))}
           </ul>
-          <h2 className={cn(heading, 'mt-6')}>{s.providedBy}</h2>
-          <a href={footer.providedBy.href} rel="noopener" className="mt-[7px] block">
-            <Picture
-              image={footer.providedBy.image}
-              alt={footer.providedBy.alt}
-              sizes="192px"
-              className="mx-auto h-[47px] w-[192px] md:h-[41px] md:w-[167px]"
-            />
-          </a>
+          {footer.providedBy ? (
+            <>
+              <h2 className={cn(heading, 'mt-6')}>{s.providedBy}</h2>
+              <a href={footer.providedBy.href} rel="noopener" className="mt-[7px] block">
+                <Picture
+                  image={footer.providedBy.image}
+                  alt={footer.providedBy.alt}
+                  sizes="192px"
+                  className="mx-auto h-[47px] w-[192px] md:h-[41px] md:w-[167px]"
+                />
+              </a>
+            </>
+          ) : null}
           {footer.badges.map((b) => (
             <Picture
               key={b.alt}

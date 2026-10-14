@@ -18,7 +18,7 @@ import { useSite } from '~/site'
 
 /**
  * The app's side of the site chrome: it reads the locale's config (src/i18n/sites/<locale>.ts), its data
- * (content/<locale>/data/{nav,footer}.ts) and the brand files, and passes them to the layout components,
+ * (content/<locale>/data/menu.json and footer.ts) and the brand files, and passes them to the layout components,
  * which hold no words or pictures of their own. The design-system bundle mounts these same pieces.
  */
 
@@ -100,7 +100,8 @@ export function SiteFooter() {
 }
 
 export function SiteConsent() {
-  const s = useSite().strings.cookies
+  const site = useSite()
+  const s = site.strings.cookies
   return (
     <ConsentBanner
       title={s.title}
@@ -108,8 +109,8 @@ export function SiteConsent() {
       accept={s.accept}
       deny={s.deny}
       links={[
-        { label: s.cookiesPolicy, href: '/cookies' },
-        { label: s.privacyPolicy, href: '/gdpr' },
+        { label: s.cookiesPolicy, href: site.routes.cookies },
+        { label: s.privacyPolicy, href: site.routes.privacy },
       ]}
     />
   )

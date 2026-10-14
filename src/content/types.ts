@@ -201,8 +201,8 @@ export interface FooterData {
   paymentText: string
   /** The accepted-payment-methods strip (an SVG URL) and its alt text. */
   payment: { image: string; alt: string }
-  /** The "provided by" mark, linked. */
-  providedBy: LogoPicture & { href: string }
+  /** The "provided by" mark, linked (the Spanish site shows none). */
+  providedBy?: LogoPicture & { href: string }
   /** Further marks under it (ACCIÓ). */
   badges: LogoPicture[]
 }

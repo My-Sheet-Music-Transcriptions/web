@@ -25,6 +25,7 @@ For anything Decap itself does (options, widgets, collections, i18n, media, the 
 | `content/<locale>/data/brand.ts` | Brand pictures (photo bands, the lockup) named so data fields can offer them. |
 | `src/content/cms-fields.ts` | The field DSL (`line`, `prose`, `picture`, `pictureFile`, `sound`, `data`, `select`, `toggle`, `number`, `group`, `list`, `listOf`, `tableRows`, `faqGroups`), `decapField` (DSL → Decap field; `decap: {…}` passes raw Decap options last), the check of what is stored and `decodeFields` (names → pictures, recordings and data, then each field's decoder). |
 | `src/content/data-page.ts`, `BlockPage.tsx`, `scripts/lib/vite-data-pages.ts` | Reading, checking and rendering `page.json` on the site. |
+| `src/content/menu.ts`, `content/<locale>/data/menu.json` | A language's main menu (`<Language> · Menu`, a file collection with its form in `menuFields` of `config.ts`): items, sections, links; each link a `page` (a select of every page of the language, hand-built included, listed when the admin is built) or an `href`. Checked by zod and `checkSlugs`; the preview draws it as an outline. |
 | `src/admin/preview.tsx` | The editor's live preview with the real blocks, and `registerWidgets`. |
 | `src/admin/widgets.ts` | Our widgets: `translation-key` (suggests existing keys, shows the linked translations, refuses a duplicate in the same language) and `image` (Decap's own, remounted once the picture has loaded so thumbnails show in lists). |
 | `src/admin/index.html`, `vite.admin.config.ts` | The admin page (absolute `/admin/...` paths) and its build: config.yml, scripts, `logo.svg`. |
@@ -56,6 +57,9 @@ relative imports **with** `.ts` extensions and `import type` for everything else
 - **The homepage** of a language appears as `<Language> · Home` (a file collection, §2.3 of the reference) as soon as
   its `pages/home/page.json` exists; it is also listed under Pages (Decap's `filter` cannot exclude one entry). Other
   singletons follow the same pattern: the file must exist first.
+- **The menu**: the shape is `src/content/menu.ts` (schema, `menuToNav`); a field there goes into `menuFields` in
+  `config.ts` too. A language gets a `<Language> · Menu` entry once it has `content/<locale>/data/menu.json`
+  (until then it shows the English menu): copy the English file and translate it, picking that language's pages.
 - **A widget**: write it in `widgets.ts` with Decap's `createClass` / `h` globals (Decap renders with its own React)
   and register it in `registerWidgets`; reference it from a field with `decap: { widget: '<name>' }`.
 

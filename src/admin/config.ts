@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import { readAllEntries } from '../../scripts/lib/content-fs.ts'
 import { cmsBlocks } from '../components/blocks/cms.ts'
 import type { AnyCmsBlock, Field } from '../content/cms-fields.ts'
 import { decapField } from '../content/cms-fields.ts'
@@ -47,6 +48,78 @@ const serviceFormFields = fieldsOf({ ...metaFields, ...serviceFields })
 /** A language's homepage, when it is a data page (run from the repository root, as the build and tests are). */
 const homeFile = (locale: string) => `content/${locale}/pages/home/page.json`
 
+/** A language's main menu (src/content/menu.ts). */
+const menuFile = (locale: string) => `content/${locale}/data/menu.json`
+const entries = readAllEntries()
+
+/**
+ * The menu's form. Each link picks a page of the language (every page in content/, hand-built ones included, as the
+ * site has them when the CMS was built) or takes an address; the order of each list is the order on the site.
+ */
+function menuFields(locale: string) {
+  const options = entries
+    .filter((e) => e.locale === locale)
+    .map((e) => ({
+      label: `${'shortTitle' in e.meta ? e.meta.shortTitle : e.meta.title} (${e.path})`,
+      value: e.path,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label, locale))
+  const label = (hint: string) => ({ name: 'label', label: 'Label', widget: 'string', hint })
+  const page = {
+    name: 'page',
+    label: 'Page',
+    widget: 'select',
+    required: false,
+    options,
+    hint: 'A page of this language. Leave it empty to write an address instead.',
+  }
+  const href = {
+    name: 'href',
+    label: 'Address',
+    widget: 'string',
+    required: false,
+    hint: 'Only when no page is picked: a page not on the new site yet (/pricing) or another site (https://…).',
+  }
+  const links = {
+    name: 'links',
+    label: 'Links',
+    label_singular: 'link',
+    widget: 'list',
+    required: false,
+    collapsed: true,
+    summary: '{{fields.label}}',
+    fields: [label('The words in the menu.'), page, href],
+  }
+  const sections = {
+    name: 'sections',
+    label: 'Sections',
+    label_singular: 'section',
+    widget: 'list',
+    required: false,
+    collapsed: true,
+    summary: '{{fields.label}}',
+    hint: 'The panel that opens from this item: one heading per section, with its links under it.',
+    fields: [
+      label('The heading of the section.'),
+      { ...page, hint: 'Optional: the page the heading opens.' },
+      href,
+      links,
+    ],
+  }
+  return [
+    {
+      name: 'items',
+      label: 'Menu items',
+      label_singular: 'menu item',
+      widget: 'list',
+      collapsed: true,
+      summary: '{{fields.label}}',
+      hint: 'Drag to reorder: the order here is the order on the site.',
+      fields: [label('The words in the menu bar.'), page, href, sections],
+    },
+  ]
+}
+
 export const decapConfig = {
   backend: {
     name: 'git-gateway',
@@ -67,8 +140,8 @@ export const decapConfig = {
   // The brand on the login page (Decap 3.17's `show_in_header` draws nothing).
   logo: { src: '/admin/logo.svg' },
   // A page's language is the collection it is in, so that a language's collections sit together in the sidebar:
-  // `<Language> · Home` (a single entry: the language's homepage, once it is a data page), then `<Language> · Pages` and
-  // `<Language> · Services`.
+  // `<Language> · Home` (a single entry: the language's homepage, once it is a data page), `<Language> · Menu` (the
+  // main menu, once the language has its own), then `<Language> · Pages` and `<Language> · Services`.
   collections: CMS_LOCALES.flatMap(({ code, label }) => [
     ...(fs.existsSync(homeFile(code))
       ? [
@@ -79,6 +152,23 @@ export const decapConfig = {
             media_folder: '',
             public_folder: '',
             files: [{ name: `home-${code}`, label: 'Homepage', file: homeFile(code), fields }],
+          },
+        ]
+      : []),
+    ...(fs.existsSync(menuFile(code))
+      ? [
+          {
+            name: `menu-${code}`,
+            label: `${label} · Menu`,
+            description: `The main menu in ${label}: its items, the sections of each panel and their links.`,
+            files: [
+              {
+                name: `menu-${code}`,
+                label: 'Menu',
+                file: menuFile(code),
+                fields: menuFields(code),
+              },
+            ],
           },
         ]
       : []),

@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import fg from 'fast-glob'
 import { DATA_PAGE_FILE, splitDataPage } from '../../src/content/data-page.ts'
+import { menuPages, parseMenu } from '../../src/content/menu.ts'
 import {
   COLLECTIONS,
   type Collection,
@@ -113,7 +114,10 @@ export function entriesFor(locale: Locale): FsEntry[] {
   return readAllEntries().filter((e) => e.locale === locale && !e.meta.draft)
 }
 
-/** Fails on duplicate public paths within a locale and on reserved slugs. */
+/**
+ * Fails on duplicate public paths within a locale, on reserved slugs, and on a menu (content/<locale>/data/menu.json)
+ * that is invalid or points at a page its language does not have.
+ */
 export function checkSlugs(all = readAllEntries()): string[] {
   const problems: string[] = []
   for (const locale of LOCALES) {
@@ -130,6 +134,30 @@ export function checkSlugs(all = readAllEntries()): string[] {
       if (e.collection === 'pages' && e.slug === 'home' && e.meta.translationKey !== 'home')
         problems.push(`${locale}: pages/home must have translationKey "home"`)
     }
+  }
+  return [...problems, ...checkMenus(all)]
+}
+
+function checkMenus(all: FsEntry[]): string[] {
+  const problems: string[] = []
+  for (const locale of LOCALES) {
+    const file = `${CONTENT_DIR}/${locale}/data/menu.json`
+    if (!fs.existsSync(file)) continue
+    let pages: ReturnType<typeof menuPages>
+    try {
+      pages = menuPages(parseMenu(JSON.parse(fs.readFileSync(file, 'utf8')), file))
+    } catch (e) {
+      problems.push((e as Error).message)
+      continue
+    }
+    const paths = new Set(
+      all.filter((e) => e.locale === locale && !e.meta.draft).map((e) => e.path),
+    )
+    for (const { page, at } of pages)
+      if (!paths.has(page))
+        problems.push(
+          `${file} ${at}: ${locale} has no page ${page} (pick another, or write it as an address)`,
+        )
   }
   return problems
 }
