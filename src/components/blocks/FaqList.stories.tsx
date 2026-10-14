@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { faqGroup } from '~/stories/data'
 import { revealed } from '~/stories/play'
 import { FaqList, type FaqListProps } from './FaqList'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Lists & grids/FaqList',
   component: FaqList,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('FaqList') },
   args: storyArgs<FaqListProps>('FaqList'),
 } satisfies Meta<typeof FaqList>
 export default meta

@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { sample } from '~/stories/samples'
 import { PictureGrid, type PictureGridProps } from './PictureGrid'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Lists & grids/PictureGrid',
   component: PictureGrid,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('PictureGrid') },
   args: storyArgs<PictureGridProps>('PictureGrid'),
 } satisfies Meta<typeof PictureGrid>
 export default meta

@@ -21,9 +21,9 @@ For anything Decap itself does (options, widgets, collections, i18n, media, the 
 | `src/admin/config.ts` | `decapConfig`, written as `/admin/config.yml` by `vite.admin.config.ts`. Backend, logo, one collection per language. |
 | `src/admin/locales.ts` | `CMS_LOCALES`: the languages, in sidebar order. A collection, a preview template and the key widget each. |
 | `src/content/cms-meta.ts` | `metaFields`: the fields every page opens with (title, description, translation key, SEO, share card, noindex, draft, updated), typed by `baseSchema`. |
-| `src/components/blocks/cms.ts` | `cmsBlocks`: the blocks writers can add and their fields, typed by each block's props; presets (`preset`); `fromData`. |
+| `src/components/blocks/cms.ts` | `cmsBlocks`: every block of the catalogue, in its order, with the fields writers fill in, typed by each block's props; presets (`preset`); `fromData`. |
 | `content/<locale>/data/brand.ts` | Brand pictures (photo bands, the lockup) named so data fields can offer them. |
-| `src/content/cms-fields.ts` | The field DSL (`line`, `prose`, `picture`, `pictureFile`, `select`, `toggle`, `number`, `group`, `list`, `listOf`, `tableRows`), `decapField` (DSL → Decap field; `decap: {…}` passes raw Decap options last) and the zod check made from the same list. |
+| `src/content/cms-fields.ts` | The field DSL (`line`, `prose`, `picture`, `pictureFile`, `sound`, `data`, `select`, `toggle`, `number`, `group`, `list`, `listOf`, `tableRows`, `faqGroups`), `decapField` (DSL → Decap field; `decap: {…}` passes raw Decap options last), the check of what is stored and `decodeFields` (names → pictures, recordings and data, then each field's decoder). |
 | `src/content/data-page.ts`, `BlockPage.tsx`, `scripts/lib/vite-data-pages.ts` | Reading, checking and rendering `page.json` on the site. |
 | `src/admin/preview.tsx` | The editor's live preview with the real blocks, and `registerWidgets`. |
 | `src/admin/widgets.ts` | Our widgets: `translation-key` (suggests existing keys, shows the linked translations, refuses a duplicate in the same language) and `image` (Decap's own, remounted once the picture has loaded so thumbnails show in lists). |
@@ -35,9 +35,12 @@ relative imports **with** `.ts` extensions and `import type` for everything else
 
 ## Recipes
 
-- **Offer a block**: add it to `cmsBlocks` with the props a writer should set (words and pictures; data lists such as
-  prices and reviews stay in code). A field that does not fit the prop, or a missing required one, does not compile.
-  `pictureWidths` sets the srcset; `words` names the shared labels from `content/<locale>/data/labels.ts` it needs.
+- **Offer a block**: add it to `cmsBlocks`, in catalogue order, with the props a writer should set: words and
+  pictures of the page folder, recordings (`sound`, an mp3 of the folder) and the lists kept in code (below). A field
+  that does not fit the prop, or a missing required one, does not compile; the test checks the CMS offers every
+  block of the catalogue. `pictureWidths` sets the srcset; `words` names the shared labels from
+  `content/<locale>/data/labels.ts` it needs. A prop the CMS cannot edit as the block takes it gets a builder with a
+  `decode` (as `tableRows` and `faqGroups` do): the decoder runs on the stored value once its names are resolved.
 - **A list kept in code** (reviews, prices, a form, a brand picture): a data field,
   `fromData('Reviews', { homeReviews: 'reviews' })` (export name: its file in `content/<locale>/data`). It is typed
   by what the English file exports, the page stores the name, and the site, the preview and the content test resolve
@@ -62,8 +65,9 @@ separate collections instead.
 
 ## Checks
 
-- `tests/unit/data-page.test.tsx`: the config offers exactly `cmsBlocks`, one collection per site language, meta fields
-  first; every `page.json` validates; the DSL's types refuse what does not fit (`@ts-expect-error` lines).
+- `tests/unit/data-page.test.tsx`: the config offers every block of the catalogue (then the presets), one collection
+  per site language, meta fields first; every `page.json` validates; names resolve (pictures, recordings, data, FAQ
+  groups, a preset's props); the DSL's types refuse what does not fit (`@ts-expect-error` lines).
 - Try it locally: `pnpm build && pnpm serve:dist`, `pnpm dlx decap-server` in another terminal, then
   http://localhost:4173/admin/ (`local_backend` writes straight to the working copy, no login). Look at the result in
   headless Chromium (`executablePath: '/opt/pw-browsers/chromium'`) before saying a UI change works.

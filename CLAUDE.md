@@ -46,12 +46,13 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   `src/content/BlockPage.tsx`, the Vite plugin `scripts/lib/vite-data-pages.ts`), and people edit it in Decap CMS at
   `/admin` (`src/admin/`: `config.ts` becomes Decap's `config.yml` at build, `preview.tsx` renders the entry with the
   real blocks; built by `vite.admin.config.ts` into `dist/client/admin`; Netlify Identity logins, every save a PR).
-  The blocks the CMS offers and what writers fill in on each are `src/components/blocks/cms.ts`, fields typed by the
-  block's props (`src/content/cms-fields.ts`: a field that does not fit its prop does not compile); Decap's forms,
-  the check of every `page.json` (build and unit tests) and its rendering are all made from it. To offer a block in
-  the CMS, add it there; a preset (`ServiceGrid`, `PictureStrip`) is another entry for the same block with props
-  of its own. Lists kept in code (reviews, prices, forms, brand pictures in `content/<locale>/data/brand.ts`) are data
-  fields: the page stores the export's name and gets the export of its locale. Every page opens with the same meta fields (`src/content/cms-meta.ts`, typed by the meta
+  Every block of the catalogue is offered, and what writers fill in on each is `src/components/blocks/cms.ts`, fields
+  typed by the block's props (`src/content/cms-fields.ts`: a field that does not fit its prop does not compile);
+  Decap's forms, the check of every `page.json` (build and unit tests) and its rendering are all made from it. A new
+  block is added there too (the test fails until it is); a preset (`ServiceGrid`, `PictureStrip`, `Cards`) is another
+  entry for the same block with props of its own. Lists kept in code (reviews, prices, shared questions, forms, brand
+  pictures in `content/<locale>/data/brand.ts`) are data fields: the page stores the export's name and gets the export
+  of its locale. Recordings (mp3) sit in the page folder like pictures. Every page opens with the same meta fields (`src/content/cms-meta.ts`, typed by the meta
   schema); a page's language is its collection, one per language (`src/admin/locales.ts`); our own widgets
   (translation-key suggestions, picture thumbnails) are `src/admin/widgets.ts`. The `cms` skill says how to change
   any of it and carries a Decap reference. A folder is one

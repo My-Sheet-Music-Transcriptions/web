@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, waitFor, within } from 'storybook/test'
 import { revealed } from '~/stories/play'
 import { RatingBanner, type RatingBannerProps } from './RatingBanner'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Reviews & ratings/RatingBanner',
   component: RatingBanner,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('RatingBanner') },
   args: storyArgs<RatingBannerProps>('RatingBanner'),
 } satisfies Meta<typeof RatingBanner>
 export default meta

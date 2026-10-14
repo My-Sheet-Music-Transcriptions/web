@@ -67,6 +67,7 @@ function render(el: Element, data: unknown, assetUrl: (file: string) => string, 
       .map((b) =>
         resolveBlock(b, {
           picture: (file) => pictureOf(assetUrl(file), again),
+          file: assetUrl,
           data: (file, name) => dataOf(locale, file)[name],
         }),
       )

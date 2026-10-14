@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Section, type SectionProps } from './Section'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 
 const meta = {
   title: 'Blocks/Text & media/Section',
   component: Section,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('Section') },
   args: storyArgs<SectionProps>('Section'),
 } satisfies Meta<typeof Section>
 export default meta

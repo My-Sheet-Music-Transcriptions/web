@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { revealed } from '~/stories/play'
-import { storyArgs } from './story-args'
+import { blockDocs, storyArgs } from './story-args'
 import { Testimonials, type TestimonialsProps } from './Testimonials'
 
 const meta = {
   title: 'Blocks/Reviews & ratings/Testimonials',
   component: Testimonials,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...blockDocs('Testimonials') },
   args: storyArgs<TestimonialsProps>('Testimonials'),
 } satisfies Meta<typeof Testimonials>
 export default meta

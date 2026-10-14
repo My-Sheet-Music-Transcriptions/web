@@ -120,8 +120,10 @@ export const catalogue = {
   },
   Samples: {
     category: 'text',
-    useWhen: 'Showing our work: a recording beside the first page of the score we wrote.',
-    notFor: 'a single video with prose: MediaText `video`.',
+    useWhen:
+      'Showing our work: a recording beside the first page of the score we wrote; priced, a pricing chart.',
+    notFor:
+      'a single video with prose: MediaText `video`; prices with their factors: PricingCards.',
     defaults: {
       labels: mediaLabels,
       items: [
@@ -138,10 +140,11 @@ export const catalogue = {
       ],
     },
     usage:
-      '<Samples items={[{ title: "…", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />\n<Samples variant="columns" items={[{ title: "…", icon: pianoIcon, name: "Piano", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />',
+      '<Samples items={[{ title: "…", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />\n<Samples variant="columns" items={[{ title: "…", icon: pianoIcon, name: "Piano", video: { youtube: "…", title: "…" }, image: score, alt: "…" }]} />\n<Samples variant="columns" title="Pricing chart for piano" tabs={[{ label: "USD", items: [{ title: "Easy", tone: "teal", price: { from: "$22-24 USD", unit: "price per minute of music" }, audio: { src: easyMp3, title: "…" }, image: score, alt: "…", href: "/piano", linkLabel: "Go to the piano page" }] }]} />',
     dataSource: 'content/<locale>/data/labels.ts (mediaLabels)',
     previewHeight: 640,
-    guidelines: 'Scores live in the page folder (first page, PNG). Two to four samples.',
+    guidelines:
+      'Scores live in the page folder (first page, PNG), recordings too (mp3). Two to six samples. A pricing chart is `variant="columns"` with a `price` per sample and `tabs` per currency; its prices live in content/<locale>/data like every other price.',
   },
   Table: {
     category: 'text',
@@ -174,7 +177,7 @@ export const catalogue = {
       items: included,
     },
     usage:
-      '<CardGrid title="What\'s included?" image={studioBand} items={included} />\n<CardGrid title="Who do we work for?" variant="tile" columns={4} items={audiences} />',
+      '<CardGrid title="What\'s included?" image={studioBand} items={included} />\n<CardGrid title="Who do we work for?" variant="tile" columns={4} items={audiences} />\n<CardGrid title="Available discounts" variant="plain" columns={5} items={[{ title: "Bulk orders", body: "5-20% discounts for bulk orders", icon: bulkIcon }]} />\n<CardGrid title="Services & Pricing" tabs={[{ label: "$", items: […] }, { label: "€", items: […] }]} />',
     previewHeight: 700,
     dataSource: 'content/<locale>/data/services.ts (included), home.ts (audiences)',
     guidelines:

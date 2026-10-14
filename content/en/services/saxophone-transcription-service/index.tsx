@@ -106,7 +106,7 @@ export default function SaxophoneTranscriptionServicePage() {
 
       <PricingCards
         title="Flexible pricing for saxophone"
-        tiers={[saxophonePricing]}
+        tiers={saxophonePricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 

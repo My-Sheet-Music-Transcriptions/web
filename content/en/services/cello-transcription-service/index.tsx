@@ -106,7 +106,7 @@ export default function CelloTranscriptionServicePage() {
 
       <PricingCards
         title="Flexible pricing for cello"
-        tiers={[celloPricing]}
+        tiers={celloPricing}
         cta={{ label: 'Request your sheet music', href: '#contact' }}
       />
 
