@@ -52,12 +52,10 @@ const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
  * highlight and the floating rating card. It drifts in as the page opens.
  */
 export function PageHeader(props: PageHeaderProps) {
-  // As the page opens each piece comes in from the side its variant calls for: the band's centred copy rises
-  // and its rule draws itself, then the icon settles and the rating card rises under it; a split header's copy
-  // comes from the left and its picture from the right; the homepage's copy from the left, its photos sliding
-  // in behind their curve (then lagging behind it on scroll) and its floating card rising last. CSS
-  // (`entrance-*` and `parallax` in theme.css), never `reveal`, which would hide the header, the page's largest
-  // paint, until the JavaScript loads.
+  // The text and pictures stand still; as the page opens only the rating card rises into place, a beat later,
+  // and the homepage's photos lag behind their curve as the page scrolls. CSS (`entrance` and
+  // `parallax` in theme.css), never `reveal`, which would hide the header, the page's largest paint, until
+  // the JavaScript loads.
   const { variant = 'band' } = props
   if (variant === 'photo') return <PhotoHeader {...props} />
   if (variant === 'split') return <SplitHeader {...props} />
@@ -76,40 +74,29 @@ function BandHeader({
   id,
 }: PageHeaderProps) {
   return (
-    <header id={id} className="overflow-x-clip">
+    <header id={id}>
       <div className="bg-[#434343] px-4 pt-16 pb-20 text-center text-white">
-        <div className="entrance-up">
-          {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
-          <h1 className="mx-auto max-w-4xl text-[32px] font-bold leading-tight text-white md:text-display">
-            {title}
-          </h1>
-          {subtitle ? (
-            <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-relaxed">{subtitle}</p>
-          ) : null}
-          <span
-            aria-hidden="true"
-            className="entrance-rule mx-auto mt-6 block h-px w-[150px] bg-accent"
-          />
-          {lead ? (
-            <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed [&_a]:text-accent-light">
-              {inlineMarkdown(lead)}
-            </p>
-          ) : null}
-          {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
-        </div>
+        {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
+        <h1 className="mx-auto max-w-4xl text-[32px] font-bold leading-tight text-white md:text-display">
+          {title}
+        </h1>
+        {subtitle ? (
+          <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-relaxed">{subtitle}</p>
+        ) : null}
+        <span aria-hidden="true" className="mx-auto mt-6 block h-px w-[150px] bg-accent" />
+        {lead ? (
+          <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed [&_a]:text-accent-light">
+            {inlineMarkdown(lead)}
+          </p>
+        ) : null}
+        {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
       </div>
       {rating || image ? (
         <div className="container-content flex flex-wrap items-center justify-center gap-10 py-10">
           {image ? (
-            <Picture
-              image={image}
-              alt={alt}
-              sizes="180px"
-              className="h-[180px] w-auto"
-              pictureClassName="entrance-settle entrance-late"
-            />
+            <Picture image={image} alt={alt} sizes="180px" className="h-[180px] w-auto" />
           ) : null}
-          {rating ? <CompactRating source={rating} className="entrance-up entrance-late" /> : null}
+          {rating ? <CompactRating source={rating} className="entrance" /> : null}
         </div>
       ) : null}
     </header>
@@ -131,9 +118,9 @@ function SplitHeader({
 }: PageHeaderProps) {
   const several = !!images && images.length > 1
   return (
-    <header id={id} className="overflow-x-clip bg-white">
+    <header id={id} className="bg-white">
       <div className="container-content grid items-center gap-10 py-12 md:py-16 lg:grid-cols-2">
-        <div className="entrance-left flex flex-col items-start">
+        <div className="flex flex-col items-start">
           {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-deep')}>{eyebrow}</p> : null}
           <h1 className="text-[32px] font-bold leading-tight text-ink md:text-display">{title}</h1>
           {subtitle ? <p className="mt-4 text-[20px] font-bold text-ink">{subtitle}</p> : null}
@@ -141,20 +128,18 @@ function SplitHeader({
             <p className="mt-5 text-[20px] leading-[30px] text-secondary">{inlineMarkdown(lead)}</p>
           ) : null}
           {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
-          {rating ? <CompactRating source={rating} className="mt-8" /> : null}
+          {rating ? <CompactRating source={rating} className="entrance mt-8" /> : null}
         </div>
-        <div className="entrance-right min-w-0">
-          <Media
-            image={image}
-            alt={alt}
-            images={images}
-            labels={labels}
-            label={title}
-            priority
-            sizes="(min-width: 1025px) 560px, 100vw"
-            imageClassName={several ? 'aspect-[3/2]' : 'rounded-card object-cover'}
-          />
-        </div>
+        <Media
+          image={image}
+          alt={alt}
+          images={images}
+          labels={labels}
+          label={title}
+          priority
+          sizes="(min-width: 1025px) 560px, 100vw"
+          imageClassName={several ? 'aspect-[3/2]' : 'rounded-card object-cover'}
+        />
       </div>
     </header>
   )
@@ -186,13 +171,13 @@ function PhotoHeader({
     highlight && title.includes(highlight) ? title.split(highlight) : [title, null]
   const photos = images.map((s) => s.image)
   return (
-    <header id={id} className="relative overflow-x-clip">
+    <header id={id} className="relative">
       {/* Phones: the photos above the copy */}
       <div className="relative aspect-[390/261] overflow-hidden md:hidden">
         <Slideshow slides={mobileImages?.map((s) => s.image) ?? photos} sizes="100vw" />
       </div>
       {/* From tablets up: the photos fill the whole header, cut by the curve that leaves the copy on white. The
-          curve stays put: the photos slide in behind it from the right, then lag behind it as the page scrolls.
+          curve stays put and the photos lag behind it as the page scrolls.
           The header's height, padding, copy width, type and logo all scale with the viewport between 768 and
           1440 (the live site's design width, where every clamp lands on its design pixel), so the curve keeps
           the same proportions on a tablet or a laptop */}
@@ -201,14 +186,12 @@ function PhotoHeader({
         style={{ maskImage: photoCut, WebkitMaskImage: photoCut }}
       >
         <div className="parallax absolute inset-0">
-          <div className="entrance-behind absolute inset-0">
-            <Slideshow slides={photos} sizes="100vw" />
-          </div>
+          <Slideshow slides={photos} sizes="100vw" />
         </div>
       </div>
       <div className="relative">
         <div className="mx-auto flex max-w-[1440px] flex-col px-[14px] pt-[132px] pb-[77px] md:min-h-[clamp(520px,53.2vw,765px)] md:justify-center md:px-[clamp(24px,6.05vw,86px)] md:py-10">
-          <div className="entrance-left max-w-[459px] md:max-w-[clamp(300px,32vw,459px)]">
+          <div className="max-w-[459px] md:max-w-[clamp(300px,32vw,459px)]">
             {logo ? (
               <Logo
                 logo={logo}
@@ -239,7 +222,7 @@ function PhotoHeader({
           </div>
         </div>
         {rating ? (
-          <div className="entrance-up entrance-late absolute right-[clamp(24px,8.4vw,120px)] bottom-[25px] z-20 hidden w-[clamp(240px,20.9vw,300px)] md:block">
+          <div className="entrance absolute right-[clamp(24px,8.4vw,120px)] bottom-[25px] z-20 hidden w-[clamp(240px,20.9vw,300px)] md:block">
             <CompactRating source={rating} />
           </div>
         ) : null}
