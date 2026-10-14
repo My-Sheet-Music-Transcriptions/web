@@ -1,0 +1,19 @@
+import studioBandPicture from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
+import pianoBandPicture from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import logoFile from '~/assets/images/brand/lockup-es.png?format=png&as=url'
+import type { BrandLogo } from '~/content/types'
+
+/** Brand pictures a page passes to blocks, named so CMS pages can pick them (src/components/blocks/cms.ts). */
+
+/** The piano behind the ratings band. */
+export const pianoBand = pianoBandPicture
+
+/** The studio behind "¿Qué se incluye?". */
+export const studioBand = studioBandPicture
+
+/** The Spanish lockup above the homepage title, with its words. */
+export const logo: BrandLogo = {
+  image: logoFile,
+  alt: 'Logo de Mis Transcripciones Musicales by My Sheet Music Transcriptions',
+  label: 'Mis Transcripciones Musicales – inicio',
+}

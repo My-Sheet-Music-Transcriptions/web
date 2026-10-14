@@ -14,3 +14,8 @@ declare module '*.svg' {
   const src: string
   export default src
 }
+/** One file's URL (`?format=png&as=url`): a picture shown as it is, such as a lockup in PNG. */
+declare module '*&as=url' {
+  const src: string
+  export default src
+}

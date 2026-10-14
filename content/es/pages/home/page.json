@@ -1,0 +1,229 @@
+{
+  "title": "Transcripción de partituras - Mis Transcripciones Musicales",
+  "description": "Servicio de transcripción de partituras por encargo. Realizado por transcriptores musicales profesionales. Preciso al 100%, personalizado, nota a nota.",
+  "translationKey": "home",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "photo",
+      "title": "El servicio online de transcripción de partituras número #1",
+      "highlight": "#1",
+      "lead": "Consigue una partitura precisa y de calidad con nuestro servicio de transcripción realizado nota a nota por transcriptores profesionales.",
+      "cta": {
+        "label": "¡Pide tu partitura ahora!",
+        "href": "#contact"
+      },
+      "images": [
+        {
+          "image": "hero-slide-1.webp"
+        },
+        {
+          "image": "hero-slide-6.webp"
+        },
+        {
+          "image": "hero-slide-2.webp"
+        },
+        {
+          "image": "hero-slide-4.webp"
+        },
+        {
+          "image": "hero-slide-3.webp"
+        },
+        {
+          "image": "hero-slide-5.webp"
+        }
+      ],
+      "mobileImages": [
+        {
+          "image": "hero-slide-mobile-1.webp"
+        },
+        {
+          "image": "office-piano-transcribers.webp"
+        },
+        {
+          "image": "hero-slide-mobile-3.webp"
+        },
+        {
+          "image": "hero-slide-mobile-4.webp"
+        },
+        {
+          "image": "hero-slide-mobile-5.webp"
+        }
+      ],
+      "rating": "google",
+      "logo": "logo"
+    },
+    {
+      "type": "Steps",
+      "reveal": true,
+      "id": "how-it-works",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "illustration": "how-it-works.jpg",
+      "illustrationAlt": "Tres pasos: envíanos un audio, lo transcribimos por ti, imprime el PDF y a tocar",
+      "items": [
+        {
+          "title": "1. Envíanos un audio",
+          "body": "Rápidamente te enviaremos un presupuesto y una estimación del tiempo de entrega",
+          "image": "step-1-send-audio.png",
+          "imageWidth": 177
+        },
+        {
+          "title": "2. Lo transcribimos por ti",
+          "body": "Transcribimos la música nota por nota y preparamos la partitura para ti siguiendo tus instrucciones.",
+          "image": "step-2-transcribe.png",
+          "imageWidth": 188
+        },
+        {
+          "title": "3. Imprime y a tocar",
+          "body": "Ya sea en formato físico o digital, ya puedes usar en pdf y XML tu partitura para tocarla o para lo que quieras.",
+          "image": "step-3-print-play.jpg",
+          "imageWidth": 112
+        }
+      ]
+    },
+    {
+      "type": "ServiceGrid",
+      "reveal": true,
+      "title": "Transcribimos cualquier instrumento y género musical",
+      "items": "allServices"
+    },
+    {
+      "type": "RatingBanner",
+      "reveal": true,
+      "image": "pianoBand",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "homeRatings"
+    },
+    {
+      "type": "Testimonials",
+      "reveal": true,
+      "title": "Las opiniones de nuestros clientes",
+      "items": "homeReviews",
+      "cta": {
+        "label": "Ver todas las opiniones",
+        "href": "/opiniones"
+      }
+    },
+    {
+      "type": "PricingCards",
+      "reveal": true,
+      "title": "Precios flexibles",
+      "tiers": "pricingTiers",
+      "cta": {
+        "label": "Ver todos los precios",
+        "href": "/precios"
+      },
+      "body": "Hay opciones y precios para todos los bolsillos. Cuantos más instrumentos y más larga o compleja es una pieza, más se tarda en transcribir. Cuanto más sencilla y esquemática puede ser la notación requerida, menos se tarda.\n\nTu partitura será **100% personalizada, adaptada a tus necesidades, y elaborada nota a nota manualmente por nuestros transcriptores profesionales.** El proceso estará coordinado por nuestro equipo de atención al cliente que te mantendrá informado en todo momento.\n\nSomos un equipo de músicos profesionales, intérpretes, editores, y musicólogos con amplia experiencia y nos esforzamos para proporcionar **transcripciones de la más alta calidad** y **el mejor servicio al cliente.**\n\nLas revisiones y transposiciones están incluidas en el precio, así como todos los formatos digitales que necesites.\n\nAquí tienes una pequeña referencia de precios, pero no dudes en contactarnos para propuestas a medida:"
+    },
+    {
+      "type": "CardGrid",
+      "reveal": true,
+      "title": "¿Qué se incluye?",
+      "image": "studioBand",
+      "items": "included"
+    },
+    {
+      "type": "MediaText",
+      "reveal": true,
+      "title": "¿Quiénes somos?",
+      "align": "center",
+      "imageSide": "left",
+      "images": [
+        {
+          "image": "office-9.jpg",
+          "alt": "El equipo de atención al cliente en la oficina de Mis Transcripciones Musicales"
+        },
+        {
+          "image": "team-1.jpg",
+          "alt": "El equipo de Mis Transcripciones Musicales trabajando en la oficina"
+        },
+        {
+          "image": "office-10.jpg",
+          "alt": "El equipo de atención al cliente en la oficina de Mis Transcripciones Musicales"
+        },
+        {
+          "image": "team-2.jpg",
+          "alt": "El equipo de Mis Transcripciones Musicales trabajando en la oficina"
+        },
+        {
+          "image": "office-11.jpg",
+          "alt": "El equipo de atención al cliente en la oficina de Mis Transcripciones Musicales"
+        },
+        {
+          "image": "office-transcriber.jpg",
+          "alt": "Un transcriptor trabajando en la oficina de Mis Transcripciones Musicales"
+        },
+        {
+          "image": "office-12.jpg",
+          "alt": "El equipo de atención al cliente en la oficina de Mis Transcripciones Musicales"
+        },
+        {
+          "image": "office-6.jpg",
+          "alt": "Un transcriptor con auriculares trabajando en la oficina de Mis Transcripciones Musicales"
+        },
+        {
+          "image": "office-14.jpg",
+          "alt": "El equipo de atención al cliente en la oficina de Mis Transcripciones Musicales"
+        },
+        {
+          "image": "office-7.jpg",
+          "alt": "Un transcriptor trabajando con dos pantallas en la oficina de Mis Transcripciones Musicales"
+        },
+        {
+          "image": "team-3.jpg",
+          "alt": "El equipo de Mis Transcripciones Musicales trabajando en la oficina"
+        }
+      ],
+      "cta": {
+        "label": "Conócenos más",
+        "href": "/sobre-nosotros"
+      },
+      "body": "Somos **un equipo de transcriptores y arreglistas profesionales** con experiencia contrastada en todo tipo de transcripciones musicales.\n\nCreamos acompañamientos de piano para audiciones de canto, solos de jazz para piano para disfrutar en casa, arreglos para pequeños grupos para bodas, conjuntos vocales para cantar con amigos, vocal lead sheets para aprender una nueva canción… ¡y mucho más!\n\nTranscribimos **cada nota a mano y de oído una por una** – no usamos ningún tipo de programa de transcripción automática. Es un proceso lento pero que da unos grandes resultados. ¡Nos encanta lo que hacemos! Conócenos más [**aquí**](/sobre-nosotros)."
+    },
+    {
+      "type": "PictureStrip",
+      "label": "Ejemplos de nuestras partituras",
+      "items": [
+        {
+          "image": "strip-piano-8.jpg",
+          "alt": "Partitura de piano sobre un piano digital"
+        },
+        {
+          "image": "strip-piano-10.jpg",
+          "alt": "Partitura para voz y piano sobre un piano digital"
+        },
+        {
+          "image": "strip-piano-11.jpg",
+          "alt": "Libro de partituras de piano abierto sobre una mesa de madera"
+        },
+        {
+          "image": "strip-piano-12.jpg",
+          "alt": "Dos libros de partituras abiertos sobre una mesa"
+        },
+        {
+          "image": "strip-piano-3.jpg",
+          "alt": "Cancionero de piano abierto en un atril sobre un teclado digital"
+        },
+        {
+          "image": "strip-piano-4.jpg",
+          "alt": "Partitura de piano apoyada en las teclas de un piano"
+        },
+        {
+          "image": "strip-piano-5.jpg",
+          "alt": "Partitura de piano abierta sobre un teclado"
+        },
+        {
+          "image": "strip-piano-13.jpg",
+          "alt": "Libro de piano «Kintsugi» de Laura Andrés junto a un cactus"
+        }
+      ]
+    },
+    {
+      "type": "ContactSection",
+      "reveal": true,
+      "form": "quoteForm"
+    }
+  ]
+}
