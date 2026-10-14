@@ -2,16 +2,17 @@ import '~/design-system/export/asset-base'
 import '@fontsource-variable/montserrat'
 import '~/design-system/export/entry.css'
 import { createRoot, type Root } from 'react-dom/client'
+import { isCmsBlock } from '~/components/blocks/cms'
 import { MotionProvider } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { BlockPage, type BlockWords } from '~/content/BlockPage'
-import { mapPictures, splitDataPage } from '~/content/data-page'
+import { resolveBlock, splitDataPage } from '~/content/data-page'
 
 /**
  * The CMS preview (/admin, Decap): the entry being edited rendered with the real blocks, as the site renders its
  * page.json (src/content/BlockPage.tsx). Built by vite.admin.config.ts into dist/client/admin/preview.{js,css};
  * src/admin/index.html loads it after Decap, and it registers one preview template per collection of
- * src/admin/config.yml (`pages-<locale>`). Decap renders templates with its own React, so each template only
+ * src/admin/config.ts (`pages-<locale>`). Decap renders templates with its own React, so each template only
  * gives this bundle an element to render into.
  */
 
@@ -43,10 +44,12 @@ function render(el: Element, data: unknown, assetUrl: (file: string) => string, 
   const again = () => render(el, data, assetUrl, locale)
   let node: React.ReactNode
   try {
-    const { blocks } = splitDataPage(data ?? { blocks: [] }, 'the page being edited')
+    const { blocks } = splitDataPage({ blocks: [], ...(data as object) }, 'the page being edited', {
+      check: false,
+    })
     const resolved = blocks
-      .filter((b) => b?.type)
-      .map((b) => mapPictures(b, (file) => pictureOf(assetUrl(file), again)))
+      .filter((b) => isCmsBlock(b.type))
+      .map((b) => resolveBlock(b, (file) => pictureOf(assetUrl(file), again)))
     node = (
       <MotionProvider>
         <main>

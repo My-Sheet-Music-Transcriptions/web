@@ -3,8 +3,8 @@ import path from 'node:path'
 import type { Plugin } from 'vite'
 import {
   DATA_PAGE_FILE,
-  mapPictures,
   pictureWidths,
+  resolveBlock,
   splitDataPage,
 } from '../../src/content/data-page.ts'
 
@@ -48,7 +48,7 @@ export function dataPages(): Plugin {
       const locale = rel.split('/')[1]
       const imports: string[] = []
       const resolved = blocks.map((block) =>
-        mapPictures(block, (name) => {
+        resolveBlock(block, (name) => {
           const picture = path.join(dir, name)
           if (!fs.existsSync(picture))
             throw new Error(

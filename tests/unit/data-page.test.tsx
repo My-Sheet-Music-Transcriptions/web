@@ -1,8 +1,13 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { mediaLabels, reviewLabels } from '../../content/en/data/labels'
+import { decapConfig } from '../../src/admin/config'
+import { cmsBlocks } from '../../src/components/blocks/cms'
+import type { PageHeaderProps } from '../../src/components/blocks/PageHeader'
+import type { TableProps } from '../../src/components/blocks/Table'
 import { BlockPage } from '../../src/content/BlockPage'
-import { mapPictures, splitDataPage } from '../../src/content/data-page'
+import { type CmsBlock, line, prose, select } from '../../src/content/cms-fields'
+import { resolveBlock, splitDataPage } from '../../src/content/data-page'
 
 /** Data pages: the page.json format the CMS edits (src/content/data-page.ts) and its renderer. */
 describe('splitDataPage', () => {
@@ -12,50 +17,144 @@ describe('splitDataPage', () => {
         title: 'T',
         updated: '',
         og: null,
-        blocks: [{ type: 'Section', title: '', cta: { label: '', href: '' }, columns: ['A', ''] }],
+        blocks: [
+          { type: 'Table', title: '', cta: { label: '', href: '' }, columns: ['A', ''], rows: [] },
+        ],
       },
       'x/page.json',
     )
     expect(meta).toEqual({ title: 'T' })
-    expect(blocks).toEqual([{ type: 'Section', columns: ['A', ''] }])
+    expect(blocks).toEqual([{ type: 'Table', columns: ['A', ''], rows: [] }])
   })
   it('refuses blocks without a type', () => {
     expect(() => splitDataPage({ blocks: [{ title: 'x' }] }, 'x/page.json')).toThrow(/type/)
   })
 })
 
-describe('mapPictures', () => {
-  it('resolves every image field, at any depth, and nothing else', () => {
+describe('checking stored blocks against their CMS fields', () => {
+  const page = (blocks: unknown[]) => ({ title: 'T', blocks })
+  const problems = (blocks: unknown[]) => {
+    try {
+      splitDataPage(page(blocks), 'x/page.json')
+      return ''
+    } catch (e) {
+      return (e as Error).message
+    }
+  }
+  it('accepts what the CMS saves', () => {
+    expect(
+      problems([
+        { type: 'PageHeader', title: 'Hi', cta: { label: 'Go', href: '#x' } },
+        { type: 'PictureGrid', columns: 4, items: [{ image: 'a.jpg', alt: 'A' }] },
+        { type: 'Table', columns: ['A'], rows: [{ cells: ['x'] }] },
+      ]),
+    ).toBe('')
+  })
+  it('names every problem: unknown blocks and fields, missing and wrong values, half a button', () => {
+    const message = problems([
+      { type: 'CardGrid' },
+      { type: 'PageHeader', subtitle: 'not offered' },
+      { type: 'Section', tone: 'blue', cta: { label: 'Go' } },
+      { type: 'PictureGrid', columns: 9, items: [{ image: 'https://x.com/a.jpg' }] },
+    ])
+    expect(message).toMatch(/blocks\[0\]: "CardGrid" is not a CMS block/)
+    expect(message).toMatch(/blocks\[1\] \(PageHeader\)\.subtitle: not a field here/)
+    expect(message).toMatch(/blocks\[1\] \(PageHeader\)\.title: required/)
+    expect(message).toMatch(/blocks\[2\] \(Section\)\.tone: expected one of white, cream, peach/)
+    expect(message).toMatch(/blocks\[2\] \(Section\)\.cta\.href: required/)
+    expect(message).toMatch(
+      /blocks\[3\] \(PictureGrid\)\.columns: expected a whole number from 2 to 6/,
+    )
+    expect(message).toMatch(/blocks\[3\] \(PictureGrid\)\.items\[0\]\.image: expected a picture/)
+  })
+  it('lets the CMS preview render a block still being filled in', () => {
+    expect(() => splitDataPage(page([{ type: 'PageHeader' }]), 'x', { check: false })).not.toThrow()
+  })
+})
+
+describe('resolveBlock', () => {
+  it('resolves picture fields at any depth, and nothing else', () => {
     const block = {
       type: 'MediaText',
       image: 'a.jpg',
       alt: 'b.jpg',
       images: [{ image: 'c.png', alt: 'C' }],
     }
-    expect(mapPictures(block, (f) => `<${f}>`)).toEqual({
+    expect(resolveBlock(block, (f) => `<${f}>`)).toEqual({
       type: 'MediaText',
       image: '<a.jpg>',
       alt: 'b.jpg',
       images: [{ image: '<c.png>', alt: 'C' }],
     })
   })
+  it('turns stored table rows into cells, and [label](href) into link cells', () => {
+    const block = {
+      type: 'Table',
+      columns: ['Position', ''],
+      rows: [{ cells: ['Music Editor', '[Apply](/job/music-editor)'] }],
+    }
+    expect(resolveBlock(block, (f) => f).rows).toEqual([
+      ['Music Editor', { label: 'Apply', href: '/job/music-editor' }],
+    ])
+  })
+})
+
+describe('Decap configuration', () => {
+  const blocksField = decapConfig.collections[0]?.fields.find(
+    (f) => f.name === 'blocks',
+  ) as unknown as {
+    types: {
+      name: string
+      fields: { name: string; required: boolean; fields?: { required: boolean }[] }[]
+    }[]
+  }
+  it('offers exactly the CMS blocks, with their fields', () => {
+    expect(blocksField.types.map((t) => t.name)).toEqual(Object.keys(cmsBlocks))
+    for (const t of blocksField.types)
+      expect(t.fields.map((f) => f.name)).toEqual(
+        Object.keys(cmsBlocks[t.name as keyof typeof cmsBlocks].fields),
+      )
+  })
+  it('keeps a required prop required, and an optional button optional all the way down', () => {
+    const header = blocksField.types.find((t) => t.name === 'PageHeader')
+    expect(header?.fields.find((f) => f.name === 'title')?.required).toBe(true)
+    const cta = header?.fields.find((f) => f.name === 'cta')
+    expect(cta?.required).toBe(false)
+    expect(cta?.fields?.every((f) => !f.required)).toBe(true)
+  })
+})
+
+describe('CMS fields are typed by the block’s props', () => {
+  // Each @ts-expect-error marks a line that must not compile: tsc in `pnpm check` fails when one does.
+  const T = line('T', { required: true })
+  it('refuses fields that do not fit', () => {
+    const header = (fields: CmsBlock<PageHeaderProps>['fields']) => fields
+    // @ts-expect-error a required prop (title) needs a required field
+    header({ title: line('Title') })
+    // @ts-expect-error a field must offer values of the prop's type (variant is band | split | photo)
+    header({ title: T, variant: select('V', ['band', 'grid']) })
+    // @ts-expect-error a field the block has no prop for
+    header({ title: T, colour: line('C') })
+    // @ts-expect-error a body (children) on a block that takes none
+    header({ title: T, body: prose('B') })
+    const table = (fields: CmsBlock<TableProps>['fields']) => fields
+    // @ts-expect-error every required prop needs a field (Table's columns and rows)
+    table({ title: T })
+    expect(header({ title: T }).title).toBe(T)
+  })
 })
 
 describe('BlockPage', () => {
   const words = { mediaLabels, reviewLabels }
-  it('renders bodies as light markdown and link cells as links', () => {
+  it('renders a resolved block, its body as light markdown', () => {
+    const table = {
+      type: 'Table',
+      columns: ['Position', ''],
+      rows: [{ cells: ['Music Editor', '[Apply](/job/music-editor)'] }],
+      body: 'Open **now**.',
+    }
     const html = renderToStaticMarkup(
-      <BlockPage
-        words={words}
-        blocks={[
-          {
-            type: 'Table',
-            columns: ['Position', ''],
-            rows: [{ cells: ['Music Editor', '[Apply](/job/music-editor)'] }],
-            body: 'Open **now**.',
-          },
-        ]}
-      />,
+      <BlockPage words={words} blocks={[resolveBlock(table, (f) => f)]} />,
     )
     expect(html).toContain('<strong>now</strong>')
     expect(html).toMatch(/<a [^>]*href="[^"]*\/job\/music-editor"[^>]*>Apply<\/a>/)

@@ -2,13 +2,15 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { mergeConfig, type Plugin } from 'vite'
 import { assetFileNames } from './scripts/lib/asset-names.ts'
+import { decapConfig } from './src/admin/config.ts'
 import designSystem from './vite.ds.config.ts'
 
 /**
  * The CMS admin (/admin, Decap CMS), built after the site into dist/client/admin:
  *   preview.{js,css}   the real-component preview (src/admin/preview.tsx), built like the design-system bundle
  *                      (React 19 inside, router links as plain anchors)
- *   index.html, config.yml, emails/   from src/admin
+ *   index.html, emails/   from src/admin
+ *   config.yml         Decap's configuration, from src/admin/config.ts (JSON, which YAML reads as it is)
  *   decap-cms.js (+ its chunks), netlify-identity-widget.js   copied from node_modules: nothing loads from a CDN
  * Run by `pnpm build` between the site build and postbuild.
  */
@@ -26,8 +28,9 @@ function adminFiles(): Plugin {
     closeBundle() {
       fs.cpSync('src/admin', OUT, {
         recursive: true,
-        filter: (src) => !src.endsWith('.tsx'),
+        filter: (src) => !/\.tsx?$/.test(src),
       })
+      fs.writeFileSync(path.join(OUT, 'config.yml'), `${JSON.stringify(decapConfig, null, 2)}\n`)
       for (const file of fs.readdirSync(DECAP))
         if (/^(\d+\.)?decap-cms\.js$|\.wasm$|LICENSE/.test(file))
           fs.copyFileSync(path.join(DECAP, file), path.join(OUT, file))

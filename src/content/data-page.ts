@@ -1,3 +1,6 @@
+import { cmsBlocks, isCmsBlock } from '../components/blocks/cms.ts'
+import { checkFields, decodeFields } from './cms-fields.ts'
+
 /**
  * A data page: the second kind of page folder, edited in the CMS (/admin, Decap) instead of in code. Where a
  * hand-built page has `index.tsx` + `meta.ts`, a data page has one `page.json`: the meta fields at the top level
@@ -36,44 +39,45 @@ function dropEmpty(value: unknown): unknown {
 const isEmptyObject = (v: unknown) =>
   !!v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length === 0
 
-/** Splits a page.json into its meta (validated by the collection's schema) and its blocks. */
-export function splitDataPage(data: unknown, file: string): { meta: unknown; blocks: DataBlock[] } {
+/**
+ * Splits a page.json into its meta (validated by the collection's schema) and its blocks, each checked against its
+ * CMS fields (src/components/blocks/cms.ts): a block the CMS does not offer, a field it does not have or a value of the
+ * wrong kind fails here, so at build and in the unit tests. The CMS preview passes `check: false` (a block being
+ * filled in is incomplete until it is saved, and Decap checks it then).
+ */
+export function splitDataPage(
+  data: unknown,
+  file: string,
+  { check = true } = {},
+): { meta: unknown; blocks: DataBlock[] } {
   if (!data || typeof data !== 'object' || Array.isArray(data))
     throw new Error(`${file}: a page.json is one object (the meta fields and "blocks")`)
   const { blocks, ...meta } = dropEmpty(data) as Record<string, unknown>
   if (!Array.isArray(blocks) || blocks.some((b) => typeof b?.type !== 'string'))
     throw new Error(`${file}: "blocks" must be a list of { "type": "<Block>", … }`)
+  if (check) {
+    const problems = (blocks as DataBlock[]).flatMap(({ type, ...props }, i) =>
+      isCmsBlock(type)
+        ? checkFields(cmsBlocks[type].fields, props, `blocks[${i}] (${type})`)
+        : [`blocks[${i}]: "${type}" is not a CMS block (${Object.keys(cmsBlocks).join(', ')})`],
+    )
+    if (problems.length) throw new Error(`${file}:\n  ${problems.join('\n  ')}`)
+  }
   return { meta, blocks: blocks as DataBlock[] }
 }
 
-const PICTURE = /^[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp|avif)$/i
-
-/** A picture of the page folder, as an `image` field names it. */
-export const isPictureName = (value: unknown): value is string =>
-  typeof value === 'string' && PICTURE.test(value)
+/** The srcset widths a block's pictures are built at (vite-imagetools `w=`). */
+export const pictureWidths = (type: string): string =>
+  isCmsBlock(type) ? cmsBlocks[type].pictureWidths : '480;960'
 
 /**
- * The srcset widths a block's pictures are built at (vite-imagetools `w=`), the ones its hand-built pages use.
- * One set per block: a picture's width is set by the block's layout, not by the page.
+ * A stored block as its block's props (and `body`): every picture field's file name replaced by what `picture`
+ * returns for it, table rows and other stored shapes decoded (src/content/cms-fields.ts).
  */
-const PICTURE_WIDTHS: Record<string, string> = {
-  PictureGrid: '180;360',
-  MediaText: '560;1000',
-  PageHeader: '480;960',
-}
-export const pictureWidths = (block: string): string => PICTURE_WIDTHS[block] ?? '480;960'
-
-/**
- * Every `image` field in a block, at any depth (`image`, `items[].image`, `images[].image`), replaced by what
- * `resolve` returns for its file name. Other values are kept as they are.
- */
-export function mapPictures<T>(block: DataBlock, resolve: (file: string) => T): DataBlock {
-  const walk = (value: unknown, key?: string): unknown => {
-    if (key === 'image' && isPictureName(value)) return resolve(value)
-    if (Array.isArray(value)) return value.map((v) => walk(v))
-    if (value && typeof value === 'object')
-      return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, walk(v, k)]))
-    return value
-  }
-  return walk(block) as DataBlock
+export function resolveBlock<T>(
+  { type, ...props }: DataBlock,
+  picture: (file: string) => T,
+): DataBlock {
+  if (!isCmsBlock(type)) return { type, ...props }
+  return { type, ...decodeFields(cmsBlocks[type].fields, props, picture) }
 }

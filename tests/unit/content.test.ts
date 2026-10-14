@@ -11,8 +11,7 @@ import {
   readMetaSource,
 } from '../../scripts/lib/content-fs'
 import { parseTsx, where } from '../../scripts/lib/ts-literal'
-import { blocks } from '../../src/components/blocks'
-import { mapPictures, splitDataPage } from '../../src/content/data-page'
+import { resolveBlock, splitDataPage } from '../../src/content/data-page'
 import { pathFor, RESERVED_SLUGS } from '../../src/content/schema'
 
 describe('content collections', () => {
@@ -108,23 +107,20 @@ describe('pages write text with the typography components', () => {
 describe('data pages (page.json, edited in the CMS)', () => {
   const data = readAllEntries().filter((e) => e.kind === 'data')
   it.each(data.map((e) => e.page))(
-    '%s uses catalogue blocks and pictures of its folder',
+    '%s matches the CMS fields of its blocks and names pictures of its folder',
     (page) => {
+      // splitDataPage checks every block against its CMS fields (src/components/blocks/cms.ts).
       const { blocks: list } = splitDataPage(
         JSON.parse(fs.readFileSync(`${CONTENT_DIR}/${page}`, 'utf8')),
         page,
       )
-      const problems: string[] = []
-      for (const block of list) {
-        if (!(block.type in blocks)) problems.push(`unknown block "${block.type}"`)
-        if (block.body !== undefined && typeof block.body !== 'string')
-          problems.push(`${block.type}: "body" is light markdown text`)
-        mapPictures(block, (name) => {
+      const missing: string[] = []
+      for (const block of list)
+        resolveBlock(block, (name) => {
           if (!fs.existsSync(`${CONTENT_DIR}/${path.posix.dirname(page)}/${name}`))
-            problems.push(`${block.type}: picture "${name}" is not in the page folder`)
+            missing.push(`${block.type}: picture "${name}" is not in the page folder`)
         })
-      }
-      expect(problems).toEqual([])
+      expect(missing).toEqual([])
     },
   )
   it('refuses a page.json without a blocks list', () => {

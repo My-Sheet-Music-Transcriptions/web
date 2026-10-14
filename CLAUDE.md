@@ -44,8 +44,12 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   the meta fields at the top level and `blocks`, a list of `{ "type": "<Block>", …props }` with `body` (light markdown) as the block's children and
   pictures by file name. It renders exactly as the equivalent `index.tsx` would (`src/content/data-page.ts`,
   `src/content/BlockPage.tsx`, the Vite plugin `scripts/lib/vite-data-pages.ts`), and people edit it in Decap CMS at
-  `/admin` (`src/admin/`: `config.yml` lists the editable blocks, `preview.tsx` renders the entry with the real blocks;
-  built by `vite.admin.config.ts` into `dist/client/admin`; Netlify Identity logins, every save a PR). A folder is one
+  `/admin` (`src/admin/`: `config.ts` becomes Decap's `config.yml` at build, `preview.tsx` renders the entry with the
+  real blocks; built by `vite.admin.config.ts` into `dist/client/admin`; Netlify Identity logins, every save a PR).
+  The blocks the CMS offers and what writers fill in on each are `src/components/blocks/cms.ts`, fields typed by the
+  block's props (`src/content/cms-fields.ts`: a field that does not fit its prop does not compile); Decap's forms,
+  the check of every `page.json` (build and unit tests) and its rendering are all made from it. To offer a block in
+  the CMS, add it there. A folder is one
   kind or the other; `content/en/pages/careers/` is the pilot. `ds:mockup` does not apply to data pages; to make one
   hand-built, turn its blocks into JSX in an `index.tsx` + `meta.ts`.
 - `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
