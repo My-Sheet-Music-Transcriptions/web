@@ -49,11 +49,13 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   The blocks the CMS offers and what writers fill in on each are `src/components/blocks/cms.ts`, fields typed by the
   block's props (`src/content/cms-fields.ts`: a field that does not fit its prop does not compile); Decap's forms,
   the check of every `page.json` (build and unit tests) and its rendering are all made from it. To offer a block in
-  the CMS, add it there. Every page opens with the same meta fields (`src/content/cms-meta.ts`, typed by the meta
+  the CMS, add it there; a preset (`ServiceGrid`, `PictureStrip`) is another entry for the same block with props
+  of its own. Lists kept in code (reviews, prices, forms, brand pictures in `content/<locale>/data/brand.ts`) are data
+  fields: the page stores the export's name and gets the export of its locale. Every page opens with the same meta fields (`src/content/cms-meta.ts`, typed by the meta
   schema); a page's language is its collection, one per language (`src/admin/locales.ts`); our own widgets
   (translation-key suggestions, picture thumbnails) are `src/admin/widgets.ts`. The `cms` skill says how to change
   any of it and carries a Decap reference. A folder is one
-  kind or the other; `content/en/pages/careers/` is the pilot. `ds:mockup` does not apply to data pages; to make one
+  kind or the other; `content/en/pages/careers/` and the homepage (`<Language> · Home` in the CMS) are data pages. `ds:mockup` does not apply to data pages; to make one
   hand-built, turn its blocks into JSX in an `index.tsx` + `meta.ts`.
 - `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
   words blocks show around their content (`labels.ts`: carousel and video controls, review lines; `forms.ts`: the

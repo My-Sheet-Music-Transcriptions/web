@@ -6,6 +6,10 @@ A change starts from the real page, never from memory of it.
    title or URL; `pnpm page:status` lists the pages with a mockup; `src/content/paths.generated.json` lists
    every built page's path per locale. A page that is on the live WordPress site but not in `content/` yet
    is a port, not an edit: mode **new** with `wordpress.md`, keeping the live slug.
+   A folder with a `page.json` instead (a CMS page: the homepage, careers) can be changed by the person
+   themselves at `/admin` (say so); when they ask you, change `page.json` (the fields of
+   `src/components/blocks/cms.ts`), skip the mockup steps below (`ds:mockup` refuses data pages) and show the
+   change on the draft PR's deploy preview.
 2. `pnpm ds:mockup <slug>` (or `<locale>/<collection>/<slug>` when the slug exists in several locales)
    writes `mockups/<slug>/sections.html` from the page component, copies the page's pictures into `img/` and fills
    `preview.json` (title, path, locale, source). It refuses to overwrite a mockup that exists: that mockup

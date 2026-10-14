@@ -21,7 +21,8 @@ For anything Decap itself does (options, widgets, collections, i18n, media, the 
 | `src/admin/config.ts` | `decapConfig`, written as `/admin/config.yml` by `vite.admin.config.ts`. Backend, logo, one collection per language. |
 | `src/admin/locales.ts` | `CMS_LOCALES`: the languages, in sidebar order. A collection, a preview template and the key widget each. |
 | `src/content/cms-meta.ts` | `metaFields`: the fields every page opens with (title, description, translation key, SEO, share card, noindex, draft, updated), typed by `baseSchema`. |
-| `src/components/blocks/cms.ts` | `cmsBlocks`: the blocks writers can add and their fields, typed by each block's props. |
+| `src/components/blocks/cms.ts` | `cmsBlocks`: the blocks writers can add and their fields, typed by each block's props; presets (`preset`); `fromData`. |
+| `content/<locale>/data/brand.ts` | Brand pictures (photo bands, the lockup) named so data fields can offer them. |
 | `src/content/cms-fields.ts` | The field DSL (`line`, `prose`, `picture`, `pictureFile`, `select`, `toggle`, `number`, `group`, `list`, `listOf`, `tableRows`), `decapField` (DSL → Decap field; `decap: {…}` passes raw Decap options last) and the zod check made from the same list. |
 | `src/content/data-page.ts`, `BlockPage.tsx`, `scripts/lib/vite-data-pages.ts` | Reading, checking and rendering `page.json` on the site. |
 | `src/admin/preview.tsx` | The editor's live preview with the real blocks, and `registerWidgets`. |
@@ -37,13 +38,21 @@ relative imports **with** `.ts` extensions and `import type` for everything else
 - **Offer a block**: add it to `cmsBlocks` with the props a writer should set (words and pictures; data lists such as
   prices and reviews stay in code). A field that does not fit the prop, or a missing required one, does not compile.
   `pictureWidths` sets the srcset; `words` names the shared labels from `content/<locale>/data/labels.ts` it needs.
+- **A list kept in code** (reviews, prices, a form, a brand picture): a data field,
+  `fromData('Reviews', { homeReviews: 'reviews' })` (export name: its file in `content/<locale>/data`). It is typed
+  by what the English file exports, the page stores the name, and the site, the preview and the content test resolve
+  it in the page's locale. A brand picture becomes offerable by naming it in `brand.ts`.
+- **A block used two ways** (the services grid vs a grid of photos): a preset, `preset('PictureGrid', { …, props })`,
+  under a name of its own; `props` are fixed, the fields are what the writer sets. Pictures can override the block's
+  widths per field: `picture('Photo', { widths: '1000;1600' })`. A decorative picture's alt takes `empty: ''`.
 - **A field on every page**: add it to `baseSchema` (`src/content/schema.ts`) first, then to `metaFields`.
 - **A language**: add it to `CMS_LOCALES` (it must be a site `Locale`); the collection, preview and key check follow.
 - **A collection** (posts, services…): add it in `config.ts` per language next to `pages-<locale>`, named
   `<kind>-<locale>` (the key widget reads the locale from the name's last part), fields `metaFields` first, then the
   kind's own. Keep `folder`, `path: '{{slug}}/page'`, `media_folder: ''`, `public_folder: ''` so pictures stay in the page folder.
-- **A singleton** (the homepage of each language): a file collection (§2.3 of the reference) per language pointing at
-  that page's `page.json`; the page must be a data page first.
+- **The homepage** of a language appears as `<Language> · Home` (a file collection, §2.3 of the reference) as soon as
+  its `pages/home/page.json` exists; it is also listed under Pages (Decap's `filter` cannot exclude one entry). Other
+  singletons follow the same pattern: the file must exist first.
 - **A widget**: write it in `widgets.ts` with Decap's `createClass` / `h` globals (Decap renders with its own React)
   and register it in `registerWidgets`; reference it from a field with `decap: { widget: '<name>' }`.
 

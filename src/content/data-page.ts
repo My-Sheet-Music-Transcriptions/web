@@ -1,5 +1,6 @@
 import { cmsBlocks, isCmsBlock } from '../components/blocks/cms.ts'
-import { checkFields, decodeFields } from './cms-fields.ts'
+import type { AnyCmsBlock } from './cms-fields.ts'
+import { checkFields, decodeFields, type Resolve } from './cms-fields.ts'
 
 /**
  * A data page: the second kind of page folder, edited in the CMS (/admin, Decap) instead of in code. Where a
@@ -58,7 +59,7 @@ export function splitDataPage(
   if (check) {
     const problems = (blocks as DataBlock[]).flatMap(({ type, ...props }, i) =>
       isCmsBlock(type)
-        ? checkFields(cmsBlocks[type].fields, props, `blocks[${i}] (${type})`)
+        ? checkFields((cmsBlocks[type] as AnyCmsBlock).fields, props, `blocks[${i}] (${type})`)
         : [`blocks[${i}]: "${type}" is not a CMS block (${Object.keys(cmsBlocks).join(', ')})`],
     )
     if (problems.length) throw new Error(`${file}:\n  ${problems.join('\n  ')}`)
@@ -71,13 +72,12 @@ export const pictureWidths = (type: string): string =>
   isCmsBlock(type) ? cmsBlocks[type].pictureWidths : '480;960'
 
 /**
- * A stored block as its block's props (and `body`): every picture field's file name replaced by what `picture`
- * returns for it, table rows and other stored shapes decoded (src/content/cms-fields.ts).
+ * A stored block as its block's props (and `body`): every picture field's file name and every data field's export
+ * name replaced by what `resolve` returns for it, table rows and other stored shapes decoded
+ * (src/content/cms-fields.ts). The block's preset props come last: the writer cannot override them.
  */
-export function resolveBlock<T>(
-  { type, ...props }: DataBlock,
-  picture: (file: string) => T,
-): DataBlock {
+export function resolveBlock({ type, ...props }: DataBlock, resolve: Resolve): DataBlock {
   if (!isCmsBlock(type)) return { type, ...props }
-  return { type, ...decodeFields(cmsBlocks[type].fields, props, picture) }
+  const entry = cmsBlocks[type] as AnyCmsBlock
+  return { type, ...decodeFields(entry.fields, props, resolve), ...entry.props }
 }
