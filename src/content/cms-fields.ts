@@ -202,8 +202,11 @@ export const faqGroups = <R extends boolean = false>(
 
 // --- A block's fields, typed by its props ---------------------------------------------------------------------
 
-/** Props the CMS never sets: `children` is the `body` field, `labels` comes from the locale's words. */
-type Hidden = 'children' | 'labels'
+/**
+ * Props the CMS never sets: `children` is the `body` field, `labels` comes from the locale's words, `videoPoster` from
+ * its brand.
+ */
+type Hidden = 'children' | 'labels' | 'videoPoster'
 type Req<P> = { [K in keyof P]-?: undefined extends P[K] ? never : K }[keyof P]
 
 /**
@@ -228,7 +231,10 @@ export interface CmsBlock<P = unknown> {
   props?: Partial<P>
   /** The line Decap shows for a collapsed block (`{{fields.title}}`). */
   summary?: string
-  /** The locale's words (content/<locale>/data/labels.ts) the block gets as `labels`. */
+  /**
+   * The locale's words (content/<locale>/data/labels.ts) the block gets as `labels`; with `mediaLabels`, also the
+   * brand's video poster (content/<locale>/data/brand.ts) as `videoPoster`.
+   */
   words?: 'mediaLabels' | 'reviewLabels'
   /** The srcset widths its pictures are built at (vite-imagetools `w=`), as on hand-built pages. */
   pictureWidths: string

@@ -1,0 +1,140 @@
+{
+  "title": "Transcripciones para instrumentos de viento - Mis Transcripciones Musicales",
+  "description": "El servicio de transcripción musical más popular de Internet. ¡Consigue las transcripciones de tus partituras favoritas en formato PDF!",
+  "translationKey": "wind-instruments",
+  "seoTitle": "Instrumentos de viento - Mis Transcripciones Musicales",
+  "shortTitle": "Transcripciones para instrumentos de viento",
+  "icon": "horns",
+  "group": "winds",
+  "priceFrom": 15,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcripciones para instrumentos de viento",
+      "subtitle": "Transcribimos con precisión canciones para cualquier instrumento de viento",
+      "image": "horns.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
+          "image": "horns.png"
+        },
+        {
+          "body": "**Transcribimos tus canciones favoritas para cualquier instrumento de viento.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de flauta, clarinete, saxofón, trompeta, tuba o trombón** estarán encantados de crear una partitura personalizada para ti.",
+          "video": {
+            "youtube": "tB3ftFUgLJ8",
+            "title": "Transcripciones para instrumentos de viento",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "horns-1-please-come-home-for-christmas.png"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand"
+    },
+    {
+      "type": "Samples",
+      "title": "Más partituras y transcripciones de instrumentos de viento",
+      "items": [
+        {
+          "title": "Parte de saxofón jazz",
+          "video": {
+            "youtube": "LfjqL8bli3s",
+            "title": "Parte de saxofón jazz",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "saxophone-2-day-by-day.png",
+          "alt": "Horns 2 (Day By Day), primera página de la partitura"
+        },
+        {
+          "title": "Arreglo para 3 tubas",
+          "video": {
+            "youtube": "MXr1RoPJPII",
+            "title": "Arreglo para 3 tubas",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "horns-3-stomp-box.png",
+          "alt": "Horns 3 (Stomp Box), primera página de la partitura"
+        },
+        {
+          "title": "Trombón Pop",
+          "video": {
+            "youtube": "LmnejiLlR-M",
+            "title": "Trombón Pop",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "horns-4-daydreaming.png",
+          "alt": "Horns 4 (Daydreaming), primera página de la partitura"
+        },
+        {
+          "title": "Solo de jazz para trompeta",
+          "video": {
+            "youtube": "4OcySBum734",
+            "title": "Solo de jazz para trompeta",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "woodchoppers-ball.png",
+          "alt": "Horns 5 (Woodchopper's Ball), primera página de la partitura"
+        }
+      ]
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand"
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "windPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/instrumentos-de-viento"
+    }
+  ]
+}

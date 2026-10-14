@@ -9,28 +9,8 @@ import saxophoneIcon from '~/assets/images/icons/saxophone.png?w=150;300&as=pict
 import stringsIcon from '~/assets/images/icons/strings.png?w=150;300&as=picture'
 import type { CardItem, PictureItem, PricingTier } from '~/content/types'
 
-/** "¿Qué se incluye?" as the homepage words it. */
+/** "¿Qué se incluye?": the three reassurances of every service page (the homepage words its own). */
 export const included: CardItem[] = [
-  {
-    title: 'Entrega rápida y atención al cliente',
-    body: 'Respuestas en pocas horas, seguimiento, y entregas en 1-2 días.',
-    icon: fastDeliveryIcon,
-  },
-  {
-    title: 'Trabajamos con todos los formatos',
-    body: 'Obtén la transcripción en formato digital:',
-    emphasis: 'PDF, XML, MIDI, SIB y MUSX',
-    icon: formatsIcon,
-  },
-  {
-    title: 'Precisión garantizada',
-    body: 'Trabajo 100% preciso hecho nota a nota para obtener la partitura perfecta',
-    icon: accuracyIcon,
-  },
-]
-
-/** "¿Qué se incluye?" as the service pages (piano, guitarra) word it. */
-export const includedService: CardItem[] = [
   {
     title: 'Entrega rápida',
     body: 'Respuestas en pocas horas y entregas en 1-2 días.',
@@ -68,6 +48,11 @@ const pricing = (from: string): PricingTier[] => [
 export const pianoPricing: PricingTier[] = pricing('15-34+ €')
 
 export const guitarTabPricing: PricingTier[] = pricing('12-32+ €')
+
+/** The wind and string instrument pages word the same price their own way. */
+export const windPricing: PricingTier[] = pricing('€15-34+ EUR')
+
+export const stringPricing: PricingTier[] = pricing('€15-34+ EUR')
 
 /** The services the homepage shows ("Transcribimos cualquier instrumento y género musical"). */
 export const allServices: PictureItem[] = [

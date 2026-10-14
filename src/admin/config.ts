@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import { cmsBlocks } from '../components/blocks/cms.ts'
-import type { AnyCmsBlock } from '../content/cms-fields.ts'
+import type { AnyCmsBlock, Field } from '../content/cms-fields.ts'
 import { decapField } from '../content/cms-fields.ts'
-import { metaFields } from '../content/cms-meta.ts'
+import { metaFields, serviceFields } from '../content/cms-meta.ts'
 import { CMS_LOCALES } from './locales.ts'
 
 /**
@@ -28,18 +28,21 @@ const blockTypes = Object.entries(cmsBlocks as unknown as Record<string, AnyCmsB
   }),
 )
 
-/** Every page's fields: its meta, then its blocks. */
-const fields = [
-  ...Object.entries(metaFields).map(([name, f]) => decapField(name, f)),
-  {
-    name: 'blocks',
-    label: 'Blocks',
-    label_singular: 'block',
-    widget: 'list',
-    summary: '{{fields.title}}',
-    types: blockTypes,
-  },
+const blocksField = {
+  name: 'blocks',
+  label: 'Blocks',
+  label_singular: 'block',
+  widget: 'list',
+  summary: '{{fields.title}}',
+  types: blockTypes,
+}
+const fieldsOf = (meta: Record<string, Field>) => [
+  ...Object.entries(meta).map(([name, f]) => decapField(name, f)),
+  blocksField,
 ]
+/** Every page's fields: its meta, then its blocks; a service page's own meta fields come after the shared ones. */
+const fields = fieldsOf(metaFields)
+const serviceFormFields = fieldsOf({ ...metaFields, ...serviceFields })
 
 /** A language's homepage, when it is a data page (run from the repository root, as the build and tests are). */
 const homeFile = (locale: string) => `content/${locale}/pages/home/page.json`
@@ -64,7 +67,8 @@ export const decapConfig = {
   // The brand on the login page (Decap 3.17's `show_in_header` draws nothing).
   logo: { src: '/admin/logo.svg' },
   // A page's language is the collection it is in, so that a language's collections sit together in the sidebar:
-  // `<Language> · Home` (a single entry: the language's homepage, once it is a data page), then `<Language> · Pages`.
+  // `<Language> · Home` (a single entry: the language's homepage, once it is a data page), then `<Language> · Pages` and
+  // `<Language> · Services`.
   collections: CMS_LOCALES.flatMap(({ code, label }) => [
     ...(fs.existsSync(homeFile(code))
       ? [
@@ -82,7 +86,7 @@ export const decapConfig = {
       name: `pages-${code}`,
       label: `${label} · Pages`,
       label_singular: `${label} page`,
-      description: `Pages in ${label}. Hand-built pages (landing pages, service pages) are changed by asking Claude.`,
+      description: `Pages in ${label}. Hand-built pages (the landing pages) are changed by asking Claude.`,
       folder: `content/${code}/pages`,
       path: '{{slug}}/page',
       extension: 'json',
@@ -93,6 +97,22 @@ export const decapConfig = {
       public_folder: '',
       summary: '{{title}}',
       fields,
+    },
+    {
+      name: `services-${code}`,
+      label: `${label} · Services`,
+      label_singular: `${label} service page`,
+      description: `Service pages in ${label}: one per instrument or service, listed in the menus and grids.`,
+      folder: `content/${code}/services`,
+      path: '{{slug}}/page',
+      extension: 'json',
+      format: 'json',
+      create: true,
+      slug: '{{slug}}',
+      media_folder: '',
+      public_folder: '',
+      summary: '{{title}}',
+      fields: serviceFormFields,
     },
   ]),
 }

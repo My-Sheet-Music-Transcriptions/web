@@ -17,7 +17,7 @@ const REQUEST = new RegExp(`/${DATA_PAGE_FILE.replace('.', '\\.')}\\?(meta|page)
  * index reads every page's meta eagerly, so the blocks stay out of it), and `page.json?page` is the page component,
  * as an index.tsx would be: each picture imported through vite-imagetools at its field's or its block's widths, each
  * recording as its URL, each data field's export imported from content/<locale>/data, the blocks rendered by
- * BlockPage with the locale's block words (content/<locale>/data/labels.ts).
+ * BlockPage with the locale's block words (content/<locale>/data/labels.ts) and brand (its video poster, brand.ts).
  */
 export function dataPages(): Plugin {
   let root = process.cwd()
@@ -94,10 +94,11 @@ export function dataPages(): Plugin {
         // Absolute paths: an importer outside the file system (a \0 id) gets no alias or root resolution.
         `import { BlockPage } from ${JSON.stringify(path.join(root, 'src/content/BlockPage.tsx'))}`,
         `import * as words from ${JSON.stringify(path.join(root, `content/${locale}/data/labels.ts`))}`,
+        `import * as brand from ${JSON.stringify(path.join(root, `content/${locale}/data/brand.ts`))}`,
         ...imports,
         `const blocks = ${data}`,
         'export default function DataPage() {',
-        '  return createElement(BlockPage, { blocks, words })',
+        '  return createElement(BlockPage, { blocks, words, brand })',
         '}',
         '',
       ].join('\n')

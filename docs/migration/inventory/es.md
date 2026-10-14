@@ -2,16 +2,16 @@
 
 Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); machine-readable copy: [`es.json`](./es.json). This site's inventory is **less complete than the English one**: its sitemap was never archived, so the list is rebuilt from the live menu, the English pages' hreflang tags and every URL the Internet Archive ever captured. **Step W0.2 of the plan replaces it with the live sitemap before any page of this locale is ported.**
 
-**Found in**: `sitemap:<type>` = Yoast sitemap · `crawl` = archived page reached from the menu · `live-2026-home` = linked from the live homepage (Common Crawl) · `en-hreflang` = named by an English page's hreflang · `archive` = some capture exists in the Internet Archive · `linked` = linked but never archived.
+**Found in**: `sitemap:<type>` = Yoast sitemap · `crawl` = archived page reached from the menu · `live-2026-home` = linked from the live homepage (Common Crawl) · `live-2026` = in the live menu in October 2026 · `en-hreflang` = named by an English page's hreflang · `archive` = some capture exists in the Internet Archive · `linked` = linked but never archived.
 
 | Action | URLs |
 |---|---|
-| Port | 25 |
+| Port | 27 |
 | Verify first (linked from the live site, never archived) | 1 |
 | Decide first (see the plan's decisions) | 1 |
 | Redirect (retired URLs) | 81 |
 | Drop (test pages: let them 404) | 3 |
-| **Total** | **111** |
+| **Total** | **113** |
 
 ## Port
 
@@ -38,6 +38,8 @@ Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); mac
 | [`/orquestaciones`](https://www.mistranscripcionesmusicales.com/orquestaciones) | crawl, archive | services | `/orchestration-service` | Orquestaciones | 2024-06 | translation of EN /orchestration-service; **two es URLs claim EN /orchestration-service**: keep one, 301 the other | |
 | [`/orquestraciones`](https://www.mistranscripcionesmusicales.com/orquestraciones) | crawl, archive, en-hreflang | services | `/orchestration-service` | Orquestaciones | 2020-10 | translation of EN /orchestration-service; **two es URLs claim EN /orchestration-service**: keep one, 301 the other | |
 | [`/piano`](https://www.mistranscripcionesmusicales.com/piano) | crawl, archive, en-hreflang | services | `/piano` | Transcripciones para piano | 2024-06 | translation of EN /piano || [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
+| [`/instrumentos-de-viento`](https://www.mistranscripcionesmusicales.com/instrumentos-de-viento) | live-2026 | services |  | Transcripciones para instrumentos de viento | — | live page (2026-10), not in the archive; the Spanish site's one page for the wind instruments EN has a page each for (trumpet, saxophone, clarinet, flute), no hreflang | [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
+| [`/instrumentos-de-cuerda`](https://www.mistranscripcionesmusicales.com/instrumentos-de-cuerda) | live-2026 | services |  | Transcripciones para instrumentos de cuerda | — | live page (2026-10), not in the archive; the Spanish site's one page for the string instruments EN has a page each for (violin, cello), no hreflang | [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
 | [`/piano-vocal`](https://www.mistranscripcionesmusicales.com/piano-vocal) | crawl, archive, en-hreflang | services | `/piano-vocal` | Transcripciones para piano y voz | 2024-04 | translation of EN /piano-vocal | |
 | [`/finale-vs-sibelius`](https://www.mistranscripcionesmusicales.com/finale-vs-sibelius) | crawl, archive | posts | `/finale-vs-sibelius` | Finale vs Sibelius - Análisis de | 2024-07 | translation of EN /finale-vs-sibelius | |
 | [`/presentacion-blog-mis-transcripciones-musicales`](https://www.mistranscripcionesmusicales.com/presentacion-blog-mis-transcripciones-musicales) | crawl, archive | posts |  | Os presentamos el blog de | 2023-09 | linked from the blog index: probably a post | |

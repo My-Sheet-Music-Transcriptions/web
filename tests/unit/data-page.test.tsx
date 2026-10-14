@@ -9,7 +9,7 @@ import type { PageHeaderProps } from '../../src/components/blocks/PageHeader'
 import type { TableProps } from '../../src/components/blocks/Table'
 import { BlockPage } from '../../src/content/BlockPage'
 import { type CmsBlock, line, prose, select } from '../../src/content/cms-fields'
-import { metaFields } from '../../src/content/cms-meta'
+import { metaFields, serviceFields } from '../../src/content/cms-meta'
 import { resolveBlock, splitDataPage } from '../../src/content/data-page'
 import { LOCALES } from '../../src/i18n/types'
 
@@ -216,9 +216,12 @@ describe('Decap configuration', () => {
     expect(cta?.required).toBe(false)
     expect(cta?.fields?.every((f) => !f.required)).toBe(true)
   })
-  it('has one collection of pages per site language, each in its own folder', () => {
-    expect(pages.map((c) => c.name).sort()).toEqual(LOCALES.map((l) => `pages-${l}`).sort())
-    for (const c of pages) expect(c.folder).toBe(`content/${c.name.replace('pages-', '')}/pages`)
+  it('has one collection of pages and one of service pages per site language, each in its own folder', () => {
+    for (const kind of ['pages', 'services']) {
+      const of = collections.filter((c) => c.name.startsWith(`${kind}-`))
+      expect(of.map((c) => c.name).sort()).toEqual(LOCALES.map((l) => `${kind}-${l}`).sort())
+      for (const c of of) expect(c.folder).toBe(`content/${c.name.replace(`${kind}-`, '')}/${kind}`)
+    }
   })
   it('has a Home entry for each language whose homepage is a data page', () => {
     const homes = collections.filter((c) => c.name.startsWith('home-'))
@@ -231,10 +234,14 @@ describe('Decap configuration', () => {
     for (const c of homes)
       expect(c.files?.[0]?.file).toMatch(/^content\/\w+\/pages\/home\/page\.json$/)
   })
-  it('opens every page with the meta fields, then its blocks', () => {
+  it('opens every page with the meta fields (then a service’s own), then its blocks', () => {
     for (const c of collections)
       for (const fields of c.fields ? [c.fields] : (c.files ?? []).map((f) => f.fields))
-        expect(fields.map((f) => f.name)).toEqual([...Object.keys(metaFields), 'blocks'])
+        expect(fields.map((f) => f.name)).toEqual([
+          ...Object.keys(metaFields),
+          ...(c.name.startsWith('services-') ? Object.keys(serviceFields) : []),
+          'blocks',
+        ])
   })
 })
 

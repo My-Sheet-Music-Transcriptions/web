@@ -1,0 +1,140 @@
+{
+  "title": "Transcripciones para instrumentos de cuerda - Mis Transcripciones Musicales",
+  "description": "El servicio de transcripción musical más popular de Internet. ¡Consigue las transcripciones de tus partituras favoritas en formato PDF!",
+  "translationKey": "string-instruments",
+  "seoTitle": "Instrumentos de cuerda - Mis Transcripciones Musicales",
+  "shortTitle": "Transcripciones para instrumentos de cuerda",
+  "icon": "strings",
+  "group": "strings",
+  "priceFrom": 15,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcripciones para instrumentos de cuerda",
+      "subtitle": "Transcribimos con precisión canciones para cualquier instrumento de cuerda",
+      "image": "strings.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
+          "image": "strings.png"
+        },
+        {
+          "body": "**Transcribimos tus canciones favoritas para instrumentos de cuerda.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de violín, viola, cello y contrabajo** estarán encantados de crear una partitura personalizada para ti.",
+          "video": {
+            "youtube": "WBuPa6m9bOg",
+            "title": "Transcripciones para instrumentos de cuerda",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "strings-1-silent-night.png"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand"
+    },
+    {
+      "type": "Samples",
+      "title": "Más partituras y transcripciones de instrumentos de cuerda",
+      "items": [
+        {
+          "title": "Violín tradicional (fiddle)",
+          "video": {
+            "youtube": "IVZ8ORKlikg",
+            "title": "Violín tradicional (fiddle)",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "violin-2-lilly-dale.png",
+          "alt": "Strings 2 (Lilly Dale), primera página de la partitura"
+        },
+        {
+          "title": "Cuarteto de cuerda",
+          "video": {
+            "youtube": "BK7yyCX6uUE",
+            "title": "Cuarteto de cuerda",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "strings-3-pur-ti-miro.png",
+          "alt": "Strings 3 (L'incoronazione di Poppea - Pur ti Miro), primera página de la partitura"
+        },
+        {
+          "title": "Arreglo para ensemble de cuerdas",
+          "video": {
+            "youtube": "LmnejiLlR-M",
+            "title": "Arreglo para ensemble de cuerdas",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "strings-4-octopath-traveler.png",
+          "alt": "Strings 4 (Main Theme from Octopath Traveler OST), primera página de la partitura"
+        },
+        {
+          "title": "Cover de Rock para violonchelo",
+          "video": {
+            "youtube": "Km2JcTHGQnQ",
+            "title": "Cover de Rock para violonchelo",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "cello-2-cliffs-of-dover.png",
+          "alt": "Strings 5 (Cliffs Of Dover), primera página de la partitura"
+        }
+      ]
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand"
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "stringPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/instrumentos-de-cuerda"
+    }
+  ]
+}

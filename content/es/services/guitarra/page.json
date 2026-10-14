@@ -1,0 +1,134 @@
+{
+  "title": "Transcripciones para guitarra - Mis Transcripciones Musicales",
+  "description": "Tus covers de guitarra transcritas a tablatura por transcriptores profesionales. Preciso al 100% ¡hecho por y para guitarristas!",
+  "translationKey": "guitar-tab",
+  "shortTitle": "Transcripciones para guitarra",
+  "icon": "guitar",
+  "group": "guitar",
+  "priceFrom": 12,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcripciones para guitarra",
+      "subtitle": "Transcribimos con precisión cualquier canción de guitarra",
+      "image": "guitarra.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
+          "image": "guitarra.png"
+        },
+        {
+          "body": "Podemos transcribir tus melodías y riffs favoritos de guitarra, versiones acústicas, covers…\n\nNuestros guitarristas crearan partituras y tablaturas personalizadas para ti.",
+          "video": {
+            "youtube": "OXgXJnl3Lzk",
+            "title": "Transcripciones para guitarra",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "guitar-tab-sheet-1-alone.png"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand"
+    },
+    {
+      "type": "Samples",
+      "title": "Aquí tienes algunos ejemplos de nuestro trabajo",
+      "items": [
+        {
+          "title": "Acompañamiento de guitarra pop",
+          "video": {
+            "youtube": "zxTD1XQTcyk",
+            "title": "Acompañamiento de guitarra pop",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "guitar-tab-sheet-2-four-on-six.png",
+          "alt": "Guitar TAB & Sheet 2 (Four on six), primera página de la partitura"
+        },
+        {
+          "title": "Acompañamiento de guitarra acústica rock",
+          "video": {
+            "youtube": "7QuT48AKE4I",
+            "title": "Acompañamiento de guitarra acústica rock",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "guitar-tab-sheet-3-lonely-eyes.png",
+          "alt": "Guitar TAB & Sheet 3 (Lonely Eyes), primera página de la partitura"
+        },
+        {
+          "title": "Partitura para guitarra acústica",
+          "image": "guitar-tab-sheet-4-my-romance.png",
+          "alt": "Guitar TAB & Sheet 4 (My Romance), primera página de la partitura"
+        },
+        {
+          "title": "Partitura y tablatura para guitarra",
+          "video": {
+            "youtube": "iCE4KJWbwkA",
+            "title": "Partitura y tablatura para guitarra",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "guitar-tab-sheet-5-remembering.png",
+          "alt": "Guitar TAB & Sheet 5 (Remembering), primera página de la partitura"
+        }
+      ]
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand"
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "guitarTabPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/guitarra"
+    }
+  ]
+}

@@ -20,7 +20,7 @@ For anything Decap itself does (options, widgets, collections, i18n, media, the 
 | --- | --- |
 | `src/admin/config.ts` | `decapConfig`, written as `/admin/config.yml` by `vite.admin.config.ts`. Backend, logo, one collection per language. |
 | `src/admin/locales.ts` | `CMS_LOCALES`: the languages, in sidebar order. A collection, a preview template and the key widget each. |
-| `src/content/cms-meta.ts` | `metaFields`: the fields every page opens with (title, description, translation key, SEO, share card, noindex, draft, updated), typed by `baseSchema`. |
+| `src/content/cms-meta.ts` | `metaFields`: the fields every page opens with (title, description, translation key, SEO, share card, noindex, draft, updated), typed by `baseSchema`; `serviceFields`: what a service page adds (short name, icon, menu group, price from, order), typed by `serviceSchema`. |
 | `src/components/blocks/cms.ts` | `cmsBlocks`: every block of the catalogue, in its order, with the fields writers fill in, typed by each block's props; presets (`preset`); `fromData`. |
 | `content/<locale>/data/brand.ts` | Brand pictures (photo bands, the lockup) named so data fields can offer them. |
 | `src/content/cms-fields.ts` | The field DSL (`line`, `prose`, `picture`, `pictureFile`, `sound`, `data`, `select`, `toggle`, `number`, `group`, `list`, `listOf`, `tableRows`, `faqGroups`), `decapField` (DSL → Decap field; `decap: {…}` passes raw Decap options last), the check of what is stored and `decodeFields` (names → pictures, recordings and data, then each field's decoder). |
@@ -50,7 +50,7 @@ relative imports **with** `.ts` extensions and `import type` for everything else
   widths per field: `picture('Photo', { widths: '1000;1600' })`. A decorative picture's alt takes `empty: ''`.
 - **A field on every page**: add it to `baseSchema` (`src/content/schema.ts`) first, then to `metaFields`.
 - **A language**: add it to `CMS_LOCALES` (it must be a site `Locale`); the collection, preview and key check follow.
-- **A collection** (posts, services…): add it in `config.ts` per language next to `pages-<locale>`, named
+- **A collection** (posts, artists…; pages and services exist): add it in `config.ts` per language next to `pages-<locale>`, named
   `<kind>-<locale>` (the key widget reads the locale from the name's last part), fields `metaFields` first, then the
   kind's own. Keep `folder`, `path: '{{slug}}/page'`, `media_folder: ''`, `public_folder: ''` so pictures stay in the page folder.
 - **The homepage** of a language appears as `<Language> · Home` (a file collection, §2.3 of the reference) as soon as

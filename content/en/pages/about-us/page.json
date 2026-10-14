@@ -1,0 +1,439 @@
+{
+  "title": "About Us • My Sheet Music Transcriptions",
+  "description": "My Sheet Music Transcriptions is the largest team of music transcribers online. Know more about the most popular sheet music transcription services online.",
+  "translationKey": "about-us",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Meet the band",
+      "subtitle": "Get to know the musicians behind your sheet music"
+    },
+    {
+      "type": "MediaText",
+      "image": "band.jpg",
+      "alt": "The My Sheet Music Transcriptions team",
+      "imageSide": "left",
+      "body": "We are a team of 100+ professional musicians with unmatched musical knowledge and extensive tech proficiency. An enthusiastic bunch ready to tackle all-things-notation and help you bring your music to life.\n\nMy Sheet Music Transcriptions’ (MSMT) founder and CEO, Oriol, started as a solo act. Building steadily, never compromising quality for the sake of speed, and learning along the way, lead to opening the French and Spanish-speaking markets. Quickly followed by the Japanese and German sites, reaching an even larger community of fellow musicians.\n\nWith our home base in Catalonia (Terrassa, Barcelona, Spain), our band members are located all around the world. We have skilled Music Specialists ready to help you from various locations on 4 continents (Europe, Asia, and North and South America).\n\nThey will work by your side to fine tune the details of your project, and then, coordinate and communicate it to our team of transcribers, arrangers and composers. Before music is sent back to you, our music editors will take up the baton and ensure that each file meets the highest quality standards."
+    },
+    {
+      "type": "MediaText",
+      "images": [
+        {
+          "image": "office-8.jpg",
+          "alt": "My Sheet Music Transcriptions Office - Transcriber working"
+        },
+        {
+          "image": "office-14.jpg",
+          "alt": "My Sheet Music Transcriptions Office - Customer Service"
+        },
+        {
+          "image": "office-12.jpg",
+          "alt": "My Sheet Music Transcriptions Office - Customer Service"
+        },
+        {
+          "image": "office-transcriber.jpg",
+          "alt": "My Sheet Music Transcriptions Office - Transcriber working"
+        },
+        {
+          "image": "office-11.jpg",
+          "alt": "My Sheet Music Transcriptions Office - Customer Service"
+        },
+        {
+          "image": "office-10.jpg",
+          "alt": "My Sheet Music Transcriptions Office - Customer Service"
+        },
+        {
+          "image": "office-9.jpg",
+          "alt": "My Sheet Music Transcriptions Office - Customer Service"
+        }
+      ],
+      "imageSide": "right",
+      "tone": "cream",
+      "body": "All of them, alongside management, business, research, tech, and marketing teams, make up for the 20+ professionals that make sure we offer our unparalleled music notation services to as many musicians as possible. All over the world!\n\nAt the backbone of our services is our Transcription Team. Comprised of 60+ musicians who meticulously transcribe the hundreds of files we deliver each week by ear, note-for-note. With an adept and varied group of transcribers, each having their own specialty, we always have the right person for the job.\n\nWith this blend of talent, technology, and experience, we’re poised to take on nearly any project, no matter the level or scale. We’re here to facilitate your notation needs."
+    },
+    {
+      "type": "Section",
+      "title": "Follow the latest updates on Linkedin",
+      "tone": "peach",
+      "align": "center",
+      "width": "narrow",
+      "rule": false,
+      "cta": {
+        "label": "Read more",
+        "href": "https://www.linkedin.com/company/my-sheet-music-transcriptions/"
+      }
+    },
+    {
+      "type": "PictureGrid",
+      "title": "Our Team",
+      "shape": "portrait",
+      "columns": 6,
+      "items": [
+        {
+          "image": "team-oriol.jpg",
+          "name": "Oriol",
+          "caption": "Founder & CEO",
+          "href": "https://www.linkedin.com/in/oriollopezcalle/"
+        },
+        {
+          "image": "team-roc.jpg",
+          "name": "Roc",
+          "caption": "Lead Music Editor & Operations Manager"
+        },
+        {
+          "image": "team-arnau.png",
+          "name": "Arnau",
+          "caption": "CTO"
+        },
+        {
+          "image": "team-maja.jpg",
+          "name": "Maja",
+          "caption": "Team Manager & Music Specialist"
+        },
+        {
+          "image": "team-brett.jpg",
+          "name": "Brett",
+          "caption": "Customer Service Manager & Music Specialist"
+        },
+        {
+          "image": "team-mauricio.jpg",
+          "name": "Mauricio",
+          "caption": "Special Products Owner & Business Development"
+        },
+        {
+          "image": "team-colom.jpg",
+          "name": "Colome",
+          "caption": "Growth & Research Lead"
+        },
+        {
+          "image": "team-quim.jpg",
+          "name": "Quim",
+          "caption": "Business Development Lead"
+        },
+        {
+          "image": "team-cristina.jpg",
+          "name": "Cristina",
+          "caption": "Business Development & PR Assistant"
+        },
+        {
+          "image": "team-anandi.jpg",
+          "name": "Anandi",
+          "caption": "Music Specialist & Customer Service"
+        },
+        {
+          "image": "team-miguel-navarro.jpg",
+          "name": "Mike",
+          "caption": "Music Specialist & Customer Service"
+        },
+        {
+          "image": "team-stephano02.jpg",
+          "name": "Stephano",
+          "caption": "Music Specialist & Customer Service"
+        },
+        {
+          "image": "team-osvaldo.jpg",
+          "name": "Osvaldo",
+          "caption": "Music Specialist & Customer Service"
+        },
+        {
+          "image": "team-facu.jpg",
+          "name": "Facu",
+          "caption": "Music Specialist & Customer Service"
+        },
+        {
+          "image": "team-santi.jpg",
+          "name": "Santi",
+          "caption": "Music Specialist & Customer Service"
+        },
+        {
+          "image": "team-ona.jpg",
+          "name": "Ona",
+          "caption": "Lead Music Editor Assistant & Customer Support"
+        },
+        {
+          "image": "team-marina.jpg",
+          "name": "Marina",
+          "caption": "Content & Music Specialist"
+        },
+        {
+          "image": "team-ottavio.jpg",
+          "name": "Ottavio",
+          "caption": "Musicologist & Researcher"
+        },
+        {
+          "image": "team-carla.jpg",
+          "name": "Carla",
+          "caption": "Catalog Specialist"
+        },
+        {
+          "image": "team-piero.jpg",
+          "name": "Piero",
+          "caption": "Music Editor & Transcriber"
+        },
+        {
+          "image": "team-josepf.jpg",
+          "name": "Josep Forcada",
+          "caption": "Project Assistant & Admin Support"
+        },
+        {
+          "image": "team-david.jpg",
+          "name": "David",
+          "caption": "Transcriber & Assistant Music Editor"
+        },
+        {
+          "image": "team-marc.jpg",
+          "name": "Marc",
+          "caption": "Head Piano Jazz & Ensembles Transcriber & Proof-Editor"
+        },
+        {
+          "image": "team-eric.jpg",
+          "name": "Eric",
+          "caption": "Head Piano & Vocal Transcriber & Proof-Editor"
+        },
+        {
+          "image": "team-michael.jpg",
+          "name": "Michael",
+          "caption": "Piano & Vocal Transcriber & Proof-Editor"
+        },
+        {
+          "image": "team-gemma.jpg",
+          "name": "Gemma",
+          "caption": "Piano Arranger & Proof-Editor"
+        },
+        {
+          "image": "team-pablo-o.jpg",
+          "name": "Pablo",
+          "caption": "Piano Transcriber"
+        },
+        {
+          "image": "team-joel.jpg",
+          "name": "Joel",
+          "caption": "Piano Transcriber"
+        },
+        {
+          "image": "team-bruno.jpg",
+          "name": "Bruno",
+          "caption": "Piano Transcriber"
+        },
+        {
+          "image": "team-matthew.jpg",
+          "name": "Matthew",
+          "caption": "Piano Transcriber"
+        },
+        {
+          "image": "team-nicola.jpg",
+          "name": "Nicola",
+          "caption": "Piano & Keyboards Transcriber"
+        },
+        {
+          "image": "team-dan.jpg",
+          "name": "Dan",
+          "caption": "Piano & Vocal Transcriber"
+        },
+        {
+          "image": "team-aviana.jpg",
+          "name": "Aviana",
+          "caption": "Piano & Vocal Transcriber"
+        },
+        {
+          "image": "team-mark.jpg",
+          "name": "Mark",
+          "caption": "Piano & Vocal Transcriber"
+        },
+        {
+          "image": "team-ethan.jpg",
+          "name": "Ethan",
+          "caption": "Piano & Jazz Transcriber"
+        },
+        {
+          "image": "team-bryn.jpg",
+          "name": "Bryn",
+          "caption": "Piano & Horns Transcriber"
+        },
+        {
+          "image": "team-victor.jpg",
+          "name": "Victor",
+          "caption": "Head Guitar Transcriber, Proof-Editor"
+        },
+        {
+          "image": "team-miguel.jpg",
+          "name": "Miguel",
+          "caption": "Guitar Transcriber & Proof-Editor"
+        },
+        {
+          "image": "team-mauro.jpg",
+          "name": "Mauro",
+          "caption": "Guitar Transcriber & Arranger"
+        },
+        {
+          "image": "team-joel-r.jpg",
+          "name": "Joel",
+          "caption": "Fingerstyle/Jazz Guitar Transcriber"
+        },
+        {
+          "image": "team-pau.jpg",
+          "name": "Pau",
+          "caption": "Guitar Transcriber"
+        },
+        {
+          "image": "team-hugo.jpg",
+          "name": "Hugo",
+          "caption": "Guitar Transcriber"
+        },
+        {
+          "image": "team-jorge.jpg",
+          "name": "Jorge",
+          "caption": "Guitar Transcriber"
+        },
+        {
+          "image": "team-nathan.jpg",
+          "name": "Nathan",
+          "caption": "Piano & Guitar Transcriber"
+        },
+        {
+          "image": "team-joan.jpg",
+          "name": "Joan",
+          "caption": "Violin & Strings Transcriber"
+        },
+        {
+          "image": "team-danbi.jpg",
+          "name": "Danbi",
+          "caption": "Orchestral Transcriber & Arranger"
+        },
+        {
+          "image": "team-bernardo.jpg",
+          "name": "Bernardo",
+          "caption": "Orchestral Transcriber & Arranger"
+        },
+        {
+          "image": "team-benjamin.jpg",
+          "name": "Benjamin",
+          "caption": "Choral Transcriber"
+        },
+        {
+          "image": "team-oriol-2.jpg",
+          "name": "Oriol",
+          "caption": "Horns & Jazz Transcriber, Big Band Arranger"
+        },
+        {
+          "image": "team-joan-marti.jpg",
+          "name": "Joan",
+          "caption": "Horns & Jazz Transcriber"
+        },
+        {
+          "image": "team-guillem.jpg",
+          "name": "Guillem",
+          "caption": "Bass Transcriber"
+        },
+        {
+          "image": "team-oscar.jpg",
+          "name": "Oscar",
+          "caption": "Drums Transcriber"
+        },
+        {
+          "image": "team-manuel.jpg",
+          "name": "Manuel",
+          "caption": "Percussion Transcriber"
+        },
+        {
+          "image": "team-carla-digitizer.jpg",
+          "name": "Carla",
+          "caption": "Transcriber & Digitizer"
+        },
+        {
+          "image": "team-virginia.jpg",
+          "name": "Virginia",
+          "caption": "Digitizer & Engraver"
+        },
+        {
+          "image": "team-queralt.jpg",
+          "name": "Queralt",
+          "caption": "Finance & Executive Assistant"
+        },
+        {
+          "image": "team-josep-jaume.jpg",
+          "name": "Josep Jaume",
+          "caption": "Tech Advisor"
+        },
+        {
+          "image": "team-emma.jpg",
+          "name": "Emma",
+          "caption": "Full-Stack Software Engineer"
+        }
+      ]
+    },
+    {
+      "type": "Section",
+      "title": "How do we operate?",
+      "tone": "cream",
+      "body": "Some of us take care of responding your emails and incoming calls. Some others transcribe the music for you. Some others coordinate the whole process.\n\nThere is always an expert transcriber ready to work on your sheet music requests. We make sure that only a proficient jazz pianist works on your jazz piano transcriptions. We make sure that only a proficient fingerstyle guitar player works on your guitar tabs. And that applies to every instrument. We don’t use music transcription software – that doesn’t work at all. We transcribe every note by ear: one after the other. We believe that this is the only way to achieve an accurate, professional result.\n\nWe strive to provide the best quality sheet music transcriptions and customer service; we hope that you love what we are building as much as we do."
+    },
+    {
+      "type": "Cards",
+      "title": "Stay tuned to the latest news on sheet music notation!",
+      "items": [
+        {
+          "title": "Which Jazz Sheet Music Should I Choose?",
+          "body": "Choose the Jazz Sheet Music Transcription that Best Adapts to the Needs of Your Project",
+          "image": "post-jazz.jpg",
+          "href": "/jazz-sheet-music-choose"
+        },
+        {
+          "title": "Guitar Sheet Music | Choose the Best Option for You",
+          "body": "At My Sheet Music Transcriptions, We Have the Best Guitar Sheet Music Option for You",
+          "image": "post-guitar.jpg",
+          "href": "/guitar-sheet-music-choose-the-best-option"
+        },
+        {
+          "title": "Our Pros & Cons of Guitar Pro",
+          "body": "Pros and Cons of Guitar Pro | 5 Features We Love and 5 Features We Are Still Missing",
+          "image": "post-guitar-pro.jpg",
+          "href": "/features-guitar-pro"
+        }
+      ],
+      "columns": 3,
+      "cta": {
+        "label": "See the full Blog",
+        "href": "/music-blog"
+      }
+    },
+    {
+      "type": "Cards",
+      "title": "Our socials",
+      "items": [
+        {
+          "title": "Blog",
+          "body": "Posts every week!",
+          "href": "/music-blog"
+        },
+        {
+          "title": "Reviews",
+          "body": "Read our customer reviews",
+          "href": "/customer-reviews"
+        },
+        {
+          "title": "Instagram",
+          "body": "See our world",
+          "href": "https://www.instagram.com/mysheetmusictranscriptions/"
+        },
+        {
+          "title": "Facebook",
+          "body": "See what we’re up to",
+          "href": "https://www.facebook.com/mysheetmusictranscriptions/"
+        },
+        {
+          "title": "Youtube",
+          "body": "See our piano tutorials channel",
+          "href": "https://www.youtube.com/mysheetmusictranscriptions"
+        },
+        {
+          "title": "Discord",
+          "body": "Join our online sheet music community!",
+          "href": "https://discord.gg/9tPYzbybFb"
+        }
+      ],
+      "variant": "tile",
+      "columns": 3
+    }
+  ]
+}

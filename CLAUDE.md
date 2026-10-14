@@ -56,7 +56,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   schema); a page's language is its collection, one per language (`src/admin/locales.ts`); our own widgets
   (translation-key suggestions, picture thumbnails) are `src/admin/widgets.ts`. The `cms` skill says how to change
   any of it and carries a Decap reference. A folder is one
-  kind or the other; `content/en/pages/careers/` and the homepage (`<Language> · Home` in the CMS) are data pages. `ds:mockup` does not apply to data pages; to make one
+  kind or the other; the homepages (`<Language> · Home` in the CMS), `careers`, `about-us`, the piano and guitar
+  service pages (`<Language> · Services`, with the service fields of `serviceFields` in `cms-meta.ts`) and every Spanish
+  page are data pages. Blocks with media words also get the locale's `videoPoster` (`data/brand.ts`). `ds:mockup` does not apply to data pages; to make one
   hand-built, turn its blocks into JSX in an `index.tsx` + `meta.ts`.
 - `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
   words blocks show around their content (`labels.ts`: carousel and video controls, review lines; `forms.ts`: the

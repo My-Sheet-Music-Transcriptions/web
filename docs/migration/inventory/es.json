@@ -1663,5 +1663,35 @@
     "archived": "20240423",
     "canonical": null,
     "robots": null
+  },
+  {
+    "locale": "es",
+    "path": "/instrumentos-de-viento",
+    "sources": ["live-2026"],
+    "wpType": "",
+    "lastmod": "",
+    "collection": "services",
+    "action": "port",
+    "note": "live page (2026-10), not in the archive; the Spanish site's one page for the instruments EN has a page each for (/trumpet-transcription-service, /saxophone-transcription-service, /clarinet-transcription-service, /flute-transcription-service), no hreflang",
+    "en": "",
+    "title": "Transcripciones para instrumentos de viento - Mis Transcripciones Musicales",
+    "archived": "",
+    "canonical": "https://www.mistranscripcionesmusicales.com/instrumentos-de-viento",
+    "robots": null
+  },
+  {
+    "locale": "es",
+    "path": "/instrumentos-de-cuerda",
+    "sources": ["live-2026"],
+    "wpType": "",
+    "lastmod": "",
+    "collection": "services",
+    "action": "port",
+    "note": "live page (2026-10), not in the archive; the Spanish site's one page for the instruments EN has a page each for (/violin-transcription-service, /cello-transcription-service), no hreflang",
+    "en": "",
+    "title": "Transcripciones para instrumentos de cuerda - Mis Transcripciones Musicales",
+    "archived": "",
+    "canonical": "https://www.mistranscripcionesmusicales.com/instrumentos-de-cuerda",
+    "robots": null
   }
 ]

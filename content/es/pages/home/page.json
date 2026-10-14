@@ -118,11 +118,28 @@
       "body": "Hay opciones y precios para todos los bolsillos. Cuantos más instrumentos y más larga o compleja es una pieza, más se tarda en transcribir. Cuanto más sencilla y esquemática puede ser la notación requerida, menos se tarda.\n\nTu partitura será **100% personalizada, adaptada a tus necesidades, y elaborada nota a nota manualmente por nuestros transcriptores profesionales.** El proceso estará coordinado por nuestro equipo de atención al cliente que te mantendrá informado en todo momento.\n\nSomos un equipo de músicos profesionales, intérpretes, editores, y musicólogos con amplia experiencia y nos esforzamos para proporcionar **transcripciones de la más alta calidad** y **el mejor servicio al cliente.**\n\nLas revisiones y transposiciones están incluidas en el precio, así como todos los formatos digitales que necesites.\n\nAquí tienes una pequeña referencia de precios, pero no dudes en contactarnos para propuestas a medida:"
     },
     {
-      "type": "CardGrid",
+      "type": "Cards",
       "reveal": true,
       "title": "¿Qué se incluye?",
       "image": "studioBand",
-      "items": "included"
+      "items": [
+        {
+          "title": "Entrega rápida y atención al cliente",
+          "body": "Respuestas en pocas horas, seguimiento, y entregas en 1-2 días.",
+          "icon": "fast-delivery-alt.png"
+        },
+        {
+          "title": "Trabajamos con todos los formatos",
+          "body": "Obtén la transcripción en formato digital:",
+          "icon": "formats.png",
+          "emphasis": "PDF, XML, MIDI, SIB y MUSX"
+        },
+        {
+          "title": "Precisión garantizada",
+          "body": "Trabajo 100% preciso hecho nota a nota para obtener la partitura perfecta",
+          "icon": "accuracy.png"
+        }
+      ]
     },
     {
       "type": "MediaText",

@@ -5,7 +5,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { isCmsBlock } from '~/components/blocks/cms'
 import { MotionProvider } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
-import { BlockPage, type BlockWords } from '~/content/BlockPage'
+import { type BlockBrand, BlockPage, type BlockWords } from '~/content/BlockPage'
 import { resolveBlock, splitDataPage } from '~/content/data-page'
 import { CMS_LOCALES } from './locales'
 import { type Decap, registerWidgets } from './widgets'
@@ -33,6 +33,7 @@ const loaded = Promise.all(
 const dataOf = (locale: string, file: string) =>
   modules[`/content/${locale}/data/${file}.ts`] ?? modules[`/content/en/data/${file}.ts`] ?? {}
 const wordsFor = (locale: string) => dataOf(locale, 'labels') as unknown as BlockWords
+const brandOf = (locale: string) => dataOf(locale, 'brand') as BlockBrand
 
 // A picture's size is known once it has loaded; until then a stand-in keeps the layout plausible.
 const sizes = new Map<string, { w: number; h: number }>()
@@ -74,7 +75,7 @@ function render(el: Element, data: unknown, assetUrl: (file: string) => string, 
     node = (
       <MotionProvider>
         <main>
-          <BlockPage blocks={resolved} words={wordsFor(locale)} />
+          <BlockPage blocks={resolved} words={wordsFor(locale)} brand={brandOf(locale)} />
         </main>
       </MotionProvider>
     )
