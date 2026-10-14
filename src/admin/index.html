@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Content manager · My Sheet Music Transcriptions</title>
+    <!-- Absolute paths: Netlify also serves this page at /admin, without the slash, where a relative path would
+         point at the site's root (and its redirect to /en/). -->
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
     <!-- Netlify Identity (email logins and invitations), self-hosted like everything else. -->
-    <script src="netlify-identity-widget.js"></script>
+    <script src="/admin/netlify-identity-widget.js"></script>
   </head>
   <body>
-    <!-- Decap CMS reads config.yml beside this page; preview.js adds the real-component preview. -->
-    <script src="decap-cms.js"></script>
-    <script src="preview.js"></script>
+    <!-- Decap CMS reads its config.yml (above); preview.js adds the real-component preview. -->
+    <script src="/admin/decap-cms.js"></script>
+    <script src="/admin/preview.js"></script>
   </body>
 </html>
