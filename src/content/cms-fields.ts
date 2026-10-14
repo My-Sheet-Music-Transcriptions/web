@@ -33,11 +33,18 @@ export interface Field<V = unknown, R extends boolean = boolean> {
   readonly default?: unknown
   /** What the block gets where its props need another shape than the CMS can edit (a table row). */
   readonly decode?: (stored: never) => unknown
+  /** More of Decap's own options for this field (a `pattern`, another `widget`, a date `format`), as they are. */
+  readonly decap?: Readonly<Record<string, unknown>>
   /** The value's type, for `CmsFields`; never set. */
   readonly __value?: V
 }
 
-type Opts<R extends boolean> = { hint?: string; required?: R; default?: unknown }
+type Opts<R extends boolean> = {
+  hint?: string
+  required?: R
+  default?: unknown
+  decap?: Readonly<Record<string, unknown>>
+}
 // `Is<R>` rather than `R` in the result: TypeScript would otherwise infer R from where the field is used (a required
 // prop) and accept a field the writer may leave empty.
 type Is<R> = R extends true ? true : false
@@ -66,7 +73,10 @@ export const select = <const O extends readonly (string | number)[], R extends b
   options: O,
   o?: Opts<R>,
 ) => make<O[number], R>('select', label, { ...o, options })
-/** A picture of the page folder, stored as its file name. */
+/** A picture of the page folder, stored as its file name, which a meta field keeps as it is (og.image.src). */
+export const pictureFile = <R extends boolean = false>(label: string, o?: Opts<R>) =>
+  make<string, R>('image', label, o)
+/** A picture of the page folder, stored as its file name, which a block gets as a picture. */
 export const picture = <R extends boolean = false>(label: string, o?: Opts<R>) =>
   make<PictureSource, R>('image', label, o)
 
@@ -194,6 +204,7 @@ export function decapField(name: string, f: Field, inOptional = false): Record<s
     ...(f.summary && { summary: f.summary }),
     ...(fields && { fields }),
     ...(f.of && { field: decapField(name.replace(/s$/, ''), f.of) }),
+    ...f.decap,
   }
 }
 
