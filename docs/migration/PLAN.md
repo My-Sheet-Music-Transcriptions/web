@@ -380,7 +380,7 @@ shop → `catalog.`.
 
 ### W8 · Spanish port and cutover (2 sessions; the first cutover with rankings at stake)
 
-*Ported 2026-10-14 (ahead of the wave, the twins of the English pages already in the repo):* `/`, `/piano`,
+*Ported 2026-10-14 ([#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74), ahead of the wave, the twins of the English pages already in the repo):* `/`, `/piano`,
 `/guitarra` and `/sobre-nosotros`, verbatim from the live pages, with the Spanish data files they need
 (`content/es/data/`: ratings, FAQ groups, the quote form, prices in EUR, reviews, labels, brand). The chrome (menus,
 footer, site strings) is still English.
