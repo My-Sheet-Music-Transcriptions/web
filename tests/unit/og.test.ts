@@ -131,6 +131,15 @@ describe('buildOgImages', () => {
     // A second build takes them all from the cache.
     expect(await buildOgImages([card, photo], sites.en, dirs)).toBe(0)
   }, 30_000)
+  it('draws the cards in the locale’s words, so other words make other cards', async () => {
+    const card = entry('card')
+    const share = { tagline: 'Una altra frase', labels: { posts: 'B', services: 'S', faqs: 'F' } }
+    const other = { ...sites.en, strings: { ...sites.en.strings, share } }
+    await buildOgImages([card], sites.en, dirs)
+    // The site card and the page card are made again, not taken from the English ones in the cache.
+    expect(await buildOgImages([card], other, dirs)).toBe(2)
+    expect(await size(entryOgImage(card))).toBe('png 1200x630')
+  }, 30_000)
   it('fails the build on a picture that is missing or smaller than 1200x630', async () => {
     const missing = entry('missing', { image: { src: 'share.jpg', alt: 'A share picture' } })
     await expect(buildOgImages([missing], sites.en, dirs)).rejects.toThrow(/does not exist/)

@@ -25,7 +25,13 @@ const satori: SatoriFn = typeof satoriModule === 'function' ? satoriModule : sat
 
 const FONT_DIR = path.resolve('node_modules/@fontsource/montserrat/files')
 const TEMPLATE = path.resolve('src/seo/og/template.tsx')
-const LOGO = path.resolve('src/assets/images/brand/logo.svg')
+const BRAND_DIR = path.resolve('src/assets/images/brand')
+
+/** The locale's lockup, as src/assets/brand.ts picks it for the header: logo-<name>.svg, else the shared logo.svg. */
+function logoFile(name: string): string {
+  const own = path.join(BRAND_DIR, `logo-${name}.svg`)
+  return fs.existsSync(own) ? own : path.join(BRAND_DIR, 'logo.svg')
+}
 
 function fonts() {
   return [400, 700, 800].map((weight) => ({
@@ -36,7 +42,7 @@ function fonts() {
   }))
 }
 
-type Card = { title: string; subtitle: string; kind: string }
+type Card = { title: string; subtitle: string; label: string }
 /** One og:image to write: a Satori card, or a page's own picture to crop. */
 type Job = { out: string } & ({ card: Card } | { picture: string })
 
@@ -52,7 +58,8 @@ export interface OgDirs {
 /**
  * Writes every og:image of a locale into public/og/<locale>, exactly the files the <head> links (src/seo/og/paths.ts):
  * the site card, and per entry its own picture (`og.image`, cropped to 1200x630) or else a Satori card from its
- * (og) title and description. The folder is rebuilt from scratch, so it holds nothing else; images are cached by a
+ * (og) title and description. A card's words (label, brand, tagline) and logo are the locale's (`strings.share`,
+ * `brand`, `logo`). The folder is rebuilt from scratch, so it holds nothing else; images are cached by a
  * hash of their inputs, the template and the logo included. Throws, failing the build, when a picture is missing or
  * too small. Returns how many images were made (not taken from the cache).
  */
@@ -61,8 +68,9 @@ export async function buildOgImages(
   site: SiteConfig,
   { publicDir = 'public', cacheDir = '.cache/og', contentDir = CONTENT_DIR }: OgDirs = {},
 ): Promise<number> {
+  const { tagline, labels } = site.strings.share
   const jobs: Job[] = [
-    { out: siteOgImage(site.locale), card: { title: site.siteName, subtitle: '', kind: 'site' } },
+    { out: siteOgImage(site.locale), card: { title: site.siteName, subtitle: '', label: '' } },
     ...entries.map((e): Job => {
       const out = entryOgImage(e)
       const own = e.meta.og?.image
@@ -70,7 +78,7 @@ export async function buildOgImages(
       const card = {
         title: e.meta.og?.title ?? e.meta.title,
         subtitle: e.meta.og?.description ?? e.meta.description,
-        kind: e.collection,
+        label: labels[e.collection as keyof typeof labels] ?? '',
       }
       return { out, card }
     }),
@@ -83,20 +91,20 @@ export async function buildOgImages(
 
   fs.rmSync(path.join(publicDir, 'og', site.locale), { recursive: true, force: true })
   fs.mkdirSync(cacheDir, { recursive: true })
-  const logo = fs.readFileSync(LOGO, 'utf8')
+  const logo = fs.readFileSync(logoFile(site.logo), 'utf8')
   const logoData = `data:image/svg+xml;base64,${Buffer.from(logo).toString('base64')}`
   const design = fs.readFileSync(TEMPLATE, 'utf8') + logo
   let loadedFonts: ReturnType<typeof fonts> | undefined
   let made = 0
   for (const j of jobs) {
     const hash = createHash('sha1')
-    if ('card' in j) hash.update(JSON.stringify({ ...j.card, brand: site.brand, design }))
+    if ('card' in j) hash.update(JSON.stringify({ ...j.card, brand: site.brand, tagline, design }))
     else hash.update('crop 1').update(fs.readFileSync(j.picture))
     const cached = path.join(cacheDir, `${hash.digest('hex')}${path.extname(j.out)}`)
     if (!fs.existsSync(cached)) {
       if ('card' in j) {
         loadedFonts ??= fonts()
-        const svg = await satori(ogTemplate({ ...j.card, brand: site.brand, logoData }), {
+        const svg = await satori(ogTemplate({ ...j.card, brand: site.brand, tagline, logoData }), {
           ...OG_SIZE,
           fonts: loadedFonts,
         })

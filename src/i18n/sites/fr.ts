@@ -1,7 +1,7 @@
 import type { SiteConfig } from '../types.ts'
 import { en } from './en.ts'
 
-/** Scaffold: inherits English strings until the fr port (Iteration 3). */
+/** Scaffold: inherits English strings until the fr port (Iteration 3), but for the share cards' words. */
 export const fr: SiteConfig = {
   ...en,
   locale: 'fr',
@@ -13,6 +13,13 @@ export const fr: SiteConfig = {
   logo: 'fr',
   currency: 'EUR',
   routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
+  strings: {
+    ...en.strings,
+    share: {
+      tagline: 'Des transcriptions de partitions 100 % fidèles',
+      labels: { posts: 'Blog', services: 'Service', faqs: 'FAQ' },
+    },
+  },
   isDefault: false,
   legacyOrigin: 'https://mapartitionsurmesure.com',
 }
