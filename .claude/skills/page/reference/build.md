@@ -1,6 +1,9 @@
 # Building the real page from the approved mockup
 
-Only after the explicit yes. A page is a React component: each `data-msmt` section becomes one block in the
+Only after the explicit yes, and only from an approved mockup: `mockups/<slug>/sections.html` (or
+`mockups/<locale>-<slug>/`) exists and its preview was published and accepted. No mockup means Phase 2 has not
+happened: go back to it, whatever the request said. A page is kept with its mockup (the unit tests refuse a
+new page without one; only migration ports listed in `docs/migration/inventory/` are exempt). A page is a React component: each `data-msmt` section becomes one block in the
 page's `index.tsx` with exactly its props; each `data-proposed` section is built for real first.
 
 1. **Blocks from sections.** Each `data-msmt` element → one block element in the fragment the page component
