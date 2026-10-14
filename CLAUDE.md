@@ -49,7 +49,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   The blocks the CMS offers and what writers fill in on each are `src/components/blocks/cms.ts`, fields typed by the
   block's props (`src/content/cms-fields.ts`: a field that does not fit its prop does not compile); Decap's forms,
   the check of every `page.json` (build and unit tests) and its rendering are all made from it. To offer a block in
-  the CMS, add it there. A folder is one
+  the CMS, add it there. Every page opens with the same meta fields (`src/content/cms-meta.ts`, typed by the meta
+  schema); a page's language is its collection, one per language (`src/admin/locales.ts`); our own widgets
+  (translation-key suggestions, picture thumbnails) are `src/admin/widgets.ts`. The `cms` skill says how to change
+  any of it and carries a Decap reference. A folder is one
   kind or the other; `content/en/pages/careers/` is the pilot. `ds:mockup` does not apply to data pages; to make one
   hand-built, turn its blocks into JSX in an `index.tsx` + `meta.ts`.
 - `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
@@ -105,7 +108,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   commands `new-page`, `edit-page`, `translate`, `design`, `publish`, `status`, `site-help` (thin entry points into
   `page`), the engineering skills `component` (adding or changing a block or primitive without duplicating one),
   `motion` (every animation: the Motion provider, presets, reveals, menus) with Motion's official `motion-dev`
-  skill vendored beside it, `publish-design-system` and `release-check`, and hidden stubs for later phases.
+  skill vendored beside it, `cms` (the Decap CMS at `/admin`, with a condensed Decap reference), `publish-design-system` and `release-check`, and hidden stubs for later phases.
 - `docs/content-managers.{md,es.md,ca.md}` – the plain-language guide for content managers and writers (EN/ES/CA);
   `tests/unit/skills.test.ts` keeps the commands, the guides and the skill's reference files in sync.
 - `docs/migration/PLAN.md` – the WordPress → repo migration plan (waves, decisions, cutover runbook), with the URL

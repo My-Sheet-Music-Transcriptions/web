@@ -7,6 +7,8 @@ import { MotionProvider } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { BlockPage, type BlockWords } from '~/content/BlockPage'
 import { resolveBlock, splitDataPage } from '~/content/data-page'
+import { CMS_LOCALES } from './locales'
+import { type Decap, registerWidgets } from './widgets'
 
 /**
  * The CMS preview (/admin, Decap): the entry being edited rendered with the real blocks, as the site renders its
@@ -76,23 +78,22 @@ interface DecapPreviewProps {
   entry: DecapEntry
   getAsset(path: string): { toString(): string }
 }
-interface DecapGlobals {
-  CMS?: {
+type Globals = Decap & {
+  CMS: Decap['CMS'] & {
     registerPreviewStyle(url: string): void
     registerPreviewTemplate(name: string, component: unknown): void
   }
-  createClass?: (spec: Record<string, unknown>) => unknown
-  h?: (type: string, props: Record<string, unknown>) => unknown
 }
 
-const { CMS, createClass, h } = window as unknown as DecapGlobals
-const LOCALES = ['en', 'es', 'fr', 'de', 'ja', 'ca']
+const decap = window as unknown as Partial<Globals>
 
-if (CMS && createClass && h) {
+if (decap.CMS && decap.createClass && decap.h) {
+  const { CMS, createClass, h } = decap as Globals
+  registerWidgets(decap as Globals)
   CMS.registerPreviewStyle(
     new URL('preview.css', (document.currentScript as HTMLScriptElement).src).href,
   )
-  for (const locale of LOCALES)
+  for (const { code: locale } of CMS_LOCALES)
     CMS.registerPreviewTemplate(
       `pages-${locale}`,
       createClass({

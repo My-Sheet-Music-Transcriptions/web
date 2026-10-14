@@ -1,6 +1,8 @@
 import { cmsBlocks } from '../components/blocks/cms.ts'
 import type { AnyCmsBlock } from '../content/cms-fields.ts'
 import { decapField } from '../content/cms-fields.ts'
+import { metaFields } from '../content/cms-meta.ts'
+import { CMS_LOCALES } from './locales.ts'
 
 /**
  * Decap CMS's configuration (/admin/config.yml), written by vite.admin.config.ts at build: the pilot of the file-based
@@ -15,9 +17,6 @@ import { decapField } from '../content/cms-fields.ts'
  * Imported by Node directly (the admin build's config): relative imports with extensions and type imports only.
  */
 
-/** The languages whose pages the CMS edits (one collection each). */
-const LOCALES = [{ code: 'en', label: 'English' }] as const
-
 const blockTypes = Object.entries(cmsBlocks as Record<string, AnyCmsBlock>).map(
   ([name, block]) => ({
     name,
@@ -27,40 +26,6 @@ const blockTypes = Object.entries(cmsBlocks as Record<string, AnyCmsBlock>).map(
     fields: Object.entries(block.fields).map(([field, f]) => decapField(field, f)),
   }),
 )
-
-const metaFields = [
-  {
-    name: 'title',
-    label: 'Title',
-    widget: 'string',
-    hint: 'The page name in search results and the browser tab (3–120 characters).',
-    pattern: ['^.{3,120}$', '3 to 120 characters'],
-  },
-  {
-    name: 'description',
-    label: 'Description',
-    widget: 'text',
-    hint: 'The line Google shows under the title.',
-    pattern: ['^[\\s\\S]{50,160}$', '50 to 160 characters'],
-  },
-  {
-    name: 'translationKey',
-    label: 'Translation key',
-    widget: 'string',
-    hint: 'The same key on every language version of this page links them (lowercase, dashes). A key no other language uses keeps the page on its own.',
-    pattern: ['^[a-z0-9][a-z0-9-]*$', 'lowercase letters, numbers and dashes'],
-  },
-  {
-    name: 'updated',
-    label: 'Last updated',
-    widget: 'datetime',
-    format: 'YYYY-MM-DD',
-    date_format: 'YYYY-MM-DD',
-    time_format: false,
-    required: false,
-  },
-  { name: 'draft', label: 'Draft (hidden from the site)', widget: 'boolean', required: false },
-]
 
 export const decapConfig = {
   backend: {
@@ -79,12 +44,15 @@ export const decapConfig = {
   // Every picture lives in its page's folder (the collection's media_folder); this global one is unused.
   media_folder: 'content/media',
   public_folder: '',
-  collections: LOCALES.map(({ code, label }) => ({
+  // The brand on the login page (Decap 3.17's `show_in_header` draws nothing).
+  logo: { src: '/admin/logo.svg' },
+  // A page's language is the collection it is in: one per language, `<Language> · Pages`, so that a language's
+  // collections sit together in the sidebar as more kinds (posts, the homepage) join them.
+  collections: CMS_LOCALES.map(({ code, label }) => ({
     name: `pages-${code}`,
-    label: `Pages (${label})`,
-    label_singular: 'Page',
-    description:
-      'Pages people edit here. Hand-built pages (the homepage, landing pages) are changed by asking Claude.',
+    label: `${label} · Pages`,
+    label_singular: `${label} page`,
+    description: `Pages in ${label}. Hand-built pages (the homepage, landing pages) are changed by asking Claude.`,
     folder: `content/${code}/pages`,
     path: '{{slug}}/page',
     extension: 'json',
@@ -95,7 +63,7 @@ export const decapConfig = {
     public_folder: '',
     summary: '{{title}}',
     fields: [
-      ...metaFields,
+      ...Object.entries(metaFields).map(([name, f]) => decapField(name, f)),
       {
         name: 'blocks',
         label: 'Sections',

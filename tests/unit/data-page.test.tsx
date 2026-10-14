@@ -7,7 +7,9 @@ import type { PageHeaderProps } from '../../src/components/blocks/PageHeader'
 import type { TableProps } from '../../src/components/blocks/Table'
 import { BlockPage } from '../../src/content/BlockPage'
 import { type CmsBlock, line, prose, select } from '../../src/content/cms-fields'
+import { metaFields } from '../../src/content/cms-meta'
 import { resolveBlock, splitDataPage } from '../../src/content/data-page'
+import { LOCALES } from '../../src/i18n/types'
 
 /** Data pages: the page.json format the CMS edits (src/content/data-page.ts) and its renderer. */
 describe('splitDataPage', () => {
@@ -121,6 +123,17 @@ describe('Decap configuration', () => {
     const cta = header?.fields.find((f) => f.name === 'cta')
     expect(cta?.required).toBe(false)
     expect(cta?.fields?.every((f) => !f.required)).toBe(true)
+  })
+  it('has one collection of pages per site language, each in its own folder', () => {
+    expect(decapConfig.collections.map((c) => c.name).sort()).toEqual(
+      LOCALES.map((l) => `pages-${l}`).sort(),
+    )
+    for (const c of decapConfig.collections)
+      expect(c.folder).toBe(`content/${c.name.replace('pages-', '')}/pages`)
+  })
+  it('opens every page with the meta fields, then its sections', () => {
+    for (const c of decapConfig.collections)
+      expect(c.fields.map((f) => f.name)).toEqual([...Object.keys(metaFields), 'blocks'])
   })
 })
 

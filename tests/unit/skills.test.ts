@@ -28,6 +28,7 @@ const commands = skills.filter((d) => {
     fm['user-invocable'] !== 'false' &&
     ![
       'page',
+      'cms',
       'component',
       'motion',
       'motion-dev',
