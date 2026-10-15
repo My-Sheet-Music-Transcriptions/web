@@ -18,14 +18,14 @@ For anything Decap itself does (options, widgets, collections, i18n, media, the 
 
 | File | What it is |
 | --- | --- |
-| `src/admin/config.ts` | `decapConfig`, written as `/admin/config.yml` by `vite.admin.config.ts`. Backend, logo, one collection per language. |
-| `src/admin/locales.ts` | `CMS_LOCALES`: the languages, in sidebar order. A collection, a preview template and the key widget each. |
+| `src/admin/config.ts` | `decapConfig`, written as `/admin/config.yml` by `vite.admin.config.ts`. Backend, logo, and the three collections: `site` (every language's homepage and menu, a file collection), `pages` and `services` (every language's, filed by `language`). |
+| `src/admin/locales.ts` | `CMS_LOCALES`: the languages, in the order of the language filter and of the Site entries; the `language` field's options. |
 | `src/content/cms-meta.ts` | `metaFields`: the fields every page opens with (title, description, translation key, SEO, share card, noindex, draft, updated), typed by `baseSchema`; `serviceFields`: what a service page adds (short name, icon, menu group, price from, order), typed by `serviceSchema`. |
 | `src/components/blocks/cms.ts` | `cmsBlocks`: every block of the catalogue, in its order, with the fields writers fill in, typed by each block's props; presets (`preset`); `fromData`. |
 | `content/<locale>/data/brand.ts` | Brand pictures (photo bands, the lockup) named so data fields can offer them. |
 | `src/content/cms-fields.ts` | The field DSL (`line`, `prose`, `picture`, `pictureFile`, `sound`, `data`, `select`, `toggle`, `number`, `group`, `list`, `listOf`, `tableRows`, `faqGroups`), `decapField` (DSL → Decap field; `decap: {…}` passes raw Decap options last), the check of what is stored and `decodeFields` (names → pictures, recordings and data, then each field's decoder). |
 | `src/content/data-page.ts`, `BlockPage.tsx`, `scripts/lib/vite-data-pages.ts` | Reading, checking and rendering `page.json` on the site. |
-| `src/content/menu.ts`, `content/<locale>/data/menu.json` | A language's main menu (`<Language> · Menu`, a file collection with its form in `menuFields` of `config.ts`): items, sections, links; each link a `page` (a select of every page of the language, hand-built included, listed when the admin is built) or an `href`. Checked by zod and `checkSlugs`; the preview draws it as an outline. |
+| `src/content/menu.ts`, `content/<locale>/data/menu.json` | A language's main menu (`Site` → `<Language> · Menu`, a file entry with its form in `menuFields` of `config.ts`): items, sections, links; each link a `page` (a select of every page of the language, hand-built included, listed when the admin is built) or an `href`. Checked by zod and `checkSlugs`; the preview draws it as an outline. |
 | `src/admin/preview.tsx` | The editor's live preview with the real blocks, and `registerWidgets`. |
 | `src/admin/widgets.ts` | Our widgets: `translation-key` (suggests existing keys, shows the linked translations, refuses a duplicate in the same language) and `image` (Decap's own, remounted once the picture has loaded so thumbnails show in lists). |
 | `src/admin/index.html`, `vite.admin.config.ts` | The admin page (absolute `/admin/...` paths) and its build: config.yml, scripts, `logo.svg`. |
@@ -50,27 +50,30 @@ relative imports **with** `.ts` extensions and `import type` for everything else
   under a name of its own; `props` are fixed, the fields are what the writer sets. Pictures can override the block's
   widths per field: `picture('Photo', { widths: '1000;1600' })`. A decorative picture's alt takes `empty: ''`.
 - **A field on every page**: add it to `baseSchema` (`src/content/schema.ts`) first, then to `metaFields`.
-- **A language**: add it to `CMS_LOCALES` (it must be a site `Locale`); the collection, preview and key check follow.
-- **A collection** (posts, artists…; pages and services exist): add it in `config.ts` per language next to `pages-<locale>`, named
-  `<kind>-<locale>` (the key widget reads the locale from the name's last part), fields `metaFields` first, then the
-  kind's own. Keep `folder`, `path: '{{slug}}/page'`, `media_folder: ''`, `public_folder: ''` so pictures stay in the page folder.
-- **The homepage** of a language appears as `<Language> · Home` (a file collection, §2.3 of the reference) as soon as
-  its `pages/home/page.json` exists; it is also listed under Pages (Decap's `filter` cannot exclude one entry). Other
-  singletons follow the same pattern: the file must exist first.
+- **A language**: add it to `CMS_LOCALES` (it must be a site `Locale`); its filter, `language` option and Site entries follow.
+- **A collection** (posts, artists…; pages and services exist): one `kind(...)` in `config.ts`, which lists every
+  language's pages of that kind: `folder: 'content'`, `path: '{{language}}/<kind>/{{slug}}/page'` (a new page is filed
+  by the language the writer picks), `filter` on the hidden `collection` field (every kind sits at the same depth under
+  `content/`, so the filter is what keeps the others out), language `view_filters` and `view_groups`. Its page.json
+  files open with `language` and `collection` (`splitDataPage` checks them against the folder). Keep
+  `media_folder: ''`, `public_folder: ''` so pictures stay in the page folder. Add the kind to the preview templates.
+- **The homepage** of a language appears in `Site` as `<Language> · Homepage` (a file entry, §2.2 of the reference) as
+  soon as its `pages/home/page.json` exists; it is also listed under Pages (Decap's `filter` cannot exclude one entry).
+  Other singletons go in `Site` the same way (`siteFiles`): the file must exist first.
 - **The menu**: the shape is `src/content/menu.ts` (schema, `menuToNav`); a field there goes into `menuFields` in
-  `config.ts` too. A language gets a `<Language> · Menu` entry once it has `content/<locale>/data/menu.json`
+  `config.ts` too. A language gets a `Site` → `<Language> · Menu` entry once it has `content/<locale>/data/menu.json`
   (until then it shows the English menu): copy the English file and translate it, picking that language's pages.
 - **A widget**: write it in `widgets.ts` with Decap's `createClass` / `h` globals (Decap renders with its own React)
   and register it in `registerWidgets`; reference it from a field with `decap: { widget: '<name>' }`.
 
 Decap has no themes: branding is the logo, labels, descriptions and, if ever needed, CSS overrides of its class names.
-Nested collections (beta) need an index file at every folder level, which our layout does not have: languages are
-separate collections instead.
+Decap's sidebar is flat (no groups or dividers) and its `i18n` cannot express `content/<locale>/<kind>/`, so languages
+are a field instead of collections: one collection per kind, filtered and grouped by `language`. Nested collections
+(beta) need an index file at every folder level, which our layout does not have.
 
 ## Checks
 
-- `tests/unit/data-page.test.tsx`: the config offers every block of the catalogue (then the presets), one collection
-  per site language, meta fields first; every `page.json` validates; names resolve (pictures, recordings, data, FAQ
+- `tests/unit/data-page.test.tsx`: the config offers every block of the catalogue (then the presets), the three collections (Site, Pages, Services), language then meta fields first; every `page.json` validates; names resolve (pictures, recordings, data, FAQ
   groups, a preset's props); the DSL's types refuse what does not fit (`@ts-expect-error` lines).
 - Try it locally: `pnpm build && pnpm serve:dist`, `pnpm dlx decap-server` in another terminal, then
   http://localhost:4173/admin/ (`local_backend` writes straight to the working copy, no login). Look at the result in

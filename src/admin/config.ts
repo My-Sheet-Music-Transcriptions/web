@@ -4,13 +4,17 @@ import { cmsBlocks } from '../components/blocks/cms.ts'
 import type { AnyCmsBlock, Field } from '../content/cms-fields.ts'
 import { decapField } from '../content/cms-fields.ts'
 import { metaFields, serviceFields } from '../content/cms-meta.ts'
-import { CMS_LOCALES } from './locales.ts'
+import { CMS_LOCALES, type CmsLocale } from './locales.ts'
 
 /**
  * Decap CMS's configuration (/admin/config.yml), written by vite.admin.config.ts at build: the pilot of the file-based
  * CMS. It edits data pages, content/<locale>/<collection>/<slug>/page.json (src/content/data-page.ts), never the
  * hand-built pages (index.tsx + meta.ts), which it does not list. The blocks it offers and their forms are made from
  * src/components/blocks/cms.ts, the same list every page.json is checked against and rendered with.
+ * The sidebar: `Site` (every language's homepage and main menu, one entry each), `Pages` and `Services` (every
+ * language's, filed in one collection each: the writer filters or groups the list by language, and a new page says
+ * which language it is in, which puts it in that language's folder). Each page.json opens with `language` and
+ * `collection` for this (src/content/data-page.ts checks them against the folder).
  * Logins: Netlify Identity through Git Gateway (an email and a password, no GitHub account). Every change is a pull
  * request (editorial workflow) with its Netlify deploy preview, merged by the branch rule like any content PR.
  * Locally: `pnpm build && pnpm serve:dist`, `npx decap-server` in another terminal, then http://localhost:4173/admin/
@@ -45,12 +49,78 @@ const fieldsOf = (meta: Record<string, Field>) => [
 const fields = fieldsOf(metaFields)
 const serviceFormFields = fieldsOf({ ...metaFields, ...serviceFields })
 
+/** The language a page is in (its folder), and the collection (its folder, hidden): what a page.json opens with. */
+const languageField = {
+  name: 'language',
+  label: 'Language',
+  widget: 'select',
+  options: CMS_LOCALES.map(({ code, label }) => ({ label, value: code })),
+  hint: 'The language the page is written in: it is filed with that language’s pages.',
+}
+const collectionField = (collection: string) => ({
+  name: 'collection',
+  widget: 'hidden',
+  default: collection,
+})
+/**
+ * A folder collection of every language's pages of one kind, `content/<language>/<collection>/<slug>/page.json`:
+ * `path` files a new page by its language, `filter` keeps the other kinds out (every kind sits at the same depth),
+ * and the list can be filtered or grouped by language.
+ */
+const kind = (
+  collection: string,
+  label: string,
+  singular: string,
+  description: string,
+  own: object[],
+) => ({
+  name: collection,
+  label,
+  label_singular: singular,
+  description,
+  folder: 'content',
+  path: `{{language}}/${collection}/{{slug}}/page`,
+  filter: { field: 'collection', value: collection },
+  extension: 'json',
+  format: 'json',
+  create: true,
+  slug: '{{slug}}',
+  media_folder: '',
+  public_folder: '',
+  summary: '{{title}} · {{language | upper}}',
+  sortable_fields: ['title', 'language'],
+  view_filters: CMS_LOCALES.map(({ code, label }) => ({
+    label,
+    field: 'language',
+    pattern: `^${code}$`,
+  })),
+  view_groups: [{ label: 'Language', field: 'language' }],
+  fields: [languageField, collectionField(collection), ...own],
+})
+
 /** A language's homepage, when it is a data page (run from the repository root, as the build and tests are). */
 const homeFile = (locale: string) => `content/${locale}/pages/home/page.json`
 
 /** A language's main menu (src/content/menu.ts). */
 const menuFile = (locale: string) => `content/${locale}/data/menu.json`
 const entries = readAllEntries()
+
+/** The Site entries of a language: its homepage and its menu, those it has. */
+const siteFiles = ({ code, label }: CmsLocale) => [
+  ...(fs.existsSync(homeFile(code))
+    ? [{ name: `home-${code}`, label: `${label} · Homepage`, file: homeFile(code), fields }]
+    : []),
+  ...(fs.existsSync(menuFile(code))
+    ? [
+        {
+          name: `menu-${code}`,
+          label: `${label} · Menu`,
+          file: menuFile(code),
+          fields: menuFields(code),
+        },
+      ]
+    : []),
+]
 
 /**
  * The menu's form. Each link picks a page of the language (every page in content/, hand-built ones included, as the
@@ -139,70 +209,28 @@ export const decapConfig = {
   public_folder: '',
   // The brand on the login page (Decap 3.17's `show_in_header` draws nothing).
   logo: { src: '/admin/logo.svg' },
-  // A page's language is the collection it is in, so that a language's collections sit together in the sidebar:
-  // `<Language> · Home` (a single entry: the language's homepage, once it is a data page), `<Language> · Menu` (the
-  // main menu, once the language has its own), then `<Language> · Pages` and `<Language> · Services`.
-  collections: CMS_LOCALES.flatMap(({ code, label }) => [
-    ...(fs.existsSync(homeFile(code))
-      ? [
-          {
-            name: `home-${code}`,
-            label: `${label} · Home`,
-            description: `The homepage in ${label}.`,
-            media_folder: '',
-            public_folder: '',
-            files: [{ name: `home-${code}`, label: 'Homepage', file: homeFile(code), fields }],
-          },
-        ]
-      : []),
-    ...(fs.existsSync(menuFile(code))
-      ? [
-          {
-            name: `menu-${code}`,
-            label: `${label} · Menu`,
-            description: `The main menu in ${label}: its items, the sections of each panel and their links.`,
-            files: [
-              {
-                name: `menu-${code}`,
-                label: 'Menu',
-                file: menuFile(code),
-                fields: menuFields(code),
-              },
-            ],
-          },
-        ]
-      : []),
+  collections: [
     {
-      name: `pages-${code}`,
-      label: `${label} · Pages`,
-      label_singular: `${label} page`,
-      description: `Pages in ${label}. Hand-built pages (the landing pages) are changed by asking Claude.`,
-      folder: `content/${code}/pages`,
-      path: '{{slug}}/page',
-      extension: 'json',
-      format: 'json',
-      create: true,
-      slug: '{{slug}}',
+      name: 'site',
+      label: 'Site',
+      description: 'Each language’s homepage and main menu.',
       media_folder: '',
       public_folder: '',
-      summary: '{{title}}',
+      files: CMS_LOCALES.flatMap(siteFiles),
+    },
+    kind(
+      'pages',
+      'Pages',
+      'page',
+      'The pages of every language (filter or group the list by language). Hand-built pages (the landing pages) are changed by asking Claude.',
       fields,
-    },
-    {
-      name: `services-${code}`,
-      label: `${label} · Services`,
-      label_singular: `${label} service page`,
-      description: `Service pages in ${label}: one per instrument or service, listed in the menus and grids.`,
-      folder: `content/${code}/services`,
-      path: '{{slug}}/page',
-      extension: 'json',
-      format: 'json',
-      create: true,
-      slug: '{{slug}}',
-      media_folder: '',
-      public_folder: '',
-      summary: '{{title}}',
-      fields: serviceFormFields,
-    },
-  ]),
+    ),
+    kind(
+      'services',
+      'Services',
+      'service page',
+      'The service pages of every language: one per instrument or service, listed in the menus and grids.',
+      serviceFormFields,
+    ),
+  ],
 }

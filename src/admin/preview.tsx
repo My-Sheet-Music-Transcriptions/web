@@ -15,8 +15,8 @@ import { type Decap, registerWidgets } from './widgets'
  * The CMS preview (/admin, Decap): the entry being edited rendered with the real blocks, as the site renders its
  * page.json (src/content/BlockPage.tsx). Built by vite.admin.config.ts into dist/client/admin/preview.{js,css};
  * src/admin/index.html loads it after Decap, and it registers one preview template per collection of
- * src/admin/config.ts (`pages-<locale>`, `home-<locale>`). Decap renders templates with its own React, so each template only
- * gives this bundle an element to render into.
+ * src/admin/config.ts (`pages`, `services`, and the Site entries `home-<locale>`, `menu-<locale>`). Decap renders
+ * templates with its own React, so each template only gives this bundle an element to render into.
  */
 
 // Every locale's data (content/<locale>/data/*.ts): the block words, and the lists data fields name. Loaded before
@@ -165,13 +165,17 @@ if (decap.CMS && decap.createClass && decap.h) {
   CMS.registerPreviewStyle(
     new URL('preview.css', (document.currentScript as HTMLScriptElement).src).href,
   )
-  // One per collection of pages, per homepage and per menu (a file collection's template goes by its file's name).
-  for (const [name, locale] of CMS_LOCALES.flatMap(({ code }) => [
-    [`pages-${code}`, code] as const,
-    [`services-${code}`, code] as const,
-    [`home-${code}`, code] as const,
-    [`menu-${code}`, code] as const,
-  ]))
+  // One per collection (the language is the entry's `language` field) and per Site entry (a file collection's
+  // template goes by its file's name, which says the language).
+  const templates: (readonly [name: string, locale?: string])[] = [
+    ['pages'],
+    ['services'],
+    ...CMS_LOCALES.flatMap(({ code }) => [
+      [`home-${code}`, code] as const,
+      [`menu-${code}`, code] as const,
+    ]),
+  ]
+  for (const [name, fixed] of templates)
     CMS.registerPreviewTemplate(
       name,
       createClass({
@@ -184,6 +188,7 @@ if (decap.CMS && decap.createClass && decap.h) {
         draw(this: { el?: Element; props: DecapPreviewProps }) {
           if (!this.el) return
           const data = this.props.entry.getIn(['data'])?.toJS()
+          const locale = fixed ?? String((data as { language?: unknown })?.language ?? 'en')
           if (name.startsWith('menu-')) renderMenu(this.el, data)
           else render(this.el, data, (file) => this.props.getAsset(file).toString(), locale)
         },

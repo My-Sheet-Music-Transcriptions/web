@@ -6,7 +6,7 @@
     },
     {
       "label": "Servicios",
-      "href": "/servicios-musicales",
+      "page": "/servicios-musicales",
       "sections": [
         {
           "label": "Transcripciones para piano",
@@ -82,11 +82,11 @@
     },
     {
       "label": "Precios",
-      "href": "/precios"
+      "page": "/precios"
     },
     {
       "label": "Opiniones",
-      "href": "/opiniones"
+      "page": "/opiniones"
     },
     {
       "label": "Sobre nosotros",
@@ -98,7 +98,7 @@
     },
     {
       "label": "Contacto",
-      "href": "/contacto"
+      "page": "/contacto"
     }
   ]
 }

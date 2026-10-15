@@ -52,7 +52,7 @@ export function SiteTopBar() {
       login={{ label: s.login, href: site.hub.login }}
       signup={{ label: s.signup, href: site.hub.signup }}
     >
-      <LangSwitcher label={s.language} items={languageLinks(site)} className="ml-6 w-[166px]" />
+      <LangSwitcher label={s.language} items={languageLinks(site)} className="ml-6 min-w-[166px]" />
     </TopBar>
   )
 }

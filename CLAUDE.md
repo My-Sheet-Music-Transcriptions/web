@@ -53,11 +53,13 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   entry for the same block with props of its own. Lists kept in code (reviews, prices, shared questions, forms, brand
   pictures in `content/<locale>/data/brand.ts`) are data fields: the page stores the export's name and gets the export
   of its locale. Recordings (mp3) sit in the page folder like pictures. Every page opens with the same meta fields (`src/content/cms-meta.ts`, typed by the meta
-  schema); a page's language is its collection, one per language (`src/admin/locales.ts`); our own widgets
+  schema), after `language` and `collection` (the two parts of its folder, checked against it): the CMS's sidebar is
+  `Site` (each language's homepage and menu), `Pages` and `Services`, each listing every language's pages, filtered or
+  grouped by language (`src/admin/locales.ts`); our own widgets
   (translation-key suggestions, picture thumbnails) are `src/admin/widgets.ts`. The `cms` skill says how to change
   any of it and carries a Decap reference. A folder is one
-  kind or the other; the homepages (`<Language> · Home` in the CMS), `careers`, `about-us`, the piano and guitar
-  service pages (`<Language> · Services`, with the service fields of `serviceFields` in `cms-meta.ts`) and every Spanish
+  kind or the other; the homepages (`Site` → `<Language> · Homepage` in the CMS), `careers`, `about-us`, the piano and guitar
+  service pages (`Services`, with the service fields of `serviceFields` in `cms-meta.ts`) and every Spanish
   page are data pages. Blocks with media words also get the locale's `videoPoster` (`data/brand.ts`). `ds:mockup` does not apply to data pages; to make one
   hand-built, turn its blocks into JSX in an `index.tsx` + `meta.ts`.
 - `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
@@ -66,7 +68,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   several places (review counts, prices) live here once. Plain literals, read statically like `meta.ts`; they may
   import pictures from `~/assets/images` (icons, logos).
 - `content/<locale>/data/menu.json` – the locale's main menu (header and phone menu), edited in the CMS as
-  `<Language> · Menu`: items, the sections of an item's panel and their links, each picking a page of the language
+  `Site` → `<Language> · Menu`: items, the sections of an item's panel and their links, each picking a page of the language
   (`page`, its path) or taking an address (`href`: a page not ported yet, another site); list order is menu order.
   Checked by `src/content/menu.ts` (zod) and by `checkSlugs` (every `page` exists; build and unit tests). A locale
   without one shows the English menu.

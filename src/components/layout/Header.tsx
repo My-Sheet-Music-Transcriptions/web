@@ -55,7 +55,7 @@ export function Header({ logo, nav, cta, labels, account, languages, home = fals
           width={183}
           priority
           className={cn(
-            'w-[150px] transition-opacity duration-300 nav:ml-[10px] nav:w-[183px] [&_img]:h-auto [&_img]:w-full',
+            'w-[150px] min-w-[110px] shrink transition-opacity duration-300 nav:ml-[10px] nav:shrink-0 nav:w-[183px] [&_img]:h-auto [&_img]:w-full',
             home && !scrolled && 'md:pointer-events-none md:opacity-0',
           )}
         />
@@ -89,7 +89,7 @@ export function Header({ logo, nav, cta, labels, account, languages, home = fals
           </Button>
         </div>
 
-        <div className="flex items-center gap-3 nav:hidden">
+        <div className="flex shrink-0 items-center gap-3 nav:hidden">
           {languages}
           <button
             type="button"

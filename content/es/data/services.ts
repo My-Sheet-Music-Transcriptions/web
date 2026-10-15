@@ -54,6 +54,23 @@ export const windPricing: PricingTier[] = pricing('€15-34+ EUR')
 
 export const stringPricing: PricingTier[] = pricing('€15-34+ EUR')
 
+/** The prices page's own "Desde 15 EUR" card, worded as the live /precios has it. */
+export const generalPricing: PricingTier[] = [
+  {
+    fromLabel: 'Desde',
+    from: '15 EUR',
+    unit: 'por minuto de música',
+    note: '*tarifa mínima de 49 EUR para la mayoría de proyectos',
+    factorsLabel: 'Nuestros precios se basan en',
+    factors: [
+      'Dificultad',
+      'Densidad y complejidad musical.',
+      'Duración de la canción',
+      'Instrumentación',
+    ],
+  },
+]
+
 /** The services the homepage shows ("Transcribimos cualquier instrumento y género musical"). */
 export const allServices: PictureItem[] = [
   {

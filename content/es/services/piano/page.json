@@ -1,4 +1,6 @@
 {
+  "language": "es",
+  "collection": "services",
   "title": "Transcripciones para piano - Mis Transcripciones Musicales",
   "description": "Servicio de transcripción de partituras para piano. Realizado por transcriptores y pianistas profesionales. Preciso al 100%.",
   "translationKey": "piano",

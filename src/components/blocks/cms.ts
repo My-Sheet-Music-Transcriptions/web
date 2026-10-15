@@ -7,6 +7,7 @@ import type * as home from '../../../content/en/data/home.ts'
 import type * as ratings from '../../../content/en/data/ratings.ts'
 import type * as reviews from '../../../content/en/data/reviews.ts'
 import type * as services from '../../../content/en/data/services.ts'
+import type * as esReviews from '../../../content/es/data/reviews.ts'
 import type * as esServices from '../../../content/es/data/services.ts'
 import {
   type CmsBlock,
@@ -53,7 +54,7 @@ const preset = <K extends BlockName>(block: K, entry: CmsBlock<PropsOf<K>>) => (
 
 /**
  * The data a data field can offer: content/<locale>/data, typed by what the English files export, plus the lists only
- * one language has (the Spanish wind and string prices); a page whose language lacks the list it names fails its build.
+ * one language has (the Spanish wind, string and prices-page prices, every Spanish review); a page whose language lacks the list it names fails its build.
  */
 interface Data {
   brand: typeof brand
@@ -62,7 +63,7 @@ interface Data {
   forms: typeof forms
   home: typeof home
   ratings: typeof ratings
-  reviews: typeof reviews
+  reviews: typeof reviews & typeof esReviews
   services: typeof services & typeof esServices
 }
 type Source = { [F in keyof Data]: { [N in keyof Data[F]]: F } }[keyof Data]
@@ -199,6 +200,7 @@ const tiers = fromData(
     ukulelePricing: 'services',
     windPricing: 'services',
     stringPricing: 'services',
+    generalPricing: 'services',
   },
   { required: true, hint: 'One price makes a wide card; the homepage’s three make three cards.' },
 )
@@ -558,7 +560,7 @@ export const cmsBlocks = {
       id: anchor,
       items: fromData(
         'Reviews',
-        { homeReviews: 'reviews', educatorReviews: 'reviews' },
+        { homeReviews: 'reviews', educatorReviews: 'reviews', allReviews: 'reviews' },
         { required: true },
       ),
       cta: button(),

@@ -1,0 +1,66 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Servicios musicales - Mis Transcripciones Musicales",
+  "description": "Servicio de transcripción de partituras por encargo. Realizado por transcriptores musicales profesionales. Preciso al 100%, personalizado, nota a nota.",
+  "translationKey": "services-samples",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transforma cualquier canción en una partitura"
+    },
+    {
+      "type": "PictureGrid",
+      "label": "Nuestros servicios",
+      "shape": "icon",
+      "columns": 4,
+      "items": [
+        {
+          "image": "piano.png",
+          "name": "Transcripciones para piano",
+          "href": "/piano"
+        },
+        {
+          "image": "voz-y-piano.png",
+          "name": "Voz y piano",
+          "href": "/piano-vocal"
+        },
+        {
+          "image": "jazz.png",
+          "name": "Transcripciones de Jazz",
+          "href": "/jazz-piano-solo"
+        },
+        {
+          "image": "bandas.png",
+          "name": "Bandas",
+          "href": "/bandas"
+        },
+        {
+          "image": "guitarra.png",
+          "name": "Tablaturas para guitarra",
+          "href": "/guitarra"
+        },
+        {
+          "image": "bajo.png",
+          "name": "Tablaturas para bajo",
+          "href": "/bajo"
+        },
+        {
+          "image": "orquestaciones.png",
+          "name": "Orquestaciones",
+          "href": "/orquestaciones"
+        },
+        {
+          "image": "arreglos.png",
+          "name": "Arreglos",
+          "href": "/arreglos"
+        }
+      ]
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/servicios-musicales"
+    }
+  ]
+}
