@@ -22,9 +22,9 @@ export interface PageHeaderProps {
   cta?: Cta
   /** The compact rating card: pass `google` from content/<locale>/data/ratings. */
   rating?: RatingSource
-  /** band: dark centred title band (default). split: copy beside pictures, on white. photo: the homepage. */
+  /** band: light centred title band (default). split: copy beside pictures, on white. photo: the homepage. */
   variant?: 'band' | 'split' | 'photo'
-  /** The picture beside the copy (split), or beside the rating card under the band (a service's icon). */
+  /** The picture beside the copy (split), or the icon on the band's lower edge (a service's icon). */
   image?: PictureSource
   /** Alt text of the picture; empty when decorative. */
   alt?: string
@@ -45,11 +45,10 @@ export interface PageHeaderProps {
 const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
 
 /**
- * The opening of every page, its h1 first. `band`: the dark centred title band with an orange rule, then the
- * instrument icon and the compact rating card when given (service pages). `split`: white, the copy and button
+ * The opening of every page, its h1 first. `band`: the centred title and orange rule, on white, or on an orange
+ * tint with the instrument icon on its edge (service pages), the rating card at the right. `split`: the copy
  * left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the
- * copy, cut by a curve that leaves the copy on white (above it on phones), the brand lockup, the orange
- * highlight and the floating rating card. It drifts in as the page opens.
+ * copy, cut by a curve, the brand lockup, the orange highlight and the floating rating card.
  */
 export function PageHeader(props: PageHeaderProps) {
   // The text and pictures stand still; as the page opens only the rating card rises into place, a beat later,
@@ -74,30 +73,49 @@ function BandHeader({
   id,
 }: PageHeaderProps) {
   return (
-    <header id={id}>
-      <div className="bg-[#434343] px-4 pt-16 pb-20 text-center text-white">
-        {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
-        <h1 className="mx-auto max-w-4xl text-[32px] font-bold leading-tight text-white md:text-display">
+    <header id={id} className="relative">
+      {/* A service page's band is tinted orange (the live site's 11% accent), every other page's is white */}
+      <div
+        className={cn(
+          'px-4 pt-[110px] text-center',
+          image
+            ? 'bg-accent/11 [--color-primary:var(--color-primary-deep)] [--color-accent-deep:var(--color-accent-hover)]'
+            : 'bg-white pb-[110px]',
+        )}
+      >
+        {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-deep')}>{eyebrow}</p> : null}
+        <h1 className="mx-auto max-w-[900px] text-[36px] leading-tight font-bold text-ink">
           {title}
         </h1>
         {subtitle ? (
-          <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-relaxed">{subtitle}</p>
+          <p className="mx-auto mt-5 max-w-[900px] text-[20px] leading-[30px] text-ink">
+            {subtitle}
+          </p>
         ) : null}
-        <span aria-hidden="true" className="mx-auto mt-6 block h-px w-[150px] bg-accent" />
+        <span aria-hidden="true" className="mx-auto mt-5 block h-px w-[180px] bg-accent" />
         {lead ? (
-          <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed [&_a]:text-accent-light">
+          <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed text-ink">
             {inlineMarkdown(lead)}
           </p>
         ) : null}
         {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
+        {/* The icon straddles the band's lower edge: the band stops 53px above the icon's foot, and the empty
+            div after the band keeps that room */}
+        {image ? (
+          <Picture
+            image={image}
+            alt={alt}
+            sizes="155px"
+            className="relative mx-auto mt-[46px] -mb-[53px] block h-[155px] w-auto md:h-[135px]"
+          />
+        ) : null}
       </div>
-      {rating || image ? (
-        <div className="container-content flex flex-wrap items-center justify-center gap-10 py-10">
-          {image ? (
-            <Picture image={image} alt={alt} sizes="180px" className="h-[180px] w-auto" />
-          ) : null}
-          {rating ? <CompactRating source={rating} className="entrance" /> : null}
-        </div>
+      {image ? <div aria-hidden="true" className="h-[53px]" /> : null}
+      {rating ? (
+        <CompactRating
+          source={rating}
+          className="entrance mx-auto mt-8 px-4 lg:absolute lg:top-[200px] lg:right-[5px] lg:mt-0 lg:w-[300px] lg:px-0"
+        />
       ) : null}
     </header>
   )
