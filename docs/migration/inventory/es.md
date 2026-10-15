@@ -2,42 +2,44 @@
 
 Generated on 2026-10-08 for the migration plan ([`../PLAN.md`](../PLAN.md)); machine-readable copy: [`es.json`](./es.json). This site's inventory is **less complete than the English one**: its sitemap was never archived, so the list is rebuilt from the live menu, the English pages' hreflang tags and every URL the Internet Archive ever captured. **Step W0.2 of the plan replaces it with the live sitemap before any page of this locale is ported.**
 
-**Found in**: `sitemap:<type>` = Yoast sitemap · `crawl` = archived page reached from the menu · `live-2026-home` = linked from the live homepage (Common Crawl) · `en-hreflang` = named by an English page's hreflang · `archive` = some capture exists in the Internet Archive · `linked` = linked but never archived.
+**Found in**: `sitemap:<type>` = Yoast sitemap · `crawl` = archived page reached from the menu · `live-2026-home` = linked from the live homepage (Common Crawl) · `live-2026` = in the live menu in October 2026 · `en-hreflang` = named by an English page's hreflang · `archive` = some capture exists in the Internet Archive · `linked` = linked but never archived.
 
 | Action | URLs |
 |---|---|
-| Port | 25 |
+| Port | 27 |
 | Verify first (linked from the live site, never archived) | 1 |
 | Decide first (see the plan's decisions) | 1 |
 | Redirect (retired URLs) | 81 |
 | Drop (test pages: let them 404) | 3 |
-| **Total** | **111** |
+| **Total** | **113** |
 
 ## Port
 
 | Path | Found in | Target | EN counterpart | Title (archived) | Archived | Notes | PR |
 |---|---|---|---|---|---|---|---|
-| [`/`](https://www.mistranscripcionesmusicales.com) | crawl, archive, en-hreflang | pages | `/` | Transcripción de partituras | 2025-03 | home (translationKey home) | |
+| [`/`](https://www.mistranscripcionesmusicales.com) | crawl, archive, en-hreflang | pages | `/` | Transcripción de partituras | 2025-03 | home (translationKey home) || [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
 | [`/aviso-legal`](https://www.mistranscripcionesmusicales.com/aviso-legal) | crawl, archive, en-hreflang | pages | `/legal-notice` | Aviso legal | 2024-05 | translation of EN /legal-notice | |
 | [`/como-pagar`](https://www.mistranscripcionesmusicales.com/como-pagar) | archive, en-hreflang | pages | `/how-to-pay` |  | 2022-12 | translation of EN /how-to-pay | |
-| [`/contacto`](https://www.mistranscripcionesmusicales.com/contacto) | crawl, archive, en-hreflang | pages | `/contact` | Contacto para transcripción de partituras | 2024-05 | translation of EN /contact | |
-| [`/opiniones`](https://www.mistranscripcionesmusicales.com/opiniones) | crawl, archive, en-hreflang | pages | `/customer-reviews` | Opiniones | 2024-05 | translation of EN /customer-reviews | |
+| [`/contacto`](https://www.mistranscripcionesmusicales.com/contacto) | crawl, archive, en-hreflang | pages | `/contact` | Contacto para transcripción de partituras | 2024-05 | translation of EN /contact | [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
+| [`/opiniones`](https://www.mistranscripcionesmusicales.com/opiniones) | crawl, archive, en-hreflang | pages | `/customer-reviews` | Opiniones | 2024-05 | translation of EN /customer-reviews | [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
 | [`/politica-de-cookies`](https://www.mistranscripcionesmusicales.com/politica-de-cookies) | crawl, archive, en-hreflang | pages | `/cookies` | Política de cookies | 2024-02 | translation of EN /cookies | |
 | [`/politica-de-privacidad`](https://www.mistranscripcionesmusicales.com/politica-de-privacidad) | crawl, archive, en-hreflang | pages | `/gdpr` | Política de privacidad | 2024-04 | translation of EN /gdpr | |
-| [`/precios`](https://www.mistranscripcionesmusicales.com/precios) | crawl, archive, en-hreflang | pages | `/pricing` | Precios para transcripción de partituras | 2024-05 | translation of EN /pricing | |
+| [`/precios`](https://www.mistranscripcionesmusicales.com/precios) | crawl, archive, en-hreflang | pages | `/pricing` | Precios para transcripción de partituras | 2024-05 | translation of EN /pricing | [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
 | [`/preguntas-frecuentes`](https://www.mistranscripcionesmusicales.com/preguntas-frecuentes) | crawl, archive, en-hreflang | pages | `/frequent-asked-questions` | Preguntas frecuentes | 2024-06 | translation of EN /frequent-asked-questions | |
-| [`/servicios-musicales`](https://www.mistranscripcionesmusicales.com/servicios-musicales) | crawl, archive, en-hreflang | pages | `/services-samples` | Servicios musicales | 2024-07 | translation of EN /services-samples | |
-| [`/sobre-nosotros`](https://www.mistranscripcionesmusicales.com/sobre-nosotros) | crawl, archive, en-hreflang | pages | `/about-us` | Sobre Nosotros | 2024-05 | translation of EN /about-us | |
+| [`/servicios-musicales`](https://www.mistranscripcionesmusicales.com/servicios-musicales) | crawl, archive, en-hreflang | pages | `/services-samples` | Servicios musicales | 2024-07 | translation of EN /services-samples | [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
+| [`/sobre-nosotros`](https://www.mistranscripcionesmusicales.com/sobre-nosotros) | crawl, archive, en-hreflang | pages | `/about-us` | Sobre Nosotros | 2024-05 | translation of EN /about-us || [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
 | [`/terminos-de-uso`](https://www.mistranscripcionesmusicales.com/terminos-de-uso) | crawl, archive, en-hreflang | pages | `/terms-of-use` | Términos de uso | 2023-12 | translation of EN /terms-of-use | |
 | [`/blog`](https://www.mistranscripcionesmusicales.com/blog) | crawl, archive | (route) |  | Blog | 2024-06 | blog index route (routes.blogIndex) | |
 | [`/arreglos`](https://www.mistranscripcionesmusicales.com/arreglos) | crawl, archive, en-hreflang | services | `/music-arrangement-service` | Arreglos musicales | 2024-05 | translation of EN /music-arrangement-service | |
 | [`/bajo`](https://www.mistranscripcionesmusicales.com/bajo) | crawl, archive, en-hreflang | services | `/bass-tab-transcription-service` | Transcripciones para bajo | 2024-07 | translation of EN /bass-tab-transcription-service | |
 | [`/bandas`](https://www.mistranscripcionesmusicales.com/bandas) | crawl, archive, en-hreflang | services | `/concert-brass-band-transcriptions` | Transcripciones y arreglos para bandas | 2024-05 | translation of EN /concert-brass-band-transcriptions | |
-| [`/guitarra`](https://www.mistranscripcionesmusicales.com/guitarra) | crawl, archive, en-hreflang | services | `/guitar-tab` | Transcripciones para guitarra | 2024-04 | translation of EN /guitar-tab | |
+| [`/guitarra`](https://www.mistranscripcionesmusicales.com/guitarra) | crawl, archive, en-hreflang | services | `/guitar-tab` | Transcripciones para guitarra | 2024-04 | translation of EN /guitar-tab || [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
 | [`/jazz-piano-solo`](https://www.mistranscripcionesmusicales.com/jazz-piano-solo) | crawl, archive, en-hreflang | services | `/jazz-piano-solo-transcriptions` | Transcripciones de jazz para piano | 2024-06 | translation of EN /jazz-piano-solo-transcriptions | |
 | [`/orquestaciones`](https://www.mistranscripcionesmusicales.com/orquestaciones) | crawl, archive | services | `/orchestration-service` | Orquestaciones | 2024-06 | translation of EN /orchestration-service; **two es URLs claim EN /orchestration-service**: keep one, 301 the other | |
 | [`/orquestraciones`](https://www.mistranscripcionesmusicales.com/orquestraciones) | crawl, archive, en-hreflang | services | `/orchestration-service` | Orquestaciones | 2020-10 | translation of EN /orchestration-service; **two es URLs claim EN /orchestration-service**: keep one, 301 the other | |
-| [`/piano`](https://www.mistranscripcionesmusicales.com/piano) | crawl, archive, en-hreflang | services | `/piano` | Transcripciones para piano | 2024-06 | translation of EN /piano | |
+| [`/piano`](https://www.mistranscripcionesmusicales.com/piano) | crawl, archive, en-hreflang | services | `/piano` | Transcripciones para piano | 2024-06 | translation of EN /piano || [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
+| [`/instrumentos-de-viento`](https://www.mistranscripcionesmusicales.com/instrumentos-de-viento) | live-2026 | services |  | Transcripciones para instrumentos de viento | — | live page (2026-10), not in the archive; the Spanish site's one page for the wind instruments EN has a page each for (trumpet, saxophone, clarinet, flute), no hreflang | [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
+| [`/instrumentos-de-cuerda`](https://www.mistranscripcionesmusicales.com/instrumentos-de-cuerda) | live-2026 | services |  | Transcripciones para instrumentos de cuerda | — | live page (2026-10), not in the archive; the Spanish site's one page for the string instruments EN has a page each for (violin, cello), no hreflang | [#74](https://github.com/My-Sheet-Music-Transcriptions/web/pull/74) |
 | [`/piano-vocal`](https://www.mistranscripcionesmusicales.com/piano-vocal) | crawl, archive, en-hreflang | services | `/piano-vocal` | Transcripciones para piano y voz | 2024-04 | translation of EN /piano-vocal | |
 | [`/finale-vs-sibelius`](https://www.mistranscripcionesmusicales.com/finale-vs-sibelius) | crawl, archive | posts | `/finale-vs-sibelius` | Finale vs Sibelius - Análisis de | 2024-07 | translation of EN /finale-vs-sibelius | |
 | [`/presentacion-blog-mis-transcripciones-musicales`](https://www.mistranscripcionesmusicales.com/presentacion-blog-mis-transcripciones-musicales) | crawl, archive | posts |  | Os presentamos el blog de | 2023-09 | linked from the blog index: probably a post | |

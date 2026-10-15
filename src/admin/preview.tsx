@@ -5,8 +5,9 @@ import { createRoot, type Root } from 'react-dom/client'
 import { isCmsBlock } from '~/components/blocks/cms'
 import { MotionProvider } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
-import { BlockPage, type BlockWords } from '~/content/BlockPage'
+import { type BlockBrand, BlockPage, type BlockWords } from '~/content/BlockPage'
 import { resolveBlock, splitDataPage } from '~/content/data-page'
+import { menuToNav, parseMenu } from '~/content/menu'
 import { CMS_LOCALES } from './locales'
 import { type Decap, registerWidgets } from './widgets'
 
@@ -14,8 +15,8 @@ import { type Decap, registerWidgets } from './widgets'
  * The CMS preview (/admin, Decap): the entry being edited rendered with the real blocks, as the site renders its
  * page.json (src/content/BlockPage.tsx). Built by vite.admin.config.ts into dist/client/admin/preview.{js,css};
  * src/admin/index.html loads it after Decap, and it registers one preview template per collection of
- * src/admin/config.ts (`pages-<locale>`, `home-<locale>`). Decap renders templates with its own React, so each template only
- * gives this bundle an element to render into.
+ * src/admin/config.ts (`pages`, `services`, and the Site entries `home-<locale>`, `menu-<locale>`). Decap renders
+ * templates with its own React, so each template only gives this bundle an element to render into.
  */
 
 // Every locale's data (content/<locale>/data/*.ts): the block words, and the lists data fields name. Loaded before
@@ -33,6 +34,7 @@ const loaded = Promise.all(
 const dataOf = (locale: string, file: string) =>
   modules[`/content/${locale}/data/${file}.ts`] ?? modules[`/content/en/data/${file}.ts`] ?? {}
 const wordsFor = (locale: string) => dataOf(locale, 'labels') as unknown as BlockWords
+const brandOf = (locale: string) => dataOf(locale, 'brand') as BlockBrand
 
 // A picture's size is known once it has loaded; until then a stand-in keeps the layout plausible.
 const sizes = new Map<string, { w: number; h: number }>()
@@ -74,19 +76,70 @@ function render(el: Element, data: unknown, assetUrl: (file: string) => string, 
     node = (
       <MotionProvider>
         <main>
-          <BlockPage blocks={resolved} words={wordsFor(locale)} />
+          <BlockPage blocks={resolved} words={wordsFor(locale)} brand={brandOf(locale)} />
         </main>
       </MotionProvider>
     )
   } catch (e) {
     node = <pre style={{ padding: 24, whiteSpace: 'pre-wrap' }}>{String(e)}</pre>
   }
+  draw(el, node)
+}
+
+function draw(el: Element, node: React.ReactNode) {
   let root = roots.get(el)
   if (!root) {
     root = createRoot(el)
     roots.set(el, root)
   }
   root.render(node)
+}
+
+/** A language's menu (`menu-<locale>`) as an outline: each item, its sections and their links, and where each goes. */
+function renderMenu(el: Element, data: unknown) {
+  let node: React.ReactNode
+  try {
+    const nav = menuToNav(parseMenu({ items: [], ...(data as object) }, 'the menu being edited'))
+    const to = (href?: string) => href && <small style={{ color: '#667' }}> → {href}</small>
+    node = (
+      <ol
+        style={{
+          padding: '24px 24px 24px 48px',
+          listStyle: 'decimal',
+          lineHeight: 1.6,
+          fontFamily: 'Montserrat Variable, sans-serif',
+        }}
+      >
+        {nav.map((item) => (
+          <li key={`${item.label} ${item.href}`}>
+            <strong>{item.label}</strong>
+            {to(item.href)}
+            {item.groups && (
+              <ul style={{ paddingLeft: 24, listStyle: 'disc' }}>
+                {item.groups.map((g) => (
+                  <li key={`${g.title} ${g.href}`}>
+                    {g.title}
+                    {to(g.href)}
+                    <ul style={{ paddingLeft: 24, listStyle: 'circle' }}>
+                      {g.links.map((l) => (
+                        <li key={`${l.label} ${l.href}`}>
+                          {l.label}
+                          {to(l.href)}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ol>
+    )
+  } catch (e) {
+    node = <pre style={{ padding: 24, whiteSpace: 'pre-wrap' }}>{String(e)}</pre>
+  }
+  draw(el, node)
 }
 
 // Decap's globals (decap-cms.js, loaded first by src/admin/index.html).
@@ -112,11 +165,17 @@ if (decap.CMS && decap.createClass && decap.h) {
   CMS.registerPreviewStyle(
     new URL('preview.css', (document.currentScript as HTMLScriptElement).src).href,
   )
-  // One per collection of pages, and per homepage (a file collection's template goes by its file's name).
-  for (const [name, locale] of CMS_LOCALES.flatMap(({ code }) => [
-    [`pages-${code}`, code] as const,
-    [`home-${code}`, code] as const,
-  ]))
+  // One per collection (the language is the entry's `language` field) and per Site entry (a file collection's
+  // template goes by its file's name, which says the language).
+  const templates: (readonly [name: string, locale?: string])[] = [
+    ['pages'],
+    ['services'],
+    ...CMS_LOCALES.flatMap(({ code }) => [
+      [`home-${code}`, code] as const,
+      [`menu-${code}`, code] as const,
+    ]),
+  ]
+  for (const [name, fixed] of templates)
     CMS.registerPreviewTemplate(
       name,
       createClass({
@@ -129,7 +188,9 @@ if (decap.CMS && decap.createClass && decap.h) {
         draw(this: { el?: Element; props: DecapPreviewProps }) {
           if (!this.el) return
           const data = this.props.entry.getIn(['data'])?.toJS()
-          render(this.el, data, (file) => this.props.getAsset(file).toString(), locale)
+          const locale = fixed ?? String((data as { language?: unknown })?.language ?? 'en')
+          if (name.startsWith('menu-')) renderMenu(this.el, data)
+          else render(this.el, data, (file) => this.props.getAsset(file).toString(), locale)
         },
         render(this: { el?: Element }) {
           return h('div', {

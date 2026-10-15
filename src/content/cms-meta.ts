@@ -1,6 +1,15 @@
 import type { z } from 'zod'
-import { type CmsFields, group, line, pictureFile, prose, toggle } from './cms-fields.ts'
-import type { baseSchema } from './schema.ts'
+import {
+  type CmsFields,
+  group,
+  line,
+  number,
+  pictureFile,
+  prose,
+  select,
+  toggle,
+} from './cms-fields.ts'
+import type { baseSchema, serviceSchema } from './schema.ts'
 
 /**
  * The fields every page has in the CMS, whatever its kind: its meta (src/content/schema.ts `baseSchema`), typed by
@@ -58,3 +67,26 @@ export const metaFields = {
     },
   }),
 } satisfies CmsFields<z.input<typeof baseSchema>>
+
+/** What a service page adds to the meta fields (src/content/schema.ts `serviceSchema`): how menus and grids show it. */
+export const serviceFields = {
+  shortTitle: line('Short name', {
+    required: true,
+    hint: 'In menus and grids: "Piano Transcriptions" (2–60 characters).',
+  }),
+  icon: line('Icon name', {
+    required: true,
+    hint: 'The instrument, in English: piano, guitar, violin…',
+  }),
+  group: select(
+    'Menu group',
+    ['keys', 'vocal', 'strings', 'guitar', 'winds', 'drums', 'ensembles', 'jazz', 'editing'],
+    { required: true },
+  ),
+  priceFrom: number('Price from (per minute)', { min: 1, max: 1000 }),
+  order: number('Order in menus', {
+    min: 0,
+    max: 1000,
+    hint: 'Lower comes first; 100 when empty.',
+  }),
+} satisfies CmsFields<Omit<z.input<typeof serviceSchema>, keyof z.input<typeof baseSchema>>>

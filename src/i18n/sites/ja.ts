@@ -13,7 +13,13 @@ export const ja: SiteConfig = {
   brand: 'My Sheet Music Transcriptions Japan',
   logo: 'ja',
   currency: 'JPY',
-  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
+  routes: {
+    blogIndex: 'blog',
+    faqPrefix: 'faqs',
+    contactAnchor: '/#contact',
+    cookies: '/cookies',
+    privacy: '/gdpr',
+  },
   isDefault: false,
   legacyOrigin: 'https://mysheetmusictranscriptions.jp',
 }

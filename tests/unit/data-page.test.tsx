@@ -9,7 +9,7 @@ import type { PageHeaderProps } from '../../src/components/blocks/PageHeader'
 import type { TableProps } from '../../src/components/blocks/Table'
 import { BlockPage } from '../../src/content/BlockPage'
 import { type CmsBlock, line, prose, select } from '../../src/content/cms-fields'
-import { metaFields } from '../../src/content/cms-meta'
+import { metaFields, serviceFields } from '../../src/content/cms-meta'
 import { resolveBlock, splitDataPage } from '../../src/content/data-page'
 import { LOCALES } from '../../src/i18n/types'
 
@@ -32,6 +32,15 @@ describe('splitDataPage', () => {
   })
   it('refuses blocks without a type', () => {
     expect(() => splitDataPage({ blocks: [{ title: 'x' }] }, 'x/page.json')).toThrow(/type/)
+  })
+  it('checks that a page in content/ opens with the language and collection of its folder', () => {
+    const page = { language: 'es', collection: 'pages', title: 'T', blocks: [] }
+    expect(splitDataPage(page, 'es/pages/x/page.json').meta).toEqual({ title: 'T' })
+    expect(() => splitDataPage(page, 'en/pages/x/page.json')).toThrow(/"language": "en"/)
+    expect(() => splitDataPage(page, 'es/services/x/page.json')).toThrow(/"collection": "services"/)
+    expect(() => splitDataPage({ title: 'T', blocks: [] }, 'es/pages/x/page.json')).toThrow(
+      /language/,
+    )
   })
 })
 
@@ -184,12 +193,14 @@ describe('Decap configuration', () => {
   interface Collection {
     name: string
     folder?: string
-    fields?: { name: string }[]
+    path?: string
+    filter?: { field: string; value: string }
+    fields?: { name: string; default?: string }[]
     files?: { name: string; file: string; fields: { name: string }[] }[]
   }
   const collections = decapConfig.collections as unknown as Collection[]
-  const pages = collections.filter((c) => c.name.startsWith('pages-'))
-  const blocksField = pages[0]?.fields?.find((f) => f.name === 'blocks') as unknown as {
+  const pages = collections.find((c) => c.name === 'pages')
+  const blocksField = pages?.fields?.find((f) => f.name === 'blocks') as unknown as {
     types: {
       name: string
       fields: { name: string; required: boolean; fields?: { required: boolean }[] }[]
@@ -216,25 +227,44 @@ describe('Decap configuration', () => {
     expect(cta?.required).toBe(false)
     expect(cta?.fields?.every((f) => !f.required)).toBe(true)
   })
-  it('has one collection of pages per site language, each in its own folder', () => {
-    expect(pages.map((c) => c.name).sort()).toEqual(LOCALES.map((l) => `pages-${l}`).sort())
-    for (const c of pages) expect(c.folder).toBe(`content/${c.name.replace('pages-', '')}/pages`)
+  it('has three entries in the sidebar: Site, Pages and Services', () => {
+    expect(collections.map((c) => c.name)).toEqual(['site', 'pages', 'services'])
   })
-  it('has a Home entry for each language whose homepage is a data page', () => {
-    const homes = collections.filter((c) => c.name.startsWith('home-'))
-    expect(homes.map((c) => c.name)).toEqual(
-      LOCALES.filter((l) => fs.existsSync(`content/${l}/pages/home/page.json`)).map(
-        (l) => `home-${l}`,
-      ),
+  it('files every language’s pages of a kind in one collection, by their language', () => {
+    for (const name of ['pages', 'services']) {
+      const c = collections.find((x) => x.name === name)
+      expect(c?.folder).toBe('content')
+      expect(c?.path).toBe(`{{language}}/${name}/{{slug}}/page`)
+      expect(c?.filter).toEqual({ field: 'collection', value: name })
+      expect(c?.fields?.find((f) => f.name === 'collection')?.default).toBe(name)
+    }
+  })
+  it('lists in Site the homepage and the menu of each language that has them', () => {
+    const site = collections.find((c) => c.name === 'site')
+    expect(site?.files?.map((f) => f.name)).toEqual(
+      LOCALES.flatMap((l) => [
+        ...(fs.existsSync(`content/${l}/pages/home/page.json`) ? [`home-${l}`] : []),
+        ...(fs.existsSync(`content/${l}/data/menu.json`) ? [`menu-${l}`] : []),
+      ]),
     )
-    expect(homes.map((c) => c.name)).toContain('home-en')
-    for (const c of homes)
-      expect(c.files?.[0]?.file).toMatch(/^content\/\w+\/pages\/home\/page\.json$/)
+    expect(site?.files?.map((f) => f.name)).toEqual(
+      expect.arrayContaining(['home-en', 'menu-en', 'home-es', 'menu-es']),
+    )
+    for (const f of site?.files ?? [])
+      expect(f.file).toMatch(/^content\/\w+\/(pages\/home\/page|data\/menu)\.json$/)
   })
-  it('opens every page with the meta fields, then its blocks', () => {
+  it('opens every page with its language, the meta fields (then a service’s own), then its blocks', () => {
     for (const c of collections)
-      for (const fields of c.fields ? [c.fields] : (c.files ?? []).map((f) => f.fields))
-        expect(fields.map((f) => f.name)).toEqual([...Object.keys(metaFields), 'blocks'])
+      for (const [name, fields] of c.fields
+        ? [[c.name, c.fields] as const]
+        : (c.files ?? []).map((f) => [f.name, f.fields] as const))
+        if (!name.startsWith('menu-'))
+          expect(fields.map((f) => f.name)).toEqual([
+            ...(c.fields ? ['language', 'collection'] : []),
+            ...Object.keys(metaFields),
+            ...(name === 'services' ? Object.keys(serviceFields) : []),
+            'blocks',
+          ])
   })
 })
 

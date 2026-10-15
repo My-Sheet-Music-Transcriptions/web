@@ -53,16 +53,25 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   entry for the same block with props of its own. Lists kept in code (reviews, prices, shared questions, forms, brand
   pictures in `content/<locale>/data/brand.ts`) are data fields: the page stores the export's name and gets the export
   of its locale. Recordings (mp3) sit in the page folder like pictures. Every page opens with the same meta fields (`src/content/cms-meta.ts`, typed by the meta
-  schema); a page's language is its collection, one per language (`src/admin/locales.ts`); our own widgets
+  schema), after `language` and `collection` (the two parts of its folder, checked against it): the CMS's sidebar is
+  `Site` (each language's homepage and menu), `Pages` and `Services`, each listing every language's pages, filtered or
+  grouped by language (`src/admin/locales.ts`); our own widgets
   (translation-key suggestions, picture thumbnails) are `src/admin/widgets.ts`. The `cms` skill says how to change
   any of it and carries a Decap reference. A folder is one
-  kind or the other; `content/en/pages/careers/` and the homepage (`<Language> · Home` in the CMS) are data pages. `ds:mockup` does not apply to data pages; to make one
+  kind or the other; the homepages (`Site` → `<Language> · Homepage` in the CMS), `careers`, `about-us`, the piano and guitar
+  service pages (`Services`, with the service fields of `serviceFields` in `cms-meta.ts`) and every Spanish
+  page are data pages. Blocks with media words also get the locale's `videoPoster` (`data/brand.ts`). `ds:mockup` does not apply to data pages; to make one
   hand-built, turn its blocks into JSX in an `index.tsx` + `meta.ts`.
 - `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
   words blocks show around their content (`labels.ts`: carousel and video controls, review lines; `forms.ts`: the
-  request forms) and the locale's menus and footer (`nav.ts`, `footer.ts`, read by `src/app`). Numbers that appear in
+  request forms) and the locale's footer (`footer.ts`, read by `src/app`). Numbers that appear in
   several places (review counts, prices) live here once. Plain literals, read statically like `meta.ts`; they may
   import pictures from `~/assets/images` (icons, logos).
+- `content/<locale>/data/menu.json` – the locale's main menu (header and phone menu), edited in the CMS as
+  `Site` → `<Language> · Menu`: items, the sections of an item's panel and their links, each picking a page of the language
+  (`page`, its path) or taking an address (`href`: a page not ported yet, another site); list order is menu order.
+  Checked by `src/content/menu.ts` (zod) and by `checkSlugs` (every `page` exists; build and unit tests). A locale
+  without one shows the English menu.
 - `src/assets/images` – brand-wide pictures (lockup, illustrated icons, photo bands, flags, software logos), imported
   by pages, data files and `src/app`; never by a component.
 - `src/content/{index,schema,types}.ts` – the content loader (globs `content/`), the meta schemas and data types.
@@ -79,7 +88,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   base layer of `theme.css`. Pages never write raw `<p>`, `<h2>`, `<ul>`, `<a>` (`tests/unit/content.test.ts`).
 - `src/components/layout` – TopBar, Header (+MegaMenu, MobileNav), Footer, ConsentBanner, LangSwitcher, Logo: props
   only, with `children`/slots where composition helps (the top bar's and header's language switcher).
-- `src/app` – the app's side: `SiteShell` (reads the locale's site config, `content/<locale>/data/{nav,footer}.ts` and
+- `src/app` – the app's side: `SiteShell` (reads the locale's site config, `content/<locale>/data/{menu.json,footer.ts}` and
   the brand files and passes them to the layout; the design-system bundle mounts the same pieces), `EntryPage` (wraps
   an entry's page component in `<main>`), `NotFound`, `ErrorPage`. There are no templates: a page is blocks only and
   opens with its own `PageHeader` (`variant="photo"` on the homepage); `meta.ts` holds SEO data only.

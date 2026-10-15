@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react'
 import { blocks } from '~/components/blocks'
 import { cmsBlocks, isCmsBlock } from '~/components/blocks/cms'
+import type { PictureSource } from '~/components/primitives/Picture'
 import type { MediaLabels, ReviewLabels } from '~/content/types'
 import { lightMarkdown } from '~/lib/light-markdown'
 import type { AnyCmsBlock } from './cms-fields'
@@ -12,12 +13,28 @@ export interface BlockWords {
   reviewLabels: ReviewLabels
 }
 
+/** The locale's brand pictures (content/<locale>/data/brand.ts) the blocks take without a field for them. */
+export interface BlockBrand {
+  /** The still of every video until it is played, given to the blocks that get the media words. */
+  videoPoster?: PictureSource
+}
+
 /**
  * The body of a data page (src/content/data-page.ts): its blocks in order, already resolved (`resolveBlock`: pictures
- * as PictureSources, data names as the locale's lists, table rows as cells), `labels` from the locale's words where the block's CMS entry says, `body` (light markdown) rendered as the block's children. The site renders it from page.json
+ * as PictureSources, data names as the locale's lists, table rows as cells), `labels` from the locale's words where the
+ * block's CMS entry says (and the brand's video poster with the media words), `body` (light markdown) rendered as the
+ * block's children. The site renders it from page.json
  * and the CMS preview renders it from the entry being edited.
  */
-export function BlockPage({ blocks: list, words }: { blocks: DataBlock[]; words: BlockWords }) {
+export function BlockPage({
+  blocks: list,
+  words,
+  brand = {},
+}: {
+  blocks: DataBlock[]
+  words: BlockWords
+  brand?: BlockBrand
+}) {
   return (
     <>
       {list.map(({ type, body, ...props }, i) => {
@@ -27,9 +44,10 @@ export function BlockPage({ blocks: list, words }: { blocks: DataBlock[]; words:
         // biome-ignore lint/suspicious/noExplicitAny: each block takes its own props, checked against its CMS fields
         const Block = blocks[(entry.block ?? type) as keyof typeof blocks] as ComponentType<any>
         const w = entry.words
+        const poster = w === 'mediaLabels' ? brand.videoPoster : undefined
         return (
           // biome-ignore lint/suspicious/noArrayIndexKey: the stored order is the page's order
-          <Block key={i} {...props} labels={w && words[w]}>
+          <Block key={i} {...props} labels={w && words[w]} {...(poster && { videoPoster: poster })}>
             {body ? lightMarkdown(body) : undefined}
           </Block>
         )

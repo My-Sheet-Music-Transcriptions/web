@@ -138,13 +138,21 @@ describe('data pages (page.json, edited in the CMS)', () => {
     },
   )
   it('refuses a page.json without a blocks list', () => {
-    expect(() => readDataPageSource('{"title":"T"}', 'en/pages/x/page.json')).toThrow(/blocks/)
+    expect(() =>
+      readDataPageSource(
+        '{"language":"en","collection":"pages","title":"T"}',
+        'en/pages/x/page.json',
+      ),
+    ).toThrow(/blocks/)
     expect(() => readDataPageSource('{', 'en/pages/x/page.json')).toThrow(/invalid JSON/)
   })
   it('validates its meta against the collection schema', () => {
-    expect(() => readDataPageSource('{"title":"T","blocks":[]}', 'en/pages/x/page.json')).toThrow(
-      /Invalid meta/,
-    )
+    expect(() =>
+      readDataPageSource(
+        '{"language":"en","collection":"pages","title":"T","blocks":[]}',
+        'en/pages/x/page.json',
+      ),
+    ).toThrow(/Invalid meta/)
   })
 })
 

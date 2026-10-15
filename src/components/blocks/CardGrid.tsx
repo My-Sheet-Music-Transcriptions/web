@@ -4,7 +4,7 @@ import { FeatureItem } from '~/components/primitives/FeatureItem'
 import { RevealItem } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { Tabs } from '~/components/primitives/Tabs'
-import type { CardItem } from '~/content/types'
+import type { CardItem, MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { gridCols } from '~/lib/grid'
 
@@ -25,12 +25,16 @@ export interface CardGridProps extends ShellProps {
   variant?: 'card' | 'tile' | 'plain'
   /** A full-bleed photo behind the cards: the photo band, its cards centred (`~/assets/images/bands/included-bg.jpg`). */
   image?: PictureSource
+  /** The words of the play button: `media` from content/<locale>/data/labels (cards with a video). */
+  labels?: MediaLabels
+  /** The still shown over each video until it is played (`~/assets/images/brand/video-poster.jpg`). */
+  videoPoster?: PictureSource
 }
 
 /**
  * A grid of cards, each an icon or picture with a title, a short text and an optional button. `variant`:
  * card (white), tile (peach, the audiences) or plain. With an `image`, white cards over that photo band.
- * `tabs`: the same cards in sets (currencies).
+ * `tabs`: the same cards in sets (currencies). A card can show a video instead of its picture.
  */
 export function CardGrid({
   items = [],
@@ -38,6 +42,8 @@ export function CardGrid({
   columns = 3,
   variant = 'card',
   image,
+  labels,
+  videoPoster,
   ...shell
 }: CardGridProps) {
   const [tab, setTab] = useState(0)
@@ -58,8 +64,14 @@ export function CardGrid({
         )}
       >
         {shown.map((item) => (
-          <RevealItem as="li" key={item.title ?? item.body} className="flex">
-            <FeatureItem item={item} surface={variant} align={image ? 'center' : undefined} />
+          <RevealItem as="li" key={item.title ?? item.video?.youtube ?? item.body} className="flex">
+            <FeatureItem
+              item={item}
+              surface={variant}
+              align={image ? 'center' : undefined}
+              labels={labels}
+              videoPoster={videoPoster}
+            />
           </RevealItem>
         ))}
       </ul>

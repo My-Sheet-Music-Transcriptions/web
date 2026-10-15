@@ -1,0 +1,71 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Contacto para transcripción - Mis Transcripciones Musicales",
+  "description": "Contacta con Mis transcripciones musicales y solicita transcripciones de partituras a un equipo de transcriptores de música profesionales.",
+  "translationKey": "contact",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Contacto"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "title": "Solicita tu partitura o un servicio musical",
+      "returnTo": "/contacto"
+    },
+    {
+      "type": "Section",
+      "title": "Envíanos un email",
+      "align": "center",
+      "width": "narrow",
+      "body": "[info@mistranscripcionesmusicales.com](mailto:info@mistranscripcionesmusicales.com)\n\n**Múltiples archivos**\n\nPara varios archivos, envía un correo electrónico o utiliza un servicio como WeTransfer, Dropbox o Google Drive."
+    },
+    {
+      "type": "PictureGrid",
+      "title": "¡Llámanos y pregunta todas tus dudas por teléfono!",
+      "lead": "Atención al cliente en todo el mundo",
+      "shape": "portrait",
+      "columns": 6,
+      "items": [
+        {
+          "image": "espana.jpg",
+          "name": "España",
+          "caption": "+34 930 03 80 39",
+          "href": "tel:+34930038039"
+        },
+        {
+          "image": "us-canada.jpg",
+          "name": "US – Canada",
+          "caption": "(347)-329-4343",
+          "href": "tel:+13473294343"
+        },
+        {
+          "image": "australia.jpg",
+          "name": "Australia",
+          "caption": "(02) 9052 0877",
+          "href": "tel:+61290520877"
+        },
+        {
+          "image": "francia.jpg",
+          "name": "Francia",
+          "caption": "01 85 14 97 97",
+          "href": "tel:+33185149797"
+        },
+        {
+          "image": "europa.jpg",
+          "name": "Europa",
+          "caption": "+44 203 318 5677",
+          "href": "tel:+442033185677"
+        },
+        {
+          "image": "resto-del-mundo.jpg",
+          "name": "Resto del mundo",
+          "caption": "+1 347-329-4343",
+          "href": "tel:+13473294343"
+        }
+      ]
+    }
+  ]
+}

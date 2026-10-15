@@ -11,6 +11,7 @@ import { CMS_LOCALES } from './locales'
 
 interface Immutable {
   get(key: string): unknown
+  getIn(path: string[]): unknown
 }
 interface WidgetProps {
   value?: string
@@ -65,8 +66,10 @@ for (const [file, meta] of Object.entries(metas)) {
 const languageOf = (code: string) => CMS_LOCALES.find((l) => l.code === code)?.label ?? code
 const KEY = /^[a-z0-9][a-z0-9-]*$/
 
-/** The collection's language: `pages-<locale>`, `home-<locale>`. */
-const localeOf = (props: WidgetProps) => String(props.collection.get('name')).split('-').pop() ?? ''
+/** The entry's language: its `language` field (pages, services), else its folder's (a homepage, `content/<locale>/…`). */
+const localeOf = ({ entry }: WidgetProps) =>
+  String(entry.getIn(['data', 'language']) ?? '') ||
+  (String(entry.get('path') ?? '').split('/')[1] ?? '')
 /** The entry's page folder: `content/<locale>/pages/<slug>/page.json` (a new entry has no path yet). */
 const slugOf = (entry: Immutable) =>
   String(entry.get('path') ?? '')

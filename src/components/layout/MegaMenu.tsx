@@ -17,7 +17,8 @@ const row =
  * The drop-down of a main-menu item with groups ("Services & Samples"), as on the live site: the item links
  * to its page, and its caret button opens, on hover, focus or Enter/Space, a list of the groups under it;
  * a group with links opens them beside its row on hover or focus. Escape closes it and returns focus to the
- * caret. The links stay in the page while closed, so they are prerendered, hidden (`closedPanel`).
+ * caret; following one of its links closes it too. The links stay in the page while closed, so they are
+ * prerendered, hidden (`closedPanel`).
  */
 export function MegaMenu({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false)
@@ -105,6 +106,14 @@ export function MegaMenu({ item }: { item: NavItem }) {
         initial={false}
         animate={open ? 'open' : 'closed'}
         variants={dropDown}
+        onClick={(e) => {
+          // A link navigates inside the app while the pointer still rests on the menu: close it, and drop
+          // the focus the link keeps so the panel does not open again on focus.
+          const link = (e.target as Element).closest('a')
+          if (!link) return
+          close()
+          link.blur()
+        }}
         className={cn(
           'absolute top-full left-0 z-50 w-max min-w-[290px] rounded-card border border-line bg-white shadow-float',
           !open && closedPanel,

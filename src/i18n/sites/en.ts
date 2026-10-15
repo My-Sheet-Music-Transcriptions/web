@@ -10,7 +10,13 @@ export const en: SiteConfig = {
   brand: 'My Sheet Music Transcriptions',
   logo: 'en',
   currency: 'USD',
-  routes: { blogIndex: 'music-blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
+  routes: {
+    blogIndex: 'music-blog',
+    faqPrefix: 'faqs',
+    contactAnchor: '/#contact',
+    cookies: '/cookies',
+    privacy: '/gdpr',
+  },
   ssrOnlyPaths: [],
   hub: {
     login: 'https://hub.mysheetmusictranscriptions.com/',
