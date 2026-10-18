@@ -40,22 +40,26 @@
         {
           "body": "## Reflexiones finales\n\n**MusicXML** es una herramienta muy útil para convertir partituras entre diferentes programas. Si tu partitura no es demasiado compleja, el proceso suele ser tan sencillo como exportar, importar y realizar unos pequeños ajustes finales. Sin embargo, en partituras de gran tamaño, como las de grandes conjuntos, instrumentos con notación especial o obras con varios movimientos, el proceso puede resultar mucho más exigente.\n\nSi necesitas un resultado perfectamente pulido, no dudes en ponerte en contacto con un servicio profesional de **transcripción de partituras**, como [**Mis Transcripciones Musicales**](/). Nos aseguraremos de que tu partitura tenga un aspecto profesional y funcione exactamente como debe en su nuevo entorno de software."
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/convertir-partituras-entre-programas-de-notacion"
+      "returnTo": "/convertir-partituras-entre-programas-de-notacion",
+      "reveal": true
     }
   ]
 }

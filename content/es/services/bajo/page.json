@@ -23,11 +23,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "bajo.png"
-        },
-        {
-          "body": "Transcribimos tus líneas de bajo y riffs favoritos, contrabajo de jazz, solos, transcripciones para bajo sin trastes y todo tipo de partituras y tablaturas.\n\nNuestros bajistas crearán partituras y tablaturas personalizadas para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nTranscribimos tus líneas de bajo y riffs favoritos, contrabajo de jazz, solos, transcripciones para bajo sin trastes y todo tipo de partituras y tablaturas.\n\nNuestros bajistas crearán partituras y tablaturas personalizadas para ti.",
           "video": {
             "youtube": "4he7KkucBPM",
             "title": "Transcripciones para bajo",
@@ -37,16 +33,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "bass-1-street-life.png"
+          "image": "bass-1-street-life.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -72,13 +71,15 @@
           "image": "bass-3-amelia.png",
           "alt": "Bass TAB & Sheet 3 (Amelia), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -87,7 +88,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -110,12 +112,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/bajo"
+      "returnTo": "/bajo",
+      "reveal": true
     }
   ]
 }

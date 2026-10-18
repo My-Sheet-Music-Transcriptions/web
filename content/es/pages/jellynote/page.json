@@ -36,7 +36,8 @@
           "imageWidth": 480,
           "href": "https://www.jellynote.com/en/piano-sheet-music/jukebox-the-ghost/postcard"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -49,7 +50,8 @@
       "cta": {
         "label": "Descubre más sobre Jellynote",
         "href": "https://www.jellynote.com/es/creators/mysheetmusictranscriptions"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "Cards",
@@ -73,14 +75,16 @@
           "title": "Entrega rápida",
           "body": "1-2 days standard delivery time\nRush orders available"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
       "returnTo": "/jellynote",
       "title": "¡Pide tu presupuesto!",
-      "id": "contacto"
+      "id": "contacto",
+      "reveal": true
     },
     {
       "type": "Section",
@@ -92,7 +96,8 @@
       "cta": {
         "label": "Visita nuestro catálogo en Jellynote ahora",
         "href": "https://www.jellynote.com/es/creators/mysheetmusictranscriptions"
-      }
+      },
+      "reveal": true
     }
   ]
 }

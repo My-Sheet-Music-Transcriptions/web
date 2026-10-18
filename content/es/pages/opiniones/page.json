@@ -15,17 +15,20 @@
       "lead": "Haz clic en cada reseña o plataforma para leer la fuente original.",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Testimonials",
       "title": "Opiniones verificadas",
-      "items": "allReviews"
+      "items": "allReviews",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/opiniones"
+      "returnTo": "/opiniones",
+      "reveal": true
     }
   ]
 }

@@ -29,12 +29,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "https://www.mysheetmusictranscriptions.com/frequent-asked-questions"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/preguntas-frecuentes"
+      "returnTo": "/preguntas-frecuentes",
+      "reveal": true
     }
   ]
 }

@@ -13,14 +13,16 @@
       "type": "ContactSection",
       "form": "quoteForm",
       "title": "Solicita tu partitura o un servicio musical",
-      "returnTo": "/contacto"
+      "returnTo": "/contacto",
+      "reveal": true
     },
     {
       "type": "Section",
       "title": "Envíanos un email",
       "align": "center",
       "width": "narrow",
-      "body": "[info@mistranscripcionesmusicales.com](mailto:info@mistranscripcionesmusicales.com)\n\n**Múltiples archivos**\n\nPara varios archivos, envía un correo electrónico o utiliza un servicio como WeTransfer, Dropbox o Google Drive."
+      "body": "[info@mistranscripcionesmusicales.com](mailto:info@mistranscripcionesmusicales.com)\n\n**Múltiples archivos**\n\nPara varios archivos, envía un correo electrónico o utiliza un servicio como WeTransfer, Dropbox o Google Drive.",
+      "reveal": true
     },
     {
       "type": "PictureGrid",
@@ -65,7 +67,8 @@
           "caption": "+1 347-329-4343",
           "href": "tel:+13473294343"
         }
-      ]
+      ],
+      "reveal": true
     }
   ]
 }

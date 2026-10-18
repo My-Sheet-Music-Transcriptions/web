@@ -44,22 +44,26 @@
         {
           "body": "## 6. Cuida de tu mente y de tu cuerpo\n\nTu mente y tu cuerpo son **clave en todo este proceso**. Tú eres la persona con la que más horas pasarás practicando, ¡por ello debes cuidarte! Mientras estudias, presta atención a tu postura, tus movimientos y tu equilibrio. Sobre todo, no olvides **descansar lo suficiente**, **comer de forma sana y ordenada**, y tener un **sueño de calidad**. Así, podrás prevenir molestias y lesiones.\n\nGuardar tiempo para tu familia, amigos y hobbies, te ayudará a mantener una **relación sana y positiva con la música**. En resumen: asegúrate de guardar suficiente tiempo de alta calidad para **descansar y desconectar**.\n\n## 7. Siente la música, ¡no sólo la presión!\n\nSentir presión es inevitable. Sin embargo, recuerda que **practicas música porque te hace feliz**, no para contar compases y errores. Cuando los nervios acechen, céntrate en la **belleza y musicalidad** de tu interpretación y de la música en sí misma. **¿Para qué estamos aquí si no es para disfrutar de ella?**"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/trucos-audicion"
+      "returnTo": "/trucos-audicion",
+      "reveal": true
     }
   ]
 }

@@ -61,22 +61,26 @@
           "image": "h2-mobile-1-1.jpg",
           "alt": "Tus partituras para el post-festival"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/5-festivales-de-musica-de-barcelona-para-este-verano"
+      "returnTo": "/5-festivales-de-musica-de-barcelona-para-este-verano",
+      "reveal": true
     }
   ]
 }

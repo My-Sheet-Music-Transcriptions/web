@@ -39,22 +39,26 @@
         {
           "body": "## Las partituras para piano, en resumen…\n\n1. Un **arreglo para piano solo** condensa la melodía vocal en la mano derecha y todas las partes de acompañamiento en la mano izquierda. Es perfecto para actuaciones en solitario.\n2. Un **arreglo de acompañamiento para piano** reúne todas las partes de acompañamiento de la obra, sin incluir la melodía principal o la parte del solista.\n3. Una **reducción orquestal para piano** condensa una partitura orquestal completa en una versión tocable al piano.\n4. Una **transcripción de la parte de piano tal como se interpreta** reproduce 1:1 las notas que toca el pianista, sin añadir ni eliminar música.\n5. Un **arreglo para piano y voz** incluye la línea vocal principal con la letra, todos los instrumentos de acompañamiento condensados en una parte de piano y los símbolos de acordes sobre la melodía.\n6. Un **arreglo o transcripción para teclado** refleja no solo las notas interpretadas, sino también los efectos y otras partes musicales que puedan ser necesarias, como metales o cuerdas.\n\nComo ves, si estás buscando una **transcripción para piano**, existen varias opciones para que la partitura se adapte a tus necesidades. Si todavía tienes alguna duda sobre cuál elegir, estaremos encantados de ayudarte. Ponte en contacto con [**nuestro equipo de Atención al Cliente**](/#contact) y te asesoraremos durante todo el proceso."
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/partituras-para-piano-elige-la-mejor-opcion"
+      "returnTo": "/partituras-para-piano-elige-la-mejor-opcion",
+      "reveal": true
     }
   ]
 }

@@ -23,11 +23,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "orquestaciones.png"
-        },
-        {
-          "body": "Podemos transcribir y arreglar tus piezas para orquesta favoritas. Podrás hacer realidad tus proyectos de tocar con tu orquesta o con tus amigos a lo grande. Nuestros arreglistas y orquestadores profesionales crearán partituras personalizadas para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nPodemos transcribir y arreglar tus piezas para orquesta favoritas. Podrás hacer realidad tus proyectos de tocar con tu orquesta o con tus amigos a lo grande. Nuestros arreglistas y orquestadores profesionales crearán partituras personalizadas para ti.",
           "video": {
             "youtube": "uu6IAghIY90",
             "title": "Orquestaciones",
@@ -37,16 +33,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "orchestra-2-if-you-fall-i-will-carry-you.png"
+          "image": "orchestra-2-if-you-fall-i-will-carry-you.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -72,13 +71,15 @@
           "image": "orchestra-3-nearer-my-god-to-thee.png",
           "alt": "Orchestra 3 (Nearer, My God To Thee), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -87,7 +88,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -110,12 +112,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/orquestaciones"
+      "returnTo": "/orquestaciones",
+      "reveal": true
     }
   ]
 }

@@ -24,11 +24,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "strings.png"
-        },
-        {
-          "body": "**Transcribimos tus canciones favoritas para instrumentos de cuerda.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de violín, viola, cello y contrabajo** estarán encantados de crear una partitura personalizada para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\n**Transcribimos tus canciones favoritas para instrumentos de cuerda.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de violín, viola, cello y contrabajo** estarán encantados de crear una partitura personalizada para ti.",
           "video": {
             "youtube": "WBuPa6m9bOg",
             "title": "Transcripciones para instrumentos de cuerda",
@@ -38,16 +34,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "strings-1-silent-night.png"
+          "image": "strings-1-silent-night.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -93,13 +92,15 @@
           "image": "cello-2-cliffs-of-dover.png",
           "alt": "Strings 5 (Cliffs Of Dover), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -108,7 +109,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -131,12 +133,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/instrumentos-de-cuerda"
+      "returnTo": "/instrumentos-de-cuerda",
+      "reveal": true
     }
   ]
 }

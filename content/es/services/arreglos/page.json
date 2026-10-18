@@ -23,11 +23,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "arreglos.png"
-        },
-        {
-          "body": "Arreglamos tu música favorita, desde canciones pop, hasta música clásica. Podemos arreglar la pieza para cualquier instrumento o conjunto de instrumentos que necesites.\n\nNuestros arreglistas y transcriptores crearán una partitura personalizada para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nArreglamos tu música favorita, desde canciones pop, hasta música clásica. Podemos arreglar la pieza para cualquier instrumento o conjunto de instrumentos que necesites.\n\nNuestros arreglistas y transcriptores crearán una partitura personalizada para ti.",
           "video": {
             "youtube": "7FKE3VDhFFo",
             "title": "Arreglos musicales",
@@ -37,16 +33,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "arrangement-3-spring-little-women.png"
+          "image": "arrangement-3-spring-little-women.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -72,13 +71,15 @@
           "image": "arrangement-2-danzon-no-2.png",
           "alt": "Arrangement 2 (Danzón No. 2, Arturo Márquez), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -87,7 +88,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -110,12 +112,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/arreglos"
+      "returnTo": "/arreglos",
+      "reveal": true
     }
   ]
 }

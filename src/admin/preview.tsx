@@ -1,6 +1,7 @@
 import '~/design-system/export/asset-base'
 import '@fontsource-variable/montserrat'
 import '~/design-system/export/entry.css'
+import { Component, type ReactNode } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { isCmsBlock } from '~/components/blocks/cms'
 import { MotionProvider } from '~/components/primitives/Motion'
@@ -51,6 +52,43 @@ function pictureOf(url: string, rerender: () => void): PictureSource {
   return { sources: {}, img: { src: url, ...(size ?? { w: 800, h: 600 }) } }
 }
 
+/**
+ * One block of the preview: a block that cannot be drawn yet (a required picture not added, a list still empty, as
+ * a page started from another has until its own files are added) shows a note instead of blanking the whole preview.
+ */
+class Unfinished extends Component<
+  { type: string; data: unknown; children: ReactNode },
+  { failed: boolean; data?: unknown }
+> {
+  state = { failed: false, data: undefined as unknown }
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+  static getDerivedStateFromProps(
+    props: { data: unknown },
+    state: { failed: boolean; data?: unknown },
+  ) {
+    // a new value of the block (the writer filled something in): try drawing it again
+    return props.data === state.data ? null : { failed: false, data: props.data }
+  }
+  render() {
+    if (!this.state.failed) return this.props.children
+    return (
+      <p
+        style={{
+          margin: 24,
+          padding: 16,
+          border: '1px dashed #c5c8d1',
+          borderRadius: 8,
+          color: '#5f6b7a',
+        }}
+      >
+        {this.props.type}: not finished yet (a picture or a required field is missing).
+      </p>
+    )
+  }
+}
+
 const roots = new WeakMap<Element, Root>()
 
 function render(el: Element, data: unknown, assetUrl: (file: string) => string, locale: string) {
@@ -76,7 +114,12 @@ function render(el: Element, data: unknown, assetUrl: (file: string) => string, 
     node = (
       <MotionProvider>
         <main>
-          <BlockPage blocks={resolved} words={wordsFor(locale)} brand={brandOf(locale)} />
+          {resolved.map((b, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: the stored order is the page's order
+            <Unfinished key={i} type={b.type} data={b}>
+              <BlockPage blocks={[b]} words={wordsFor(locale)} brand={brandOf(locale)} />
+            </Unfinished>
+          ))}
         </main>
       </MotionProvider>
     )

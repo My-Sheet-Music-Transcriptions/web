@@ -55,12 +55,14 @@
           "name": "Arreglos",
           "href": "/arreglos"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/servicios-musicales"
+      "returnTo": "/servicios-musicales",
+      "reveal": true
     }
   ]
 }

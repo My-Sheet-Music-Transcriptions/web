@@ -26,7 +26,8 @@
       "id": "reserva",
       "returnTo": "/grandes-exitos-pop-espanol-sony",
       "variant": "reservation",
-      "eyebrow": "LANZAMIENTO OFICIAL - SONY MUSIC PUBLISHING"
+      "eyebrow": "LANZAMIENTO OFICIAL - SONY MUSIC PUBLISHING",
+      "reveal": true
     }
   ]
 }

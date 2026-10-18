@@ -14,7 +14,8 @@
     },
     {
       "type": "PostList",
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     }
   ]
 }

@@ -18,7 +18,8 @@
       "type": "Section",
       "title": "¿Por qué transcribir partituras, y por qué con nuestros servicios?",
       "align": "center",
-      "id": "down"
+      "id": "down",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -27,7 +28,8 @@
       "image": "editoriales-partituras-abiertas.jpg",
       "alt": "Partituras impresas abiertas sobre una mesa",
       "imageSide": "right",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -35,7 +37,8 @@
       "body": "Tenemos experiencia creando materiales didácticos y convirtiendo las partituras en un producto final listo para su distribución comercial, ya sea en formato papel o en formatos digitales o interactivos vía plataformas o aplicativos educacionales.",
       "image": "editoriales-materiales-didacticos.jpg",
       "alt": "Músico escribiendo notas a lápiz en una partitura",
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -44,7 +47,8 @@
       "image": "editoriales-retorno-inversion.jpg",
       "alt": "Transcriptores trabajando con auriculares en la oficina",
       "imageSide": "right",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -52,7 +56,8 @@
       "body": "Adaptamos las partituras a los criterios específicos requeridos, incluyendo la personalización de créditos de autoría / copyright, logos, tipografía y diseño gráfico a demanda.",
       "image": "editoriales-maquetacion-guitarra.jpg",
       "alt": "Partituras y tablaturas de guitarra impresas junto a una guitarra",
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -61,7 +66,8 @@
       "image": "editoriales-equipo-oriol.jpg",
       "alt": "Transcriptor con auriculares editando una partitura en el ordenador",
       "imageSide": "right",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -69,7 +75,8 @@
       "body": "Trabajamos de forma rápida y organizada, adaptándonos a los plazos de entrega más exigentes sin comprometer la calidad del resultado final, con un tiempo de respuesta medio de pocas horas.\n\nAtención telefónica disponible.",
       "image": "editoriales-comunicacion.jpg",
       "alt": "Manos tocando un piano digital",
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -78,12 +85,14 @@
       "image": "editoriales-pago.jpg",
       "alt": "Transcriptor trabajando con un portátil y un monitor",
       "imageSide": "right",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "Section",
       "body": "*La Ley de Propiedad Intelectual española (TRLPI) establece que la editorial ha de distribuir la obra del compositor y controlar la producción de ejemplares (artículos 64.4 y 68.1 y 72.2)",
-      "align": "center"
+      "align": "center",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -110,12 +119,14 @@
           "image": "orquesta-partitura-nota-por-nota.png",
           "alt": "Partitura de orquesta transcrita nota por nota, primera página"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/transcripcion-musical-para-editoriales"
+      "returnTo": "/transcripcion-musical-para-editoriales",
+      "reveal": true
     }
   ]
 }

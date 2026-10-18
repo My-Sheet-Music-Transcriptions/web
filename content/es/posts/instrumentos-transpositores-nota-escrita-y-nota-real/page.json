@@ -37,22 +37,26 @@
           "image": "concertpitch-vs-playingpitch.jpg",
           "alt": "Ahora todo tiene sentido, ¡gracias!"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/instrumentos-transpositores-nota-escrita-y-nota-real"
+      "returnTo": "/instrumentos-transpositores-nota-escrita-y-nota-real",
+      "reveal": true
     }
   ]
 }

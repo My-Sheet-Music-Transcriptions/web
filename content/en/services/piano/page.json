@@ -40,14 +40,16 @@
           "body": "We send you the score in a printable format",
           "image": "piano-1-man-of-war.png"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "#1 Musician’s choice piano transcription service online",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -92,7 +94,8 @@
           "image": "piano-5-theme-of-love-final-fantasy-4.png",
           "alt": "Piano 5 (Theme of Love, Final Fantasy 4), first page of the score"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Section",
@@ -104,13 +107,15 @@
       "cta": {
         "label": "See our Glossary",
         "href": "/glossary-of-musical-terms"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "What's included?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -119,7 +124,8 @@
       "cta": {
         "label": "Request your sheet music",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -209,12 +215,14 @@
       "cta": {
         "label": "Read all our FAQs",
         "href": "/frequent-asked-questions"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/piano"
+      "returnTo": "/piano",
+      "reveal": true
     }
   ]
 }

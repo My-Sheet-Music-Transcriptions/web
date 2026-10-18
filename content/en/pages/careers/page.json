@@ -18,7 +18,8 @@
     {
       "type": "Section",
       "title": "Join our band",
-      "body": "We are the go-to production company for new sheet music editions and transcriptions.\n\nBe part of a global, growing, collaborative team that makes the music community play the right notes.\n\nDevelop your music and leadership skills, grow professionally, and rest assured **this is going to be a fun gig.**\n\nOur music sounds as good as ever: come and play your part!"
+      "body": "We are the go-to production company for new sheet music editions and transcriptions.\n\nBe part of a global, growing, collaborative team that makes the music community play the right notes.\n\nDevelop your music and leadership skills, grow professionally, and rest assured **this is going to be a fun gig.**\n\nOur music sounds as good as ever: come and play your part!",
+      "reveal": true
     },
     {
       "type": "PictureGrid",
@@ -230,7 +231,8 @@
           "image": "you.webp",
           "alt": "You? Join the team"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Table",
@@ -309,7 +311,8 @@
           ]
         }
       ],
-      "body": "**There is always room for one more talented musician at My Sheet Music Transcriptions.**\n\nSee below the available job positions we’re expecting to fill soon:"
+      "body": "**There is always room for one more talented musician at My Sheet Music Transcriptions.**\n\nSee below the available job positions we’re expecting to fill soon:",
+      "reveal": true
     },
     {
       "type": "Table",
@@ -394,7 +397,8 @@
             "[See more & apply](/job/piano-vocal-transcriber)"
           ]
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -436,7 +440,8 @@
         "label": "Read more about us",
         "href": "/about-us"
       },
-      "body": "We are a team of 40+ professional music transcribers, arrangers, music editors, musicologists, developers, and engineers based in **Terrassa, Barcelona, Spain.**\n\nMost of our team is local but that doesn’t mean that we’re not looking for talent remotely.\n\nGiven the volume of applications we receive, please be aware that we might not reply immediately to your messages, or we might not reply at all if your application is incomplete or not sent to the correct email address.\n\nMake sure you include all the requested information for a position and use the correct email address for each job opening."
+      "body": "We are a team of 40+ professional music transcribers, arrangers, music editors, musicologists, developers, and engineers based in **Terrassa, Barcelona, Spain.**\n\nMost of our team is local but that doesn’t mean that we’re not looking for talent remotely.\n\nGiven the volume of applications we receive, please be aware that we might not reply immediately to your messages, or we might not reply at all if your application is incomplete or not sent to the correct email address.\n\nMake sure you include all the requested information for a position and use the correct email address for each job opening.",
+      "reveal": true
     },
     {
       "type": "Section",
@@ -449,7 +454,8 @@
         "label": "Apply now",
         "href": "mailto:job@mysheetmusictranscriptions.com"
       },
-      "body": "**Don’t worry.** We still review unsolicited applications and, if you wish, keep your information in case there’s a suitable vacancy in the future.\n\nPlease use this email address to contact us if you don’t see a suitable position for you right now: [job@mysheetmusictranscriptions.com](mailto:job@mysheetmusictranscriptions.com)"
+      "body": "**Don’t worry.** We still review unsolicited applications and, if you wish, keep your information in case there’s a suitable vacancy in the future.\n\nPlease use this email address to contact us if you don’t see a suitable position for you right now: [job@mysheetmusictranscriptions.com](mailto:job@mysheetmusictranscriptions.com)",
+      "reveal": true
     }
   ]
 }

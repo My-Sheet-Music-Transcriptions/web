@@ -18,7 +18,8 @@
         "src": "paso-1-importe.mp4",
         "title": "Rellenar el importe y añadirlo al pedido"
       },
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -29,7 +30,8 @@
         "src": "paso-2-datos-de-facturacion.mp4",
         "title": "Rellenar los datos de facturación"
       },
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -40,7 +42,8 @@
         "src": "paso-3-metodo-de-pago.mp4",
         "title": "Seleccionar el método de pago"
       },
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -51,7 +54,8 @@
         "src": "paso-4-datos-de-la-tarjeta.mp4",
         "title": "Introducir los datos de la tarjeta"
       },
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -62,7 +66,8 @@
         "src": "paso-5-verificacion.mp4",
         "title": "Verificación en dos pasos con el teléfono móvil"
       },
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -71,12 +76,14 @@
       "body": "Aparecerá la página de “**¡Gracias!**” -que se muestra en color verde como en la imagen: *¡su pago se ha enviado con éxito!* Nos pondremos en contacto contigo en las próximas horas para confirmar que hemos recibido la transacción. También deberías recibir un correo electrónico automático con el resumen de tu pedido y, si tienes una cuenta, el pedido debería aparecer en tu pestaña de **Pedidos**.\n\nSi no ha tenido éxito, por favor, **inténtalo de nuevo, prueba la opción de PayPal, ponte en contacto con nosotros, o con tu banco para obtener más ayuda.**\n\nNuestro equipo siempre está a tu disposición para cualquier cosa.",
       "image": "pago-completado.jpg",
       "alt": "Página “Thank you! Your payment was submitted successfully!”",
-      "imageSide": "right"
+      "imageSide": "right",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/como-pagar"
+      "returnTo": "/como-pagar",
+      "reveal": true
     }
   ]
 }

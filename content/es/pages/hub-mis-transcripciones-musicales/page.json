@@ -21,7 +21,8 @@
       "id": "info",
       "align": "center",
       "width": "narrow",
-      "body": "Tenemos una noticia fantástica y lo estamos celebrando con un **descuento del 10%**, ¡como merece una ocasión así! 🎊\n\nHemos estado trabajando duro entre bastidores para mejorar tu experiencia y, recientemente, hemos lanzado el **My Sheet Music Transcriptions Hub**. Por ahora, incluye una nueva pasarela de pago y un nuevo panel de control para clientes. Nuestro nuevo sistema es más ágil e intuitivo y genera un enlace único para cada pedido.\n\n**Además, se mostrará en tu idioma local para facilitar la navegación.**\n\nEsto te permitirá ver los pagos pendientes, consultar cualquier pedido realizado en el nuevo sistema y, en los próximos meses, acceder a las transcripciones que hemos elaborado para ti."
+      "body": "Tenemos una noticia fantástica y lo estamos celebrando con un **descuento del 10%**, ¡como merece una ocasión así! 🎊\n\nHemos estado trabajando duro entre bastidores para mejorar tu experiencia y, recientemente, hemos lanzado el **My Sheet Music Transcriptions Hub**. Por ahora, incluye una nueva pasarela de pago y un nuevo panel de control para clientes. Nuestro nuevo sistema es más ágil e intuitivo y genera un enlace único para cada pedido.\n\n**Además, se mostrará en tu idioma local para facilitar la navegación.**\n\nEsto te permitirá ver los pagos pendientes, consultar cualquier pedido realizado en el nuevo sistema y, en los próximos meses, acceder a las transcripciones que hemos elaborado para ti.",
+      "reveal": true
     },
     {
       "type": "Article",
@@ -32,7 +33,8 @@
             "title": "El panel de control para clientes del Hub"
           }
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Section",
@@ -42,19 +44,22 @@
       "cta": {
         "label": "Encarga una transcripción y prueba nuestro nuevo hub",
         "href": "#contacto"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "Section",
       "align": "center",
       "width": "narrow",
-      "body": "*Nota: este descuento no se puede combinar con otras promociones u ofertas. Por favor, ponte en contacto con nuestro servicio de atención al cliente si necesitas asistencia con tu proyecto.*"
+      "body": "*Nota: este descuento no se puede combinar con otras promociones u ofertas. Por favor, ponte en contacto con nuestro servicio de atención al cliente si necesitas asistencia con tu proyecto.*",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
       "id": "contacto",
-      "returnTo": "/hub-mis-transcripciones-musicales"
+      "returnTo": "/hub-mis-transcripciones-musicales",
+      "reveal": true
     }
   ]
 }

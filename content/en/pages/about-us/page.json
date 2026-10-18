@@ -15,7 +15,8 @@
       "image": "band.jpg",
       "alt": "The My Sheet Music Transcriptions team",
       "imageSide": "left",
-      "body": "We are a team of 100+ professional musicians with unmatched musical knowledge and extensive tech proficiency. An enthusiastic bunch ready to tackle all-things-notation and help you bring your music to life.\n\nMy Sheet Music Transcriptions’ (MSMT) founder and CEO, Oriol, started as a solo act. Building steadily, never compromising quality for the sake of speed, and learning along the way, lead to opening the French and Spanish-speaking markets. Quickly followed by the Japanese and German sites, reaching an even larger community of fellow musicians.\n\nWith our home base in Catalonia (Terrassa, Barcelona, Spain), our band members are located all around the world. We have skilled Music Specialists ready to help you from various locations on 4 continents (Europe, Asia, and North and South America).\n\nThey will work by your side to fine tune the details of your project, and then, coordinate and communicate it to our team of transcribers, arrangers and composers. Before music is sent back to you, our music editors will take up the baton and ensure that each file meets the highest quality standards."
+      "body": "We are a team of 100+ professional musicians with unmatched musical knowledge and extensive tech proficiency. An enthusiastic bunch ready to tackle all-things-notation and help you bring your music to life.\n\nMy Sheet Music Transcriptions’ (MSMT) founder and CEO, Oriol, started as a solo act. Building steadily, never compromising quality for the sake of speed, and learning along the way, lead to opening the French and Spanish-speaking markets. Quickly followed by the Japanese and German sites, reaching an even larger community of fellow musicians.\n\nWith our home base in Catalonia (Terrassa, Barcelona, Spain), our band members are located all around the world. We have skilled Music Specialists ready to help you from various locations on 4 continents (Europe, Asia, and North and South America).\n\nThey will work by your side to fine tune the details of your project, and then, coordinate and communicate it to our team of transcribers, arrangers and composers. Before music is sent back to you, our music editors will take up the baton and ensure that each file meets the highest quality standards.",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -51,7 +52,8 @@
       ],
       "imageSide": "right",
       "tone": "cream",
-      "body": "All of them, alongside management, business, research, tech, and marketing teams, make up for the 20+ professionals that make sure we offer our unparalleled music notation services to as many musicians as possible. All over the world!\n\nAt the backbone of our services is our Transcription Team. Comprised of 60+ musicians who meticulously transcribe the hundreds of files we deliver each week by ear, note-for-note. With an adept and varied group of transcribers, each having their own specialty, we always have the right person for the job.\n\nWith this blend of talent, technology, and experience, we’re poised to take on nearly any project, no matter the level or scale. We’re here to facilitate your notation needs."
+      "body": "All of them, alongside management, business, research, tech, and marketing teams, make up for the 20+ professionals that make sure we offer our unparalleled music notation services to as many musicians as possible. All over the world!\n\nAt the backbone of our services is our Transcription Team. Comprised of 60+ musicians who meticulously transcribe the hundreds of files we deliver each week by ear, note-for-note. With an adept and varied group of transcribers, each having their own specialty, we always have the right person for the job.\n\nWith this blend of talent, technology, and experience, we’re poised to take on nearly any project, no matter the level or scale. We’re here to facilitate your notation needs.",
+      "reveal": true
     },
     {
       "type": "Section",
@@ -63,7 +65,8 @@
       "cta": {
         "label": "Read more",
         "href": "https://www.linkedin.com/company/my-sheet-music-transcriptions/"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "PictureGrid",
@@ -362,13 +365,15 @@
           "name": "Emma",
           "caption": "Full-Stack Software Engineer"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Section",
       "title": "How do we operate?",
       "tone": "cream",
-      "body": "Some of us take care of responding your emails and incoming calls. Some others transcribe the music for you. Some others coordinate the whole process.\n\nThere is always an expert transcriber ready to work on your sheet music requests. We make sure that only a proficient jazz pianist works on your jazz piano transcriptions. We make sure that only a proficient fingerstyle guitar player works on your guitar tabs. And that applies to every instrument. We don’t use music transcription software – that doesn’t work at all. We transcribe every note by ear: one after the other. We believe that this is the only way to achieve an accurate, professional result.\n\nWe strive to provide the best quality sheet music transcriptions and customer service; we hope that you love what we are building as much as we do."
+      "body": "Some of us take care of responding your emails and incoming calls. Some others transcribe the music for you. Some others coordinate the whole process.\n\nThere is always an expert transcriber ready to work on your sheet music requests. We make sure that only a proficient jazz pianist works on your jazz piano transcriptions. We make sure that only a proficient fingerstyle guitar player works on your guitar tabs. And that applies to every instrument. We don’t use music transcription software – that doesn’t work at all. We transcribe every note by ear: one after the other. We believe that this is the only way to achieve an accurate, professional result.\n\nWe strive to provide the best quality sheet music transcriptions and customer service; we hope that you love what we are building as much as we do.",
+      "reveal": true
     },
     {
       "type": "Cards",
@@ -397,7 +402,8 @@
       "cta": {
         "label": "See the full Blog",
         "href": "/music-blog"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "Cards",
@@ -435,7 +441,8 @@
         }
       ],
       "variant": "tile",
-      "columns": 3
+      "columns": 3,
+      "reveal": true
     }
   ]
 }

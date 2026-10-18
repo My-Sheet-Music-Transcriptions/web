@@ -23,11 +23,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "piano.png"
-        },
-        {
-          "body": "**Transcribimos tus canciones favoritas para piano.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de piano** estarán encantados de crear una partitura personalizada para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\n**Transcribimos tus canciones favoritas para piano.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de piano** estarán encantados de crear una partitura personalizada para ti.",
           "video": {
             "youtube": "nI62a15qRMk",
             "title": "Transcripciones para piano",
@@ -37,16 +33,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "piano-1-some-might-say.png"
+          "image": "piano-1-some-might-say.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -92,13 +91,15 @@
           "image": "piano-5-theme-of-love-final-fantasy-4.png",
           "alt": "Piano 5 (Theme of Love, Final Fantasy 4), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -107,7 +108,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -130,12 +132,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/piano"
+      "returnTo": "/piano",
+      "reveal": true
     }
   ]
 }

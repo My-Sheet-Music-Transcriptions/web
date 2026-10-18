@@ -1,3 +1,4 @@
+import { isPictureName, isSoundName } from '~/content/cms-fields'
 import { type LinkTargets, linkProblem, markdownLinks, pathOf } from '~/content/links'
 import { CMS_LOCALES } from './locales'
 
@@ -10,7 +11,10 @@ import { CMS_LOCALES } from './locales'
  *   link              where a button, a card or a menu entry leads: the language's pages offered by title, the
  *                     address checked as it is typed (src/content/links.ts);
  *   prose             Decap's text field with a link bar above it (a page of the language, another site, an email),
- *                     every [link](…) in the text checked the same way.
+ *                     every [link](…) in the text checked the same way;
+ *   blocks            Decap's list of blocks; while a page has none, it offers to start from another page of the same
+ *                     kind and language (a starter: its blocks and words, without its pictures, recordings and
+ *                     return address, which belong to that page's folder).
  * Pages and their titles come from `__CMS_PAGES__`, written into the bundle by vite.admin.config.ts.
  * Decap renders widgets with its own React: they are built with its `createClass` and `h` globals.
  */
@@ -18,6 +22,8 @@ import { CMS_LOCALES } from './locales'
 interface Immutable {
   get(key: string): unknown
   getIn(path: string[]): unknown
+  toList(): { constructor: (items: unknown[]) => unknown }
+  size?: number
 }
 interface WidgetProps {
   value?: string
@@ -372,9 +378,130 @@ function prose({ CMS, createClass, h }: Decap) {
   })
 }
 
+// --- Starting a page from another --------------------------------------------------------------------------------
+
+interface StoredPage {
+  language?: string
+  collection?: string
+  title?: string
+  blocks?: Record<string, unknown>[]
+}
+const stored = import.meta.glob<StoredPage>('/content/*/*/*/page.json', {
+  eager: true,
+  import: 'default',
+})
+
+/** The pages a new page of this kind and language can start from, by title. */
+function startersFor(collection: string, locale: string) {
+  return Object.entries(stored)
+    .filter(([, p]) => p.collection === collection && p.language === locale && p.blocks?.length)
+    .map(([file, p]) => ({ file, title: p.title ?? file, blocks: p.blocks ?? [] }))
+    .sort((a, b) => a.title.localeCompare(b.title, locale))
+}
+
+/** A page's blocks for another page: without the files of its folder (pictures, recordings) and its return address. */
+function starterBlocks(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(starterBlocks)
+  if (!value || typeof value !== 'object') return value
+  return Object.fromEntries(
+    Object.entries(value)
+      .filter(([k, v]) => k !== 'returnTo' && !isPictureName(v) && !isSoundName(v))
+      .map(([k, v]) => [k, starterBlocks(v)]),
+  )
+}
+
+function blocks({ CMS, createClass, h }: Decap) {
+  const list = CMS.getWidget('list')
+  return createClass({
+    getInitialState: () => ({ from: '' }),
+    render(this: Widget<{ from: string }>) {
+      const { value, entry, collection } = this.props as unknown as WidgetProps & {
+        value?: Immutable
+      }
+      const empty = !value?.size
+      const locale = localeOf(this.props)
+      const starters = empty ? startersFor(String(collection.get('name')), locale) : []
+      // Decap keeps entries as Immutable.js values: the same kinds are made from the entry itself.
+      const listOf = entry.toList().constructor
+      const mapOf = (entry.get('data') as { constructor: (e: unknown) => unknown }).constructor
+      const immutable = (v: unknown): unknown =>
+        Array.isArray(v)
+          ? listOf(v.map(immutable))
+          : v && typeof v === 'object'
+            ? mapOf(Object.entries(v).map(([k, x]) => [k, immutable(x)]))
+            : v
+      const start = () => {
+        const page = starters.find((p) => p.file === this.state.from)
+        if (page) this.props.onChange(immutable(starterBlocks(page.blocks)) as string)
+      }
+      const bar = empty
+        ? h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: 8,
+                margin: '0 0 10px',
+                padding: 12,
+                border: '1px dashed #c5c8d1',
+                borderRadius: 5,
+                fontSize: 14,
+              },
+            },
+            !locale
+              ? 'Pick the language first to start from one of its pages.'
+              : starters.length
+                ? [
+                    h('span', { key: 'l' }, 'Start from another page:'),
+                    h(
+                      'select',
+                      {
+                        key: 's',
+                        value: this.state.from,
+                        onChange: (e: { target: { value: string } }) =>
+                          this.setState({ from: e.target.value }),
+                        style: { fontSize: 14, padding: 4, maxWidth: 380 },
+                      },
+                      h('option', { value: '' }, 'Pick a page…'),
+                      ...starters.map((p) => h('option', { key: p.file, value: p.file }, p.title)),
+                    ),
+                    h(
+                      'button',
+                      {
+                        key: 'b',
+                        type: 'button',
+                        onClick: start,
+                        disabled: !this.state.from,
+                        style: {
+                          border: '1px solid #dfdfe3',
+                          borderRadius: 5,
+                          background: '#fff',
+                          padding: '4px 10px',
+                          cursor: 'pointer',
+                        },
+                      },
+                      'Use its blocks',
+                    ),
+                    h(
+                      'span',
+                      { key: 'n', style: { flexBasis: '100%', fontSize: 13, color: '#5f6b7a' } },
+                      'Its blocks and words are copied; add this page’s own pictures and recordings.',
+                    ),
+                  ]
+                : 'No page of this kind in this language yet: add blocks below.',
+          )
+        : null
+      return h('div', null, bar, h(list.control, { ...this.props }))
+    },
+  })
+}
+
 export function registerWidgets(decap: Decap) {
   decap.CMS.registerWidget('translation-key', translationKey(decap))
   decap.CMS.registerWidget('link', link(decap))
+  decap.CMS.registerWidget('blocks', blocks(decap), decap.CMS.getWidget('list').preview)
   decap.CMS.registerWidget('prose', prose(decap), decap.CMS.getWidget('text').preview)
   decap.CMS.registerWidget('image', picture(decap), decap.CMS.getWidget('image').preview)
 }

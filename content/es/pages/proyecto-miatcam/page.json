@@ -24,19 +24,22 @@
       "body": "Investigar técnicas avanzadas de inteligencia artificial aplicadas a la música e integrar la tecnología para servir nuestros procesos de trabajo manuales.",
       "image": "dsc-3911.jpg",
       "alt": "Un transcriptor trabajando con una partitura en el ordenador",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
       "title": "Financiación",
       "body": "Proyecto financiado por el Centro para el Desarrollo Tecnológico y la Innovación (CDTI) y cofinanciado por la Unión Europea a través del Fondo Europeo de Desarrollo Regional (FEDER).\n\n**Europa Se Siente**",
       "image": "logo-cdti.jpg",
-      "alt": "Gobierno de España, Ministerio de Ciencia, Innovación y Universidades, CDTI Innovación"
+      "alt": "Gobierno de España, Ministerio de Ciencia, Innovación y Universidades, CDTI Innovación",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/proyecto-miatcam"
+      "returnTo": "/proyecto-miatcam",
+      "reveal": true
     }
   ]
 }

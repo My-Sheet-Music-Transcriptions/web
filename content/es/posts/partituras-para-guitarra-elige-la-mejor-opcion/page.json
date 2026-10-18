@@ -39,22 +39,26 @@
         {
           "body": "## Partituras para guitarra, en resumen\n\n1. Una **parte de guitarra tal como se toca** es una transcripción 1:1 de lo que se escucha, sin material musical nuevo ni arreglos.\n2. Un **arreglo para guitarra solista** condensa todos los elementos musicales de la pieza en una transcripción para guitarra, interpretable por un solo músico.\n3. Un **arreglo de acompañamiento para guitarra** condensa todas las partes de acompañamiento de la pieza, omitiendo únicamente la línea melódica principal (solista o cantante).\n4. Una **transcripción que condensa todas las capas de guitarra** incluye todas las guitarras en una sola parte. La partitura incluirá tanto la guitarra solista como la rítmica. Podrás tocar junto con la canción o dentro de un grupo sin necesitar dos guitarras.\n5. Las **tablas de acordes para guitarra** solo muestran los símbolos de acordes y la estructura de la canción. Hay dos tipos: acordes con barras y acordes con patrones de rasgueo.\n\n## Reflexiones finales\n\nSi buscas una transcripción para guitarra, tenemos varias opciones **para garantizar que la partitura se adapte perfectamente a tus necesidades**. Si tienes más preguntas o dudas sobre tus transcripciones, ¡estamos aquí para ayudarte! [**Ponte en contacto con nosotros**](mailto:info@mistranscripcionesmusicales.com) y haremos todo lo posible por guiarte durante el proceso."
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/partituras-para-guitarra-elige-la-mejor-opcion"
+      "returnTo": "/partituras-para-guitarra-elige-la-mejor-opcion",
+      "reveal": true
     }
   ]
 }

@@ -41,22 +41,26 @@
           "image": "audio-music-file-format.jpg",
           "alt": "Archivos de audio: MP3, WAV, M4A y más"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/como-funcionan-las-partituras-digitales"
+      "returnTo": "/como-funcionan-las-partituras-digitales",
+      "reveal": true
     }
   ]
 }

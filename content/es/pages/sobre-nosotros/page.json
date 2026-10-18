@@ -15,7 +15,8 @@
       "image": "band.jpg",
       "alt": "El equipo de Mis Transcripciones Musicales",
       "imageSide": "left",
-      "body": "Somos un equipo de **más de 100 músicos** profesionales con un conocimiento musical excepcional y una amplia competencia tecnológica. Un grupo entusiasta, preparado para abordar todo lo relacionado con la notación musical y ayudarte a dar vida a tu música.\n\nOriol, el fundador y CEO de Mis Transcripciones Musicales, comenzó el proyecto de forma individual. El crecimiento constante no ha comprometido nunca la calidad en favor de la rapidez, y ha favorecido el aprendizaje continuo a lo largo del camino. En la actualidad, atendemos en inglés, castellano, catalán, fracés, alemán y japonés.\n\nCon nuestra sede central en Cataluña (Terrassa, Barcelona, España), los miembros de nuestro equipo están repartidos por todo el mundo. Contamos con especialistas musicales altamente cualificados, preparados para ayudarte desde distintas ubicaciones **en 4 continentes (Europa, Asia, América del Norte y América del Sur)**.\n\nTrabajarán contigo codo con codo para perfeccionar los detalles de tu proyecto y, posteriormente, coordinarlo y comunicarlo a nuestro equipo de transcriptores, arreglistas y compositores. Antes de que la música te sea entregada, nuestros editores musicales habrán tomado el relevo para garantizar que cada archivo cumpla con los **más altos estándares de calidad**."
+      "body": "Somos un equipo de **más de 100 músicos** profesionales con un conocimiento musical excepcional y una amplia competencia tecnológica. Un grupo entusiasta, preparado para abordar todo lo relacionado con la notación musical y ayudarte a dar vida a tu música.\n\nOriol, el fundador y CEO de Mis Transcripciones Musicales, comenzó el proyecto de forma individual. El crecimiento constante no ha comprometido nunca la calidad en favor de la rapidez, y ha favorecido el aprendizaje continuo a lo largo del camino. En la actualidad, atendemos en inglés, castellano, catalán, fracés, alemán y japonés.\n\nCon nuestra sede central en Cataluña (Terrassa, Barcelona, España), los miembros de nuestro equipo están repartidos por todo el mundo. Contamos con especialistas musicales altamente cualificados, preparados para ayudarte desde distintas ubicaciones **en 4 continentes (Europa, Asia, América del Norte y América del Sur)**.\n\nTrabajarán contigo codo con codo para perfeccionar los detalles de tu proyecto y, posteriormente, coordinarlo y comunicarlo a nuestro equipo de transcriptores, arreglistas y compositores. Antes de que la música te sea entregada, nuestros editores musicales habrán tomado el relevo para garantizar que cada archivo cumpla con los **más altos estándares de calidad**.",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -35,7 +36,8 @@
       ],
       "imageSide": "right",
       "tone": "cream",
-      "body": "Todos ellos, junto con los equipos de **dirección, desarrollo, investigación, tecnología y marketing**, conforman un grupo de más de 30 profesionales que se aseguran de que podamos ofrecer nuestros servicios de notación musical al mayor número posible de músicos, ¡en todo el mundo!\n\nEn la base de nuestros servicios se encuentra nuestro equipo de transcripción. Formado por más de 80 músicos que transcriben meticulosamente a oído, nota por nota, los cientos de archivos que entregamos cada semana. Gracias a un grupo de transcriptores diverso y altamente especializado, siempre contamos con la persona adecuada para cada proyecto.\n\nCon esta combinación de talento, tecnología y experiencia, estamos preparados para afrontar prácticamente cualquier proyecto, independientemente de su nivel o envergadura. **Estamos aquí para dar respuesta a todas tus necesidades de notación musical.**"
+      "body": "Todos ellos, junto con los equipos de **dirección, desarrollo, investigación, tecnología y marketing**, conforman un grupo de más de 30 profesionales que se aseguran de que podamos ofrecer nuestros servicios de notación musical al mayor número posible de músicos, ¡en todo el mundo!\n\nEn la base de nuestros servicios se encuentra nuestro equipo de transcripción. Formado por más de 80 músicos que transcriben meticulosamente a oído, nota por nota, los cientos de archivos que entregamos cada semana. Gracias a un grupo de transcriptores diverso y altamente especializado, siempre contamos con la persona adecuada para cada proyecto.\n\nCon esta combinación de talento, tecnología y experiencia, estamos preparados para afrontar prácticamente cualquier proyecto, independientemente de su nivel o envergadura. **Estamos aquí para dar respuesta a todas tus necesidades de notación musical.**",
+      "reveal": true
     },
     {
       "type": "Section",
@@ -47,7 +49,8 @@
       "cta": {
         "label": "Saber más",
         "href": "https://www.linkedin.com/company/my-sheet-music-transcriptions/"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "PictureGrid",
@@ -316,7 +319,8 @@
           "name": "Emma",
           "caption": "Ingeniera de Software"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Cards",
@@ -338,7 +342,8 @@
         }
       ],
       "variant": "plain",
-      "columns": 2
+      "columns": 2,
+      "reveal": true
     },
     {
       "type": "PictureStrip",
@@ -389,7 +394,8 @@
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/sobre-nosotros"
+      "returnTo": "/sobre-nosotros",
+      "reveal": true
     }
   ]
 }

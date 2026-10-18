@@ -56,7 +56,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   schema), after `language` and `collection` (the two parts of its folder, checked against it): the CMS's sidebar is
   `Site` (each language's homepage and menu), `Pages` and `Services`, each listing every language's pages, filtered or
   grouped by language (`src/admin/locales.ts`); our own widgets
-  (translation-key suggestions, picture thumbnails, the page picker of links and texts) are `src/admin/widgets.ts`. Every
+  (translation-key suggestions, a new page's blocks started from another page of the collection, picture thumbnails, the page picker of links and texts) are `src/admin/widgets.ts`. Every
   link writers set (a button's `link()` field, a menu address, a `[link](…)` in a text) follows `src/content/links.ts`: a
   page of the language, `#id`, another site, `mailto:` or `tel:`; the CMS checks it as they type and the build refuses
   one that leads nowhere (`checkLinks`), and pages open with a client-side transition (`SmartLink`). The `cms` skill says how to change

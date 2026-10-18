@@ -38,7 +38,8 @@ const blocksField = {
   name: 'blocks',
   label: 'Blocks',
   label_singular: 'block',
-  widget: 'list',
+  // Decap's list, offering a new page to start from another page's blocks (src/admin/widgets.ts)
+  widget: 'blocks',
   summary: '{{fields.title}}',
   types: blockTypes,
 }

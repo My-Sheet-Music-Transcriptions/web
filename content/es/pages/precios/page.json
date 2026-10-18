@@ -18,7 +18,8 @@
       "cta": {
         "label": "Pide presupuesto",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -123,7 +124,8 @@
       "cta": {
         "label": "Ver la página de piano",
         "href": "/piano"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -324,7 +326,8 @@
             }
           ]
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Cards",
@@ -350,12 +353,14 @@
           "body": "Si eres un artista de YouTube o un compositor, ¡escríbenos!",
           "icon": "compositores.png"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/precios"
+      "returnTo": "/precios",
+      "reveal": true
     }
   ]
 }

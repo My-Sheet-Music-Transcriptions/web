@@ -45,7 +45,8 @@
           "image": "nadie-sabe-nada-indice.png",
           "alt": "Índice de canciones de El cancionero de Nadie Sabe Nada"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ContactSection",
@@ -55,7 +56,8 @@
       "id": "reserva",
       "returnTo": "/nadie-sabe-nada-cancionero-partituras",
       "variant": "reservation",
-      "eyebrow": "La Meva Partitura Edicions"
+      "eyebrow": "La Meva Partitura Edicions",
+      "reveal": true
     }
   ]
 }

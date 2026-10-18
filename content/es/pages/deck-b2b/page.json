@@ -33,7 +33,8 @@
           "title": "How",
           "body": "Through an expert team of highly **specialized musicians** and engineers.\n\n100 % transcribed by human ears, leveraging state-of-the-art technology."
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -42,7 +43,8 @@
       "image": "our-values.png",
       "alt": "",
       "imageSide": "left",
-      "tone": "peach"
+      "tone": "peach",
+      "reveal": true
     },
     {
       "type": "Stats",
@@ -68,7 +70,8 @@
           "value": "+40,000,000 musicians",
           "label": "have trusted our services"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Cards",
@@ -90,13 +93,15 @@
           "title": "Accessible music",
           "body": "- Visual solutions to enhance music perception and participation with the hearing-impaired community\n- Braille sheet music for the visually impaired community"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Section",
       "title": "Client success stories",
       "lead": "Meet some companies that boosted their products by using our services",
-      "id": "client-success-stories"
+      "id": "client-success-stories",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -107,7 +112,8 @@
         "title": "Music:Eyes: Visual music environment"
       },
       "imageSide": "right",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -118,7 +124,8 @@
         "title": "GuitarPro: #1 Guitar TAB software"
       },
       "imageSide": "left",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -129,7 +136,8 @@
         "title": "Synthesia: Enhanced piano tutorials"
       },
       "imageSide": "right",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -140,7 +148,8 @@
         "title": "Soundslice: Audio aligned scores"
       },
       "imageSide": "left",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -151,7 +160,8 @@
         "title": "Odisei Music: #1 Sax practice app"
       },
       "imageSide": "right",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -162,7 +172,8 @@
         "title": "Yousician: #1 MusicEd gamified app"
       },
       "imageSide": "left",
-      "tone": "cream"
+      "tone": "cream",
+      "reveal": true
     },
     {
       "type": "Cards",
@@ -194,7 +205,8 @@
           "body": "**Part separation**\n\nto have each performer enjoy perfect sheet music for their part.\n\n**Orchestration adaptation**\n\nfrom string quartet to brass band, and from vocal ensembles to jazz orchestra",
           "href": "https://www.mysheetmusictranscriptions.com/full-band-transcription-service"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "MediaText",
@@ -203,7 +215,8 @@
       "body": "Over the years, we have partnered with thriving, game-changing music businesses.\n\nThese are some of the disruptive companies that rely on our services to tackle their music challenges.\n\nWe pride ourselves on offering the best music notation services out there, and our customers’ reviews prove it.",
       "image": "trusted-by-logos.jpg",
       "alt": "Logos de empresas que confían en nosotros: Musicnotes, Guitar Pro 8, AMP, Oktav, Fever, School of Rock, Yokee, Stingray",
-      "imageSide": "left"
+      "imageSide": "left",
+      "reveal": true
     },
     {
       "type": "Cards",
@@ -235,7 +248,8 @@
           "href": "https://www.facebook.com/mysheetmusictranscriptions",
           "linkLabel": "See +300 reviews"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Section",
@@ -244,7 +258,8 @@
       "cta": {
         "label": "About us",
         "href": "https://www.mysheetmusictranscriptions.com/about-us"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "PictureGrid",
@@ -282,13 +297,15 @@
           "name": "Mauricio",
           "caption": "Customer Success Manager"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Section",
       "title": "What's next?",
       "tone": "peach",
-      "body": "**[Schedule a meeting](https://calendly.com/quim-mysheetmusictranscriptions/30min?month=2025-06) to know more and have your questions answered**\n\nCheck out our **[quick video demo,](https://drive.google.com/file/d/15xwF-OJgqltppkq9IkNQjj6xwpEIGmTw/view?pli=1)** showcasing the outcome of recent projects with industry leading companies\n\nNot sure yet? Free samples and further documentation can be sent upon request.\n\n### Contact:\n\n**[oriol@mysheetmusictranscriptions.com](mailto:oriol@mysheetmusictranscriptions.com)** – CEO & Founder\n\n**[quim@mysheetmusictranscriptions.com](mailto:quim@mysheetmusictranscriptions.com)** – Business Development Lead"
+      "body": "**[Schedule a meeting](https://calendly.com/quim-mysheetmusictranscriptions/30min?month=2025-06) to know more and have your questions answered**\n\nCheck out our **[quick video demo,](https://drive.google.com/file/d/15xwF-OJgqltppkq9IkNQjj6xwpEIGmTw/view?pli=1)** showcasing the outcome of recent projects with industry leading companies\n\nNot sure yet? Free samples and further documentation can be sent upon request.\n\n### Contact:\n\n**[oriol@mysheetmusictranscriptions.com](mailto:oriol@mysheetmusictranscriptions.com)** – CEO & Founder\n\n**[quim@mysheetmusictranscriptions.com](mailto:quim@mysheetmusictranscriptions.com)** – Business Development Lead",
+      "reveal": true
     },
     {
       "type": "Section",
@@ -302,7 +319,8 @@
           "label": "LinkedIn",
           "href": "https://www.linkedin.com/company/my-sheet-music-transcriptions/"
         }
-      ]
+      ],
+      "reveal": true
     }
   ]
 }

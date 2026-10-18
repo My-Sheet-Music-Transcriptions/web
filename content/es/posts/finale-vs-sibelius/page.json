@@ -44,22 +44,26 @@
         {
           "body": "## Aprendizaje lento y complejo\n\nSin embargo, toda virtud conlleva una desventaja. ¿Cómo puede un software tan profesional conseguir ser sencillo y fácil de usar al principio? Pues como era de esperar…no lo consigue. **La interfaz de Finale puede saturar al que lo usa por primera vez** y espantarlo. Incluso si el usuario se queda, aprender dónde está cada herramienta y cada pequeña opción será una tarea ardua. Pero la paciencia merece totalmente la pena. Una vez dominéis Finale, ¡serás **el rey o la reina indiscutible de la notación musical**!\n\nCuriosamente, al igual que Sibelius, la maquetación en Finale también es un poco incómoda. El resultado que se consigue en Finale al final es excelente. Sin embargo, es muy frustrante intentar que una partitura quede bien cuando empiezas a usar el programa.\n\nEsto se debe a **sus complejas herramientas de maquetación.** No tiene la interfaz intuitiva de Sibelius, lo que supondrá un **verdadero dolor de cabeza** al principio. Finale es como la programación. Aprender el código es difícil, pero una vez que lo dominas, todo es más fácil y más preciso.\n\n## Últimas reflexiones…\n\nTal vez Sibelius sea el Mac de la notación musical y Finale el Windows. Después de todo, no estábamos tan lejos de considerarlos eternos rivales, ¿no?\n\nAhora te toca reflexionar sobre toda esta información que estamos compartiendo. **Según lo que priorices, puedes elegir el programa que mejor se adapte a tus necesidades**. Además, el mundo no se acaba aquí. Hay muchos otros programas, ¡y algunos de ellos gratuitos! En este sentido, puede que al final Sibelius y Finale **sean demasiado caros.** Y puede que encuentres todo lo que necesitas en un software más básico y gratuito como MuseScore, ¿quién sabe?."
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/finale-vs-sibelius"
+      "returnTo": "/finale-vs-sibelius",
+      "reveal": true
     }
   ]
 }

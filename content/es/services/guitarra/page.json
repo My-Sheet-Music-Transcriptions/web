@@ -23,11 +23,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "guitarra.png"
-        },
-        {
-          "body": "Podemos transcribir tus melodías y riffs favoritos de guitarra, versiones acústicas, covers…\n\nNuestros guitarristas crearan partituras y tablaturas personalizadas para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nPodemos transcribir tus melodías y riffs favoritos de guitarra, versiones acústicas, covers…\n\nNuestros guitarristas crearan partituras y tablaturas personalizadas para ti.",
           "video": {
             "youtube": "OXgXJnl3Lzk",
             "title": "Transcripciones para guitarra",
@@ -37,16 +33,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "guitar-tab-sheet-1-alone.png"
+          "image": "guitar-tab-sheet-1-alone.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -87,13 +86,15 @@
           "image": "guitar-tab-sheet-5-remembering.png",
           "alt": "Guitar TAB & Sheet 5 (Remembering), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -102,7 +103,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -125,12 +127,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/guitarra"
+      "returnTo": "/guitarra",
+      "reveal": true
     }
   ]
 }

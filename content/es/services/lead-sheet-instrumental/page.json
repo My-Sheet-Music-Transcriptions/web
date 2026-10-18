@@ -23,11 +23,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "saxophone.png"
-        },
-        {
-          "body": "Transcribimos tus **lead sheets instrumentales** favoritas para cualquier instrumento. Recuerda viejos himnos, celebra momentos especiales y sueña a lo grande con algunas de las melodías más emblemáticas.\n\nTanto si tocas **la trompeta, el saxofón, el violín**… ¡podemos hacer que cualquier canción suene bien en tu instrumento!\n\nNuestros músicos profesionales transcribirán **partituras personalizadas para ti**. Dinos si necesitas una **transposición**, una **simplificación** o **cualquier otro ajuste para tu instrumento**.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nTranscribimos tus **lead sheets instrumentales** favoritas para cualquier instrumento. Recuerda viejos himnos, celebra momentos especiales y sueña a lo grande con algunas de las melodías más emblemáticas.\n\nTanto si tocas **la trompeta, el saxofón, el violín**… ¡podemos hacer que cualquier canción suene bien en tu instrumento!\n\nNuestros músicos profesionales transcribirán **partituras personalizadas para ti**. Dinos si necesitas una **transposición**, una **simplificación** o **cualquier otro ajuste para tu instrumento**.",
           "video": {
             "youtube": "ubhw_DB1Wog",
             "title": "Lead Sheet Instrumental",
@@ -37,16 +33,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "lead-sheet-1-berkshire-blues.png"
+          "image": "lead-sheet-1-berkshire-blues.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -72,13 +71,15 @@
           "image": "lead-sheet-3-l-line.png",
           "alt": "Lead Sheet 3 (L-line), C instruments, primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -87,7 +88,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -110,12 +112,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/lead-sheet-instrumental"
+      "returnTo": "/lead-sheet-instrumental",
+      "reveal": true
     }
   ]
 }

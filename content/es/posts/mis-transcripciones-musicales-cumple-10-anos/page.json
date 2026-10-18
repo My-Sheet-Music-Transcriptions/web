@@ -40,22 +40,26 @@
         {
           "body": "## 41,000 piezas transcritas también pueden ser…\n\n**246,000 páginas de partituras**,\n\nalrededor de 73,800 metros de papel, ¡equivalente a **7 veces la altura del Everest**!\n\n⛰️\n\n**205,000 minutos de música**,\n\ncomo escuchar la *Sinfonía núm. 5* de Beethoven **6,000 veces seguidas**.\n\n💿\n\nY **58 millones de notas (58,000,000)**\n\nmás o menos la **población total de Italia**, transcrita en notas!\n\n👥\n\nHa sido un largo viaje, ¡y también muy inspirador! Celebrando nuestro 10º aniversario, de parte de todo el equipo de [**Mis Transcripciones Musicales**](/), queremos agradecer a todos los que habéis confiado en nosotros. Gracias por formar parte de nuestra historia.\n\n## Gracias por compartir este viaje con nosotros.\n\n🥂"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/mis-transcripciones-musicales-cumple-10-anos"
+      "returnTo": "/mis-transcripciones-musicales-cumple-10-anos",
+      "reveal": true
     }
   ]
 }

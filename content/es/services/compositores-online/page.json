@@ -23,11 +23,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "arreglos.png"
-        },
-        {
-          "body": "Componemos música para ti: desde canciones pop, hasta música clásica. Podemos componer piezas o canciones para cualquier instrumento o conjunto de instrumentos que necesites.\n\nNuestros compositores y arreglistas crearán una partitura personalizada para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nComponemos música para ti: desde canciones pop, hasta música clásica. Podemos componer piezas o canciones para cualquier instrumento o conjunto de instrumentos que necesites.\n\nNuestros compositores y arreglistas crearán una partitura personalizada para ti.",
           "video": {
             "youtube": "d-Ktx632YKQ",
             "title": "Compositores de música online",
@@ -37,16 +33,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "piano-vocal-1-tears-never-dry.png"
+          "image": "piano-vocal-1-tears-never-dry.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -72,13 +71,15 @@
           "image": "vocal-lead-sheet-2-im-tired.png",
           "alt": "Vocal lead sheet 2 (I'm Tired), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -87,7 +88,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -110,12 +112,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/compositores-online"
+      "returnTo": "/compositores-online",
+      "reveal": true
     }
   ]
 }

@@ -24,11 +24,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "jazz.png"
-        },
-        {
-          "body": "Podemos transcribir tus solos de jazz para piano por ti. Podrás tocar en casa ese gran solo de Thelonious Monk, Ahmad Jamal, o McCoy Tyner. Nuestros transcriptores profesionales crearán una partitura personalizada para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nPodemos transcribir tus solos de jazz para piano por ti. Podrás tocar en casa ese gran solo de Thelonious Monk, Ahmad Jamal, o McCoy Tyner. Nuestros transcriptores profesionales crearán una partitura personalizada para ti.",
           "video": {
             "youtube": "lwrVGYxj0no",
             "title": "Transcripciones de jazz para piano",
@@ -38,16 +34,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "jazz-piano-1-terrys-tune.png"
+          "image": "jazz-piano-1-terrys-tune.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -93,13 +92,15 @@
           "image": "jazz-piano-6-the-sun-is-in-your-eyes.png",
           "alt": "Piano Jazz Solo 6 (The Sun is in Your Eyes), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -108,7 +109,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -131,12 +133,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/jazz-piano-solo"
+      "returnTo": "/jazz-piano-solo",
+      "reveal": true
     }
   ]
 }

@@ -44,22 +44,26 @@
         {
           "body": "## Reflexión final\n\nLa música jazz puede parecer compleja. ¡Igual que sus partituras! Pero nada más lejos de la realidad. Deja que los expertos de [**Mis Transcripciones Musicales**](/) te guíen en tus transcripciones de jazz y haz tu camino musical mucho más sencillo.\n\nTambién puedes consultar nuestro Glosario de Jazz (en inglés) para más información. Y si tienes dudas, [**no dudes en escribirnos por correo electrónico**](mailto:info@mistranscripcionesmusicales.com)."
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/partituras-de-jazz-mas-utiles"
+      "returnTo": "/partituras-de-jazz-mas-utiles",
+      "reveal": true
     }
   ]
 }

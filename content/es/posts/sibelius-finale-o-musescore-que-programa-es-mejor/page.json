@@ -50,22 +50,26 @@
         {
           "body": "Además, MuseScore tiene, con diferencia, **la interfaz más intuitiva de los tres programas**. Está basada completamente en la idea de **«lo que ves es lo que tienes»**, y es muy fácil para el usuario añadir, mover y eliminar elementos de la partitura.\n\nPor último, pero no menos importante, MuseScore **importa los archivos XML a la perfección**. En el campo de la notación musical digital, los XML son los archivos más comunes, pues pueden contener toda la información de la partitura. Finale y Sibelius tienden a interpretarlos de forma incorrecta, creando **partituras de difícil edición** y con **plantillas bastante pobres**.\n\n## Conclusiones\n\nEstá claro: realmente creemos que **MuseScore puede mantenerse en lo más alto** en los próximos años. La única duda que nos queda es sobre sus precios. **¿Será siempre un programa gratuito?** ¿Podrá su última actualización empujar a los competidores a ofrecer más avances? ¿Acaso tendrán que bajar los precios?\n\n¿Cómo puede un programa tan puntero (y competidor con los grandes de la industria) ser gratuito todavía? No sabemos cuánto durará. Mientras tanto, **¡MuseScore tiene todo lo que necesitas completamente gratis!**\n\nSi toda esta información aún te da dolor de cabeza, no dudes en contactar con **[Mis Transcripciones Musicales](/)** para una **atención personalizada** con respecto a tus partituras. Podemos realizar transcripciones, arreglos y digitalizaciones a tu medida.\n\nPuedes visitar **[nuestra página web](/)**, llamar por teléfono o escribirnos un e-mail. Nuestro equipo de expertos de Atención al Cliente te atenderá en todo lo que necesites."
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos"
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
     },
     {
       "type": "PostList",
       "title": "Entradas relacionadas",
       "limit": 3,
-      "linkLabel": "Leer más"
+      "linkLabel": "Leer más",
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/sibelius-finale-o-musescore-que-programa-es-mejor"
+      "returnTo": "/sibelius-finale-o-musescore-que-programa-es-mejor",
+      "reveal": true
     }
   ]
 }

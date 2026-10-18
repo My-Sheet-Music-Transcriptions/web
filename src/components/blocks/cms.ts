@@ -512,7 +512,7 @@ export const cmsBlocks = {
     label: 'Steps',
     summary: '{{fields.title}}',
     words: 'mediaLabels',
-    pictureWidths: '240;480',
+    pictureWidths: '240;480;1080',
     fields: {
       ...heading,
       variant: select('Style', ['timeline', 'bubbles', 'columns'], {

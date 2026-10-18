@@ -24,11 +24,7 @@
       "items": [
         {
           "title": "Envíanos la música",
-          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
-          "image": "horns.png"
-        },
-        {
-          "body": "**Transcribimos tus canciones favoritas para cualquier instrumento de viento.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de flauta, clarinete, saxofón, trompeta, tuba o trombón** estarán encantados de crear una partitura personalizada para ti.",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\n**Transcribimos tus canciones favoritas para cualquier instrumento de viento.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de flauta, clarinete, saxofón, trompeta, tuba o trombón** estarán encantados de crear una partitura personalizada para ti.",
           "video": {
             "youtube": "tB3ftFUgLJ8",
             "title": "Transcripciones para instrumentos de viento",
@@ -38,16 +34,19 @@
         {
           "title": "Recibe tu partitura",
           "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
-          "image": "horns-1-please-come-home-for-christmas.png"
+          "image": "horns-1-please-come-home-for-christmas.png",
+          "imageWidth": 540
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "Los transcriptores de partituras online mejor valorados",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -93,13 +92,15 @@
           "image": "woodchoppers-ball.png",
           "alt": "Horns 5 (Woodchopper's Ball), primera página de la partitura"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "¿Qué se incluye?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -108,7 +109,8 @@
       "cta": {
         "label": "Pide tu partitura",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -131,12 +133,14 @@
       "cta": {
         "label": "Lee todas nuestras FAQs",
         "href": "/preguntas-frecuentes"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/instrumentos-de-viento"
+      "returnTo": "/instrumentos-de-viento",
+      "reveal": true
     }
   ]
 }

@@ -40,14 +40,16 @@
           "body": "We send you the score in a printable format",
           "image": "guitar-tab-sheet-1-alone.png"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "RatingBanner",
       "title": "#1 Musician’s choice guitar tab transcription service online",
       "counter": "counter",
       "sources": "platforms",
-      "image": "pianoBand"
+      "image": "pianoBand",
+      "reveal": true
     },
     {
       "type": "Samples",
@@ -92,7 +94,8 @@
           "image": "guitar-tab-sheet-5-lonely-eyes.png",
           "alt": "Guitar TAB & Sheet 5 (Lonely Eyes), first page of the score"
         }
-      ]
+      ],
+      "reveal": true
     },
     {
       "type": "Section",
@@ -104,13 +107,15 @@
       "cta": {
         "label": "See our guitar glossary",
         "href": "/glossary-guitar-tabs"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "CardGrid",
       "title": "What's included?",
       "items": "included",
-      "image": "studioBand"
+      "image": "studioBand",
+      "reveal": true
     },
     {
       "type": "PricingCards",
@@ -119,7 +124,8 @@
       "cta": {
         "label": "Request your sheet music",
         "href": "#contact"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "FaqList",
@@ -213,12 +219,14 @@
       "cta": {
         "label": "Read all our FAQs",
         "href": "/frequent-asked-questions"
-      }
+      },
+      "reveal": true
     },
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "returnTo": "/guitar-tab"
+      "returnTo": "/guitar-tab",
+      "reveal": true
     }
   ]
 }

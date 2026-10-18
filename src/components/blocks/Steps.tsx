@@ -58,9 +58,11 @@ export function Steps({
         ) : null}
         <ol
           className={cn(
-            gridCols(items.length === 4 || items.length > 6 ? 4 : 3, {
-              tablet: items.length === 4 || items.length > 6 ? 2 : 3,
-            }),
+            items.length === 2
+              ? gridCols(2)
+              : gridCols(items.length === 4 || items.length > 6 ? 4 : 3, {
+                  tablet: items.length === 4 || items.length > 6 ? 2 : 3,
+                }),
             'gap-[30px] md:gap-[60px]',
           )}
         >
