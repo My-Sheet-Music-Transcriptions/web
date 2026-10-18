@@ -195,7 +195,7 @@ interface DecapPreviewProps {
 }
 type Globals = Decap & {
   CMS: Decap['CMS'] & {
-    registerPreviewStyle(url: string): void
+    registerPreviewStyle(fileOrCss: string, opts?: { raw: boolean }): void
     registerPreviewTemplate(name: string, component: unknown): void
   }
 }
@@ -207,6 +207,13 @@ if (decap.CMS && decap.createClass && decap.h) {
   registerWidgets(decap as Globals)
   CMS.registerPreviewStyle(
     new URL('preview.css', (document.currentScript as HTMLScriptElement).src).href,
+  )
+  // Revealed blocks never come in here: this bundle runs in the admin's window and draws into the preview's iframe,
+  // and Motion's useInView refuses an element of another window (`instanceof EventTarget`), so it never observes the
+  // block and leaves it hidden. Show their pieces as they are, as theme.css does for reduced motion and print.
+  CMS.registerPreviewStyle(
+    '[data-reveal] { opacity: 1 !important; transform: none !important; stroke-dasharray: none !important; }',
+    { raw: true },
   )
   // One per collection (the language is the entry's `language` field) and per Site entry (a file collection's
   // template goes by its file's name, which says the language).
