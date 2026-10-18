@@ -14,49 +14,5 @@
     "Tutoriales"
   ],
   "author": "Marina Junquera",
-  "blocks": [
-    {
-      "type": "PageHeader",
-      "variant": "cover",
-      "title": "Instrumentos transpositores: nota escrita y nota real",
-      "date": "2024-09-16",
-      "image": "concertpitch-vs-playingpitch.jpg"
-    },
-    {
-      "type": "Article",
-      "label": "Instrumentos transpositores: nota escrita y nota real",
-      "items": [
-        {
-          "body": "## Instrumentos transpositores: nota escrita y nota real\n\n¿Alguna vez te has dado cuenta de que algunos instrumentos, cuando leen y tocan un Do, **la nota no cuadra con el Do del piano**? En los instrumentos transpositores, a veces es difícil saber cuál es la nota escrita y cuál la nota real. Por ello, los expertos de [**Mis Transcripciones Musicales**](/) hoy vamos a **desvelar este misterio**.\n\n## ¿Por dónde empiezo…?\n\nLo primero de todo, debes entender lo que es un instrumento transpositor. La explicación rápida es que son instrumentos en los que **suena una nota diferente de la que el intérprete está tocando**. El clarinete en Sib es de los más populares. Si tocas un Do, realmente **sonará un Sib**.\n\n## ¡Entendido! ¿Y qué más?\n\nTambién es necesario que distingas bien las notas escritas de las notas que suenan. La música escrita para instrumentos transpositores **se escribe en una tonalidad diferente** a los instrumentos afinados en Do. Por ejemplo, si un clarinete en Sib está tocando en Do mayor, los instrumentos no transpositores deberán tocar en Re mayor, para que el sonido sea el mismo.",
-          "image": "concert-pitch-2.png",
-          "alt": "¡Entendido! ¿Y qué más?",
-          "imageWidth": 600
-        },
-        {
-          "body": "## ¿Por qué todo este lío?\n\nSí que es verdad que el tema de los instrumentos transpositores es complejo. Sin embargo, el sistema está hecho así precisamente para facilitar la vida de los intérpretes. Pondremos como ejemplo la familia del saxofón.\n\nSi [**los diferentes saxofones**](https://www.youtube.com/@MyJazzSheetMusicTranscriptions) no fueran transpositores, la digitación de cada uno de ellos sería distinta. Los saxofonistas se volverían locos al tener que cambiar de instrumento, y no sería para nada práctico. De esta manera, **un mismo músico puede tocar toda la familia con la misma digitación**, ¡y los instrumentos transpositores harán el resto del trabajo!\n\nPor ello, cuando estés tocando un instrumento transpositor, asegúrate de que [**tu partitura refleje la nota escrita, y no la nota real**](/). Si no, sonará completamente fuera de tono, y a tus compañeros de grupo no les hará gracia.\n\n## Ahora todo tiene sentido, ¡gracias!\n\nEncantados de ayudar siempre. 😀",
-          "image": "concertpitch-vs-playingpitch.jpg",
-          "alt": "Ahora todo tiene sentido, ¡gracias!"
-        }
-      ],
-      "reveal": true
-    },
-    {
-      "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos",
-      "reveal": true
-    },
-    {
-      "type": "PostList",
-      "title": "Entradas relacionadas",
-      "limit": 3,
-      "linkLabel": "Leer más",
-      "reveal": true
-    },
-    {
-      "type": "ContactSection",
-      "form": "quoteForm",
-      "returnTo": "/instrumentos-transpositores-nota-escrita-y-nota-real",
-      "reveal": true
-    }
-  ]
+  "body": "## Instrumentos transpositores: nota escrita y nota real\n\n¿Alguna vez te has dado cuenta de que algunos instrumentos, cuando leen y tocan un Do, **la nota no cuadra con el Do del piano**? En los instrumentos transpositores, a veces es difícil saber cuál es la nota escrita y cuál la nota real. Por ello, los expertos de [**Mis Transcripciones Musicales**](/) hoy vamos a **desvelar este misterio**.\n\n## ¿Por dónde empiezo…?\n\nLo primero de todo, debes entender lo que es un instrumento transpositor. La explicación rápida es que son instrumentos en los que **suena una nota diferente de la que el intérprete está tocando**. El clarinete en Sib es de los más populares. Si tocas un Do, realmente **sonará un Sib**.\n\n## ¡Entendido! ¿Y qué más?\n\nTambién es necesario que distingas bien las notas escritas de las notas que suenan. La música escrita para instrumentos transpositores **se escribe en una tonalidad diferente** a los instrumentos afinados en Do. Por ejemplo, si un clarinete en Sib está tocando en Do mayor, los instrumentos no transpositores deberán tocar en Re mayor, para que el sonido sea el mismo.\n\n![¡Entendido! ¿Y qué más?](concert-pitch-2.png){width=600}\n\n## ¿Por qué todo este lío?\n\nSí que es verdad que el tema de los instrumentos transpositores es complejo. Sin embargo, el sistema está hecho así precisamente para facilitar la vida de los intérpretes. Pondremos como ejemplo la familia del saxofón.\n\nSi [**los diferentes saxofones**](https://www.youtube.com/@MyJazzSheetMusicTranscriptions) no fueran transpositores, la digitación de cada uno de ellos sería distinta. Los saxofonistas se volverían locos al tener que cambiar de instrumento, y no sería para nada práctico. De esta manera, **un mismo músico puede tocar toda la familia con la misma digitación**, ¡y los instrumentos transpositores harán el resto del trabajo!\n\nPor ello, cuando estés tocando un instrumento transpositor, asegúrate de que [**tu partitura refleje la nota escrita, y no la nota real**](/). Si no, sonará completamente fuera de tono, y a tus compañeros de grupo no les hará gracia.\n\n## Ahora todo tiene sentido, ¡gracias!\n\nEncantados de ayudar siempre. 😀\n\n![Ahora todo tiene sentido, ¡gracias!](concertpitch-vs-playingpitch.jpg)"
 }

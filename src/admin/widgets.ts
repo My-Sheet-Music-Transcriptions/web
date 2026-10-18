@@ -1,5 +1,13 @@
 import { isPictureName, isSoundName } from '~/content/cms-fields'
 import { type LinkTargets, linkProblem, markdownLinks, pathOf } from '~/content/links'
+import {
+  audioLine,
+  POST_AUDIO,
+  POST_PICTURE,
+  POST_VIDEO,
+  pictureLine,
+  videoLine,
+} from '~/content/post-template'
 import { CMS_LOCALES } from './locales'
 
 /**
@@ -15,6 +23,8 @@ import { CMS_LOCALES } from './locales'
  *   blocks            Decap's list of blocks; while a page has none, it offers to start from another page of the same
  *                     kind and language (a starter: its blocks and words, without its pictures, recordings and
  *                     return address, which belong to that page's folder).
+ * And the boxes of a blog post's rich text editor (`CMS.registerEditorComponent`, src/content/post-template.ts): a
+ * picture, a YouTube video and a recording between the paragraphs.
  * Pages and their titles come from `__CMS_PAGES__`, written into the bundle by vite.admin.config.ts.
  * Decap renders widgets with its own React: they are built with its `createClass` and `h` globals.
  */
@@ -43,6 +53,7 @@ interface Widget<S = object> {
 export interface Decap {
   CMS: {
     registerWidget(name: string, control: unknown, preview?: unknown): void
+    registerEditorComponent(definition: Record<string, unknown>): void
     getWidget(name: string): { control: unknown; preview?: unknown }
   }
   createClass(spec: Record<string, unknown>): unknown
@@ -498,7 +509,74 @@ function blocks({ CMS, createClass, h }: Decap) {
   })
 }
 
+// --- The post body's editor components --------------------------------------------------------------------------
+
+/**
+ * The boxes of the post body's rich text editor (src/content/post-template.ts `postBody`): each is a paragraph of its
+ * own in the stored text, in the syntax `postParts` reads. The picture takes the id of Decap's own image box, which
+ * it replaces: the editor reads every registered box wherever it is offered, and Decap's would claim our pictures
+ * first and drop their width. (Decap saves lists with "* ", which light markdown reads too.)
+ */
+function registerPostComponents({ CMS }: Decap) {
+  CMS.registerEditorComponent({
+    id: 'image',
+    label: 'Picture',
+    fields: [
+      { name: 'image', label: 'Picture', widget: 'image', choose_url: false },
+      { name: 'alt', label: 'Picture description (alt text)', widget: 'string' },
+      { name: 'caption', label: 'Line under the picture', widget: 'string', required: false },
+      {
+        name: 'width',
+        label: 'Width in px',
+        widget: 'number',
+        value_type: 'int',
+        required: false,
+        hint: 'Only for a picture smaller than the column (an icon, a small diagram).',
+      },
+    ],
+    pattern: POST_PICTURE,
+    fromBlock: (m: RegExpMatchArray) => ({
+      alt: m[1],
+      image: m[2],
+      caption: m[3],
+      width: m[4] ? Number(m[4]) : undefined,
+    }),
+    toBlock: pictureLine,
+    toPreview: (p: { alt?: string; image?: string }) => `[${p.image ?? ''}] ${p.alt ?? ''}`,
+  })
+  CMS.registerEditorComponent({
+    id: 'post-video',
+    label: 'YouTube video',
+    fields: [
+      {
+        name: 'youtube',
+        label: 'Video id',
+        widget: 'string',
+        hint: 'What follows v= in the video’s address: youtube.com/watch?v=Aa30is9HYFA → Aa30is9HYFA.',
+      },
+      { name: 'title', label: 'Video title', widget: 'string' },
+    ],
+    pattern: POST_VIDEO,
+    fromBlock: (m: RegExpMatchArray) => ({ youtube: m[1], title: m[2] }),
+    toBlock: videoLine,
+    toPreview: (v: { title?: string }) => `▶ ${v.title ?? ''}`,
+  })
+  CMS.registerEditorComponent({
+    id: 'post-audio',
+    label: 'Recording',
+    fields: [
+      { name: 'src', label: 'Recording (mp3)', widget: 'file', choose_url: false },
+      { name: 'title', label: 'What it is', widget: 'string' },
+    ],
+    pattern: POST_AUDIO,
+    fromBlock: (m: RegExpMatchArray) => ({ src: m[1], title: m[2] }),
+    toBlock: audioLine,
+    toPreview: (a: { title?: string }) => `♪ ${a.title ?? ''}`,
+  })
+}
+
 export function registerWidgets(decap: Decap) {
+  registerPostComponents(decap)
   decap.CMS.registerWidget('translation-key', translationKey(decap))
   decap.CMS.registerWidget('link', link(decap))
   decap.CMS.registerWidget('blocks', blocks(decap), decap.CMS.getWidget('list').preview)

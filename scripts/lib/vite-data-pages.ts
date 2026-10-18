@@ -91,7 +91,7 @@ export function dataPages(): Plugin {
         (b) => isCmsBlock(b.type) && (cmsBlocks[b.type] as { feed?: string }).feed === 'posts',
       )
       const data = JSON.stringify(resolved, null, 2).replace(
-        /"__((?:picture|file)\d+|data\d+\.\w+)__"/g,
+        /"__((?:picture|file)\d+|data\d+\.\w+|words\.\w+\.\w+)__"/g,
         '$1',
       )
       return [

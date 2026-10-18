@@ -1,6 +1,7 @@
 import { cmsBlocks, isCmsBlock } from '../components/blocks/cms.ts'
 import type { AnyCmsBlock } from './cms-fields.ts'
 import { checkFields, decodeFields, type Resolve } from './cms-fields.ts'
+import { postBlocks, postBody } from './post-template.ts'
 
 /**
  * A data page: the second kind of page folder, edited in the CMS (/admin, Decap) instead of in code. Where a
@@ -9,6 +10,8 @@ import { checkFields, decodeFields, type Resolve } from './cms-fields.ts'
  * Its pictures sit in the folder as usual and are named by file name ("image": "office-8.jpg"). It opens with
  * `language` and `collection`, the two parts of its folder (`content/<language>/<collection>/<slug>/page.json`): the
  * CMS lists every language's pages in one collection and reads them to filter, group and file a new page.
+ * A blog post (`collection: "posts"`) has a fixed layout instead of blocks: its text and pictures are one `body`
+ * (rich text) and src/content/post-template.ts lays it out, so it splits into blocks like any other data page.
  *
  * Plain data and pure functions: shared by the Vite plugin that turns page.json into a page component
  * (scripts/lib/vite-data-pages.ts), the content loaders (src/content/index.ts, scripts/lib/content-fs.ts), the
@@ -55,9 +58,12 @@ export function splitDataPage(
 ): { meta: unknown; blocks: DataBlock[] } {
   if (!data || typeof data !== 'object' || Array.isArray(data))
     throw new Error(`${file}: a page.json is one object (the meta fields and "blocks")`)
-  const { blocks, language, collection, ...meta } = dropEmpty(data) as Record<string, unknown>
-  if (!Array.isArray(blocks) || blocks.some((b) => typeof b?.type !== 'string'))
-    throw new Error(`${file}: "blocks" must be a list of { "type": "<Block>", … }`)
+  const {
+    blocks: stored,
+    language,
+    collection,
+    ...rest
+  } = dropEmpty(data) as Record<string, unknown>
   const folder = /^(\w+)\/(\w+)\/[^/]+\/page\.json$/.exec(file)
   if (folder) {
     const [, loc, coll] = folder
@@ -66,6 +72,26 @@ export function splitDataPage(
         `${file}: must open with "language": "${loc}" and "collection": "${coll}", the parts of its folder (found ${JSON.stringify(language)} and ${JSON.stringify(collection)})`,
       )
   }
+  let meta = rest
+  let blocks = stored
+  if (collection === 'posts') {
+    const { body, ...postMeta } = rest
+    if (check) {
+      const problems = [
+        ...(stored === undefined
+          ? []
+          : [
+              '"blocks": a post has a fixed layout (src/content/post-template.ts): its text and pictures go in "body"',
+            ]),
+        ...checkFields({ body: postBody }, { body }, 'post'),
+      ]
+      if (problems.length) throw new Error(`${file}:\n  ${problems.join('\n  ')}`)
+    }
+    meta = postMeta
+    blocks = postBlocks(postMeta, body, /([^/]+)\/page\.json$/.exec(file)?.[1])
+  }
+  if (!Array.isArray(blocks) || blocks.some((b) => typeof b?.type !== 'string'))
+    throw new Error(`${file}: "blocks" must be a list of { "type": "<Block>", … }`)
   if (check) {
     const problems = (blocks as DataBlock[]).flatMap(({ type, ...props }, i) =>
       isCmsBlock(type)
@@ -90,4 +116,20 @@ export function resolveBlock({ type, ...props }: DataBlock, resolve: Resolve): D
   if (!isCmsBlock(type)) return { type, ...props }
   const entry = cmsBlocks[type] as AnyCmsBlock
   return { type, ...decodeFields(entry.fields, props, resolve), ...entry.props }
+}
+
+const WORD_REF = /^__words\.(\w+)\.(\w+)__$/
+
+/**
+ * A block's props with the template's words (`__words.<labels>.<key>__`, src/content/post-template.ts) filled in from
+ * the locale's labels, as the CMS preview needs them; the Vite plugin imports them instead.
+ */
+export function fillWords(block: DataBlock, words: object): DataBlock {
+  const labels = words as Record<string, Record<string, string> | undefined>
+  return Object.fromEntries(
+    Object.entries(block).map(([k, v]) => {
+      const ref = typeof v === 'string' ? WORD_REF.exec(v) : null
+      return [k, ref ? (labels[ref[1] as string]?.[ref[2] as string] ?? v) : v]
+    }),
+  ) as DataBlock
 }

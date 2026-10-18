@@ -63,7 +63,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   any of it and carries a Decap reference. A folder is one
   kind or the other; the homepages (`Site` → `<Language> · Homepage` in the CMS), `careers`, `about-us`, the piano and guitar
   service pages (`Services`, with the service fields of `serviceFields` in `cms-meta.ts`) and every Spanish
-  page are data pages. Blocks with media words also get the locale's `videoPoster` (`data/brand.ts`). `ds:mockup` does not apply to data pages; to make one
+  page are data pages. A blog post (`posts/`, `Blog` in the CMS) has a fixed layout instead of blocks: its
+  `page.json` holds the post's fields and one `body`, written in Decap's rich text editor (light markdown, with
+  picture, YouTube and recording lines), and `src/content/post-template.ts` lays every post out the same way (cover
+  header, article, share buttons, related posts, request form; their words are `postLabels` in `labels.ts`). Blocks with media words also get the locale's `videoPoster` (`data/brand.ts`). `ds:mockup` does not apply to data pages; to make one
   hand-built, turn its blocks into JSX in an `index.tsx` + `meta.ts`.
 - `content/<locale>/data/*.ts` – the data pages pass to blocks (ratings, prices, services, reviews, FAQ groups), the
   words blocks show around their content (`labels.ts`: carousel and video controls, review lines; `forms.ts`: the

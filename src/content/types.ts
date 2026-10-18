@@ -59,6 +59,16 @@ export interface ShareLabels {
   email: string
 }
 
+/** The words of a blog post's fixed layout around its article (src/content/post-template.ts). */
+export interface PostLabels {
+  /** The heading of the share buttons: "Share this content with your friends" */
+  share: string
+  /** The heading of the latest other posts under it: "Related posts" */
+  related: string
+  /** The link words on each of their cards: "Read more" */
+  readMore: string
+}
+
 export interface ReviewLabels {
   /** "{rating} out of 5 stars" */
   stars: string

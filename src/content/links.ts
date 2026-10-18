@@ -50,7 +50,7 @@ export function linkProblem(href: string, to: LinkTargets): string | undefined {
 
 /** The hrefs of light markdown's links, `[words](href)`. */
 export const markdownLinks = (text: string): string[] =>
-  [...text.matchAll(/\[[^\]]*\]\(([^)\s]+)\)/g)].map((m) => m[1] as string)
+  [...text.matchAll(/(?<!!)\[[^\]]*\]\(([^)\s]+)\)/g)].map((m) => m[1] as string)
 
 /**
  * Every link of a stored page, with where it is (`blocks[2].cta.href`): the `href` fields and the markdown links of
