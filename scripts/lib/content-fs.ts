@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import fg from 'fast-glob'
 import { DATA_PAGE_FILE, splitDataPage } from '../../src/content/data-page.ts'
+import { type LinkTargets, linkProblem, linksIn } from '../../src/content/links.ts'
 import { menuPages, parseMenu } from '../../src/content/menu.ts'
 import { parseRedirects, type RedirectRule, redirectProblems } from '../../src/content/redirects.ts'
 import {
@@ -137,7 +138,62 @@ export function checkSlugs(all = readAllEntries()): string[] {
         problems.push(`${locale}: pages/home must have translationKey "home"`)
     }
   }
-  return [...problems, ...checkMenus(all), ...checkRedirects(all)]
+  return [...problems, ...checkMenus(all), ...checkRedirects(all), ...checkLinks(all)]
+}
+
+/**
+ * Where a language's links may lead (src/content/links.ts): its pages (not drafts), its redirects and its own domains;
+ * while its migration inventory (docs/migration/inventory/<locale>.json) still has pages to port, any path (it opens
+ * on the old site until it is ported).
+ */
+export function linkTargets(locale: Locale, all = readAllEntries()): LinkTargets {
+  const pages = new Set(all.filter((e) => e.locale === locale && !e.meta.draft).map((e) => e.path))
+  const inventory = `docs/migration/inventory/${locale}.json`
+  const rows: { path: string; action: string }[] = fs.existsSync(inventory)
+    ? JSON.parse(fs.readFileSync(inventory, 'utf8'))
+    : []
+  let rules: RedirectRule[] = []
+  try {
+    rules = redirectsFor(locale)
+  } catch {}
+  const site = sites[locale]
+  return {
+    pages,
+    migrating: rows.some(
+      (r) => !['redirect', 'drop', 'done'].includes(r.action) && !pages.has(r.path),
+    ),
+    moved: new Map(rules.filter((r) => !r.from.endsWith('*')).map((r) => [r.from, r.to])),
+    origins: [site.domain, ...site.aliases],
+  }
+}
+
+/**
+ * Every link of a data page (buttons, cards, the markdown of its texts) and of a language's menu leads somewhere:
+ * a page of the language, another site, mailto/tel or an anchor (`linkProblem`). Hand-built pages are type-checked
+ * instead, and the SEO suite follows the links of the built site.
+ */
+function checkLinks(all: FsEntry[]): string[] {
+  const problems: string[] = []
+  for (const locale of LOCALES) {
+    const mine = all.filter((e) => e.locale === locale)
+    const menu = `${CONTENT_DIR}/${locale}/data/menu.json`
+    if (!mine.some((e) => e.kind === 'data') && !fs.existsSync(menu)) continue
+    const to = linkTargets(locale, all)
+    const sources: { file: string; value: unknown }[] = mine
+      .filter((e) => e.kind === 'data')
+      .map((e) => ({
+        file: `${CONTENT_DIR}/${e.page}`,
+        value: JSON.parse(fs.readFileSync(path.join(ROOT, e.page), 'utf8')),
+      }))
+    if (fs.existsSync(menu))
+      sources.push({ file: menu, value: JSON.parse(fs.readFileSync(menu, 'utf8')) })
+    for (const { file, value } of sources)
+      for (const { href, at } of linksIn(value)) {
+        const problem = linkProblem(href, to)
+        if (problem) problems.push(`${file} ${at}: ${problem}`)
+      }
+  }
+  return problems
 }
 
 /** A language's redirects (content/<locale>/data/redirects.json, src/content/redirects.ts), or none. */

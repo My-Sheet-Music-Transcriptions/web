@@ -29,7 +29,7 @@ export const metaFields = {
   description: prose('Description', {
     required: true,
     hint: 'The line Google shows under the title (50–160 characters).',
-    decap: { pattern: ['^[\\s\\S]{50,160}$', '50 to 160 characters'] },
+    decap: { widget: 'text', pattern: ['^[\\s\\S]{50,160}$', '50 to 160 characters'] },
   }),
   translationKey: line('Translation key', {
     required: true,
@@ -107,7 +107,7 @@ export const postFields = {
   excerpt: prose('Summary on the blog', {
     required: true,
     hint: 'A sentence or two on the post’s card (20–300 characters).',
-    decap: { pattern: ['^[\\s\\S]{20,300}$', '20 to 300 characters'] },
+    decap: { widget: 'text', pattern: ['^[\\s\\S]{20,300}$', '20 to 300 characters'] },
   }),
   cover: group(
     'Cover picture',

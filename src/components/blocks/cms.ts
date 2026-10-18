@@ -16,6 +16,7 @@ import {
   faqGroups,
   group,
   line,
+  link,
   list,
   listOf,
   movie,
@@ -95,9 +96,9 @@ const button = (label = 'Button', hint?: string) =>
     label,
     {
       label: line('Label', { required: true }),
-      href: line('Link', {
+      href: link('Link', {
         required: true,
-        hint: 'A path like /gift-card, #section-id or mailto:…',
+        hint: 'Pick a page of this language, or write #section-id, https://… or mailto:…',
       }),
     },
     { hint: hint ?? 'Leave both empty for no button.' },
@@ -157,7 +158,7 @@ const card = {
   imageWidth: number('Picture width in px', { min: 40, max: 600 }),
   video: video,
   emphasis: line('Bold line under the text'),
-  href: line('Link', { hint: 'The title links there; with button words, a button does.' }),
+  href: link('Link', { hint: 'The title links there; with button words, a button does.' }),
   linkLabel: line('Button words'),
 }
 const sampleFields = {
@@ -180,7 +181,7 @@ const sampleFields = {
     note: line('Note under the price'),
   }),
   tone: select('Price header colour', ['teal', 'blue', 'navy']),
-  href: line('Link', { hint: 'Its page, as a button under the score.' }),
+  href: link('Link', { hint: 'Its page, as a button under the score.' }),
   linkLabel: line('Button words', { hint: '"Go to the piano page"' }),
 }
 const samples = <R extends boolean = false>(label: string, required?: R) =>
@@ -469,7 +470,7 @@ export const cmsBlocks = {
           }),
           name: line('Name under the picture'),
           caption: line('Second line under the name'),
-          href: line('Link'),
+          href: link('Link'),
         },
         { required: true, summary: '{{fields.name}} {{fields.alt}}' },
       ),

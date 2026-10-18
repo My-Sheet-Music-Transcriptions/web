@@ -201,7 +201,7 @@ function menuFields(locale: string) {
   const href = {
     name: 'href',
     label: 'Address',
-    widget: 'string',
+    widget: 'link',
     required: false,
     hint: 'Only when no page is picked: a page not on the new site yet (/pricing) or another site (https://…).',
   }

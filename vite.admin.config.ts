@@ -2,7 +2,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { mergeConfig, type Plugin } from 'vite'
 import { assetFileNames } from './scripts/lib/asset-names.ts'
+import { linkTargets, readAllEntries } from './scripts/lib/content-fs.ts'
 import { decapConfig } from './src/admin/config.ts'
+import { CMS_LOCALES } from './src/admin/locales.ts'
+import type { CmsLinkTargets } from './src/admin/widgets.ts'
 import designSystem from './vite.ds.config.ts'
 
 /**
@@ -12,6 +15,7 @@ import designSystem from './vite.ds.config.ts'
  *   index.html, emails/   from src/admin; logo.svg, the brand lockup (src/assets/images/brand)
  *   config.yml         Decap's configuration, from src/admin/config.ts (JSON, which YAML reads as it is)
  *   decap-cms.js (+ its chunks), netlify-identity-widget.js   copied from node_modules: nothing loads from a CDN
+ * and `__CMS_PAGES__` in preview.js: each language's pages (path and title) and link rule, for the link widgets.
  * Run by `pnpm build` between the site build and postbuild.
  */
 
@@ -20,6 +24,30 @@ const DECAP = path.dirname(fs.realpathSync('node_modules/decap-cms/dist/decap-cm
 const IDENTITY = fs.realpathSync(
   'node_modules/netlify-identity-widget/build/netlify-identity-widget.js',
 )
+
+function cmsPages(): Record<string, CmsLinkTargets> {
+  const all = readAllEntries()
+  return Object.fromEntries(
+    CMS_LOCALES.map(({ code }) => {
+      const t = linkTargets(code, all)
+      const pages = all
+        .filter((e) => e.locale === code && !e.meta.draft)
+        .map((e) => ({
+          path: e.path,
+          title: 'shortTitle' in e.meta && e.meta.shortTitle ? e.meta.shortTitle : e.meta.title,
+        }))
+      return [
+        code,
+        {
+          pages,
+          migrating: !!t.migrating,
+          moved: [...(t.moved ?? [])],
+          origins: [...(t.origins ?? [])],
+        },
+      ]
+    }),
+  )
+}
 
 function adminFiles(): Plugin {
   return {
@@ -42,6 +70,7 @@ function adminFiles(): Plugin {
 
 export default mergeConfig(designSystem, {
   plugins: [adminFiles()],
+  define: { __CMS_PAGES__: JSON.stringify(cmsPages()) },
   build: {
     outDir: OUT,
     emptyOutDir: true,

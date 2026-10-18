@@ -17,6 +17,7 @@ import type { FaqGroup, FaqItem } from './types.ts'
 type Kind =
   | 'string'
   | 'text'
+  | 'link'
   | 'number'
   | 'boolean'
   | 'select'
@@ -76,9 +77,18 @@ const make = <V, R extends boolean>(
 /** One line of text. */
 export const line = <R extends boolean = false>(label: string, o?: Opts<R>) =>
   make<string, R>('string', label, o)
-/** Several lines: light markdown (paragraphs, "- " lists, **bold**, [links](/path)). */
+/**
+ * Several lines: light markdown (paragraphs, "- " lists, **bold**, [links](/path)), edited in the CMS's `prose` widget
+ * (a link button that picks a page of the language; links checked as they are written).
+ */
 export const prose = <R extends boolean = false>(label: string, o?: Opts<R>) =>
   make<string, R>('text', label, o)
+/**
+ * Where a button or a card leads: a page of the language (`/precios`, `/#contact`), another site, mailto: or tel:
+ * (src/content/links.ts), edited in the CMS's `link` widget (the language's pages offered by title, checked as typed).
+ */
+export const link = <R extends boolean = false>(label: string, o?: Opts<R>) =>
+  make<string, R>('link', label, o)
 /** A whole number from `min` to `max` (a literal union type when the prop is one: `number<2 | 3>(…)`). */
 export const number = <V extends number = number, R extends boolean = false>(
   label: string,
@@ -253,7 +263,8 @@ export type AnyCmsBlock = Omit<CmsBlock, 'fields'> & { fields: Readonly<Record<s
 
 const WIDGETS: Record<Kind, string> = {
   string: 'string',
-  text: 'text',
+  text: 'prose',
+  link: 'link',
   number: 'number',
   boolean: 'boolean',
   select: 'select',
@@ -314,6 +325,7 @@ export function checkField(f: Field, value: unknown, at: string): string[] {
   switch (f.kind) {
     case 'string':
     case 'text':
+    case 'link':
       return typeof value === 'string' ? [] : [`${at}: expected text`]
     case 'boolean':
       return typeof value === 'boolean' ? [] : [`${at}: expected true or false`]

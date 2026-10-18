@@ -25,20 +25,27 @@ const PORTED = Object.fromEntries(
  *   router adds the /<locale> prefix, so hrefs here are always locale-free: "/pricing", "/#contact");
  * - internal path that is not ported yet → absolute link to the same path on the legacy site, so the
  *   preview stays fully navigable during the migration (and the SEO suite only sees real internal links);
+ * - an address on this site's own domain (`https://www.mistranscripcionesmusicales.com/precios`) → as its path;
  * - same-page anchors ("#x"), mailto/tel and external URLs → plain <a>.
+ * The build refuses data-page links that lead nowhere (src/content/links.ts).
  */
-export function SmartLink({ href, children, activeProps, activeOptions, ...rest }: SmartLinkProps) {
+export function SmartLink({
+  href: given,
+  children,
+  activeProps,
+  activeOptions,
+  ...rest
+}: SmartLinkProps) {
   const site = useSite()
+  const own = [site.domain, ...site.aliases].find((o) => given === o || given.startsWith(`${o}/`))
+  const href = own ? given.slice(own.length) || '/' : given
   const external =
     /^(https?:)?\/\//.test(href) || href.startsWith('mailto:') || href.startsWith('tel:')
   if (external) {
-    const sameSite = href.startsWith(site.domain)
     return (
       <a
         href={href}
-        rel={
-          sameSite || href.startsWith('mailto:') || href.startsWith('tel:') ? undefined : 'noopener'
-        }
+        rel={href.startsWith('mailto:') || href.startsWith('tel:') ? undefined : 'noopener'}
         {...rest}
       >
         {children}
