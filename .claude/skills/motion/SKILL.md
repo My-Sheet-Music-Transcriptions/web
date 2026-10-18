@@ -43,6 +43,7 @@ an ease or a distance:
 | `starsGroup`, `pop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. `pop` is also an icon popping in (`RevealItem preset="pop"`). |
 | `revealSide`, `drawDown` | A piece sliding in 16px from the left (a step's speech bubble, `preset="side"`), and a line drawing itself from its top over 0.4 s (the timeline, `preset="draw"`). |
 | `drawGroup`, `drawLine` | The staff lines behind Testimonials painting themselves, start to end, 0.12 s apart, over 1.8 s each (`pathLength` on `m.path`: only the dashes change, never the layout). |
+| `unfold` (theme.css) | A FaqList answer opening and closing: the native `<details>` content growing from 0 to its height (`::details-content`, `interpolate-size`) while the answer fades in and drops 8px, 0.3 s. CSS, no script; height because it follows the reader's click (no layout shift); only the fade where `::details-content` is missing. |
 | `entrance`, `parallax` (theme.css) | The PageHeader: its rating card rising 40px into place a beat after the page opens; the homepage's photos lagging behind their curve on scroll (see 4). |
 
 A new preset stays subtle:
