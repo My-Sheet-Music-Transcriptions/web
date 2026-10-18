@@ -44,4 +44,10 @@ describe('light markdown', () => {
       'Yes! See the page.\none\ntwo',
     )
   })
+  it('reads what the rich text editor saves: "* " lists and escaped characters', () => {
+    expect(html('* One\n* Two \\*not italics\\*')).toBe(
+      '<ul><li>One</li><li>Two *not italics*</li></ul>',
+    )
+    expect(plainMarkdown('Price \\*from\\* 10')).toBe('Price *from* 10')
+  })
 })

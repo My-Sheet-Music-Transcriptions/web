@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import { mediaLabels, reviewLabels, shareLabels } from '../../content/en/data/labels'
+import { mediaLabels, postLabels, reviewLabels, shareLabels } from '../../content/en/data/labels'
 import { decapConfig } from '../../src/admin/config'
 import { blocks } from '../../src/components/blocks'
 import { cmsBlocks } from '../../src/components/blocks/cms'
@@ -10,7 +10,8 @@ import type { TableProps } from '../../src/components/blocks/Table'
 import { BlockPage } from '../../src/content/BlockPage'
 import { type CmsBlock, line, prose, select } from '../../src/content/cms-fields'
 import { metaFields, postFields, serviceFields } from '../../src/content/cms-meta'
-import { resolveBlock, splitDataPage } from '../../src/content/data-page'
+import { fillWords, resolveBlock, splitDataPage } from '../../src/content/data-page'
+import { postParts } from '../../src/content/post-template'
 import { LOCALES } from '../../src/i18n/types'
 
 /** Data pages: the page.json format the CMS edits (src/content/data-page.ts) and its renderer. */
@@ -41,6 +42,65 @@ describe('splitDataPage', () => {
     expect(() => splitDataPage({ title: 'T', blocks: [] }, 'es/pages/x/page.json')).toThrow(
       /language/,
     )
+  })
+})
+
+describe('blog posts (a fixed layout, src/content/post-template.ts)', () => {
+  const post = {
+    language: 'es',
+    collection: 'posts',
+    title: 'Finale vs Sibelius',
+    date: '2022-09-15',
+    cover: { src: 'cover.jpg', alt: 'Cover' },
+    body: 'Intro **bold**.\n\n![A screen](screen.png "The menu"){width=300}\n\n## Next\n\nMore.\n\n{{youtube abc123 "A video"}}\n\n{{audio take.mp3 "A take"}}\n\nThe end.',
+  }
+  it('cuts the body into an article’s parts: text, then the picture, video or recording after it', () => {
+    expect(postParts(post.body)).toEqual([
+      {
+        body: 'Intro **bold**.',
+        image: 'screen.png',
+        alt: 'A screen',
+        caption: 'The menu',
+        imageWidth: 300,
+      },
+      { body: '## Next\n\nMore.', video: { youtube: 'abc123', title: 'A video' } },
+      { audio: { src: 'take.mp3', title: 'A take' } },
+      { body: 'The end.' },
+    ])
+  })
+  it('lays every post out the same way from its fields', () => {
+    const { meta, blocks } = splitDataPage(post, 'es/posts/finale-vs-sibelius/page.json')
+    expect(meta).toEqual({
+      title: 'Finale vs Sibelius',
+      date: '2022-09-15',
+      cover: { src: 'cover.jpg', alt: 'Cover' },
+    })
+    expect(blocks.map((b) => b.type)).toEqual([
+      'PageHeader',
+      'Article',
+      'ShareLinks',
+      'PostList',
+      'ContactSection',
+    ])
+    expect(blocks[0]).toMatchObject({
+      title: 'Finale vs Sibelius',
+      date: '2022-09-15',
+      image: 'cover.jpg',
+    })
+    expect(blocks[4]).toMatchObject({ form: 'quoteForm', returnTo: '/finale-vs-sibelius' })
+    const share = blocks[2] as (typeof blocks)[number]
+    expect(fillWords(share, { postLabels }).title).toBe(postLabels.share)
+  })
+  it('refuses blocks on a post, and a post without its text', () => {
+    expect(() => splitDataPage({ ...post, blocks: [] }, 'es/posts/x/page.json')).toThrow(
+      /fixed layout/,
+    )
+    expect(() => splitDataPage({ ...post, body: undefined }, 'es/posts/x/page.json')).toThrow(
+      /post\.body: required/,
+    )
+    expect(() =>
+      splitDataPage({ ...post, body: '![A](https://x.test/a.jpg)' }, 'es/posts/x/page.json'),
+    ).toThrow(/\(Article\)\.items\[0\]\.image: expected a picture/)
   })
 })
 
@@ -195,7 +255,7 @@ describe('Decap configuration', () => {
     folder?: string
     path?: string
     filter?: { field: string; value: string }
-    fields?: { name: string; default?: string }[]
+    fields?: { name: string; default?: string; widget?: string }[]
     files?: { name: string; file: string; fields: { name: string }[] }[]
   }
   const collections = decapConfig.collections as unknown as Collection[]
@@ -259,14 +319,24 @@ describe('Decap configuration', () => {
       for (const [name, fields] of c.fields
         ? [[c.name, c.fields] as const]
         : (c.files ?? []).map((f) => [f.name, f.fields] as const))
-        if (!name.startsWith('menu-') && !name.startsWith('redirects-'))
+        if (!name.startsWith('menu-') && !name.startsWith('redirects-') && name !== 'posts')
           expect(fields.map((f) => f.name)).toEqual([
             ...(c.fields ? ['language', 'collection'] : []),
             ...Object.keys(metaFields),
             ...(name === 'services' ? Object.keys(serviceFields) : []),
-            ...(name === 'posts' ? Object.keys(postFields) : []),
             'blocks',
           ])
+  })
+  it('opens a post with what every post needs, its text in a rich text editor, and no blocks', () => {
+    const post = collections.find((c) => c.name === 'posts')?.fields ?? []
+    const names = post.map((f) => f.name)
+    expect(names.slice(0, 6)).toEqual(['language', 'collection', 'title', 'date', 'cover', 'body'])
+    expect(names).toEqual(
+      expect.arrayContaining([...Object.keys(metaFields), ...Object.keys(postFields)]),
+    )
+    expect(names).toHaveLength(3 + Object.keys(metaFields).length + Object.keys(postFields).length)
+    expect(names).not.toContain('blocks')
+    expect(post.find((f) => f.name === 'body')?.widget).toBe('richtext')
   })
 })
 
@@ -291,7 +361,7 @@ describe('CMS fields are typed by the block’s props', () => {
 })
 
 describe('BlockPage', () => {
-  const words = { mediaLabels, reviewLabels, shareLabels }
+  const words = { mediaLabels, reviewLabels, shareLabels, postLabels }
   it('renders a resolved block, its body as light markdown', () => {
     const table = {
       type: 'Table',

@@ -1,4 +1,4 @@
-import type { MediaLabels, ReviewLabels, ShareLabels } from '~/content/types'
+import type { MediaLabels, PostLabels, ReviewLabels, ShareLabels } from '~/content/types'
 
 /**
  * The words blocks show around their content, for screen readers and small labels: pages pass them to the
@@ -27,4 +27,11 @@ export const shareLabels: ShareLabels = {
   twitter: 'Twitter',
   linkedin: 'LinkedIn',
   email: 'Email',
+}
+
+/** The words around every blog post's article (its fixed layout): the share buttons, the related posts. */
+export const postLabels: PostLabels = {
+  share: 'Share this content with your friends',
+  related: 'Related posts',
+  readMore: 'Read more',
 }

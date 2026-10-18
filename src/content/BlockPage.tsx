@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 import { blocks } from '~/components/blocks'
 import { cmsBlocks, isCmsBlock } from '~/components/blocks/cms'
 import type { PictureSource } from '~/components/primitives/Picture'
-import type { MediaLabels, PostCard, ReviewLabels, ShareLabels } from '~/content/types'
+import type { MediaLabels, PostCard, PostLabels, ReviewLabels, ShareLabels } from '~/content/types'
 import { lightMarkdown } from '~/lib/light-markdown'
 import type { AnyCmsBlock } from './cms-fields'
 import type { DataBlock } from './data-page'
@@ -12,6 +12,8 @@ export interface BlockWords {
   mediaLabels: MediaLabels
   reviewLabels: ReviewLabels
   shareLabels: ShareLabels
+  /** The words of a post's fixed layout (src/content/post-template.ts). */
+  postLabels: PostLabels
 }
 
 /** The locale's brand pictures (content/<locale>/data/brand.ts) the blocks take without a field for them. */

@@ -7,7 +7,7 @@ import { isCmsBlock } from '~/components/blocks/cms'
 import { MotionProvider } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
 import { type BlockBrand, BlockPage, type BlockWords } from '~/content/BlockPage'
-import { resolveBlock, splitDataPage } from '~/content/data-page'
+import { fillWords, resolveBlock, splitDataPage } from '~/content/data-page'
 import { menuToNav, parseMenu } from '~/content/menu'
 import { CMS_LOCALES } from './locales'
 import { type Decap, registerWidgets } from './widgets'
@@ -99,13 +99,17 @@ function render(el: Element, data: unknown, assetUrl: (file: string) => string, 
   }
   let node: React.ReactNode
   try {
-    const { blocks } = splitDataPage({ blocks: [], ...(data as object) }, 'the page being edited', {
-      check: false,
-    })
+    // A post has no blocks: its fixed layout (src/content/post-template.ts) makes them from its fields.
+    const post = (data as { collection?: unknown } | undefined)?.collection === 'posts'
+    const { blocks } = splitDataPage(
+      { ...(!post && { blocks: [] }), ...(data as object) },
+      'the page being edited',
+      { check: false },
+    )
     const resolved = blocks
       .filter((b) => isCmsBlock(b.type))
       .map((b) =>
-        resolveBlock(b, {
+        resolveBlock(fillWords(b, wordsFor(locale)), {
           picture: (file) => pictureOf(assetUrl(file), again),
           file: assetUrl,
           data: (file, name) => dataOf(locale, file)[name],

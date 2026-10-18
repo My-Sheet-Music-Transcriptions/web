@@ -14,52 +14,5 @@
     "Programas y apps"
   ],
   "author": "Marina Junquera",
-  "blocks": [
-    {
-      "type": "PageHeader",
-      "variant": "cover",
-      "title": "Cómo convertir partituras entre programas de notación musical",
-      "date": "2026-06-26",
-      "image": "dsc-3864.jpg"
-    },
-    {
-      "type": "Article",
-      "label": "Cómo convertir partituras entre programas de notación musical",
-      "items": [
-        {
-          "body": "## Tu guía para convertir tus partituras entre programas de notación musical\n\n¿Vas a cambiar de **software de notación musical**? ¿Estás colaborando con alguien que utiliza un programa diferente? ¿Necesitas entregar una partitura en un formato específico? En [**Mis Transcripciones Musicales**](/) estamos aquí para ayudarte. Veamos cómo mover partituras entre distintos programas de notación.\n\n**MusicXML** es el formato de archivo estándar utilizado para intercambiar notación musical entre diferentes programas de notación. Entre otras utilidades, MusicXML actúa como un lenguaje universal para transferir partituras de una plataforma a otra.\n\nAquí tienes una guía rápida para convertir tus partituras de un programa de notación a otro utilizando el formato **MusicXML**.\n\n## Paso 1: Abre tu partitura\n\nEl primer paso para convertir tus partituras entre programas de notación es muy sencillo. Simplemente abre la partitura en el programa donde fue creada: **Dorico, Finale, [Guitar Pro](https://www.guitar-pro.com/#ae902), MuseScore o [Sibelius](https://avid.8v4lqg.net/VmoKPJ)**.\n\nAsegúrate de guardar una copia de seguridad del proyecto original. Siempre es recomendable poder volver al archivo de origen cuando sea necesario.",
-          "image": "dsc-3911.jpg",
-          "alt": "Paso 1: Abre tu partitura",
-          "imageWidth": 380
-        },
-        {
-          "body": "## Paso 2: Exporta la partitura como MusicXML\n\nUna vez que tu partitura esté lista, localiza el menú **“Exportar”** o **“Guardar como”** en tu programa de notación. Normalmente se encuentra en la parte izquierda de la barra superior. Después, selecciona la opción MusicXML. Dependiendo del software, podrás exportar un archivo **.mxl** o **.musicxml**.\n\nTanto XML como MusicXML contienen información musical, pero, si puedes elegir, **MusicXML** es la opción más completa. MusicXML es un tipo específico de XML diseñado para la notación musical y, por lo general, puede abrirse en cualquier programa de notación.\n\nUna vez exportado, guarda el archivo en una ubicación fácil de encontrar en tu ordenador. Este archivo será el que utilizarás para transferir la partitura al nuevo software.\n\n## Paso 3: Importa el archivo MusicXML al nuevo programa\n\nAbre el nuevo **software de notación** que quieras utilizar y selecciona «Abrir», «Importar» o «Importar MusicXML» (la opción puede variar según el programa). Busca el archivo que exportaste anteriormente y selecciónalo en tu ordenador. Si la partitura es compleja, el proceso de importación de MusicXML puede tardar unos segundos.\n\nEl programa leerá los datos de notación y recreará automáticamente la partitura utilizando sus propias reglas de grabado y configuración. Por ello, es muy probable que tengas que editar y perfeccionar el archivo, aunque ya podrás guardarlo en el formato nativo del nuevo programa.\n\n## Paso 4: Revisa la partitura\n\n**MusicXML** es un formato muy fiable. Sin embargo, ninguna conversión es perfecta: los distintos programas de notación gestionan la maquetación y las funciones de grabado de formas diferentes. Después de importar el nuevo archivo, te recomendamos revisar cuidadosamente la partitura y realizar los ajustes necesarios: formato de página, espaciado, estilos de texto, posibles colisiones y elementos de notación especial.\n\n## En resumen\n\n- Abre tu partitura en el programa de notación donde fue creada.\n- Localiza el menú **«Exportar»** o **«Guardar como»** y selecciona la opción MusicXML.\n- En el nuevo programa de notación, selecciona «Abrir», «Importar» o «Importar MusicXML».\n- Revisa cuidadosamente la partitura y realiza los ajustes necesarios.",
-          "image": "dsc-3864.jpg",
-          "alt": "En resumen"
-        },
-        {
-          "body": "## Reflexiones finales\n\n**MusicXML** es una herramienta muy útil para convertir partituras entre diferentes programas. Si tu partitura no es demasiado compleja, el proceso suele ser tan sencillo como exportar, importar y realizar unos pequeños ajustes finales. Sin embargo, en partituras de gran tamaño, como las de grandes conjuntos, instrumentos con notación especial o obras con varios movimientos, el proceso puede resultar mucho más exigente.\n\nSi necesitas un resultado perfectamente pulido, no dudes en ponerte en contacto con un servicio profesional de **transcripción de partituras**, como [**Mis Transcripciones Musicales**](/). Nos aseguraremos de que tu partitura tenga un aspecto profesional y funcione exactamente como debe en su nuevo entorno de software."
-        }
-      ],
-      "reveal": true
-    },
-    {
-      "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos",
-      "reveal": true
-    },
-    {
-      "type": "PostList",
-      "title": "Entradas relacionadas",
-      "limit": 3,
-      "linkLabel": "Leer más",
-      "reveal": true
-    },
-    {
-      "type": "ContactSection",
-      "form": "quoteForm",
-      "returnTo": "/convertir-partituras-entre-programas-de-notacion",
-      "reveal": true
-    }
-  ]
+  "body": "## Tu guía para convertir tus partituras entre programas de notación musical\n\n¿Vas a cambiar de **software de notación musical**? ¿Estás colaborando con alguien que utiliza un programa diferente? ¿Necesitas entregar una partitura en un formato específico? En [**Mis Transcripciones Musicales**](/) estamos aquí para ayudarte. Veamos cómo mover partituras entre distintos programas de notación.\n\n**MusicXML** es el formato de archivo estándar utilizado para intercambiar notación musical entre diferentes programas de notación. Entre otras utilidades, MusicXML actúa como un lenguaje universal para transferir partituras de una plataforma a otra.\n\nAquí tienes una guía rápida para convertir tus partituras de un programa de notación a otro utilizando el formato **MusicXML**.\n\n## Paso 1: Abre tu partitura\n\nEl primer paso para convertir tus partituras entre programas de notación es muy sencillo. Simplemente abre la partitura en el programa donde fue creada: **Dorico, Finale, [Guitar Pro](https://www.guitar-pro.com/#ae902), MuseScore o [Sibelius](https://avid.8v4lqg.net/VmoKPJ)**.\n\nAsegúrate de guardar una copia de seguridad del proyecto original. Siempre es recomendable poder volver al archivo de origen cuando sea necesario.\n\n![Paso 1: Abre tu partitura](dsc-3911.jpg){width=380}\n\n## Paso 2: Exporta la partitura como MusicXML\n\nUna vez que tu partitura esté lista, localiza el menú **“Exportar”** o **“Guardar como”** en tu programa de notación. Normalmente se encuentra en la parte izquierda de la barra superior. Después, selecciona la opción MusicXML. Dependiendo del software, podrás exportar un archivo **.mxl** o **.musicxml**.\n\nTanto XML como MusicXML contienen información musical, pero, si puedes elegir, **MusicXML** es la opción más completa. MusicXML es un tipo específico de XML diseñado para la notación musical y, por lo general, puede abrirse en cualquier programa de notación.\n\nUna vez exportado, guarda el archivo en una ubicación fácil de encontrar en tu ordenador. Este archivo será el que utilizarás para transferir la partitura al nuevo software.\n\n## Paso 3: Importa el archivo MusicXML al nuevo programa\n\nAbre el nuevo **software de notación** que quieras utilizar y selecciona «Abrir», «Importar» o «Importar MusicXML» (la opción puede variar según el programa). Busca el archivo que exportaste anteriormente y selecciónalo en tu ordenador. Si la partitura es compleja, el proceso de importación de MusicXML puede tardar unos segundos.\n\nEl programa leerá los datos de notación y recreará automáticamente la partitura utilizando sus propias reglas de grabado y configuración. Por ello, es muy probable que tengas que editar y perfeccionar el archivo, aunque ya podrás guardarlo en el formato nativo del nuevo programa.\n\n## Paso 4: Revisa la partitura\n\n**MusicXML** es un formato muy fiable. Sin embargo, ninguna conversión es perfecta: los distintos programas de notación gestionan la maquetación y las funciones de grabado de formas diferentes. Después de importar el nuevo archivo, te recomendamos revisar cuidadosamente la partitura y realizar los ajustes necesarios: formato de página, espaciado, estilos de texto, posibles colisiones y elementos de notación especial.\n\n## En resumen\n\n- Abre tu partitura en el programa de notación donde fue creada.\n- Localiza el menú **«Exportar»** o **«Guardar como»** y selecciona la opción MusicXML.\n- En el nuevo programa de notación, selecciona «Abrir», «Importar» o «Importar MusicXML».\n- Revisa cuidadosamente la partitura y realiza los ajustes necesarios.\n\n![En resumen](dsc-3864.jpg)\n\n## Reflexiones finales\n\n**MusicXML** es una herramienta muy útil para convertir partituras entre diferentes programas. Si tu partitura no es demasiado compleja, el proceso suele ser tan sencillo como exportar, importar y realizar unos pequeños ajustes finales. Sin embargo, en partituras de gran tamaño, como las de grandes conjuntos, instrumentos con notación especial o obras con varios movimientos, el proceso puede resultar mucho más exigente.\n\nSi necesitas un resultado perfectamente pulido, no dudes en ponerte en contacto con un servicio profesional de **transcripción de partituras**, como [**Mis Transcripciones Musicales**](/). Nos aseguraremos de que tu partitura tenga un aspecto profesional y funcione exactamente como debe en su nuevo entorno de software."
 }

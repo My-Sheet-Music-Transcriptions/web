@@ -4,6 +4,7 @@ import { cmsBlocks } from '../components/blocks/cms.ts'
 import type { AnyCmsBlock, Field } from '../content/cms-fields.ts'
 import { decapField } from '../content/cms-fields.ts'
 import { metaFields, postFields, serviceFields } from '../content/cms-meta.ts'
+import { postBody } from '../content/post-template.ts'
 import { CMS_LOCALES, type CmsLocale } from './locales.ts'
 
 /**
@@ -50,7 +51,23 @@ const fieldsOf = (meta: Record<string, Field>) => [
 /** Every page's fields: its meta, then its blocks; a service page's own meta fields come after the shared ones. */
 const fields = fieldsOf(metaFields)
 const serviceFormFields = fieldsOf({ ...metaFields, ...serviceFields })
-const postFormFields = fieldsOf({ ...metaFields, ...postFields })
+/**
+ * A post's fields: no blocks, its layout is fixed (src/content/post-template.ts). What a writer fills in for every post
+ * comes first (title, date, cover, the text in a rich text editor, the card's summary), then the search fields.
+ */
+const { title, ...searchFields } = metaFields
+const { date, cover, ...cardFields } = postFields
+const postFormFields = Object.entries({
+  title: {
+    ...title,
+    hint: 'The post’s headline: on the post, on its card on the blog and in search results.',
+  },
+  date,
+  cover,
+  body: postBody,
+  ...cardFields,
+  ...searchFields,
+}).map(([name, f]) => decapField(name, f))
 
 /** The language a page is in (its folder), and the collection (its folder, hidden): what a page.json opens with. */
 const languageField = {

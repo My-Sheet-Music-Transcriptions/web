@@ -1,7 +1,8 @@
 {
   "language": "es",
   "collection": "posts",
-  "title": "Cómo funcionan las partituras digitales",
+  "title": "Formatos de archivos musicales: cómo funcionan las partituras digitales",
+  "seoTitle": "Cómo funcionan las partituras digitales",
   "description": "Si eres músico, saber para qué sirven y cómo funcionan las partituras digitales facilitará mucho tu vida y tu trabajo.",
   "translationKey": "como-funcionan-las-partituras-digitales",
   "date": "2025-12-03",
@@ -14,53 +15,5 @@
     "Programas y apps"
   ],
   "author": "Marina Junquera",
-  "blocks": [
-    {
-      "type": "PageHeader",
-      "variant": "cover",
-      "title": "Formatos de archivos musicales: cómo funcionan las partituras digitales",
-      "date": "2025-12-03",
-      "image": "dsc-7030.jpg"
-    },
-    {
-      "type": "Article",
-      "label": "Formatos de archivos musicales: cómo funcionan las partituras digitales",
-      "items": [
-        {
-          "body": "## ¿Cómo funcionan las partituras digitales? Los formatos de archivos musicales explicados uno a uno\n\nSi eres músico, probablemente te hayas encontrado con una variedad de formatos de archivos musicales: **PDF, MIDI, XML, MP3** y muchos otros. Cada uno cumple una función diferente, y entender cómo funcionan puede facilitar mucho tu vida musical.\n\nEn este artículo, desglosamos qué es cada formato, cómo funciona y en qué situaciones es más útil: **leer partituras, editar una partitura, producir audio o compartir tu trabajo**.",
-          "image": "dsc-7030.jpg",
-          "alt": "Formatos de archivos musicales: cómo funcionan las partituras digitales"
-        },
-        {
-          "body": "## PDF: la PARTITURA en sí\n\nUn PDF (Portable Document Format) es un formato de archivo digital que **preserva el diseño, las fuentes, las imágenes y el formato** de un documento. Una transcripción en PDF debería abrirse en tu ordenador como **una partitura limpia y con aspecto profesional**, lista para imprimir.\n\nLos archivos PDF se usan ampliamente, son fáciles de compartir y normalmente no son editables, lo que garantiza que **se vean idénticos en cualquier dispositivo o al imprimirlos**. Son una forma fiable de compartir y ver partituras, ya que mantienen los símbolos, las fuentes y el formato de página perfectamente intactos. También son ideales para intérpretes, profesores y editores que necesitan partituras limpias y consistentes.\n\n## Formatos de archivo editables: XML y MusicXML\n\nLos archivos XML son formatos digitales usados para **almacenar e intercambiar partituras de forma estandarizada**. A diferencia de los PDF, que son “imágenes fijas” de una partitura, los archivos XML contienen datos musicales estructurados **que pueden abrirse y modificarse**.\n\nExisten dos versiones comunes. El formato moderno y ampliamente compatible es **.musicxml**, diseñado específicamente para compartir notación entre programas. Por otro lado, **.xml** es una extensión más antigua que funciona de manera similar, pero puede tener menos funciones o menos actualizaciones.\n\nMusicXML es el formato más versátil, porque **puede abrirse en cualquier software de notación musical** (Dorico, Finale, GuitarPro, MuseScore o Sibelius). Preserva detalles como notas, ritmos o letras, lo que lo hace ideal para **editar, transportar o convertir partituras** entre programas.\n\nSin embargo, la **consistencia del diseño suele verse afectada al cambiar de programa**. Si necesitas convertir archivos editables a otro formato, nuestros editores en **Mis Transcripciones Musicales** pueden encargarse de la conversión, ajustar la plantilla según sea necesario y enviarte archivos nuevos de alta calidad. Solo [**ponte en contacto con nosotros**](/#contact) para más información.",
-          "image": "editable-music-file-format.jpg",
-          "alt": "Formatos de archivo editables: XML y MusicXML"
-        },
-        {
-          "body": "## Archivos editables: programas específicos de notación\n\nEstos formatos digitales almacenan **partituras totalmente editables**, pero solo pueden abrirse y editarse **en el programa de notación específico del que provienen**. Permiten a los músicos modificar, arreglar y personalizar la partitura con total flexibilidad, igual que los archivos XML.\n\n- Dorico (.dor) solo puede abrirse con el [**programa de notación Dorico**](https://www.steinberg.net/dorico/).\n- Finale (.musx) solo puede abrirse con el [**programa de notación Finale**](https://www.finalemusic.com/).\n- GuitarPro (.gp) solo puede abrirse con el [**programa de notación GuitarPro**](https://www.guitar-pro.com/).\n- MuseScore (.mscz) solo puede abrirse con el [**programa de notación MuseScore.**](https://musescore.org/es)\n- Sibelius (.sib) solo puede abrirse con el [**programa de notación Sibelius**](https://www.avid.com/products/sibelius-ultimate-crossgrade?irclickid=W6ExELQPuxycRSHwYpT0vRddUkpW5f0hSRuiz00&utm_medium=affiliate&utm_source=My%20Sheet%20Music%20Transcriptions&utm_campaign=avidEN&irgwc=1&afsrc=1).\n\n## Archivos MIDI: ¿son realmente archivos de audio?\n\nLos archivos MIDI (.mid) son archivos digitales de música, pero **no pueden usarse como archivos de audio.** Almacenan datos de interpretación, no sonido grabado. En lugar de capturar sonido real, **contienen información como qué notas se tocan, su duración y su intensidad**. Esto los convierte en una referencia útil para tu partitura.\n\nPuedes abrir archivos MIDI en cualquier **Digital Audio Workstation (DAW)** y en muchos reproductores multimedia compatibles. La reproducción MIDI es totalmente **generada por ordenador**, por lo que no refleja la expresión musical, el timbre o los matices de un intérprete humano. Piénsalo como **una guía técnica de notas y ritmos**, no como una interpretación musical pulida.\n\n## Archivos de audio: MP3, WAV, M4A y más\n\nLos archivos de audio son formatos digitales que normalmente **almacenan sonido grabado**. Hay varios tipos de archivos de audio, según el propósito, tamaño, calidad o programa: **MP3, WAV, M4A, OGG, AIFF, WMA**… Todos estos formatos pueden capturar interpretaciones humanas exactamente como suenan. A diferencia de los MIDI, que almacenan datos musicales, no audio real.\n\nPublicaremos un post específico sobre los distintos formatos de audio, cómo funcionan y para qué se utilizan… Mantente al día en [**https://www.mistranscripcionesmusicales.com/blog**](/blog).",
-          "image": "audio-music-file-format.jpg",
-          "alt": "Archivos de audio: MP3, WAV, M4A y más"
-        }
-      ],
-      "reveal": true
-    },
-    {
-      "type": "ShareLinks",
-      "title": "Comparte este contenido con tus amigos",
-      "reveal": true
-    },
-    {
-      "type": "PostList",
-      "title": "Entradas relacionadas",
-      "limit": 3,
-      "linkLabel": "Leer más",
-      "reveal": true
-    },
-    {
-      "type": "ContactSection",
-      "form": "quoteForm",
-      "returnTo": "/como-funcionan-las-partituras-digitales",
-      "reveal": true
-    }
-  ]
+  "body": "## ¿Cómo funcionan las partituras digitales? Los formatos de archivos musicales explicados uno a uno\n\nSi eres músico, probablemente te hayas encontrado con una variedad de formatos de archivos musicales: **PDF, MIDI, XML, MP3** y muchos otros. Cada uno cumple una función diferente, y entender cómo funcionan puede facilitar mucho tu vida musical.\n\nEn este artículo, desglosamos qué es cada formato, cómo funciona y en qué situaciones es más útil: **leer partituras, editar una partitura, producir audio o compartir tu trabajo**.\n\n![Formatos de archivos musicales: cómo funcionan las partituras digitales](dsc-7030.jpg)\n\n## PDF: la PARTITURA en sí\n\nUn PDF (Portable Document Format) es un formato de archivo digital que **preserva el diseño, las fuentes, las imágenes y el formato** de un documento. Una transcripción en PDF debería abrirse en tu ordenador como **una partitura limpia y con aspecto profesional**, lista para imprimir.\n\nLos archivos PDF se usan ampliamente, son fáciles de compartir y normalmente no son editables, lo que garantiza que **se vean idénticos en cualquier dispositivo o al imprimirlos**. Son una forma fiable de compartir y ver partituras, ya que mantienen los símbolos, las fuentes y el formato de página perfectamente intactos. También son ideales para intérpretes, profesores y editores que necesitan partituras limpias y consistentes.\n\n## Formatos de archivo editables: XML y MusicXML\n\nLos archivos XML son formatos digitales usados para **almacenar e intercambiar partituras de forma estandarizada**. A diferencia de los PDF, que son “imágenes fijas” de una partitura, los archivos XML contienen datos musicales estructurados **que pueden abrirse y modificarse**.\n\nExisten dos versiones comunes. El formato moderno y ampliamente compatible es **.musicxml**, diseñado específicamente para compartir notación entre programas. Por otro lado, **.xml** es una extensión más antigua que funciona de manera similar, pero puede tener menos funciones o menos actualizaciones.\n\nMusicXML es el formato más versátil, porque **puede abrirse en cualquier software de notación musical** (Dorico, Finale, GuitarPro, MuseScore o Sibelius). Preserva detalles como notas, ritmos o letras, lo que lo hace ideal para **editar, transportar o convertir partituras** entre programas.\n\nSin embargo, la **consistencia del diseño suele verse afectada al cambiar de programa**. Si necesitas convertir archivos editables a otro formato, nuestros editores en **Mis Transcripciones Musicales** pueden encargarse de la conversión, ajustar la plantilla según sea necesario y enviarte archivos nuevos de alta calidad. Solo [**ponte en contacto con nosotros**](/#contact) para más información.\n\n![Formatos de archivo editables: XML y MusicXML](editable-music-file-format.jpg)\n\n## Archivos editables: programas específicos de notación\n\nEstos formatos digitales almacenan **partituras totalmente editables**, pero solo pueden abrirse y editarse **en el programa de notación específico del que provienen**. Permiten a los músicos modificar, arreglar y personalizar la partitura con total flexibilidad, igual que los archivos XML.\n\n- Dorico (.dor) solo puede abrirse con el [**programa de notación Dorico**](https://www.steinberg.net/dorico/).\n- Finale (.musx) solo puede abrirse con el [**programa de notación Finale**](https://www.finalemusic.com/).\n- GuitarPro (.gp) solo puede abrirse con el [**programa de notación GuitarPro**](https://www.guitar-pro.com/).\n- MuseScore (.mscz) solo puede abrirse con el [**programa de notación MuseScore.**](https://musescore.org/es)\n- Sibelius (.sib) solo puede abrirse con el [**programa de notación Sibelius**](https://www.avid.com/products/sibelius-ultimate-crossgrade?irclickid=W6ExELQPuxycRSHwYpT0vRddUkpW5f0hSRuiz00&utm_medium=affiliate&utm_source=My%20Sheet%20Music%20Transcriptions&utm_campaign=avidEN&irgwc=1&afsrc=1).\n\n## Archivos MIDI: ¿son realmente archivos de audio?\n\nLos archivos MIDI (.mid) son archivos digitales de música, pero **no pueden usarse como archivos de audio.** Almacenan datos de interpretación, no sonido grabado. En lugar de capturar sonido real, **contienen información como qué notas se tocan, su duración y su intensidad**. Esto los convierte en una referencia útil para tu partitura.\n\nPuedes abrir archivos MIDI en cualquier **Digital Audio Workstation (DAW)** y en muchos reproductores multimedia compatibles. La reproducción MIDI es totalmente **generada por ordenador**, por lo que no refleja la expresión musical, el timbre o los matices de un intérprete humano. Piénsalo como **una guía técnica de notas y ritmos**, no como una interpretación musical pulida.\n\n## Archivos de audio: MP3, WAV, M4A y más\n\nLos archivos de audio son formatos digitales que normalmente **almacenan sonido grabado**. Hay varios tipos de archivos de audio, según el propósito, tamaño, calidad o programa: **MP3, WAV, M4A, OGG, AIFF, WMA**… Todos estos formatos pueden capturar interpretaciones humanas exactamente como suenan. A diferencia de los MIDI, que almacenan datos musicales, no audio real.\n\nPublicaremos un post específico sobre los distintos formatos de audio, cómo funcionan y para qué se utilizan… Mantente al día en [**https://www.mistranscripcionesmusicales.com/blog**](/blog).\n\n![Archivos de audio: MP3, WAV, M4A y más](audio-music-file-format.jpg)"
 }
