@@ -1,0 +1,66 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Funciones destacadas de MuseScore | Nuestras favoritas",
+  "description": "\"5 funciones que nos encantan y 5 funciones que todavía echamos de menos de MuseScore\", último artículo de Mis Transcripciones Musicales",
+  "translationKey": "mejores-funciones-de-musescore",
+  "date": "2026-02-02",
+  "excerpt": "Las mejores funciones de MuseScore: un repaso a las herramientas de MuseScore que más destacan, junto con las mejoras que esperamos ver en futuras versiones.",
+  "cover": {
+    "src": "musescore.png",
+    "alt": "MuseScore: 5 funciones que nos encantan y 5 que todavía echamos de menos"
+  },
+  "tags": [
+    "Notación musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "MuseScore: 5 funciones que nos encantan y 5 que todavía echamos de menos",
+      "date": "2026-02-02",
+      "image": "musescore.png"
+    },
+    {
+      "type": "Article",
+      "label": "MuseScore: 5 funciones que nos encantan y 5 que todavía echamos de menos",
+      "items": [
+        {
+          "body": "## Las mejores funciones de MuseScore: un repaso a las herramientas de MuseScore que más destacan, junto con las mejoras que esperamos ver en futuras versiones.\n\nEn [**Mis Transcripciones Musicales**](/), nuestro equipo de transcriptores profesionales trabaja a diario con varios programas de notación musical, **entre ellos MuseScore**. Por ello, contamos con la experiencia necesaria para comparar su rendimiento y recopilar informes muy útiles que queremos compartir con nuestra comunidad.\n\nEsto es **“5 funciones que nos encantan y 5 funciones que todavía echamos de menos de MuseScore”**.\n\n## 5 funciones que nos encantan de MuseScore\n\n## 1. Compatibilidad con fuentes SMuFL\n\nMuseScore permite cargar **cualquier fuente musical compatible con SMuFL**. Esto significa que **los usuarios pueden trabajar con su fuente favorita** y conseguir una mayor calidad de maquetación. Consideramos esta función especialmente útil para compositores o empresas que necesitan mantener coherencia visual en todos sus productos.",
+          "image": "font-title-musescore.png",
+          "alt": "1. Compatibilidad con fuentes SMuFL"
+        },
+        {
+          "body": "**2. Control avanzado de pentagramas vacíos**\n\nEsta función puede parecer innecesaria, pero la posibilidad de mostrar u ocultar pentagramas vacíos por sistema (y no de forma global en toda la partitura) supone un gran ahorro de tiempo para obtener partituras limpias. Ocultar pentagramas vacíos resulta especialmente práctico al **trabajar con partituras orquestales**.\n\n**3. Entrada MIDI avanzada y en tiempo real**\n\nSi trabajas con archivos MIDI, esta será tu función favorita. MuseScore ofrece previsualización de notas en tiempo real: **reproduce el sonido instantáneamente al pulsar la tecla**. Además, permite controlar la velocidad y el pedal *sustain*, respetando la intensidad con la que se toca cada nota y respondiendo incluso al pedal *sustain*.\n\n**4. Filtro de selección y widgets de maquetación**\n\nEl filtro de selección de MuseScore permite **aislar elementos concretos** (letras, dinámicas, ligaduras, etc.) dentro de un pasaje seleccionado, sin tener que hacer clic uno a uno ni arriesgar detalles de maquetación. Los widgets de maquetación permiten **controlar los espaciados de forma numérica**, facilitando ajustes precisos sin desplazamientos manuales.\n\n**5. MuseSounds integrado y compatibilidad con VST3**\n\nMuseScore incluye **bibliotecas de sonido orquestales y de percusión de alta calidad**, además de compatibilidad con VST3. Esto acerca notablemente la calidad de reproducción a un entorno tipo DAW sin salir del programa de notación. ¡Es como tener dos programas en uno!",
+          "image": "selection-filter-musescore.png",
+          "alt": "1. Compatibilidad con fuentes SMuFL"
+        },
+        {
+          "body": "## 5 funciones que todavía echamos de menos en MuseScore\n\n## 1. Mayor libertad en la colocación de expresiones\n\nLos usuarios aún encuentran dificultades para mover expresiones en relación con las notas. Además, **el Inspector no siempre resulta intuitivo** y las opciones de desplazamiento son limitadas.\n\n**2. Duplicación simultánea en diferentes claves**\n\nLos compositores y los editores musicales suelen trabajar con las mismas notas mostradas en distintas claves. Por ello, muchos usuarios solicitan poder **generar instantáneamente dos partes a partir de las mismas notas**, pero en claves diferentes.\n\n**3. Funciones avanzadas de afinación**\n\nAlgunas funciones muy útiles, como **cambiar estándares globales de afinación** o **trabajar con temperamentos alternativos**, aún no están completamente implementadas en la versión 4. ¡Y muchas de ellas ya existían o se habían debatido en versiones anteriores!\n\n**4. Canal MIDI más refinado**\n\nLa reproducción MIDI de MuseScore funciona correctamente, pero **todavía no alcanza el nivel de un DAW**. Los usuarios más avanzados echan de menos un control más preciso de los canales MIDI y mayores opciones de edición de la reproducción.\n\n**5. Consistencia y fiabilidad**\n\n[**MuseScore**](https://musescore.com/) incluye la mayoría de las funciones clave que los usuarios necesitan, pero **algunos elementos aún carecen de fiabilidad**. Las funciones existen, pero no siempre se sienten completamente pulidas. Más que nuevas funciones, los usuarios **piden consistencia para un uso profesional diario**.",
+          "image": "musescore.png",
+          "alt": "1. Mayor libertad en la colocación de expresiones"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/mejores-funciones-de-musescore",
+      "reveal": true
+    }
+  ]
+}

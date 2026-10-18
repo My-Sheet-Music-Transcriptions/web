@@ -1,0 +1,125 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Transcripciones para bajo - Mis Transcripciones Musicales",
+  "description": "Tus covers de guitarra transcritas a tablatura por transcriptores y bajistas profesionales. Preciso al 100% ¡hecho por y para bajistas!",
+  "translationKey": "bass-tab-transcription-service",
+  "shortTitle": "Transcripciones para bajo",
+  "icon": "bajo",
+  "group": "guitar",
+  "priceFrom": 11,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcripciones para bajo",
+      "subtitle": "Transcribimos con precisión cualquier canción para bajo",
+      "image": "bajo.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nTranscribimos tus líneas de bajo y riffs favoritos, contrabajo de jazz, solos, transcripciones para bajo sin trastes y todo tipo de partituras y tablaturas.\n\nNuestros bajistas crearán partituras y tablaturas personalizadas para ti.",
+          "video": {
+            "youtube": "4he7KkucBPM",
+            "title": "Transcripciones para bajo",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "bass-1-street-life.png",
+          "imageWidth": 540
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand",
+      "reveal": true
+    },
+    {
+      "type": "Samples",
+      "title": "Aquí tienes algunos ejemplos de nuestro trabajo",
+      "items": [
+        {
+          "title": "Transcripción de bajo de Edoardo Bombace",
+          "video": {
+            "youtube": "xnQG_p4YIG0",
+            "title": "Transcripción de bajo de Edoardo Bombace",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "bass-2-youve-got-a-friend-in-me.png",
+          "alt": "Bass TAB 2 (You've Got A Friend In Me), primera página de la partitura"
+        },
+        {
+          "title": "Línea de bajo de Jaco Pastorius",
+          "video": {
+            "youtube": "YmOwFYMLsDc",
+            "title": "Línea de bajo de Jaco Pastorius",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "bass-3-amelia.png",
+          "alt": "Bass TAB & Sheet 3 (Amelia), primera página de la partitura"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand",
+      "reveal": true
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "bassPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      },
+      "reveal": true
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      },
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/bajo",
+      "reveal": true
+    }
+  ]
+}

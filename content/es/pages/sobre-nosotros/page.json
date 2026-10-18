@@ -1,0 +1,401 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Sobre Nosotros - Mis Transcripciones Musicales",
+  "description": "En Mis transcripciones musicales, somos el equipo más grande de transcriptores de música. Conoce más sobre nuestros transcriptores.",
+  "translationKey": "about-us",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Sobre Mis Transcripciones Musicales",
+      "subtitle": "¡Conoce a los músicos detrás de tus transcripciones!"
+    },
+    {
+      "type": "MediaText",
+      "image": "band.jpg",
+      "alt": "El equipo de Mis Transcripciones Musicales",
+      "imageSide": "left",
+      "body": "Somos un equipo de **más de 100 músicos** profesionales con un conocimiento musical excepcional y una amplia competencia tecnológica. Un grupo entusiasta, preparado para abordar todo lo relacionado con la notación musical y ayudarte a dar vida a tu música.\n\nOriol, el fundador y CEO de Mis Transcripciones Musicales, comenzó el proyecto de forma individual. El crecimiento constante no ha comprometido nunca la calidad en favor de la rapidez, y ha favorecido el aprendizaje continuo a lo largo del camino. En la actualidad, atendemos en inglés, castellano, catalán, fracés, alemán y japonés.\n\nCon nuestra sede central en Cataluña (Terrassa, Barcelona, España), los miembros de nuestro equipo están repartidos por todo el mundo. Contamos con especialistas musicales altamente cualificados, preparados para ayudarte desde distintas ubicaciones **en 4 continentes (Europa, Asia, América del Norte y América del Sur)**.\n\nTrabajarán contigo codo con codo para perfeccionar los detalles de tu proyecto y, posteriormente, coordinarlo y comunicarlo a nuestro equipo de transcriptores, arreglistas y compositores. Antes de que la música te sea entregada, nuestros editores musicales habrán tomado el relevo para garantizar que cada archivo cumpla con los **más altos estándares de calidad**.",
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "images": [
+        {
+          "image": "office-14.jpg",
+          "alt": "Oficina de Mis Transcripciones Musicales - Atención al cliente"
+        },
+        {
+          "image": "office-12.jpg",
+          "alt": "Oficina de Mis Transcripciones Musicales - Atención al cliente"
+        },
+        {
+          "image": "office-transcriber.jpg",
+          "alt": "Oficina de Mis Transcripciones Musicales - Transcriptor trabajando"
+        }
+      ],
+      "imageSide": "right",
+      "tone": "cream",
+      "body": "Todos ellos, junto con los equipos de **dirección, desarrollo, investigación, tecnología y marketing**, conforman un grupo de más de 30 profesionales que se aseguran de que podamos ofrecer nuestros servicios de notación musical al mayor número posible de músicos, ¡en todo el mundo!\n\nEn la base de nuestros servicios se encuentra nuestro equipo de transcripción. Formado por más de 80 músicos que transcriben meticulosamente a oído, nota por nota, los cientos de archivos que entregamos cada semana. Gracias a un grupo de transcriptores diverso y altamente especializado, siempre contamos con la persona adecuada para cada proyecto.\n\nCon esta combinación de talento, tecnología y experiencia, estamos preparados para afrontar prácticamente cualquier proyecto, independientemente de su nivel o envergadura. **Estamos aquí para dar respuesta a todas tus necesidades de notación musical.**",
+      "reveal": true
+    },
+    {
+      "type": "Section",
+      "title": "Sigue nuestras noticias en LinkedIn",
+      "tone": "peach",
+      "align": "center",
+      "width": "narrow",
+      "rule": false,
+      "cta": {
+        "label": "Saber más",
+        "href": "https://www.linkedin.com/company/my-sheet-music-transcriptions/"
+      },
+      "reveal": true
+    },
+    {
+      "type": "PictureGrid",
+      "title": "Nuestro equipo",
+      "shape": "portrait",
+      "columns": 6,
+      "items": [
+        {
+          "image": "team-oriol.jpg",
+          "name": "Oriol",
+          "caption": "Fundador y CEO",
+          "href": "https://www.linkedin.com/in/oriollopezcalle/"
+        },
+        {
+          "image": "team-roc.jpg",
+          "name": "Roc",
+          "caption": "Editor Musical Principal y Responsable de Operaciones"
+        },
+        {
+          "image": "team-arnau.png",
+          "name": "Arnau",
+          "caption": "Director Técnico"
+        },
+        {
+          "image": "team-maja.jpg",
+          "name": "Maja",
+          "caption": "Especialista Musical y Responsable de Equipo"
+        },
+        {
+          "image": "team-brett.jpg",
+          "name": "Brett",
+          "caption": "Responsable de Atención al Cliente y Especialista Musical"
+        },
+        {
+          "image": "team-mauricio.jpg",
+          "name": "Mauricio",
+          "caption": "Responsable de Productos Especiales y Especialista Musical"
+        },
+        {
+          "image": "team-colom.jpg",
+          "name": "Colome",
+          "caption": "Responsable de Crecimiento e Investigación"
+        },
+        {
+          "image": "team-quim.jpg",
+          "name": "Quim",
+          "caption": "Responsable de Crecimiento y Desarrollo Empresarial"
+        },
+        {
+          "image": "team-cristina.jpg",
+          "name": "Cristina",
+          "caption": "Asistente de Crecimiento y Desarrollo Empresarial y RRPP"
+        },
+        {
+          "image": "team-anandi.jpg",
+          "name": "Anandi",
+          "caption": "Especialista Musical y Atención al Cliente"
+        },
+        {
+          "image": "team-miguel-navarro.jpg",
+          "name": "Mike",
+          "caption": "Especialista Musical y Atención al Cliente"
+        },
+        {
+          "image": "team-stephano02.jpg",
+          "name": "Stephano",
+          "caption": "Especialista Musical y Atención al Cliente"
+        },
+        {
+          "image": "team-osvaldo.jpg",
+          "name": "Osvaldo",
+          "caption": "Especialista Musical y Atención al Cliente"
+        },
+        {
+          "image": "team-facu.jpg",
+          "name": "Facu",
+          "caption": "Especialista Musical y Atención al Cliente"
+        },
+        {
+          "image": "team-santi.jpg",
+          "name": "Santi",
+          "caption": "Especialista Musical y Atención al Cliente"
+        },
+        {
+          "image": "team-ona.jpg",
+          "name": "Ona",
+          "caption": "Asistente al Editor Musical Principal y Soporte al Cliente"
+        },
+        {
+          "image": "team-marina.jpg",
+          "name": "Marina",
+          "caption": "Especialista en Música y Contenido"
+        },
+        {
+          "image": "team-ottavio.jpg",
+          "name": "Ottavio",
+          "caption": "Musicólogo e Investigador"
+        },
+        {
+          "image": "team-carla.jpg",
+          "name": "Carla",
+          "caption": "Especialista en Catalogación"
+        },
+        {
+          "image": "team-piero.jpg",
+          "name": "Piero",
+          "caption": "Transcriptor y Editor Musical"
+        },
+        {
+          "image": "team-josepf.jpg",
+          "name": "Josep Forcada",
+          "caption": "Asistente de Administración y Coordinación de Proyectos"
+        },
+        {
+          "image": "team-david.jpg",
+          "name": "David",
+          "caption": "Asistente del Editor Musical Principal"
+        },
+        {
+          "image": "team-marc.jpg",
+          "name": "Marc",
+          "caption": "Transcriptor Principal de Piano Jazz y Blues"
+        },
+        {
+          "image": "team-eric.jpg",
+          "name": "Eric",
+          "caption": "Transcriptor Principal de Piano y Conjuntos Instrumentales"
+        },
+        {
+          "image": "team-michael.jpg",
+          "name": "Michael",
+          "caption": "Transcriptor de Voz y Piano"
+        },
+        {
+          "image": "team-gemma.jpg",
+          "name": "Gemma",
+          "caption": "Transcriptora de Piano y Revisora"
+        },
+        {
+          "image": "team-pablo-o.jpg",
+          "name": "Pablo",
+          "caption": "Transcriptor de Piano"
+        },
+        {
+          "image": "team-joel.jpg",
+          "name": "Joel",
+          "caption": "Transcriptor de Piano y Conjuntos Instrumentales"
+        },
+        {
+          "image": "team-bruno.jpg",
+          "name": "Bruno",
+          "caption": "Transcriptor de Piano"
+        },
+        {
+          "image": "team-matthew.jpg",
+          "name": "Matthew",
+          "caption": "Transcriptor de Piano"
+        },
+        {
+          "image": "team-nicola.jpg",
+          "name": "Nicola",
+          "caption": "Transcriptor de Piano y Teclados"
+        },
+        {
+          "image": "team-dan.jpg",
+          "name": "Dan",
+          "caption": "Transcriptor de Voz y Piano"
+        },
+        {
+          "image": "team-ethan.jpg",
+          "name": "Ethan",
+          "caption": "Transcriptor de Piano y Jazz"
+        },
+        {
+          "image": "team-victor.jpg",
+          "name": "Victor",
+          "caption": "Transcriptor Principal de Guitarra"
+        },
+        {
+          "image": "team-miguel.jpg",
+          "name": "Miguel",
+          "caption": "Transcriptor de Guitarra y Editor"
+        },
+        {
+          "image": "team-mauro.jpg",
+          "name": "Mauro",
+          "caption": "Transcriptor y Arreglista de Guitarra"
+        },
+        {
+          "image": "team-joel-r.jpg",
+          "name": "Joel",
+          "caption": "Transcriptor de Guitarra Jazz"
+        },
+        {
+          "image": "team-pau.jpg",
+          "name": "Pau",
+          "caption": "Transcriptor de Guitarra"
+        },
+        {
+          "image": "team-nathan.jpg",
+          "name": "Nathan",
+          "caption": "Transcriptor de Guitarra y Piano"
+        },
+        {
+          "image": "team-hugo.jpg",
+          "name": "Hugo",
+          "caption": "Transcriptor de Guitarra"
+        },
+        {
+          "image": "team-joan.jpg",
+          "name": "Joan",
+          "caption": "Transcriptor de Violín e Instrumentos de Cuerda"
+        },
+        {
+          "image": "team-danbi.jpg",
+          "name": "Danbi",
+          "caption": "Transcriptora y Arreglista Orquestal"
+        },
+        {
+          "image": "team-benjamin.jpg",
+          "name": "Benjamin",
+          "caption": "Transcriptor y Arreglista Coral"
+        },
+        {
+          "image": "team-oriol-2.jpg",
+          "name": "Oriol",
+          "caption": "Transcriptor de Instrumentos de Viento y Big Band"
+        },
+        {
+          "image": "team-joan-marti.jpg",
+          "name": "Joan",
+          "caption": "Transcriptor de Jazz"
+        },
+        {
+          "image": "team-guillem.jpg",
+          "name": "Guillem",
+          "caption": "Transcriptor de Bajo"
+        },
+        {
+          "image": "team-oscar.jpg",
+          "name": "Òscar",
+          "caption": "Transcriptor de Batería"
+        },
+        {
+          "image": "team-carla-digitizer.jpg",
+          "name": "Carla",
+          "caption": "Transcriptora y Digitalizadora"
+        },
+        {
+          "image": "team-virginia.jpg",
+          "name": "Virginia",
+          "caption": "Digitalizadora y Maquetadora"
+        },
+        {
+          "image": "team-queralt.jpg",
+          "name": "Queralt",
+          "caption": "Asistente de Producción y Finanzas"
+        },
+        {
+          "image": "team-josep-jaume.jpg",
+          "name": "Josep Jaume",
+          "caption": "Consultor Técnico"
+        },
+        {
+          "image": "team-emma.jpg",
+          "name": "Emma",
+          "caption": "Ingeniera de Software"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "Cards",
+      "title": "Conócenos un poco más",
+      "items": [
+        {
+          "body": "",
+          "video": {
+            "youtube": "pdKHzdCOrvE",
+            "title": "My Sheet Music Transcriptions - About us"
+          }
+        },
+        {
+          "body": "",
+          "video": {
+            "youtube": "T-RvKOhjQtI",
+            "title": "My Sheet Music Transcriptions now in Spanish!!! - Mis Transcripciones Musicales"
+          }
+        }
+      ],
+      "variant": "plain",
+      "columns": 2,
+      "reveal": true
+    },
+    {
+      "type": "PictureStrip",
+      "label": "Nuestras partituras",
+      "items": [
+        {
+          "image": "strip-piano-8.jpg",
+          "alt": "Partitura de piano sobre un piano digital"
+        },
+        {
+          "image": "strip-piano-10.jpg",
+          "alt": "Partitura para voz y piano sobre un piano digital"
+        },
+        {
+          "image": "strip-piano-14.jpg",
+          "alt": "Piano digital y guitarra junto a un sofá"
+        },
+        {
+          "image": "strip-piano-15.jpg",
+          "alt": "Partitura de guitarra «Lonely Eyes» junto a un portátil"
+        },
+        {
+          "image": "strip-piano-11.jpg",
+          "alt": "Libro de partituras de piano abierto sobre una mesa de madera"
+        },
+        {
+          "image": "strip-piano-12.jpg",
+          "alt": "Dos libros de partituras abiertos sobre una mesa"
+        },
+        {
+          "image": "strip-piano-3.jpg",
+          "alt": "Cancionero de piano abierto en un atril sobre un teclado digital"
+        },
+        {
+          "image": "strip-piano-4.jpg",
+          "alt": "Partitura de piano apoyada en las teclas de un piano"
+        },
+        {
+          "image": "strip-piano-5.jpg",
+          "alt": "Partitura de piano abierta sobre un teclado"
+        },
+        {
+          "image": "strip-piano-13.jpg",
+          "alt": "Libro de piano «Kintsugi» de Laura Andrés junto a un cactus"
+        }
+      ]
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/sobre-nosotros",
+      "reveal": true
+    }
+  ]
+}

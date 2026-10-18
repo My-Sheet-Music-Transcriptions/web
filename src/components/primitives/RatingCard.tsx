@@ -32,7 +32,7 @@ export function RatingCard({ source, compact }: { source: RatingSource; compact?
       </p>
       {source.score ? (
         <Stars
-          rating={Number(source.score)}
+          rating={Number(source.score.replace(',', '.'))}
           label={source.starsLabel ?? source.score}
           color="gold"
           size={compact ? 19 : 24}

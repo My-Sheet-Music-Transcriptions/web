@@ -1,0 +1,66 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Mis Transcripciones Musicales en el NAMM Show 2026",
+  "description": "Mis Transcripciones Musicales estará en el NAMM Show 2026, el mayor evento relacionado con la música del año, que se celebrará en California.",
+  "translationKey": "mis-transcripciones-musicales-namm-show-2026",
+  "date": "2026-01-15",
+  "excerpt": "Del 21 al 24 de enero, Mis Transcripciones Musicales asistirá al NAMM Show 2026 Nos complace anunciar que Mis Transcripciones Musicales estará presente en el NAMM Show 2026. Nuestro…",
+  "cover": {
+    "src": "the-namm-show-1.jpg",
+    "alt": "Mis Transcripciones Musicales en el NAMM Show 2026"
+  },
+  "tags": [
+    "Actualidad Musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Mis Transcripciones Musicales en el NAMM Show 2026",
+      "date": "2026-01-15",
+      "image": "the-namm-show-1.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Mis Transcripciones Musicales en el NAMM Show 2026",
+      "items": [
+        {
+          "body": "## Del 21 al 24 de enero, Mis Transcripciones Musicales asistirá al NAMM Show 2026\n\nNos complace anunciar que Mis Transcripciones Musicales estará presente en el NAMM Show 2026. Nuestro [**CEO y fundador, Oriol López Calle**](https://www.mysheetmusictranscriptions.com/ORIOL), representará a la empresa en el mayor evento relacionado con la música del año, que se celebrará **del 21 al 24 de enero** en **Anaheim, California**.\n\nComo en ediciones anteriores, el NAMM Show será una oportunidad para **conectar con artistas, managers, sellos discográficos y editoriales musicales**. Exploraremos las últimas iniciativas de tecnología musical y presentaremos nuestros amplios recursos y experiencia a otros profesionales de la industria.",
+          "image": "meet-my-sheet-music-transcriptions-at-the-namm-show-2026.jpg",
+          "alt": "Mis Transcripciones Musicales en el NAMM Show 2026"
+        },
+        {
+          "body": "## ¿Por qué Mis Transcripciones Musicales asiste al NAMM Show 2026?\n\nLa próxima semana, la industria musical global se reunirá [**en el NAMM Show**](https://www.namm.org/thenammshow/attend) para colaborar y explorar nuevas oportunidades de negocio. Sin embargo, muchos artistas aún desconocen **el impacto que las partituras pueden tener en sus carreras** y en la conexión con su audiencia. En **Mis Transcripciones Musicales** sabemos cómo ayudar a los artistas a desbloquear este potencial.\n\nCada día, cientos de fans nos contactan solicitando partituras de sus artistas favoritos. En 2026, alrededor del 25% de la población mundial está aprendiendo a tocar un instrumento o ya lo toca activamente. Y muchos de ellos quieren aprender sus canciones favoritas.\n\nEsto abre una oportunidad para que los artistas **moneticen su música a través de partituras.** Así, fortalezcan su relación con los oyentes y los conviertan en verdaderos superfanes. Si asistes al NAMM Show 2026, estaremos encantados de compartir contigo **cómo las partituras pueden apoyar y potenciar tu carrera musical**.",
+          "image": "the-namm-show-2.jpg",
+          "alt": "¿Por qué Mis Transcripciones Musicales asiste al NAMM Show 2026?"
+        },
+        {
+          "body": "## ¡Nos vemos en el NAMM Show 2026!\n\n¿Asistirás al NAMM Show 2026? Busca la **camiseta 🧡 de MSMT** y pongámonos al día. 👀\n\nSi estarás allí y te gustaría hablar con nosotros (ya sea para agendar una reunión o simplemente tomar un café), escríbenos a: [**business@mysheetmusictranscriptions.com**](mailto:business@mysheetmusictranscriptions.com). Estaremos encantados de hablar sobre posibles colaboraciones y compartir nuestra visión para el futuro de la industria musical.\n\n## Más sobre NAMM\n\nLa [**National Association of Music Merchants (NAMM)**](https://www.namm.org/) es la principal organización comercial. Representa a las industrias globales de la música, el sonido y los eventos en vivo. Su misión es apoyar al sector fomentando un crecimiento sostenible, impulsando la innovación y promoviendo la creación musical en todo el mundo.\n\nGracias a su influencia, el NAMM Show se ha convertido en uno de los encuentros más importantes del negocio musical. El NAMM tiene una alta participación de actores clave e innovadores del sector. Es considerado un evento imprescindible para los profesionales y a la vanguardia de las tendencias de la industria.",
+          "image": "the-namm-show-1.jpg",
+          "alt": "Más sobre NAMM"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/mis-transcripciones-musicales-namm-show-2026",
+      "reveal": true
+    }
+  ]
+}

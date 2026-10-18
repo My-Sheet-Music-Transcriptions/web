@@ -13,7 +13,13 @@ export const ca: SiteConfig = {
   brand: 'La Meva Partitura',
   logo: 'ca',
   currency: 'EUR',
-  routes: { blogIndex: 'blog', faqPrefix: 'faqs', contactAnchor: '/#contact' },
+  routes: {
+    blogIndex: 'blog',
+    faqPrefix: 'faqs',
+    contactAnchor: '/#contact',
+    cookies: '/cookies',
+    privacy: '/gdpr',
+  },
   strings: {
     ...en.strings,
     share: {

@@ -1,0 +1,65 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "HUB Mis Transcripciones Musicales - Mis Transcripciones Musicales",
+  "description": "Del 17 al 28 de agosto, disfruta de un 10% en todas las transcripciones para celebrar el lanzamiento del HUB de Mis Transcripciones Musicales",
+  "translationKey": "hub-mis-transcripciones-musicales",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "split",
+      "title": "HUB Mis Transcripciones Musicales",
+      "image": "hub-lanzamiento-10-descuento.png",
+      "alt": "Presentamos el My Sheet Music Transcriptions HUB y lo estamos celebrando con un 10% de descuento en todas las transcripciones. Código: HUB10",
+      "cta": {
+        "label": "Desliza para saber más",
+        "href": "#info"
+      }
+    },
+    {
+      "type": "Section",
+      "id": "info",
+      "align": "center",
+      "width": "narrow",
+      "body": "Tenemos una noticia fantástica y lo estamos celebrando con un **descuento del 10%**, ¡como merece una ocasión así! 🎊\n\nHemos estado trabajando duro entre bastidores para mejorar tu experiencia y, recientemente, hemos lanzado el **My Sheet Music Transcriptions Hub**. Por ahora, incluye una nueva pasarela de pago y un nuevo panel de control para clientes. Nuestro nuevo sistema es más ágil e intuitivo y genera un enlace único para cada pedido.\n\n**Además, se mostrará en tu idioma local para facilitar la navegación.**\n\nEsto te permitirá ver los pagos pendientes, consultar cualquier pedido realizado en el nuevo sistema y, en los próximos meses, acceder a las transcripciones que hemos elaborado para ti.",
+      "reveal": true
+    },
+    {
+      "type": "Article",
+      "items": [
+        {
+          "clip": {
+            "src": "presentacion-hub.mp4",
+            "title": "El panel de control para clientes del Hub"
+          }
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "Section",
+      "align": "center",
+      "width": "narrow",
+      "body": "Y esto es solo el principio. Ya estamos desarrollando más funciones para ti relacionadas con la notación musical, así como **herramientas que mejorarán tu día a día como músico**. Nos encantaría que este **Hub** se convirtiera en tu lugar de referencia para transcripciones y todo lo relacionado con la notación.\n\nPara celebrar este lanzamiento y dar la bienvenida al nuevo curso, te ofrecemos un descuento exclusivo. ¡**Del 17 al 28 de agosto**, disfruta de un **10 % de descuento en todos los servicios de transcripción**!\n\n**CONSIGUE UN 10% DE DESCUENTO**\n\nCÓDIGO: **HUB10**\n\n¡Nuevo lanzamiento, nuevo curso escolar, nueva música! Es la combinación perfecta para empezar algo épico. Pongámonos manos a la obra con tu próxima obra maestra musical, y ahora puedes pasar por la pasarela de pago sin problemas, como un niño feliz. **¡Yujuuuu! 🛝**\n\n**¿Cómo puedes probar la nueva plataforma?** Escribe un correo electrónico o rellena un formulario de contacto para solicitar una nueva transcripción. A continuación, te enviaremos los detalles para realizar el pago a través del portal.\n\nFeliz vuelta al cole,\n\n**Mis Transcripciones Musicales**",
+      "cta": {
+        "label": "Encarga una transcripción y prueba nuestro nuevo hub",
+        "href": "#contacto"
+      },
+      "reveal": true
+    },
+    {
+      "type": "Section",
+      "align": "center",
+      "width": "narrow",
+      "body": "*Nota: este descuento no se puede combinar con otras promociones u ofertas. Por favor, ponte en contacto con nuestro servicio de atención al cliente si necesitas asistencia con tu proyecto.*",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "id": "contacto",
+      "returnTo": "/hub-mis-transcripciones-musicales",
+      "reveal": true
+    }
+  ]
+}

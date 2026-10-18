@@ -1,0 +1,366 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Precios para transcripción - Mis Transcripciones Musicales",
+  "description": "Tarifas y precios de transcripción de partituras razonables y fáciles de calcular. Puedes ver las muestras gratuitas y precios ¡Solicita un presupuesto!",
+  "translationKey": "pricing",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Precios",
+      "subtitle": "Tenemos opciones para todos los presupuestos."
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios desde",
+      "tiers": "generalPricing",
+      "body": "Cada transcripción es diferente y nuestros precios reflejan el tiempo y la habilidad necesarios para transcribir la música con precisión y acomodar las peculiaridades.\n\nCuantos más instrumentos haya y cuanto más larga o compleja sea una pieza, más tiempo llevará transcribirla. Cuanto más sencilla y esquemática pueda ser la notación necesaria, menos tiempo llevará.\n\nConsulta las guías de precios que aparecen a continuación o solicita un presupuesto.",
+      "cta": {
+        "label": "Pide presupuesto",
+        "href": "#contact"
+      },
+      "reveal": true
+    },
+    {
+      "type": "Samples",
+      "title": "Precios para piano",
+      "variant": "columns",
+      "tabs": [
+        {
+          "label": "Ver en EUR",
+          "items": [
+            {
+              "title": "Fácil",
+              "audio": {
+                "src": "piano-easy.mp3",
+                "title": "Fácil: grabación"
+              },
+              "image": "piano-easy.png",
+              "alt": "Etude .o.3 - Tristesse - Transcripciones para piano",
+              "price": {
+                "from": "19-21€",
+                "unit": "precio por minuto de música"
+              },
+              "tone": "teal"
+            },
+            {
+              "title": "Intermedio - Avanzado",
+              "audio": {
+                "src": "piano-average.mp3",
+                "title": "Intermedio - Avanzado: grabación"
+              },
+              "image": "piano-average.png",
+              "alt": "Ain't No Mountain High Enough - Transcripciones para piano",
+              "price": {
+                "from": "22-32€",
+                "unit": "precio por minuto de música"
+              },
+              "tone": "blue"
+            },
+            {
+              "title": "Difícil",
+              "audio": {
+                "src": "piano-difficult.mp3",
+                "title": "Difícil: grabación"
+              },
+              "image": "piano-difficult.png",
+              "alt": "As time Goes By - Joe England - Transcripciones para piano",
+              "price": {
+                "from": "33-45€",
+                "unit": "precio por minuto de música"
+              },
+              "tone": "navy"
+            }
+          ]
+        },
+        {
+          "label": "Ver en USD",
+          "items": [
+            {
+              "title": "Fácil",
+              "audio": {
+                "src": "piano-easy.mp3",
+                "title": "Fácil: grabación"
+              },
+              "image": "piano-easy.png",
+              "alt": "Etude .o.3 - Tristesse - Transcripciones para piano",
+              "price": {
+                "from": "$22-24",
+                "unit": "precio por minuto de música"
+              },
+              "tone": "teal"
+            },
+            {
+              "title": "Intermedio - Avanzado",
+              "audio": {
+                "src": "piano-average.mp3",
+                "title": "Intermedio - Avanzado: grabación"
+              },
+              "image": "piano-average.png",
+              "alt": "Ain't No Mountain High Enough - Transcripciones para piano",
+              "price": {
+                "from": "$26-37",
+                "unit": "precio por minuto de música"
+              },
+              "tone": "blue"
+            },
+            {
+              "title": "Difícil",
+              "audio": {
+                "src": "piano-difficult.mp3",
+                "title": "Difícil: grabación"
+              },
+              "image": "piano-difficult.png",
+              "alt": "As time Goes By - Joe England - Transcripciones para piano",
+              "price": {
+                "from": "$38-52",
+                "unit": "precio por minuto de música"
+              },
+              "tone": "navy"
+            }
+          ]
+        }
+      ],
+      "cta": {
+        "label": "Ver la página de piano",
+        "href": "/piano"
+      },
+      "reveal": true
+    },
+    {
+      "type": "Samples",
+      "title": "Precios para otros instrumentos",
+      "variant": "columns",
+      "tabs": [
+        {
+          "label": "Ver en EUR",
+          "items": [
+            {
+              "title": "Vocal lead sheets",
+              "audio": {
+                "src": "vocal-lead-sheet.mp3",
+                "title": "Vocal lead sheets: grabación"
+              },
+              "image": "vocal-lead-sheet.png",
+              "alt": "Paper Roise - Servicio de transcripción para voz",
+              "icon": "vocal.png",
+              "price": {
+                "from": "13-25€",
+                "unit": "precio por minuto de música"
+              }
+            },
+            {
+              "title": "Transcripciones para piano/voz",
+              "audio": {
+                "src": "piano-voz.mp3",
+                "title": "Transcripciones para piano/voz: grabación"
+              },
+              "image": "piano-voz.png",
+              "alt": "No More Fear - Transcripción para piano y voz",
+              "icon": "piano-vocal.png",
+              "price": {
+                "from": "16-39€",
+                "unit": "precio por minuto de música"
+              },
+              "href": "/piano-vocal",
+              "linkLabel": "Ver la página de piano y voz"
+            },
+            {
+              "title": "TABs para guitarra",
+              "audio": {
+                "src": "guitarra.mp3",
+                "title": "TABs para guitarra: grabación"
+              },
+              "image": "guitarra-alone.png",
+              "alt": "Alone - Transcripción de partitura para guitarra",
+              "icon": "guitar.png",
+              "price": {
+                "from": "15-30€",
+                "unit": "precio por minuto de música"
+              },
+              "href": "/guitarra",
+              "linkLabel": "Ver tablaturas para Guitarra"
+            },
+            {
+              "title": "Instrumental lead sheet",
+              "audio": {
+                "src": "lead-sheet.mp3",
+                "title": "Instrumental lead sheet: grabación"
+              },
+              "image": "lead-sheet-woodchoppers-ball.png",
+              "alt": "Woodchopper's Ball - Solo de trompeta",
+              "icon": "trumpet.png",
+              "price": {
+                "from": "10-20€",
+                "unit": "precio por minuto de música"
+              }
+            },
+            {
+              "title": "Transcripciones de jazz",
+              "audio": {
+                "src": "jazz.mp3",
+                "title": "Transcripciones de jazz: grabación"
+              },
+              "image": "jazz-terrys-tune.png",
+              "alt": "Terry's Tune (as played by Oscar Peterson) - Transcripción de partitura para piano jazz",
+              "icon": "jazz.png",
+              "price": {
+                "from": "20-44€",
+                "unit": "precio por minuto de música"
+              },
+              "href": "/jazz-piano-solo",
+              "linkLabel": "Ver Transcripciones de jazz"
+            },
+            {
+              "title": "TABs para bajo",
+              "audio": {
+                "src": "bajo.mp3",
+                "title": "TABs para bajo: grabación"
+              },
+              "image": "bajo-street-life.png",
+              "alt": "Street Life - Randy Crawford - Transcripción de partitura para bajo",
+              "icon": "bajo.png",
+              "price": {
+                "from": "12-25€",
+                "unit": "precio por minuto de música"
+              },
+              "href": "/bajo",
+              "linkLabel": "Ver tablaturas para bajo"
+            }
+          ]
+        },
+        {
+          "label": "Ver en USD",
+          "items": [
+            {
+              "title": "Vocal lead sheets",
+              "audio": {
+                "src": "vocal-lead-sheet.mp3",
+                "title": "Vocal lead sheets: grabación"
+              },
+              "image": "vocal-lead-sheet.png",
+              "alt": "Paper Roise - Servicio de transcripción para voz",
+              "icon": "vocal.png",
+              "price": {
+                "from": "$15-29",
+                "unit": "precio por minuto de música"
+              }
+            },
+            {
+              "title": "Transcripciones para piano/voz",
+              "audio": {
+                "src": "piano-voz.mp3",
+                "title": "Transcripciones para piano/voz: grabación"
+              },
+              "image": "piano-voz.png",
+              "alt": "No More Fear - Transcripción para piano y voz",
+              "icon": "piano-vocal.png",
+              "price": {
+                "from": "$19-45",
+                "unit": "precio por minuto de música"
+              },
+              "href": "/piano-vocal",
+              "linkLabel": "Ver la página de piano y voz"
+            },
+            {
+              "title": "TABs para guitarra",
+              "audio": {
+                "src": "guitarra.mp3",
+                "title": "TABs para guitarra: grabación"
+              },
+              "image": "guitarra-alone.png",
+              "alt": "Alone - Transcripción de partitura para guitarra",
+              "icon": "guitar.png",
+              "price": {
+                "from": "$17-35",
+                "unit": "precio por minuto de música"
+              },
+              "href": "/guitarra",
+              "linkLabel": "Ver tablaturas para Guitarra"
+            },
+            {
+              "title": "Instrumental lead sheet",
+              "audio": {
+                "src": "lead-sheet.mp3",
+                "title": "Instrumental lead sheet: grabación"
+              },
+              "image": "lead-sheet-woodchoppers-ball.png",
+              "alt": "Woodchopper's Ball - Solo de trompeta",
+              "icon": "trumpet.png",
+              "price": {
+                "from": "$12-23",
+                "unit": "precio por minuto de música"
+              }
+            },
+            {
+              "title": "Transcripciones de jazz",
+              "audio": {
+                "src": "jazz.mp3",
+                "title": "Transcripciones de jazz: grabación"
+              },
+              "image": "jazz-terrys-tune.png",
+              "alt": "Terry's Tune (as played by Oscar Peterson) - Transcripción de partitura para piano jazz",
+              "icon": "jazz.png",
+              "price": {
+                "from": "$21-51",
+                "unit": "precio por minuto de música"
+              },
+              "href": "/jazz-piano-solo",
+              "linkLabel": "Ver Transcripciones de jazz"
+            },
+            {
+              "title": "TABs para bajo",
+              "audio": {
+                "src": "bajo.mp3",
+                "title": "TABs para bajo: grabación"
+              },
+              "image": "bajo-street-life.png",
+              "alt": "Street Life - Randy Crawford - Transcripción de partitura para bajo",
+              "icon": "bajo.png",
+              "price": {
+                "from": "$14-29",
+                "unit": "precio por minuto de música"
+              },
+              "href": "/bajo",
+              "linkLabel": "Ver tablaturas para bajo"
+            }
+          ]
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "Cards",
+      "title": "Descuentos disponibles",
+      "items": [
+        {
+          "title": "Clientes habituales",
+          "body": "10% de descuento cuando vuelvas",
+          "icon": "clientes-habituales.png"
+        },
+        {
+          "title": "Pedidos grandes",
+          "body": "5-20% de descuento en pedidos grandes",
+          "icon": "pedidos-grandes.png"
+        },
+        {
+          "title": "Trae a un amigo",
+          "body": "5% de descuento para ti y para tu amigo",
+          "icon": "trae-a-un-amigo.png"
+        },
+        {
+          "title": "Compositores",
+          "body": "Si eres un artista de YouTube o un compositor, ¡escríbenos!",
+          "icon": "compositores.png"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/precios",
+      "reveal": true
+    }
+  ]
+}

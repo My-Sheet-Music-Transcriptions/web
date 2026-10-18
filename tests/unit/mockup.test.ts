@@ -71,9 +71,9 @@ describe('ds:mockup reproduces the committed gift-card mockup', () => {
 })
 
 describe('a service page', () => {
-  // The homepage is a data page (page.json, edited in the CMS): the piano page is the hand-built page with the most data.
+  // The homepage and the piano page are data pages (page.json, edited in the CMS): the violin page is hand-built.
   it('opens with its PageHeader and resolves the data it imports', () => {
-    const result = mockupFromEntry(entryOf('piano'))
+    const result = mockupFromEntry(entryOf('violin-transcription-service'))
     const names = result.blocks.map((b) => b.name)
     expect(names.slice(0, 3)).toEqual(['TopBar', 'Header', 'PageHeader'])
     expect(names.at(-1)).toBe('Footer')

@@ -1,0 +1,63 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Cancionero Nadie Sabe Nada - Libro de Partituras",
+  "description": "Pre-reserva tu cancionero del Nadie Sabe Nada para que Mia Font, Berto y Buenafuente vean que el mundo necesita este libro de partituras.",
+  "translationKey": "nadie-sabe-nada-cancionero-partituras",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "split",
+      "eyebrow": "El cancionero",
+      "title": "Nadie Sabe Nada",
+      "lead": "Este cancionero es único y exclusivo, y no está a la venta ni se ha comercializado, pero es una idea y regalo que se le hizo a Berto y Andreu en el episodio T13x23. Si lo pre-reservas aquí, le haremos llegar el interés que ha generado al presidente del Nadie para que tome las acciones oportunas. **Reserva aquí tu libro de partituras de Nadie Sabe Nada con todas las canciones icónicas del programa.**",
+      "cta": {
+        "label": "Resérvalo ya",
+        "href": "#reserva"
+      },
+      "image": "nadie-sabe-nada-portada.png",
+      "alt": "Portada de El cancionero de Nadie Sabe Nada, con Andreu Buenafuente y Berto Romero"
+    },
+    {
+      "type": "PictureGrid",
+      "label": "Páginas del cancionero de Nadie Sabe Nada",
+      "shape": "photo",
+      "columns": 5,
+      "zoom": true,
+      "items": [
+        {
+          "image": "nadie-sabe-nada-portada.png",
+          "alt": "Portada de El cancionero de Nadie Sabe Nada"
+        },
+        {
+          "image": "nadie-sabe-nada-me-da-asco-tu-familia.png",
+          "alt": "Partitura de «Me da asco tu familia», de Berto Romero"
+        },
+        {
+          "image": "nadie-sabe-nada-presentacion.png",
+          "alt": "Página de presentación: «Este es el primer libro de la historia que captura la improvisación de Andreu y Berto y fracasa estrepitosamente en el intento.»"
+        },
+        {
+          "image": "nadie-sabe-nada-trituradora-de-papel.png",
+          "alt": "Partitura de «Trituradora de papel», de Berto Romero y Andreu Buenafuente"
+        },
+        {
+          "image": "nadie-sabe-nada-indice.png",
+          "alt": "Índice de canciones de El cancionero de Nadie Sabe Nada"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "reservationForm",
+      "title": "Cancionero – Nadie Sabe Nada",
+      "lead": "Deja tu correo aquí y dile a Mia Font que quieres tu libro de partituras de *Nadie Sabe Nada* para disfrutar, tocar y cantar el lore musical del programa en casa, para regalarlo, o para triturarlo.",
+      "id": "reserva",
+      "returnTo": "/nadie-sabe-nada-cancionero-partituras",
+      "variant": "reservation",
+      "eyebrow": "La Meva Partitura Edicions",
+      "reveal": true
+    }
+  ]
+}

@@ -3,6 +3,8 @@ import { cn } from '~/lib/cn'
 import { fill } from '~/lib/strings'
 import { type Audio, AudioPlayer } from './AudioPlayer'
 import { Carousel, type Slide } from './Carousel'
+import { type Clip, ClipPlayer } from './Clip'
+import { Lightbox } from './Lightbox'
 import { Picture, type PictureSource } from './Picture'
 import { type Video, VideoEmbed } from './VideoEmbed'
 
@@ -22,6 +24,10 @@ export interface MediaContent {
   video?: Video
   /** A recording instead of a picture: an audio player. */
   audio?: Audio
+  /** A short silent video (an mp4 of the page folder) that plays in a loop, instead of a picture. */
+  clip?: Clip
+  /** The picture opens larger when clicked (a score to read, a photo of a gallery); needs `labels`. */
+  zoom?: boolean
   /** The words of the carousel arrows and the play button: `media` from content/<locale>/data/labels. */
   labels?: MediaLabels
   /** The still shown over the video until it is played (`~/assets/images/brand/video-poster.jpg`). */
@@ -44,7 +50,8 @@ export interface MediaProps extends MediaContent {
 
 /**
  * The one place that decides how media shows: a video behind its poster and play button, a recording in an
- * audio player, a carousel or a before/after pair of pictures, or one picture with its caption. Page headers,
+ * audio player, a short looping clip, a carousel or a before/after pair of pictures, or one picture with its
+ * caption, which can open larger when clicked (`zoom`). Page headers,
  * MediaText, samples, feature cards and steps all show their media through it.
  */
 export function Media({
@@ -55,6 +62,8 @@ export function Media({
   layout = 'carousel',
   video,
   audio,
+  clip,
+  zoom,
   labels,
   videoPoster,
   sizes,
@@ -82,6 +91,7 @@ export function Media({
         className={cn('w-full', className)}
       />
     )
+  if (clip) return <ClipPlayer {...clip} className={cn('w-full', className)} />
   if (images && images.length > 1 && layout === 'pair')
     return (
       <div className={cn('grid grid-cols-2 gap-4', className)}>
@@ -115,15 +125,29 @@ export function Media({
     )
   const one = image ? { image, alt, caption } : images?.[0]
   if (!one) return null
+  const picture = (
+    <Picture
+      image={one.image}
+      alt={one.alt}
+      sizes={sizes}
+      priority={priority}
+      className={cn('h-auto w-full', one.caption && 'rounded-card shadow-card', imageClassName)}
+    />
+  )
   return (
     <figure className={cn('flex flex-col gap-2.5', className)}>
-      <Picture
-        image={one.image}
-        alt={one.alt}
-        sizes={sizes}
-        priority={priority}
-        className={cn('h-auto w-full', one.caption && 'rounded-card shadow-card', imageClassName)}
-      />
+      {zoom && labels?.enlarge && labels.close ? (
+        <Lightbox
+          image={one.image}
+          alt={one.alt}
+          openLabel={fill(labels.enlarge, { alt: one.alt })}
+          closeLabel={labels.close}
+        >
+          {picture}
+        </Lightbox>
+      ) : (
+        picture
+      )}
       {one.caption ? (
         <figcaption className="text-[13px] italic leading-[1.5] text-muted">
           {one.caption}

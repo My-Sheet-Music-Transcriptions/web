@@ -1,0 +1,33 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Grandes Éxitos Pop Español - Libro de Partituras para Piano",
+  "description": "Reserva aquí tu libro de partituras de Sony Music Publishing Spain con los grandes éxitos del pop español de los últimos 30 años!",
+  "translationKey": "grandes-exitos-pop-espanol-sony",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "split",
+      "eyebrow": "Libro de partituras para piano",
+      "title": "Grandes Éxitos del Pop Español",
+      "lead": "**Reserva aquí tu libro de partituras de Sony Music Publishing Spain con los grandes éxitos del pop español de los últimos 30 años!**",
+      "cta": {
+        "label": "Resérvalo ya",
+        "href": "#reserva"
+      },
+      "image": "sony-portada-partituras.png",
+      "alt": "Portada del libro Grandes Éxitos del Pop Español, partituras para piano, Sony Music Publishing"
+    },
+    {
+      "type": "ContactSection",
+      "form": "reservationForm",
+      "title": "Grandes Éxitos Pop Español",
+      "lead": "Asegura tu ejemplar del libro de partituras definitivo. Los éxitos de los últimos 30 años en tu piano",
+      "id": "reserva",
+      "returnTo": "/grandes-exitos-pop-espanol-sony",
+      "variant": "reservation",
+      "eyebrow": "LANZAMIENTO OFICIAL - SONY MUSIC PUBLISHING",
+      "reveal": true
+    }
+  ]
+}

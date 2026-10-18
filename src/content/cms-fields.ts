@@ -17,6 +17,7 @@ import type { FaqGroup, FaqItem } from './types.ts'
 type Kind =
   | 'string'
   | 'text'
+  | 'link'
   | 'number'
   | 'boolean'
   | 'select'
@@ -76,9 +77,18 @@ const make = <V, R extends boolean>(
 /** One line of text. */
 export const line = <R extends boolean = false>(label: string, o?: Opts<R>) =>
   make<string, R>('string', label, o)
-/** Several lines: light markdown (paragraphs, "- " lists, **bold**, [links](/path)). */
+/**
+ * Several lines: light markdown (paragraphs, "- " lists, **bold**, [links](/path)), edited in the CMS's `prose` widget
+ * (a link button that picks a page of the language; links checked as they are written).
+ */
 export const prose = <R extends boolean = false>(label: string, o?: Opts<R>) =>
   make<string, R>('text', label, o)
+/**
+ * Where a button or a card leads: a page of the language (`/precios`, `/#contact`), another site, mailto: or tel:
+ * (src/content/links.ts), edited in the CMS's `link` widget (the language's pages offered by title, checked as typed).
+ */
+export const link = <R extends boolean = false>(label: string, o?: Opts<R>) =>
+  make<string, R>('link', label, o)
 /** A whole number from `min` to `max` (a literal union type when the prop is one: `number<2 | 3>(…)`). */
 export const number = <V extends number = number, R extends boolean = false>(
   label: string,
@@ -102,6 +112,9 @@ export const picture = <R extends boolean = false>(
 ) => make<PictureSource, R>('image', label, o)
 /** A recording of the page folder (an mp3), stored as its file name, which a block gets as its URL. */
 export const sound = <R extends boolean = false>(label: string, o?: Opts<R>) =>
+  make<string, R>('file', label, o)
+/** A short video of the page folder (an mp4), stored by file name; the block gets its URL. */
+export const movie = <R extends boolean = false>(label: string, o?: Opts<R>) =>
   make<string, R>('file', label, o)
 /**
  * One of a few lists or values kept in code, in content/<locale>/data/<file>.ts (the reviews, the prices, a form's
@@ -202,8 +215,11 @@ export const faqGroups = <R extends boolean = false>(
 
 // --- A block's fields, typed by its props ---------------------------------------------------------------------
 
-/** Props the CMS never sets: `children` is the `body` field, `labels` comes from the locale's words. */
-type Hidden = 'children' | 'labels'
+/**
+ * Props the CMS never sets: `children` is the `body` field, `labels` comes from the locale's words, `videoPoster` from
+ * its brand.
+ */
+type Hidden = 'children' | 'labels' | 'videoPoster'
 type Req<P> = { [K in keyof P]-?: undefined extends P[K] ? never : K }[keyof P]
 
 /**
@@ -228,10 +244,15 @@ export interface CmsBlock<P = unknown> {
   props?: Partial<P>
   /** The line Decap shows for a collapsed block (`{{fields.title}}`). */
   summary?: string
-  /** The locale's words (content/<locale>/data/labels.ts) the block gets as `labels`. */
-  words?: 'mediaLabels' | 'reviewLabels'
+  /**
+   * The locale's words (content/<locale>/data/labels.ts) the block gets as `labels`; with `mediaLabels`, also the
+   * brand's video poster (content/<locale>/data/brand.ts) as `videoPoster`.
+   */
+  words?: 'mediaLabels' | 'reviewLabels' | 'shareLabels'
   /** The srcset widths its pictures are built at (vite-imagetools `w=`), as on hand-built pages. */
   pictureWidths: string
+  /** A list the block gets as `items` without a field for it: `posts`, the page's language's blog posts. */
+  feed?: 'posts'
   fields: CmsFields<P>
 }
 
@@ -242,7 +263,8 @@ export type AnyCmsBlock = Omit<CmsBlock, 'fields'> & { fields: Readonly<Record<s
 
 const WIDGETS: Record<Kind, string> = {
   string: 'string',
-  text: 'text',
+  text: 'prose',
+  link: 'link',
   number: 'number',
   boolean: 'boolean',
   select: 'select',
@@ -289,9 +311,9 @@ const PICTURE = /^[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp|avif)$/i
 export const isPictureName = (value: unknown): value is string =>
   typeof value === 'string' && PICTURE.test(value)
 
-const SOUND = /^[a-z0-9][a-z0-9._-]*\.(mp3|m4a|ogg|wav)$/i
+const SOUND = /^[a-z0-9][a-z0-9._-]*\.(mp3|m4a|ogg|wav|mp4|webm)$/i
 
-/** A recording of the page folder, as a file field names it. */
+/** A recording (or a clip's mp4) of the page folder, as a file field names it. */
 export const isSoundName = (value: unknown): value is string =>
   typeof value === 'string' && SOUND.test(value)
 
@@ -303,6 +325,7 @@ export function checkField(f: Field, value: unknown, at: string): string[] {
   switch (f.kind) {
     case 'string':
     case 'text':
+    case 'link':
       return typeof value === 'string' ? [] : [`${at}: expected text`]
     case 'boolean':
       return typeof value === 'boolean' ? [] : [`${at}: expected true or false`]
@@ -320,7 +343,9 @@ export function checkField(f: Field, value: unknown, at: string): string[] {
     case 'image':
       return isPictureName(value) ? [] : [`${at}: expected a picture's file name (photo.jpg)`]
     case 'file':
-      return isSoundName(value) ? [] : [`${at}: expected a recording's file name (piece.mp3)`]
+      return isSoundName(value)
+        ? []
+        : [`${at}: expected a recording's or a video's file name (piece.mp3, clip.mp4)`]
     case 'object':
       return isRecord(value)
         ? checkFields(f.fields ?? {}, value, at)

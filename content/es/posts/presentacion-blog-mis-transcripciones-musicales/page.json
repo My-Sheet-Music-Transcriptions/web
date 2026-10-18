@@ -1,0 +1,66 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Os presentamos el blog de Mis Transcripciones Musicales",
+  "description": "Descubre quién está detrás del mayor servicio de transcripción de partituras online! Mis transcripciones musicales te da la bienvenida!",
+  "translationKey": "presentacion-blog-mis-transcripciones-musicales",
+  "date": "2021-01-12",
+  "excerpt": "¡Bienvenidos y bienvenidas al blog de Mis Transcripciones Musicales! Estábamos impacientes por presentar este nuevo espacio virtual, donde compartiremos contenido relacionado con nuestros servicios de transcripción musical. ¿Quiénes somos?",
+  "cover": {
+    "src": "galeria-2-1.jpg",
+    "alt": "Os presentamos el blog de Mis Transcripciones Musicales"
+  },
+  "tags": [
+    "¿Quiénes somos?"
+  ],
+  "author": "Álvaro Martínez",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Os presentamos el blog de Mis Transcripciones Musicales",
+      "date": "2021-01-12",
+      "image": "galeria-2-1.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Os presentamos el blog de Mis Transcripciones Musicales",
+      "items": [
+        {
+          "body": "## ¡Bienvenidos y bienvenidas al blog de Mis Transcripciones Musicales!\n\nEstábamos impacientes por presentar este nuevo espacio virtual, **donde compartiremos contenido relacionado con nuestros servicios de transcripción musical**.\n\n## ¿Quiénes somos?\n\nSomos un [**equipo de 40 músicos profesionales**](/) con distintas formaciones académicas y muchos años de experiencia como arreglistas, compositores, transcriptores, e intérpretes musicales.\n\nEl **equipo de atención al cliente y gestión de proyectos** está compuesto por **10 músicos especializados.** Todos ellos tienen una amplia experiencia en gestión y conocimientos musicales. Creemos que es importante **responder con rapidez y conocimiento de causa a todas las solicitudes** que recibimos. Siempre hacemos que la experiencia del cliente con nosotros sea lo más sencilla y cómoda posible. Además, contamos con **dos profesionales** dedicados **exclusivamente al control de calidad** y a la coordinación de nuestro equipo.\n\nNuestro **equipo de transcriptores** está formado por una **treintena de profesionales** con una larga trayectoria musical y cientos de transcripciones en su haber. La mayoría de ellos trabajan con nosotros a tiempo completo y combinan su trabajo como intérpretes.\n\n**Son músicos de renombre en la escena musical, con sus propios proyectos**, muy dinámicos e interesantes. A todo esto se suman otras figuras importantes como el diseño web, el departamento técnico o el marketing digital, todas ellas orientadas hacia la misma dirección. **¡Llegar cada día a más músicos de todo el mundo!**",
+          "image": "galeria-5-1.jpg",
+          "alt": "Júlia G. y Xavi C. - Transcriptores profesionales de música"
+        },
+        {
+          "body": "## ¿Cómo trabajamos?\n\nSiempre tenemos al transcriptor adecuado listo para trabajar en su proyecto y entregar la partitura rápidamente si es necesario. Aun así, nos aseguramos de que sólo pianistas de jazz experimentados trabajen en las transcripciones para piano de jazz, que sólo guitarristas experimentados trabajen en las tablaturas para guitarra o que sólo un orquestador y director de orquesta experimentado trabaje en los conjuntos sinfónicos. Y así sucesivamente para todos los demás instrumentos y conjuntos.\n\nUtilizamos **Sibelius, Finale, Musescore** y otros programas de notación estándar del sector, pero no utilizamos programas de transcripción musical automática. Ninguno puede cumplir los estándares de precisión y calidad que ofrecemos en **[Mis Transcripciones Musicales](https://www.youtube.com/@MyJazzSheetMusicTranscriptions)**.\n\nCreemos que la música debe ser **transcrita por músicos**, con **paciencia, meticulosidad y atención a cada detalle**, a mano. Para realizar adaptaciones 100% específicas para el instrumento o conjunto instrumental para el que escribimos, es necesario abordar cada obra desde cero con el mismo cuidado que un compositor pondría al escribir una obra nueva. Tras **más de 35.000 transcripciones en pocos años**, esta forma de trabajar nos demuestra que es la única manera de obtener **resultados excelentes que cumplan sus expectativas**.",
+          "image": "galeria-2-1.jpg",
+          "alt": "Marc S. - Transcriptores profesionales de música"
+        },
+        {
+          "body": "## Sobre el Blog\n\n**Queremos que nos conozcáis mejor y más de cerca**, tejiendo redes con vosotros, los lectores. Por ello os invitamos a dejar comentarios, escribirnos y proponer nuevos temas sobre los que os interese saber más. Nuestro objetivo es **proporcionar las partituras de mayor calidad** a los músicos de todo el mundo. No entendemos un mundo sin que toda la música esté transcrita para ser reproducida mil veces si es necesario.\n\nEn este blog encontraréis **artículos sobre nuestro funcionamiento interno,** nuestros **músicos favoritos, análisis de software**, divulgación sobre teoría musical y demás temas de interés para la **comunidad de músicos, como tú, con los que trabajamos día a día.** Así pues, podréis gozar de un montón de contenido informativo a la vez que –esperamos– entretenido.\n\n## ¡Empezamos!",
+          "image": "mesa-de-trabajo-1-2x2.png",
+          "alt": "¡Empezamos!"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/presentacion-blog-mis-transcripciones-musicales",
+      "reveal": true
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Opiniones - Mis Transcripciones Musicales",
+  "description": "Lee las opiniones de clientes que han contratado nuestros servicios de transcripción de música en las redes Facebook y Google.",
+  "translationKey": "customer-reviews",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Opiniones de nuestros clientes"
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Por motivos de transparencia, todas las reseñas están escritas por clientes reales verificados en plataformas independientes.",
+      "lead": "Haz clic en cada reseña o plataforma para leer la fuente original.",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand",
+      "reveal": true
+    },
+    {
+      "type": "Testimonials",
+      "title": "Opiniones verificadas",
+      "items": "allReviews",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/opiniones",
+      "reveal": true
+    }
+  ]
+}

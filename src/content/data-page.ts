@@ -6,7 +6,9 @@ import { checkFields, decodeFields, type Resolve } from './cms-fields.ts'
  * A data page: the second kind of page folder, edited in the CMS (/admin, Decap) instead of in code. Where a
  * hand-built page has `index.tsx` + `meta.ts`, a data page has one `page.json`: the meta fields at the top level
  * (the same schema as a meta.ts) and `blocks`, the page's blocks in order, each `{ "type": "<Block>", …props }`.
- * Its pictures sit in the folder as usual and are named by file name ("image": "office-8.jpg").
+ * Its pictures sit in the folder as usual and are named by file name ("image": "office-8.jpg"). It opens with
+ * `language` and `collection`, the two parts of its folder (`content/<language>/<collection>/<slug>/page.json`): the
+ * CMS lists every language's pages in one collection and reads them to filter, group and file a new page.
  *
  * Plain data and pure functions: shared by the Vite plugin that turns page.json into a page component
  * (scripts/lib/vite-data-pages.ts), the content loaders (src/content/index.ts, scripts/lib/content-fs.ts), the
@@ -53,9 +55,17 @@ export function splitDataPage(
 ): { meta: unknown; blocks: DataBlock[] } {
   if (!data || typeof data !== 'object' || Array.isArray(data))
     throw new Error(`${file}: a page.json is one object (the meta fields and "blocks")`)
-  const { blocks, ...meta } = dropEmpty(data) as Record<string, unknown>
+  const { blocks, language, collection, ...meta } = dropEmpty(data) as Record<string, unknown>
   if (!Array.isArray(blocks) || blocks.some((b) => typeof b?.type !== 'string'))
     throw new Error(`${file}: "blocks" must be a list of { "type": "<Block>", … }`)
+  const folder = /^(\w+)\/(\w+)\/[^/]+\/page\.json$/.exec(file)
+  if (folder) {
+    const [, loc, coll] = folder
+    if (language !== loc || collection !== coll)
+      throw new Error(
+        `${file}: must open with "language": "${loc}" and "collection": "${coll}", the parts of its folder (found ${JSON.stringify(language)} and ${JSON.stringify(collection)})`,
+      )
+  }
   if (check) {
     const problems = (blocks as DataBlock[]).flatMap(({ type, ...props }, i) =>
       isCmsBlock(type)

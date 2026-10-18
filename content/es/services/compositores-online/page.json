@@ -1,0 +1,125 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Compositores de música online - Mis Transcripciones Musicales",
+  "description": "Compositores de música profesionales online. Obtén la partitura de tu canción o composición musical profesional en poco tiempo.",
+  "translationKey": "compositores-online",
+  "shortTitle": "Compositores de música online",
+  "icon": "arreglos",
+  "group": "editing",
+  "priceFrom": 19,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Compositores de música online",
+      "subtitle": "Te ayudamos a componer cualquier tipo de canción o pieza",
+      "image": "arreglos.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nComponemos música para ti: desde canciones pop, hasta música clásica. Podemos componer piezas o canciones para cualquier instrumento o conjunto de instrumentos que necesites.\n\nNuestros compositores y arreglistas crearán una partitura personalizada para ti.",
+          "video": {
+            "youtube": "d-Ktx632YKQ",
+            "title": "Compositores de música online",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "piano-vocal-1-tears-never-dry.png",
+          "imageWidth": 540
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand",
+      "reveal": true
+    },
+    {
+      "type": "Samples",
+      "title": "Más ejemplos de partituras personalizadas",
+      "items": [
+        {
+          "title": "Partitura de piano personalizada",
+          "video": {
+            "youtube": "nI62a15qRMk",
+            "title": "Partitura de piano personalizada",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-1-some-might-say.png",
+          "alt": "Piano 1 (Some Might Say), primera página de la partitura"
+        },
+        {
+          "title": "Partitura vocal con letra y acordes",
+          "video": {
+            "youtube": "lf54fPqVpCk",
+            "title": "Partitura vocal con letra y acordes",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "vocal-lead-sheet-2-im-tired.png",
+          "alt": "Vocal lead sheet 2 (I'm Tired), primera página de la partitura"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand",
+      "reveal": true
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "composerPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      },
+      "reveal": true
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      },
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/compositores-online",
+      "reveal": true
+    }
+  ]
+}

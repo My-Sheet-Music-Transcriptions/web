@@ -1,0 +1,145 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Transcripciones para piano - Mis Transcripciones Musicales",
+  "description": "Servicio de transcripción de partituras para piano. Realizado por transcriptores y pianistas profesionales. Preciso al 100%.",
+  "translationKey": "piano",
+  "shortTitle": "Transcripciones para piano",
+  "icon": "piano",
+  "group": "keys",
+  "priceFrom": 15,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcripciones para piano",
+      "subtitle": "Transcribimos con precisión cualquier canción para piano",
+      "image": "piano.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\n**Transcribimos tus canciones favoritas para piano.** Podrás tocar canciones de los mejores musicales o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de piano** estarán encantados de crear una partitura personalizada para ti.",
+          "video": {
+            "youtube": "nI62a15qRMk",
+            "title": "Transcripciones para piano",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "piano-1-some-might-say.png",
+          "imageWidth": 540
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand",
+      "reveal": true
+    },
+    {
+      "type": "Samples",
+      "title": "Más partituras y transcripciones de piano",
+      "items": [
+        {
+          "title": "Arreglos musicales para piano",
+          "video": {
+            "youtube": "_jvfq4YXxZs",
+            "title": "Arreglos musicales para piano",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-2-on-eagles-wings.png",
+          "alt": "Piano 2 (On Eagle's Wings), primera página de la partitura"
+        },
+        {
+          "title": "Transcripciones de covers de piano",
+          "video": {
+            "youtube": "Eq1bToFlZT8",
+            "title": "Transcripciones de covers de piano",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-3-for-once-in-my-life.png",
+          "alt": "Piano 3 (For Once In My Life), primera página de la partitura"
+        },
+        {
+          "title": "Transcripciones de piano virtuoso",
+          "video": {
+            "youtube": "LmnejiLlR-M",
+            "title": "Transcripciones de piano virtuoso",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-4-white-christmas.png",
+          "alt": "Piano 4 (White Christmas), primera página de la partitura"
+        },
+        {
+          "title": "Transcripciones de piano jazz",
+          "video": {
+            "youtube": "klF1rHHa6sQ",
+            "title": "Transcripciones de piano jazz",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-5-theme-of-love-final-fantasy-4.png",
+          "alt": "Piano 5 (Theme of Love, Final Fantasy 4), primera página de la partitura"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand",
+      "reveal": true
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "pianoPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      },
+      "reveal": true
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      },
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/piano",
+      "reveal": true
+    }
+  ]
+}

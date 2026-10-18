@@ -1,0 +1,76 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "El finale de Finale: MakeMusic dejará de desarrollar Finale",
+  "description": "MakeMusic ha anunciado que dejará de desarrollar Finale, uno de los programas líderes de la industria. Analizamos la noticia y su impacto.",
+  "translationKey": "makemusic-dejara-de-desarrollar-finale",
+  "date": "2024-08-29",
+  "excerpt": "«Finale ya no es el futuro de los programas de notación musical […]. Hemos tomado la decisión de detener su desarrollo.»…",
+  "cover": {
+    "src": "finale-2.png",
+    "alt": "El finale de Finale: MakeMusic dejará de desarrollar Finale"
+  },
+  "tags": [
+    "Actualidad Musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "El finale de Finale: MakeMusic dejará de desarrollar Finale",
+      "date": "2024-08-29",
+      "image": "finale-2.png"
+    },
+    {
+      "type": "Article",
+      "label": "El finale de Finale: MakeMusic dejará de desarrollar Finale",
+      "items": [
+        {
+          "body": "## «Finale ya no es el futuro de los programas de notación musical […]. Hemos tomado la decisión de detener su desarrollo.»\n\n## El final de una era\n\nHace unos días, el 26 de agosto del 2024, una noticia inesperada llegó a la industria musical. Greg Dell’Era, presidente de MakeMusic, anunció que la compañía ha decidido **detener el desarrollo de Finale**, uno de los programas de notación musical líderes en la industria.\n\nDespués de 35 años siendo uno de los principales recursos de notación musical del mundo, Dell’Era aseguró que «Finale ya no es el futuro de la notación musical […]. En lugar de lanzar nuevas versiones de escaso valor para los usuarios, **hemos decidido dar por finalizado su desarrollo**».\n\n¡Que no cunda el pánico! Por ahora, **Finale funciona en dispositivos en los que ya estaba instalado**. Sin embargo, MakeMusic ha anunciado algunos cambios inmediatos y futuros que deberás tener en cuenta si eres usuario de Finale:\n\n- A partir de ahora, «**no habrá más actualizaciones para Finale** ni ninguna de sus herramientas». Y ya no es posible «**comprar o actualizar Finale** desde la página de MakeMusic».\n- A partir de agosto de 2025, «**no será posible autorizar Finale en nuevos dispositivos o renovar la licencia**», informa la compañía. Dentro de un año también se **retirará el servicio de soporte oficial**.",
+          "image": "screen-shot-2021-07-16-at-11-26-10-am-1.png",
+          "alt": "El final de una era"
+        },
+        {
+          "body": "## Dorico, ¿el futuro de la notación musical?\n\n[**En el mismo anuncio**](https://www.finalemusic.com/blog/end-of-finale-new-journey-dorico-letter-from-president/), Greg Dell’Era también expresó su contundente opinión sobre la dirección que tomará la industria de la notación musical en los próximos años.\n\n> «Existe un nuevo futuro para la industria de la notación: Dorico, desarrollado por Steinberg […].»\n\nDe esta manera, MakeMusic informó sobre **su acuerdo de colaboración con** [**Steinberg Media Technologies**](https://www.steinberg.net/). Esta empresa alemana, subsidiaria de Yamaha, se especializa en hardware y software musical y desarrolla **Dorico** y **Cubase**.\n\nSu acuerdo permite «a los usuarios de Finale o PrintMusic comprar la licencia de Dorico Pro–la más alta hasta la fecha–por **solo $149 USD**». Si eres usuario de Finale, tu **75 % de descuento para Dorico Pro 5** ya está disponible [**en tu área personal de MakeMusic**](https://store.makemusic.com/Store/?_ga=2.243818819.792424882.1724746705-414307537.1724746705). Según lo que ha informado la empresa, el descuento será válido por tiempo limitado.",
+          "image": "captura-de-pantalla-2024-08-27-a-las-18-35-41.png",
+          "alt": "Dorico, ¿el futuro de la notación musical?"
+        },
+        {
+          "body": "Steinberg ha querido dar la bienvenida a los usuarios de Finale a la comunidad de Dorico. Clyde Sendke ha declarado que saben «que es difícil dejar atrás un programa de confianza». Sin embargo, desde la compañía «están seguros de que los usuarios podrán apoyarse en los **eficientes recursos de Dorico Pro**».\n\n## Para hacer más fácil el cambio de Finale a Dorico\n\nTanto MakeMusic como Steinberg están lanzando diferentes recursos para hacer el cambio de Finale a Dorico más llevadero a todos los usuarios que lo necesiten. Hemos recogido algunos, pero, sin duda, lanzarán muchos más en las próximas semanas.\n\nDaniel Spreadbury, de Steinberg, ha compartido un artículo en su blog, en el que amplía la información acerca de esta gran noticia. **[*After Sunset: your path from Finale to Dorico*](https://blog.dorico.com/2024/08/finale-sunset/)**. Spreadbury explica con detalle la andadura de Finale desde su presentación en 1988, y ofrece soporte y ayuda a los usuarios, a través de **[una página de Preguntas Frecuentes](https://www.steinberg.net/dorico/finale-crossgrade/faq)**.\n\nAdemás, Steinberg le ha encargado al experto Ben Byram-Wigfield, usuario de Finale convertido a Dorico, la producción de **una serie de vídeos para presentar Dorico a usuarios de Finale**. Son en inglés, y ya están disponibles en modo lista de YouTube, en el canal de Steinberg.",
+          "video": {
+            "youtube": "videoseries",
+            "title": "Switching from Finale to Dorico"
+          }
+        },
+        {
+          "body": "## La despedida de MakeMusic a Finale\n\nEn su comunicado, Dell’Era se ha despedido en nombre de MakeMusic de los usuarios de Finale. «Finale ha terminado, **pero sabemos que vuestro viaje musical no**. Quiero expresar la más sincera y cálida gratitud a todos nuestros leales usuarios. Toda la organización os agradece vuestra confianza […]».\n\nEn [**Mis Transcripciones Musicales**](/), hemos apoyado Finale y otros programas de notación musical durante años. Seguiremos trabajando para **adaptarnos a la industria musical.** Y apoyando programas como **Dorico, Sibelius, MuseScore** y **GuitarPro** entre nuestros músicos y transcriptores.",
+          "image": "dorico-logo.png",
+          "alt": "La despedida de MakeMusic a Finale"
+        },
+        {
+          "body": "Nuevas noticias están por llegar – ¡estad atentos!"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/makemusic-dejara-de-desarrollar-finale",
+      "reveal": true
+    }
+  ]
+}

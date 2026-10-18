@@ -1,0 +1,86 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "5 Festivales de música de Barcelona para este verano",
+  "description": "Los mejores festivales de música de Barcelona para este verano 2024, un ránking del equipo de Mis Transcripciones Musicales",
+  "translationKey": "5-festivales-de-musica-de-barcelona-para-este-verano",
+  "date": "2024-07-03",
+  "excerpt": "Próximos Festivales de música en Barcelona para este verano 2024 ¿Estás planeando una escapada a Barcelona este verano 2024? ¿Te gusta la música en directo, los días de sol…",
+  "cover": {
+    "src": "festival-cruilla.jpg",
+    "alt": "5 Festivales de música de Barcelona para este verano"
+  },
+  "tags": [
+    "Actualidad Musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "5 Festivales de música de Barcelona para este verano",
+      "date": "2024-07-03",
+      "image": "festival-cruilla.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "5 Festivales de música de Barcelona para este verano",
+      "items": [
+        {
+          "body": "## Próximos Festivales de música en Barcelona para este verano 2024\n\n¿Estás planeando una escapada a **Barcelona** este **verano 2024**? ¿Te gusta la música en directo, los días de sol y las famosas noches mediterráneas? ¡Nunca es tarde para disfrutar de un **festival de música al aire libre**!\n\nEspecialmente durante los meses de verano, Barcelona acoge numerosos festivales de música. Para facilitarte la toma de decisiones, hemos decidido hacer una lista de los **mejores festivales de música de Barcelona** para este verano 2024. ¡Los hay para todos los gustos!\n\n## Festival Vida\n\nEl **[Festival Vida](https://www.vidafestival.com/es/)** se celebra **entre el 4 y el 6 de julio** en **Vilanova i la Geltrú**, un bonito pueblo costero muy cercano a Barcelona. Tiene un cartel variado e interesante, que incluye grupos internacionales, pero también tesoros de la **cultura musical española y catalana**.\n\nNuestra recomendación personal es el concierto de la cantautora catalana **Sílvia Pérez Cruz**. También subirán al escenario artistas como **James Blake, mia,** y **Paolo Nutini**. Además de estos nombres ya conocidos, el Festival Vida acogerá numerosos conciertos de **artistas alternativos**, que podrás conocer sobre los escenarios.",
+          "image": "festival-vida.jpg",
+          "alt": "© Festival Vida",
+          "caption": "© Festival Vida"
+        },
+        {
+          "body": "## Rock Fest Barcelona\n\nPara los más rockeros, el **[Rock Fest Barcelona 2024](https://www.barcelonarockfest.com/en/home/)** se celebrará en el **Palau Olímpic de Badalona** (en Barcelona) entre el **5 y el 7 de julio**.\n\nEl Rock Fest Barcelona recibirá famosos grupos internacionales, como **Deep Purple, Pantera, W.A.S.P, Hatebreed, Parkway Drive o Europe**. Sin embargo, en él también podrás descubrir las **bandas de rock más jóvenes y punteras**.",
+          "image": "rock-fest-barcelona.jpg",
+          "alt": "© Rock Fest Barcelona",
+          "caption": "© Rock Fest Barcelona"
+        },
+        {
+          "body": "## Festival Cruïlla\n\nEl [**Festival Cruïlla**](https://www.cruillabarcelona.com/es/festival-cruilla-2024/) es, sin duda, una de las citas imprescindibles de los amantes de la actualidad musical. Este año, se celebrará en Barcelona **entre el 10 y el 13 de julio**, con un cartel **tan diverso como siempre**. ¡Apto para todos los gustos musicales!\n\nSi te gusta la salsa, podrás disfrutar del concierto de **Oscar D’Leon** y sentir ese ritmo latino en el cuerpo. Los fanáticos de la música cubana y el latin jazz también tendrán su espacio: una cita con el último proyecto de **Chucho Valdés**.\n\nLa generación de la MTV podrá ver a la icónica **Avril Lavigne** y, si lo que más te gusta es el rock británico, los **Kasabian** también visitarán el festival. Además, el 12 de julio, **Sue** presentará su tercer álbum.\n\nEl sábado, día 13, podrás disfrutar de un programa lleno de los más conocidos artistas, como **Pet Shop Boys, The Smashing Pumpkins y Johnny Marr**. Por último, pero no menos importante, **Oques Grasses** te dará la oportunidad de sumergirte en lo más actual de la cultura musical catalana.",
+          "image": "festival-cruilla.jpg",
+          "alt": "© Festival Cruilla",
+          "caption": "© Festival Cruilla"
+        },
+        {
+          "body": "## Festival Alma Barcelona\n\nEl [**Festival Alma**](https://almafestival.info/barcelona/) comenzó el pasado mes de junio y **finalizará el 21 de julio**. ¡Aún estás a tiempo de disfrutar de este singular festival!\n\nLo más especial de este evento es su escenario: sus conciertos tienen lugar en el **Poble Espanyol de Montjuïc**, dentro de la ciudad de Barcelona. Por ello, su entorno es muy emblemático. Artistas de muy diversos géneros musicales presentan sus proyectos en el Festival Alma. Algunos de ellos son **Hozier, Take That, Jamie Cullum, James Blunt,** y **Kool and the Gang**.",
+          "image": "carlota-figueras-festival-alma.jpg",
+          "alt": "© Carlota Figueras _ Festival Alma",
+          "caption": "© Carlota Figueras _ Festival Alma"
+        },
+        {
+          "body": "## Brunch Electronik Festival\n\nSi lo que más te gusta es **la música electrónica y la noche**, no puedes perderte el [**Brunch Electronik Festival**](https://brunchelectronikfestival.com/en/). Durará varios días, comenzando el **9 de agosto**, y tendrá lugar en el **Parc del Forum de Barcelona**.\n\nSi acudes a este festival, disfrutarás de **fiesta y música electrónica** hasta por la mañana, seguidas de after-parties en diferentes rincones de la ciudad. ¿Te atreves a indagar en lo más profundo de las noches de verano en Barcelona?",
+          "image": "brunch-elektronic-festival.jpg",
+          "alt": "© Brunch Elektronic Festival",
+          "caption": "© Brunch Elektronic Festival"
+        },
+        {
+          "body": "## Tus partituras para el post-festival\n\nSi ya has podido disfrutar de un festival de música este verano, y ahora quieres **[tocar las canciones de tus grupos favoritos](/servicios-musicales)**, ¡no dudes en pedirnos tus partituras! En **[Mis Transcripciones Musicales](https://www.mysheetmusictranscriptions.com/services-samples)** creamos partituras de alta calidad y a tu medida, transcritas por músicos expertos.\n\nNos puedes llamar o escribir a través de nuestra web **[mistranscripcionesmusicales.com](/)**. **¡Tus canciones favoritas te están esperando!**",
+          "image": "h2-mobile-1-1.jpg",
+          "alt": "Tus partituras para el post-festival"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/5-festivales-de-musica-de-barcelona-para-este-verano",
+      "reveal": true
+    }
+  ]
+}

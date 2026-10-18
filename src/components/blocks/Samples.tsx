@@ -4,6 +4,7 @@ import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { Card } from '~/components/primitives/Card'
 import { CtaLink } from '~/components/primitives/CtaLink'
 import { Icon } from '~/components/primitives/Icon'
+import { Lightbox } from '~/components/primitives/Lightbox'
 import { Media } from '~/components/primitives/Media'
 import { RevealGroup, RevealItem } from '~/components/primitives/Motion'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
@@ -12,6 +13,7 @@ import { Tabs } from '~/components/primitives/Tabs'
 import type { Video } from '~/components/primitives/VideoEmbed'
 import type { MediaLabels, Price, PriceTone } from '~/content/types'
 import { gridCols } from '~/lib/grid'
+import { fill } from '~/lib/strings'
 
 /** One piece we transcribed: the recording (a video or an audio file) and the first page of our score. */
 export interface Sample {
@@ -55,14 +57,46 @@ export interface SamplesProps extends ShellProps {
   labels?: MediaLabels
   /** The still shown over each video until it is played (`~/assets/images/brand/video-poster.jpg`). */
   videoPoster?: PictureSource
+  /** Each score opens larger when clicked, to be read (the pricing chart). */
+  zoom?: boolean
+}
+
+/** The first page of a sample's score, which opens larger when clicked with `zoom`. */
+function Score({
+  sample,
+  sizes,
+  className,
+  zoom,
+  labels,
+}: {
+  sample: Sample
+  sizes: string
+  className: string
+  zoom?: boolean
+  labels?: MediaLabels
+}) {
+  const picture = (
+    <Picture image={sample.image} alt={sample.alt} sizes={sizes} className={className} />
+  )
+  if (!zoom || !labels?.enlarge || !labels.close) return picture
+  return (
+    <Lightbox
+      image={sample.image}
+      alt={sample.alt}
+      openLabel={fill(labels.enlarge, { alt: sample.alt })}
+      closeLabel={labels.close}
+    >
+      {picture}
+    </Lightbox>
+  )
 }
 
 /**
  * Our work, to compare: each sample's title, the recording (a YouTube video loaded on click, or an audio file
  * in a player) and the score we wrote from it. `rows`: the recording beside the score, one row per sample.
  * `columns`: side by side, the recording in a card with the instrument's icon and name, an arrow, then the
- * score. A `price` turns the title into a coloured price header, a link adds a button, and `tabs` switch the
- * samples between currencies: a pricing chart.
+ * score. A `price` makes the title a price header, a link adds a button, `tabs` switch currencies (a pricing
+ * chart), and `zoom` opens a score larger when clicked.
  */
 export function Samples({
   items = [],
@@ -70,6 +104,7 @@ export function Samples({
   variant = 'rows',
   labels,
   videoPoster,
+  zoom,
   ...shell
 }: SamplesProps) {
   const [tab, setTab] = useState(0)
@@ -117,11 +152,12 @@ export function Samples({
               </RevealItem>
               <RevealItem className="w-full">
                 <Card padding="none" shadow="band" className="overflow-hidden">
-                  <Picture
-                    image={s.image}
-                    alt={s.alt}
+                  <Score
+                    sample={s}
                     sizes="(min-width: 1025px) 360px, 100vw"
                     className="w-full"
+                    zoom={zoom}
+                    labels={labels}
                   />
                 </Card>
               </RevealItem>
@@ -160,12 +196,15 @@ export function Samples({
                 </div>
               ) : null}
             </div>
-            <Picture
-              image={s.image}
-              alt={s.alt}
-              sizes="(min-width: 768px) 420px, 100vw"
-              className="mx-auto w-full max-w-[360px] rounded-card shadow-card"
-            />
+            <div className="mx-auto w-full max-w-[360px]">
+              <Score
+                sample={s}
+                sizes="(min-width: 768px) 420px, 100vw"
+                className="w-full rounded-card shadow-card"
+                zoom={zoom}
+                labels={labels}
+              />
+            </div>
           </li>
         ))}
       </ul>

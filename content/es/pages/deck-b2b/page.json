@@ -1,0 +1,326 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Deck B2B - Mis Transcripciones Musicales",
+  "description": "Notation that brings music to life. Sheet music & MIDI for playing, learning and creating.",
+  "translationKey": "deck-b2b",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Notation that brings music to life",
+      "lead": "Sheet music & MIDI for playing, learning and creating",
+      "image": "deck-hero-transcriptor.jpg",
+      "alt": "Transcriptor trabajando con una partitura y un espectrograma en pantalla"
+    },
+    {
+      "type": "Cards",
+      "variant": "plain",
+      "columns": 3,
+      "items": [
+        {
+          "icon": "icon-what.png",
+          "title": "What",
+          "body": "Digital music notation services. **Transcription** to transform audio into digitized sheet music and MIDI.\n\n**Arrangements** to match your musical setting, level and needs."
+        },
+        {
+          "icon": "icon-why.png",
+          "title": "Why",
+          "body": "To make music notation accessible to all, and to expand music literacy around the globe.\n\nWe work with **educators**, **app developers**, **artists**, **publishers**, etc."
+        },
+        {
+          "icon": "icon-how.png",
+          "title": "How",
+          "body": "Through an expert team of highly **specialized musicians** and engineers.\n\n100 % transcribed by human ears, leveraging state-of-the-art technology."
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "Our values",
+      "body": "### Flexibility\n\nCustomized project solutions tailored to your specific needs, leveraging our team of experts.\n\n### Reliability\n\nConsistent, high-quality results you can count on, trusted by over 50,000 satisfied clients.\n\n### Accuracy\n\n100% note-for-note transcriptions, meticulously done by musicians by ear with perfect precision.\n\n### Responsiveness\n\nQuick support from our team of music specialists, with an average response time of just 1–4 hours.",
+      "image": "our-values.png",
+      "alt": "",
+      "imageSide": "left",
+      "tone": "peach",
+      "reveal": true
+    },
+    {
+      "type": "Stats",
+      "title": "Our numbers",
+      "items": [
+        {
+          "value": "+48,000 orders",
+          "label": "completed since 2018"
+        },
+        {
+          "value": "+175,000 files",
+          "label": "delivered since 2018"
+        },
+        {
+          "value": "+8,000 files/month",
+          "label": "produced by our team members"
+        },
+        {
+          "value": "+500 companies",
+          "label": "have trusted our services"
+        },
+        {
+          "value": "+40,000,000 musicians",
+          "label": "have trusted our services"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "Cards",
+      "title": "Digital use cases",
+      "lead": "Interactive and visual representation",
+      "variant": "card",
+      "columns": 3,
+      "tone": "cream",
+      "items": [
+        {
+          "title": "Music learning apps and music education",
+          "body": "- MIDI and Music XML transcription to expand your song and exercise catalogs\n- Broad musical expertise to absorb your production needs —all instruments, levels, and music genres.\n- Backing track production\n- Digitization and conversion to your class software"
+        },
+        {
+          "title": "Karaoke and music gamification",
+          "body": "- MIDI-to-audio alignment for seamless integration to your systems\n- Lead vocals tutorial and feedback for enhanced user experience\n- Technical consultancy: sample fonts, file formats, advanced MIDI functionalities, etc."
+        },
+        {
+          "title": "Accessible music",
+          "body": "- Visual solutions to enhance music perception and participation with the hearing-impaired community\n- Braille sheet music for the visually impaired community"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "Section",
+      "title": "Client success stories",
+      "lead": "Meet some companies that boosted their products by using our services",
+      "id": "client-success-stories",
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "Music:Eyes",
+      "body": "[**Visual music environment**](https://musiceyes.org/)\n\nThey use our symphonic MIDI transcriptions to create visuals for collaborations with live orchestras.",
+      "clip": {
+        "src": "clip-musiceyes.mp4",
+        "title": "Music:Eyes: Visual music environment"
+      },
+      "imageSide": "right",
+      "tone": "cream",
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "GuitarPro",
+      "body": "[**#1 Guitar TAB software**](https://www.guitar-pro.com/)\n\nThey sell a subscription-based catalog with thousands of songs. We populate it with guitar and bass TAB transcriptions.",
+      "clip": {
+        "src": "clip-guitarpro.mp4",
+        "title": "GuitarPro: #1 Guitar TAB software"
+      },
+      "imageSide": "left",
+      "tone": "cream",
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "Synthesia",
+      "body": "[**Enhanced piano tutorials**](https://synthesiagame.com/)\n\nWe provide piano transcriptions for this world’s best-known alternative to sheet music for piano players.",
+      "clip": {
+        "src": "clip-synthesia.mp4",
+        "title": "Synthesia: Enhanced piano tutorials"
+      },
+      "imageSide": "right",
+      "tone": "cream",
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "Soundslice",
+      "body": "[**Audio aligned scores**](https://www.soundslice.com/)\n\nAs trusted partners, we provide their users with note-for-note transcription and audio synchronization.",
+      "clip": {
+        "src": "clip-soundslice.mp4",
+        "title": "Soundslice: Audio aligned scores"
+      },
+      "imageSide": "left",
+      "tone": "cream",
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "Odisei Music",
+      "body": "[**#1 Sax practice app**](https://odiseimusic.com/)\n\nWe are proud to be the music transcription providers and digital notation consultants for the first sax gamified app.",
+      "clip": {
+        "src": "clip-odisei.mp4",
+        "title": "Odisei Music: #1 Sax practice app"
+      },
+      "imageSide": "right",
+      "tone": "cream",
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "Yousician",
+      "body": "[**#1 MusicEd gamified app**](https://yousician.com/)\n\nWe create guitar, bass, ukulele, and piano transcriptions and arrangements to help them expand their catalog for +20M users worldwide.",
+      "clip": {
+        "src": "clip-yousician.mp4",
+        "title": "Yousician: #1 MusicEd gamified app"
+      },
+      "imageSide": "left",
+      "tone": "cream",
+      "reveal": true
+    },
+    {
+      "type": "Cards",
+      "title": "Music notation services",
+      "variant": "card",
+      "columns": 4,
+      "items": [
+        {
+          "image": "service-artists.jpg",
+          "title": "Artists",
+          "body": "**Songbooks**\n\nto sell as merchandising when on tour and on your site.\n\n**Chord and master Charts**\n\nfor your band’s practice and session recordings. Ideal to have walk-in collaborators and substitutes.",
+          "href": "https://www.mysheetmusictranscriptions.com/artists"
+        },
+        {
+          "image": "service-songwriters.jpg",
+          "title": "Songwriters",
+          "body": "**Lead sheet transcription**\n\nperfect for copyright register and work safekeeping.\n\n**Digitization**\n\ngives new life to your handwritten body of work creating digital files with your sheet music so it can live on.",
+          "href": "https://www.mysheetmusictranscriptions.com/music-copying-digitizing-service"
+        },
+        {
+          "image": "service-educators.jpg",
+          "title": "Educators",
+          "body": "**Level adaptation**\n\nto meet your students exactly where they are. Use always the right materials.\n\n**Method digitization**\n\nto create digital and publish-ready versions of your exercises and methods.",
+          "href": "https://www.mysheetmusictranscriptions.com/music-educators"
+        },
+        {
+          "image": "service-ensembles.jpg",
+          "title": "Ensembles",
+          "body": "**Part separation**\n\nto have each performer enjoy perfect sheet music for their part.\n\n**Orchestration adaptation**\n\nfrom string quartet to brass band, and from vocal ensembles to jazz orchestra",
+          "href": "https://www.mysheetmusictranscriptions.com/full-band-transcription-service"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "Trusted by",
+      "lead": "Endorsed by the worldwide music community.",
+      "body": "Over the years, we have partnered with thriving, game-changing music businesses.\n\nThese are some of the disruptive companies that rely on our services to tackle their music challenges.\n\nWe pride ourselves on offering the best music notation services out there, and our customers’ reviews prove it.",
+      "image": "trusted-by-logos.jpg",
+      "alt": "Logos de empresas que confían en nosotros: Musicnotes, Guitar Pro 8, AMP, Oktav, Fever, School of Rock, Yokee, Stingray",
+      "imageSide": "left",
+      "reveal": true
+    },
+    {
+      "type": "Cards",
+      "variant": "card",
+      "columns": 3,
+      "tone": "cream",
+      "items": [
+        {
+          "image": "review-google.png",
+          "imageWidth": 100,
+          "title": "These guys are legends",
+          "body": "우진, Pianist, South Korea",
+          "href": "https://www.google.com/maps/place/My+Sheet+Music+Transcriptions/@41.5699944,2.0095947,17z/data=!3m1!4b1!4m8!3m7!1s0x12a4933dfee41643:0x4e967d39cf62b25d!8m2!3d41.5699944!4d2.0095947!9m1!1b1!16s%2Fg%2F11c6f4wtpw?entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D",
+          "linkLabel": "See +800 reviews"
+        },
+        {
+          "image": "review-trustpilot.png",
+          "imageWidth": 100,
+          "title": "Je les recommander pour tout !",
+          "body": "Jean M., Pianist, Quebec",
+          "href": "https://www.trustpilot.com/review/mysheetmusictranscriptions.com",
+          "linkLabel": "See +400 reviews"
+        },
+        {
+          "image": "review-facebook.png",
+          "imageWidth": 100,
+          "title": "This is the best thing since ice cream!",
+          "body": "Craig J., Guitarist, USA",
+          "href": "https://www.facebook.com/mysheetmusictranscriptions",
+          "linkLabel": "See +300 reviews"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "Section",
+      "title": "The best team to bridge music and tech",
+      "body": "**Over 40 employees**\n\nOur company HQ is in Barcelona, with 85% of employees coming from the area. Additionally, in order to meet our partners’ needs wherever they are, we employ representatives in EMEA, APAC, and NAMER/LATAM.\n\nWith unmatched musical knowledge and extensive tech proficiency, our team is a go-getter crew ready to tackle every one of your needs in both B2B and B2C scenarios.\n\n**30 In-house Music Transcribers, Arrangers, & Editors**\n\n- Music Specialists & Musician Support\n- Music Tech & Engineering\n- Quality Control & Proof-Editing\n- Business Development\n- Digital Marketing & Graphic Design\n- Content Creation & Artist Relationships",
+      "cta": {
+        "label": "About us",
+        "href": "https://www.mysheetmusictranscriptions.com/about-us"
+      },
+      "reveal": true
+    },
+    {
+      "type": "PictureGrid",
+      "label": "Our team",
+      "shape": "photo",
+      "columns": 3,
+      "items": [
+        {
+          "image": "deck-team-oriol.jpg",
+          "name": "Oriol",
+          "caption": "CEO & Founder"
+        },
+        {
+          "image": "deck-team-roc.jpg",
+          "name": "Roc",
+          "caption": "Operations Manager & Lead Music Editor"
+        },
+        {
+          "image": "deck-team-maja.jpg",
+          "name": "Maja",
+          "caption": "Team Manager"
+        },
+        {
+          "image": "deck-team-quim.jpg",
+          "name": "Quim",
+          "caption": "Business Development Lead"
+        },
+        {
+          "image": "deck-team-colome.jpg",
+          "name": "Colomé",
+          "caption": "Tech Lead"
+        },
+        {
+          "image": "deck-team-mauricio.jpg",
+          "name": "Mauricio",
+          "caption": "Customer Success Manager"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "Section",
+      "title": "What's next?",
+      "tone": "peach",
+      "body": "**[Schedule a meeting](https://calendly.com/quim-mysheetmusictranscriptions/30min?month=2025-06) to know more and have your questions answered**\n\nCheck out our **[quick video demo,](https://drive.google.com/file/d/15xwF-OJgqltppkq9IkNQjj6xwpEIGmTw/view?pli=1)** showcasing the outcome of recent projects with industry leading companies\n\nNot sure yet? Free samples and further documentation can be sent upon request.\n\n### Contact:\n\n**[oriol@mysheetmusictranscriptions.com](mailto:oriol@mysheetmusictranscriptions.com)** – CEO & Founder\n\n**[quim@mysheetmusictranscriptions.com](mailto:quim@mysheetmusictranscriptions.com)** – Business Development Lead",
+      "reveal": true
+    },
+    {
+      "type": "Section",
+      "title": "Sempre Crescendo",
+      "align": "center",
+      "width": "narrow",
+      "rule": false,
+      "body": "[**mysheetmusictranscriptions.com**](https://www.mysheetmusictranscriptions.com/)\n\nDigital music notation services\n\n[business@mysheetmusictranscriptions.com](mailto:business@mysheetmusictranscriptions.com)",
+      "links": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/company/my-sheet-music-transcriptions/"
+        }
+      ],
+      "reveal": true
+    }
+  ]
+}

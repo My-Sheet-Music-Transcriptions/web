@@ -18,10 +18,15 @@ export interface HeadResult {
   scripts?: ScriptTag[]
 }
 
+/** Longest `<title>` the SEO suite accepts. */
+const MAX_TITLE = 65
+
 export function pageTitle(title: string, locale: Locale = SITE_LOCALE): string {
   const site = getSiteConfig(locale)
   if (title.includes(site.siteName)) return title
-  return site.titleTemplate.replace('%s', title)
+  const branded = site.titleTemplate.replace('%s', title)
+  // The brand only where it fits: a long title (a ported post's) stays whole rather than cut (D13).
+  return branded.length <= MAX_TITLE ? branded : title
 }
 
 /**

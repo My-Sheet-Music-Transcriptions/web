@@ -1,0 +1,103 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Jellynote - Mis Transcripciones Musicales",
+  "description": "Transcribe tus canciones preferidas y aprende a tocarlas con Jellynote. Más de 100000 partituras perfectas disponibles.",
+  "translationKey": "jellynote",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcribe tus canciones preferidas y aprende a tocarlas con Jellynote",
+      "subtitle": "Más de 100000 partituras perfectas disponibles",
+      "cta": {
+        "label": "¡Pide tu presupuesto!",
+        "href": "#contacto"
+      }
+    },
+    {
+      "type": "Cards",
+      "eyebrow": "¿Cómo funciona?",
+      "title": "Transcribimos tu música preferida para que la puedas tocar cuando y como quieras",
+      "variant": "plain",
+      "columns": 2,
+      "items": [
+        {
+          "title": "Envía tu música:",
+          "body": "basta con un video o un audio\n\n**Transcripciones a partir de 40€**\n\n**5 € de descuento si eres usuario de Jellynote**",
+          "video": {
+            "youtube": "ieXsWlw9HzM",
+            "title": "Transcripciones para usuarios de Jellynote"
+          }
+        },
+        {
+          "title": "Aprende a tocar la canción en Jellynote",
+          "body": "Recibirás la partitura en **PDF** y también en el formato interactivo de **Jellynote** sin coste adicional\n\nTendrás **acceso de por vida** a tus partituras y podrás acceder a ellas a través de todos tus dispositivos",
+          "image": "jellynote-postcard-partitura.jpg",
+          "imageWidth": 480,
+          "href": "https://www.jellynote.com/en/piano-sheet-music/jukebox-the-ghost/postcard"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "title": "La colaboración de Jellynote y Mis Transcripciones Musicales",
+      "lead": "**¡La mejor colaboración para la transcripción de música!**",
+      "body": "Aunque Jellynote ya dispone de una gran biblioteca de partituras, puede que algunas aún no estén disponibles.\n\nMis Transcripciones Musicales colabora con Jellynote para llenar este vacío: creamos partituras personalizadas para los usuarios de Jellynote.\n\nTodas nuestras transcripciones están hechas nota a nota y siempre nos esforzamos al máximo para que tengas la partitura que mejor se adapta a tus necesidades. Todas las transcripciones están 100% personalizadas y hechas a mano por transcriptores profesionales.\n\nAprende a tocarla con la aplicación de Jellynote en tu tableta, ordenador o móvil e imprime las partituras en formato pdf.",
+      "image": "jellynote-movil-partitura.png",
+      "alt": "Partitura interactiva de Jellynote en un móvil",
+      "imageSide": "left",
+      "cta": {
+        "label": "Descubre más sobre Jellynote",
+        "href": "https://www.jellynote.com/es/creators/mysheetmusictranscriptions"
+      },
+      "reveal": true
+    },
+    {
+      "type": "Cards",
+      "title": "Qué incluye",
+      "variant": "plain",
+      "columns": 3,
+      "tone": "cream",
+      "items": [
+        {
+          "icon": "accuracy.png",
+          "title": "100% accurate transcriptions",
+          "body": "Transcripción profesional nota a nota"
+        },
+        {
+          "icon": "archivos-jellynote-pdf.png",
+          "title": "Jellynote y PDF",
+          "body": "Se entrega en pdf y en Jellynote"
+        },
+        {
+          "icon": "fast-delivery-alt.png",
+          "title": "Entrega rápida",
+          "body": "1-2 days standard delivery time\nRush orders available"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/jellynote",
+      "title": "¡Pide tu presupuesto!",
+      "id": "contacto",
+      "reveal": true
+    },
+    {
+      "type": "Section",
+      "title": "También puedes ver qué canciones ya se han transcrito.",
+      "align": "center",
+      "width": "narrow",
+      "rule": false,
+      "tone": "peach",
+      "cta": {
+        "label": "Visita nuestro catálogo en Jellynote ahora",
+        "href": "https://www.jellynote.com/es/creators/mysheetmusictranscriptions"
+      },
+      "reveal": true
+    }
+  ]
+}

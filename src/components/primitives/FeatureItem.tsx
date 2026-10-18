@@ -57,7 +57,11 @@ export function FeatureItem({
     <Picture
       image={item.image}
       alt=""
-      sizes={surface === 'card' ? '(min-width: 1025px) 360px, 100vw' : '280px'}
+      sizes={
+        surface === 'card'
+          ? '(min-width: 1025px) 360px, 100vw'
+          : `(max-width: 767px) 100vw, ${item.imageWidth ?? 180}px`
+      }
       className={cn(
         'mb-5',
         surface === 'card' ? 'aspect-[3/2] w-full rounded-card object-cover' : 'h-auto',

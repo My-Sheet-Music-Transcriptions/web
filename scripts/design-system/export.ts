@@ -166,7 +166,7 @@ for (const [name, doc] of Object.entries(layoutDocs)) {
   fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(
     path.join(dir, 'README.md'),
-    `# ${name}\n\n${doc.description}\n\nMounted as the app composes it (\`src/app/SiteShell.tsx\`): the locale's \`content/<locale>/data/nav.ts\`, \`footer.ts\` and \`src/i18n/sites/<locale>.ts\`. No props here.\n\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}"></div>\n\`\`\`\n`,
+    `# ${name}\n\n${doc.description}\n\nMounted as the app composes it (\`src/app/SiteShell.tsx\`): the locale's \`content/<locale>/data/menu.json\`, \`footer.ts\` and \`src/i18n/sites/<locale>.ts\`. No props here.\n\n## Mount from a canvas\n\n\`\`\`html\n<div data-msmt="${name}"></div>\n\`\`\`\n`,
   )
   fs.writeFileSync(
     path.join(dir, 'preview.html'),

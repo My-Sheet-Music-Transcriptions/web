@@ -190,6 +190,38 @@
   }
 }
 
+/* A question's answer unfolding as its `<details>` opens and folding as it closes (`unfold`, FaqList): the
+   details' content box grows from 0 to its height while the answer fades in and drops 8px into place. Height,
+   unlike the reveals, because the page should open around the answer; it follows the reader's own click, so it
+   is no layout shift. CSS on the native element, no JavaScript; where browsers lack `::details-content` the
+   answer only fades in. Instant under reduced motion and on paper. */
+@utility unfold {
+  @media screen and (prefers-reduced-motion: no-preference) {
+    &[open] > :not(summary) {
+      animation: unfold-in 0.3s cubic-bezier(0.33, 1, 0.68, 1) both;
+    }
+    @supports selector(::details-content) {
+      interpolate-size: allow-keywords;
+      &::details-content {
+        block-size: 0;
+        overflow-y: clip;
+        transition:
+          block-size 0.3s cubic-bezier(0.33, 1, 0.68, 1),
+          content-visibility 0.3s allow-discrete;
+      }
+      &[open]::details-content {
+        block-size: auto;
+      }
+    }
+  }
+}
+@keyframes unfold-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
 /* The photo header's photos lagging behind their curve as the page scrolls (parallax): over the first screen
    of scrolling they move down 45vh, so they scroll at 55% of the page's speed; the strip this exposes above
    them is always smaller than what the page has already scrolled off, so it never shows. A scroll-driven animation (no

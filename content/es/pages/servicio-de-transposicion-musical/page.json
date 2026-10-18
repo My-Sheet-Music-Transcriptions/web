@@ -1,0 +1,84 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Servicio de Transposición Musical - Mis Transcripciones Musicales",
+  "description": "Servicio de transposición musical online. Contáctanos y transportamos tu partitura de forma rápida, fácil y precisa.",
+  "translationKey": "servicio-de-transposicion-musical",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transposición de partituras",
+      "subtitle": "Cambia la tonalidad de tus partituras de forma rápida y precisa",
+      "image": "rhythm-charts.png"
+    },
+    {
+      "type": "Section",
+      "title": "Ejemplos de partituras transportadas",
+      "align": "center",
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "images": [
+        {
+          "image": "hes-got-the-whole-world-original-re-mayor.jpg",
+          "alt": "He's Got the Whole World in His Hand, partitura original en re mayor",
+          "caption": "Partitura original en re mayor"
+        },
+        {
+          "image": "hes-got-the-whole-world-transposicion-do-mayor.png",
+          "alt": "He's Got the Whole World in His Hands, transposición en do mayor",
+          "caption": "Transposición en do mayor"
+        }
+      ],
+      "layout": "pair",
+      "imageSide": "left",
+      "imageWidth": 1140,
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "images": [
+        {
+          "image": "les-preludes-original-trompa-en-do.jpg",
+          "alt": "Les Préludes, original para trompa en do",
+          "caption": "Original para trompa en do (obsoleto)"
+        },
+        {
+          "image": "les-preludes-trompa-en-fa.png",
+          "alt": "Les Préludes, digitalizado para trompa en fa",
+          "caption": "Digitalizado para trompa en fa (actual)"
+        }
+      ],
+      "layout": "pair",
+      "imageSide": "left",
+      "imageWidth": 1140,
+      "reveal": true
+    },
+    {
+      "type": "MediaText",
+      "images": [
+        {
+          "image": "the-first-noel-original-trompa-en-do.jpg",
+          "alt": "The First Noel, original para trompa en do",
+          "caption": "Original para trompa en do (obsoleto)"
+        },
+        {
+          "image": "the-first-noel-trompa-en-fa.png",
+          "alt": "The First Noel, digitalizado para trompa en fa",
+          "caption": "Digitalizado para trompa en fa (actual)"
+        }
+      ],
+      "layout": "pair",
+      "imageSide": "left",
+      "imageWidth": 1140,
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/servicio-de-transposicion-musical",
+      "reveal": true
+    }
+  ]
+}

@@ -1,13 +1,17 @@
 import { Logo } from '~/components/layout/Logo'
 import type { Slide } from '~/components/primitives/Carousel'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
+import { Icon } from '~/components/primitives/Icon'
 import { Media } from '~/components/primitives/Media'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
 import { Slideshow } from '~/components/primitives/Slideshow'
+import { WaveDivider } from '~/components/primitives/WaveDivider'
 import type { BrandLogo, MediaLabels, RatingSource } from '~/content/types'
 import { cn } from '~/lib/cn'
+import { shortDate } from '~/lib/dates'
 import { inlineMarkdown } from '~/lib/light-markdown'
+import { useLocale } from '~/site'
 
 export interface PageHeaderProps {
   /** The page's h1: the words people searched for. */
@@ -22,9 +26,11 @@ export interface PageHeaderProps {
   cta?: Cta
   /** The compact rating card: pass `google` from content/<locale>/data/ratings. */
   rating?: RatingSource
-  /** band: dark centred title band (default). split: copy beside pictures, on white. photo: the homepage. */
-  variant?: 'band' | 'split' | 'photo'
-  /** The picture beside the copy (split), or beside the rating card under the band (a service's icon). */
+  /** band: light centred title band (default). split: copy beside pictures, on white. photo: the homepage. cover: the title in white over a darkened photo (the blog, a post). */
+  variant?: 'band' | 'split' | 'photo' | 'cover'
+  /** The date under the title (cover: a post's publication date), YYYY-MM-DD; written as the locale writes dates. */
+  date?: string
+  /** The picture beside the copy (split), or the icon on the band's lower edge (a service's icon). */
   image?: PictureSource
   /** Alt text of the picture; empty when decorative. */
   alt?: string
@@ -45,11 +51,11 @@ export interface PageHeaderProps {
 const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
 
 /**
- * The opening of every page, its h1 first. `band`: the dark centred title band with an orange rule, then the
- * instrument icon and the compact rating card when given (service pages). `split`: white, the copy and button
- * left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the
- * copy, cut by a curve that leaves the copy on white (above it on phones), the brand lockup, the orange
- * highlight and the floating rating card. It drifts in as the page opens.
+ * The opening of every page, its h1 first. `band`: the centred title and orange rule, on white, or on an orange
+ * tint with the service's icon on its edge, the rating card at the right. `split`: the copy
+ * left, a picture or carousel right (landing pages). `photo`: the homepage, rotating photos behind the copy,
+ * cut by a curve, the lockup, the orange highlight and the rating card. `cover`: the title and the date or lead in
+ * white over a darkened photo (the blog, a post).
  */
 export function PageHeader(props: PageHeaderProps) {
   // The text and pictures stand still; as the page opens only the rating card rises into place, a beat later,
@@ -59,6 +65,7 @@ export function PageHeader(props: PageHeaderProps) {
   const { variant = 'band' } = props
   if (variant === 'photo') return <PhotoHeader {...props} />
   if (variant === 'split') return <SplitHeader {...props} />
+  if (variant === 'cover') return <CoverHeader {...props} />
   return <BandHeader {...props} />
 }
 
@@ -74,31 +81,88 @@ function BandHeader({
   id,
 }: PageHeaderProps) {
   return (
-    <header id={id}>
-      <div className="bg-[#434343] px-4 pt-16 pb-20 text-center text-white">
-        {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
-        <h1 className="mx-auto max-w-4xl text-[32px] font-bold leading-tight text-white md:text-display">
+    <header id={id} className="relative">
+      {/* A service page's band is tinted orange (the live site's 11% accent), every other page's is white */}
+      <div
+        className={cn(
+          'px-4 pt-[110px] text-center',
+          image
+            ? 'bg-accent/11 [--color-primary:var(--color-primary-deep)] [--color-accent-deep:var(--color-accent-hover)]'
+            : 'bg-white pb-[110px]',
+        )}
+      >
+        {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-deep')}>{eyebrow}</p> : null}
+        <h1 className="mx-auto max-w-[900px] text-[36px] leading-tight font-bold text-ink">
           {title}
         </h1>
         {subtitle ? (
-          <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-relaxed">{subtitle}</p>
+          <p className="mx-auto mt-5 max-w-[900px] text-[20px] leading-[30px] text-ink">
+            {subtitle}
+          </p>
         ) : null}
-        <span aria-hidden="true" className="mx-auto mt-6 block h-px w-[150px] bg-accent" />
+        <span aria-hidden="true" className="mx-auto mt-5 block h-px w-[180px] bg-accent" />
         {lead ? (
-          <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed [&_a]:text-accent-light">
+          <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed text-ink">
             {inlineMarkdown(lead)}
           </p>
         ) : null}
         {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
+        {/* The icon straddles the band's lower edge: the band stops 53px above the icon's foot, and the empty
+            div after the band keeps that room */}
+        {image ? (
+          <Picture
+            image={image}
+            alt={alt}
+            sizes="155px"
+            className="relative mx-auto mt-[46px] -mb-[53px] block h-[155px] w-auto md:h-[135px]"
+          />
+        ) : null}
       </div>
-      {rating || image ? (
-        <div className="container-content flex flex-wrap items-center justify-center gap-10 py-10">
-          {image ? (
-            <Picture image={image} alt={alt} sizes="180px" className="h-[180px] w-auto" />
-          ) : null}
-          {rating ? <CompactRating source={rating} className="entrance" /> : null}
-        </div>
+      {image ? <div aria-hidden="true" className="h-[53px]" /> : null}
+      {rating ? (
+        <CompactRating
+          source={rating}
+          className="entrance mx-auto mt-8 px-4 lg:absolute lg:top-[200px] lg:right-[5px] lg:mt-0 lg:w-[300px] lg:px-0"
+        />
       ) : null}
+    </header>
+  )
+}
+
+function CoverHeader({ title, eyebrow, lead, date, cta, image, alt = '', id }: PageHeaderProps) {
+  const locale = useLocale()
+  return (
+    <header
+      id={id}
+      className="relative isolate flex min-h-[280px] items-center overflow-hidden bg-footer px-4 py-20 text-center text-white md:min-h-[340px]"
+    >
+      {image ? (
+        <Picture
+          image={image}
+          alt={alt}
+          sizes="100vw"
+          priority
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          pictureClassName="contents"
+        />
+      ) : null}
+      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-footer/65" />
+      <div className="mx-auto flex max-w-[900px] flex-col items-center gap-4">
+        {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
+        <h1 className="text-[32px] leading-tight font-bold text-white md:text-[40px]">{title}</h1>
+        <span aria-hidden="true" className="block h-px w-[120px] bg-accent" />
+        {date ? (
+          <p className="flex items-center gap-2 text-small">
+            <Icon name="calendar" size={16} aria-hidden="true" className="text-accent-light" />
+            <time dateTime={date}>{shortDate(date, locale)}</time>
+          </p>
+        ) : null}
+        {lead ? (
+          <p className="max-w-3xl text-[17px] leading-relaxed">{inlineMarkdown(lead)}</p>
+        ) : null}
+        {cta ? <CtaLink cta={cta} className="mt-2" /> : null}
+      </div>
+      <WaveDivider position="bottom" height={30} />
     </header>
   )
 }

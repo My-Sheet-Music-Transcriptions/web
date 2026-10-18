@@ -1,0 +1,62 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Mis Transcripciones Musicales en el BIME 2025",
+  "description": "Mis Transcripciones Musicales acudirá al BIME 2025 del 28 al 30 de octubre, con el fin de intercambiar ideas con compañeros de la industria",
+  "translationKey": "mis-transcripciones-musicales-en-el-bime-2025",
+  "date": "2025-10-23",
+  "excerpt": "Oriol López, Fundador y CEO de Mis Transcripciones Musicales, acudirá al BIME 2025 del 28 al 30 de octubre, con el fin de intercambiar ideas con compañeros de la industria…",
+  "cover": {
+    "src": "my-sheet-music-transcriptions-at-bime-2025-bime.jpg",
+    "alt": "Mis Transcripciones Musicales en el BIME 2025"
+  },
+  "tags": [
+    "Actualidad Musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Mis Transcripciones Musicales en el BIME 2025",
+      "date": "2025-10-23",
+      "image": "my-sheet-music-transcriptions-at-bime-2025-bime.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Mis Transcripciones Musicales en el BIME 2025",
+      "items": [
+        {
+          "body": "## Oriol López, Fundador y CEO de Mis Transcripciones Musicales, acudirá al BIME 2025 del 28 al 30 de octubre, con el fin de intercambiar ideas con compañeros de la industria musical\n\nMis Transcripciones Musicales estará presente en el BIME 2025 la semana que viene, representada por [**Oriol López, nuestro fundador y CEO**](https://www.mysheetmusictranscriptions.com/oriol). Oriol estará disponible para charlar, intercambiar ideas con compañeros de la industria, y **explorar nuevas oportunidades de colaboración**.\n\nEn [**Mis Transcripciones Musicales**](/), estamos muy orgullosos de formar parte activamente en la industria musical española. Por ello, no podíamos perdernos este evento lleno de artistas, sellos, marcas, y gran creatividad.",
+          "image": "my-sheet-music-transcriptions-at-bime-2025.jpg",
+          "alt": "Mis Transcripciones Musicales en el BIME 2025"
+        },
+        {
+          "body": "## Mis Transcripciones Musicales en el BIME 2025\n\nSi acudirás al **BIME 2025** la semana que viene, y estás interesado en quedar con Mis Transcripciones Musicales, ¡solo **ponte en contacto con Oriol**, por [**correo electrónico**](mailto:oriol@mysheetmusictranscriptions.com) o [**a través de LinkedIN**](https://www.linkedin.com/in/oriollopezcalle/)! Estaremos encantados de reunirnos y compartir nuestra visión sobre el futuro de la industria musical.\n\nY si Mis Transcripciones Musicales llama tu atención en el [**BIME 2025**](https://bime.org/), no dudes en decirnos hola. Si no hemos podido coincidir, también puedes contactar **con nosotros en cualquier momento**.\n\n## Sobre el BIME 2025\n\n**BIME es un evento internacional de la industria musical**, creado en 2013 en **Bilbao**. Unos años más tarde, en 2022, llegó a Bogotá (Colombia). En BIME, los artistas, compañías y audiencias (relacionadas directa o indirectamente con la música) establecen **nuevas redes de negocios entre Latinoamérica y España**.\n\nEste evento reúne diferentes corrientes profesionales y artísticas, y genera oportunidades para el **crecimiento económico, cultural y relacional**. Todo esto está basado en la unión lingüística indiscutible del castellano, un idioma que comparten casi 600 millones de personas de todo el mundo.\n\nBIME 2025 será **música en directo e innovación**. Músicos, artistas y audiencias podrán crear sinergias entre continentes, hacer negocios, descubrir nuevo talento y compartir sus conocimientos. Aquí es donde se crean y desarrollan las **últimas noticias de la actualidad cultural y creativa**.",
+          "image": "my-sheet-music-transcriptions-at-bime-2025-bime.jpg",
+          "alt": "© Javier Rosa",
+          "caption": "© Javier Rosa"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/mis-transcripciones-musicales-en-el-bime-2025",
+      "reveal": true
+    }
+  ]
+}

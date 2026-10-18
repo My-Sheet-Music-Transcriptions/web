@@ -87,7 +87,8 @@ export const postSchema = baseSchema.extend({
   type: z.literal('post').default('post'),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   excerpt: z.string().min(20).max(300),
-  cover: seoImage,
+  /** The post's picture on its card and behind its title: a file of the post folder (src/content/posts.ts). */
+  cover: z.object({ src: ogImage.shape.src, alt: z.string().min(3) }),
   tags: z.array(z.string()).default([]),
   author: z.string().default('My Sheet Music Transcriptions'),
 })

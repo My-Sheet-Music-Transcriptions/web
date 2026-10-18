@@ -1,0 +1,65 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Mis Transcripciones Musicales cumple 10 años",
+  "description": "Después de más de 41,000 partituras transcritas, ¡celebramos por todo lo alto que Mis Transcripciones Musicales cumple 10 años!",
+  "translationKey": "mis-transcripciones-musicales-cumple-10-anos",
+  "date": "2024-12-19",
+  "excerpt": "Mis Transcripciones Musicales cumple 10 años ¡Estamos de celebración! Este año, en Mis Transcripciones Musicales, cumplimos 10 años de andadura.🎂…",
+  "cover": {
+    "src": "16-1-1.jpg",
+    "alt": "Mis Transcripciones Musicales cumple 10 años"
+  },
+  "tags": [
+    "Actualidad Musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Mis Transcripciones Musicales cumple 10 años",
+      "date": "2024-12-19",
+      "image": "16-1-1.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Mis Transcripciones Musicales cumple 10 años",
+      "items": [
+        {
+          "body": "## Mis Transcripciones Musicales cumple 10 años\n\n¡Estamos de celebración! Este año, en Mis Transcripciones Musicales, cumplimos 10 años de andadura.🎂\n\n[**Mis Transcripciones Musicales**](/) fue fundada en 2014 por Oriol López Calle, pianista y actual CEO de la empresa. Después de 10 años de crecimiento, ahora un equipo de **más de 50 músicos** trabaja en alrededor de **600 proyectos al mes**. Así, la compañía está presente en la mayor parte de zonas horarias del planeta, y ofrece sus servicios en seis idiomas diferentes.\n\nEn esta foto de 2017, ¡Oriol celebraba la **transcripción número 500**!",
+          "image": "oriol-msmt-2017.jpg",
+          "alt": "Mis Transcripciones Musicales cumple 10 años",
+          "caption": "Mis Transcripciones Musicales cumple 10 años"
+        },
+        {
+          "body": "## A día de hoy, hemos creado más de 41,000 partituras📄\n\n## Y trabajado con más de 19,000 músicos de todo el mundo🎤\n\nEstamos muy orgullosos de poder mostrar la satisfacción de nuestros clientes, gracias a nuestras puntuaciones de 5 estrellas tanto [**en Google**](https://www.google.com/search?sca_esv=9532ceb1aaa73555&sca_upv=1&authuser=2&sxsrf=ACQVn08D-usAifngevw3dJaMykxkgfbBRw%3A1712043674411&q=My%20Sheet%20Music%20Transcriptions&stick=H4sIAAAAAAAAAONgU1I1qDA0SjSxNDZOSUtNNTE0MzG2MqgwSbU0M08xtkxOMzNKMjJNWcQq61upEJyRmlqi4FtanJmsEFKUmFecXJRZUJKZn1cMAMbnCvxJAAAA&mat=CeuqrMZD1Sbl&ved=2ahUKEwjukrbYg6OFAxVoVKQEHcEUCykQrMcEegQIDxAH) como en [**Facebook**](https://www.facebook.com/mysheetmusictranscriptions/) y **TrustPilot**:",
+          "image": "msmt-google-trustpilot.png",
+          "alt": "Y trabajado con más de 19,000 músicos de todo el mundo🎤"
+        },
+        {
+          "body": "## 41,000 piezas transcritas también pueden ser…\n\n**246,000 páginas de partituras**,\n\nalrededor de 73,800 metros de papel, ¡equivalente a **7 veces la altura del Everest**!\n\n⛰️\n\n**205,000 minutos de música**,\n\ncomo escuchar la *Sinfonía núm. 5* de Beethoven **6,000 veces seguidas**.\n\n💿\n\nY **58 millones de notas (58,000,000)**\n\nmás o menos la **población total de Italia**, transcrita en notas!\n\n👥\n\nHa sido un largo viaje, ¡y también muy inspirador! Celebrando nuestro 10º aniversario, de parte de todo el equipo de [**Mis Transcripciones Musicales**](/), queremos agradecer a todos los que habéis confiado en nosotros. Gracias por formar parte de nuestra historia.\n\n## Gracias por compartir este viaje con nosotros.\n\n🥂"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos",
+      "reveal": true
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más",
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/mis-transcripciones-musicales-cumple-10-anos",
+      "reveal": true
+    }
+  ]
+}

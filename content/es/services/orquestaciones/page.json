@@ -1,0 +1,125 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Orquestaciones - Mis Transcripciones Musicales",
+  "description": "El servicio de transcripción más popular de arreglos para orquestaciones. Preciso al 100% y personalizado.",
+  "translationKey": "orchestration-service",
+  "shortTitle": "Orquestaciones",
+  "icon": "orquestaciones",
+  "group": "ensembles",
+  "priceFrom": 59,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Orquestaciones",
+      "subtitle": "Podemos orquestar cualquier pieza que necesites",
+      "image": "orquestaciones.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.\n\nPodemos transcribir y arreglar tus piezas para orquesta favoritas. Podrás hacer realidad tus proyectos de tocar con tu orquesta o con tus amigos a lo grande. Nuestros arreglistas y orquestadores profesionales crearán partituras personalizadas para ti.",
+          "video": {
+            "youtube": "uu6IAghIY90",
+            "title": "Orquestaciones",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "orchestra-2-if-you-fall-i-will-carry-you.png",
+          "imageWidth": 540
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand",
+      "reveal": true
+    },
+    {
+      "type": "Samples",
+      "title": "Aquí tienes algunos ejemplos de nuestro trabajo",
+      "items": [
+        {
+          "title": "Orquesta sinfónica completa",
+          "video": {
+            "youtube": "rMqBVCQVc0E",
+            "title": "Orquesta sinfónica completa",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "orchestra-1-symphony-no-6.png",
+          "alt": "Orchestra 1 (Symphony No. 6 in F Major, Op. 132 - IV. Finale), primera página de la partitura"
+        },
+        {
+          "title": "Arreglo personalizado para orquesta",
+          "video": {
+            "youtube": "zafV2g1fRqI",
+            "title": "Arreglo personalizado para orquesta",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "orchestra-3-nearer-my-god-to-thee.png",
+          "alt": "Orchestra 3 (Nearer, My God To Thee), primera página de la partitura"
+        }
+      ],
+      "reveal": true
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand",
+      "reveal": true
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "orchestrationPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      },
+      "reveal": true
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      },
+      "reveal": true
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/orquestaciones",
+      "reveal": true
+    }
+  ]
+}

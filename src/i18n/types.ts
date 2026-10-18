@@ -83,7 +83,14 @@ export interface SiteConfig {
   logo: 'en' | 'es' | 'fr' | 'de' | 'ja' | 'ca'
   currency: 'USD' | 'EUR' | 'GBP' | 'AUD' | 'JPY'
   /** Slugs of the fixed routes that are not content-driven. */
-  routes: { blogIndex: string; faqPrefix: string; contactAnchor: string }
+  routes: {
+    blogIndex: string
+    faqPrefix: string
+    contactAnchor: string
+    /** The cookies and privacy policies the consent banner links to. */
+    cookies: string
+    privacy: string
+  }
   /** Paths that must not be prerendered (served by a function). */
   ssrOnlyPaths: string[]
   hub: { login: string; signup: string }

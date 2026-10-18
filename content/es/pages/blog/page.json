@@ -1,0 +1,21 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Blog - Mis Transcripciones Musicales",
+  "description": "Infórmate sobre nuestras últimas noticias, trucos de edición musical, historias detrás de las cámaras y curiosidades sobre música.",
+  "translationKey": "blog",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "¡Bienvenido a nuestro blog!",
+      "lead": "Infórmate sobre nuestras últimas noticias, trucos de edición musical, historias detrás de las cámaras y curiosidades sobre música. También encontrarás opiniones y guías de programas de notación musical, actualizaciones de la industria musical y, en general, contenido de interés para músicos, artistas y melómanos.",
+      "image": "pdf-music-file-format.jpg"
+    },
+    {
+      "type": "PostList",
+      "linkLabel": "Leer más",
+      "reveal": true
+    }
+  ]
+}

@@ -30,9 +30,9 @@ const pluses: Record<NonNullable<FaqGroup['tone']>, string> = {
 }
 
 /**
- * Questions that open one at a time (native `<details>`, no script), in titled groups with optional jump
- * links (outline buttons, or a row of filled pills when the groups have a `tone`) and a button, with the
- * FAQPage structured data search engines read.
+ * Questions whose answers unfold when clicked (native `<details>`, animated in CSS, no script), in titled groups
+ * with optional jump links (outline buttons, or a row of filled pills when the groups have a `tone`) and a button,
+ * with the FAQPage structured data search engines read.
  */
 export function FaqList({ groups, jumpLinks = false, jsonLd = true, ...shell }: FaqListProps) {
   const data = {
@@ -81,7 +81,7 @@ export function FaqList({ groups, jumpLinks = false, jsonLd = true, ...shell }: 
             {g.title ? <h3 className="mb-4 text-h3 font-bold text-ink">{g.title}</h3> : null}
             <div className="divide-y divide-line border-y border-line">
               {g.items.map((q) => (
-                <details key={q.question} className="group">
+                <details key={q.question} className="group unfold">
                   <summary className="flex cursor-pointer list-none items-start gap-3 py-4 text-[18px] font-semibold leading-7 text-ink [&::-webkit-details-marker]:hidden">
                     <Icon
                       name="plus"
