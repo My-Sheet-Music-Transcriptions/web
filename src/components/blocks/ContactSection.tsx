@@ -14,16 +14,21 @@ import { submitContact } from '~/server/contact.functions'
 import { usePublicPath } from '~/site'
 
 export interface ContactSectionProps {
-  /** Every word of the form: `quoteForm` or `giftCardForm` from content/<locale>/data/forms. */
+  /** Every word of the form: `quoteForm`, `giftCardForm` or `reservationForm` from content/<locale>/data/forms. */
   form: ContactFormCopy
   /** This page's own heading, instead of the copy's ("Let's make music together"). */
   title?: string
   /** This page's own line under the heading, instead of the copy's. */
   lead?: string
+  /** A short line above the heading (a reservation: who publishes the book). */
+  eyebrow?: string
   /** Anchor id of the section (also where the no-JS fallback returns to). */
   id?: string
-  /** `quote` (default): music link, instruments, file, message, phone. `gift-card`: amount, currency, details. */
-  variant?: 'quote' | 'gift-card'
+  /**
+   * `quote` (default): music link, instruments, purpose, file, message, phone. `gift-card`: amount, currency, details.
+   * `reservation`: the email alone (a book's pre-order list).
+   */
+  variant?: 'quote' | 'gift-card' | 'reservation'
   /** Path of the page hosting the form, for the no-JS fallback redirect. */
   returnTo?: string
   /** Comes in as it scrolls into view: the heading, the response-time line, then the form rise and fade in. */
@@ -35,19 +40,21 @@ type Errors = Record<string, string>
 /**
  * The request form in its peach section under a white wave: title, lead, the teal response-time pill and the
  * form. `variant="quote"` (default): name, email, music link, instruments, file, message, phone.
- * `variant="gift-card"`: name, email, amount, currency, details. The optional fields show when the copy names
- * them. Submits to the contact server function; works without JavaScript.
+ * `variant="gift-card"`: name, email, amount, currency, details. `variant="reservation"`: the email alone. The
+ * optional fields show when the copy names them. Submits to the contact server function; works without JavaScript.
  */
 export function ContactSection({
   form: copy,
   title,
   lead,
+  eyebrow,
   id = 'contact',
   variant = 'quote',
   returnTo = '/',
   reveal,
 }: ContactSectionProps) {
   const gift = variant === 'gift-card'
+  const reservation = variant === 'reservation'
   const returnPath = usePublicPath(returnTo)
   const uid = useId()
   const formRef = useRef<HTMLFormElement>(null)
@@ -118,6 +125,7 @@ export function ContactSection({
       id={id}
       title={title ?? copy.title}
       lead={lead ?? copy.lead}
+      eyebrow={eyebrow}
       tone="peach"
       width="narrow"
       spacing="loose"
@@ -126,14 +134,16 @@ export function ContactSection({
       cascade
     >
       <WaveDivider position="top" height={86} width={300} mobileHeight={44} />
-      <RevealItem
-        as="p"
-        data-live-colour=""
-        className="mx-[-10px] flex items-center justify-center gap-x-0 rounded-[25px] bg-[linear-gradient(266deg,#2ec4b6_0%,#2e97c4_100%)] pt-1.5 pr-2.5 pb-3 pl-2.5 text-body leading-8 font-bold text-white md:mx-auto md:w-[430px] md:pt-0.5 md:pr-10 md:pb-2 md:pl-[42px]"
-      >
-        <Icon name="fa-paper-plane" size={25} className="mt-2 hidden shrink-0 md:block" />
-        <span className="mt-2 flex-1 text-center">{copy.responseTime}</span>
-      </RevealItem>
+      {copy.responseTime ? (
+        <RevealItem
+          as="p"
+          data-live-colour=""
+          className="mx-[-10px] flex items-center justify-center gap-x-0 rounded-[25px] bg-[linear-gradient(266deg,#2ec4b6_0%,#2e97c4_100%)] pt-1.5 pr-2.5 pb-3 pl-2.5 text-body leading-8 font-bold text-white md:mx-auto md:w-[430px] md:pt-0.5 md:pr-10 md:pb-2 md:pl-[42px]"
+        >
+          <Icon name="fa-paper-plane" size={25} className="mt-2 hidden shrink-0 md:block" />
+          <span className="mt-2 flex-1 text-center">{copy.responseTime}</span>
+        </RevealItem>
+      ) : null}
 
       <RevealItem>
         {status === 'sent' ? (
@@ -154,18 +164,20 @@ export function ContactSection({
             noValidate
             onSubmit={onSubmit}
           >
-            <div className="grid gap-x-[10px] gap-y-[6px] md:grid-cols-2">
-              <div>
-                {label('name', copy.name, true)}
-                <Input
-                  {...field('name')}
-                  type="text"
-                  autoComplete="name"
-                  placeholder={copy.name.placeholder}
-                  required
-                />
-                <Err name="name" />
-              </div>
+            <div className={cn('grid gap-x-[10px] gap-y-[6px]', !reservation && 'md:grid-cols-2')}>
+              {reservation ? null : (
+                <div>
+                  {label('name', copy.name, true)}
+                  <Input
+                    {...field('name')}
+                    type="text"
+                    autoComplete="name"
+                    placeholder={copy.name.placeholder}
+                    required
+                  />
+                  <Err name="name" />
+                </div>
+              )}
               <div>
                 {label('email', copy.email, true)}
                 <Input
@@ -178,7 +190,7 @@ export function ContactSection({
                 <Err name="email" />
               </div>
             </div>
-            {gift ? (
+            {reservation ? null : gift ? (
               <>
                 <div className="mt-[6px] grid gap-x-[10px] gap-y-[6px] md:grid-cols-[1fr_200px]">
                   {copy.amount ? (
@@ -236,6 +248,17 @@ export function ContactSection({
                       rows={2}
                       className="h-[55px]"
                       placeholder={copy.instruments.placeholder}
+                    />
+                  </div>
+                ) : null}
+                {copy.purpose ? (
+                  <div className="mt-[6px]">
+                    {label('purpose', copy.purpose)}
+                    <Textarea
+                      {...field('purpose')}
+                      rows={3}
+                      className="h-[75px]"
+                      placeholder={copy.purpose.placeholder}
                     />
                   </div>
                 ) : null}

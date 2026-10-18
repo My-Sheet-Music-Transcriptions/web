@@ -41,9 +41,24 @@ export interface MediaLabels {
   pause?: string
   /** What screen readers call a carousel ("carousel"). */
   carousel: string
+  /** "Enlarge: {alt}" (a picture that opens larger when clicked). */
+  enlarge?: string
+  /** "Close" (the enlarged picture). */
+  close?: string
 }
 
 /** The words around a customer review: `{rating}`, `{role}` and `{country}` are filled in. */
+/** The words of the share buttons (ShareLinks). */
+export interface ShareLabels {
+  /** "Share on {network}", for screen readers. */
+  shareOn: string
+  facebook: string
+  twitter: string
+  linkedin: string
+  /** "Email" */
+  email: string
+}
+
 export interface ReviewLabels {
   /** "{rating} out of 5 stars" */
   stars: string
@@ -133,6 +148,24 @@ export interface PictureItem {
   caption?: string
   /** Where the item leads (its page, their store). */
   href?: string
+}
+
+/** A blog post as its card in a list (PostList): made from the post's meta (src/content/posts.ts). */
+export interface PostCard {
+  /** The post's title. */
+  title: string
+  /** Its path ("/finale-vs-sibelius"). */
+  href: string
+  /** Its cover picture. */
+  image?: PictureSource
+  /** Alt text of the cover. */
+  alt?: string
+  /** Its summary, a sentence or two. */
+  excerpt?: string
+  /** Its publication date, YYYY-MM-DD. */
+  date: string
+  /** Its category, shown as a badge on the cover ("Notación musical"). */
+  category?: string
 }
 
 /** A card of a CardGrid or a step of Steps: an icon, picture or video, a title, a short body and a link. */
@@ -232,6 +265,8 @@ export interface ContactFormCopy {
   message: FieldCopy
   link?: FieldCopy
   instruments?: FieldCopy
+  /** What the score is for (home, professional use, a band…). */
+  purpose?: FieldCopy
   file?: FieldCopy
   amount?: FieldCopy
   currency?: FieldCopy & { options: { value: 'EUR' | 'USD'; label: string }[] }

@@ -1,14 +1,17 @@
 import {
+  article,
   faqGroup,
   google,
   included,
   mediaLabels,
   pianoPricing,
   platforms,
+  posts,
   quoteForm,
   reviewLabels,
   reviews,
   services,
+  shareLabels,
 } from '../../stories/data'
 import type { BlockName } from './index'
 
@@ -77,11 +80,11 @@ export const catalogue = {
       rating: google,
     },
     usage:
-      '<PageHeader title="…" subtitle="…" image={pianoIcon} rating={google} />\n<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} labels={mediaLabels} />\n<PageHeader variant="photo" title="…" highlight="#1" lead="…" subtitle="…" cta={{ label: "Learn more", href: "#how-it-works" }} images={[{ image: slide1, alt: "" }]} rating={google} logo={{ … }} />',
+      '<PageHeader title="…" subtitle="…" image={pianoIcon} rating={google} />\n<PageHeader variant="split" title="…" lead="…" cta={{ label: "…", href: "#contact" }} rating={google} images={[…]} labels={mediaLabels} />\n<PageHeader variant="photo" title="…" highlight="#1" lead="…" subtitle="…" cta={{ label: "Learn more", href: "#how-it-works" }} images={[{ image: slide1, alt: "" }]} rating={google} logo={{ … }} />\n<PageHeader variant="cover" title="…" date="2026-09-23" image={cover} />',
     previewHeight: 560,
     dataSource: 'content/<locale>/data/ratings.ts (google), labels.ts (mediaLabels, with images)',
     guidelines:
-      'One per page, always first. The band on content pages (the service icon as `image` + `rating` on service pages), `variant="split"` on landing pages, `variant="photo"` on the homepage only (`highlight` must be a substring of the title).',
+      'One per page, always first. The band on content pages (the service icon as `image` + `rating` on service pages), `variant="split"` on landing pages, `variant="photo"` on the homepage only (`highlight` must be a substring of the title), `variant="cover"` on the blog and its posts (the post\'s cover as `image`, its `date`).',
   },
   Section: {
     category: 'text',
@@ -117,6 +120,19 @@ export const catalogue = {
     previewHeight: 520,
     guidelines:
       "Pictures live in the page folder (`import photo from './photo.jpg?w=480;960&as=picture'`). Keep prose to a few short paragraphs; use `cta` only for the section's main action.",
+  },
+  Article: {
+    category: 'text',
+    useWhen:
+      'Long-form prose in a reading column: a blog post, a legal text, a guide, with subheadings, pictures and videos between the paragraphs.',
+    notFor: 'a short text with a heading: Section; prose beside one picture: MediaText.',
+    defaults: { items: article, labels: mediaLabels, label: 'Article' },
+    usage:
+      '<Article label="…" items={[{ body: "…\\n\\n## …", image: photo, alt: "…", caption: "…" }, { body: "…", video: { youtube: "…", title: "…" } }]} labels={mediaLabels} />',
+    dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with a video)',
+    previewHeight: 760,
+    guidelines:
+      'Each part is light markdown ("## " and "### " subheadings, "- " and "1. " lists, "> " quotes, **bold**, *italics*, [links](/path)) followed by its picture, YouTube video or short mp4 clip. Pictures and clips live in the page folder. The page’s h1 stays in its PageHeader.',
   },
   Samples: {
     category: 'text',
@@ -242,6 +258,20 @@ export const catalogue = {
     usage: '<Stats title="…" items={[{ value: "25%", label: "…" }]} />',
     previewHeight: 380,
   },
+  PostList: {
+    category: 'list',
+    useWhen:
+      'The blog: every post as a card on its index, or the latest few under a post (`limit`).',
+    notFor: 'cards written on the page: CardGrid.',
+    defaults: { title: 'More articles', items: posts, linkLabel: 'Read more' },
+    usage:
+      '<PostList items={postCards(locale)} linkLabel="Read more" />\n<PostList title="…" items={postCards(locale)} limit={3} columns={3} linkLabel="Read more" />',
+    dataSource:
+      'src/content/posts.ts (postCards: the locale’s posts from their meta, newest first; a data page gets them by itself)',
+    previewHeight: 640,
+    guidelines:
+      'The cards come from each post’s meta (title, cover, excerpt, date, first tag as the category); nothing is typed into the list.',
+  },
   PricingCards: {
     category: 'list',
     useWhen: 'Any page that talks about price: price-from cards with the factors.',
@@ -303,6 +333,17 @@ export const catalogue = {
     dataSource: 'content/<locale>/data/reviews.ts, labels.ts (reviewLabels)',
     guidelines:
       'Quotes are verbatim from Trustpilot/Google; add new ones to data/reviews.ts, never inline. Pass only the reviews to show.',
+  },
+  ShareLinks: {
+    category: 'cta',
+    useWhen: 'Under a blog post, before the related posts: buttons to share it.',
+    notFor: 'links to our own social profiles: those are in the footer.',
+    defaults: { title: 'Share this with your friends', labels: shareLabels },
+    usage: '<ShareLinks title="Share this with your friends" labels={shareLabels} />',
+    dataSource: 'content/<locale>/data/labels.ts (shareLabels)',
+    previewHeight: 220,
+    guidelines:
+      'The links share the page’s canonical address; no script of the networks is loaded. Its words come from `shareLabels`.',
   },
   ContactSection: {
     category: 'cta',

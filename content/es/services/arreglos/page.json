@@ -1,0 +1,121 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Arreglos musicales - Mis Transcripciones Musicales",
+  "description": "Arreglamos tus canciones para cualquier grupo de instrumentos. Hecho por los mejores arreglistas. Preciso al 100%.",
+  "translationKey": "music-arrangement-service",
+  "shortTitle": "Arreglos musicales",
+  "icon": "arreglos",
+  "group": "editing",
+  "priceFrom": 19,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Arreglos musicales",
+      "subtitle": "Creamos cualquier tipo de arreglo que necesites",
+      "image": "arreglos.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
+          "image": "arreglos.png"
+        },
+        {
+          "body": "Arreglamos tu música favorita, desde canciones pop, hasta música clásica. Podemos arreglar la pieza para cualquier instrumento o conjunto de instrumentos que necesites.\n\nNuestros arreglistas y transcriptores crearán una partitura personalizada para ti.",
+          "video": {
+            "youtube": "7FKE3VDhFFo",
+            "title": "Arreglos musicales",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "arrangement-3-spring-little-women.png"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand"
+    },
+    {
+      "type": "Samples",
+      "title": "Más arreglos musicales",
+      "items": [
+        {
+          "title": "Arreglo para banda completa",
+          "video": {
+            "youtube": "wvHYdgHLAvo",
+            "title": "Arreglo para banda completa",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "arrangement-1-friend-like-me-aladdin.png",
+          "alt": "Arrangement 1 (Friend Like Me, from Aladdin), primera página de la partitura"
+        },
+        {
+          "title": "Orquesta de musical reducida a piano",
+          "video": {
+            "youtube": "_1ynC1RB3kY",
+            "title": "Orquesta de musical reducida a piano",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "arrangement-2-danzon-no-2.png",
+          "alt": "Arrangement 2 (Danzón No. 2, Arturo Márquez), primera página de la partitura"
+        }
+      ]
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand"
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "arrangementPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/arreglos"
+    }
+  ]
+}

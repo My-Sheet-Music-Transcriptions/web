@@ -24,7 +24,16 @@ export interface HeadingProps extends ComponentPropsWithoutRef<'h2'> {
 /** A heading inside prose (a section's own title is the block's `title` prop). */
 export function Heading({ level = 2, className, ...p }: HeadingProps) {
   const Tag = level === 2 ? 'h2' : 'h3'
-  return <Tag {...p} className={cn(level === 2 ? 'text-h2' : 'text-h3', 'text-ink', className)} />
+  return (
+    <Tag
+      {...p}
+      className={cn(
+        level === 2 ? 'text-h2' : 'text-h3',
+        'text-ink [overflow-wrap:anywhere] hyphens-auto',
+        className,
+      )}
+    />
+  )
 }
 
 export interface ListProps extends ComponentPropsWithoutRef<'ul'> {
@@ -65,7 +74,7 @@ export function TextLink({ className, ...p }: SmartLinkProps) {
     <SmartLink
       {...p}
       className={cn(
-        'text-primary underline underline-offset-2 hover:decoration-2 hover:text-primary-deep',
+        'text-primary underline underline-offset-2 [overflow-wrap:anywhere] hover:decoration-2 hover:text-primary-deep',
         className,
       )}
     />

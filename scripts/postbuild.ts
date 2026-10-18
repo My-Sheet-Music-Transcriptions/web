@@ -1,7 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { redirectLines } from '../src/content/redirects'
 import { DEFAULT_LOCALE } from '../src/i18n/routing'
-import { entriesFor, readAllEntries } from './lib/content-fs'
+import { entriesFor, readAllEntries, redirectsFor } from './lib/content-fs'
 import { deployOrigin, LOCAL_ORIGIN, resolveLocaleRouting } from './lib/site-locale'
 import {
   buildSitemaps,
@@ -15,7 +16,8 @@ import {
 
 /**
  * Runs after `vite build`, writing to dist/client (not public/, so `pnpm dev`, which emulates Netlify redirects,
- * never serves a stale file) the sitemaps (scripts/lib/sitemap.ts) and a Netlify _redirects file:
+ * never serves a stale file) the sitemaps (scripts/lib/sitemap.ts) and a Netlify _redirects file with each
+ * locale's own redirects (content/<locale>/data/redirects.json, src/content/redirects.ts):
  * - domain mode (production): the locale's sitemaps; the WordPress sitemap URLs go to its index;
  * - path mode (every locale under /<locale>: previews, a site with no SITE_LOCALE): each locale's sitemaps under its
  *   prefix and a parent /sitemap.xml over all of them; the WordPress sitemap URLs under each prefix go to that
@@ -51,16 +53,18 @@ if (mode === 'path') {
   console.log(
     `[postbuild] ${path.join(dir, SITEMAP_INDEX)}: ${children.length} sitemaps (${origin})`,
   )
-  // Netlify takes the first rule that matches: the sitemap ones before each locale's catch-all 404.
+  // Netlify takes the first rule that matches: the sitemap ones and each locale's own redirects before each
+  // locale's catch-all 404.
   rules = [
     ...legacy,
+    ...served.flatMap((l) => redirectLines(redirectsFor(l), `/${l}`)),
     `/  /${DEFAULT_LOCALE}  302`,
     ...served.map((l) => `/${l}/*  /${l}/404.html  404`),
   ]
 } else {
   const sitemaps = buildSitemaps(locale, all)
   write(sitemaps)
-  rules = legacySitemapRedirects(sitemaps)
+  rules = [...legacySitemapRedirects(sitemaps), ...redirectLines(redirectsFor(locale))]
 }
 if (!hasGitHistory())
   console.warn('[postbuild] shallow clone: sitemaps carry only the lastmod dates set in meta.ts')

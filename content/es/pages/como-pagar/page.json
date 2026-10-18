@@ -1,0 +1,82 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Cómo pagar - Mis Transcripciones Musicales",
+  "description": "Rellena el importe a pagar según lo acordado en las comunicaciones previas por correo electrónico. No es necesario poner decimales ni tampoco la moneda.",
+  "translationKey": "how-to-pay",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "CÓMO PAGAR: Una guía paso a paso"
+    },
+    {
+      "type": "MediaText",
+      "eyebrow": "1.",
+      "title": "Rellena el importe a pagar y haz clic en \"Add to order\"",
+      "body": "Rellena el importe a pagar según lo acordado en las comunicaciones previas por correo electrónico. No es necesario poner decimales ni tampoco la moneda.\n\nComprueba que el importe es correcto y haz clic en “Add to order”.\n\nVerás que el importe correspondiente se añadirá al resumen de tu pedido justo debajo. La descripción del producto aparecerá como “My Sheet Music Transcription Services”.",
+      "clip": {
+        "src": "paso-1-importe.mp4",
+        "title": "Rellenar el importe y añadirlo al pedido"
+      },
+      "imageSide": "right"
+    },
+    {
+      "type": "MediaText",
+      "eyebrow": "2.",
+      "title": "Rellena los datos de facturación de tu pedido",
+      "body": "Rellena tus datos personales como lo harías en cualquier otra tienda online. Puedes marcar la casilla para crear una cuenta con nosotros y se almacenarán tus datos de facturación. También puedes realizar el pago como invitado sin crear una cuenta.\n\nPor favor, asegúrate de escribir la dirección correctamente, así como el número de teléfono con el [código de país](https://countrycode.org/) correspondiente.\n\nSi ya tienes una cuenta con nosotros, puedes iniciar sesión en la parte superior de la página.\n\nTen en cuenta que los campos marcados con un asterisco rojo son obligatorios.",
+      "clip": {
+        "src": "paso-2-datos-de-facturacion.mp4",
+        "title": "Rellenar los datos de facturación"
+      },
+      "imageSide": "right"
+    },
+    {
+      "type": "MediaText",
+      "eyebrow": "3.",
+      "title": "Selecciona el método de pago que prefieras",
+      "body": "Puedes seleccionar “Debit or Credit Card (VISA, Mastercard)” o “PayPal and other cards” según tus preferencias. Ambas opciones son seguras y encriptan la información de tu tarjeta.\n\nTen en cuenta que PayPal puede aplicar cargos adicionales. Si eliges esa opción, serás redirigido a la pasarela de pago de PayPal que te guiará durante el resto del proceso.",
+      "clip": {
+        "src": "paso-3-metodo-de-pago.mp4",
+        "title": "Seleccionar el método de pago"
+      },
+      "imageSide": "right"
+    },
+    {
+      "type": "MediaText",
+      "eyebrow": "4.",
+      "title": "Introduce los datos de tu tarjeta",
+      "body": "Si has seleccionado la opción “Debit or Credit Card (VISA, Mastercard)”, introduce los datos de tu tarjeta.\n\nEl código de seguridad de la tarjeta (CSC) suele ser un número de 3 dígitos y suele estar impreso en el reverso de la tarjeta de crédito (normalmente junto a la firma). Puedes hacer clic en el interrogante “?” para obtener más información al respecto.",
+      "clip": {
+        "src": "paso-4-datos-de-la-tarjeta.mp4",
+        "title": "Introducir los datos de la tarjeta"
+      },
+      "imageSide": "right"
+    },
+    {
+      "type": "MediaText",
+      "eyebrow": "5.",
+      "title": "Verificación en dos pasos",
+      "body": "Cuando selecciones “proceed to verification”, se iniciará un **proceso de verificación en dos pasos**. Asegúrate de completarlo.\n\nLa verificación en dos pasos es un proceso solicitado por el emisor de tu tarjeta de crédito que implica dos métodos de autenticación realizados **uno tras otro** para verificar que tu solicitud de acceso es legítima y autorizada.\n\nDespués de rellenar los datos de tu tarjeta de crédito **(paso 1)**, se enviará un código a tu teléfono móvil mediante un mensaje de texto, una llamada de voz o a través de la aplicación móvil de tu banco **(paso 2)**. Tendrás que confirmar que eres realmente tú quien realiza el pago.\n\nSi esto no se completa con éxito, la transacción será denegada por razones de seguridad.",
+      "clip": {
+        "src": "paso-5-verificacion.mp4",
+        "title": "Verificación en dos pasos con el teléfono móvil"
+      },
+      "imageSide": "right"
+    },
+    {
+      "type": "MediaText",
+      "eyebrow": "6.",
+      "title": "¿Cómo sabrás si la transacción se ha realizado con éxito?",
+      "body": "Aparecerá la página de “**¡Gracias!**” -que se muestra en color verde como en la imagen: *¡su pago se ha enviado con éxito!* Nos pondremos en contacto contigo en las próximas horas para confirmar que hemos recibido la transacción. También deberías recibir un correo electrónico automático con el resumen de tu pedido y, si tienes una cuenta, el pedido debería aparecer en tu pestaña de **Pedidos**.\n\nSi no ha tenido éxito, por favor, **inténtalo de nuevo, prueba la opción de PayPal, ponte en contacto con nosotros, o con tu banco para obtener más ayuda.**\n\nNuestro equipo siempre está a tu disposición para cualquier cosa.",
+      "image": "pago-completado.jpg",
+      "alt": "Página “Thank you! Your payment was submitted successfully!”",
+      "imageSide": "right"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/como-pagar"
+    }
+  ]
+}

@@ -18,6 +18,8 @@ const config: KnipConfig = {
     // BlockPage into every data page's module.
     'src/admin/preview.tsx',
     'src/content/BlockPage.tsx',
+    // and of usePostCards into the data pages that list the blog's posts.
+    'src/content/posts.ts',
     // .storybook/main.ts: the builder's viteConfigPath and the server-function stand-in (an alias).
     '.storybook/vite.config.ts',
     '.storybook/mocks/contact.functions.ts',

@@ -1,10 +1,12 @@
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
+import { Lightbox } from '~/components/primitives/Lightbox'
 import { RevealItem } from '~/components/primitives/Motion'
 import { Picture } from '~/components/primitives/Picture'
 import { SmartLink } from '~/components/primitives/SmartLink'
-import type { PictureItem } from '~/content/types'
+import type { MediaLabels, PictureItem } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { gridCols } from '~/lib/grid'
+import { fill } from '~/lib/strings'
 
 export interface PictureGridProps extends ShellProps {
   /** The pictures: a list from content/<locale>/data (allServices) or written in the page. */
@@ -19,6 +21,10 @@ export interface PictureGridProps extends ShellProps {
   limit?: number
   /** What the pictures are, for screen readers, when there is no title. */
   label?: string
+  /** A picture without a link opens larger when clicked (a gallery); needs `labels`. */
+  zoom?: boolean
+  /** The words of the enlarge and close buttons: `media` from content/<locale>/data/labels. */
+  labels?: MediaLabels
 }
 
 const pictures = {
@@ -41,7 +47,8 @@ const pictures = {
 /**
  * A grid of pictures, each with its name and caption, linked when it has an `href`. `shape`: icon
  * (services), logo, portrait (round) or photo (square). `variant="marquee"`: a strip that scrolls by on its
- * own, of icons with their names or of tall photos (hidden on phones). `limit` shows the first n.
+ * own, of icons with their names or of tall photos (hidden on phones). `limit` shows the first n. With `zoom` the
+ * pictures open larger when clicked (a gallery).
  */
 export function PictureGrid({
   items,
@@ -50,6 +57,8 @@ export function PictureGrid({
   columns = 4,
   limit,
   label,
+  zoom,
+  labels,
   ...shell
 }: PictureGridProps) {
   const shown = limit ? items.slice(0, limit) : items
@@ -134,14 +143,29 @@ export function PictureGrid({
         )}
       >
         {shown.map((item) => {
+          const picture = (
+            <Picture
+              image={item.image}
+              alt={item.alt ?? ''}
+              sizes={p.sizes}
+              className={p.className}
+            />
+          )
+          const enlarge = zoom && !item.href && labels?.enlarge && labels.close
           const content = (
             <>
-              <Picture
-                image={item.image}
-                alt={item.alt ?? ''}
-                sizes={p.sizes}
-                className={p.className}
-              />
+              {enlarge ? (
+                <Lightbox
+                  image={item.image}
+                  alt={item.alt ?? item.name ?? ''}
+                  openLabel={fill(labels.enlarge as string, { alt: item.alt ?? item.name ?? '' })}
+                  closeLabel={labels.close as string}
+                >
+                  {picture}
+                </Lightbox>
+              ) : (
+                picture
+              )}
               {item.name ? (
                 <span className="mt-4 block text-h4 font-bold text-ink group-hover:text-accent-deep">
                   {item.name}

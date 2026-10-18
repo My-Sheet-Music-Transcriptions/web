@@ -1,0 +1,121 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Transcripciones para batería - Mis Transcripciones Musicales",
+  "description": "Servicio de transcripción de partituras para batería. Realizado por transcriptores y bateristas profesionales. Preciso al 100 %.",
+  "translationKey": "bateria",
+  "shortTitle": "Transcripciones para batería",
+  "icon": "drums",
+  "group": "drums",
+  "priceFrom": 19,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcripciones para batería",
+      "subtitle": "Transcribimos con precisión la línea de batería de cualquier canción",
+      "image": "drums.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
+          "image": "drums.png"
+        },
+        {
+          "body": "**Transcribimos tus líneas favoritas de batería.** Podrás tocar canciones de tus bandas sonoras favoritas o de los artistas que más admiras.\n\nTambién te ayudaremos a prepararte para audiciones. **Nuestros transcriptores profesionales de batería** estarán encantados de crear una partitura personalizada para ti.",
+          "video": {
+            "youtube": "iMABd4gV2gY",
+            "title": "Transcripciones para batería",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "drums-1-more-of-you.png"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand"
+    },
+    {
+      "type": "Samples",
+      "title": "Más partituras y transcripciones de batería",
+      "items": [
+        {
+          "title": "Transcripción de la línea de batería de banda sonora",
+          "video": {
+            "youtube": "r-lu0vjHSO0",
+            "title": "Transcripción de la línea de batería de banda sonora",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "drums-2-fletch-theme.png",
+          "alt": "Drums 2 (Fletch Theme), primera página de la partitura"
+        },
+        {
+          "title": "Comping de batería jazz",
+          "video": {
+            "youtube": "G4X5jphJyYQ",
+            "title": "Comping de batería jazz",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "drums-3-three-wishes.png",
+          "alt": "Drums 3 (Three Wishes), primera página de la partitura"
+        }
+      ]
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand"
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "drumsPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/bateria"
+    }
+  ]
+}

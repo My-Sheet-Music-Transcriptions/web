@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import type { Plugin } from 'vite'
+import { cmsBlocks, isCmsBlock } from '../../src/components/blocks/cms.ts'
 import {
   DATA_PAGE_FILE,
   pictureWidths,
@@ -17,7 +18,8 @@ const REQUEST = new RegExp(`/${DATA_PAGE_FILE.replace('.', '\\.')}\\?(meta|page)
  * index reads every page's meta eagerly, so the blocks stay out of it), and `page.json?page` is the page component,
  * as an index.tsx would be: each picture imported through vite-imagetools at its field's or its block's widths, each
  * recording as its URL, each data field's export imported from content/<locale>/data, the blocks rendered by
- * BlockPage with the locale's block words (content/<locale>/data/labels.ts) and brand (its video poster, brand.ts).
+ * BlockPage with the locale's block words (content/<locale>/data/labels.ts) and brand (its video poster, brand.ts),
+ * and, when a block lists the blog (`feed: 'posts'`), the locale's posts (src/content/posts.ts).
  */
 export function dataPages(): Plugin {
   let root = process.cwd()
@@ -85,6 +87,9 @@ export function dataPages(): Plugin {
           },
         }),
       )
+      const feedsPosts = blocks.some(
+        (b) => isCmsBlock(b.type) && (cmsBlocks[b.type] as { feed?: string }).feed === 'posts',
+      )
       const data = JSON.stringify(resolved, null, 2).replace(
         /"__((?:picture|file)\d+|data\d+\.\w+)__"/g,
         '$1',
@@ -95,10 +100,17 @@ export function dataPages(): Plugin {
         `import { BlockPage } from ${JSON.stringify(path.join(root, 'src/content/BlockPage.tsx'))}`,
         `import * as words from ${JSON.stringify(path.join(root, `content/${locale}/data/labels.ts`))}`,
         `import * as brand from ${JSON.stringify(path.join(root, `content/${locale}/data/brand.ts`))}`,
+        ...(feedsPosts
+          ? [
+              `import { usePostCards } from ${JSON.stringify(path.join(root, 'src/content/posts.ts'))}`,
+            ]
+          : []),
         ...imports,
         `const blocks = ${data}`,
         'export default function DataPage() {',
-        '  return createElement(BlockPage, { blocks, words, brand })',
+        feedsPosts
+          ? '  return createElement(BlockPage, { blocks, words, brand, posts: usePostCards() })'
+          : '  return createElement(BlockPage, { blocks, words, brand })',
         '}',
         '',
       ].join('\n')

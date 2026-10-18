@@ -13,7 +13,10 @@ export function Stats({ items, ...shell }: StatsProps) {
     <BlockShell {...shell} cascade>
       <dl className="grid gap-8 text-center md:grid-cols-3">
         {items.map((s) => (
-          <RevealItem key={s.label} className="flex flex-col-reverse items-center gap-3">
+          <RevealItem
+            key={`${s.value} ${s.label}`}
+            className="flex flex-col-reverse items-center gap-3"
+          >
             <dt className="max-w-[300px] text-body text-ink">{s.label}</dt>
             <dd className="text-[46px] font-bold leading-none text-primary">{s.value}</dd>
           </RevealItem>

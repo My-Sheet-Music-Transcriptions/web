@@ -1,0 +1,66 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Escalas: la escala mayor y la escala menor",
+  "description": "¿Cuáles son las diferencias entre la escala mayor y la escala menor? Te lo explican fácilmente los expertos de Mis Transcripciones Musicales",
+  "translationKey": "escalas-la-escala-mayor-y-la-escala-menor",
+  "date": "2024-08-19",
+  "excerpt": "Escalas: la escala mayor y la escala menor Una de las primeras cosas que ha de aprender un músico es que hay dos escalas principales en la música occidental.",
+  "cover": {
+    "src": "scales.png",
+    "alt": "Escalas: la escala mayor y la escala menor"
+  },
+  "tags": [
+    "Tutoriales"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Escalas: la escala mayor y la escala menor",
+      "date": "2024-08-19",
+      "image": "scales.png"
+    },
+    {
+      "type": "Article",
+      "label": "Escalas: la escala mayor y la escala menor",
+      "items": [
+        {
+          "body": "## Escalas: la escala mayor y la escala menor\n\nUna de las primeras cosas que ha de aprender un músico es que hay dos escalas principales en la música occidental. Son **la escala mayor** y **la escala menor**.\n\nPor eso, hoy hablaremos de un tema muy importante en la música: **la escala mayor y la escala menor**. ¿Cuál es la diferencia entre ellas? Los expertos de [**Mis Transcripciones Musicales**](/) te lo explicamos en este post:\n\n## La escala mayor\n\nLa escala mayor es la más común y está compuesta por siete notas diferentes, que se llaman grados. Su primer, tercer y quinto grado forman la **tríada mayor**, porque el tercer grado está a una tercera mayor del primero. Normalmente, su sonoridad se reconoce como **alegre**.\n\n¿La escala mayor más fácil? La de Do mayor: **Do, Re, Mi, Fa, Sol, La, Si, Do**. Suena así:",
+          "video": {
+            "youtube": "6p4mjohZ3YM",
+            "title": "C Major Scale piano lesson tutorial"
+          }
+        },
+        {
+          "body": "## La escala menor\n\nLa escala menor es también muy común e igualmente está formada por siete notas. Sin embargo, su primer, tercer y quinto grado forman una **tríada menor**, porque el tercer grado está a una tercera menor del primero. Al contrario que la mayor, su sonoridad es **triste**.\n\nLa escala menor más fácil es la de La menor: **La, Si, Do, Re, Mi, Fa, Sol, La**. Suena así:",
+          "video": {
+            "youtube": "iOanqperDIs",
+            "title": "The Key of A Minor - Am Scale - Primary Chords - Piano Lesson"
+          }
+        },
+        {
+          "body": "Todas las escalas mayores tienen una relativa menor (y todas las escalas menores, tienen una relativa mayor). Las dos escalas que hemos visto (**Do mayor y La menor**) son relativas, es decir, tienen **las mismas notas pero con distinto orden**.\n\n## Reconociendo escalas\n\n¡Vamos a hacer un pequeño ejercicio! Si cogemos, por ejemplo, **Sol mayor**, que es otra escala mayor muy fácil, ¿cuál sería su relativa menor? Si estabas pensando en **Mi menor**, ¡la respuesta es correcta!\n\nJugar a intercambiar escalas mayores y menores es muy divertido, ¡los resultados sonoros son muy graciosos! Puedes tomar como ejemplo [**el famoso tema de La Pantera Rosa**](https://www.youtube.com/@MyJazzSheetMusicTranscriptions). A pesar de que no suena triste, utiliza una escala menor.\n\nAhora, prueba a tocarlo utilizando la escala mayor. Suena muy diferente, ¿cierto?\n\nEn conclusión, las diferentes escalas le dan una gran variedad de colores a la música. Para aprender a utilizarlas de la forma más óptima posible, coge tu instrumento e improvisa con una y con otra. Así descubrirás de primera mano las diferencias sonoras entre ellas, ¡y las reconocerás en las diferentes canciones!",
+          "image": "included-bg.jpg",
+          "alt": "Reconociendo escalas"
+        }
+      ]
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos"
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/escalas-la-escala-mayor-y-la-escala-menor"
+    }
+  ]
+}

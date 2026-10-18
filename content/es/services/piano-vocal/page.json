@@ -1,0 +1,141 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Transcripciones para piano y voz - Mis Transcripciones Musicales",
+  "description": "Servicio de transcripción de partituras para piano y voz. Realizado por transcriptores profesionales. Preciso al 100%.",
+  "translationKey": "piano-vocal",
+  "shortTitle": "Transcripciones para piano y voz",
+  "icon": "voz-y-piano",
+  "group": "vocal",
+  "priceFrom": 16,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcripciones para piano y voz",
+      "subtitle": "Transcribimos con precisión cualquier canción para piano y voz",
+      "image": "voz-y-piano.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
+          "image": "voz-y-piano.png"
+        },
+        {
+          "body": "Transcribimos tus canciones favoritas para piano y voz. Podrás tocar y cantar canciones de los mejores musicales o de los artistas que más admiras. También te ayudaremos a prepararte para audiciones. Nuestros transcriptores profesionales de piano y voz estarán encantados de crear una partitura personalizada para ti.",
+          "video": {
+            "youtube": "d-Ktx632YKQ",
+            "title": "Transcripciones para piano y voz",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "piano-vocal-1-tears-never-dry.png"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand"
+    },
+    {
+      "type": "Samples",
+      "title": "Más ejemplos de partituras",
+      "items": [
+        {
+          "title": "Piano y voz jazz",
+          "video": {
+            "youtube": "LmnejiLlR-M",
+            "title": "Piano y voz jazz",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-vocal-2-the-shadow-of-your-smile.png",
+          "alt": "Piano & vocal 2 (The Shadow Of Your Smile), primera página de la partitura"
+        },
+        {
+          "title": "Piano y voz musical",
+          "video": {
+            "youtube": "A_jON-RBmiQ",
+            "title": "Piano y voz musical",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-vocal-3-no-more-fear.png",
+          "alt": "Piano & vocal 3 (No More Fear), primera página de la partitura"
+        },
+        {
+          "title": "Piano y voz moderno",
+          "video": {
+            "youtube": "6U2ktX3GTGE",
+            "title": "Piano y voz moderno",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-vocal-4-toxic.png",
+          "alt": "Piano & vocal 4 (Toxic), primera página de la partitura"
+        },
+        {
+          "title": "Piano, voz y coro",
+          "video": {
+            "youtube": "HgzGwKwLmgM",
+            "title": "Piano, voz y coro",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "piano-vocal-5-dont-stop-me-now.png",
+          "alt": "Piano, voz y coro (Don't Stop Me Now, Queen), primera página de la partitura"
+        }
+      ]
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand"
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "pianoVocalPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/piano-vocal"
+    }
+  ]
+}

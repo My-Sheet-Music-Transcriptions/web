@@ -1,0 +1,142 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Transcripciones de jazz para piano - Mis Transcripciones Musicales",
+  "description": "Servicio de transcripción de partituras de jazz para piano. Realizado por transcriptores profesionales. Preciso al 100%.",
+  "translationKey": "jazz-piano-solo-transcriptions",
+  "seoTitle": "Jazz para piano - Mis Transcripciones Musicales",
+  "shortTitle": "Transcripciones de jazz para piano",
+  "icon": "jazz",
+  "group": "jazz",
+  "priceFrom": 28,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Transcripciones de jazz para piano",
+      "subtitle": "Transcribimos con precisión cualquier canción de jazz para piano",
+      "image": "jazz.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
+          "image": "jazz.png"
+        },
+        {
+          "body": "Podemos transcribir tus solos de jazz para piano por ti. Podrás tocar en casa ese gran solo de Thelonious Monk, Ahmad Jamal, o McCoy Tyner. Nuestros transcriptores profesionales crearán una partitura personalizada para ti.",
+          "video": {
+            "youtube": "lwrVGYxj0no",
+            "title": "Transcripciones de jazz para piano",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "jazz-piano-1-terrys-tune.png"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand"
+    },
+    {
+      "type": "Samples",
+      "title": "Aquí tienes algunos ejemplos de nuestro trabajo",
+      "items": [
+        {
+          "title": "Erroll’s Theme tocado por Gene Harris",
+          "video": {
+            "youtube": "ENXge5ENlww",
+            "title": "Erroll’s Theme tocado por Gene Harris",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "jazz-piano-2-errolls-theme.png",
+          "alt": "Piano Jazz Solo 2 (Erroll's Theme), primera página de la partitura"
+        },
+        {
+          "title": "Balada de jazz para piano",
+          "video": {
+            "youtube": "_1liUart72g",
+            "title": "Balada de jazz para piano",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "jazz-piano-3-over-the-rainbow.png",
+          "alt": "Piano Jazz Solo 3 (Over the Rainbow), primera página de la partitura"
+        },
+        {
+          "title": "Arreglo para piano solo",
+          "video": {
+            "youtube": "LmnejiLlR-M",
+            "title": "Arreglo para piano solo",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "jazz-piano-4-easy-living.png",
+          "alt": "Piano Jazz Solo 4 (Easy Living), primera página de la partitura"
+        },
+        {
+          "title": "Covers de jazz para piano",
+          "video": {
+            "youtube": "9YbjSCrTcKM",
+            "title": "Covers de jazz para piano",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "jazz-piano-6-the-sun-is-in-your-eyes.png",
+          "alt": "Piano Jazz Solo 6 (The Sun is in Your Eyes), primera página de la partitura"
+        }
+      ]
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand"
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "jazzPianoPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/jazz-piano-solo"
+    }
+  ]
+}

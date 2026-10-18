@@ -1,0 +1,55 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Transcribir como un profesional - Mis Transcripciones Musicales",
+  "description": "¿Quieres transcribir como un profesional? ¿Alguna vez te has preguntado cómo trabajan los transcriptores musicales de nuestro equipo?",
+  "translationKey": "transcribir-como-un-profesional",
+  "date": "2021-01-12",
+  "excerpt": "¿Quieres transcribir como un profesional? ¿Alguna vez te has preguntado cómo trabajan los transcriptores musicales de nuestro equipo? En este artículo, los músicos de Mis Transcripciones Musicales compartiremos sus consejos,…",
+  "cover": {
+    "src": "rocket-man.png",
+    "alt": "Transcribir como un profesional"
+  },
+  "tags": [
+    "Tutoriales"
+  ],
+  "author": "Álvaro Martínez",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Transcribir como un profesional",
+      "date": "2021-01-12",
+      "image": "rocket-man.png"
+    },
+    {
+      "type": "Article",
+      "label": "Transcribir como un profesional",
+      "items": [
+        {
+          "body": "## ¿Quieres transcribir como un profesional? ¿Alguna vez te has preguntado cómo trabajan los transcriptores musicales de nuestro equipo?\n\nEn este artículo, los músicos de [**Mis Transcripciones Musicales**](/) compartiremos sus **consejos, trucos y recomendaciones** para transcribir como un profesional, de la forma más práctica y eficaz. Ya seas aficionado a la música en general o quieras iniciarte en las transcripciones, **¡sigue leyendo si quieres aprender más sobre el tema!**\n\n## Crea tu espacio de trabajo\n\nPuede parecer básico, pero **para nosotros es una regla de oro**. Especialmente para los que, como nuestro equipo de transcriptores, trabaja desde casa. Y resulta aún más importante teniendo en cuenta **el grado de concentración que requiere transcribir música.**\n\nRecomendamos, pues, **encontrar un espacio silencioso y tranquilo**, sin interferencias sonoras de algún tipo. De este modo será mucho más sencillo trabajar en la transcripción de forma precisa.\n\n## Ten una idea general de la transcripción\n\nSolemos estancarnos en los detalles, considerándolos la prioridad en un buen encargo. Y sí, es cierto, aunque no hay que perder de vista la transcripción en su totalidad. **Trabajar siempre con la idea general en mente es imprescindible para asegurar la coherencia interna.**\n\nPor ejemplo, pensar en la totalidad de la transcripción asegurará una correcta expresión enarmónica. Olvidar estos pequeños aspectos es un error común: **una enarmonía no es incorrecta en sí misma, pero puede generar partituras incoherentes**.\n\n**Resumiendo, como transcriptores, nuestro objetivo es crear partituras sencillas de leer e interpretar**. Hace falta, entonces, controlar los detalles a la vez que el desarrollo de la pieza en general.",
+          "image": "jtw-2068r.jpg",
+          "alt": "Ten una idea general de la transcripción"
+        },
+        {
+          "body": "## ¡Bienvenidos, aparatos y programas!\n\nQué suerte transcribir durante el s. XXI, ¿verdad? **Actualmente, disponemos de incontables herramientas que permiten una velocidad mayor sin sacrificar la calidad del resultado.**\n\nNuestros transcriptores **[usan teclados](https://www.youtube.com/@MyJazzSheetMusicTranscriptions)** *midi*, por ejemplo, que facilitan muchísimo el proceso. Además, todos ellos conocen bien programas como Finale o Sibelius. **Vale la pena estudiarse todas las opciones que ofrecen, ya que serán nuestros mayores aliados.**\n\nObviamente, no recomendamos depender de estas herramientas –el transcriptor (¡aún!) es el humano– pero sí **exprimir sus posibilidades para ganar en eficacia.**\n\n## Tómate un descanso\n\nComo comentábamos en el primer punto, transcribir requiere un estado de concentración profundo. Por eso, aunque seas el mejor transcriptor del mundo, **necesitarás descansar de vez en cuando**. Es preferible parar cada hora y media durante unos minutos que trabajar cuatro horas seguidas. **Las maratones suelen dejarnos exhaustos y acaban reduciendo el rendimiento.**\n\nTrata de tener a mano una botella de agua y aparta los ojos de la pantalla un momento: **¡sentirás que tus niveles de energía se renuevan!**\n\n**Esperamos que estos consejos os animen a probar de transcribir. Si tenéis alguna duda o comentario, ¡no dudéis en escribirnos!**"
+        }
+      ]
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos"
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/transcribir-como-un-profesional"
+    }
+  ]
+}

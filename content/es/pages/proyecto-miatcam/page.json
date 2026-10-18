@@ -1,0 +1,42 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "MIATCAM: transcripción automática de música con IA",
+  "description": "MIATCAM es un proyecto de I+D de MSMT Barcelona Music sobre transcripción automática de música, cofinanciado por la Unión Europea y el CDTI.",
+  "translationKey": "proyecto-miatcam",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "split",
+      "title": "Modelo de IA para la Transformación y Conversión Automática de Música",
+      "lead": "MSMT Barcelona Music S.L. desarrolla MIATCAM, un proyecto de I+D que aplica inteligencia artificial a la transcripción automática de música. Su finalidad es reforzar nuestros servicios de transcripción artesanal con nuevas herramientas tecnológicas.",
+      "cta": {
+        "label": "Saber más",
+        "href": "#objetivos"
+      },
+      "image": "logo-feder-cdti.png",
+      "alt": "Cofinanciado por la Unión Europea, Ministerio de Hacienda, Fondos Europeos y CDTI"
+    },
+    {
+      "type": "MediaText",
+      "id": "objetivos",
+      "title": "Objetivos",
+      "body": "Investigar técnicas avanzadas de inteligencia artificial aplicadas a la música e integrar la tecnología para servir nuestros procesos de trabajo manuales.",
+      "image": "dsc-3911.jpg",
+      "alt": "Un transcriptor trabajando con una partitura en el ordenador",
+      "tone": "cream"
+    },
+    {
+      "type": "MediaText",
+      "title": "Financiación",
+      "body": "Proyecto financiado por el Centro para el Desarrollo Tecnológico y la Innovación (CDTI) y cofinanciado por la Unión Europea a través del Fondo Europeo de Desarrollo Regional (FEDER).\n\n**Europa Se Siente**",
+      "image": "logo-cdti.jpg",
+      "alt": "Gobierno de España, Ministerio de Ciencia, Innovación y Universidades, CDTI Innovación"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/proyecto-miatcam"
+    }
+  ]
+}

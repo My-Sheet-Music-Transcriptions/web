@@ -1,0 +1,121 @@
+{
+  "language": "es",
+  "collection": "services",
+  "title": "Lead Sheet Instrumental - Mis Transcripciones Musicales",
+  "description": "Servicio de transcripción de lead sheets instrumentales. Realizado por transcriptores y músicos de jazz profesionales. ¡Preciso al 100%!",
+  "translationKey": "lead-sheet-instrumental",
+  "shortTitle": "Lead Sheet Instrumental",
+  "icon": "saxophone",
+  "group": "jazz",
+  "priceFrom": 10,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Lead Sheet Instrumental",
+      "subtitle": "Transcribimos con precisión lead sheets instrumentales, para cualquier instrumento",
+      "image": "saxophone.png",
+      "rating": "google"
+    },
+    {
+      "type": "Steps",
+      "title": "¿Cómo funciona?",
+      "variant": "columns",
+      "items": [
+        {
+          "title": "Envíanos la música",
+          "body": "Formato: Link de Youtube, archivo de audio, Dropbox, Drive.",
+          "image": "saxophone.png"
+        },
+        {
+          "body": "Transcribimos tus **lead sheets instrumentales** favoritas para cualquier instrumento. Recuerda viejos himnos, celebra momentos especiales y sueña a lo grande con algunas de las melodías más emblemáticas.\n\nTanto si tocas **la trompeta, el saxofón, el violín**… ¡podemos hacer que cualquier canción suene bien en tu instrumento!\n\nNuestros músicos profesionales transcribirán **partituras personalizadas para ti**. Dinos si necesitas una **transposición**, una **simplificación** o **cualquier otro ajuste para tu instrumento**.",
+          "video": {
+            "youtube": "ubhw_DB1Wog",
+            "title": "Lead Sheet Instrumental",
+            "caption": "Reproduce para comparar con la partitura"
+          }
+        },
+        {
+          "title": "Recibe tu partitura",
+          "body": "Te la enviamos en formato digital: pdf, XML, Sibelius, etc",
+          "image": "lead-sheet-1-berkshire-blues.png"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "title": "Los transcriptores de partituras online mejor valorados",
+      "counter": "counter",
+      "sources": "platforms",
+      "image": "pianoBand"
+    },
+    {
+      "type": "Samples",
+      "title": "¡Más ejemplos de lead sheet instrumentales!",
+      "items": [
+        {
+          "title": "Lead sheet de jazz para instrumentos en Si bemol",
+          "video": {
+            "youtube": "RvOwQtJOgEA",
+            "title": "Lead sheet de jazz para instrumentos en Si bemol",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "lead-sheet-2-images.png",
+          "alt": "Lead Sheet 2 (Images), Bb instruments, primera página de la partitura"
+        },
+        {
+          "title": "Lead sheet de jazz para instrumentos en Do",
+          "video": {
+            "youtube": "d6J08QCACqo",
+            "title": "Lead sheet de jazz para instrumentos en Do",
+            "caption": "Reproduce para comparar con la partitura"
+          },
+          "image": "lead-sheet-3-l-line.png",
+          "alt": "Lead Sheet 3 (L-line), C instruments, primera página de la partitura"
+        }
+      ]
+    },
+    {
+      "type": "CardGrid",
+      "title": "¿Qué se incluye?",
+      "items": "included",
+      "image": "studioBand"
+    },
+    {
+      "type": "PricingCards",
+      "title": "Precios flexibles",
+      "tiers": "leadSheetPricing",
+      "cta": {
+        "label": "Pide tu partitura",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "FaqList",
+      "title": "Preguntas frecuentes",
+      "groups": [
+        {
+          "shared": "servicesFaq"
+        },
+        {
+          "shared": "orderingFaq"
+        },
+        {
+          "shared": "technicalFaq"
+        },
+        {
+          "shared": "aboutFaq"
+        }
+      ],
+      "jumpLinks": true,
+      "cta": {
+        "label": "Lee todas nuestras FAQs",
+        "href": "/preguntas-frecuentes"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/lead-sheet-instrumental"
+    }
+  ]
+}

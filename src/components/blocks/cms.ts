@@ -18,6 +18,7 @@ import {
   line,
   list,
   listOf,
+  movie,
   number,
   picture,
   prose,
@@ -104,6 +105,8 @@ const button = (label = 'Button', hint?: string) =>
 const markdownHint =
   'Blank line between paragraphs; lines starting with "- " make a list; **bold** and [links](/path).'
 const inlineHint = '**bold** and [links](/path) are kept.'
+const articleHint =
+  'Blank line between paragraphs; "## " or "### " starts a subheading; lines starting with "- " or "1. " make a list; "> " a quotation; **bold**, *italics* and [links](/path).'
 const tone = select('Background', ['white', 'cream', 'peach'])
 const anchor = line('Anchor id', { hint: 'For links to #this-id (lowercase, dashes).' })
 const reveal = toggle('Rise in as the page scrolls to it', { default: true })
@@ -121,6 +124,15 @@ const video = group('Video', {
   }),
   title: line('What the video shows', { required: true }),
   caption: line('Line under the video', { hint: '"Play to compare with the sheet music"' }),
+})
+const clip = group('Short video (mp4 of the page folder, plays on its own in a loop)', {
+  src: movie('Video file (mp4)', { required: true }),
+  title: line('What the video shows', { required: true }),
+})
+const recording = group('Recording', {
+  src: sound('Audio file (mp3)', { required: true }),
+  title: line('What the recording is', { required: true }),
+  caption: line('Line under the player'),
 })
 const slides = (label: string, widths: string, hint?: string) =>
   list(
@@ -154,11 +166,7 @@ const sampleFields = {
     hint: 'What it is ("Piano cover transcription"); with a price, the level or instrument ("Easy").',
   }),
   video: video,
-  audio: group('Recording', {
-    src: sound('Audio file (mp3)', { required: true }),
-    title: line('What the recording is', { required: true }),
-    caption: line('Line under the player'),
-  }),
+  audio: recording,
   image: picture('First page of the score', { required: true }),
   alt: line('Score description (alt text)', { required: true }),
   icon: picture('Instrument icon', {
@@ -200,6 +208,15 @@ const tiers = fromData(
     ukulelePricing: 'services',
     windPricing: 'services',
     stringPricing: 'services',
+    bandPricing: 'services',
+    bassPricing: 'services',
+    drumsPricing: 'services',
+    arrangementPricing: 'services',
+    pianoVocalPricing: 'services',
+    jazzPianoPricing: 'services',
+    orchestrationPricing: 'services',
+    leadSheetPricing: 'services',
+    composerPricing: 'services',
     generalPricing: 'services',
   },
   { required: true, hint: 'One price makes a wide card; the homepage’s three make three cards.' },
@@ -220,9 +237,9 @@ export const cmsBlocks = {
     words: 'mediaLabels',
     pictureWidths: '480;960',
     fields: {
-      variant: select('Style', ['band', 'split', 'photo'], {
+      variant: select('Style', ['band', 'split', 'photo', 'cover'], {
         default: 'band',
-        hint: 'band: the dark title band. split: the words beside a picture, on white. photo: the homepage, photos behind.',
+        hint: 'band: the title band. split: the words beside a picture, on white. photo: the homepage, photos behind. cover: white words over a darkened photo (the blog, a post).',
       }),
       title: line('Title (the page’s h1)', { required: true }),
       highlight: line('Part of the title in orange (photo style)', {
@@ -231,9 +248,14 @@ export const cmsBlocks = {
       eyebrow: line('Short line above the title'),
       lead: prose('Lead', { hint: inlineHint }),
       subtitle: line('Line in bold under the lead'),
+      date: line('Date under the title (cover)', {
+        hint: 'A post’s date, as YYYY-MM-DD: 2026-09-23.',
+        decap: { pattern: ['^\\d{4}-\\d{2}-\\d{2}$', 'YYYY-MM-DD'] },
+      }),
       cta: button(),
       image: picture('Picture', {
-        hint: 'Beside the words (split), or the service’s icon under the band.',
+        hint: 'Beside the words (split), the service’s icon under the band, or the photo behind (cover).',
+        widths: '480;960;1600',
       }),
       alt: line('Picture description (alt text)'),
       images: slides('Photos', '1000;1600;2000', 'Several rotate behind the title (photo style).'),
@@ -289,9 +311,50 @@ export const cmsBlocks = {
         { summary: '{{fields.alt}}' },
       ),
       layout: select('Several pictures as', ['carousel', 'pair']),
+      zoom: toggle('The picture opens larger when clicked'),
       video: video,
+      clip,
       imageSide: select('Picture side', ['left', 'right']),
+      imageWidth: number('Picture width in px (desktop)', { min: 120, max: 1140 }),
       align: select('Alignment', ['start', 'center']),
+      tone,
+      cta: button(),
+      reveal,
+    },
+  },
+  Article: {
+    label: 'Article',
+    summary: '{{fields.title}} {{fields.label}}',
+    words: 'mediaLabels',
+    pictureWidths: '860;1720',
+    fields: {
+      ...heading,
+      label: line('What the text is (for screen readers, without a heading)'),
+      items: list(
+        'Parts',
+        {
+          body: prose('Text', { hint: articleHint }),
+          image: picture('Picture under the text'),
+          alt: line('Picture description (alt text)'),
+          caption: line('Line under the picture or video'),
+          imageWidth: number('Picture width in px', {
+            min: 40,
+            max: 860,
+            hint: 'Only for a picture smaller than the column (an icon, a small diagram).',
+          }),
+          video: video,
+          clip,
+          audio: recording,
+        },
+        {
+          required: true,
+          summary: '{{fields.body}}',
+          hint: 'The text in order: each part is some text, then a picture or a video if it has one.',
+        },
+      ),
+      width: select('Width', ['narrow', 'content'], {
+        hint: 'narrow: a reading column (default).',
+      }),
       tone,
       cta: button(),
       reveal,
@@ -308,6 +371,7 @@ export const cmsBlocks = {
         hint: 'rows: the recording beside the score. columns: side by side (a pricing chart).',
       }),
       items: samples('Samples'),
+      zoom: toggle('Scores open larger when clicked'),
       tabs: list(
         'Sets of samples (one per currency)',
         { label: line('Tab', { required: true, hint: '"USD"' }), items: samples('Samples', true) },
@@ -384,6 +448,7 @@ export const cmsBlocks = {
   PictureGrid: {
     label: 'Picture grid',
     summary: '{{fields.title}} {{fields.label}}',
+    words: 'mediaLabels',
     pictureWidths: '180;360',
     fields: {
       ...heading,
@@ -394,6 +459,7 @@ export const cmsBlocks = {
       }),
       columns: number<2 | 3 | 4 | 5 | 6>('Pictures per row (2–6)', { min: 2, max: 6 }),
       limit: number('Show only the first', { min: 1, max: 60 }),
+      zoom: toggle('Pictures without a link open larger when clicked (a gallery)'),
       items: list(
         'Pictures',
         {
@@ -498,6 +564,25 @@ export const cmsBlocks = {
       reveal,
     },
   },
+  PostList: {
+    label: 'Blog posts',
+    summary: '{{fields.title}}',
+    pictureWidths: '400;800',
+    feed: 'posts',
+    fields: {
+      ...heading,
+      limit: number('Show only the latest', {
+        min: 1,
+        max: 60,
+        hint: 'Empty: every post (the blog). Under a post: 3.',
+      }),
+      columns: number<2 | 3>('Cards per row (2–3)', { min: 2, max: 3 }),
+      linkLabel: line('Link words on each card', { hint: '"Read more"' }),
+      tone,
+      cta: button(),
+      reveal,
+    },
+  },
   PricingCards: {
     label: 'Prices',
     summary: '{{fields.title}}',
@@ -568,15 +653,31 @@ export const cmsBlocks = {
     },
   },
   // --- calls to action
+  ShareLinks: {
+    label: 'Share buttons',
+    summary: '{{fields.title}}',
+    words: 'shareLabels',
+    pictureWidths: '480;960',
+    fields: {
+      ...heading,
+      tone,
+      reveal,
+    },
+  },
   ContactSection: {
     label: 'Request form',
     summary: '{{fields.title}}',
     pictureWidths: '480;960',
     fields: {
-      form: fromData('Form', { quoteForm: 'forms', giftCardForm: 'forms' }, { required: true }),
-      variant: select('Kind', ['quote', 'gift-card'], {
-        hint: 'gift-card with the gift card form.',
+      form: fromData(
+        'Form',
+        { quoteForm: 'forms', giftCardForm: 'forms', reservationForm: 'forms' },
+        { required: true },
+      ),
+      variant: select('Kind', ['quote', 'gift-card', 'reservation'], {
+        hint: 'gift-card with the gift card form; reservation (the email alone) with the reservation form.',
       }),
+      eyebrow: line('Short line above the heading'),
       title: line('Heading', { hint: 'Instead of the form’s own.' }),
       lead: line('Line under the heading', { hint: 'Instead of the form’s own.' }),
       id: anchor,

@@ -16,8 +16,8 @@ export interface MediaTextProps extends ShellProps, MediaContent {
 }
 
 /**
- * Prose beside media: a picture with its caption, a carousel, a before/after pair (`layout="pair"`) or a
- * video, left or right, with an optional eyebrow, heading and button. `align="center"` puts the heading above
+ * Prose beside media: a picture with its caption, a carousel, a before/after pair (`layout="pair"`), a
+ * video or a short looping clip, left or right, with an optional eyebrow, heading and button. `align="center"` puts the heading above
  * and the button below (who we are).
  */
 export function MediaText({
@@ -27,6 +27,9 @@ export function MediaText({
   images,
   layout,
   video,
+  clip,
+  audio,
+  zoom,
   labels,
   videoPoster,
   imageSide = 'right',
@@ -35,7 +38,19 @@ export function MediaText({
   children,
   ...shell
 }: MediaTextProps) {
-  const media = { image, alt, caption, images, layout, video, labels, videoPoster }
+  const media = {
+    image,
+    alt,
+    caption,
+    images,
+    layout,
+    video,
+    clip,
+    audio,
+    zoom,
+    labels,
+    videoPoster,
+  }
   const label = shell.title ?? images?.[0]?.alt
 
   if (align === 'center')

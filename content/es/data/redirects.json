@@ -1,0 +1,159 @@
+{
+  "rules": [
+    {
+      "from": "/black-friday-22",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/black-friday-23",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/black-friday-2024",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/black-friday-2025",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/summer-24",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/summer-25",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/summer-26",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/summer-discounts-23",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/fall-25",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/spring-2026",
+      "to": "/precios",
+      "note": "Promoción caducada"
+    },
+    {
+      "from": "/review/*",
+      "to": "/opiniones",
+      "note": "Cada opinión suelta de WordPress: están todas en Opiniones"
+    },
+    {
+      "from": "/faqs/*",
+      "to": "/preguntas-frecuentes",
+      "note": "Cada grupo de preguntas suelto de WordPress"
+    },
+    {
+      "from": "/equipo/*",
+      "to": "/sobre-nosotros",
+      "note": "Cada miembro del equipo suelto de WordPress"
+    },
+    {
+      "from": "/author/*",
+      "to": "/blog",
+      "note": "Archivos de autor de WordPress"
+    },
+    {
+      "from": "/category/*",
+      "to": "/blog",
+      "note": "Categorías de WordPress"
+    },
+    {
+      "from": "/2021/*",
+      "to": "/blog",
+      "note": "Archivos por fecha de WordPress"
+    },
+    {
+      "from": "/2022/*",
+      "to": "/blog",
+      "note": "Archivos por fecha de WordPress"
+    },
+    {
+      "from": "/2023/*",
+      "to": "/blog",
+      "note": "Archivos por fecha de WordPress"
+    },
+    {
+      "from": "/2024/*",
+      "to": "/blog",
+      "note": "Archivos por fecha de WordPress"
+    },
+    {
+      "from": "/2025/*",
+      "to": "/blog",
+      "note": "Archivos por fecha de WordPress"
+    },
+    {
+      "from": "/2026/*",
+      "to": "/blog",
+      "note": "Archivos por fecha de WordPress"
+    },
+    {
+      "from": "/blog/page/*",
+      "to": "/blog",
+      "note": "Páginas 2, 3… del blog: el blog nuevo los lista todos"
+    },
+    {
+      "from": "/orquestraciones",
+      "to": "/orquestaciones",
+      "note": "Antigua dirección de Orquestaciones"
+    },
+    {
+      "from": "/servicios/orquestraciones",
+      "to": "/orquestaciones",
+      "note": "Antigua dirección de Orquestaciones"
+    },
+    {
+      "from": "/lead-sheet",
+      "to": "/lead-sheet-instrumental",
+      "note": "Antigua dirección de Lead Sheet Instrumental"
+    },
+    {
+      "from": "/transcribe-como-un-profesional",
+      "to": "/transcribir-como-un-profesional",
+      "note": "Antigua dirección del artículo"
+    },
+    {
+      "from": "/política-de-cookies",
+      "to": "/politica-de-cookies",
+      "note": "La dirección con tilde"
+    },
+    {
+      "from": "/tienda",
+      "to": "/",
+      "note": "Tienda de WooCommerce retirada"
+    },
+    {
+      "from": "/carrito",
+      "to": "/",
+      "note": "Tienda de WooCommerce retirada"
+    },
+    {
+      "from": "/finalizar-compra",
+      "to": "/",
+      "note": "Tienda de WooCommerce retirada"
+    },
+    {
+      "from": "/mi-cuenta",
+      "to": "/",
+      "note": "Tienda de WooCommerce retirada"
+    }
+  ]
+}

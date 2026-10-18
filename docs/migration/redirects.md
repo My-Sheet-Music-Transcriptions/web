@@ -103,19 +103,22 @@ Trailing slash: WordPress canonicals have no trailing slash (`/pricing`). The ne
 
 ## Spanish (`www.mistranscripcionesmusicales.com`)
 
+Written by the build from `content/es/data/redirects.json` (editable in the CMS as **Spanish · Redirects**; checked by
+`checkRedirects`: no rule hides a page, every target is a page, no chains). All 301.
+
 | From | To | Status | Note |
 |---|---|---|---|
-| `/category/*`, `/author/*`, `/:year/:month/:day` | `/blog` | planned | |
-| `/review/*` | `/opiniones` | planned | decision D5 (19 archived review entries) |
-| `/equipo/*` | `/sobre-nosotros` | planned | D5 (34 archived team entries) |
-| `/faqs/*` | `/preguntas-frecuentes` | planned | D5 |
-| `/orquestaciones` or `/orquestraciones` | the other one | planned | both exist and both claim EN `/orchestration-service`; the hreflang tag uses `/orquestraciones` |
-| `/servicios/orquestraciones` | `/orquestraciones` | verify | old nested URL |
-| `/política-de-cookies` | `/politica-de-cookies` | verify | accented duplicate linked from a page |
-| `/transcribe-como-un-profesional` | `/transcribir-como-un-profesional` | verify | |
-| `/tienda`, `/carrito`, `/finalizar-compra`, `/mi-cuenta` | `/` | planned | WooCommerce (D4) |
-| `/black-friday-22`, `/black-friday-23`, `/summer-discounts-23`, `/summer-24` | `/precios` | verify | expired promos |
-| `/como-pagar` | D4 | verify | payment page |
+| `/category/*`, `/author/*`, `/2021/*` … `/2026/*`, `/blog/page/*` | `/blog` | done | WordPress archives; the new blog lists every post on one page |
+| `/review/*` | `/opiniones` | done | decision D5 (25 review entries in the live sitemap) |
+| `/equipo/*` | `/sobre-nosotros` | done | D5 (34 archived team entries) |
+| `/faqs/*` | `/preguntas-frecuentes` | done | D5 (4 entries in the live sitemap) |
+| `/orquestraciones`, `/servicios/orquestraciones` | `/orquestaciones` | done | the live site already 301s `/orquestraciones` to `/orquestaciones` |
+| `/lead-sheet` | `/lead-sheet-instrumental` | done | the live site already 301s it |
+| `/política-de-cookies` | `/politica-de-cookies` | done | accented duplicate linked from a page |
+| `/transcribe-como-un-profesional` | `/transcribir-como-un-profesional` | done | older slug of the post |
+| `/tienda`, `/carrito`, `/finalizar-compra`, `/mi-cuenta` | `/` | done | WooCommerce (D4) |
+| `/black-friday-22`, `-23`, `/black-friday-2024`, `-2025`, `/summer-24`, `-25`, `-26`, `/summer-discounts-23`, `/fall-25`, `/spring-2026` | `/precios` | done | expired promos (the live sitemap still lists the 2024–2026 ones) |
+| `/test`, `/testing`, `/elementor-20014`, `/blog-post-test-1` | (none: 404) | done | test pages |
 
 ## French (`mapartitionsurmesure.com`)
 

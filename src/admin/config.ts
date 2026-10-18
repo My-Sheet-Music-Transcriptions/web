@@ -3,7 +3,7 @@ import { readAllEntries } from '../../scripts/lib/content-fs.ts'
 import { cmsBlocks } from '../components/blocks/cms.ts'
 import type { AnyCmsBlock, Field } from '../content/cms-fields.ts'
 import { decapField } from '../content/cms-fields.ts'
-import { metaFields, serviceFields } from '../content/cms-meta.ts'
+import { metaFields, postFields, serviceFields } from '../content/cms-meta.ts'
 import { CMS_LOCALES, type CmsLocale } from './locales.ts'
 
 /**
@@ -11,7 +11,8 @@ import { CMS_LOCALES, type CmsLocale } from './locales.ts'
  * CMS. It edits data pages, content/<locale>/<collection>/<slug>/page.json (src/content/data-page.ts), never the
  * hand-built pages (index.tsx + meta.ts), which it does not list. The blocks it offers and their forms are made from
  * src/components/blocks/cms.ts, the same list every page.json is checked against and rendered with.
- * The sidebar: `Site` (every language's homepage and main menu, one entry each), `Pages` and `Services` (every
+ * The sidebar: `Site` (every language's homepage, main menu and redirects, one entry each), `Pages`, `Services` and
+ * `Blog` (every
  * language's, filed in one collection each: the writer filters or groups the list by language, and a new page says
  * which language it is in, which puts it in that language's folder). Each page.json opens with `language` and
  * `collection` for this (src/content/data-page.ts checks them against the folder).
@@ -48,6 +49,7 @@ const fieldsOf = (meta: Record<string, Field>) => [
 /** Every page's fields: its meta, then its blocks; a service page's own meta fields come after the shared ones. */
 const fields = fieldsOf(metaFields)
 const serviceFormFields = fieldsOf({ ...metaFields, ...serviceFields })
+const postFormFields = fieldsOf({ ...metaFields, ...postFields })
 
 /** The language a page is in (its folder), and the collection (its folder, hidden): what a page.json opens with. */
 const languageField = {
@@ -103,9 +105,11 @@ const homeFile = (locale: string) => `content/${locale}/pages/home/page.json`
 
 /** A language's main menu (src/content/menu.ts). */
 const menuFile = (locale: string) => `content/${locale}/data/menu.json`
+/** A language's redirects (src/content/redirects.ts). */
+const redirectsFile = (locale: string) => `content/${locale}/data/redirects.json`
 const entries = readAllEntries()
 
-/** The Site entries of a language: its homepage and its menu, those it has. */
+/** The Site entries of a language: its homepage, its menu and its redirects, those it has. */
 const siteFiles = ({ code, label }: CmsLocale) => [
   ...(fs.existsSync(homeFile(code))
     ? [{ name: `home-${code}`, label: `${label} · Homepage`, file: homeFile(code), fields }]
@@ -120,6 +124,57 @@ const siteFiles = ({ code, label }: CmsLocale) => [
         },
       ]
     : []),
+  ...(fs.existsSync(redirectsFile(code))
+    ? [
+        {
+          name: `redirects-${code}`,
+          label: `${label} · Redirects`,
+          file: redirectsFile(code),
+          fields: redirectFields,
+        },
+      ]
+    : []),
+]
+
+/** The redirects' form: each old address and where it leads (src/content/redirects.ts checks them at build). */
+const redirectFields = [
+  {
+    name: 'rules',
+    label: 'Redirects',
+    label_singular: 'redirect',
+    widget: 'list',
+    collapsed: true,
+    summary: '{{fields.from}} → {{fields.to}}',
+    hint: 'Old addresses of the site and where visitors and search engines are sent instead.',
+    fields: [
+      {
+        name: 'from',
+        label: 'Old address',
+        widget: 'string',
+        hint: 'A path: /summer-25, or /review/* for everything under /review/.',
+        pattern: ['^/\\S*$', 'a path starting with /'],
+      },
+      {
+        name: 'to',
+        label: 'Leads to',
+        widget: 'string',
+        hint: 'A page of this language (/opiniones) or another site (https://…).',
+        pattern: ['^(/\\S*|https://\\S+)$', 'a path or an https:// address'],
+      },
+      {
+        name: 'status',
+        label: 'Kind',
+        widget: 'select',
+        required: false,
+        default: 301,
+        options: [
+          { label: 'Moved for good (301)', value: 301 },
+          { label: 'For now (302)', value: 302 },
+        ],
+      },
+      { name: 'note', label: 'Why', widget: 'string', required: false },
+    ],
+  },
 ]
 
 /**
@@ -213,7 +268,7 @@ export const decapConfig = {
     {
       name: 'site',
       label: 'Site',
-      description: 'Each language’s homepage and main menu.',
+      description: 'Each language’s homepage, main menu and redirects.',
       media_folder: '',
       public_folder: '',
       files: CMS_LOCALES.flatMap(siteFiles),
@@ -231,6 +286,13 @@ export const decapConfig = {
       'service page',
       'The service pages of every language: one per instrument or service, listed in the menus and grids.',
       serviceFormFields,
+    ),
+    kind(
+      'posts',
+      'Blog',
+      'post',
+      'The blog posts of every language: each lists itself on its language’s blog, newest first, with its cover, summary and date.',
+      postFormFields,
     ),
   ],
 }

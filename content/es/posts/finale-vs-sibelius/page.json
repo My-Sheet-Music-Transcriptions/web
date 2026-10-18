@@ -1,0 +1,65 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Finale vs Sibelius - Análisis de Mis Transcripciones Musicales",
+  "description": "¡Finale vs Sibelius! ¿Cuál funciona mejor? Descúbralo en un análisis exhaustivo por parte del equipo de Mis Transcripciones Musicales",
+  "translationKey": "finale-vs-sibelius",
+  "date": "2022-09-15",
+  "excerpt": "Finale vs. Sibelius: ¡un duelo de titanes! ¡El momento finalmente ha llegado! Tenemos que hablar sobre los dos titanes de la notación musical. Ambos llevan múltiples décadas dominando el…",
+  "cover": {
+    "src": "finale-v-sibelius-1.jpg",
+    "alt": "Finale vs Sibelius"
+  },
+  "tags": [
+    "Programas y apps"
+  ],
+  "author": "Oriol",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Finale vs Sibelius",
+      "date": "2022-09-15",
+      "image": "finale-v-sibelius-1.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Finale vs Sibelius",
+      "items": [
+        {
+          "body": "## Finale vs. Sibelius: ¡un duelo de titanes!\n\n¡El momento finalmente ha llegado! Tenemos que hablar sobre los dos titanes de la notación musical. Ambos llevan múltiples décadas dominando el sector. Aunque muchos son dignos contrincantes al título y poseen muy buenas prestaciones: Dórico, MuseScore, Notion 6… **Sibelius y Finale** continúan siendo los líderes del sector.\n\nAl compararlos, surge la **eterna pregunta**: ¿Cuál es mejor, **Sibelius o Finale**?, y parecen estar destinados a ser **eternos rivales** como: ¿**Mac o Windows**?, ¿escalera o ascensor?, ¿café o té?\n\n[**En este artículo queremos hablar**](/) sobre sus pros y contras de manera **imparcial y sin prejuicios**, para que podáis decidir cuál es la mejor opción dependiendo de vuestras prioridades.",
+          "image": "finale-v-sibelius-1.jpg",
+          "alt": "Finale vs Sibelius"
+        },
+        {
+          "body": "## Sibelius\n\n¡Comencemos por [**Sibelius**](https://www.avid.com/sibelius)! De los dos, podemos tranquilamente decir que **Sibelius es la opción favorita de los principiantes**. ¿Por qué?\n\nLa respuesta es muy sencilla y tiene que ver con su increíble **interface *user-friendly*:** es muy **intuitiva y visualmente placentera**. ¿Quieres separar dos sistemas? Muévelos con un simple click y arrastra. ¿Quieres subir o bajar la tesitura de una nota? Haz lo mismo. No tienes por qué saber dónde está cada cosa o cada sub-menú para hacer estos simples cambios, y es lo que precisamente lo hace tan atractivo para músicos principiantes que no necesariamente quieren ser maquetadores profesionales.\n\n## Ratón y atajos de teclado\n\nLa interfaz de Sibelius también tiene un concepto muy interesante. Su sencillez inicial es muy acogedora y **no asusta**. Puede parecer una minucia, pero el usuario que no se sienta saturado durante la primera toma de contacto, es más susceptible a querer aprender más sobre el programa.\n\nUna vez os hayáis familiarizado con su intuitiva interfaz inicial, que inevitablemente implicará **tediosos viajes de ratón arriba y abajo** para, por ejemplo, cambiar la longitud de cada nota (creednos, incluso nosotros hemos pasado por ahí), podéis escalar al siguiente nivel: ayudaros con el teclado (que siempre estuvo ahí, pero quizá no sabíamos de su potencial).\n\n**El teclado** puede hacer que la tarea de introducir notas en vuestros proyectos sea 10.000 veces más **rápida**. Podréis seleccionar cualquier longitud de nota, alteración, articulación, ligadura o símbolo con muy pocos golpes de tecla. Estos **atajos que vienen automatizados** y listos para usar son la guinda del pastel que os **ahorrarán horas y horas** de movimientos con el ratón.",
+          "image": "screen-shot-2021-07-16-at-11-04-51-am.png",
+          "alt": "Ratón y atajos de teclado"
+        },
+        {
+          "body": "## Organización de la interfaz\n\nY una vez hayáis dominado todos los *shortcuts* del teclado, la siguiente etapa sería la de familiarizarse con la interfaz completa de Sibelius, entendiendo cómo se organizan los menús, que encontraréis **visualmente muy similares a la estructura de Microsoft Word** o Google Docs.\n\nSin embargo, aquí es donde las cosas se pueden poner feas para Sibelius. Aunque su interfaz inicial puede ser intuitiva, la **organización de sus menús es de todo menos clara**. ¿Queréis hacer algún ajuste básico de maquetación? ¡Sin problemas! Sólo tendréis que perder una hora intentando recordar el sub-menú correcto para encontrar la herramienta específica que **parecen querer que no encuentres**. Aunque siempre podéis encontrarla con el buscador del programa, pero, ¿es tan difícil poner cada cosa en un lugar fácil de encontrar?\n\nEn lugar de tener todas las herramientas juntas y debidamente ordenadas por temas, clases o acciones, **Sibelius las distribuye innecesariamente entre varios lugares diferentes**. Si quieres escuchar un interesantísimo debate sobre este tema, te recomendamos al 100% la crítica de Tantacrul.\n\n## Finale\n\n**¿Y qué pasa con Finale?** No es de extrañar que, al comparar dos rivales, uno de ellos muestre soluciones y remedios para los defectos del otro. Aunque esto a su vez, también expone la falta de virtudes que el otro tenía originalmente.\n\nAsí como Sibelius es perfecto para un principiante, con una interfaz inicial fácil, pero mal organizada, **Finale es perfecto para los músicos más avanzados y/o profesionales.** Tiene una **interfaz inicial compleja a la que cuesta acostumbrarse rápidamente, pero está bien organizada.**\n\n## Prestaciones avanzadas\n\n[**Finale**](https://www.finalemusic.com/) es la mejor opción si realmente quieres hacer algo más que escribir algunas notas en un pentagrama en blanco. **Puede ir más allá que Sibelius en ciertos aspectos**, por eso probablemente esté pensado para proyectos más avanzados: tiene una gran cantidad de herramientas que te permitirán crear, modificar, ajustar, retocar y cambiar absolutamente todo lo que quieras. Por eso es muy eficiente a la hora de realizar las **maquetaciones más profesionales** y propias de una **publicación preparada para ser comercializada**.\n\nIncluso si no estás intentando hacer algo rebuscado, Finale **tiene todo lo que necesitas, donde lo necesitas** (¡Sibelius, presta atención!).",
+          "image": "screen-shot-2021-07-16-at-11-26-10-am-1.png",
+          "alt": "Prestaciones avanzadas"
+        },
+        {
+          "body": "## Aprendizaje lento y complejo\n\nSin embargo, toda virtud conlleva una desventaja. ¿Cómo puede un software tan profesional conseguir ser sencillo y fácil de usar al principio? Pues como era de esperar…no lo consigue. **La interfaz de Finale puede saturar al que lo usa por primera vez** y espantarlo. Incluso si el usuario se queda, aprender dónde está cada herramienta y cada pequeña opción será una tarea ardua. Pero la paciencia merece totalmente la pena. Una vez dominéis Finale, ¡serás **el rey o la reina indiscutible de la notación musical**!\n\nCuriosamente, al igual que Sibelius, la maquetación en Finale también es un poco incómoda. El resultado que se consigue en Finale al final es excelente. Sin embargo, es muy frustrante intentar que una partitura quede bien cuando empiezas a usar el programa.\n\nEsto se debe a **sus complejas herramientas de maquetación.** No tiene la interfaz intuitiva de Sibelius, lo que supondrá un **verdadero dolor de cabeza** al principio. Finale es como la programación. Aprender el código es difícil, pero una vez que lo dominas, todo es más fácil y más preciso.\n\n## Últimas reflexiones…\n\nTal vez Sibelius sea el Mac de la notación musical y Finale el Windows. Después de todo, no estábamos tan lejos de considerarlos eternos rivales, ¿no?\n\nAhora te toca reflexionar sobre toda esta información que estamos compartiendo. **Según lo que priorices, puedes elegir el programa que mejor se adapte a tus necesidades**. Además, el mundo no se acaba aquí. Hay muchos otros programas, ¡y algunos de ellos gratuitos! En este sentido, puede que al final Sibelius y Finale **sean demasiado caros.** Y puede que encuentres todo lo que necesitas en un software más básico y gratuito como MuseScore, ¿quién sabe?."
+        }
+      ]
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos"
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/finale-vs-sibelius"
+    }
+  ]
+}

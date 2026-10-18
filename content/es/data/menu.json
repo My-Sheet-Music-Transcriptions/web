@@ -15,17 +15,17 @@
         },
         {
           "label": "Transcripciones para piano y voz",
-          "href": "/piano-vocal",
+          "page": "/piano-vocal",
           "links": []
         },
         {
           "label": "Arreglos musicales",
-          "href": "/arreglos",
+          "page": "/arreglos",
           "links": []
         },
         {
           "label": "Transcripciones de jazz para piano",
-          "href": "/jazz-piano-solo",
+          "page": "/jazz-piano-solo",
           "links": []
         },
         {
@@ -35,17 +35,17 @@
         },
         {
           "label": "Transcripciones para bajo",
-          "href": "/bajo",
+          "page": "/bajo",
           "links": []
         },
         {
           "label": "Transcripciones para batería",
-          "href": "/bateria",
+          "page": "/bateria",
           "links": []
         },
         {
           "label": "Lead Sheets Instrumentales",
-          "href": "/lead-sheet-instrumental",
+          "page": "/lead-sheet-instrumental",
           "links": []
         },
         {
@@ -60,22 +60,22 @@
         },
         {
           "label": "Transcripciones y arreglos para bandas",
-          "href": "/bandas",
+          "page": "/bandas",
           "links": []
         },
         {
           "label": "Servicio de orquestaciones",
-          "href": "/orquestaciones",
+          "page": "/orquestaciones",
           "links": []
         },
         {
           "label": "Proyecto MIATCAM",
-          "href": "/proyecto-miatcam",
+          "page": "/proyecto-miatcam",
           "links": []
         },
         {
           "label": "Servicio de Transposición Musical",
-          "href": "/servicio-de-transposicion-musical",
+          "page": "/servicio-de-transposicion-musical",
           "links": []
         }
       ]
@@ -94,7 +94,7 @@
     },
     {
       "label": "Blog",
-      "href": "/blog"
+      "page": "/blog"
     },
     {
       "label": "Contacto",

@@ -1,0 +1,86 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Cómo identificar compases binarios y ternarios",
+  "description": "Último artículo \"Cómo identificar compases binarios y ternarios\" del blog de Mis Transcripciones Musicales, el servicio de transcripción de partituras online",
+  "translationKey": "compases-binarios-y-ternarios",
+  "date": "2026-09-23",
+  "excerpt": "¡Una guía para identificar rápidamente si el compás de una pieza es binario o ternario, y aprender más sobre los compases! Al transcribir música, el compás suele ser el…",
+  "cover": {
+    "src": "img-9981.jpg",
+    "alt": "Cómo identificar compases binarios y ternarios"
+  },
+  "tags": [
+    "Notación musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Cómo identificar compases binarios y ternarios",
+      "date": "2026-09-23",
+      "image": "img-9981.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Cómo identificar compases binarios y ternarios",
+      "items": [
+        {
+          "body": "## ¡Una guía para identificar rápidamente si el compás de una pieza es binario o ternario, y aprender más sobre los compases!\n\nAl transcribir música, **el compás suele ser el primer elemento que necesitas identificar**. No solo necesitas saber el número de pulsos por compás, sino también cómo están organizados. ¿Es una pieza con un compás binario o ternario?\n\n**¡Vamos a descubrirlo!**",
+          "image": "img-9981.jpg",
+          "alt": "Cómo identificar compases binarios y ternarios"
+        },
+        {
+          "body": "## ¿Qué es un compás?\n\nUn compás es un símbolo de notación musical que **indica cómo se organizan los pulsos a lo largo de la pieza**. Normalmente se escribe mediante dos números, uno encima del otro, al principio de una pieza o de una sección. Estos números nos indican más que simplemente cuántas notas caben en un compás: muestran **el ritmo y el flujo general de la pieza**.\n\n## Los números del compás",
+          "image": "24.png",
+          "alt": "Los números del compás",
+          "imageWidth": 150
+        },
+        {
+          "body": "Los compases siempre incluyen dos números: uno arriba y otro abajo. **El número superior simplemente indica la cantidad de pulsos de cada compás**. Si tenemos un 2, significa que cada compás tendrá solo dos pulsos iguales. Todos los números funcionan de la misma manera y **los pulsos siempre tienen la misma duración**.\n\nEn un compás, el número inferior indica el valor de nota de cada pulso. También **puede ser útil para saber si el compás es binario o ternario** antes de escuchar la pieza. Este es el truco: si el número inferior es un 8, lo más probable es que estés a punto de tocar una pieza ternaria.\n\nPor ahora, aquí tienes una breve guía para identificar los números con sus valores:",
+          "image": "bottom-number.png",
+          "alt": "Los números del compás"
+        },
+        {
+          "body": "Como puedes ver en este esquema, si el número inferior es un 4, significa que una negra ocupa un pulso entero. Si es un 16, una semicorchea ocupa un pulso.\n\n## Compases binarios vs. ternarios\n\nEl compás binario es el más común en la música popular occidental y en las canciones de radio en general, como en los géneros pop-rock o country. En un compás binario, **la música se organiza y se siente en grupos de dos**. En otras palabras: puedes caminar o correr siguiendo un ritmo binario y se sentirá cómodo y estable.\n\nPor otro lado, en un compás ternario, **la música se siente y se organiza en grupos de tres**. A diferencia de la música binaria, no puedes caminar siguiendo un ritmo ternario sin que resulte incómodo. Los valses son el ejemplo más evidente de compases ternarios, aunque el compás ternario va mucho más allá.\n\n## Binario vs. ternario: ¿cómo distinguirlos?\n\nDespués de explicar los detalles técnicos de los compases binarios y ternarios, esta es LA manera de identificarlos dentro de una canción.\n\n- El compás binario se siente así: **UNO-dos, UNO-dos, UNO-dos**\n- El compás ternario se siente así: **UNO-dos-tres, UNO-dos-tres, UNO-dos-tres**\n\nEste es un ejemplo de **compás binario**:",
+          "audio": {
+            "src": "binary-mozart.mp3",
+            "title": "Este es un ejemplo de compás binario"
+          }
+        },
+        {
+          "body": "Y este es un ejemplo de **compás ternario**:",
+          "audio": {
+            "src": "ternary-waltz.mp3",
+            "title": "Y este es un ejemplo de compás ternario"
+          }
+        },
+        {
+          "body": "## Otros compases\n\nEn esta sección hemos recopilado algunos compases poco comunes con su correspondiente explicación.",
+          "image": "uncommon-time-signatures.png",
+          "alt": "Otros compases",
+          "imageWidth": 461
+        },
+        {
+          "body": "Si todavía tienes dificultades para crear tu transcripción de partituras, no dudes en contactar con [**Mis Transcripciones Musicales**](/). Nuestros transcriptores y arreglistas profesionales crearán la partitura perfecta para ti. Contacta con nosotros **por email** o [**a través del formulario de contacto de nuestra web**](/#contact)."
+        }
+      ]
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos"
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/compases-binarios-y-ternarios"
+    }
+  ]
+}

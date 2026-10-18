@@ -1,0 +1,84 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Cómo leer tablaturas de guitarra - Mis Transcripciones Musicales",
+  "description": "Las tablaturas son un sistema de notación específico de los instrumentos con trastes, como la guitarra. Aquí está tu guía para entenderlas.",
+  "translationKey": "leer-tablaturas-de-guitarra",
+  "date": "2024-11-15",
+  "excerpt": "Tu guía definitiva sobre tablaturas de guitarra y todos los símbolos que puedes encontrar en ellas La mayoría de los instrumentos leen en lo que llamamos “notación estándar”, es…",
+  "cover": {
+    "src": "1-6-1-1.jpg",
+    "alt": "Cómo leer tablaturas de guitarra"
+  },
+  "tags": [
+    "Notación musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Cómo leer tablaturas de guitarra",
+      "date": "2024-11-15",
+      "image": "1-6-1-1.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Cómo leer tablaturas de guitarra",
+      "items": [
+        {
+          "body": "## Tu guía definitiva sobre tablaturas de guitarra y todos los símbolos que puedes encontrar en ellas\n\nLa mayoría de los instrumentos leen en lo que llamamos “notación estándar”, es decir, partituras con pentagramas. Y pueden encontrar sin problemas todas las notas e indicaciones que necesitan. Pero esto no es así para los **instrumentos con trastes**.\n\nPara seguir una tablatura no hace falta saber leer pentagramas. Por ello, es la mayor aliada de los **músicos *amateur***. Por otro lado, los compositores profesionales encuentran en las tablaturas un recurso idóneo para reflejar de forma clara las técnicas, **articulaciones y efectos específicos** de los instrumentos con trastes.\n\nHoy en día, la tablatura es el sistema de notación más popular entre los intérpretes de instrumentos trasteados. Por ello, este post explorará los **básicos de las tablaturas**, así como todos los símbolos que se pueden encontrar en ellas.",
+          "image": "dsc-4628.jpg",
+          "alt": "Cómo leer tablaturas de guitarra"
+        },
+        {
+          "body": "## ¿Qué son las tablaturas?\n\nUna tablatura es un [**sistema visual**](https://www.youtube.com/channel/UCdSjFANsAbiTPU0y8A8yOSQ) para indicar las notas en los instrumentos trasteados como **la guitarra, el bajo, la mandolina, el ukelele o el banjo**, sin necesidad de utilizar notación musical estándar (pentagramas). Las tablaturas utilizan **números para representar los trastes** y **líneas horizontales para representar las cuerdas**.\n\nAdemás, las tablaturas pueden reflejar técnicas específicas, como **ligaduras, *pull-offs*, glissandos o *bendings***, esenciales en la técnica guitarrística. La tablatura no puede expresar el tempo tan nítidamente como la notación estándar. Por ello, habitualmente incluye indicaciones para ayudar con el ritmo.\n\n## Líneas y números\n\nLa tablatura está compuesta por **líneas horizontales**, que representan **las cuerdas** del instrumento. Por ejemplo, en una tablatura para guitarra, la línea inferior representa la cuerda del Mi grave (cuerda 6), mientras que la línea superior indica la cuerda del Mi agudo (cuerda 1).",
+          "image": "guitartab-picture1.png",
+          "alt": "Las líneas horizontales de las tablaturas representan las cuerdas de la guitarra",
+          "caption": "Las líneas horizontales de las tablaturas representan las cuerdas de la guitarra",
+          "imageWidth": 350
+        },
+        {
+          "body": "Encima de las líneas, números indican **qué traste presionar para cada nota**. Y el 0, significa que la nota es una cuerda al aire. Es importante remarcar que estos números indican **los trastes**, no la digitación de los dedos.\n\nDicho esto, así se ve un pequeño fragmento musical tanto en **tablatura** como en **notación estándar**.",
+          "image": "guitartab-picture3.png",
+          "alt": "Líneas y números"
+        },
+        {
+          "body": "## Principales símbolos de las tablaturas para guitarra\n\nAhora que ya hemos hablado de los **básicos de las tablaturas**, hemos hecho una lista con las definiciones de los principales símbolos que te encontrarás en una tablatura. **¡Vamos allá!**\n\n- ***Hammer-on*** o **ligadura ascendente (H):** tocar la nota golpeando el traste con el dedo de la mano izquierda, sin tocar la cuerda con la mano derecha.\n- ***Pull-off*** o **ligadura descendente (P):** tocar la nota arrastrando el dedo de la mano izquierda al retirarlo del traste. Sin tocar la cuerda con la mano derecha.\n- ***Tapping* (T):** producir notas utilizando la mano derecha para golpear las cuerdas directamente en el mástil. Se suele indicar con una T sobre las notas indicadas.",
+          "image": "guitartab-hammeron-pulloff.png",
+          "alt": "Principales símbolos de las tablaturas para guitarra"
+        },
+        {
+          "body": "- ***Bendings* (b):** alterar la altura de la nota doblando la cuerda con el dedo de la mano izquierda sobre el mástil. Se suele representar con una flecha, marcando *full* (1 tono) o *half* (medio tono).\n- **Glissando o *Slide* (sl.):** indica que una nota debe deslizarse hasta la siguiente sin soltar la presión en el dedo que presiona el traste (mano izquierda).\n- **Vibrato (~):** variación ligera del tono al mover rápidamente el dedo que presiona el traste. Este efecto es muy personal, y suele estar ligado al estilo del músico.",
+          "image": "guitartab-bend-vibrato.png",
+          "alt": "Principales símbolos de las tablaturas para guitarra"
+        },
+        {
+          "body": "- ***Palm mute* (* o PM):** consiste en amortiguar las cuerdas colocando la mano derecha cerca del puente, para producir un sonido apagado y percusivo.\n\n- ***Muted notes* (x):** amortiguar las cuerdas apoyando uno o varios dedos de la mano izquierda sobre las cuerdas sin ejercer presión, para producir un sonido apagado.",
+          "image": "guitartab-palmmute.png",
+          "alt": "Principales símbolos de las tablaturas para guitarra"
+        },
+        {
+          "body": "- ***Upstrokes* y *Downstrokes*:** estos símbolos simplemente indican la dirección hacia la que tienes que rasguear las cuerdas (hacia arriba o hacia abajo). Se indican con flechas.\n\n## Conclusiones\n\nAhora que ya sabes todo sobre las tablaturas, tenemos un último consejo para ti. ¡La mejor forma de aprender a leer tablaturas fluidamente es **practicando**!\n\nEn [**Mis Transcripciones Musicales**](/), estaremos encantados de darte un pequeño empujón convirtiendo tus canciones preferidas en partituras personalizadas para ti. No dudes en contactar con nosotros **a través de nuestra [página web](/)**.",
+          "image": "playing-the-guitar.jpg",
+          "alt": "Conclusiones"
+        }
+      ]
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos"
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/leer-tablaturas-de-guitarra"
+    }
+  ]
+}

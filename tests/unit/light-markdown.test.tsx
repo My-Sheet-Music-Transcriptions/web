@@ -23,6 +23,22 @@ describe('light markdown', () => {
       '<p>Things we do:</p><ul><li>Simplify</li><li><strong>Add</strong> fingering</li></ul>',
     )
   })
+  it('reads numbered lists, headings, quotes and italics', () => {
+    expect(html('## Why\n\n### How\n\n1. One\n2. *Two*\n\n> Said **so**')).toBe(
+      '<h2>Why</h2><h3>How</h3><ol><li>One</li><li><em>Two</em></li></ol><blockquote>Said <strong>so</strong></blockquote>',
+    )
+  })
+  it('reads bold and italics together', () => {
+    expect(html('A ***single*** for **fans *amateur***.')).toBe(
+      '<p>A <strong><em>single</em></strong> for <strong>fans <em>amateur</em></strong>.</p>',
+    )
+    expect(plainMarkdown('A ***single*** for **fans *amateur***.')).toBe(
+      'A single for fans amateur.',
+    )
+  })
+  it('leaves a lone asterisk alone', () => {
+    expect(html('*minimum fee of 49 EUR')).toBe('<p>*minimum fee of 49 EUR</p>')
+  })
   it('gives the plain text for structured data', () => {
     expect(plainMarkdown('**Yes!** See [the page](/x).\n\n- one\n- two')).toBe(
       'Yes! See the page.\none\ntwo',

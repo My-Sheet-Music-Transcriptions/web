@@ -1,0 +1,121 @@
+{
+  "language": "es",
+  "collection": "pages",
+  "title": "Servicio de transcripción musical para editoriales",
+  "description": "Transcribimos catálogos editoriales ajustándolos a la Ley Española de propiedad intelectual. No retenemos derechos de autoría.",
+  "translationKey": "transcripcion-musical-para-editoriales",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "TRANSCRIPCIÓN MUSICAL PARA EDITORIALES",
+      "lead": "Transcribimos catálogos editoriales de forma rápida y eficiente, ajustándolos al cumplimiento de la **Ley Española de Propiedad Intelectual***. Transcripciones aptas para **registro en SGAE** y para promoción y distribución de la obra musical de los artistas.",
+      "cta": {
+        "label": "SABER MÁS",
+        "href": "#down"
+      }
+    },
+    {
+      "type": "Section",
+      "title": "¿Por qué transcribir partituras, y por qué con nuestros servicios?",
+      "align": "center",
+      "id": "down"
+    },
+    {
+      "type": "MediaText",
+      "title": "Protección de derechos asegurada",
+      "body": "Transcripciones compatibles y necesarias para el registro de las obras en SGAE o PROs similares.\n\nNo retenemos ningún derecho de autoría sobre la partitura. Firmamos acuerdos legales para proteger la propiedad intelectual así como garantizar la confidencialidad de los proyectos.",
+      "image": "editoriales-partituras-abiertas.jpg",
+      "alt": "Partituras impresas abiertas sobre una mesa",
+      "imageSide": "right",
+      "tone": "cream"
+    },
+    {
+      "type": "MediaText",
+      "title": "Adaptación de materiales didácticos",
+      "body": "Tenemos experiencia creando materiales didácticos y convirtiendo las partituras en un producto final listo para su distribución comercial, ya sea en formato papel o en formatos digitales o interactivos vía plataformas o aplicativos educacionales.",
+      "image": "editoriales-materiales-didacticos.jpg",
+      "alt": "Músico escribiendo notas a lápiz en una partitura",
+      "imageSide": "right"
+    },
+    {
+      "type": "MediaText",
+      "title": "Maximizamos el retorno de la inversión",
+      "body": "Asesoramos en la correcta elección de las obras a transcribir, así como su formato y canales de distribución para maximizar el retorno de la inversión.\n\nTenemos los datos y la experiencia para guiar a los artistas y editoriales en la dirección correcta.",
+      "image": "editoriales-retorno-inversion.jpg",
+      "alt": "Transcriptores trabajando con auriculares en la oficina",
+      "imageSide": "right",
+      "tone": "cream"
+    },
+    {
+      "type": "MediaText",
+      "title": "Maquetación a medida",
+      "body": "Adaptamos las partituras a los criterios específicos requeridos, incluyendo la personalización de créditos de autoría / copyright, logos, tipografía y diseño gráfico a demanda.",
+      "image": "editoriales-maquetacion-guitarra.jpg",
+      "alt": "Partituras y tablaturas de guitarra impresas junto a una guitarra",
+      "imageSide": "right"
+    },
+    {
+      "type": "MediaText",
+      "title": "Tenemos gran capacidad de producción",
+      "body": "Contamos con un amplio equipo de transcriptores, editores y especialistas, para manejar proyectos de gran escala con eficiencia y precisión.",
+      "image": "editoriales-equipo-oriol.jpg",
+      "alt": "Transcriptor con auriculares editando una partitura en el ordenador",
+      "imageSide": "right",
+      "tone": "cream"
+    },
+    {
+      "type": "MediaText",
+      "title": "Comunicación y tiempos de entrega ágiles",
+      "body": "Trabajamos de forma rápida y organizada, adaptándonos a los plazos de entrega más exigentes sin comprometer la calidad del resultado final, con un tiempo de respuesta medio de pocas horas.\n\nAtención telefónica disponible.",
+      "image": "editoriales-comunicacion.jpg",
+      "alt": "Manos tocando un piano digital",
+      "imageSide": "right"
+    },
+    {
+      "type": "MediaText",
+      "title": "Métodos de pago flexibles",
+      "body": "Ofrecemos diferentes formas de pago y plazos sin incrementar el precio final. Para proyectos a gran escala, disponemos de descuentos exclusivos por volumen.",
+      "image": "editoriales-pago.jpg",
+      "alt": "Transcriptor trabajando con un portátil y un monitor",
+      "imageSide": "right",
+      "tone": "cream"
+    },
+    {
+      "type": "Section",
+      "body": "*La Ley de Propiedad Intelectual española (TRLPI) establece que la editorial ha de distribuir la obra del compositor y controlar la producción de ejemplares (artículos 64.4 y 68.1 y 72.2)",
+      "align": "center"
+    },
+    {
+      "type": "Samples",
+      "title": "Todos los géneros y formaciones musicales",
+      "lead": "Desde música popular hasta repertorio sinfónico, reducciones a piano o adaptaciones de material didáctico.",
+      "items": [
+        {
+          "title": "Vocal Lead Sheet",
+          "video": {
+            "youtube": "7IguUFc7af4",
+            "title": "Vocal Lead Sheet",
+            "caption": "Melodía con letra o instrumental y acordes. Es la transcripción de mínimos para el cumplimiento de la ley de propiedad intelectual, la opción perfecta para registrar canciones."
+          },
+          "image": "me-cuesta-tanto-olvidarte-vocal-lead-sheet.jpg",
+          "alt": "Vocal lead sheet de «Me cuesta tanto olvidarte» (Mecano), primera página de la partitura"
+        },
+        {
+          "title": "Partituras nota por nota",
+          "video": {
+            "youtube": "-haE0Yh0piE",
+            "title": "Partituras nota por nota",
+            "caption": "Transcripción nota por nota de todos los instrumentos y voces de la pieza, incluyendo formaciones sinfónicas, corales, y todo tipo de conjuntos. Partituras listas para estudio de grabación y directos."
+          },
+          "image": "orquesta-partitura-nota-por-nota.png",
+          "alt": "Partitura de orquesta transcrita nota por nota, primera página"
+        }
+      ]
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/transcripcion-musical-para-editoriales"
+    }
+  ]
+}

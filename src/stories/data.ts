@@ -92,6 +92,14 @@ export const reviewLabels = { stars: '{rating} out of 5 stars', roleFrom: '{role
 
 // --- the words of controls
 
+export const shareLabels = {
+  shareOn: 'Share on {network}',
+  facebook: 'Facebook',
+  twitter: 'Twitter',
+  linkedin: 'LinkedIn',
+  email: 'Email',
+}
+
 export const mediaLabels = {
   previous: 'Previous photo',
   next: 'Next photo',
@@ -100,6 +108,8 @@ export const mediaLabels = {
   listen: 'Play the recording: {title}',
   pause: 'Pause',
   carousel: 'carousel',
+  enlarge: 'Enlarge: {alt}',
+  close: 'Close',
 }
 
 // --- offer
@@ -155,6 +165,50 @@ export const services = [
   { name: 'Guitar Tab Transcriptions', href: '/guitar-tab', image: 'sample:icon' },
   { name: 'Trumpet Transcriptions', href: '/trumpet-transcription-service', image: 'sample:icon' },
   { name: 'Violin Transcriptions', href: '/violin-transcription-service', image: 'sample:icon' },
+]
+
+export const posts = [
+  {
+    title: 'How to tell simple from compound meters',
+    href: '/simple-and-compound-meters',
+    image: 'sample:photo',
+    alt: 'A score on a music stand',
+    excerpt:
+      'A guide to telling at once whether a piece is in a simple or compound meter, and what that means when you transcribe it.',
+    date: '2026-09-23',
+    category: 'Music notation',
+  },
+  {
+    title: 'Guitar Pro: what we love and what we miss',
+    href: '/guitar-pro-pros-and-cons',
+    image: 'sample:photo',
+    alt: 'A guitar beside a printed tab',
+    excerpt: 'Five features we love and five we still miss in Guitar Pro.',
+    date: '2026-07-23',
+    category: 'Software',
+  },
+  {
+    title: 'Sheet music for piano: pick the right one',
+    href: '/piano-sheet-music-options',
+    image: 'sample:photo',
+    alt: 'Sheet music on a piano',
+    excerpt:
+      'Solo, accompaniment or piano and voice: the score that fits your level and your music.',
+    date: '2026-07-10',
+    category: 'Music notation',
+  },
+]
+
+export const article = [
+  {
+    body: 'The moment has come! We have to talk about the two titans of music notation.\n\n## Sibelius\n\nLet’s start with **Sibelius**: it is the *favourite* of beginners.\n\n- Easy to start\n- Clear menus',
+    image: 'sample:photo',
+    alt: 'A transcriber at work',
+    caption: 'Our office in Terrassa',
+  },
+  {
+    body: '## Finale\n\n> Finale has everything you need, where you need it.\n\n1. Advanced engraving\n2. Full control',
+  },
 ]
 
 export const pianoPricing = {

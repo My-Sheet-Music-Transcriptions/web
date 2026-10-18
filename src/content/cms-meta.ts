@@ -3,13 +3,14 @@ import {
   type CmsFields,
   group,
   line,
+  listOf,
   number,
   pictureFile,
   prose,
   select,
   toggle,
 } from './cms-fields.ts'
-import type { baseSchema, serviceSchema } from './schema.ts'
+import type { baseSchema, postSchema, serviceSchema } from './schema.ts'
 
 /**
  * The fields every page has in the CMS, whatever its kind: its meta (src/content/schema.ts `baseSchema`), typed by
@@ -90,3 +91,34 @@ export const serviceFields = {
     hint: 'Lower comes first; 100 when empty.',
   }),
 } satisfies CmsFields<Omit<z.input<typeof serviceSchema>, keyof z.input<typeof baseSchema>>>
+
+/** What a blog post adds to the meta fields (src/content/schema.ts `postSchema`): its card on the blog (PostList). */
+export const postFields = {
+  date: line('Publication date', {
+    required: true,
+    hint: 'Newest first on the blog.',
+    decap: {
+      widget: 'datetime',
+      format: 'YYYY-MM-DD',
+      date_format: 'YYYY-MM-DD',
+      time_format: false,
+    },
+  }),
+  excerpt: prose('Summary on the blog', {
+    required: true,
+    hint: 'A sentence or two on the post’s card (20–300 characters).',
+    decap: { pattern: ['^[\\s\\S]{20,300}$', '20 to 300 characters'] },
+  }),
+  cover: group(
+    'Cover picture',
+    {
+      src: pictureFile('Picture', { required: true }),
+      alt: line('Picture description (alt text)', { required: true }),
+    },
+    { required: true, hint: 'On the post’s card and behind its title.' },
+  ),
+  tags: listOf('Categories', line('Category'), {
+    hint: 'The first is the badge on the card: Notación musical, Programas y apps, Actualidad musical, Curiosidades…',
+  }),
+  author: line('Author', { hint: 'Empty: My Sheet Music Transcriptions.' }),
+} satisfies CmsFields<Omit<z.input<typeof postSchema>, keyof z.input<typeof baseSchema>>>

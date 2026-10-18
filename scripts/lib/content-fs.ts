@@ -3,6 +3,7 @@ import path from 'node:path'
 import fg from 'fast-glob'
 import { DATA_PAGE_FILE, splitDataPage } from '../../src/content/data-page.ts'
 import { menuPages, parseMenu } from '../../src/content/menu.ts'
+import { parseRedirects, type RedirectRule, redirectProblems } from '../../src/content/redirects.ts'
 import {
   COLLECTIONS,
   type Collection,
@@ -115,8 +116,9 @@ export function entriesFor(locale: Locale): FsEntry[] {
 }
 
 /**
- * Fails on duplicate public paths within a locale, on reserved slugs, and on a menu (content/<locale>/data/menu.json)
- * that is invalid or points at a page its language does not have.
+ * Fails on duplicate public paths within a locale, on reserved slugs, on a menu (content/<locale>/data/menu.json)
+ * that is invalid or points at a page its language does not have, and on redirects (redirects.json) that are invalid,
+ * hide a page, chain or lead nowhere.
  */
 export function checkSlugs(all = readAllEntries()): string[] {
   const problems: string[] = []
@@ -135,7 +137,32 @@ export function checkSlugs(all = readAllEntries()): string[] {
         problems.push(`${locale}: pages/home must have translationKey "home"`)
     }
   }
-  return [...problems, ...checkMenus(all)]
+  return [...problems, ...checkMenus(all), ...checkRedirects(all)]
+}
+
+/** A language's redirects (content/<locale>/data/redirects.json, src/content/redirects.ts), or none. */
+export function redirectsFor(locale: Locale): RedirectRule[] {
+  const file = `${CONTENT_DIR}/${locale}/data/redirects.json`
+  if (!fs.existsSync(file)) return []
+  return parseRedirects(JSON.parse(fs.readFileSync(file, 'utf8')), file)
+}
+
+function checkRedirects(all: FsEntry[]): string[] {
+  const problems: string[] = []
+  for (const locale of LOCALES) {
+    let rules: RedirectRule[]
+    try {
+      rules = redirectsFor(locale)
+    } catch (e) {
+      problems.push((e as Error).message)
+      continue
+    }
+    const pages = new Set(
+      all.filter((e) => e.locale === locale && !e.meta.draft).map((e) => e.path),
+    )
+    problems.push(...redirectProblems(rules, pages, `${CONTENT_DIR}/${locale}/data/redirects.json`))
+  }
+  return problems
 }
 
 function checkMenus(all: FsEntry[]): string[] {

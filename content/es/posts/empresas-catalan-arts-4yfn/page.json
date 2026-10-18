@@ -1,0 +1,65 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Las 10 empresas que representarán Catalan Arts en 4YFN",
+  "description": "Mis Transcripciones Musicales ha sido seleccionada como una de las 10 empresas que representarán Catalan Arts en 4YFN, dentro del MWC 2026.",
+  "translationKey": "empresas-catalan-arts-4yfn",
+  "date": "2026-02-26",
+  "excerpt": "Mis Transcripciones Musicales ha sido seleccionada como una de las 10 empresas que representarán Catalan Arts en 4YFN, el evento de startups dentro del MWC Barcelona 2026 El Institut…",
+  "cover": {
+    "src": "catalan-arts-4yfn-2025.jpg",
+    "alt": "Las 10 empresas que representarán Catalan Arts en 4YFN"
+  },
+  "tags": [
+    "Actualidad Musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Las 10 empresas que representarán Catalan Arts en 4YFN",
+      "date": "2026-02-26",
+      "image": "catalan-arts-4yfn-2025.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Las 10 empresas que representarán Catalan Arts en 4YFN",
+      "items": [
+        {
+          "body": "## Mis Transcripciones Musicales ha sido seleccionada como una de las 10 empresas que representarán Catalan Arts en 4YFN, el evento de startups dentro del MWC Barcelona 2026\n\nEl [**Institut Català de les Empreses Culturals (ICEC)**](https://icec.gencat.cat/ca/inici), bajo su marca **Catalan Arts**, acogerá a 10 empresas digitales catalanas en el [**4YFN**](https://www.4yfn.com/), del **2 al 5 de marzo de 2026**. Las startups seleccionadas estarán en el stand de Cataluña, **en el Hall 8.1, durante la 12ª edición de 4YFN**.\n\nEstas empresas han sido seleccionadas entre 20 potentes propuestas tecnológicas y representarán la marca Catalan Arts a nivel internacional. Desde [**Mis Transcripciones Musicales**](/) estamos muy orgullosos de formar parte de este grupo. Y **admiramos profundamente a cada uno de nuestros compañeros en esta edición**.\n\nEstas son las 10 empresas participantes en el **stand de Catalan Arts en 4YFN 2026**, con las que compartiremos el Hall 8.1:",
+          "image": "catalan-arts-4yfn-2025.jpg",
+          "alt": "Mis Transcripciones Musicales en 4YFN 2025",
+          "caption": "Mis Transcripciones Musicales en 4YFN 2025"
+        },
+        {
+          "body": "## GameBCN\n\nComo su nombre indica, **GameBCN** está especializada en videojuegos y tiene su sede en Barcelona. Esta empresa ayuda a los estudios a optimizar sus producciones para aumentar sus oportunidades de negocio.\n\n## Immersive Creatures\n\nEste estudio desarrolla experiencias inmersivas. Para ello, combina artes visuales, narrativa y las tecnologías emergentes más avanzadas, como la realidad aumentada y la animación 3D. **Immersive Creatures** trabaja principalmente con empresas, compañías culturales y el sector del entretenimiento.\n\n## IP2U\n\n**IP2U** es una herramienta de inteligencia artificial que aborda uno de los aspectos más complejos del sector cultural: la gestión de los derechos de propiedad intelectual. Trabaja principalmente con contenido musical y audiovisual, facilitando las licencias, el cumplimiento normativo y reduciendo los riesgos legales.\n\n## Music Tech Hub\n\nEntidad europea creada para unir fuerzas entre hardware, software y socios del sector de la tecnología musical, representando sus intereses comunes. Mis Transcripciones Musicales forma parte con orgullo de **Music Tech Hub**, junto a muchos otros miembros.\n\n## MusikaliVR\n\nPlataforma que ofrece experiencias musicales inmersivas. Gracias a la tecnología avanzada multicámara, **MusikaliVR** proporciona retransmisiones en directo inmersivas en 3D y 8K, además de contenido XR exclusivo.\n\n## Mis Transcripciones Musicales\n\nEn **Mis Transcripciones Musicales** conocemos la notación musical, el ADN de la música, al detalle. En 4YFN, por segundo año consecutivo, compartiremos quiénes somos y cómo estamos llevando los proyectos de tecnología musical al siguiente nivel mediante la notación musical.",
+          "image": "msmt-4yfn-2025.jpg",
+          "alt": "Mis Transcripciones Musicales en 4YFN 2025",
+          "caption": "Mis Transcripciones Musicales en 4YFN 2025"
+        },
+        {
+          "body": "## PlayNuzic\n\nCon una variedad de recursos interactivos y aplicaciones educativas, **PlayNuzic** invita a los usuarios a comprender y crear música mediante el pensamiento matemático. De este modo, los estudiantes potencian su creatividad y refuerzan el razonamiento lógico.\n\n## Vanova\n\n**Vanova** es una productora independiente con sede en Barcelona. Su objetivo es crear contenido original e IPs innovadoras que conecten con múltiples audiencias. El aclamado videojuego *Lumen* es uno de sus proyectos más destacados.\n\n## XRoam\n\nPlataforma especializada en realidad virtual que ofrece soluciones innovadoras para crear e implementar experiencias VR multiusuario y free-roaming. **XRoam** cubre toda la cadena de valor: desde la creación de contenidos hasta la distribución y la operativa en el espacio físico.\n\n## Zertifier\n\nCombinando múltiples herramientas tecnológicas y con un enfoque *phygital*, **Zertifier** ofrece soluciones de autenticación para empresas. Así, les permite conectar con sus clientes de manera significativa tanto en el mundo físico como en el digital.\n\n## Gracias al ICEC\n\nUna vez más, desde **Mis Transcripciones Musicales** queremos agradecer al Institut Català de les Empreses Culturals (ICEC) la confianza depositada en nosotros y la invitación a participar en 4YFN, dentro del [**MWC Barcelona 2026**](https://www.mwcbarcelona.com/).\n\nEstaremos en el **Hall 8.1, Stand 81B50, del 2 al 5 de marzo**. ¡Ven a saludarnos! 👋",
+          "image": "msmt-4yfn-2026-2.jpg",
+          "alt": "Mis Transcripciones Musicales en 4YFN 2025",
+          "caption": "Mis Transcripciones Musicales en 4YFN 2025"
+        }
+      ]
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos"
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/empresas-catalan-arts-4yfn"
+    }
+  ]
+}

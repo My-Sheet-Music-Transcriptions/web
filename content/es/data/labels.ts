@@ -1,4 +1,4 @@
-import type { MediaLabels, ReviewLabels } from '~/content/types'
+import type { MediaLabels, ReviewLabels, ShareLabels } from '~/content/types'
 
 /**
  * The words blocks show around their content, for screen readers and small labels: pages pass them to the
@@ -12,9 +12,19 @@ export const mediaLabels: MediaLabels = {
   listen: 'Reproducir la grabación: {title}',
   pause: 'Pausa',
   carousel: 'carrusel',
+  enlarge: 'Ampliar: {alt}',
+  close: 'Cerrar',
 }
 
 export const reviewLabels: ReviewLabels = {
   stars: '{rating} de 5 estrellas',
   roleFrom: '{role} de {country}',
+}
+
+export const shareLabels: ShareLabels = {
+  shareOn: 'Compartir en {network}',
+  facebook: 'Facebook',
+  twitter: 'Twitter',
+  linkedin: 'LinkedIn',
+  email: 'Email',
 }

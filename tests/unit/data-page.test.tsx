@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import { mediaLabels, reviewLabels } from '../../content/en/data/labels'
+import { mediaLabels, reviewLabels, shareLabels } from '../../content/en/data/labels'
 import { decapConfig } from '../../src/admin/config'
 import { blocks } from '../../src/components/blocks'
 import { cmsBlocks } from '../../src/components/blocks/cms'
@@ -9,7 +9,7 @@ import type { PageHeaderProps } from '../../src/components/blocks/PageHeader'
 import type { TableProps } from '../../src/components/blocks/Table'
 import { BlockPage } from '../../src/content/BlockPage'
 import { type CmsBlock, line, prose, select } from '../../src/content/cms-fields'
-import { metaFields, serviceFields } from '../../src/content/cms-meta'
+import { metaFields, postFields, serviceFields } from '../../src/content/cms-meta'
 import { resolveBlock, splitDataPage } from '../../src/content/data-page'
 import { LOCALES } from '../../src/i18n/types'
 
@@ -227,11 +227,11 @@ describe('Decap configuration', () => {
     expect(cta?.required).toBe(false)
     expect(cta?.fields?.every((f) => !f.required)).toBe(true)
   })
-  it('has three entries in the sidebar: Site, Pages and Services', () => {
-    expect(collections.map((c) => c.name)).toEqual(['site', 'pages', 'services'])
+  it('has four entries in the sidebar: Site, Pages, Services and Blog', () => {
+    expect(collections.map((c) => c.name)).toEqual(['site', 'pages', 'services', 'posts'])
   })
   it('files every language’s pages of a kind in one collection, by their language', () => {
-    for (const name of ['pages', 'services']) {
+    for (const name of ['pages', 'services', 'posts']) {
       const c = collections.find((x) => x.name === name)
       expect(c?.folder).toBe('content')
       expect(c?.path).toBe(`{{language}}/${name}/{{slug}}/page`)
@@ -239,30 +239,32 @@ describe('Decap configuration', () => {
       expect(c?.fields?.find((f) => f.name === 'collection')?.default).toBe(name)
     }
   })
-  it('lists in Site the homepage and the menu of each language that has them', () => {
+  it('lists in Site the homepage, the menu and the redirects of each language that has them', () => {
     const site = collections.find((c) => c.name === 'site')
     expect(site?.files?.map((f) => f.name)).toEqual(
       LOCALES.flatMap((l) => [
         ...(fs.existsSync(`content/${l}/pages/home/page.json`) ? [`home-${l}`] : []),
         ...(fs.existsSync(`content/${l}/data/menu.json`) ? [`menu-${l}`] : []),
+        ...(fs.existsSync(`content/${l}/data/redirects.json`) ? [`redirects-${l}`] : []),
       ]),
     )
     expect(site?.files?.map((f) => f.name)).toEqual(
       expect.arrayContaining(['home-en', 'menu-en', 'home-es', 'menu-es']),
     )
     for (const f of site?.files ?? [])
-      expect(f.file).toMatch(/^content\/\w+\/(pages\/home\/page|data\/menu)\.json$/)
+      expect(f.file).toMatch(/^content\/\w+\/(pages\/home\/page|data\/(menu|redirects))\.json$/)
   })
   it('opens every page with its language, the meta fields (then a service’s own), then its blocks', () => {
     for (const c of collections)
       for (const [name, fields] of c.fields
         ? [[c.name, c.fields] as const]
         : (c.files ?? []).map((f) => [f.name, f.fields] as const))
-        if (!name.startsWith('menu-'))
+        if (!name.startsWith('menu-') && !name.startsWith('redirects-'))
           expect(fields.map((f) => f.name)).toEqual([
             ...(c.fields ? ['language', 'collection'] : []),
             ...Object.keys(metaFields),
             ...(name === 'services' ? Object.keys(serviceFields) : []),
+            ...(name === 'posts' ? Object.keys(postFields) : []),
             'blocks',
           ])
   })
@@ -289,7 +291,7 @@ describe('CMS fields are typed by the block’s props', () => {
 })
 
 describe('BlockPage', () => {
-  const words = { mediaLabels, reviewLabels }
+  const words = { mediaLabels, reviewLabels, shareLabels }
   it('renders a resolved block, its body as light markdown', () => {
     const table = {
       type: 'Table',

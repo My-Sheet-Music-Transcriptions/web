@@ -1,0 +1,65 @@
+{
+  "language": "es",
+  "collection": "posts",
+  "title": "Partituras de jazz: las más útiles y por qué",
+  "description": "En este artículo explicamos los tipos de partituras de jazz más utilizadas, así como sus secciones habituales.",
+  "translationKey": "partituras-de-jazz-mas-utiles",
+  "date": "2026-02-27",
+  "excerpt": "Las partituras de jazz más utilizadas son las lead sheets, las partituras estilo “Real Book” y los rhythm charts, que contienen elementos como “intro”, “outro”, “solo section” y “coda”.",
+  "cover": {
+    "src": "piano-jazz.jpg",
+    "alt": "Partituras de jazz: las más útiles y por qué"
+  },
+  "tags": [
+    "Notación musical"
+  ],
+  "author": "Marina Junquera",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Partituras de jazz: las más útiles y por qué",
+      "date": "2026-02-27",
+      "image": "piano-jazz.jpg"
+    },
+    {
+      "type": "Article",
+      "label": "Partituras de jazz: las más útiles y por qué",
+      "items": [
+        {
+          "body": "## Las partituras de jazz más utilizadas son las lead sheets, las partituras estilo “Real Book” y los rhythm charts, que contienen elementos como “intro”, “outro”, “solo section” y “coda”.\n\nLa música jazz tiene su propio lenguaje: Real Book, head, rhythm section, outro, lead sheet, *rhythm chart*, coda… Puede parecer complicado, pero en [**Mis Transcripciones Musicales**](/) estamos aquí para ayudarte.\n\nEn este artículo explicamos los **tipos de partituras de jazz más utilizadas**, así como sus secciones habituales. Cada una tiene su función, y es muy útil encontrar la transcripción o el *rhythm chart* que mejor se adapte a tus necesidades.",
+          "image": "jazz-microphone.jpg",
+          "alt": "Partituras de jazz: las más útiles y por qué"
+        },
+        {
+          "body": "## Lead Sheet de Jazz\n\nEn el jazz, una lead sheet contiene todos **los elementos esenciales de una pieza** y puede adaptarse a cualquier instrumento. Incluye **todas las notas del instrumento** para el que está compuesta. Además, contiene los símbolos de acordes y otros elementos básicos de la estructura del tema.\n\nUna lead sheet de jazz es la opción perfecta para **seguir la estructura principal de la música**, tocar las partes más características e incluso improvisar sobre la pieza.\n\n## Lead Sheet estilo Real Book\n\nUna **lead sheet estilo “Real Book”** solo incluye la melodía y los símbolos de acordes del head. En ocasiones, también incluye la intro y la outro. Como no incluye la sección de solos, **cada instrumento tiene mayor libertad para improvisar**. Este tipo de partitura puede ser utilizado por cualquier instrumento de la banda.\n\n## Rhythm Chart\n\nUn rhythm chart es un tipo de partitura que contiene la **información básica para la sección rítmica de una banda**. En el jazz, incluye la estructura del tema, los símbolos de acordes y las indicaciones o acentos importantes.\n\nExisten distintos tipos: Master Rhythm Chart, Detailed Rhythm Chart e Instrumental Rhythm Chart. Puedes encontrar más información en nuestro [**Servicio de Transcripción de Rhythm Charts (inglés)**](https://www.mysheetmusictranscriptions.com/rhythm-charts).\n\n## Arreglo para piano solo vs. arreglo de acompañamiento para piano\n\nUn [**arreglo para piano solo**](/jazz-piano-solo) es la transcripción ideal para **interpretar una canción completa en solitario**. Combina la melodía principal y el acompañamiento en una única parte de piano. Así, captura la esencia y los matices de la obra.\n\nEn cambio, un arreglo de acompañamiento para piano **condensa los instrumentos de acompañamiento**, excluyendo la línea melódica principal. Es la mejor opción para acompañar a un solista o cantar mientras tocas.\n\nLa diferencia entre ambos arreglos es el propósito de la interpretación.\n\n- ¿Necesitas la partitura para una actuación en solitario? Elige el **arreglo para piano solo**.\n- ¿Vas a acompañar a un cantante o solista? Entonces el **arreglo de acompañamiento es tu mejor opción**.",
+          "image": "piano-jazz.jpg",
+          "alt": "Arreglo para piano solo vs. arreglo de acompañamiento para piano"
+        },
+        {
+          "body": "## La estructura de las canciones de jazz\n\n**El Head**\n\nEl head es **el tema principal de una canción de jazz**. Suele interpretarse al unísono por todos los instrumentos al inicio y al final. Es similar al estribillo en la música pop.\n\nNormalmente, una canción de jazz comienza con una breve intro, seguida del head, la sección de solos, nuevamente el head (una o dos veces) y una outro.\n\n**La sección de solos**\n\nEs la **sección más característica del jazz**. En esta sección, los instrumentos se turnan para tocar un solo, mientras el resto de la banda acompaña.\n\n**Intro / Outro / Coda**\n\nLa intro es **la sección musical que inicia el tema**. Suele ser breve, pero establece el tono y los elementos principales, como la armonía y la línea melódica.\n\nLa outro es **la sección final de la pieza**. También puede llamarse coda, especialmente cuando la canción incluye repeticiones. De ahí proviene el “signo de coda”.",
+          "image": "dsc-7030.jpg",
+          "alt": "La estructura de las canciones de jazz"
+        },
+        {
+          "body": "## Reflexión final\n\nLa música jazz puede parecer compleja. ¡Igual que sus partituras! Pero nada más lejos de la realidad. Deja que los expertos de [**Mis Transcripciones Musicales**](/) te guíen en tus transcripciones de jazz y haz tu camino musical mucho más sencillo.\n\nTambién puedes consultar nuestro Glosario de Jazz (en inglés) para más información. Y si tienes dudas, [**no dudes en escribirnos por correo electrónico**](info@mistranscripcionesmusicales.com)."
+        }
+      ]
+    },
+    {
+      "type": "ShareLinks",
+      "title": "Comparte este contenido con tus amigos"
+    },
+    {
+      "type": "PostList",
+      "title": "Entradas relacionadas",
+      "limit": 3,
+      "linkLabel": "Leer más"
+    },
+    {
+      "type": "ContactSection",
+      "form": "quoteForm",
+      "returnTo": "/partituras-de-jazz-mas-utiles"
+    }
+  ]
+}

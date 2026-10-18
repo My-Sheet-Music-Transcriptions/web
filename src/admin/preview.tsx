@@ -170,6 +170,7 @@ if (decap.CMS && decap.createClass && decap.h) {
   const templates: (readonly [name: string, locale?: string])[] = [
     ['pages'],
     ['services'],
+    ['posts'],
     ...CMS_LOCALES.flatMap(({ code }) => [
       [`home-${code}`, code] as const,
       [`menu-${code}`, code] as const,

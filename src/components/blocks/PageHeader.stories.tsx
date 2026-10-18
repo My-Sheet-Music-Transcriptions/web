@@ -58,3 +58,25 @@ export const Photo: Story = {
     logo: { ...logo, image: sample.logo },
   },
 }
+/** A blog post: its title and date in white over its darkened cover. */
+export const Cover: Story = {
+  args: {
+    variant: 'cover',
+    title: 'Finale vs Sibelius',
+    subtitle: undefined,
+    rating: undefined,
+    date: '2022-09-15',
+    image: sample.photo,
+  },
+}
+/** The blog's index: the title and a lead over a photo. */
+export const CoverWithLead: Story = {
+  args: {
+    variant: 'cover',
+    title: 'Welcome to our blog!',
+    subtitle: undefined,
+    rating: undefined,
+    image: sample.photo,
+    lead: 'News, music editing tips, behind-the-scenes stories and reviews of notation software.',
+  },
+}

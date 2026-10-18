@@ -103,6 +103,9 @@ export const picture = <R extends boolean = false>(
 /** A recording of the page folder (an mp3), stored as its file name, which a block gets as its URL. */
 export const sound = <R extends boolean = false>(label: string, o?: Opts<R>) =>
   make<string, R>('file', label, o)
+/** A short video of the page folder (an mp4), stored by file name; the block gets its URL. */
+export const movie = <R extends boolean = false>(label: string, o?: Opts<R>) =>
+  make<string, R>('file', label, o)
 /**
  * One of a few lists or values kept in code, in content/<locale>/data/<file>.ts (the reviews, the prices, a form's
  * words), offered by export name in a menu and stored as that name; the block gets the export of the page's locale.
@@ -235,9 +238,11 @@ export interface CmsBlock<P = unknown> {
    * The locale's words (content/<locale>/data/labels.ts) the block gets as `labels`; with `mediaLabels`, also the
    * brand's video poster (content/<locale>/data/brand.ts) as `videoPoster`.
    */
-  words?: 'mediaLabels' | 'reviewLabels'
+  words?: 'mediaLabels' | 'reviewLabels' | 'shareLabels'
   /** The srcset widths its pictures are built at (vite-imagetools `w=`), as on hand-built pages. */
   pictureWidths: string
+  /** A list the block gets as `items` without a field for it: `posts`, the page's language's blog posts. */
+  feed?: 'posts'
   fields: CmsFields<P>
 }
 
@@ -295,9 +300,9 @@ const PICTURE = /^[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp|avif)$/i
 export const isPictureName = (value: unknown): value is string =>
   typeof value === 'string' && PICTURE.test(value)
 
-const SOUND = /^[a-z0-9][a-z0-9._-]*\.(mp3|m4a|ogg|wav)$/i
+const SOUND = /^[a-z0-9][a-z0-9._-]*\.(mp3|m4a|ogg|wav|mp4|webm)$/i
 
-/** A recording of the page folder, as a file field names it. */
+/** A recording (or a clip's mp4) of the page folder, as a file field names it. */
 export const isSoundName = (value: unknown): value is string =>
   typeof value === 'string' && SOUND.test(value)
 
@@ -326,7 +331,9 @@ export function checkField(f: Field, value: unknown, at: string): string[] {
     case 'image':
       return isPictureName(value) ? [] : [`${at}: expected a picture's file name (photo.jpg)`]
     case 'file':
-      return isSoundName(value) ? [] : [`${at}: expected a recording's file name (piece.mp3)`]
+      return isSoundName(value)
+        ? []
+        : [`${at}: expected a recording's or a video's file name (piece.mp3, clip.mp4)`]
     case 'object':
       return isRecord(value)
         ? checkFields(f.fields ?? {}, value, at)

@@ -1,13 +1,17 @@
 import { Logo } from '~/components/layout/Logo'
 import type { Slide } from '~/components/primitives/Carousel'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
+import { Icon } from '~/components/primitives/Icon'
 import { Media } from '~/components/primitives/Media'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
 import { Slideshow } from '~/components/primitives/Slideshow'
+import { WaveDivider } from '~/components/primitives/WaveDivider'
 import type { BrandLogo, MediaLabels, RatingSource } from '~/content/types'
 import { cn } from '~/lib/cn'
+import { shortDate } from '~/lib/dates'
 import { inlineMarkdown } from '~/lib/light-markdown'
+import { useLocale } from '~/site'
 
 export interface PageHeaderProps {
   /** The page's h1: the words people searched for. */
@@ -22,8 +26,10 @@ export interface PageHeaderProps {
   cta?: Cta
   /** The compact rating card: pass `google` from content/<locale>/data/ratings. */
   rating?: RatingSource
-  /** band: light centred title band (default). split: copy beside pictures, on white. photo: the homepage. */
-  variant?: 'band' | 'split' | 'photo'
+  /** band: light centred title band (default). split: copy beside pictures, on white. photo: the homepage. cover: the title in white over a darkened photo (the blog, a post). */
+  variant?: 'band' | 'split' | 'photo' | 'cover'
+  /** The date under the title (cover: a post's publication date), YYYY-MM-DD; written as the locale writes dates. */
+  date?: string
   /** The picture beside the copy (split), or the icon on the band's lower edge (a service's icon). */
   image?: PictureSource
   /** Alt text of the picture; empty when decorative. */
@@ -46,9 +52,10 @@ const eyebrowClass = 'text-small font-bold uppercase tracking-wide'
 
 /**
  * The opening of every page, its h1 first. `band`: the centred title and orange rule, on white, or on an orange
- * tint with the instrument icon on its edge (service pages), the rating card at the right. `split`: the copy
- * left, a picture or carousel right (landing pages). `photo`: the homepage, rotating studio photos behind the
- * copy, cut by a curve, the brand lockup, the orange highlight and the floating rating card.
+ * tint with the service's icon on its edge, the rating card at the right. `split`: the copy
+ * left, a picture or carousel right (landing pages). `photo`: the homepage, rotating photos behind the copy,
+ * cut by a curve, the lockup, the orange highlight and the rating card. `cover`: the title and the date or lead in
+ * white over a darkened photo (the blog, a post).
  */
 export function PageHeader(props: PageHeaderProps) {
   // The text and pictures stand still; as the page opens only the rating card rises into place, a beat later,
@@ -58,6 +65,7 @@ export function PageHeader(props: PageHeaderProps) {
   const { variant = 'band' } = props
   if (variant === 'photo') return <PhotoHeader {...props} />
   if (variant === 'split') return <SplitHeader {...props} />
+  if (variant === 'cover') return <CoverHeader {...props} />
   return <BandHeader {...props} />
 }
 
@@ -117,6 +125,44 @@ function BandHeader({
           className="entrance mx-auto mt-8 px-4 lg:absolute lg:top-[200px] lg:right-[5px] lg:mt-0 lg:w-[300px] lg:px-0"
         />
       ) : null}
+    </header>
+  )
+}
+
+function CoverHeader({ title, eyebrow, lead, date, cta, image, alt = '', id }: PageHeaderProps) {
+  const locale = useLocale()
+  return (
+    <header
+      id={id}
+      className="relative isolate flex min-h-[280px] items-center overflow-hidden bg-footer px-4 py-20 text-center text-white md:min-h-[340px]"
+    >
+      {image ? (
+        <Picture
+          image={image}
+          alt={alt}
+          sizes="100vw"
+          priority
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          pictureClassName="contents"
+        />
+      ) : null}
+      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-footer/65" />
+      <div className="mx-auto flex max-w-[900px] flex-col items-center gap-4">
+        {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
+        <h1 className="text-[32px] leading-tight font-bold text-white md:text-[40px]">{title}</h1>
+        <span aria-hidden="true" className="block h-px w-[120px] bg-accent" />
+        {date ? (
+          <p className="flex items-center gap-2 text-small">
+            <Icon name="calendar" size={16} aria-hidden="true" className="text-accent-light" />
+            <time dateTime={date}>{shortDate(date, locale)}</time>
+          </p>
+        ) : null}
+        {lead ? (
+          <p className="max-w-3xl text-[17px] leading-relaxed">{inlineMarkdown(lead)}</p>
+        ) : null}
+        {cta ? <CtaLink cta={cta} className="mt-2" /> : null}
+      </div>
+      <WaveDivider position="bottom" height={30} />
     </header>
   )
 }

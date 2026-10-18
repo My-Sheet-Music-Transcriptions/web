@@ -4,17 +4,19 @@ export const CURRENCIES = ['EUR', 'USD'] as const
 
 /**
  * Shared validation for the request forms (client hints + server enforcement). `kind` selects the form:
- * `quote` (default) needs a message; `gift-card` needs an amount and currency and the details are optional.
+ * `quote` (default) needs a message; `gift-card` needs an amount and currency and the details are optional;
+ * `reservation` (a book's pre-order list) needs only the email.
  * Issue messages are codes (`name`, `email`, `amount`, `message`): the form shows the locale's wording
  * (`strings.form.errors`), never the server's.
  */
 export const contactSchema = z
   .object({
-    kind: z.enum(['quote', 'gift-card']).optional().default('quote'),
-    name: z.string().trim().min(2, 'name').max(120),
+    kind: z.enum(['quote', 'gift-card', 'reservation']).optional().default('quote'),
+    name: z.string().trim().max(120).optional().default(''),
     email: z.string().trim().email('email').max(200),
     link: z.string().trim().max(2000).optional().default(''),
     instruments: z.string().trim().max(1000).optional().default(''),
+    purpose: z.string().trim().max(1000).optional().default(''),
     message: z.string().trim().max(5000).optional().default(''),
     prefix: z.string().trim().max(8).optional().default(''),
     phone: z.string().trim().max(32).optional().default(''),
@@ -46,6 +48,8 @@ export const contactSchema = z
     startedAt: z.coerce.number().optional(),
   })
   .superRefine((v, ctx) => {
+    if (v.kind === 'reservation') return
+    if (v.name.length < 2) ctx.addIssue({ code: 'custom', path: ['name'], message: 'name' })
     if (v.kind === 'gift-card') {
       if (v.amount === undefined || !Number.isFinite(v.amount) || v.amount <= 0)
         ctx.addIssue({ code: 'custom', path: ['amount'], message: 'amount' })

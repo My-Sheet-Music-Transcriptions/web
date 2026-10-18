@@ -18,9 +18,9 @@ For anything Decap itself does (options, widgets, collections, i18n, media, the 
 
 | File | What it is |
 | --- | --- |
-| `src/admin/config.ts` | `decapConfig`, written as `/admin/config.yml` by `vite.admin.config.ts`. Backend, logo, and the three collections: `site` (every language's homepage and menu, a file collection), `pages` and `services` (every language's, filed by `language`). |
+| `src/admin/config.ts` | `decapConfig`, written as `/admin/config.yml` by `vite.admin.config.ts`. Backend, logo, and the four collections: `site` (every language's homepage, menu and redirects, a file collection), `pages`, `services` and `posts` (Blog; every language's, filed by `language`). |
 | `src/admin/locales.ts` | `CMS_LOCALES`: the languages, in the order of the language filter and of the Site entries; the `language` field's options. |
-| `src/content/cms-meta.ts` | `metaFields`: the fields every page opens with (title, description, translation key, SEO, share card, noindex, draft, updated), typed by `baseSchema`; `serviceFields`: what a service page adds (short name, icon, menu group, price from, order), typed by `serviceSchema`. |
+| `src/content/cms-meta.ts` | `metaFields`: the fields every page opens with (title, description, translation key, SEO, share card, noindex, draft, updated), typed by `baseSchema`; `serviceFields`: what a service page adds (short name, icon, menu group, price from, order), typed by `serviceSchema`; `postFields`: what a post adds (date, excerpt, cover, tags, author), typed by `postSchema`. |
 | `src/components/blocks/cms.ts` | `cmsBlocks`: every block of the catalogue, in its order, with the fields writers fill in, typed by each block's props; presets (`preset`); `fromData`. |
 | `content/<locale>/data/brand.ts` | Brand pictures (photo bands, the lockup) named so data fields can offer them. |
 | `src/content/cms-fields.ts` | The field DSL (`line`, `prose`, `picture`, `pictureFile`, `sound`, `data`, `select`, `toggle`, `number`, `group`, `list`, `listOf`, `tableRows`, `faqGroups`), `decapField` (DSL → Decap field; `decap: {…}` passes raw Decap options last), the check of what is stored and `decodeFields` (names → pictures, recordings and data, then each field's decoder). |
@@ -29,6 +29,8 @@ For anything Decap itself does (options, widgets, collections, i18n, media, the 
 | `src/admin/preview.tsx` | The editor's live preview with the real blocks, and `registerWidgets`. |
 | `src/admin/widgets.ts` | Our widgets: `translation-key` (suggests existing keys, shows the linked translations, refuses a duplicate in the same language) and `image` (Decap's own, remounted once the picture has loaded so thumbnails show in lists). |
 | `src/admin/index.html`, `vite.admin.config.ts` | The admin page (absolute `/admin/...` paths) and its build: config.yml, scripts, `logo.svg`. |
+| `src/content/redirects.ts`, `content/<locale>/data/redirects.json` | A language's redirects (`Site` → `<Language> · Redirects`, form in `redirectFields` of `config.ts`): old address (a path, or a path ending in `/*`), target, 301/302, note. `scripts/postbuild.ts` writes them into `_redirects`; `checkRedirects` (in `checkSlugs`) refuses a rule that hides a page, leads to a missing page or to another rule. |
+| `src/content/posts.ts` | The blog's cards (`postCards`, `usePostCards`), from each post's meta and cover; a block whose CMS entry says `feed: 'posts'` (PostList) gets them as `items` (the data-page plugin imports it only then). |
 | `src/app/identity-redirect.ts` | Sends `#invite_token` / `#recovery_token` links that land on the site to `/admin`. |
 
 Files Node imports to write config.yml (`config.ts`, `locales.ts`, `cms-meta.ts`, `cms-fields.ts`, `blocks/cms.ts`) use
@@ -51,7 +53,7 @@ relative imports **with** `.ts` extensions and `import type` for everything else
   widths per field: `picture('Photo', { widths: '1000;1600' })`. A decorative picture's alt takes `empty: ''`.
 - **A field on every page**: add it to `baseSchema` (`src/content/schema.ts`) first, then to `metaFields`.
 - **A language**: add it to `CMS_LOCALES` (it must be a site `Locale`); its filter, `language` option and Site entries follow.
-- **A collection** (posts, artists…; pages and services exist): one `kind(...)` in `config.ts`, which lists every
+- **A collection** (artists…; pages, services and posts exist): one `kind(...)` in `config.ts`, which lists every
   language's pages of that kind: `folder: 'content'`, `path: '{{language}}/<kind>/{{slug}}/page'` (a new page is filed
   by the language the writer picks), `filter` on the hidden `collection` field (every kind sits at the same depth under
   `content/`, so the filter is what keeps the others out), language `view_filters` and `view_groups`. Its page.json
@@ -73,7 +75,7 @@ are a field instead of collections: one collection per kind, filtered and groupe
 
 ## Checks
 
-- `tests/unit/data-page.test.tsx`: the config offers every block of the catalogue (then the presets), the three collections (Site, Pages, Services), language then meta fields first; every `page.json` validates; names resolve (pictures, recordings, data, FAQ
+- `tests/unit/data-page.test.tsx`: the config offers every block of the catalogue (then the presets), the four collections (Site, Pages, Services, Blog), language then meta fields first; every `page.json` validates; names resolve (pictures, recordings, data, FAQ
   groups, a preset's props); the DSL's types refuse what does not fit (`@ts-expect-error` lines).
 - Try it locally: `pnpm build && pnpm serve:dist`, `pnpm dlx decap-server` in another terminal, then
   http://localhost:4173/admin/ (`local_backend` writes straight to the working copy, no login). Look at the result in

@@ -54,6 +54,25 @@ export const windPricing: PricingTier[] = pricing('€15-34+ EUR')
 
 export const stringPricing: PricingTier[] = pricing('€15-34+ EUR')
 
+export const bandPricing: PricingTier[] = pricing('45-99+ EUR')
+
+export const bassPricing: PricingTier[] = pricing('11-24+ €')
+
+export const drumsPricing: PricingTier[] = pricing('19-35+ EUR')
+
+/** The live /arreglos shows its price with a dollar sign and EUR, kept as it is. */
+export const arrangementPricing: PricingTier[] = pricing('$19-95+ EUR')
+
+export const pianoVocalPricing: PricingTier[] = pricing('16-36+ €')
+
+export const jazzPianoPricing: PricingTier[] = pricing('28-39+ €')
+
+export const orchestrationPricing: PricingTier[] = pricing('59-99+ EUR')
+
+export const leadSheetPricing: PricingTier[] = pricing('10-25+ €')
+
+export const composerPricing: PricingTier[] = pricing('19-45+ EUR')
+
 /** The prices page's own "Desde 15 EUR" card, worded as the live /precios has it. */
 export const generalPricing: PricingTier[] = [
   {

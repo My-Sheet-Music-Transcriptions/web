@@ -33,6 +33,8 @@ export type IconName =
   | 'star'
   | 'plus'
   | 'minus'
+  | 'search'
+  | 'calendar'
   | 'external'
   | 'dollar'
   | 'pen'
@@ -136,6 +138,10 @@ const paths: Record<IconName, { d: string; fill?: boolean; viewBox?: string }> =
   },
   plus: { d: 'M12 5v14M5 12h14' },
   minus: { d: 'M5 12h14' },
+  search: { d: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3M8 11h6M11 8v6' },
+  calendar: {
+    d: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+  },
   external: { d: 'M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3' },
   dollar: {
     d: 'M12 2v20M17 6.5a4 4 0 0 0-4-2.5H11a3.5 3.5 0 0 0 0 7h2a3.5 3.5 0 0 1 0 7h-2.5a4 4 0 0 1-3.5-2',
