@@ -11,6 +11,11 @@ pull request (editorial workflow) that merges on green CI like any content PR. D
 devDependencies (`decap-cms`, `netlify-identity-widget`) copied from `node_modules` into `dist/client/admin` at build:
 nothing loads from a CDN, and updating Decap is bumping the version in `package.json` (read §11 of the reference first).
 
+The CMS is in **Spanish**: Decap's own words (`locale: 'es'` in `config.ts`; its bundle registers every locale), the
+Identity login window (`setLocale('es')` in `index.html`), the invitation and recovery emails (`emails/`), and every
+label, hint, summary and message we write (collections, blocks, meta fields, widgets, link problems). A new field or
+block gets Spanish words too; option values (`band`, `white`…) stay as the props spell them and the hint explains them.
+
 For anything Decap itself does (options, widgets, collections, i18n, media, the JS API, the gotchas), read
 `reference/decap.md`, a condensed copy of decapcms.org/docs for 3.17, before guessing or fetching the site.
 
@@ -25,12 +30,12 @@ For anything Decap itself does (options, widgets, collections, i18n, media, the 
 | `content/<locale>/data/brand.ts` | Brand pictures (photo bands, the lockup) named so data fields can offer them. |
 | `src/content/cms-fields.ts` | The field DSL (`line`, `prose`, `picture`, `pictureFile`, `sound`, `data`, `select`, `toggle`, `number`, `group`, `list`, `listOf`, `tableRows`, `faqGroups`), `decapField` (DSL → Decap field; `decap: {…}` passes raw Decap options last), the check of what is stored and `decodeFields` (names → pictures, recordings and data, then each field's decoder). |
 | `src/content/data-page.ts`, `BlockPage.tsx`, `scripts/lib/vite-data-pages.ts` | Reading, checking and rendering `page.json` on the site. |
-| `src/content/menu.ts`, `content/<locale>/data/menu.json` | A language's main menu (`Site` → `<Language> · Menu`, a file entry with its form in `menuFields` of `config.ts`): items, sections, links; each link a `page` (a select of every page of the language, hand-built included, listed when the admin is built) or an `href`. Checked by zod and `checkSlugs`; the preview draws it as an outline. |
+| `src/content/menu.ts`, `content/<locale>/data/menu.json` | A language's main menu (`Web` → `<Idioma> · Menú`, a file entry with its form in `menuFields` of `config.ts`): items, sections, links; each link a `page` (a select of every page of the language, hand-built included, listed when the admin is built) or an `href`. Checked by zod and `checkSlugs`; the preview draws it as an outline. |
 | `src/admin/preview.tsx` | The editor's live preview with the real blocks, and `registerWidgets`. Each block draws inside its own error boundary (`Unfinished`): a block missing a picture or a required field shows a note instead of blanking the preview. The bundle runs in the admin's window and draws into Decap's iframe, so Motion's `useInView` never sees the blocks: a raw preview style shows every `[data-reveal]` piece as it is. |
 | `src/admin/widgets.ts` | Our widgets: `translation-key` (suggests existing keys, shows the linked translations, refuses a duplicate in the same language), `image` (Decap's own, remounted once the picture has loaded so thumbnails show in lists), `link` (every `link()` field and the menu's addresses: the language's pages offered by title, the address checked as typed) `blocks` (the page's block list: Decap's list, plus, while it is empty, "Start from another page", which copies the blocks and words of a page of the same collection and language, without its pictures and recordings, so any page is a starter) and `prose` (every `prose()` field: Decap's text area with a bar to link a page, another site or an email, each `[link](…)` checked). The pages come from `__CMS_PAGES__`, defined by `vite.admin.config.ts`. |
 | `src/content/links.ts` | The one link rule (`linkProblem`): a page of the language (a migrating language may still link the old site's pages), `#id`, `https://`, `mailto:`, `tel:`; never the site's own domain, an old address that redirects, or a bare email. The widgets apply it as writers type, `checkLinks` (in `checkSlugs`) at build and in the unit tests, and `SmartLink` renders pages with the router (a client-side transition). |
 | `src/admin/index.html`, `vite.admin.config.ts` | The admin page (absolute `/admin/...` paths) and its build: config.yml, scripts, `logo.svg`. |
-| `src/content/redirects.ts`, `content/<locale>/data/redirects.json` | A language's redirects (`Site` → `<Language> · Redirects`, form in `redirectFields` of `config.ts`): old address (a path, or a path ending in `/*`), target, 301/302, note. `scripts/postbuild.ts` writes them into `_redirects`; `checkRedirects` (in `checkSlugs`) refuses a rule that hides a page, leads to a missing page or to another rule. |
+| `src/content/redirects.ts`, `content/<locale>/data/redirects.json` | A language's redirects (`Web` → `<Idioma> · Redirecciones`, form in `redirectFields` of `config.ts`): old address (a path, or a path ending in `/*`), target, 301/302, note. `scripts/postbuild.ts` writes them into `_redirects`; `checkRedirects` (in `checkSlugs`) refuses a rule that hides a page, leads to a missing page or to another rule. |
 | `src/content/post-template.ts` | The blog post's fixed layout: a post's page.json has no `blocks`, only its fields and `body` (`postBody`: Decap's `richtext` widget, light markdown plus one-paragraph picture `![alt](file.jpg "caption"){width=300}`, `{{youtube ID "title"}}` and `{{audio file.mp3 "title"}}` lines, the editor's boxes in `widgets.ts`); `splitDataPage` lays it out with `postBlocks` (PageHeader cover, Article from `postParts`, ShareLinks, PostList, ContactSection), the words being `postLabels` of the locale's labels.ts (`__words.…__` references, imported by the Vite plugin, filled by the preview with `fillWords`). Change the layout there, never per post. |
 | `src/content/posts.ts` | The blog's cards (`postCards`, `usePostCards`), from each post's meta and cover; a block whose CMS entry says `feed: 'posts'` (PostList) gets them as `items` (the data-page plugin imports it only then). |
 | `src/app/identity-redirect.ts` | Sends `#invite_token` / `#recovery_token` links that land on the site to `/admin`. |
@@ -63,11 +68,11 @@ relative imports **with** `.ts` extensions and `import type` for everything else
   `content/`, so the filter is what keeps the others out), language `view_filters` and `view_groups`. Its page.json
   files open with `language` and `collection` (`splitDataPage` checks them against the folder). Keep
   `media_folder: ''`, `public_folder: ''` so pictures stay in the page folder. Add the kind to the preview templates.
-- **The homepage** of a language appears in `Site` as `<Language> · Homepage` (a file entry, §2.2 of the reference) as
+- **The homepage** of a language appears in `Web` as `<Idioma> · Portada` (a file entry, §2.2 of the reference) as
   soon as its `pages/home/page.json` exists; it is also listed under Pages (Decap's `filter` cannot exclude one entry).
-  Other singletons go in `Site` the same way (`siteFiles`): the file must exist first.
+  Other singletons go in `Web` the same way (`siteFiles`): the file must exist first.
 - **The menu**: the shape is `src/content/menu.ts` (schema, `menuToNav`); a field there goes into `menuFields` in
-  `config.ts` too. A language gets a `Site` → `<Language> · Menu` entry once it has `content/<locale>/data/menu.json`
+  `config.ts` too. A language gets a `Web` → `<Idioma> · Menú` entry once it has `content/<locale>/data/menu.json`
   (until then it shows the English menu): copy the English file and translate it, picking that language's pages.
 - **A link** (a button, a card, anything a visitor clicks to go somewhere): `link('Link')`, never `line`; light markdown links need nothing more than a `prose` field.
 - **A widget**: write it in `widgets.ts` with Decap's `createClass` / `h` globals (Decap renders with its own React)

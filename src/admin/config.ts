@@ -37,8 +37,8 @@ const blockTypes = Object.entries(cmsBlocks as unknown as Record<string, AnyCmsB
 
 const blocksField = {
   name: 'blocks',
-  label: 'Blocks',
-  label_singular: 'block',
+  label: 'Bloques',
+  label_singular: 'bloque',
   // Decap's list, offering a new page to start from another page's blocks (src/admin/widgets.ts)
   widget: 'blocks',
   summary: '{{fields.title}}',
@@ -60,7 +60,7 @@ const { date, cover, ...cardFields } = postFields
 const postFormFields = Object.entries({
   title: {
     ...title,
-    hint: 'The post’s headline: on the post, on its card on the blog and in search results.',
+    hint: 'El titular del artículo: en el artículo, en su tarjeta del blog y en los resultados de búsqueda.',
   },
   date,
   cover,
@@ -72,10 +72,10 @@ const postFormFields = Object.entries({
 /** The language a page is in (its folder), and the collection (its folder, hidden): what a page.json opens with. */
 const languageField = {
   name: 'language',
-  label: 'Language',
+  label: 'Idioma',
   widget: 'select',
   options: CMS_LOCALES.map(({ code, label }) => ({ label, value: code })),
-  hint: 'The language the page is written in: it is filed with that language’s pages.',
+  hint: 'El idioma en que está escrita la página: se guarda con las páginas de ese idioma.',
 }
 const collectionField = (collection: string) => ({
   name: 'collection',
@@ -114,7 +114,7 @@ const kind = (
     field: 'language',
     pattern: `^${code}$`,
   })),
-  view_groups: [{ label: 'Language', field: 'language' }],
+  view_groups: [{ label: 'Idioma', field: 'language' }],
   fields: [languageField, collectionField(collection), ...own],
 })
 
@@ -130,13 +130,13 @@ const entries = readAllEntries()
 /** The Site entries of a language: its homepage, its menu and its redirects, those it has. */
 const siteFiles = ({ code, label }: CmsLocale) => [
   ...(fs.existsSync(homeFile(code))
-    ? [{ name: `home-${code}`, label: `${label} · Homepage`, file: homeFile(code), fields }]
+    ? [{ name: `home-${code}`, label: `${label} · Portada`, file: homeFile(code), fields }]
     : []),
   ...(fs.existsSync(menuFile(code))
     ? [
         {
           name: `menu-${code}`,
-          label: `${label} · Menu`,
+          label: `${label} · Menú`,
           file: menuFile(code),
           fields: menuFields(code),
         },
@@ -146,7 +146,7 @@ const siteFiles = ({ code, label }: CmsLocale) => [
     ? [
         {
           name: `redirects-${code}`,
-          label: `${label} · Redirects`,
+          label: `${label} · Redirecciones`,
           file: redirectsFile(code),
           fields: redirectFields,
         },
@@ -158,39 +158,39 @@ const siteFiles = ({ code, label }: CmsLocale) => [
 const redirectFields = [
   {
     name: 'rules',
-    label: 'Redirects',
-    label_singular: 'redirect',
+    label: 'Redirecciones',
+    label_singular: 'redirección',
     widget: 'list',
     collapsed: true,
     summary: '{{fields.from}} → {{fields.to}}',
-    hint: 'Old addresses of the site and where visitors and search engines are sent instead.',
+    hint: 'Direcciones antiguas de la web y adónde se envía en su lugar a los visitantes y a los buscadores.',
     fields: [
       {
         name: 'from',
-        label: 'Old address',
+        label: 'Dirección antigua',
         widget: 'string',
-        hint: 'A path: /summer-25, or /review/* for everything under /review/.',
-        pattern: ['^/\\S*$', 'a path starting with /'],
+        hint: 'Una ruta: /verano-25, o /review/* para todo lo que hay bajo /review/.',
+        pattern: ['^/\\S*$', 'una ruta que empiece por /'],
       },
       {
         name: 'to',
-        label: 'Leads to',
+        label: 'Lleva a',
         widget: 'string',
-        hint: 'A page of this language (/opiniones) or another site (https://…).',
-        pattern: ['^(/\\S*|https://\\S+)$', 'a path or an https:// address'],
+        hint: 'Una página de este idioma (/opiniones) u otra web (https://…).',
+        pattern: ['^(/\\S*|https://\\S+)$', 'una ruta o una dirección https://'],
       },
       {
         name: 'status',
-        label: 'Kind',
+        label: 'Tipo',
         widget: 'select',
         required: false,
         default: 301,
         options: [
-          { label: 'Moved for good (301)', value: 301 },
-          { label: 'For now (302)', value: 302 },
+          { label: 'Traslado definitivo (301)', value: 301 },
+          { label: 'Temporal (302)', value: 302 },
         ],
       },
-      { name: 'note', label: 'Why', widget: 'string', required: false },
+      { name: 'note', label: 'Motivo', widget: 'string', required: false },
     ],
   },
 ]
@@ -207,44 +207,44 @@ function menuFields(locale: string) {
       value: e.path,
     }))
     .sort((a, b) => a.label.localeCompare(b.label, locale))
-  const label = (hint: string) => ({ name: 'label', label: 'Label', widget: 'string', hint })
+  const label = (hint: string) => ({ name: 'label', label: 'Texto', widget: 'string', hint })
   const page = {
     name: 'page',
-    label: 'Page',
+    label: 'Página',
     widget: 'select',
     required: false,
     options,
-    hint: 'A page of this language. Leave it empty to write an address instead.',
+    hint: 'Una página de este idioma. Déjalo vacío para escribir una dirección.',
   }
   const href = {
     name: 'href',
-    label: 'Address',
+    label: 'Dirección',
     widget: 'link',
     required: false,
-    hint: 'Only when no page is picked: a page not on the new site yet (/pricing) or another site (https://…).',
+    hint: 'Solo si no eliges página: una página que aún no está en la web nueva (/pricing) u otra web (https://…).',
   }
   const links = {
     name: 'links',
-    label: 'Links',
-    label_singular: 'link',
+    label: 'Enlaces',
+    label_singular: 'enlace',
     widget: 'list',
     required: false,
     collapsed: true,
     summary: '{{fields.label}}',
-    fields: [label('The words in the menu.'), page, href],
+    fields: [label('El texto en el menú.'), page, href],
   }
   const sections = {
     name: 'sections',
-    label: 'Sections',
-    label_singular: 'section',
+    label: 'Secciones',
+    label_singular: 'sección',
     widget: 'list',
     required: false,
     collapsed: true,
     summary: '{{fields.label}}',
-    hint: 'The panel that opens from this item: one heading per section, with its links under it.',
+    hint: 'El panel que se abre desde este elemento: un encabezado por sección, con sus enlaces debajo.',
     fields: [
-      label('The heading of the section.'),
-      { ...page, hint: 'Optional: the page the heading opens.' },
+      label('El encabezado de la sección.'),
+      { ...page, hint: 'Opcional: la página que abre el encabezado.' },
       href,
       links,
     ],
@@ -252,18 +252,21 @@ function menuFields(locale: string) {
   return [
     {
       name: 'items',
-      label: 'Menu items',
-      label_singular: 'menu item',
+      label: 'Elementos del menú',
+      label_singular: 'elemento del menú',
       widget: 'list',
       collapsed: true,
       summary: '{{fields.label}}',
-      hint: 'Drag to reorder: the order here is the order on the site.',
-      fields: [label('The words in the menu bar.'), page, href, sections],
+      hint: 'Arrastra para reordenar: el orden de aquí es el de la web.',
+      fields: [label('El texto en la barra del menú.'), page, href, sections],
     },
   ]
 }
 
 export const decapConfig = {
+  // The CMS speaks Spanish: Decap's own words (its bundle carries every locale), and ours in this file, cms.ts and
+  // cms-meta.ts; the login window too (index.html).
+  locale: 'es',
   backend: {
     name: 'git-gateway',
     branch: 'main',
@@ -285,31 +288,31 @@ export const decapConfig = {
   collections: [
     {
       name: 'site',
-      label: 'Site',
-      description: 'Each language’s homepage, main menu and redirects.',
+      label: 'Web',
+      description: 'La portada, el menú principal y las redirecciones de cada idioma.',
       media_folder: '',
       public_folder: '',
       files: CMS_LOCALES.flatMap(siteFiles),
     },
     kind(
       'pages',
-      'Pages',
-      'page',
-      'The pages of every language (filter or group the list by language). Hand-built pages (the landing pages) are changed by asking Claude.',
+      'Páginas',
+      'página',
+      'Las páginas de todos los idiomas (filtra o agrupa la lista por idioma). Las páginas hechas a mano (las landing pages) se cambian pidiéndoselo a Claude.',
       fields,
     ),
     kind(
       'services',
-      'Services',
-      'service page',
-      'The service pages of every language: one per instrument or service, listed in the menus and grids.',
+      'Servicios',
+      'página de servicio',
+      'Las páginas de servicio de todos los idiomas: una por instrumento o servicio, en los menús y las cuadrículas.',
       serviceFormFields,
     ),
     kind(
       'posts',
       'Blog',
-      'post',
-      'The blog posts of every language: each lists itself on its language’s blog, newest first, with its cover, summary and date.',
+      'artículo',
+      'Los artículos del blog de todos los idiomas: cada uno aparece en el blog de su idioma, los más recientes primero, con su portada, resumen y fecha.',
       postFormFields,
     ),
   ],

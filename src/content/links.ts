@@ -31,21 +31,21 @@ export const pathOf = (href: string) => href.split(/[?#]/)[0]?.replace(/(.)\/+$/
 /** What is wrong with a link, in words a writer can act on, or undefined when it leads somewhere. */
 export function linkProblem(href: string, to: LinkTargets): string | undefined {
   const h = href.trim()
-  if (!h) return 'the link is empty'
+  if (!h) return 'el enlace está vacío'
   if (/^#[\w-]+$/.test(h)) return undefined
   const own = to.origins?.find((o) => h === o || h.startsWith(`${o}/`))
-  if (own) return `${h} is this site: write it as ${h.slice(own.length) || '/'}`
+  if (own) return `${h} es esta misma web: escríbelo como ${h.slice(own.length) || '/'}`
   if (/^[\w.+-]+@[\w-]+\.[\w.]+$/.test(h))
-    return `${h} is an email address: write it as mailto:${h}`
+    return `${h} es una dirección de email: escríbela como mailto:${h}`
   if (EXTERNAL.test(h)) return undefined
   if (!h.startsWith('/') || /\s/.test(h))
-    return `${h} is not a link: pick a page (/precios), a part of the page (#contact), another site (https://…), mailto: or tel:`
+    return `${h} no es un enlace: elige una página (/precios), una parte de la página (#contacto), otra web (https://…), mailto: o tel:`
   const path = pathOf(h)
   if (to.pages.has(path)) return undefined
   const moved = to.moved?.get(path)
-  if (moved) return `${path} has moved to ${moved}: link to it directly`
+  if (moved) return `${path} se ha movido a ${moved}: enlaza directamente ahí`
   if (to.migrating) return undefined
-  return `${path} is not a page of this language`
+  return `${path} no es una página de este idioma`
 }
 
 /** The hrefs of light markdown's links, `[words](href)`. */

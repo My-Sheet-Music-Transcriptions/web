@@ -103,14 +103,17 @@ function translationKey({ createClass, h }: Decap) {
   return createClass({
     isValid(this: Widget) {
       const { value = '', entry } = this.props
-      if (!KEY.test(value))
-        return { error: { message: 'Lowercase letters, numbers and dashes only.' } }
+      if (!KEY.test(value)) return { error: { message: 'Solo minúsculas, números y guiones.' } }
       const locale = localeOf(this.props)
       const clash = (pagesByKey.get(value) ?? []).find(
         (p) => p.locale === locale && p.slug !== slugOf(entry),
       )
       return clash
-        ? { error: { message: `“${clash.title}” already uses this key in ${languageOf(locale)}.` } }
+        ? {
+            error: {
+              message: `“${clash.title}” ya usa esta clave en ${languageOf(locale).toLowerCase()}.`,
+            },
+          }
         : true
     },
     render(this: Widget) {
@@ -122,8 +125,8 @@ function translationKey({ createClass, h }: Decap) {
       const note = !value
         ? ''
         : others.length
-          ? `Linked to: ${others.map((p) => `${p.title} (${languageOf(p.locale)})`).join(', ')}`
-          : 'No other page uses this key yet: this page has no translations.'
+          ? `Enlazada con: ${others.map((p) => `${p.title} (${languageOf(p.locale)})`).join(', ')}`
+          : 'Ninguna otra página usa aún esta clave: esta página no tiene traducciones.'
       return h(
         'div',
         null,
@@ -222,12 +225,12 @@ const ERROR = { ...HINT, color: '#d60032' }
 /** What a link leads to, in a line under the field: the page's title, or the address's kind. */
 function linkNote(href: string, titleOf: (href: string) => string | undefined) {
   if (!href) return ''
-  if (href.startsWith('#')) return 'A part of this page.'
-  if (href.startsWith('mailto:')) return 'Writes an email.'
-  if (href.startsWith('tel:')) return 'Calls a phone.'
-  if (/^https?:/.test(href)) return 'Another site.'
+  if (href.startsWith('#')) return 'Una parte de esta página.'
+  if (href.startsWith('mailto:')) return 'Escribe un email.'
+  if (href.startsWith('tel:')) return 'Llama a un teléfono.'
+  if (/^https?:/.test(href)) return 'Otra web.'
   const title = titleOf(href)
-  return title ? `Page: ${title}` : 'Not on the new site yet: it opens on the current site.'
+  return title ? `Página: ${title}` : 'Aún no está en la web nueva: se abre en la web actual.'
 }
 
 function link({ createClass, h }: Decap) {
@@ -251,7 +254,7 @@ function link({ createClass, h }: Decap) {
           type: 'text',
           list: `${forID}-pages`,
           autoComplete: 'off',
-          placeholder: 'Pick a page, or write https://…, mailto:… or #section',
+          placeholder: 'Elige una página, o escribe https://…, mailto:… o #seccion',
           value,
           onChange: (e: { target: { value: string } }) => onChange(e.target.value.trim()),
         }),
@@ -333,7 +336,7 @@ function prose({ CMS, createClass, h }: Decap) {
                     this.setState({ page: e.target.value }),
                   style: { fontSize: 13, padding: 4, maxWidth: 360 },
                 },
-                h('option', { value: '' }, 'Pick a page…'),
+                h('option', { value: '' }, 'Elige una página…'),
                 ...pages.map((p) =>
                   h('option', { key: p.path, value: p.path }, `${p.title} (${p.path})`),
                 ),
@@ -341,28 +344,28 @@ function prose({ CMS, createClass, h }: Decap) {
               h(
                 'span',
                 { key: 'go' },
-                button('Insert link', () => {
+                button('Insertar enlace', () => {
                   if (this.state.page) this.insert(this.state.page, wordsOf(this.state.page))
                 }),
               ),
               h(
                 'span',
                 { key: 'cancel' },
-                button('Cancel', () => this.setState({ picking: false })),
+                button('Cancelar', () => this.setState({ picking: false })),
               ),
             ]
           : [
               h(
                 'span',
                 { key: 'page' },
-                button('Link to a page', () => this.setState({ picking: true })),
+                button('Enlazar una página', () => this.setState({ picking: true })),
               ),
               h(
                 'span',
                 { key: 'site' },
                 button(
-                  'Link to another site',
-                  ask('Address of the other site (https://…)', (a) =>
+                  'Enlazar otra web',
+                  ask('Dirección de la otra web (https://…)', (a) =>
                     /^https?:\/\//.test(a) ? a : `https://${a}`,
                   ),
                 ),
@@ -371,8 +374,8 @@ function prose({ CMS, createClass, h }: Decap) {
                 'span',
                 { key: 'mail' },
                 button(
-                  'Link to an email',
-                  ask('Email address', (a) => `mailto:${a.replace(/^mailto:/, '')}`),
+                  'Enlazar un email',
+                  ask('Dirección de email', (a) => `mailto:${a.replace(/^mailto:/, '')}`),
                 ),
               ),
             ],
@@ -462,10 +465,10 @@ function blocks({ CMS, createClass, h }: Decap) {
               },
             },
             !locale
-              ? 'Pick the language first to start from one of its pages.'
+              ? 'Elige primero el idioma para empezar desde una de sus páginas.'
               : starters.length
                 ? [
-                    h('span', { key: 'l' }, 'Start from another page:'),
+                    h('span', { key: 'l' }, 'Empezar desde otra página:'),
                     h(
                       'select',
                       {
@@ -475,7 +478,7 @@ function blocks({ CMS, createClass, h }: Decap) {
                           this.setState({ from: e.target.value }),
                         style: { fontSize: 14, padding: 4, maxWidth: 380 },
                       },
-                      h('option', { value: '' }, 'Pick a page…'),
+                      h('option', { value: '' }, 'Elige una página…'),
                       ...starters.map((p) => h('option', { key: p.file, value: p.file }, p.title)),
                     ),
                     h(
@@ -493,15 +496,15 @@ function blocks({ CMS, createClass, h }: Decap) {
                           cursor: 'pointer',
                         },
                       },
-                      'Use its blocks',
+                      'Usar sus bloques',
                     ),
                     h(
                       'span',
                       { key: 'n', style: { flexBasis: '100%', fontSize: 13, color: '#5f6b7a' } },
-                      'Its blocks and words are copied; add this page’s own pictures and recordings.',
+                      'Se copian sus bloques y textos; añade las imágenes y grabaciones propias de esta página.',
                     ),
                   ]
-                : 'No page of this kind in this language yet: add blocks below.',
+                : 'Aún no hay ninguna página de este tipo en este idioma: añade bloques debajo.',
           )
         : null
       return h('div', null, bar, h(list.control, { ...this.props }))
@@ -520,18 +523,18 @@ function blocks({ CMS, createClass, h }: Decap) {
 function registerPostComponents({ CMS }: Decap) {
   CMS.registerEditorComponent({
     id: 'image',
-    label: 'Picture',
+    label: 'Imagen',
     fields: [
-      { name: 'image', label: 'Picture', widget: 'image', choose_url: false },
-      { name: 'alt', label: 'Picture description (alt text)', widget: 'string' },
-      { name: 'caption', label: 'Line under the picture', widget: 'string', required: false },
+      { name: 'image', label: 'Imagen', widget: 'image', choose_url: false },
+      { name: 'alt', label: 'Descripción de la imagen (texto alternativo)', widget: 'string' },
+      { name: 'caption', label: 'Línea bajo la imagen', widget: 'string', required: false },
       {
         name: 'width',
-        label: 'Width in px',
+        label: 'Ancho en px',
         widget: 'number',
         value_type: 'int',
         required: false,
-        hint: 'Only for a picture smaller than the column (an icon, a small diagram).',
+        hint: 'Solo para una imagen más pequeña que la columna (un icono, un diagrama pequeño).',
       },
     ],
     pattern: POST_PICTURE,
@@ -546,15 +549,15 @@ function registerPostComponents({ CMS }: Decap) {
   })
   CMS.registerEditorComponent({
     id: 'post-video',
-    label: 'YouTube video',
+    label: 'Vídeo de YouTube',
     fields: [
       {
         name: 'youtube',
-        label: 'Video id',
+        label: 'Id del vídeo',
         widget: 'string',
-        hint: 'What follows v= in the video’s address: youtube.com/watch?v=Aa30is9HYFA → Aa30is9HYFA.',
+        hint: 'Lo que sigue a v= en la dirección del vídeo: youtube.com/watch?v=Aa30is9HYFA → Aa30is9HYFA.',
       },
-      { name: 'title', label: 'Video title', widget: 'string' },
+      { name: 'title', label: 'Título del vídeo', widget: 'string' },
     ],
     pattern: POST_VIDEO,
     fromBlock: (m: RegExpMatchArray) => ({ youtube: m[1], title: m[2] }),
@@ -563,10 +566,10 @@ function registerPostComponents({ CMS }: Decap) {
   })
   CMS.registerEditorComponent({
     id: 'post-audio',
-    label: 'Recording',
+    label: 'Grabación',
     fields: [
-      { name: 'src', label: 'Recording (mp3)', widget: 'file', choose_url: false },
-      { name: 'title', label: 'What it is', widget: 'string' },
+      { name: 'src', label: 'Grabación (mp3)', widget: 'file', choose_url: false },
+      { name: 'title', label: 'Qué es', widget: 'string' },
     ],
     pattern: POST_AUDIO,
     fromBlock: (m: RegExpMatchArray) => ({ src: m[1], title: m[2] }),

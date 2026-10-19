@@ -11,10 +11,10 @@ export interface CmsLocale {
   label: string
 }
 export const CMS_LOCALES = [
-  { code: 'en', label: 'English' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'ca', label: 'Catalan' },
-  { code: 'fr', label: 'French' },
-  { code: 'de', label: 'German' },
-  { code: 'ja', label: 'Japanese' },
+  { code: 'en', label: 'Inglés' },
+  { code: 'es', label: 'Español' },
+  { code: 'ca', label: 'Catalán' },
+  { code: 'fr', label: 'Francés' },
+  { code: 'de', label: 'Alemán' },
+  { code: 'ja', label: 'Japonés' },
 ] as const satisfies readonly CmsLocale[]

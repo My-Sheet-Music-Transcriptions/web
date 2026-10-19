@@ -26,9 +26,9 @@ export const POST_VIDEO = /^\{\{youtube\s+(\S+)(?:\s+"([^"\n]*)")?\s*\}\}$/
 export const POST_AUDIO = /^\{\{audio\s+(\S+)(?:\s+"([^"\n]*)")?\s*\}\}$/
 
 /** The post's text: one rich text field, light markdown with pictures, videos and recordings between paragraphs. */
-export const postBody = prose('Text', {
+export const postBody = prose('Texto', {
   required: true,
-  hint: 'The post itself. Use the toolbar for subheadings, bold, lists and links, and its + button for a picture, a YouTube video or a recording. The header, share buttons, related posts and request form are added on every post.',
+  hint: 'El artículo en sí. Usa la barra de herramientas para subtítulos, negrita, listas y enlaces, y su botón + para una imagen, un vídeo de YouTube o una grabación. La cabecera, los botones para compartir, los artículos relacionados y el formulario se añaden en todos los artículos.',
   decap: {
     widget: 'richtext',
     modes: ['rich_text', 'raw'],

@@ -21,45 +21,47 @@ import type { baseSchema, postSchema, serviceSchema } from './schema.ts'
  * Imported by Node directly (the admin build's config): relative imports with extensions and type imports only.
  */
 export const metaFields = {
-  title: line('Title', {
+  title: line('Título', {
     required: true,
-    hint: 'The page name in search results and the browser tab (3–120 characters).',
-    decap: { pattern: ['^.{3,120}$', '3 to 120 characters'] },
+    hint: 'El nombre de la página en los resultados de búsqueda y en la pestaña del navegador (3–120 caracteres).',
+    decap: { pattern: ['^.{3,120}$', 'de 3 a 120 caracteres'] },
   }),
-  description: prose('Description', {
+  description: prose('Descripción', {
     required: true,
-    hint: 'The line Google shows under the title (50–160 characters).',
-    decap: { widget: 'text', pattern: ['^[\\s\\S]{50,160}$', '50 to 160 characters'] },
+    hint: 'La línea que Google muestra bajo el título (50–160 caracteres).',
+    decap: { widget: 'text', pattern: ['^[\\s\\S]{50,160}$', 'de 50 a 160 caracteres'] },
   }),
-  translationKey: line('Translation key', {
+  translationKey: line('Clave de traducción', {
     required: true,
-    hint: 'Pick the key of the same page in another language to link them as translations; a new key (lowercase, dashes) keeps the page on its own.',
+    hint: 'Elige la clave de la misma página en otro idioma para enlazarlas como traducciones; una clave nueva (minúsculas y guiones) deja la página sola.',
     // src/admin/widgets.ts: a text field that suggests the keys the site already uses.
     decap: { widget: 'translation-key' },
   }),
-  seoTitle: line('Title in search results', {
-    hint: 'Only when it should differ from the title (10–70 characters).',
-    decap: { pattern: ['^.{10,70}$', '10 to 70 characters'] },
+  seoTitle: line('Título en los resultados de búsqueda', {
+    hint: 'Solo si debe ser distinto del título (10–70 caracteres).',
+    decap: { pattern: ['^.{10,70}$', 'de 10 a 70 caracteres'] },
   }),
   og: group(
-    'Search & sharing',
+    'Búsqueda y redes',
     {
-      title: line('Title on the share card'),
-      description: line('Description on the share card'),
+      title: line('Título de la tarjeta al compartir'),
+      description: line('Descripción de la tarjeta al compartir'),
       image: group(
-        'Share picture',
+        'Imagen para compartir',
         {
-          src: pictureFile('Picture (at least 1200×630)', { required: true }),
-          alt: line('Picture description (alt text)', { required: true }),
+          src: pictureFile('Imagen (como mínimo 1200×630)', { required: true }),
+          alt: line('Descripción de la imagen (texto alternativo)', { required: true }),
         },
-        { hint: 'Without one, the site draws a card from the title and description.' },
+        { hint: 'Sin ella, la web dibuja una tarjeta con el título y la descripción.' },
       ),
     },
-    { hint: 'How the page looks when shared. Leave empty to use the title and description.' },
+    {
+      hint: 'Cómo se ve la página al compartirla. Déjalo vacío para usar el título y la descripción.',
+    },
   ),
-  noindex: toggle('Hide from search engines'),
-  draft: toggle('Draft (hidden from the site)'),
-  updated: line('Last updated', {
+  noindex: toggle('Ocultar a los buscadores'),
+  draft: toggle('Borrador (oculto en la web)'),
+  updated: line('Última actualización', {
     decap: {
       widget: 'datetime',
       format: 'YYYY-MM-DD',
@@ -71,32 +73,32 @@ export const metaFields = {
 
 /** What a service page adds to the meta fields (src/content/schema.ts `serviceSchema`): how menus and grids show it. */
 export const serviceFields = {
-  shortTitle: line('Short name', {
+  shortTitle: line('Nombre corto', {
     required: true,
-    hint: 'In menus and grids: "Piano Transcriptions" (2–60 characters).',
+    hint: 'En los menús y las cuadrículas: "Transcripciones de piano" (2–60 caracteres).',
   }),
-  icon: line('Icon name', {
+  icon: line('Nombre del icono', {
     required: true,
-    hint: 'The instrument, in English: piano, guitar, violin…',
+    hint: 'El instrumento, en inglés: piano, guitar, violin…',
   }),
   group: select(
-    'Menu group',
+    'Grupo del menú',
     ['keys', 'vocal', 'strings', 'guitar', 'winds', 'drums', 'ensembles', 'jazz', 'editing'],
     { required: true },
   ),
-  priceFrom: number('Price from (per minute)', { min: 1, max: 1000 }),
-  order: number('Order in menus', {
+  priceFrom: number('Precio desde (por minuto)', { min: 1, max: 1000 }),
+  order: number('Orden en los menús', {
     min: 0,
     max: 1000,
-    hint: 'Lower comes first; 100 when empty.',
+    hint: 'El más bajo va primero; 100 si está vacío.',
   }),
 } satisfies CmsFields<Omit<z.input<typeof serviceSchema>, keyof z.input<typeof baseSchema>>>
 
 /** What a blog post adds to the meta fields (src/content/schema.ts `postSchema`): its card on the blog (PostList). */
 export const postFields = {
-  date: line('Publication date', {
+  date: line('Fecha de publicación', {
     required: true,
-    hint: 'Newest first on the blog.',
+    hint: 'En el blog, los más recientes primero.',
     decap: {
       widget: 'datetime',
       format: 'YYYY-MM-DD',
@@ -104,21 +106,21 @@ export const postFields = {
       time_format: false,
     },
   }),
-  excerpt: prose('Summary on the blog', {
+  excerpt: prose('Resumen en el blog', {
     required: true,
-    hint: 'A sentence or two on the post’s card (20–300 characters).',
-    decap: { widget: 'text', pattern: ['^[\\s\\S]{20,300}$', '20 to 300 characters'] },
+    hint: 'Una o dos frases en la tarjeta del artículo (20–300 caracteres).',
+    decap: { widget: 'text', pattern: ['^[\\s\\S]{20,300}$', 'de 20 a 300 caracteres'] },
   }),
   cover: group(
-    'Cover picture',
+    'Imagen de portada',
     {
-      src: pictureFile('Picture', { required: true }),
-      alt: line('Picture description (alt text)', { required: true }),
+      src: pictureFile('Imagen', { required: true }),
+      alt: line('Descripción de la imagen (texto alternativo)', { required: true }),
     },
-    { required: true, hint: 'On the post’s card and behind its title.' },
+    { required: true, hint: 'En la tarjeta del artículo y detrás de su título.' },
   ),
-  tags: listOf('Categories', line('Category'), {
-    hint: 'The first is the badge on the card: Notación musical, Programas y apps, Actualidad musical, Curiosidades…',
+  tags: listOf('Categorías', line('Categoría'), {
+    hint: 'La primera es la etiqueta de la tarjeta: Notación musical, Programas y apps, Actualidad musical, Curiosidades…',
   }),
-  author: line('Author', { hint: 'Empty: My Sheet Music Transcriptions.' }),
+  author: line('Autor', { hint: 'Vacío: My Sheet Music Transcriptions.' }),
 } satisfies CmsFields<Omit<z.input<typeof postSchema>, keyof z.input<typeof baseSchema>>>

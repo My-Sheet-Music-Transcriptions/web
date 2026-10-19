@@ -170,9 +170,9 @@ export const tableRows = <R extends boolean = false>(label: string, o?: Opts<R>)
     ...o,
     summary: '{{fields.cells}}',
     fields: {
-      cells: listOf('Cells', line('Cell'), {
+      cells: listOf('Celdas', line('Celda'), {
         required: true,
-        hint: 'One per column. A link cell is written [Label](/path).',
+        hint: 'Una por columna. Una celda con enlace se escribe [Texto](/ruta).',
       }),
     },
     decode: (rows: { cells?: string[] }[]) =>
@@ -198,13 +198,15 @@ export const faqGroups = <R extends boolean = false>(
     summary: '{{fields.shared}} {{fields.title}}',
     fields: {
       shared,
-      title: line('Heading', { hint: 'Of the page’s own questions, written below.' }),
-      id: line('Anchor id', { hint: 'For the jump buttons: lowercase, dashes.' }),
+      title: line('Encabezado', {
+        hint: 'De las preguntas propias de la página, escritas debajo.',
+      }),
+      id: line('Id de ancla', { hint: 'Para los botones de salto: minúsculas y guiones.' }),
       items: list(
-        'Questions',
+        'Preguntas',
         {
-          question: line('Question', { required: true }),
-          answer: prose('Answer', { required: true }),
+          question: line('Pregunta', { required: true }),
+          answer: prose('Respuesta', { required: true }),
         },
         { summary: '{{fields.question}}' },
       ),

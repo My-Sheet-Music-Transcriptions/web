@@ -83,7 +83,7 @@ class Unfinished extends Component<
           color: '#5f6b7a',
         }}
       >
-        {this.props.type}: not finished yet (a picture or a required field is missing).
+        {this.props.type}: aún sin terminar (falta una imagen o un campo obligatorio).
       </p>
     )
   }

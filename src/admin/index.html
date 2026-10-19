@@ -1,15 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Content manager · My Sheet Music Transcriptions</title>
+    <title>Gestor de contenidos · My Sheet Music Transcriptions</title>
     <!-- Absolute paths: Netlify also serves this page at /admin, without the slash, where a relative path would
          point at the site's root (and its redirect to /en/). -->
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
     <!-- Netlify Identity (email logins and invitations), self-hosted like everything else. -->
     <script src="/admin/netlify-identity-widget.js"></script>
+    <!-- The login window in Spanish, like the rest of the CMS (config.ts `locale`). -->
+    <script>
+      window.netlifyIdentity.setLocale('es')
+    </script>
   </head>
   <body>
     <!-- Decap CMS reads its config.yml (above); preview.js adds the real-component preview. -->

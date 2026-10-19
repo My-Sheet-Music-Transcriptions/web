@@ -11,7 +11,7 @@ What is ready today, to tell the person plainly before promising a translated pa
   it (or shared ones re-imported). The slug is the translated URL as the live site of that language uses it
   (check it there; keep it if the page exists, choose a short translated slug otherwise; slugs are unique per
   locale and never a locale code or a reserved word, `pnpm exec tsx scripts/check-slugs.ts`).
-- The **menu and footer** come from `content/<locale>/data/menu.json` (the CMS's `<Language> · Menu`) and `footer.ts` and the chrome's words from
+- The **menu and footer** come from `content/<locale>/data/menu.json` (the CMS's `<Idioma> · Menú`) and `footer.ts` and the chrome's words from
   `src/i18n/sites/<locale>.ts`; a language without those files yet shows the English ones. The page's own
   words around its blocks (`labels.ts`, `forms.ts`) and its lists (ratings, prices, reviews) are imported by
   the page from `content/<locale>/data/`, so a translation imports the target language's files, creating

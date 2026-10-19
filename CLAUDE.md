@@ -46,6 +46,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   `src/content/BlockPage.tsx`, the Vite plugin `scripts/lib/vite-data-pages.ts`), and people edit it in Decap CMS at
   `/admin` (`src/admin/`: `config.ts` becomes Decap's `config.yml` at build, `preview.tsx` renders the entry with the
   real blocks; built by `vite.admin.config.ts` into `dist/client/admin`; Netlify Identity logins, every save a PR).
+  The CMS speaks Spanish (Decap's `locale: 'es'`, the login window, the invitation emails): every label, hint and
+  message we write for it (`config.ts`, `cms.ts`, `cms-meta.ts`, `cms-fields.ts`, `widgets.ts`, `links.ts`) is Spanish too.
   Every block of the catalogue is offered, and what writers fill in on each is `src/components/blocks/cms.ts`, fields
   typed by the block's props (`src/content/cms-fields.ts`: a field that does not fit its prop does not compile);
   Decap's forms, the check of every `page.json` (build and unit tests) and its rendering are all made from it. A new
@@ -54,15 +56,15 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   pictures in `content/<locale>/data/brand.ts`) are data fields: the page stores the export's name and gets the export
   of its locale. Recordings (mp3) sit in the page folder like pictures. Every page opens with the same meta fields (`src/content/cms-meta.ts`, typed by the meta
   schema), after `language` and `collection` (the two parts of its folder, checked against it): the CMS's sidebar is
-  `Site` (each language's homepage and menu), `Pages` and `Services`, each listing every language's pages, filtered or
+  `Web` (each language's homepage and menu), `Páginas` and `Servicios`, each listing every language's pages, filtered or
   grouped by language (`src/admin/locales.ts`); our own widgets
   (translation-key suggestions, a new page's blocks started from another page of the collection, picture thumbnails, the page picker of links and texts) are `src/admin/widgets.ts`. Every
   link writers set (a button's `link()` field, a menu address, a `[link](…)` in a text) follows `src/content/links.ts`: a
   page of the language, `#id`, another site, `mailto:` or `tel:`; the CMS checks it as they type and the build refuses
   one that leads nowhere (`checkLinks`), and pages open with a client-side transition (`SmartLink`). The `cms` skill says how to change
   any of it and carries a Decap reference. A folder is one
-  kind or the other; the homepages (`Site` → `<Language> · Homepage` in the CMS), `careers`, `about-us`, the piano and guitar
-  service pages (`Services`, with the service fields of `serviceFields` in `cms-meta.ts`) and every Spanish
+  kind or the other; the homepages (`Web` → `<Idioma> · Portada` in the CMS), `careers`, `about-us`, the piano and guitar
+  service pages (`Servicios`, with the service fields of `serviceFields` in `cms-meta.ts`) and every Spanish
   page are data pages. A blog post (`posts/`, `Blog` in the CMS) has a fixed layout instead of blocks: its
   `page.json` holds the post's fields and one `body`, written in Decap's rich text editor (light markdown, with
   picture, YouTube and recording lines), and `src/content/post-template.ts` lays every post out the same way (cover
@@ -74,7 +76,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   several places (review counts, prices) live here once. Plain literals, read statically like `meta.ts`; they may
   import pictures from `~/assets/images` (icons, logos).
 - `content/<locale>/data/menu.json` – the locale's main menu (header and phone menu), edited in the CMS as
-  `Site` → `<Language> · Menu`: items, the sections of an item's panel and their links, each picking a page of the language
+  `Web` → `<Idioma> · Menú`: items, the sections of an item's panel and their links, each picking a page of the language
   (`page`, its path) or taking an address (`href`: a page not ported yet, another site); list order is menu order.
   Checked by `src/content/menu.ts` (zod) and by `checkSlugs` (every `page` exists; build and unit tests). A locale
   without one shows the English menu.

@@ -91,58 +91,58 @@ type UnionToIntersection<U> = (U extends unknown ? (u: U) => void : never) exten
   ? I
   : never
 
-const button = (label = 'Button', hint?: string) =>
+const button = (label = 'Botón', hint?: string) =>
   group(
     label,
     {
-      label: line('Label', { required: true }),
-      href: link('Link', {
+      label: line('Texto', { required: true }),
+      href: link('Enlace', {
         required: true,
-        hint: 'Pick a page of this language, or write #section-id, https://… or mailto:…',
+        hint: 'Elige una página de este idioma, o escribe #id-de-seccion, https://… o mailto:…',
       }),
     },
-    { hint: hint ?? 'Leave both empty for no button.' },
+    { hint: hint ?? 'Deja los dos vacíos para no poner botón.' },
   )
 const markdownHint =
-  'Blank line between paragraphs; lines starting with "- " make a list; **bold** and [links](/path).'
-const inlineHint = '**bold** and [links](/path) are kept.'
+  'Línea en blanco entre párrafos; las líneas que empiezan por "- " forman una lista; **negrita** y [enlaces](/ruta).'
+const inlineHint = 'Se conservan **negrita** y [enlaces](/ruta).'
 const articleHint =
-  'Blank line between paragraphs; "## " or "### " starts a subheading; lines starting with "- " or "1. " make a list; "> " a quotation; **bold**, *italics* and [links](/path).'
-const tone = select('Background', ['white', 'cream', 'peach'])
-const anchor = line('Anchor id', { hint: 'For links to #this-id (lowercase, dashes).' })
-const reveal = toggle('Rise in as the page scrolls to it', { default: true })
+  'Línea en blanco entre párrafos; "## " o "### " empieza un subtítulo; las líneas que empiezan por "- " o "1. " forman una lista; "> " una cita; **negrita**, *cursiva* y [enlaces](/ruta).'
+const tone = select('Fondo', ['white', 'cream', 'peach'])
+const anchor = line('Id de ancla', { hint: 'Para enlaces a #este-id (minúsculas y guiones).' })
+const reveal = toggle('Aparece al llegar a él con el scroll', { default: true })
 /** The shell's heading: what every block but the page header opens with. */
 const heading = {
-  title: line('Heading'),
-  eyebrow: line('Short line above the heading'),
-  lead: prose('Line under the heading', { hint: inlineHint }),
+  title: line('Encabezado'),
+  eyebrow: line('Línea corta sobre el encabezado'),
+  lead: prose('Línea bajo el encabezado', { hint: inlineHint }),
   id: anchor,
 }
-const video = group('Video', {
-  youtube: line('YouTube video id', {
+const video = group('Vídeo', {
+  youtube: line('Id del vídeo de YouTube', {
     required: true,
-    hint: 'The 11 characters after v= in the video’s address.',
+    hint: 'Los 11 caracteres que siguen a v= en la dirección del vídeo.',
   }),
-  title: line('What the video shows', { required: true }),
-  caption: line('Line under the video', { hint: '"Play to compare with the sheet music"' }),
+  title: line('Qué muestra el vídeo', { required: true }),
+  caption: line('Línea bajo el vídeo', { hint: '"Dale al play y compara con la partitura"' }),
 })
-const clip = group('Short video (mp4 of the page folder, plays on its own in a loop)', {
-  src: movie('Video file (mp4)', { required: true }),
-  title: line('What the video shows', { required: true }),
+const clip = group('Vídeo corto (mp4 de la carpeta de la página, se reproduce solo en bucle)', {
+  src: movie('Archivo de vídeo (mp4)', { required: true }),
+  title: line('Qué muestra el vídeo', { required: true }),
 })
-const recording = group('Recording', {
-  src: sound('Audio file (mp3)', { required: true }),
-  title: line('What the recording is', { required: true }),
-  caption: line('Line under the player'),
+const recording = group('Grabación', {
+  src: sound('Archivo de audio (mp3)', { required: true }),
+  title: line('Qué es la grabación', { required: true }),
+  caption: line('Línea bajo el reproductor'),
 })
 const slides = (label: string, widths: string, hint?: string) =>
   list(
     label,
     {
-      image: picture('Picture', { required: true, widths }),
+      image: picture('Imagen', { required: true, widths }),
       // Never missing: left empty, the block gets '' (a decorative photo), so it types as a required field.
-      alt: line('Description (alt text)', {
-        hint: 'Leave empty for a photo that only decorates.',
+      alt: line('Descripción (texto alternativo)', {
+        hint: 'Déjala vacía si la foto solo decora.',
         empty: '',
       }) as unknown as Field<string, true>,
     },
@@ -150,39 +150,39 @@ const slides = (label: string, widths: string, hint?: string) =>
   )
 /** The fields of one card or step: what FeatureItem shows. */
 const card = {
-  title: line('Title'),
+  title: line('Título'),
   // Never missing: left empty, the block gets '' (a card that is only a video or a picture).
-  body: prose('Text', { hint: markdownHint, empty: '' }) as unknown as Field<string, true>,
-  icon: picture('Icon', { hint: 'An illustrated icon (square or wide).' }),
-  image: picture('Picture', { hint: 'Instead of an icon.' }),
-  imageWidth: number('Picture width in px', { min: 40, max: 600 }),
+  body: prose('Texto', { hint: markdownHint, empty: '' }) as unknown as Field<string, true>,
+  icon: picture('Icono', { hint: 'Un icono ilustrado (cuadrado o ancho).' }),
+  image: picture('Imagen', { hint: 'En lugar de un icono.' }),
+  imageWidth: number('Ancho de la imagen en px', { min: 40, max: 600 }),
   video: video,
-  emphasis: line('Bold line under the text'),
-  href: link('Link', { hint: 'The title links there; with button words, a button does.' }),
-  linkLabel: line('Button words'),
+  emphasis: line('Línea en negrita bajo el texto'),
+  href: link('Enlace', { hint: 'El título enlaza ahí; con texto de botón, enlaza un botón.' }),
+  linkLabel: line('Texto del botón'),
 }
 const sampleFields = {
-  title: line('Title', {
+  title: line('Título', {
     required: true,
-    hint: 'What it is ("Piano cover transcription"); with a price, the level or instrument ("Easy").',
+    hint: 'Qué es ("Transcripción de piano cover"); con precio, el nivel o el instrumento ("Fácil").',
   }),
   video: video,
   audio: recording,
-  image: picture('First page of the score', { required: true }),
-  alt: line('Score description (alt text)', { required: true }),
-  icon: picture('Instrument icon', {
-    hint: 'Shown with the instrument’s name over the recording.',
+  image: picture('Primera página de la partitura', { required: true }),
+  alt: line('Descripción de la partitura (texto alternativo)', { required: true }),
+  icon: picture('Icono del instrumento', {
+    hint: 'Se muestra con el nombre del instrumento sobre la grabación.',
   }),
-  name: line('Instrument name'),
-  price: group('Price', {
-    fromLabel: line('Word before the price', { hint: '"from"' }),
-    from: line('Price', { required: true, hint: 'As written: "$22-24 USD".' }),
-    unit: line('Per', { required: true, hint: '"price per minute of music"' }),
-    note: line('Note under the price'),
+  name: line('Nombre del instrumento'),
+  price: group('Precio', {
+    fromLabel: line('Palabra antes del precio', { hint: '"desde"' }),
+    from: line('Precio', { required: true, hint: 'Tal como se escribe: "$22-24 USD".' }),
+    unit: line('Por', { required: true, hint: '"precio por minuto de música"' }),
+    note: line('Nota bajo el precio'),
   }),
-  tone: select('Price header colour', ['teal', 'blue', 'navy']),
-  href: link('Link', { hint: 'Its page, as a button under the score.' }),
-  linkLabel: line('Button words', { hint: '"Go to the piano page"' }),
+  tone: select('Color de la cabecera del precio', ['teal', 'blue', 'navy']),
+  href: link('Enlace', { hint: 'Su página, como botón bajo la partitura.' }),
+  linkLabel: line('Texto del botón', { hint: '"Ir a la página de piano"' }),
 }
 const samples = <R extends boolean = false>(label: string, required?: R) =>
   list(label, sampleFields, { required, summary: '{{fields.title}}' })
@@ -194,7 +194,7 @@ const cardLists = {
   conversionReasons: 'conversions',
 } as const
 const tiers = fromData(
-  'Prices',
+  'Precios',
   {
     pricingTiers: 'home',
     pianoPricing: 'services',
@@ -220,9 +220,12 @@ const tiers = fromData(
     composerPricing: 'services',
     generalPricing: 'services',
   },
-  { required: true, hint: 'One price makes a wide card; the homepage’s three make three cards.' },
+  {
+    required: true,
+    hint: 'Un precio forma una tarjeta ancha; los tres de la portada, tres tarjetas.',
+  },
 )
-const sharedFaq = fromData('Shared questions', {
+const sharedFaq = fromData('Preguntas compartidas', {
   generalFaq: 'faqs',
   servicesFaq: 'faqs',
   orderingFaq: 'faqs',
@@ -233,115 +236,119 @@ const sharedFaq = fromData('Shared questions', {
 export const cmsBlocks = {
   // --- headers
   PageHeader: {
-    label: 'Page header',
+    label: 'Cabecera de página',
     summary: '{{fields.title}}',
     words: 'mediaLabels',
     pictureWidths: '480;960',
     fields: {
-      variant: select('Style', ['band', 'split', 'photo', 'cover'], {
+      variant: select('Estilo', ['band', 'split', 'photo', 'cover'], {
         default: 'band',
-        hint: 'band: the title band. split: the words beside a picture, on white. photo: the homepage, photos behind. cover: white words over a darkened photo (the blog, a post).',
+        hint: 'band: la franja del título. split: el texto junto a una imagen, sobre blanco. photo: la portada, con fotos detrás. cover: texto blanco sobre una foto oscurecida (el blog, un artículo).',
       }),
-      title: line('Title (the page’s h1)', { required: true }),
-      highlight: line('Part of the title in orange (photo style)', {
-        hint: 'Exactly as in the title: #1',
+      title: line('Título (el h1 de la página)', { required: true }),
+      highlight: line('Parte del título en naranja (estilo photo)', {
+        hint: 'Exactamente como en el título: #1',
       }),
-      eyebrow: line('Short line above the title'),
-      lead: prose('Lead', { hint: inlineHint }),
-      subtitle: line('Line in bold under the lead'),
-      date: line('Date under the title (cover)', {
-        hint: 'A post’s date, as YYYY-MM-DD: 2026-09-23.',
-        decap: { pattern: ['^\\d{4}-\\d{2}-\\d{2}$', 'YYYY-MM-DD'] },
+      eyebrow: line('Línea corta sobre el título'),
+      lead: prose('Entradilla', { hint: inlineHint }),
+      subtitle: line('Línea en negrita bajo la entradilla'),
+      date: line('Fecha bajo el título (cover)', {
+        hint: 'La fecha de un artículo, como AAAA-MM-DD: 2026-09-23.',
+        decap: { pattern: ['^\\d{4}-\\d{2}-\\d{2}$', 'AAAA-MM-DD'] },
       }),
       cta: button(),
-      image: picture('Picture', {
-        hint: 'Beside the words (split), the service’s icon under the band, or the photo behind (cover).',
+      image: picture('Imagen', {
+        hint: 'Junto al texto (split), el icono del servicio bajo la franja, o la foto de fondo (cover).',
         widths: '480;960;1600',
       }),
-      alt: line('Picture description (alt text)'),
-      images: slides('Photos', '1000;1600;2000', 'Several rotate behind the title (photo style).'),
-      mobileImages: slides(
-        'Photos on phones',
-        '480;800',
-        'Above the title on phones; the photos when empty.',
+      alt: line('Descripción de la imagen (texto alternativo)'),
+      images: slides(
+        'Fotos',
+        '1000;1600;2000',
+        'Varias van rotando detrás del título (estilo photo).',
       ),
-      rating: fromData('Rating card', {
+      mobileImages: slides(
+        'Fotos en móviles',
+        '480;800',
+        'Sobre el título en móviles; si está vacío, las fotos.',
+      ),
+      rating: fromData('Tarjeta de valoración', {
         google: 'ratings',
         trustpilot: 'ratings',
         facebook: 'ratings',
       }),
-      logo: fromData('Logo above the title', { logo: 'brand' }),
+      logo: fromData('Logo sobre el título', { logo: 'brand' }),
       id: anchor,
     },
   },
   // --- text & media
   Section: {
-    label: 'Text section',
+    label: 'Sección de texto',
     summary: '{{fields.title}}',
     pictureWidths: '480;960',
     fields: {
       ...heading,
-      body: prose('Text', { hint: markdownHint }),
+      body: prose('Texto', { hint: markdownHint }),
       tone,
-      align: select('Alignment', ['start', 'center']),
-      width: select('Width', ['content', 'narrow', 'wide']),
-      rule: toggle('Orange rule under the heading', { default: true }),
+      align: select('Alineación', ['start', 'center']),
+      width: select('Ancho', ['content', 'narrow', 'wide']),
+      rule: toggle('Raya naranja bajo el encabezado', { default: true }),
       cta: button(),
-      links: listOf('Outline buttons', button('Button', ' ')),
+      links: listOf('Botones con borde', button('Botón', ' ')),
       reveal,
     },
   },
   MediaText: {
-    label: 'Text and pictures',
+    label: 'Texto e imágenes',
     summary: '{{fields.title}}',
     words: 'mediaLabels',
     pictureWidths: '560;1000',
     fields: {
       ...heading,
-      body: prose('Text', { hint: markdownHint }),
-      image: picture('Picture'),
-      alt: line('Picture description (alt text)'),
-      caption: line('Line under the picture'),
+      body: prose('Texto', { hint: markdownHint }),
+      image: picture('Imagen'),
+      alt: line('Descripción de la imagen (texto alternativo)'),
+      caption: line('Línea bajo la imagen'),
       images: list(
-        'Several pictures',
+        'Varias imágenes',
         {
-          image: picture('Picture', { required: true }),
-          alt: line('Description (alt text)', { required: true }),
-          caption: line('Line under the picture', { hint: 'In a pair: "Before", "After".' }),
+          image: picture('Imagen', { required: true }),
+          alt: line('Descripción (texto alternativo)', { required: true }),
+          caption: line('Línea bajo la imagen', { hint: 'En pareja: "Antes", "Después".' }),
         },
         { summary: '{{fields.alt}}' },
       ),
-      layout: select('Several pictures as', ['carousel', 'pair']),
-      zoom: toggle('The picture opens larger when clicked'),
+      layout: select('Varias imágenes como', ['carousel', 'pair']),
+      zoom: toggle('La imagen se amplía al hacer clic'),
       video: video,
       clip,
-      imageSide: select('Picture side', ['left', 'right']),
-      imageWidth: number('Picture width in px (desktop)', { min: 120, max: 1140 }),
-      align: select('Alignment', ['start', 'center']),
+      imageSide: select('Lado de la imagen', ['left', 'right']),
+      imageWidth: number('Ancho de la imagen en px (escritorio)', { min: 120, max: 1140 }),
+      align: select('Alineación', ['start', 'center']),
       tone,
       cta: button(),
       reveal,
     },
   },
   Article: {
-    label: 'Article',
+    label: 'Artículo',
     summary: '{{fields.title}} {{fields.label}}',
     words: 'mediaLabels',
     pictureWidths: '860;1720',
     fields: {
       ...heading,
-      label: line('What the text is (for screen readers, without a heading)'),
+      label: line('Qué es el texto (para lectores de pantalla, sin encabezado)'),
       items: list(
-        'Parts',
+        'Partes',
         {
-          body: prose('Text', { hint: articleHint }),
-          image: picture('Picture under the text'),
-          alt: line('Picture description (alt text)'),
-          caption: line('Line under the picture or video'),
-          imageWidth: number('Picture width in px', {
+          body: prose('Texto', { hint: articleHint }),
+          image: picture('Imagen bajo el texto'),
+          alt: line('Descripción de la imagen (texto alternativo)'),
+          caption: line('Línea bajo la imagen o el vídeo'),
+          imageWidth: number('Ancho de la imagen en px', {
             min: 40,
             max: 860,
-            hint: 'Only for a picture smaller than the column (an icon, a small diagram).',
+            hint: 'Solo para una imagen más pequeña que la columna (un icono, un diagrama pequeño).',
           }),
           video: video,
           clip,
@@ -350,11 +357,11 @@ export const cmsBlocks = {
         {
           required: true,
           summary: '{{fields.body}}',
-          hint: 'The text in order: each part is some text, then a picture or a video if it has one.',
+          hint: 'El texto en orden: cada parte es un texto y, si la tiene, una imagen o un vídeo.',
         },
       ),
-      width: select('Width', ['narrow', 'content'], {
-        hint: 'narrow: a reading column (default).',
+      width: select('Ancho', ['narrow', 'content'], {
+        hint: 'narrow: una columna de lectura (por defecto).',
       }),
       tone,
       cta: button(),
@@ -362,23 +369,26 @@ export const cmsBlocks = {
     },
   },
   Samples: {
-    label: 'Samples (recordings and scores)',
+    label: 'Muestras (grabaciones y partituras)',
     summary: '{{fields.title}}',
     words: 'mediaLabels',
     pictureWidths: '300;600',
     fields: {
       ...heading,
-      variant: select('Style', ['rows', 'columns'], {
-        hint: 'rows: the recording beside the score. columns: side by side (a pricing chart).',
+      variant: select('Estilo', ['rows', 'columns'], {
+        hint: 'rows: la grabación junto a la partitura. columns: una al lado de otra (una tabla de precios).',
       }),
-      items: samples('Samples'),
-      zoom: toggle('Scores open larger when clicked'),
+      items: samples('Muestras'),
+      zoom: toggle('Las partituras se amplían al hacer clic'),
       tabs: list(
-        'Sets of samples (one per currency)',
-        { label: line('Tab', { required: true, hint: '"USD"' }), items: samples('Samples', true) },
+        'Grupos de muestras (uno por moneda)',
+        {
+          label: line('Pestaña', { required: true, hint: '"USD"' }),
+          items: samples('Muestras', true),
+        },
         {
           summary: '{{fields.label}}',
-          hint: 'Instead of the samples above: the same samples priced per currency.',
+          hint: 'En lugar de las muestras de arriba: las mismas muestras con el precio en cada moneda.',
         },
       ),
       tone,
@@ -387,15 +397,15 @@ export const cmsBlocks = {
     },
   },
   Table: {
-    label: 'Table',
+    label: 'Tabla',
     summary: '{{fields.title}} {{fields.caption}}',
     pictureWidths: '480;960',
     fields: {
       ...heading,
-      body: prose('Text above the table'),
-      caption: line('Caption'),
-      columns: listOf('Column headings', line('Heading'), { required: true }),
-      rows: tableRows('Rows', { required: true }),
+      body: prose('Texto sobre la tabla'),
+      caption: line('Leyenda'),
+      columns: listOf('Encabezados de columna', line('Encabezado'), { required: true }),
+      rows: tableRows('Filas', { required: true }),
       tone,
       cta: button(),
       reveal,
@@ -403,74 +413,77 @@ export const cmsBlocks = {
   },
   // --- lists & grids
   CardGrid: {
-    label: 'Cards from a list',
+    label: 'Tarjetas de una lista',
     summary: '{{fields.title}}',
     words: 'mediaLabels',
     pictureWidths: '400;768',
     fields: {
       ...heading,
-      items: fromData('Cards', cardLists),
+      items: fromData('Tarjetas', cardLists),
       tabs: list(
-        'Sets of cards (one per currency)',
+        'Grupos de tarjetas (uno por moneda)',
         {
-          label: line('Tab', { required: true, hint: '"$"' }),
-          items: fromData('Cards', cardLists, { required: true }),
+          label: line('Pestaña', { required: true, hint: '"$"' }),
+          items: fromData('Tarjetas', cardLists, { required: true }),
         },
-        { summary: '{{fields.label}}', hint: 'Instead of the cards above: one list per set.' },
+        {
+          summary: '{{fields.label}}',
+          hint: 'En lugar de las tarjetas de arriba: una lista por grupo.',
+        },
       ),
-      variant: select('Style', ['card', 'tile', 'plain'], {
-        hint: 'card: white cards. tile: peach tiles. plain: no surface.',
+      variant: select('Estilo', ['card', 'tile', 'plain'], {
+        hint: 'card: tarjetas blancas. tile: baldosas melocotón. plain: sin fondo.',
       }),
-      columns: number<2 | 3 | 4 | 5>('Cards per row (2–5)', { min: 2, max: 5 }),
-      image: fromData('Photo behind the cards', { studioBand: 'brand' }),
+      columns: number<2 | 3 | 4 | 5>('Tarjetas por fila (2–5)', { min: 2, max: 5 }),
+      image: fromData('Foto detrás de las tarjetas', { studioBand: 'brand' }),
       tone,
       cta: button(),
       reveal,
     },
   },
   Cards: preset('CardGrid', {
-    label: 'Cards',
+    label: 'Tarjetas',
     summary: '{{fields.title}}',
     words: 'mediaLabels',
     pictureWidths: '400;768',
     fields: {
       ...heading,
-      items: list('Cards', card, { required: true, summary: '{{fields.title}}' }),
-      variant: select('Style', ['card', 'tile', 'plain'], {
-        hint: 'card: white cards. tile: peach tiles. plain: no surface.',
+      items: list('Tarjetas', card, { required: true, summary: '{{fields.title}}' }),
+      variant: select('Estilo', ['card', 'tile', 'plain'], {
+        hint: 'card: tarjetas blancas. tile: baldosas melocotón. plain: sin fondo.',
       }),
-      columns: number<2 | 3 | 4 | 5>('Cards per row (2–5)', { min: 2, max: 5 }),
-      image: fromData('Photo behind the cards', { studioBand: 'brand' }),
+      columns: number<2 | 3 | 4 | 5>('Tarjetas por fila (2–5)', { min: 2, max: 5 }),
+      image: fromData('Foto detrás de las tarjetas', { studioBand: 'brand' }),
       tone,
       cta: button(),
       reveal,
     },
   }),
   PictureGrid: {
-    label: 'Picture grid',
+    label: 'Cuadrícula de imágenes',
     summary: '{{fields.title}} {{fields.label}}',
     words: 'mediaLabels',
     pictureWidths: '180;360',
     fields: {
       ...heading,
-      label: line('What the pictures are (for screen readers, without a heading)'),
-      shape: select('Shape', ['icon', 'logo', 'portrait', 'photo'], { default: 'photo' }),
-      variant: select('Style', ['grid', 'marquee'], {
-        hint: 'marquee: a strip that scrolls by on its own.',
+      label: line('Qué son las imágenes (para lectores de pantalla, sin encabezado)'),
+      shape: select('Forma', ['icon', 'logo', 'portrait', 'photo'], { default: 'photo' }),
+      variant: select('Estilo', ['grid', 'marquee'], {
+        hint: 'marquee: una franja que se desplaza sola.',
       }),
-      columns: number<2 | 3 | 4 | 5 | 6>('Pictures per row (2–6)', { min: 2, max: 6 }),
-      limit: number('Show only the first', { min: 1, max: 60 }),
-      zoom: toggle('Pictures without a link open larger when clicked (a gallery)'),
+      columns: number<2 | 3 | 4 | 5 | 6>('Imágenes por fila (2–6)', { min: 2, max: 6 }),
+      limit: number('Mostrar solo los primeros', { min: 1, max: 60 }),
+      zoom: toggle('Las imágenes sin enlace se amplían al hacer clic (una galería)'),
       items: list(
-        'Pictures',
+        'Imágenes',
         {
-          image: picture('Picture', { required: true }),
-          alt: line('Description (alt text)', {
-            hint: 'Leave empty when the name under the picture says who or what it is.',
+          image: picture('Imagen', { required: true }),
+          alt: line('Descripción (texto alternativo)', {
+            hint: 'Déjala vacía si el nombre bajo la imagen ya dice quién o qué es.',
           }),
-          name: line('Name under the picture'),
-          caption: line('Second line under the name'),
-          href: link('Link'),
+          name: line('Nombre bajo la imagen'),
+          caption: line('Segunda línea bajo el nombre'),
+          href: link('Enlace'),
         },
         { required: true, summary: '{{fields.name}} {{fields.alt}}' },
       ),
@@ -480,49 +493,49 @@ export const cmsBlocks = {
     },
   },
   ServiceGrid: preset('PictureGrid', {
-    label: 'Services grid',
+    label: 'Cuadrícula de servicios',
     summary: '{{fields.title}}',
     pictureWidths: '180;360',
     fields: {
       ...heading,
-      items: fromData('Services', { allServices: 'services' }, { required: true }),
-      limit: number('Show only the first', { min: 1, max: 60 }),
+      items: fromData('Servicios', { allServices: 'services' }, { required: true }),
+      limit: number('Mostrar solo los primeros', { min: 1, max: 60 }),
       cta: button(),
       reveal,
     },
   }),
   PictureStrip: preset('PictureGrid', {
-    label: 'Moving picture strip',
+    label: 'Franja de imágenes en movimiento',
     summary: '{{fields.label}}',
     pictureWidths: '250;500',
     props: { variant: 'marquee', shape: 'photo' },
     fields: {
-      label: line('What the pictures are (for screen readers)', { required: true }),
+      label: line('Qué son las imágenes (para lectores de pantalla)', { required: true }),
       items: list(
-        'Pictures',
+        'Imágenes',
         {
-          image: picture('Picture', { required: true }),
-          alt: line('Description (alt text)', { required: true }),
+          image: picture('Imagen', { required: true }),
+          alt: line('Descripción (texto alternativo)', { required: true }),
         },
         { required: true, summary: '{{fields.alt}}' },
       ),
     },
   }),
   Steps: {
-    label: 'Steps',
+    label: 'Pasos',
     summary: '{{fields.title}}',
     words: 'mediaLabels',
     pictureWidths: '240;480;1080',
     fields: {
       ...heading,
-      variant: select('Style', ['timeline', 'bubbles', 'columns'], {
-        hint: 'timeline: a numbered list. bubbles: icons on a line, each step in a bubble. columns: side by side.',
+      variant: select('Estilo', ['timeline', 'bubbles', 'columns'], {
+        hint: 'timeline: una lista numerada. bubbles: iconos sobre una línea, cada paso en una burbuja. columns: uno al lado de otro.',
       }),
       items: list(
-        'Steps',
+        'Pasos',
         {
           ...card,
-          glyph: select('Glyph in the disc (timeline)', [
+          glyph: select('Símbolo del círculo (timeline)', [
             'dollar',
             'pen',
             'music',
@@ -536,27 +549,27 @@ export const cmsBlocks = {
         },
         { required: true, summary: '{{fields.title}}' },
       ),
-      stepLabel: line('Label above an untitled step', { hint: '"Step {n}"' }),
-      illustration: picture('One wide picture instead (columns, desktop)', {
+      stepLabel: line('Etiqueta sobre un paso sin título', { hint: '"Paso {n}"' }),
+      illustration: picture('Una imagen ancha en su lugar (columns, escritorio)', {
         widths: '700;974;1460',
       }),
-      illustrationAlt: line('Its description (alt text)'),
+      illustrationAlt: line('Su descripción (texto alternativo)'),
       tone,
       cta: button(),
       reveal,
     },
   },
   Stats: {
-    label: 'Figures',
+    label: 'Cifras',
     summary: '{{fields.title}}',
     pictureWidths: '480;960',
     fields: {
       ...heading,
       items: list(
-        'Figures',
+        'Cifras',
         {
-          value: line('Figure', { required: true, hint: 'As written: "25%", "$4,000M".' }),
-          label: line('What it measures', { required: true }),
+          value: line('Cifra', { required: true, hint: 'Tal como se escribe: "25%", "$4,000M".' }),
+          label: line('Qué mide', { required: true }),
         },
         { required: true, summary: '{{fields.value}} {{fields.label}}' },
       ),
@@ -566,48 +579,48 @@ export const cmsBlocks = {
     },
   },
   PostList: {
-    label: 'Blog posts',
+    label: 'Artículos del blog',
     summary: '{{fields.title}}',
     pictureWidths: '400;800',
     feed: 'posts',
     fields: {
       ...heading,
-      limit: number('Show only the latest', {
+      limit: number('Mostrar solo los últimos', {
         min: 1,
         max: 60,
-        hint: 'Empty: every post (the blog). Under a post: 3.',
+        hint: 'Vacío: todos los artículos (el blog). Bajo un artículo: 3.',
       }),
-      columns: number<2 | 3>('Cards per row (2–3)', { min: 2, max: 3 }),
-      linkLabel: line('Link words on each card', { hint: '"Read more"' }),
+      columns: number<2 | 3>('Tarjetas por fila (2–3)', { min: 2, max: 3 }),
+      linkLabel: line('Texto del enlace de cada tarjeta', { hint: '"Leer más"' }),
       tone,
       cta: button(),
       reveal,
     },
   },
   PricingCards: {
-    label: 'Prices',
+    label: 'Precios',
     summary: '{{fields.title}}',
     pictureWidths: '480;960',
     fields: {
-      title: line('Heading', { required: true }),
-      eyebrow: line('Short line above the heading'),
-      lead: prose('Line under the heading', { hint: inlineHint }),
+      title: line('Encabezado', { required: true }),
+      eyebrow: line('Línea corta sobre el encabezado'),
+      lead: prose('Línea bajo el encabezado', { hint: inlineHint }),
       id: anchor,
       tiers,
-      body: prose('Text above the prices', { hint: markdownHint }),
+      body: prose('Texto sobre los precios', { hint: markdownHint }),
       cta: button(),
       reveal,
     },
   },
   FaqList: {
-    label: 'Questions and answers',
+    label: 'Preguntas y respuestas',
     summary: '{{fields.title}}',
     pictureWidths: '480;960',
     fields: {
       ...heading,
-      groups: faqGroups('Question groups', sharedFaq, { required: true }),
-      jumpLinks: toggle('Buttons that jump to each group', {
-        hint: 'Each group needs a heading and an anchor id.',
+      groups: faqGroups('Grupos de preguntas', sharedFaq, { required: true }),
+      jumpLinks: toggle('Botones que saltan a cada grupo', {
+        hint: 'Cada grupo necesita un encabezado y un id de ancla.',
       }),
       tone,
       cta: button(),
@@ -616,36 +629,36 @@ export const cmsBlocks = {
   },
   // --- reviews & ratings
   RatingBanner: {
-    label: 'Ratings over a photo',
+    label: 'Valoraciones sobre una foto',
     summary: '{{fields.title}}',
     pictureWidths: '900;1282',
     fields: {
-      title: line('Heading', { required: true }),
-      eyebrow: line('Short line above the heading'),
-      lead: prose('Line under the heading', { hint: inlineHint }),
+      title: line('Encabezado', { required: true }),
+      eyebrow: line('Línea corta sobre el encabezado'),
+      lead: prose('Línea bajo el encabezado', { hint: inlineHint }),
       id: anchor,
-      counter: fromData('Big number', { counter: 'ratings' }),
+      counter: fromData('Número grande', { counter: 'ratings' }),
       sources: fromData(
-        'Rating cards',
+        'Tarjetas de valoración',
         { homeRatings: 'ratings', platforms: 'ratings' },
         { required: true },
       ),
-      image: fromData('Photo behind', { pianoBand: 'brand' }, { required: true }),
+      image: fromData('Foto de fondo', { pianoBand: 'brand' }, { required: true }),
       reveal,
     },
   },
   Testimonials: {
-    label: 'Customer reviews',
+    label: 'Opiniones de clientes',
     summary: '{{fields.title}}',
     words: 'reviewLabels',
     pictureWidths: '480;960',
     fields: {
-      title: line('Heading', { required: true }),
-      eyebrow: line('Short line above the heading'),
-      lead: prose('Line under the heading', { hint: inlineHint }),
+      title: line('Encabezado', { required: true }),
+      eyebrow: line('Línea corta sobre el encabezado'),
+      lead: prose('Línea bajo el encabezado', { hint: inlineHint }),
       id: anchor,
       items: fromData(
-        'Reviews',
+        'Opiniones',
         { homeReviews: 'reviews', educatorReviews: 'reviews', allReviews: 'reviews' },
         { required: true },
       ),
@@ -655,7 +668,7 @@ export const cmsBlocks = {
   },
   // --- calls to action
   ShareLinks: {
-    label: 'Share buttons',
+    label: 'Botones para compartir',
     summary: '{{fields.title}}',
     words: 'shareLabels',
     pictureWidths: '480;960',
@@ -666,23 +679,25 @@ export const cmsBlocks = {
     },
   },
   ContactSection: {
-    label: 'Request form',
+    label: 'Formulario de solicitud',
     summary: '{{fields.title}}',
     pictureWidths: '480;960',
     fields: {
       form: fromData(
-        'Form',
+        'Formulario',
         { quoteForm: 'forms', giftCardForm: 'forms', reservationForm: 'forms' },
         { required: true },
       ),
-      variant: select('Kind', ['quote', 'gift-card', 'reservation'], {
-        hint: 'gift-card with the gift card form; reservation (the email alone) with the reservation form.',
+      variant: select('Tipo', ['quote', 'gift-card', 'reservation'], {
+        hint: 'gift-card con el formulario de tarjeta regalo; reservation (solo el email) con el formulario de reserva.',
       }),
-      eyebrow: line('Short line above the heading'),
-      title: line('Heading', { hint: 'Instead of the form’s own.' }),
-      lead: line('Line under the heading', { hint: 'Instead of the form’s own.' }),
+      eyebrow: line('Línea corta sobre el encabezado'),
+      title: line('Encabezado', { hint: 'En lugar del propio del formulario.' }),
+      lead: line('Línea bajo el encabezado', { hint: 'En lugar del propio del formulario.' }),
       id: anchor,
-      returnTo: line('This page’s path, for browsers without JavaScript', { hint: '/gift-card' }),
+      returnTo: line('La ruta de esta página, para navegadores sin JavaScript', {
+        hint: '/gift-card',
+      }),
       reveal,
     },
   },
