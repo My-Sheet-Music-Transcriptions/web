@@ -295,13 +295,9 @@ export const cmsBlocks = {
       frame: select('Carousel frame (split)', ['wide', 'square'], {
         hint: 'wide: 3:2, cropped (the default). square: each picture whole (a product’s gallery).',
       }),
-      mobileImages: slides(
-        'Photos on phones',
-        '480;800',
-        'Above the title on phones; the photos when empty.',
-      ),
-      phone: select('On phones (photo)', ['photos', 'backdrop'], {
-        hint: 'photos: the photos above the words (the default). backdrop: the first phone photo faded behind the words, with the logo and the buttons.',
+      mobileImage: picture('Photo on phones (photo)', {
+        hint: 'Faded behind the logo, the title and the buttons on phones; the first photo when empty.',
+        widths: '480;800;1200',
       }),
       rating: fromData('Rating card', {
         google: 'ratings',

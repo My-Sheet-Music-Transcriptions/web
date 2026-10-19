@@ -43,12 +43,9 @@ export interface PageHeaderProps {
   /** The carousel's frame (split): `wide`, 3:2 and cropped (default), or `square`, each picture whole (a shop
    * product's gallery). */
   frame?: 'wide' | 'square'
-  /** The photos above the copy on phones (photo); `images` when left out. */
-  mobileImages?: Slide[]
-  /** How the photo header looks on phones: `photos` above the copy (default), or `backdrop`: the first of the
-   * `mobileImages` faded behind the copy, with the lockup and the buttons (the Catalan homepage). */
-  phone?: 'photos' | 'backdrop'
-  /** A part of the title set in orange from desktop up (photo): "#1". */
+  /** The photo faded behind the copy on phones (photo); the first of `images` when left out. */
+  mobileImage?: PictureSource
+  /** A part of the title set in orange (photo): "#1". */
   highlight?: string
   /** The brand lockup above the title (photo), or in its place (band, cover: the h1 is then for screen readers only): `~/assets/images/brand/logo.svg` with its words. */
   logo?: BrandLogo
@@ -297,21 +294,20 @@ function PhotoHeader({
   links,
   ctaVariant = 'primary',
   images = [],
-  mobileImages,
-  phone = 'photos',
+  mobileImage,
   rating,
   logo,
   id,
 }: PageHeaderProps) {
-  const backdrop = phone === 'backdrop' ? (mobileImages?.[0] ?? images[0])?.image : undefined
+  const backdrop = mobileImage ?? images[0]?.image
   const [before, after] =
     highlight && title.includes(highlight) ? title.split(highlight) : [title, null]
   const photos = images.map((s) => s.image)
   return (
     <header id={id} className="relative">
-      {backdrop ? (
-        /* Phones: one photo faded behind the copy, a wave under it */
-        <div className="absolute inset-0 overflow-hidden md:hidden">
+      {/* Phones: one photo faded behind the lockup, the copy and the buttons, a wave under it */}
+      <div className="absolute inset-0 overflow-hidden md:hidden">
+        {backdrop ? (
           <Picture
             image={backdrop}
             alt=""
@@ -320,14 +316,9 @@ function PhotoHeader({
             className="h-full w-full object-cover opacity-10"
             pictureClassName="absolute inset-0"
           />
-          <WaveDivider position="bottom" height={25} />
-        </div>
-      ) : (
-        /* Phones: the photos above the copy */
-        <div className="relative aspect-[390/261] overflow-hidden md:hidden">
-          <Slideshow slides={mobileImages?.map((s) => s.image) ?? photos} sizes="100vw" />
-        </div>
-      )}
+        ) : null}
+        <WaveDivider position="bottom" height={25} />
+      </div>
       {/* From tablets up: the photos fill the whole header, cut by the curve that leaves the copy on white. The
           curve stays put and the photos lag behind it as the page scrolls.
           The header's height, padding, copy width, type and logo all scale with the viewport between 768 and
@@ -345,9 +336,7 @@ function PhotoHeader({
         <div
           className={cn(
             'mx-auto flex max-w-[1440px] flex-col px-[14px] md:min-h-[clamp(520px,53.2vw,765px)] md:justify-center md:px-[clamp(24px,6.05vw,86px)] md:py-10',
-            backdrop
-              ? 'min-h-[100svh] justify-center px-5 pt-[120px] pb-[140px]'
-              : 'pt-[132px] pb-[77px]',
+            'min-h-[100svh] justify-center px-5 pt-[120px] pb-[140px] md:pt-10 md:pb-10',
           )}
         >
           <div className="max-w-[459px] md:max-w-[clamp(300px,32vw,459px)]">
@@ -355,22 +344,12 @@ function PhotoHeader({
               <Logo
                 logo={logo}
                 width={340}
-                className={cn(
-                  'md:inline-flex md:w-[clamp(220px,23.7vw,340px)] [&>img]:h-auto [&>img]:w-full',
-                  backdrop ? 'inline-flex w-full max-w-[340px]' : 'hidden',
-                )}
+                className="inline-flex w-full max-w-[340px] md:w-[clamp(220px,23.7vw,340px)] [&>img]:h-auto [&>img]:w-full"
               />
             ) : null}
-            <h1
-              className={cn(
-                'text-[28px] font-bold leading-[1.4] text-ink md:mt-5 md:text-[clamp(28px,2.8vw,40px)] md:leading-[1.15]',
-                backdrop && 'mt-8',
-              )}
-            >
+            <h1 className="mt-8 text-[28px] font-bold leading-[1.4] text-ink md:mt-5 md:text-[clamp(28px,2.8vw,40px)] md:leading-[1.15]">
               {before}
-              {after !== null && (
-                <span className={backdrop ? 'text-orange' : 'md:text-orange'}>{highlight}</span>
-              )}
+              {after !== null && <span className="text-orange">{highlight}</span>}
               {after}
             </h1>
             {lead ? (
@@ -388,10 +367,7 @@ function PhotoHeader({
                 cta={cta}
                 links={links}
                 variant={ctaVariant}
-                className={cn(
-                  'mt-[34px] md:flex',
-                  backdrop ? 'flex-col items-start md:flex-row md:items-center' : 'hidden',
-                )}
+                className="mt-[34px] flex-col items-start md:flex-row md:items-center"
               />
             ) : null}
           </div>
