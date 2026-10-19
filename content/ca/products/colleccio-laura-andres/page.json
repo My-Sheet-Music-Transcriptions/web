@@ -1,0 +1,52 @@
+{
+  "language": "ca",
+  "collection": "products",
+  "title": "Col·lecció Laura Andrés - La Meva Partitura Edicions",
+  "description": "Pack dels 4 llibres de partitures de Laura Andrés transcrits per La Meva Partitura Edicions",
+  "translationKey": "colleccio-laura-andres",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "split",
+      "title": "Col·lecció Laura Andrés",
+      "subtitle": "80,00 €",
+      "lead": "Pack dels 4 llibres de partitures de Laura Andrés transcrits per La Meva Partitura Edicions",
+      "cta": {
+        "label": "Compra",
+        "href": "https://laurandres.com/products/pack-de-libros-de-partituras"
+      },
+      "images": [
+        {
+          "image": "book-8.jpg",
+          "alt": "Un llibre de partitures de Laura Andrés obert"
+        },
+        {
+          "image": "book-5.jpg",
+          "alt": "Un llibre de partitures de Laura Andrés obert sobre un piano"
+        },
+        {
+          "image": "book-4.jpg",
+          "alt": "El llibre de partitures #blanc de Laura Andrés al faristol d'un teclat"
+        },
+        {
+          "image": "book-6.jpg",
+          "alt": "Un llibre de partitures de Laura Andrés obert al faristol d'un piano"
+        },
+        {
+          "image": "book-7.jpg",
+          "alt": "Un llibre de partitures de Laura Andrés sobre un piano"
+        }
+      ]
+    },
+    {
+      "type": "Article",
+      "reveal": true,
+      "title": "Descripció",
+      "items": [
+        {
+          "body": "- Llibre de partitures #blanc\n- Llibre de partitures Kintsugi\n- Llibre de partitures Venus\n- Llibre de partitures ZERO\n\nEs pot efectuar la compra al [comerç online de Laura Andrés](https://laurandres.com/products/pack-de-libros-de-partituras).\n\n### Informació addicional\n\n**Pes:** 1 kg"
+        }
+      ]
+    }
+  ]
+}

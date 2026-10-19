@@ -85,7 +85,8 @@ export interface Review {
   /** YYYY-MM */
   date?: string
   rating: number
-  source: 'google' | 'trustpilot' | 'facebook' | 'email'
+  /** Where it was left: a review site, an email, or the shop's own product page (`shop`). */
+  source: 'google' | 'trustpilot' | 'facebook' | 'email' | 'shop'
   sourceUrl?: string
   quote: string
 }

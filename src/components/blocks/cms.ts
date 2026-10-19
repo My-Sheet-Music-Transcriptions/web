@@ -676,7 +676,12 @@ export const cmsBlocks = {
       id: anchor,
       items: fromData(
         'Reviews',
-        { homeReviews: 'reviews', educatorReviews: 'reviews', allReviews: 'reviews' },
+        {
+          homeReviews: 'reviews',
+          educatorReviews: 'reviews',
+          allReviews: 'reviews',
+          songbookReviews: 'reviews',
+        },
         { required: true },
       ),
       cta: button(),
