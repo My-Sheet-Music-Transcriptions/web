@@ -10,17 +10,17 @@ end with a slash and the new site 301s the slashed form (plan W1.3).
 
 | Path | Collection | translationKey | Notes | PR |
 |---|---|---|---|---|
-| [`/`](https://lamevapartitura.cat/) | pages | `home` |  | #PR |
-| [`/gracies`](https://lamevapartitura.cat/gracies/) | pages | `thank-you` | noindex (thank-you page after the form) | #PR |
-| [`/contacte`](https://lamevapartitura.cat/contacte/) | pages | `contact` |  | #PR |
-| [`/sobre-nosaltres`](https://lamevapartitura.cat/sobre-nosaltres/) | pages | `about-us` |  | #PR |
-| [`/shop`](https://lamevapartitura.cat/shop/) | pages | `shop` |  | #PR |
-| [`/edicions`](https://lamevapartitura.cat/edicions/) | pages | `editions` |  | #PR |
-| [`/my-musicbook`](https://lamevapartitura.cat/my-musicbook/) | pages | `my-musicbook` |  | #PR |
-| [`/product/grans-exits-del-pop-espanyol`](https://lamevapartitura.cat/product/grans-exits-del-pop-espanyol/) | products | `grandes-exitos-pop-espanol-sony` |  | #PR |
-| [`/product/canconer-de-nadal-2026`](https://lamevapartitura.cat/product/canconer-de-nadal-2026/) | products | `canconer-de-nadal-2026` |  | #PR |
-| [`/product/colleccio-laura-andres`](https://lamevapartitura.cat/product/colleccio-laura-andres/) | products | `colleccio-laura-andres` |  | #PR |
-| [`/product/la-oreja-de-van-gogh-songbook-1996-2026`](https://lamevapartitura.cat/product/la-oreja-de-van-gogh-songbook-1996-2026/) | products | `la-oreja-de-van-gogh-songbook` |  | #PR |
+| [`/`](https://lamevapartitura.cat/) | pages | `home` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/gracies`](https://lamevapartitura.cat/gracies/) | pages | `thank-you` | noindex (thank-you page after the form) | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/contacte`](https://lamevapartitura.cat/contacte/) | pages | `contact` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/sobre-nosaltres`](https://lamevapartitura.cat/sobre-nosaltres/) | pages | `about-us` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/shop`](https://lamevapartitura.cat/shop/) | pages | `shop` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/edicions`](https://lamevapartitura.cat/edicions/) | pages | `editions` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/my-musicbook`](https://lamevapartitura.cat/my-musicbook/) | pages | `my-musicbook` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/product/grans-exits-del-pop-espanyol`](https://lamevapartitura.cat/product/grans-exits-del-pop-espanyol/) | products | `grandes-exitos-pop-espanol-sony` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/product/canconer-de-nadal-2026`](https://lamevapartitura.cat/product/canconer-de-nadal-2026/) | products | `canconer-de-nadal-2026` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/product/colleccio-laura-andres`](https://lamevapartitura.cat/product/colleccio-laura-andres/) | products | `colleccio-laura-andres` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/product/la-oreja-de-van-gogh-songbook-1996-2026`](https://lamevapartitura.cat/product/la-oreja-de-van-gogh-songbook-1996-2026/) | products | `la-oreja-de-van-gogh-songbook` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
 
 The shop takes no payments on the static site: each product's "Compra" opens an order form (`orderForm`) that the
 team answers by email; the Laura Andrés collection keeps its link to laurandres.com as on live.
