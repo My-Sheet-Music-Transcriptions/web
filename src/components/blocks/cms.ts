@@ -178,6 +178,14 @@ const card = {
   ),
   video: video,
   emphasis: line('Bold line under the text'),
+  more: group(
+    'Words that unfold under the text',
+    {
+      label: line('What is clicked', { required: true, hint: '"Avantatges"' }),
+      body: prose('The words that unfold', { required: true, hint: markdownHint }),
+    },
+    { hint: 'Leave both empty for none.' },
+  ),
   href: link('Link', { hint: 'The title links there; with button words, a button does.' }),
   linkLabel: line('Button words'),
 }
@@ -294,9 +302,10 @@ export const cmsBlocks = {
         trustpilot: 'ratings',
         facebook: 'ratings',
       }),
-      logo: fromData('Logo above the title (photo), or over the photo (cover)', {
+      logo: fromData('Logo above the title (photo), or in its place (band, cover)', {
         logo: 'brand',
         edicionsLogo: 'brand',
+        musicBookLogo: 'brand',
       }),
       id: anchor,
     },

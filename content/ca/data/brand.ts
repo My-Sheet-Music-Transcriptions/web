@@ -3,6 +3,7 @@ import sheetMusicBandPicture from '~/assets/images/bands/sheet-music-bg.jpg?w=90
 import pianoBandPicture from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
 import logoFile from '~/assets/images/brand/lockup-ca.png?format=png&as=url'
 import edicionsLogoFile from '~/assets/images/brand/lockup-ca-edicions.png?format=png&as=url'
+import musicBookLogoFile from '~/assets/images/brand/my-music-book.png?format=png&as=url'
 import videoPosterPicture from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import type { BrandLogo } from '~/content/types'
 
@@ -31,5 +32,12 @@ export const logo: BrandLogo = {
 export const edicionsLogo: BrandLogo = {
   image: edicionsLogoFile,
   alt: 'La Meva Partitura Edicions',
+  label: 'La Meva Partitura – inici',
+}
+
+/** The My Music Book wordmark, with its handwritten line, at the top of /my-musicbook. */
+export const musicBookLogo: BrandLogo = {
+  image: musicBookLogoFile,
+  alt: 'My Music Book: tan personal com les teves cançons',
   label: 'La Meva Partitura – inici',
 }

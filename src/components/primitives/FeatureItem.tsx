@@ -41,8 +41,9 @@ const glyphDisc: Partial<Record<string, string>> = {
 
 /**
  * One item of a grid or a process: its media (an illustrated icon, a picture, a video or a glyph in a disc), a title, a short
- * text in light markdown, a bold line and a link. CardGrid and Steps show their items with it, on one of
- * four surfaces (a card, a tile, plain, a speech bubble); nothing else draws a feature card.
+ * text in light markdown, a bold line, more words that unfold when clicked (native `<details>`) and a link. CardGrid
+ * and Steps show their items with it, on one of five surfaces (a card, a tile, plain, a speech bubble, the words over
+ * the picture); nothing else draws a feature card.
  */
 export function FeatureItem({
   item,
@@ -138,6 +139,19 @@ export function FeatureItem({
         {lightMarkdown(item.body)}
       </div>
       {item.emphasis ? <p className="mt-1 font-bold text-ink">{item.emphasis}</p> : null}
+      {item.more ? (
+        <details className="group unfold mt-5 w-full text-left">
+          <summary className="flex cursor-pointer list-none items-center gap-2 text-small font-medium text-ink [&::-webkit-details-marker]:hidden">
+            <Icon
+              name="plus"
+              size={14}
+              className="shrink-0 transition-transform group-open:rotate-45"
+            />
+            {item.more.label}
+          </summary>
+          <div className="flex flex-col gap-3 pt-4 text-ink">{lightMarkdown(item.more.body)}</div>
+        </details>
+      ) : null}
       {item.href && item.linkLabel ? (
         <div className={overlay ? 'pt-6' : 'mt-auto pt-6'}>
           <CtaLink

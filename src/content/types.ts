@@ -195,6 +195,8 @@ export interface CardItem {
   glyph?: IconName
   /** A video instead of a picture. */
   video?: Video
+  /** More words that unfold under the body when their title is clicked ("Avantatges" and its list). */
+  more?: { label: string; body: string }
   /** A line in bold under the body. */
   emphasis?: string
   /** Where the card leads: the title links there, and `linkLabel` adds a button. */

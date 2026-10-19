@@ -44,7 +44,7 @@ export interface PageHeaderProps {
   mobileImages?: Slide[]
   /** A part of the title set in orange from desktop up (photo): "#1". */
   highlight?: string
-  /** The brand lockup above the title (photo), or in its place over the photo (cover; the h1 is then for screen readers only): `~/assets/images/brand/logo.svg` with its words. */
+  /** The brand lockup above the title (photo), or in its place (band, cover: the h1 is then for screen readers only): `~/assets/images/brand/logo.svg` with its words. */
   logo?: BrandLogo
   /** The words of the carousel arrows: `media` from content/<locale>/data/labels (with `images`). */
   labels?: MediaLabels
@@ -82,6 +82,7 @@ function BandHeader({
   rating,
   image,
   alt = '',
+  logo,
   id,
 }: PageHeaderProps) {
   return (
@@ -96,7 +97,21 @@ function BandHeader({
         )}
       >
         {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-deep')}>{eyebrow}</p> : null}
-        <h1 className="mx-auto max-w-[900px] text-[36px] leading-tight font-bold text-ink">
+        {logo ? (
+          <img
+            src={logo.image}
+            alt={logo.alt}
+            width={900}
+            height={364}
+            className="mx-auto h-auto w-[min(900px,100%)]"
+          />
+        ) : null}
+        <h1
+          className={cn(
+            'mx-auto max-w-[900px] text-[36px] leading-tight font-bold text-ink',
+            logo && 'sr-only',
+          )}
+        >
           {title}
         </h1>
         {subtitle ? (
@@ -104,7 +119,9 @@ function BandHeader({
             {subtitle}
           </p>
         ) : null}
-        <span aria-hidden="true" className="mx-auto mt-5 block h-px w-[180px] bg-accent" />
+        {logo ? null : (
+          <span aria-hidden="true" className="mx-auto mt-5 block h-px w-[180px] bg-accent" />
+        )}
         {lead ? (
           <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed text-ink">
             {inlineMarkdown(lead)}

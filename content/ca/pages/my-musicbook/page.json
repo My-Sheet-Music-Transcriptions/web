@@ -1,0 +1,153 @@
+{
+  "language": "ca",
+  "collection": "pages",
+  "title": "my music book - La Meva Partitura Edicions",
+  "description": "My Music Book: el cançoner de les teves cançons, tan personal com la teva música, per a la promoció, el merchandising i l’engagement amb els teus fans.",
+  "translationKey": "my-musicbook",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "band",
+      "title": "My Music Book",
+      "logo": "musicBookLogo"
+    },
+    {
+      "type": "Stats",
+      "reveal": true,
+      "items": [
+        {
+          "value": "95%",
+          "label": "Dels artistes no rendibilitzen les seves partitures ni processos creatius"
+        },
+        {
+          "value": "2%",
+          "label": "El top 2% dels teus fans, els superfans, generen el 18% dels streams, el 40% dels ingressos i fins al 52% de les vendes de merch"
+        },
+        {
+          "value": "90%",
+          "label": "Dels llançaments d’àlbums no aconsegueixen sostenir el seu impacte més de 4-6 setmanes"
+        }
+      ]
+    },
+    {
+      "type": "Article",
+      "reveal": true,
+      "label": "El teu Music Book",
+      "items": [
+        {
+          "body": "",
+          "image": "book.png",
+          "alt": "Un Music Book obert, amb notes a mà: personalitza el teu Musicbook; el storytelling com a eina de màrqueting; aquesta sóc jo després de 4 hores component a l’estudi",
+          "imageWidth": 520
+        }
+      ]
+    },
+    {
+      "type": "Cards",
+      "reveal": true,
+      "variant": "plain",
+      "columns": 3,
+      "items": [
+        {
+          "title": "Promoció",
+          "body": "Destacar és cada vegada més difícil en un món on surten més de 10.000 cançons al dia.",
+          "more": {
+            "label": "Avantatges",
+            "body": "- Dona suport als teus llançaments amb un **producte real**, que doni a conèixer tot **el teu procés artístic**.\n- Un email es perd, **però això no**.\n- Promociona’t entre professionals del sector. **No s’oblidaran de tu!**\n- Crea una carrera artística **amb valor diferencial**."
+          }
+        },
+        {
+          "title": "Merchandising",
+          "body": "Ofereix un article d’elevada qualitat que farà que els teus fans i oients mai s’oblidin de tu.",
+          "more": {
+            "label": "Avantatges",
+            "body": "- Ven **articles col·leccionables** d’alta qualitat.\n- Fes que els teus fans se sentin **especials**.\n- Aconsegueix rendibilitat de tota la teva obra: **fins i tot de la partitura**.\n- **Genera una comunitat** i fes que els teus productes siguin els més especials."
+          }
+        },
+        {
+          "title": "Engagement",
+          "body": "Un suport on recopilar el procés creatiu i convertir els oients en fans de les teves cançons.",
+          "more": {
+            "label": "Avantatges",
+            "body": "- Fes que la teva *listening party* sigui **inoblidable**.\n- Inicia un ***trend* de *covers*** a xarxes socials.\n- Fes que la gent **se’n recordi de tu i de la teva música** durant molt més temps.\n- Guarda un record **per a tota la vida**."
+          }
+        }
+      ]
+    },
+    {
+      "type": "PictureStrip",
+      "label": "Music Books que hem fet",
+      "items": [
+        {
+          "image": "songbook-1.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh sobre un piano"
+        },
+        {
+          "image": "book-5.jpg",
+          "alt": "Un Music Book obert sobre un piano"
+        },
+        {
+          "image": "book-4.jpg",
+          "alt": "Un llibre de partitures al faristol d'un teclat"
+        },
+        {
+          "image": "songbook-9.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh al faristol d'un piano"
+        },
+        {
+          "image": "book-6.jpg",
+          "alt": "Un Music Book obert al faristol d'un piano"
+        },
+        {
+          "image": "songbook-6.jpg",
+          "alt": "Les pàgines del cançoner de La Oreja de Van Gogh"
+        },
+        {
+          "image": "songbook-5.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh obert sobre el faristol d'un piano"
+        },
+        {
+          "image": "songbook-cover.jpg",
+          "alt": "La portada del cançoner de La Oreja de Van Gogh"
+        },
+        {
+          "image": "book-3.jpg",
+          "alt": "Un llibre de partitures i un CD sobre una taula"
+        },
+        {
+          "image": "book-7.jpg",
+          "alt": "Un Music Book sobre un piano"
+        },
+        {
+          "image": "book-8.jpg",
+          "alt": "Un Music Book obert"
+        },
+        {
+          "image": "songbook-8.jpg",
+          "alt": "Una partitura del cançoner de La Oreja de Van Gogh"
+        },
+        {
+          "image": "songbook-3.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh obert"
+        }
+      ]
+    },
+    {
+      "type": "Section",
+      "reveal": true,
+      "title": "Tan propi com les teves cançons.",
+      "align": "center",
+      "rule": false,
+      "body": "Demana el teu cançoner, i personalitza’l com vulguis.",
+      "cta": {
+        "label": "Contacta'ns",
+        "href": "#contact"
+      }
+    },
+    {
+      "type": "ContactSection",
+      "reveal": true,
+      "form": "quoteForm"
+    }
+  ]
+}
