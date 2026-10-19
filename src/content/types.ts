@@ -1,3 +1,4 @@
+import type { IconName } from '~/components/primitives/Icon'
 import type { PictureSource } from '~/components/primitives/Picture'
 import type { Video } from '~/components/primitives/VideoEmbed'
 
@@ -190,6 +191,8 @@ export interface CardItem {
   image?: PictureSource
   /** Width of the picture in px (plain items; it fills a card's width otherwise). */
   imageWidth?: number
+  /** A glyph in a coloured disc instead of a picture ("mail", "phone"); in a timeline step, in its disc. */
+  glyph?: IconName
   /** A video instead of a picture. */
   video?: Video
   /** A line in bold under the body. */

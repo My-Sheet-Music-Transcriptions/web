@@ -53,6 +53,8 @@ export interface SamplesProps extends ShellProps {
   tabs?: SampleTab[]
   /** rows (default): one row per sample, the video beside the score. columns: the samples side by side, each recording above its score with an arrow between. */
   variant?: 'rows' | 'columns'
+  /** Samples per row from desktop up (columns): three (default) or two, larger. */
+  columns?: 2 | 3
   /** The words of the carousel arrows and the play buttons: `media` from content/<locale>/data/labels. */
   labels?: MediaLabels
   /** The still shown over each video until it is played (`~/assets/images/brand/video-poster.jpg`). */
@@ -105,6 +107,7 @@ export function Samples({
   labels,
   videoPoster,
   zoom,
+  columns = 3,
   ...shell
 }: SamplesProps) {
   const [tab, setTab] = useState(0)
@@ -113,7 +116,7 @@ export function Samples({
     return (
       <BlockShell {...shell} cascade>
         {tabs ? <Tabs tabs={tabs.map((t) => t.label)} active={tab} onChange={setTab} /> : null}
-        <ul className={`${gridCols(3, { tablet: 3 })} gap-x-8 gap-y-14`}>
+        <ul className={`${gridCols(columns, { tablet: columns })} gap-x-8 gap-y-14`}>
           {shown.map((s) => (
             <RevealGroup as="li" key={s.title} className="flex flex-col items-center gap-5">
               <RevealItem className="w-full">

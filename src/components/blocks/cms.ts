@@ -156,6 +156,26 @@ const card = {
   icon: picture('Icon', { hint: 'An illustrated icon (square or wide).' }),
   image: picture('Picture', { hint: 'Instead of an icon.' }),
   imageWidth: number('Picture width in px', { min: 40, max: 600 }),
+  glyph: select(
+    'Glyph in a disc',
+    [
+      'mail',
+      'phone',
+      'dollar',
+      'pen',
+      'music',
+      'chat',
+      'gift',
+      'send',
+      'check',
+      'question',
+      'star',
+      'instagram',
+      'facebook',
+      'youtube',
+    ],
+    { hint: 'Instead of a picture; in a timeline step, in its disc.' },
+  ),
   video: video,
   emphasis: line('Bold line under the text'),
   href: link('Link', { hint: 'The title links there; with button words, a button does.' }),
@@ -254,6 +274,10 @@ export const cmsBlocks = {
         decap: { pattern: ['^\\d{4}-\\d{2}-\\d{2}$', 'YYYY-MM-DD'] },
       }),
       cta: button(),
+      links: listOf('More buttons beside it (photo, split)', button('Button', ' ')),
+      ctaVariant: select('Buttons’ colour (photo)', ['primary', 'accent'], {
+        hint: 'primary: teal-blue (the default). accent: orange.',
+      }),
       image: picture('Picture', {
         hint: 'Beside the words (split), the service’s icon under the band, or the photo behind (cover).',
         widths: '480;960;1600',
@@ -372,6 +396,7 @@ export const cmsBlocks = {
         hint: 'rows: the recording beside the score. columns: side by side (a pricing chart).',
       }),
       items: samples('Samples'),
+      columns: number<2 | 3>('Samples per row (columns: 2 or 3)', { min: 2, max: 3 }),
       zoom: toggle('Scores open larger when clicked'),
       tabs: list(
         'Sets of samples (one per currency)',
@@ -418,8 +443,8 @@ export const cmsBlocks = {
         },
         { summary: '{{fields.label}}', hint: 'Instead of the cards above: one list per set.' },
       ),
-      variant: select('Style', ['card', 'tile', 'plain'], {
-        hint: 'card: white cards. tile: peach tiles. plain: no surface.',
+      variant: select('Style', ['card', 'tile', 'plain', 'overlay'], {
+        hint: 'card: white cards. tile: peach tiles. plain: no surface. overlay: the words over the card’s picture.',
       }),
       columns: number<2 | 3 | 4 | 5>('Cards per row (2–5)', { min: 2, max: 5 }),
       image: fromData('Photo behind the cards', { studioBand: 'brand' }),
@@ -436,8 +461,8 @@ export const cmsBlocks = {
     fields: {
       ...heading,
       items: list('Cards', card, { required: true, summary: '{{fields.title}}' }),
-      variant: select('Style', ['card', 'tile', 'plain'], {
-        hint: 'card: white cards. tile: peach tiles. plain: no surface.',
+      variant: select('Style', ['card', 'tile', 'plain', 'overlay'], {
+        hint: 'card: white cards. tile: peach tiles. plain: no surface. overlay: the words over the card’s picture.',
       }),
       columns: number<2 | 3 | 4 | 5>('Cards per row (2–5)', { min: 2, max: 5 }),
       image: fromData('Photo behind the cards', { studioBand: 'brand' }),
@@ -522,17 +547,6 @@ export const cmsBlocks = {
         'Steps',
         {
           ...card,
-          glyph: select('Glyph in the disc (timeline)', [
-            'dollar',
-            'pen',
-            'music',
-            'chat',
-            'gift',
-            'send',
-            'check',
-            'question',
-            'star',
-          ]),
         },
         { required: true, summary: '{{fields.title}}' },
       ),
@@ -630,7 +644,11 @@ export const cmsBlocks = {
         { homeRatings: 'ratings', platforms: 'ratings' },
         { required: true },
       ),
-      image: fromData('Photo behind', { pianoBand: 'brand' }, { required: true }),
+      image: fromData(
+        'Photo behind',
+        { pianoBand: 'brand', sheetMusicBand: 'brand' },
+        { required: true },
+      ),
       reveal,
     },
   },

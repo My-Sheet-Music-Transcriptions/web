@@ -16,6 +16,7 @@ export const COLLECTIONS = [
   'musicians',
   'partners',
   'reviews',
+  'products',
 ] as const
 export type Collection = (typeof COLLECTIONS)[number]
 
@@ -134,6 +135,11 @@ export const reviewSchema = baseSchema.extend({
   sourceUrl: z.string().url().optional(),
 })
 
+/** A product of the shop (the Catalan site's songbooks), at /product/<slug> as on the WooCommerce site. */
+export const productSchema = baseSchema.extend({
+  type: z.literal('product').default('product'),
+})
+
 export const schemas = {
   pages: pageSchema,
   services: serviceSchema,
@@ -143,6 +149,7 @@ export const schemas = {
   musicians: musicianSchema,
   partners: partnerSchema,
   reviews: reviewSchema,
+  products: productSchema,
 } as const satisfies Record<Collection, z.ZodType>
 
 export type PageMeta = z.infer<typeof pageSchema>
@@ -153,6 +160,7 @@ export type ArtistMeta = z.infer<typeof artistSchema>
 export type MusicianMeta = z.infer<typeof musicianSchema>
 export type PartnerMeta = z.infer<typeof partnerSchema>
 export type ReviewMeta = z.infer<typeof reviewSchema>
+export type ProductMeta = z.infer<typeof productSchema>
 /** What a meta.ts writes (defaulted fields optional): `export default { … } satisfies PageMetaInput`. */
 export type PageMetaInput = z.input<typeof pageSchema>
 export type ServiceMetaInput = z.input<typeof serviceSchema>
@@ -179,6 +187,7 @@ export type EntryMeta =
   | MusicianMeta
   | PartnerMeta
   | ReviewMeta
+  | ProductMeta
 
 /** Route names that content slugs may never use. */
 export const RESERVED_SLUGS = [
@@ -187,6 +196,7 @@ export const RESERVED_SLUGS = [
   'og',
   'faqs',
   'review',
+  'product',
   'sitemap.xml',
   'robots.txt',
   '404',
@@ -202,7 +212,7 @@ export const RESERVED_SLUGS = [
   'ca',
 ]
 
-/** Public path of an entry. `pages/home` is the site root; FAQs and reviews live under a prefix. */
+/** Public path of an entry. `pages/home` is the site root; FAQs, reviews and products live under a prefix. */
 export function pathFor(
   collection: Collection,
   slug: string,
@@ -211,6 +221,7 @@ export function pathFor(
   if (collection === 'pages' && slug === 'home') return '/'
   if (collection === 'faqs') return `/${routes.faqPrefix}/${slug}`
   if (collection === 'reviews') return `/review/${slug}`
+  if (collection === 'products') return `/product/${slug}`
   return `/${slug}`
 }
 

@@ -20,7 +20,7 @@ export interface HeaderProps {
   /** The menus' words for screen readers and the phone menu. */
   labels: MenuLabels
   /** The hub's login and sign-up links, in the phone menu. */
-  account: { login: Link; signup: Link }
+  account?: { login: Link; signup: Link }
   /** What sits beside the menu button on phones: the language switcher. */
   languages?: ReactNode
   /** On the homepage the logo waits for the first scroll from tablets up (the hero carries the lockup). */

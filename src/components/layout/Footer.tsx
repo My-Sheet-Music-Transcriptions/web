@@ -143,18 +143,20 @@ export function Footer({
           </ul>
         </div>
 
-        <div className="mt-[56px] px-[25px] py-[15px] md:mt-0 md:px-[15px]">
-          <h2 className={heading}>{s.services}</h2>
-          <ul className="mt-5">
-            {footer.services.map((l) => (
-              <li key={l.href + l.label}>
-                <SmartLink href={l.href} className={cn(link, 'block px-5 py-2 leading-4')}>
-                  {l.label}
-                </SmartLink>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {footer.services.length ? (
+          <div className="mt-[56px] px-[25px] py-[15px] md:mt-0 md:px-[15px]">
+            <h2 className={heading}>{s.services}</h2>
+            <ul className="mt-5">
+              {footer.services.map((l) => (
+                <li key={l.href + l.label}>
+                  <SmartLink href={l.href} className={cn(link, 'block px-5 py-2 leading-4')}>
+                    {l.label}
+                  </SmartLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="mt-[11px] px-[25px] py-[15px] md:mt-0 md:px-[15px]">
           <h2 className={heading}>{s.contactUs}</h2>
@@ -202,8 +204,8 @@ export function Footer({
               </li>
             ))}
           </ul>
-          <h2 className={cn(heading, 'mt-[15px]')}>{s.aboutUs}</h2>
-          <ul className="mt-[15px] space-y-[9px]">
+          {footer.about.length ? <h2 className={cn(heading, 'mt-[15px]')}>{s.aboutUs}</h2> : null}
+          <ul className="mt-[15px] space-y-[9px] empty:hidden">
             {footer.about.map((l) => (
               <li key={l.href}>
                 <SmartLink href={l.href} className={cn(link, 'flex items-center leading-[23px]')}>

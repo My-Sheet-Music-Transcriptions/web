@@ -1,0 +1,27 @@
+import studioBandPicture from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
+import sheetMusicBandPicture from '~/assets/images/bands/sheet-music-bg.jpg?w=900;1282;2000&as=picture'
+import pianoBandPicture from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
+import logoFile from '~/assets/images/brand/lockup-ca.png?format=png&as=url'
+import videoPosterPicture from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
+import type { BrandLogo } from '~/content/types'
+
+/** Brand pictures a page passes to blocks, named so CMS pages can pick them (src/components/blocks/cms.ts). */
+
+/** The piano behind the ratings band. */
+export const pianoBand = pianoBandPicture
+
+/** The sheet music behind the Catalan homepage's ratings. */
+export const sheetMusicBand = sheetMusicBandPicture
+
+/** The studio behind a band of cards. */
+export const studioBand = studioBandPicture
+
+/** The still of every video until it is played (CMS pages get it without a field). */
+export const videoPoster = videoPosterPicture
+
+/** The Catalan lockup above the homepage title, with its words. */
+export const logo: BrandLogo = {
+  image: logoFile,
+  alt: 'Logo de La Meva Partitura',
+  label: 'La Meva Partitura – inici',
+}

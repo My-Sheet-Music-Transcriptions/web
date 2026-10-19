@@ -31,6 +31,8 @@ export const SITEMAP_NAMES: Record<Collection, string> = {
   musicians: 'musicians',
   partners: 'partner',
   reviews: 'review',
+  // Not WooCommerce's `product`: that name stays a redirect to the index (LEGACY_SITEMAPS) on every site.
+  products: 'products',
 }
 
 /**

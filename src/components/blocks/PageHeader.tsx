@@ -24,6 +24,10 @@ export interface PageHeaderProps {
   lead?: string
   /** The page's main action, under the copy. */
   cta?: Cta
+  /** More buttons beside the `cta`, in its style (photo, split): the Catalan homepage's two ways in. */
+  links?: Cta[]
+  /** The colour of the photo header's buttons: primary (teal-blue, the default) or accent (orange, the Catalan homepage). */
+  ctaVariant?: 'primary' | 'accent'
   /** The compact rating card: pass `google` from content/<locale>/data/ratings. */
   rating?: RatingSource
   /** band: light centred title band (default). split: copy beside pictures, on white. photo: the homepage. cover: the title in white over a darkened photo (the blog, a post). */
@@ -173,6 +177,7 @@ function SplitHeader({
   eyebrow,
   lead,
   cta,
+  links,
   rating,
   image,
   alt = '',
@@ -191,7 +196,7 @@ function SplitHeader({
           {lead ? (
             <p className="mt-5 text-[20px] leading-[30px] text-secondary">{inlineMarkdown(lead)}</p>
           ) : null}
-          {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
+          {cta || links?.length ? <Actions cta={cta} links={links} className="mt-8" /> : null}
           {rating ? <CompactRating source={rating} className="entrance mt-8" /> : null}
         </div>
         <Media
@@ -225,6 +230,8 @@ function PhotoHeader({
   lead,
   subtitle,
   cta,
+  links,
+  ctaVariant = 'primary',
   images = [],
   mobileImages,
   rating,
@@ -278,10 +285,13 @@ function PhotoHeader({
                 {subtitle}
               </p>
             ) : null}
-            {cta ? (
-              <div className="mt-[34px] hidden md:block">
-                <CtaLink cta={cta} variant="primary" />
-              </div>
+            {cta || links?.length ? (
+              <Actions
+                cta={cta}
+                links={links}
+                variant={ctaVariant}
+                className="mt-[34px] hidden md:flex"
+              />
             ) : null}
           </div>
         </div>
@@ -292,6 +302,26 @@ function PhotoHeader({
         ) : null}
       </div>
     </header>
+  )
+}
+
+/** The header's buttons: the `cta`, then the `links` beside it, all in one style. */
+function Actions({
+  cta,
+  links = [],
+  variant,
+  className,
+}: Pick<PageHeaderProps, 'cta' | 'links'> & {
+  variant?: 'primary' | 'accent'
+  className?: string
+}) {
+  return (
+    <div className={cn('flex flex-wrap gap-4', className)}>
+      {cta ? <CtaLink cta={cta} variant={variant} /> : null}
+      {links.map((l) => (
+        <CtaLink key={l.href} cta={l} variant={variant} />
+      ))}
+    </div>
   )
 }
 

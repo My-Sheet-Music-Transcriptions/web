@@ -1,6 +1,6 @@
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { FeatureItem } from '~/components/primitives/FeatureItem'
-import { Icon, type IconName } from '~/components/primitives/Icon'
+import { Icon } from '~/components/primitives/Icon'
 import { RevealGroup, RevealItem } from '~/components/primitives/Motion'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import type { CardItem, MediaLabels } from '~/content/types'
@@ -9,15 +9,9 @@ import { gridCols } from '~/lib/grid'
 import { inlineMarkdown, lightMarkdown } from '~/lib/light-markdown'
 import { fill } from '~/lib/strings'
 
-/** One step: a title, a text and, in columns, a picture or video (the shape of a card). */
-export interface StepItem extends CardItem {
-  /** A glyph in the timeline's disc instead of the step number ("dollar", "gift"). */
-  glyph?: IconName
-}
-
 export interface StepsProps extends ShellProps {
-  /** The steps, in order: three to seven. */
-  items: StepItem[]
+  /** The steps, in order: three to seven. Each a title, a text and, in columns, a picture or video; in a timeline, its glyph in the disc instead of the step number ("dollar", "gift"). */
+  items: CardItem[]
   /** timeline: numbered vertical list (default). bubbles: a vertical line of illustrated icons, each step a speech bubble. columns: side by side, each with its picture or video. */
   variant?: 'timeline' | 'bubbles' | 'columns'
   /** One wide picture shown instead of the step pictures from 1025px up (columns). */
@@ -121,7 +115,7 @@ export function Steps({
               </div>
               <RevealItem preset="side" className="my-2 min-w-0 flex-1">
                 <FeatureItem
-                  item={{ ...step, icon: undefined }}
+                  item={{ ...step, icon: undefined, glyph: undefined }}
                   surface="bubble"
                   labels={labels}
                   videoPoster={videoPoster}

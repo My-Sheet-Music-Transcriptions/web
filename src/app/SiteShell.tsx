@@ -47,6 +47,7 @@ function languageLinks(site: SiteConfig, alternates: Partial<Record<string, stri
 export function SiteTopBar() {
   const site = useSite()
   const s = site.strings.nav
+  if (!site.hub) return null
   return (
     <TopBar
       login={{ label: s.login, href: site.hub.login }}
@@ -66,10 +67,12 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
       nav={navFor(site.locale)}
       cta={{ label: s.requestCta, href: site.routes.contactAnchor }}
       labels={{ main: s.main, menu: s.menu, closeMenu: s.closeMenu, allServices: s.allServices }}
-      account={{
-        login: { label: s.login, href: site.hub.login },
-        signup: { label: s.signup, href: site.hub.signup },
-      }}
+      account={
+        site.hub && {
+          login: { label: s.login, href: site.hub.login },
+          signup: { label: s.signup, href: site.hub.signup },
+        }
+      }
       languages={
         <LangSwitcher label={s.language} items={languageLinks(site)} className="text-[13px]" />
       }
