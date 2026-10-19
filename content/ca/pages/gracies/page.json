@@ -1,0 +1,73 @@
+{
+  "language": "ca",
+  "collection": "pages",
+  "title": "Gràcies - La Meva Partitura Edicions",
+  "description": "Hem rebut el teu formulari de contacte: estem revisant la teva consulta sobre partitures i et respondrem en les properes hores.",
+  "translationKey": "thank-you",
+  "noindex": true,
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "GRÀCIES!",
+      "subtitle": "El teu formulari de contacte s'ha enviat correctament"
+    },
+    {
+      "type": "Section",
+      "reveal": true,
+      "align": "center",
+      "width": "narrow",
+      "body": "Estem revisant la teva consulta sobre partitures i ens posarem en contacte amb tu en les properes hores.\n\nSi us plau, revisa la carpeta de correu brossa per assegurar-te que no us has perdut la resposta.\n\nSi no reps notícies nostres, també pots provar de contactar amb nosaltres:"
+    },
+    {
+      "type": "Cards",
+      "reveal": true,
+      "variant": "plain",
+      "columns": 2,
+      "items": [
+        {
+          "glyph": "mail",
+          "title": "Escriu-nos un mail",
+          "body": "[info@lamevapartitura.cat](mailto:info@lamevapartitura.cat)\n\nResposta ràpida garantida."
+        },
+        {
+          "glyph": "phone",
+          "title": "Truca'ns",
+          "body": "[+34 930 03 80 39](tel:+34930038039)\n\nTelèfon per Catalunya / Espanya"
+        }
+      ]
+    },
+    {
+      "type": "Cards",
+      "reveal": true,
+      "title": "Més informació sobre nosaltres",
+      "variant": "plain",
+      "columns": 4,
+      "items": [
+        {
+          "glyph": "star",
+          "title": "Opinions",
+          "body": "Què diu la gent de nosaltres?",
+          "href": "https://www.trustpilot.com/review/mysheetmusictranscriptions.com"
+        },
+        {
+          "glyph": "instagram",
+          "title": "Instagram",
+          "body": "Segueix-nos per no perdre’t res",
+          "href": "https://www.instagram.com/mysheetmusictranscriptions/"
+        },
+        {
+          "glyph": "facebook",
+          "title": "Facebook",
+          "body": "Passa pel nostre Facebook",
+          "href": "https://www.facebook.com/mysheetmusictranscriptions/"
+        },
+        {
+          "glyph": "youtube",
+          "title": "Youtube",
+          "body": "Consulta els nostres tutorials de piano",
+          "href": "https://www.youtube.com/mysheetmusictranscriptions"
+        }
+      ]
+    }
+  ]
+}

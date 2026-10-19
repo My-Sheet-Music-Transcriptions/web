@@ -1,0 +1,39 @@
+{
+  "language": "ca",
+  "collection": "pages",
+  "title": "Contacte - La Meva Partitura Edicions",
+  "description": "Contacta amb nosaltres per a sol·licitar la teva partitura, serveis de notació digital o preguntar qualsevol dubte que tinguis!",
+  "translationKey": "contact",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Contacta'ns"
+    },
+    {
+      "type": "ContactSection",
+      "reveal": true,
+      "form": "quoteForm",
+      "title": "Sol·licita la teva partitura",
+      "lead": "Sol·licita la teva partitura, serveis de notació digital o pregunta qualsevol dubte que tinguis!",
+      "returnTo": "/contacte"
+    },
+    {
+      "type": "Cards",
+      "reveal": true,
+      "variant": "plain",
+      "columns": 2,
+      "items": [
+        {
+          "glyph": "mail",
+          "title": "Escriu-nos un mail",
+          "body": "[info@lamevapartitura.cat](mailto:info@lamevapartitura.cat)\n\nResposta ràpida garantida."
+        },
+        {
+          "glyph": "phone",
+          "title": "Truca'ns",
+          "body": "[+34 930 03 80 39](tel:+34930038039)\n\nTelèfon per Catalunya / Espanya"
+        }
+      ]
+    }
+  ]
+}
