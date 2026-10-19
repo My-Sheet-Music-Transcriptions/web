@@ -19,8 +19,8 @@ export interface CardGridProps extends ShellProps {
   items?: CardItem[]
   /** Instead of items: sets of cards behind buttons (one per currency, per audience…). */
   tabs?: CardTab[]
-  /** Cards per row from desktop up (two on tablets, one on phones; five fit plain items only). */
-  columns?: 2 | 3 | 4 | 5
+  /** Cards per row from desktop up (two on tablets, one on phones; five fit plain items only; one, wide cards one under another). */
+  columns?: 1 | 2 | 3 | 4 | 5
   /** card: white cards with a soft shadow (default). tile: peach rounded tiles. plain: no surface. overlay: each card's picture fills it, darkened, the words in white over it (the Catalan homepage). */
   variant?: 'card' | 'tile' | 'plain' | 'overlay'
   /** A full-bleed photo behind the cards: the photo band, its cards centred (`~/assets/images/bands/included-bg.jpg`). */
@@ -59,7 +59,7 @@ export function CardGrid({
       {tabs ? <Tabs tabs={tabs.map((t) => t.label)} active={tab} onChange={setTab} /> : null}
       <ul
         className={cn(
-          gridCols(columns, { tablet: columns === 5 ? 3 : 2 }),
+          gridCols(columns, { tablet: columns === 5 ? 3 : columns === 1 ? 1 : 2 }),
           variant === 'tile' ? 'gap-[30px]' : variant === 'overlay' ? 'gap-5' : 'gap-6',
         )}
       >

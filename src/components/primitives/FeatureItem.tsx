@@ -131,7 +131,7 @@ export function FeatureItem({
       <div
         className={cn(
           'flex flex-col gap-3 whitespace-pre-line',
-          overlay ? 'max-w-[300px] text-white' : 'text-ink',
+          overlay ? 'text-white md:max-w-[60%]' : 'text-ink',
           item.title && 'mt-3',
         )}
       >

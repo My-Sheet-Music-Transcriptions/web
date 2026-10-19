@@ -44,7 +44,7 @@ export interface PageHeaderProps {
   mobileImages?: Slide[]
   /** A part of the title set in orange from desktop up (photo): "#1". */
   highlight?: string
-  /** The brand lockup above the title (photo): `~/assets/images/brand/logo.svg` with its words. */
+  /** The brand lockup above the title (photo), or in its place over the photo (cover; the h1 is then for screen readers only): `~/assets/images/brand/logo.svg` with its words. */
   logo?: BrandLogo
   /** The words of the carousel arrows: `media` from content/<locale>/data/labels (with `images`). */
   labels?: MediaLabels
@@ -133,12 +133,27 @@ function BandHeader({
   )
 }
 
-function CoverHeader({ title, eyebrow, lead, date, cta, image, alt = '', id }: PageHeaderProps) {
+function CoverHeader({
+  title,
+  eyebrow,
+  lead,
+  date,
+  cta,
+  image,
+  alt = '',
+  logo,
+  id,
+}: PageHeaderProps) {
   const locale = useLocale()
   return (
     <header
       id={id}
-      className="relative isolate flex min-h-[280px] items-center overflow-hidden bg-footer px-4 py-20 text-center text-white md:min-h-[340px]"
+      className={cn(
+        'relative isolate flex items-center overflow-hidden bg-footer px-4 py-20 text-center text-white',
+        logo
+          ? 'min-h-[360px] md:min-h-[clamp(480px,57vw,820px)]'
+          : 'min-h-[280px] md:min-h-[340px]',
+      )}
     >
       {image ? (
         <Picture
@@ -150,11 +165,30 @@ function CoverHeader({ title, eyebrow, lead, date, cta, image, alt = '', id }: P
           pictureClassName="contents"
         />
       ) : null}
-      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-footer/65" />
+      <span
+        aria-hidden="true"
+        className={cn('absolute inset-0 -z-10', logo ? 'bg-footer/35' : 'bg-footer/65')}
+      />
       <div className="mx-auto flex max-w-[900px] flex-col items-center gap-4">
         {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
-        <h1 className="text-[32px] leading-tight font-bold text-white md:text-[40px]">{title}</h1>
-        <span aria-hidden="true" className="block h-px w-[120px] bg-accent" />
+        {logo ? (
+          <img
+            src={logo.image}
+            alt={logo.alt}
+            width={664}
+            height={268}
+            className="h-auto w-[min(664px,80vw)]"
+          />
+        ) : null}
+        <h1
+          className={cn(
+            'text-[32px] leading-tight font-bold text-white md:text-[40px]',
+            logo && 'sr-only',
+          )}
+        >
+          {title}
+        </h1>
+        {logo ? null : <span aria-hidden="true" className="block h-px w-[120px] bg-accent" />}
         {date ? (
           <p className="flex items-center gap-2 text-small">
             <Icon name="calendar" size={16} aria-hidden="true" className="text-accent-light" />

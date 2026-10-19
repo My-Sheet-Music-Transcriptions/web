@@ -1,0 +1,159 @@
+{
+  "language": "ca",
+  "collection": "pages",
+  "title": "Edicions - La Meva Partitura Edicions",
+  "description": "Publiquem i distribuïm les partitures dels artistes del nostre territori, en línia i en paper, amb ISBN i als nostres punts de distribució.",
+  "translationKey": "editions",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "cover",
+      "title": "Edicions",
+      "image": "hero.jpg",
+      "logo": "edicionsLogo"
+    },
+    {
+      "type": "Section",
+      "reveal": true,
+      "title": "Serveis editorials",
+      "align": "center",
+      "rule": false,
+      "body": "## Publiquem i distribuïm les partitures dels artistes del nostre territori\n\nDesprés de més de 12 anys en el món de la notació musical, continuem construint el nostre catàleg editorial, presentant centenars de partitures als circuits comercials."
+    },
+    {
+      "type": "Cards",
+      "reveal": true,
+      "variant": "overlay",
+      "columns": 1,
+      "items": [
+        {
+          "title": "Publicació online",
+          "body": "Publiquem i distribuïm partitures a les plataformes en línia més rellevants, com Musicnotes, Amazon, etc.",
+          "image": "labels.jpg"
+        },
+        {
+          "title": "Publicació física",
+          "body": "Publiquem i distribuïm partitures en format físic. Assignem número ISBN i les enviem als nostres punts de distribució.",
+          "image": "institutions.jpg"
+        }
+      ]
+    },
+    {
+      "type": "PictureStrip",
+      "label": "Les nostres edicions",
+      "items": [
+        {
+          "image": "songbook-1.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh sobre un piano"
+        },
+        {
+          "image": "songbook-5.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh obert sobre el faristol d'un piano"
+        },
+        {
+          "image": "songbook-9.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh al faristol d'un piano"
+        },
+        {
+          "image": "book-1.jpg",
+          "alt": "Un llibre de partitures obert sobre un piano"
+        },
+        {
+          "image": "book-2.jpg",
+          "alt": "Un llibre de partitures obert"
+        },
+        {
+          "image": "book-3.jpg",
+          "alt": "Un llibre de partitures i un CD sobre una taula"
+        },
+        {
+          "image": "book-4.jpg",
+          "alt": "Un llibre de partitures al faristol d'un teclat"
+        }
+      ]
+    },
+    {
+      "type": "Stats",
+      "reveal": true,
+      "id": "more",
+      "title": "Posicionem les partitures al mercat",
+      "items": [
+        {
+          "value": "+30",
+          "label": "Punts de distribució a Catalunya"
+        },
+        {
+          "value": "#1",
+          "label": "Líders en el mercat de la notació musical"
+        },
+        {
+          "value": "+200",
+          "label": "Artistes que ja ens confien la difusió de les seves partitures"
+        }
+      ]
+    },
+    {
+      "type": "PictureGrid",
+      "reveal": true,
+      "shape": "logo",
+      "columns": 4,
+      "label": "On distribuïm les partitures",
+      "items": [
+        {
+          "image": "platform-musescore.png",
+          "alt": "MuseScore"
+        },
+        {
+          "image": "platform-fnac.png",
+          "alt": "Fnac"
+        },
+        {
+          "image": "platform-amazon.png",
+          "alt": "Amazon"
+        },
+        {
+          "image": "client-musicnotes.png",
+          "alt": "Musicnotes"
+        }
+      ]
+    },
+    {
+      "type": "PictureGrid",
+      "reveal": true,
+      "title": "Artistes que ja publiquen amb nosaltres",
+      "shape": "portrait",
+      "columns": 3,
+      "items": [
+        {
+          "image": "artist-rosalia.png",
+          "name": "Rosalía"
+        },
+        {
+          "image": "artist-laura-andres.png",
+          "name": "Laura Andrés"
+        },
+        {
+          "image": "artist-carles-marigo.png",
+          "name": "Carles Marigó"
+        },
+        {
+          "image": "artist-jacob-collier.png",
+          "name": "Jacob Collier"
+        },
+        {
+          "image": "artist-la-oreja-de-van-gogh.png",
+          "name": "La Oreja de Van Gogh"
+        },
+        {
+          "image": "artist-doctor-prats.png",
+          "name": "Doctor Prats"
+        }
+      ]
+    },
+    {
+      "type": "ContactSection",
+      "reveal": true,
+      "form": "editorialForm"
+    }
+  ]
+}

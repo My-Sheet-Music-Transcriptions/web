@@ -2,6 +2,7 @@ import studioBandPicture from '~/assets/images/bands/included-bg.jpg?w=1000;1600
 import sheetMusicBandPicture from '~/assets/images/bands/sheet-music-bg.jpg?w=900;1282;2000&as=picture'
 import pianoBandPicture from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
 import logoFile from '~/assets/images/brand/lockup-ca.png?format=png&as=url'
+import edicionsLogoFile from '~/assets/images/brand/lockup-ca-edicions.png?format=png&as=url'
 import videoPosterPicture from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import type { BrandLogo } from '~/content/types'
 
@@ -23,5 +24,12 @@ export const videoPoster = videoPosterPicture
 export const logo: BrandLogo = {
   image: logoFile,
   alt: 'Logo de La Meva Partitura',
+  label: 'La Meva Partitura – inici',
+}
+
+/** The publishing imprint's lockup, in white, over the photo at the top of /edicions. */
+export const edicionsLogo: BrandLogo = {
+  image: edicionsLogoFile,
+  alt: 'La Meva Partitura Edicions',
   label: 'La Meva Partitura – inici',
 }

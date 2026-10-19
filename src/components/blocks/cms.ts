@@ -294,7 +294,10 @@ export const cmsBlocks = {
         trustpilot: 'ratings',
         facebook: 'ratings',
       }),
-      logo: fromData('Logo above the title', { logo: 'brand' }),
+      logo: fromData('Logo above the title (photo), or over the photo (cover)', {
+        logo: 'brand',
+        edicionsLogo: 'brand',
+      }),
       id: anchor,
     },
   },
@@ -446,7 +449,7 @@ export const cmsBlocks = {
       variant: select('Style', ['card', 'tile', 'plain', 'overlay'], {
         hint: 'card: white cards. tile: peach tiles. plain: no surface. overlay: the words over the card’s picture.',
       }),
-      columns: number<2 | 3 | 4 | 5>('Cards per row (2–5)', { min: 2, max: 5 }),
+      columns: number<1 | 2 | 3 | 4 | 5>('Cards per row (1–5)', { min: 1, max: 5 }),
       image: fromData('Photo behind the cards', { studioBand: 'brand' }),
       tone,
       cta: button(),
@@ -464,7 +467,7 @@ export const cmsBlocks = {
       variant: select('Style', ['card', 'tile', 'plain', 'overlay'], {
         hint: 'card: white cards. tile: peach tiles. plain: no surface. overlay: the words over the card’s picture.',
       }),
-      columns: number<2 | 3 | 4 | 5>('Cards per row (2–5)', { min: 2, max: 5 }),
+      columns: number<1 | 2 | 3 | 4 | 5>('Cards per row (1–5)', { min: 1, max: 5 }),
       image: fromData('Photo behind the cards', { studioBand: 'brand' }),
       tone,
       cta: button(),
@@ -690,7 +693,13 @@ export const cmsBlocks = {
     fields: {
       form: fromData(
         'Form',
-        { quoteForm: 'forms', giftCardForm: 'forms', reservationForm: 'forms' },
+        {
+          quoteForm: 'forms',
+          giftCardForm: 'forms',
+          reservationForm: 'forms',
+          editorialForm: 'forms',
+          orderForm: 'forms',
+        },
         { required: true },
       ),
       variant: select('Kind', ['quote', 'gift-card', 'reservation'], {
