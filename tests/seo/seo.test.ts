@@ -133,12 +133,15 @@ describe.each(pages.map((p) => [p.route, p] as const))('%s', (_route, p) => {
       expect(data['@type']).toBeTruthy()
     })
   })
-  it('has hreflang alternates that are reciprocal and include x-default when translated', () => {
+  it('has hreflang alternates that are reciprocal and include x-default when English has the page', () => {
     const alts = $('link[rel="alternate"][hreflang]')
       .map((_, l) => ({ lang: $(l).attr('hreflang'), href: $(l).attr('href') }))
       .get()
     if (alts.length === 0) return
-    expect(alts.some((a) => a.lang === 'x-default')).toBe(true)
+    // x-default is the English page (src/seo/alternates.ts); a page translated only between other languages has none.
+    expect(alts.some((a) => a.lang === 'x-default')).toBe(
+      alts.some((a) => a.lang === sites.en.lang),
+    )
     expect(alts.some((a) => a.href === $('link[rel="canonical"]').attr('href'))).toBe(true)
     for (const a of alts) {
       const l = Object.values(sites).find((s) => a.href?.startsWith(s.domain))

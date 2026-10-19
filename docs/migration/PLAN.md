@@ -12,7 +12,7 @@ in later sessions: tick the checklists here, fill the **PR** column of the inven
 | **this file** | scope, findings, principles, decisions, the waves and their checklists, the cutover runbook, risks |
 | [`inventory/en.md`](./inventory/en.md) | every English URL (320) with its target collection, wave, action, translations and archived title |
 | [`inventory/es.md`](./inventory/es.md) · [`fr.md`](./inventory/fr.md) · [`de.md`](./inventory/de.md) · [`ja.md`](./inventory/ja.md) | the same for the other live sites (less complete until step W0.2) |
-| [`inventory/ca.md`](./inventory/ca.md) | the Catalan draft site and the page set to create for its launch |
+| [`inventory/ca.md`](./inventory/ca.md) | the Catalan site (La Meva Partitura Edicions, with its shop) and how each URL was ported |
 | [`inventory/*.json`](./inventory/) | machine-readable copy (titles, descriptions, canonicals, hreflang pairs): what the importer, the parity checks and the cutover test read |
 | [`redirects.md`](./redirects.md) | draft redirect map per domain |
 | `parity/<locale>.md` (from W1 on) | the parity report of each ported locale: the record that replaces page-by-page review |
@@ -29,7 +29,7 @@ conversions**, and switch off WordPress:
 | fr | mapartitionsurmesure.com | WordPress, same stack | migrate ~30 pages |
 | de | meinemusiktranskription.de | WordPress, same stack (cloned from the French site) | migrate ~40 pages |
 | ja | mysheetmusictranscriptions.jp | WordPress, same stack | migrate ~20 pages |
-| ca | lamevapartitura.cat | an **unfinished** WordPress draft (title "My WordPress", Catalan/Spanish homepage, 7 URLs) | **launch** ~22 new pages; pilot of the cutover |
+| ca | lamevapartitura.cat | WordPress (Elementor, WooCommerce): La Meva Partitura Edicions, 7 pages and a 4-product shop | migrate 11 pages (done 2026-10-19); pilot of the cutover |
 
 A locale is done when: every URL in its inventory answers 200 from the new site at the same path or 301s in one hop
 to its successor; its pages declare hreflang to every other locale that has the page; the domain points at Netlify;
@@ -63,11 +63,11 @@ review/FAQ/team entries):
 | fr | 49 | 29 | 2 | 14 | 3 | no sitemap archived: live menu (Common Crawl, 2026-09), English hreflang, archive |
 | de | 120 | 36 | 3 | 69 | 11 | sitemap 2025-10 (10 pages, 16 posts, 9 services) + 2024 sitemaps since dropped (30 team, 16 reviews, 13 FAQs) |
 | ja | 28 | 18 | 3 | 5 | 2 | 2022 sitemap (10 pages) + live menu (2026-09) |
-| ca | 7 existing + 19 new | 22 (3 replace + 19 create) | — | 2 | — | 2023 `wp-sitemap.xml` + homepage (2025-07); new page set in [`inventory/ca.md`](./inventory/ca.md) |
+| ca | 194 | 11 (7 pages + 4 products) | — | 183 | — | live Yoast sitemaps (2026-10-19); see [`inventory/ca.md`](./inventory/ca.md) |
 
 So the work is about **290 English pages** (126 of them blog posts), **~110 pages across es/fr/de/ja**, most of them
 translations of ~25 English pages (home, pricing, contact, about, reviews, FAQ, services overview, legal, 6–12
-services), and **~22 Catalan pages to generate**.
+services), and **11 Catalan pages** (ported 2026-10-19).
 
 **Findings that shape the plan**
 
@@ -312,17 +312,22 @@ on one `translationKey`. First real run of the importer and the parity report. N
 and `/careers` (neither has a twin in the inventories). *Ported 2026-10-14:* `/about-us`, English only (its es/fr/de/ja
 twins follow in this wave). 9 of the 12 English core pages remain.
 
-### C1 · Catalan launch (2 sessions, after W1 and W2)
+### C1 · Catalan port (done 2026-10-19)
 
-The page set is in [`inventory/ca.md`](./inventory/ca.md): home, the eleven core and legal pages, gift card and ten
-services, generated automatically from the English pages (D14).
-- [ ] Locale chrome: `src/i18n/sites/ca.ts` strings in Catalan (today it inherits English), `content/ca/data/`
-      (`nav.ts`, `footer.ts`, `home.ts`, `reviews.ts`, prices in EUR), the `ca` logo lockup, the Catalan legal entity
-      text. This is the checklist the `add-locale` skill stub becomes.
-- [ ] Pages: core first (home, preus, contacte, sobre-nosaltres, opinions, preguntes-frequents, serveis-musicals,
-      legal), then the services, each sharing its English `translationKey`.
-- [ ] Redirects: the two Catalan rules of [`redirects.md`](./redirects.md).
+The live Catalan site turned out to be a finished site, not the 2023 draft the archive showed: La Meva Partitura
+Edicions (home, `/edicions`, `/my-musicbook`, `/sobre-nosaltres`, `/contacte`, `/gracies`) and a WooCommerce shop
+(`/shop`, four songbooks at `/product/<slug>`). D14 no longer applies: every page was ported verbatim as a data page on
+its live path, like the Spanish site ([`inventory/ca.md`](./inventory/ca.md)).
+- [x] Locale chrome: `src/i18n/sites/ca.ts` (no top bar: the site has no accounts; the footer offers es and en, as
+      live), `content/ca/data/` (menu, footer, forms, labels, ratings, reviews, brand, redirects), the edicions and
+      My Music Book lockups.
+- [x] Pages: the 7 pages and the 4 products (a new `products` collection, `Products` in the CMS; "Compra" opens an
+      order form, as the static site takes no payments).
+- [x] Redirects: the WordPress drafts, the WooCommerce account/cart/checkout pages and the unlinked English `team`,
+      `service` and `faq` cards (`content/ca/data/redirects.json`).
 - [ ] D15: `ca` in every site config's `languageSwitcher` (label `CA`) and a flag/label asset.
+- [ ] Later, through the `page` skill: the core set the other locales have (pricing, reviews, FAQ, services, legal
+      pages in Catalan); until then the footer's legal links lead to the English pages.
 
 ### C2 · Catalan cutover, the pilot (1 session)
 
@@ -490,3 +495,4 @@ Not blocking the start; each is resolved in W0.4 or before the wave named:
 | 2026-10-14 | Spanish pages in the CMS | Every Spanish page and the English piano, guitar-tab and about-us became data pages (`page.json`), editable at `/admin` (new `<Language> · Services` collections with the service fields). `/instrumentos-de-viento` and `/instrumentos-de-cuerda` ported verbatim from the live site as data pages: the Spanish site's one page per family stands for the English per-instrument pages (no hreflang, own translation keys); missing from the archive-based inventory, added as `live-2026`. Their live third sample reuses the piano "White Christmas" video, kept as live. (#74) |
 | 2026-10-15 | Spanish main menu pages, CMS regrouped | `/servicios-musicales`, `/precios`, `/opiniones` and `/contacto` ported verbatim from the live Spanish site as data pages on their live URLs, now linked from the Spanish menu as pages (`/blog` stays a link to live until the 24 posts are ported). Live titles over 65 characters trimmed at a word boundary keeping the brand (D13); `allReviews` (the 8 extra live reviews) and `generalPricing` added to `content/es/data`; the second counter on `/opiniones` and the "60 pedidos" counter left out (no block draws them); the header no longer overflows with six languages. The CMS went from one collection per language and kind (16 entries) to three: Site (each language's homepage and menu), Pages and Services, filtered and grouped by a `language` field every `page.json` now opens with (`collection` too, both checked against the folder). |
 | 2026-10-18 | Spanish site, the rest | Every remaining live Spanish page ported verbatim as a data page (61 in all with #74's): the 9 other services on the piano template (nine price exports), the FAQ, how-to-pay (looping clips), the four legal pages (noindex, as live), the hub, editorial, transposition, songbook, Jellynote, B2B deck and MIATCAM pages (the last missing from the sitemaps, found in the menu), `/blog` and its 27 posts (converted from the Gutenberg HTML: covers, categories, dates, card excerpts, audio, YouTube; pictures and mp3s downloaded). New blocks: `Article` (long prose with pictures, recordings, videos and clips between paragraphs), `PostList` (the blog's cards, fed from the posts' meta), `ShareLinks` (share buttons); `PageHeader variant="cover"`; a lightbox (`zoom`) on Samples, MediaText and PictureGrid; looping mp4 `clip`s; light markdown with headings, numbered lists, quotes and italics. CMS: a Blog collection and a Redirects entry per language (the build writes `_redirects` from it and refuses a rule that hides a page or leads nowhere). the copy typos fixed and listed in the PR | Review together; the reservation form of the songbook pages and the deck's rated quotes; the Spanish Netlify site and cutover |
+| 2026-10-19 | Catalan site | Every live Catalan page ported verbatim as a data page on its live path (#PR): the home, `/edicions`, `/my-musicbook`, `/sobre-nosaltres`, `/contacte`, `/gracies` (noindex), `/shop` and its four songbooks in a new `products` collection at `/product/<slug>` ("Compra" opens an order form); the menu, footer and redirects (183 old URLs: drafts, WooCommerce pages, the unlinked English team/service/faq cards). New block options: `PageHeader` `ctaVariant` and a logo in the band and cover headers, `CardGrid` `variant="overlay"` and one column, cards with a `more` fold-out, `Samples` two columns. Typos fixed and listed in the PR | Review together; D15 (Catalan in the other sites' switchers); the Catalan core pages later; the Catalan Netlify site and cutover (C2) |
