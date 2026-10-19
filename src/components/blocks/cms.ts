@@ -39,8 +39,9 @@ import type { BlockName, blocks } from './index.tsx'
  * recordings of the page folder, and the lists that live once in content/<locale>/data (prices, reviews, ratings,
  * shared questions, the forms, the brand photos) picked by name with `fromData`. A preset (`preset`) is a second
  * entry for a block, with its own name in the menu and props set for the writer (a services grid is a PictureGrid
- * of the services). What a page cannot set stays out: `jsonLd`; `videoPoster` is the locale's brand poster
- * (content/<locale>/data/brand.ts), which every block with media words gets (src/content/BlockPage.tsx).
+ * of the services). What a page cannot set stays out: `jsonLd`; `videoPoster` and `mobileImage` are the locale's brand pictures
+ * (content/<locale>/data/brand.ts), which every block with media words and every PageHeader get
+ * (src/content/BlockPage.tsx).
  *
  * Imported by Node directly (the admin build's config): relative imports with extensions and type imports only.
  */
@@ -294,10 +295,6 @@ export const cmsBlocks = {
       images: slides('Photos', '1000;1600;2000', 'Several rotate behind the title (photo style).'),
       frame: select('Carousel frame (split)', ['wide', 'square'], {
         hint: 'wide: 3:2, cropped (the default). square: each picture whole (a product’s gallery).',
-      }),
-      mobileImage: picture('Photo on phones (photo)', {
-        hint: 'Faded behind the logo, the title and the buttons on phones; the first photo when empty.',
-        widths: '480;800;1200',
       }),
       rating: fromData('Rating card', {
         google: 'ratings',

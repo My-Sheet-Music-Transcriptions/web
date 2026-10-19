@@ -20,6 +20,8 @@ export interface BlockWords {
 export interface BlockBrand {
   /** The still of every video until it is played, given to the blocks that get the media words. */
   videoPoster?: PictureSource
+  /** The photo faded behind the homepage header on phones, given to every PageHeader. */
+  heroPhone?: PictureSource
 }
 
 /**
@@ -54,6 +56,7 @@ export function BlockPage({
         const given = {
           labels: w && words[w],
           ...(poster && { videoPoster: poster }),
+          ...(type === 'PageHeader' && brand.heroPhone && { mobileImage: brand.heroPhone }),
           ...(entry.feed === 'posts' && { items: posts }),
         }
         return (

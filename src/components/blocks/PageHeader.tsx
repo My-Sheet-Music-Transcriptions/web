@@ -43,7 +43,8 @@ export interface PageHeaderProps {
   /** The carousel's frame (split): `wide`, 3:2 and cropped (default), or `square`, each picture whole (a shop
    * product's gallery). */
   frame?: 'wide' | 'square'
-  /** The photo faded behind the copy on phones (photo); the first of `images` when left out. */
+  /** The photo faded behind the copy on phones (photo): the locale's `heroPhone` (content/<locale>/data/brand.ts),
+   * never chosen per page; the first of `images` when left out. */
   mobileImage?: PictureSource
   /** A part of the title set in orange (photo): "#1". */
   highlight?: string
