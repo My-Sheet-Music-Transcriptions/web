@@ -292,11 +292,17 @@ export const cmsBlocks = {
       }),
       alt: line('Picture description (alt text)'),
       images: slides('Photos', '1000;1600;2000', 'Several rotate behind the title (photo style).'),
+      frame: select('Carousel frame (split)', ['wide', 'square'], {
+        hint: 'wide: 3:2, cropped (the default). square: each picture whole (a product’s gallery).',
+      }),
       mobileImages: slides(
         'Photos on phones',
         '480;800',
         'Above the title on phones; the photos when empty.',
       ),
+      phone: select('On phones (photo)', ['photos', 'backdrop'], {
+        hint: 'photos: the photos above the words (the default). backdrop: the first phone photo faded behind the words, with the logo and the buttons.',
+      }),
       rating: fromData('Rating card', {
         google: 'ratings',
         trustpilot: 'ratings',

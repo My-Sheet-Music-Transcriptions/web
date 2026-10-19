@@ -27,6 +27,12 @@
           "image": "hero.jpg"
         }
       ],
+      "mobileImages": [
+        {
+          "image": "book-6.jpg"
+        }
+      ],
+      "phone": "backdrop",
       "logo": "logo"
     },
     {

@@ -18,7 +18,8 @@
           "image": "canconer-nadal.png",
           "alt": "El Cançoner de Nadal 2026"
         }
-      ]
+      ],
+      "frame": "square"
     }
   ]
 }

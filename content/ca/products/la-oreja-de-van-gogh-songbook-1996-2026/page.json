@@ -52,7 +52,8 @@
           "image": "songbook-1.jpg",
           "alt": "El cançoner de La Oreja de Van Gogh sobre un piano"
         }
-      ]
+      ],
+      "frame": "square"
     },
     {
       "type": "Article",

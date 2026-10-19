@@ -36,7 +36,8 @@
           "image": "book-7.jpg",
           "alt": "Un llibre de partitures de Laura Andrés sobre un piano"
         }
-      ]
+      ],
+      "frame": "square"
     },
     {
       "type": "Article",
