@@ -182,10 +182,8 @@ async function recordOrder(
   order: NewOrder,
   origin: string,
 ): Promise<Order> {
-  const store = await orderStore()
-  const known = await numberOfSession(store, session)
-  const saved = await createOrder(store, prefix, session, order)
-  if (known) return saved
+  const { order: saved, created } = await createOrder(await orderStore(), prefix, session, order)
+  if (!created) return saved
   const results = await Promise.allSettled([
     sendEmail(teamEmail(saved, `${origin}/admin/orders/`)),
     sendEmail(customerEmail(saved, 'paid', orderLink(saved, origin))),
@@ -250,6 +248,30 @@ export function orderFromSession(
   }
 }
 
+/**
+ * Files the order of a paid Checkout Session (once, however often it arrives), or null while it is not paid. The
+ * webhook calls it, and so does the buyer's return from Stripe, so a deploy Stripe sends no webhooks to (a deploy
+ * preview, a branch deploy) records its paid orders too.
+ */
+async function recordSession(key: string, session: CheckoutSession, origin: string) {
+  if (session.payment_status !== 'paid') return null
+  const shop = siteShop(session.metadata?.locale ?? '')
+  if (!shop) throw new Error(`no shop for ${session.metadata?.locale}`)
+  const items = await stripe<{ data: StripeLineItem[] }>(
+    key,
+    'GET',
+    `checkout/sessions/${session.id}/line_items`,
+    { limit: 100 },
+  )
+  const zone = shop.zones.find((z) => z.id === session.metadata?.zone)
+  return recordOrder(
+    shop.config.orderPrefix,
+    session.id,
+    orderFromSession(session, items.data, zone?.label ?? session.metadata?.zone ?? ''),
+    origin,
+  )
+}
+
 /** POST /api/shop/stripe-webhook: Stripe telling us a Checkout Session is paid. Answers 2xx once it is recorded. */
 export async function stripeWebhook(request: Request): Promise<Response> {
   const secret = process.env.STRIPE_WEBHOOK_SECRET
@@ -264,24 +286,10 @@ export async function stripeWebhook(request: Request): Promise<Response> {
     event.type !== 'checkout.session.async_payment_succeeded'
   )
     return json({ received: true })
-  const session = event.data.object
-  if (session.payment_status !== 'paid') return json({ received: true, pending: true })
-  const shop = siteShop(session.metadata?.locale ?? '')
-  if (!shop) return json({ error: `no shop for ${session.metadata?.locale}` }, 422)
-  const items = await stripe<{ data: StripeLineItem[] }>(
-    key,
-    'GET',
-    `checkout/sessions/${session.id}/line_items`,
-    { limit: 100 },
-  )
-  const zone = shop.zones.find((z) => z.id === session.metadata?.zone)
-  const order = await recordOrder(
-    shop.config.orderPrefix,
-    session.id,
-    orderFromSession(session, items.data, zone?.label ?? session.metadata?.zone ?? ''),
-    originOf(request),
-  )
-  return json({ received: true, number: order.number })
+  const order = await recordSession(key, event.data.object, originOf(request))
+  return order
+    ? json({ received: true, number: order.number })
+    : json({ received: true, pending: true })
 }
 
 /** The invoice and receipt Stripe made for an order, when Stripe is set up and has them. */
@@ -363,7 +371,20 @@ export async function customerOrder(request: Request): Promise<Response> {
   const session = params.get('session') ?? ''
   if (!/^(cs_(test|live)_|demo-)[\w-]+$/.test(session)) return json({ error: 'bad session' }, 400)
   const number = await numberOfSession(store, session)
-  const order = number ? await getOrder(store, number) : null
+  let order = number ? await getOrder(store, number) : null
+  // not recorded yet: ask Stripe ourselves rather than wait for a webhook that may never come to this deploy
+  const key = process.env.STRIPE_SECRET_KEY
+  if (!order && key && session.startsWith('cs_')) {
+    try {
+      order = await recordSession(
+        key,
+        await stripe<CheckoutSession>(key, 'GET', `checkout/sessions/${session}`),
+        originOf(request),
+      )
+    } catch (err) {
+      console.error('[shop] could not confirm', session, err)
+    }
+  }
   return order
     ? json({ number: order.number, ref: orderRef(order) })
     : json({ error: 'not yet' }, 404)
