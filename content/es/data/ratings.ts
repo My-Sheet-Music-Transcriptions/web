@@ -52,3 +52,9 @@ export const homeRatings: RatingSource[] = [google, customers, facebook]
 export const platforms: RatingSource[] = [google, trustpilot, facebook]
 
 export const counter: Counter = { value: 71844, label: 'transcripciones entregadas desde 2011' }
+
+/** The two counters of /opiniones: the transcriptions and the satisfied customers (the figure of `customers`). */
+export const counters: Counter[] = [
+  counter,
+  { value: 26330, label: 'clientes satisfechos hasta octubre de 2026' },
+]

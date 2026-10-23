@@ -7,6 +7,7 @@ import type * as home from '../../../content/en/data/home.ts'
 import type * as ratings from '../../../content/en/data/ratings.ts'
 import type * as reviews from '../../../content/en/data/reviews.ts'
 import type * as services from '../../../content/en/data/services.ts'
+import type * as esRatings from '../../../content/es/data/ratings.ts'
 import type * as esReviews from '../../../content/es/data/reviews.ts'
 import type * as esServices from '../../../content/es/data/services.ts'
 import {
@@ -57,7 +58,7 @@ const preset = <K extends BlockName>(block: K, entry: CmsBlock<PropsOf<K>>) => (
 
 /**
  * The data a data field can offer: content/<locale>/data, typed by what the English files export, plus the lists only
- * one language has (the Spanish wind, string and prices-page prices, every Spanish review); a page whose language lacks the list it names fails its build.
+ * one language has (the Spanish wind, string and prices-page prices, every Spanish review, the Spanish counters); a page whose language lacks the list it names fails its build.
  */
 interface Data {
   brand: typeof brand
@@ -65,7 +66,7 @@ interface Data {
   faqs: typeof faqs
   forms: typeof forms
   home: typeof home
-  ratings: typeof ratings
+  ratings: typeof ratings & typeof esRatings
   reviews: typeof reviews & typeof esReviews
   services: typeof services & typeof esServices
 }
@@ -646,12 +647,13 @@ export const cmsBlocks = {
       eyebrow: line('Short line above the heading'),
       lead: prose('Line under the heading', { hint: inlineHint }),
       id: anchor,
-      counter: fromData('Big number', { counter: 'ratings' }),
+      counter: fromData('Big numbers (one or two)', { counter: 'ratings', counters: 'ratings' }),
       sources: fromData(
         'Rating cards',
         { homeRatings: 'ratings', platforms: 'ratings' },
         { required: true },
       ),
+      note: prose('Line under the cards', { hint: inlineHint }),
       image: fromData(
         'Photo behind',
         { pianoBand: 'brand', sheetMusicBand: 'brand' },

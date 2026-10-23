@@ -3,9 +3,11 @@ import { useEffect, useRef, useState } from 'react'
 import { BlockShell, type HeadingProps } from '~/components/primitives/BlockShell'
 import { Card } from '~/components/primitives/Card'
 import type { Cta } from '~/components/primitives/CtaLink'
+import { Icon, type IconName } from '~/components/primitives/Icon'
 import { drawGroup, drawLine, RevealItem } from '~/components/primitives/Motion'
 import { Stars } from '~/components/primitives/Stars'
 import type { Review, ReviewLabels } from '~/content/types'
+import { cn } from '~/lib/cn'
 import { fill } from '~/lib/strings'
 import { useLocale } from '~/site'
 
@@ -104,7 +106,16 @@ function monthLabel(date: string, locale: string) {
   })
 }
 
-/** One review: name (linked to the original), stars, who and when, and the quote. */
+/** The mark of the platform a review comes from, in the card's corner (the live Spanish site's "G"). */
+const sourceMark: Record<Review['source'], { icon: IconName; className: string }> = {
+  google: { icon: 'fa-google', className: 'text-google' },
+  trustpilot: { icon: 'trustpilot', className: 'text-trustpilot' },
+  facebook: { icon: 'fa-facebook-f', className: 'text-facebook' },
+  shop: { icon: 'book', className: 'text-accent-deep' },
+  email: { icon: 'mail', className: 'text-primary' },
+}
+
+/** One review: name (linked to the original), the platform's mark, stars, who and when, and the quote. */
 export function ReviewCard({ review, labels }: { review: Review; labels: ReviewLabels }) {
   const locale = useLocale()
   const name = review.sourceUrl ? (
@@ -121,8 +132,14 @@ export function ReviewCard({ review, labels }: { review: Review; labels: ReviewL
   return (
     <Card as="article" padding="none" className="pb-10">
       <div className="p-px md:mx-[14px]">
-        <header className="border-b border-[#e1e8ed] px-[15px] pt-[15px] pb-6 text-[#202020]">
-          <p className="text-[20px] leading-[38px] font-semibold">{name}</p>
+        <header className="relative border-b border-[#e1e8ed] px-[15px] pt-[15px] pb-6 text-[#202020]">
+          <Icon
+            name={sourceMark[review.source].icon}
+            size={26}
+            aria-hidden="true"
+            className={cn('absolute top-[18px] right-[15px]', sourceMark[review.source].className)}
+          />
+          <p className="pr-10 text-[20px] leading-[38px] font-semibold">{name}</p>
           <Stars
             rating={review.rating}
             label={fill(labels.stars, { rating: review.rating })}

@@ -39,7 +39,7 @@ export const Revealed: Story = {
       { timeout: 5000 },
     )
     await expect(
-      within(canvasElement).getByText(args.counter?.value.toLocaleString('en') ?? ''),
+      within(canvasElement).getByText(([args.counter].flat()[0]?.value ?? 0).toLocaleString('en')),
     ).toBeInTheDocument()
   },
 }

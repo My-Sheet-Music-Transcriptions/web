@@ -70,9 +70,24 @@ export const homeReviews: Review[] = [
   },
 ]
 
+/** The reviews /opiniones shows after the homepage's and before the older ones; keep quotes verbatim. */
+const laterReviews: Review[] = [
+  {
+    name: 'Álvaro N.',
+    role: 'Pianista',
+    country: 'España',
+    date: '2024-06',
+    rating: 5,
+    source: 'trustpilot',
+    sourceUrl: 'https://www.trustpilot.com/reviews/66718d88077012aaca29073b',
+    quote: '¡Muy buena transcripción, nota a nota!',
+  },
+]
+
 /** Every review the live /opiniones shows (newest first): the homepage's, then the older ones; keep quotes verbatim. */
 export const allReviews: Review[] = [
   ...homeReviews,
+  ...laterReviews,
   {
     name: 'Arnau S.',
     country: 'España',
