@@ -15,13 +15,16 @@ export function ProductPrice({
   product,
   labels,
   size = 'lg',
+  placeholder,
 }: {
   product: Product
   labels: ShopLabels
   size?: 'lg' | 'sm'
+  /** An empty line where a product without a price would show one (a card keeps its rows). */
+  placeholder?: boolean
 }) {
   const locale = useLocale()
-  if (product.price === undefined) return null
+  if (product.price === undefined) return placeholder ? <p aria-hidden="true" /> : null
   return (
     <p
       className={cn(
@@ -29,7 +32,7 @@ export function ProductPrice({
         size === 'sm' && 'justify-center',
       )}
     >
-      <span className={cn('font-bold text-ink', size === 'lg' ? 'text-[24px]' : 'text-body')}>
+      <span className={cn('font-bold text-ink', size === 'lg' ? 'text-[24px]' : 'text-h3')}>
         {formatPrice(product.price, locale)}
       </span>
       {product.compareAt ? (
@@ -91,14 +94,14 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
 
   // on a card every action is the same full-width pill, its words wrapping onto a second line when long (and
   // without its icon on phones, where the column is narrow)
-  const fit = compact && 'h-full w-full min-h-11 py-2 leading-tight text-balance'
+  const fit = compact && 'h-14 w-full px-4 py-2 leading-tight text-balance'
   let action: ReactNode
   if (product.availability === 'external' && product.externalUrl)
     action = (
-      <Button asChild variant="primary" size={compact ? 'sm' : 'md'} className={cn(fit)}>
+      <Button asChild variant="primary" className={cn(fit)}>
         <a href={product.externalUrl} rel="noopener">
           {labels.buyElsewhere}
-          <Icon name="external" size={16} className={cn(compact && 'max-md:hidden')} />
+          <Icon name="external" size={18} className={cn(compact && 'max-md:hidden')} />
         </a>
       </Button>
     )
@@ -108,7 +111,7 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
         className={cn(
           'rounded-pill bg-cream font-bold uppercase tracking-wide text-ink',
           compact
-            ? 'flex h-full min-h-11 w-full items-center justify-center px-4 py-2 text-[13px] leading-tight'
+            ? 'flex h-14 w-full items-center justify-center px-4 py-2 text-small leading-tight'
             : 'inline-block px-4 py-2 text-small',
         )}
       >
@@ -129,7 +132,6 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
         )}
         <Button
           variant="accent"
-          size={compact ? 'sm' : 'md'}
           disabled={room < 1}
           className={cn(fit, !compact && 'max-md:grow')}
           aria-label={compact ? `${labels.add}: ${product.name}` : undefined}
@@ -141,7 +143,7 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
         >
           <Icon
             name={added ? 'check' : 'bag'}
-            size={compact ? 14 : 18}
+            size={18}
             className={cn(compact && 'max-md:hidden')}
           />
           <span aria-live="polite">{added ? labels.added : labels.add}</span>
@@ -149,20 +151,20 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
       </div>
     )
 
-  // on a card the price and the action are two cells of the card's grid (PictureGrid lines them up across the
-  // row), the price's there even when empty
-  if (compact)
-    return (
-      <>
-        <div className={cn('self-end', className)}>
-          <ProductPrice product={product} labels={labels} size="sm" />
-        </div>
-        {action}
-      </>
-    )
+  // on a card the price line keeps its height even when there is none, so the buttons of a row line up
   return (
-    <div className={cn('flex flex-col items-start gap-4', className)}>
-      <ProductPrice product={product} labels={labels} />
+    <div
+      className={cn(
+        'flex flex-col',
+        compact ? 'items-stretch gap-4 [&>p]:min-h-7 [&>p]:items-end' : 'items-start gap-4',
+        className,
+      )}
+    >
+      {compact ? (
+        <ProductPrice product={product} labels={labels} size="sm" placeholder />
+      ) : (
+        <ProductPrice product={product} labels={labels} />
+      )}
       {action}
     </div>
   )
