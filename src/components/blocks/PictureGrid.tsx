@@ -11,8 +11,8 @@ import { fill } from '~/lib/strings'
 export interface PictureGridProps extends ShellProps {
   /** The pictures: a list from content/<locale>/data (allServices), written in the page, or the shop's products (ProductGrid). */
   items?: PictureItem[]
-  /** icon: illustrated icons (services). logo: wide marks in a box. portrait: round photos. photo: square photos. */
-  shape?: 'icon' | 'logo' | 'portrait' | 'photo'
+  /** icon: illustrated icons (services). logo: wide marks in a box. portrait: round photos. photo: square photos. cover: upright pictures in a book's proportions (7:10), the shop's covers. */
+  shape?: 'icon' | 'logo' | 'portrait' | 'photo' | 'cover'
   /** grid (default), or marquee: a strip that scrolls by on its own: icons with their names (the services), or tall photos (hidden on phones). */
   variant?: 'grid' | 'marquee'
   /** Pictures per row from desktop up (two on phones). */
@@ -42,11 +42,16 @@ const pictures = {
     sizes: '(min-width: 768px) 240px, 50vw',
     className: 'aspect-square w-full rounded-card object-cover',
   },
+  cover: {
+    sizes: '(min-width: 1025px) 270px, (min-width: 768px) 25vw, 50vw',
+    className:
+      'aspect-[7/10] w-full rounded-card object-cover shadow-card transition-transform duration-300 group-hover:-translate-y-1',
+  },
 }
 
 /**
  * A grid of pictures, each with its name and caption, linked when it has an `href`. `shape`: icon
- * (services), logo, portrait (round) or photo (square). `variant="marquee"`: a strip that scrolls by on its
+ * (services), logo, portrait (round), photo (square) or cover (upright, the shop's books). `variant="marquee"`: a strip that scrolls by on its
  * own, of icons with their names or of tall photos (hidden on phones). `limit` shows the first n. With `zoom` the
  * pictures open larger when clicked (a gallery).
  */
@@ -136,12 +141,15 @@ export function PictureGrid({
   const p = pictures[shape]
   // never a last row of one or two pictures: 8 logos in 6 columns become 4, 4 in 3 become 4
   const cols = balanceColumns(columns, shown.length, 6)
+  // cards with an action (the shop's add-to-cart) line their actions up along the bottom of the row
+  const actions = shown.some((item) => item.action)
   return (
     <BlockShell {...shell} label={label} cascade>
       <ul
         className={cn(
           gridCols(cols, { tablet: Math.min(cols, 4) as 4, phone: 2 }),
-          'items-start gap-x-6 gap-y-8',
+          actions ? 'items-stretch' : 'items-start',
+          'gap-x-6 gap-y-8',
         )}
       >
         {shown.map((item) => {
@@ -183,7 +191,11 @@ export function PictureGrid({
             </>
           )
           return (
-            <RevealItem as="li" key={keyOf(item)} className="text-center">
+            <RevealItem
+              as="li"
+              key={keyOf(item)}
+              className={cn('text-center', actions && 'flex flex-col')}
+            >
               {item.href ? (
                 <SmartLink href={item.href} className="group block">
                   {content}
@@ -191,7 +203,7 @@ export function PictureGrid({
               ) : (
                 content
               )}
-              {item.action}
+              {item.action ? <div className="mt-auto pt-4">{item.action}</div> : null}
             </RevealItem>
           )
         })}

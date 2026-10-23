@@ -89,25 +89,35 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
   const inCart = cart.lines.find((l) => l.sku === sku)?.quantity ?? 0
   const room = product.maxPerOrder - inCart
 
+  // on a card every action is the same full-width pill, its words wrapping onto a second line when long (and
+  // without its icon on phones, where the column is narrow)
+  const fit = compact && 'w-full min-h-11 py-2 leading-tight text-balance'
   let action: ReactNode
   if (product.availability === 'external' && product.externalUrl)
     action = (
-      <Button asChild variant="primary" size={compact ? 'sm' : 'md'}>
+      <Button asChild variant="primary" size={compact ? 'sm' : 'md'} className={cn(fit)}>
         <a href={product.externalUrl} rel="noopener">
           {labels.buyElsewhere}
-          <Icon name="external" size={16} />
+          <Icon name="external" size={16} className={cn(compact && 'max-md:hidden')} />
         </a>
       </Button>
     )
   else if (product.availability !== 'available')
     action = (
-      <span className="inline-block rounded-pill bg-cream px-4 py-2 text-small font-bold uppercase tracking-wide text-ink">
+      <span
+        className={cn(
+          'rounded-pill bg-cream font-bold uppercase tracking-wide text-ink',
+          compact
+            ? 'flex min-h-11 w-full items-center justify-center px-4 py-2 text-[13px] leading-tight'
+            : 'inline-block px-4 py-2 text-small',
+        )}
+      >
         {product.availability === 'soldOut' ? labels.soldOut : labels.soon}
       </span>
     )
   else
     action = (
-      <div className={cn('flex flex-wrap items-center gap-3', compact && 'justify-center')}>
+      <div className={cn('flex flex-wrap items-center gap-3', compact && 'w-full')}>
         {compact ? null : (
           <QuantityStepper
             value={Math.min(quantity, Math.max(room, 1))}
@@ -121,6 +131,7 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
           variant="accent"
           size={compact ? 'sm' : 'md'}
           disabled={room < 1}
+          className={cn(fit)}
           aria-label={compact ? `${labels.add}: ${product.name}` : undefined}
           onClick={(e) => {
             cart.add(sku, compact ? 1 : Math.min(quantity, room), pictureNear(e.currentTarget))
@@ -128,7 +139,11 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
             setQuantity(1)
           }}
         >
-          <Icon name={added ? 'check' : 'bag'} size={compact ? 14 : 18} />
+          <Icon
+            name={added ? 'check' : 'bag'}
+            size={compact ? 14 : 18}
+            className={cn(compact && 'max-md:hidden')}
+          />
           <span aria-live="polite">{added ? labels.added : labels.add}</span>
         </Button>
       </div>
@@ -138,7 +153,7 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
     <div
       className={cn(
         'flex flex-col gap-4',
-        compact ? 'mt-3 items-center gap-2' : 'items-start',
+        compact ? 'items-stretch gap-3' : 'items-start',
         className,
       )}
     >

@@ -488,7 +488,7 @@ export const cmsBlocks = {
     fields: {
       ...heading,
       label: line('What the pictures are (for screen readers, without a heading)'),
-      shape: select('Shape', ['icon', 'logo', 'portrait', 'photo'], { default: 'photo' }),
+      shape: select('Shape', ['icon', 'logo', 'portrait', 'photo', 'cover'], { default: 'photo' }),
       variant: select('Style', ['grid', 'marquee'], {
         hint: 'marquee: a strip that scrolls by on its own.',
       }),
@@ -528,9 +528,9 @@ export const cmsBlocks = {
   ProductGrid: preset('PictureGrid', {
     label: 'Shop products',
     summary: '{{fields.title}}{{fields.label}}',
-    pictureWidths: '160;320;480',
+    pictureWidths: '270;540',
     feed: 'products',
-    props: { shape: 'photo' },
+    props: { shape: 'cover' },
     fields: {
       ...heading,
       label: line('What the products are (for screen readers, without a heading)'),
