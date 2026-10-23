@@ -28,6 +28,7 @@ export const en: SiteConfig = {
     { locale: 'fr', label: 'FR', name: 'French' },
     { locale: 'de', label: 'DE', name: 'German' },
     { locale: 'ja', label: 'JP', name: 'Japanese' },
+    { locale: 'ca', label: 'CAT', name: 'Catalan' },
   ],
   strings: {
     nav: {

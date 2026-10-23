@@ -11,7 +11,6 @@ end with a slash and the new site 301s the slashed form (plan W1.3).
 | Path | Collection | translationKey | Notes | PR |
 |---|---|---|---|---|
 | [`/`](https://lamevapartitura.cat/) | pages | `home` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
-| [`/gracies`](https://lamevapartitura.cat/gracies/) | pages | `thank-you` | noindex (thank-you page after the form) | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
 | [`/contacte`](https://lamevapartitura.cat/contacte/) | pages | `contact` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
 | [`/sobre-nosaltres`](https://lamevapartitura.cat/sobre-nosaltres/) | pages | `about-us` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
 | [`/shop`](https://lamevapartitura.cat/shop/) | pages | `shop` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
@@ -32,6 +31,7 @@ team answers by email; the Laura Andrés collection keeps its link to laurandres
 | `/sample-page` | page | `/` | WordPress draft, duplicate or WooCommerce page |
 | `/descartes` | page | `/` | WordPress draft, duplicate or WooCommerce page |
 | `/contacte-2` | page | `/contacte` | WordPress draft, duplicate or WooCommerce page |
+| `/gracies` | page | `/contacte` | Thank-you page retired: the form confirms inline (decided 2026-10-23) |
 | `/redisseny-home` | page | `/` | WordPress draft, duplicate or WooCommerce page |
 | `/el-meu-compte` | page | `/shop` | WordPress draft, duplicate or WooCommerce page |
 | `/cistella` | page | `/shop` | WordPress draft, duplicate or WooCommerce page |

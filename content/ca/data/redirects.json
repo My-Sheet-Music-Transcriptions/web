@@ -1,6 +1,11 @@
 {
   "rules": [
     {
+      "from": "/gracies",
+      "to": "/contacte",
+      "note": "Pàgina de gràcies retirada: el formulari confirma en línia"
+    },
+    {
       "from": "/redisseny-home",
       "to": "/",
       "note": "Esborrany del redisseny de la portada"
