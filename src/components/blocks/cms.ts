@@ -292,7 +292,7 @@ export const cmsBlocks = {
       alt: line('Picture description (alt text)'),
       images: slides('Photos', '1000;1600;2000', 'Several rotate behind the title (photo style).'),
       frame: select('Carousel frame (split)', ['wide', 'square'], {
-        hint: 'wide: 3:2, cropped (the default). square: each picture whole (a product’s gallery).',
+        hint: 'wide: 3:2, cropped (the default). square: a gallery, each picture whole on a cream card with thumbnails (a product).',
       }),
       rating: fromData('Rating card', {
         google: 'ratings',
@@ -344,7 +344,7 @@ export const cmsBlocks = {
         },
         { summary: '{{fields.alt}}' },
       ),
-      layout: select('Several pictures as', ['carousel', 'pair']),
+      layout: select('Several pictures as', ['carousel', 'gallery', 'pair']),
       zoom: toggle('The picture opens larger when clicked'),
       video: video,
       clip,
@@ -488,7 +488,7 @@ export const cmsBlocks = {
     fields: {
       ...heading,
       label: line('What the pictures are (for screen readers, without a heading)'),
-      shape: select('Shape', ['icon', 'logo', 'portrait', 'photo'], { default: 'photo' }),
+      shape: select('Shape', ['icon', 'logo', 'portrait', 'photo', 'cover'], { default: 'photo' }),
       variant: select('Style', ['grid', 'marquee'], {
         hint: 'marquee: a strip that scrolls by on its own.',
       }),
@@ -528,9 +528,9 @@ export const cmsBlocks = {
   ProductGrid: preset('PictureGrid', {
     label: 'Shop products',
     summary: '{{fields.title}}{{fields.label}}',
-    pictureWidths: '160;320;480',
+    pictureWidths: '270;540',
     feed: 'products',
-    props: { shape: 'photo' },
+    props: { shape: 'cover' },
     fields: {
       ...heading,
       label: line('What the products are (for screen readers, without a heading)'),

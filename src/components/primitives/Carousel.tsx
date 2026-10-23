@@ -24,6 +24,10 @@ export interface CarouselProps {
   sizes: string
   /** Seconds between slides (paused while hovered or focused, and for reduced-motion users). */
   interval?: number
+  /** photo (default): cropped photos that slide on by themselves, white arrows over them. gallery: each picture
+   * whole on a cream card, arrows on white discs, the pictures as thumbnails under it to pick from; it moves only
+   * when asked (a product's pictures). */
+  variant?: 'photo' | 'gallery'
   /** Extra classes of the visible frame (e.g. a bleed past the column). */
   frameClassName?: string
   /** Extra classes of each picture (its aspect ratio). */
@@ -43,21 +47,27 @@ export function Carousel({
   labels,
   sizes,
   interval = 10,
+  variant = 'photo',
   frameClassName,
   imageClassName,
   priority,
 }: CarouselProps) {
+  const gallery = variant === 'gallery'
   const [paused, setPaused] = useState(false)
   const n = slides.length
-  const [i, setI] = useAutoAdvance(n, interval, paused)
+  const [i, setI] = useAutoAdvance(n, interval, paused || gallery)
   const go = (d: number) => setI((v) => (v + d + n) % n)
-  const arrow =
-    'absolute top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-white drop-shadow'
+  const arrow = cn(
+    'absolute top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center',
+    gallery
+      ? 'rounded-full bg-white/90 text-ink shadow-card transition-colors hover:bg-white'
+      : 'text-white drop-shadow',
+  )
   return (
     // biome-ignore lint/a11y/useSemanticElements: the WAI-ARIA carousel pattern is a named group, not a form fieldset
     <div
       role="group"
-      className="relative"
+      className="relative min-w-0"
       aria-roledescription={labels?.carousel}
       aria-label={label}
       onMouseEnter={() => setPaused(true)}
@@ -65,9 +75,17 @@ export function Carousel({
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <div className={cn('overflow-hidden rounded-card', frameClassName)} aria-live="polite">
+      <div
+        className={cn('overflow-hidden rounded-card', gallery && 'bg-cream', frameClassName)}
+        aria-live="polite"
+      >
         <div
-          className="flex transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none"
+          className={cn(
+            'flex ease-in-out motion-reduce:transition-none',
+            gallery
+              ? 'transition-transform duration-500'
+              : 'transition-transform duration-[2000ms]',
+          )}
           style={{ transform: `translateX(-${i * 100}%)` }}
         >
           {slides.map((s, k) => (
@@ -78,7 +96,11 @@ export function Carousel({
               aria-hidden={k === i ? undefined : 'true'}
               sizes={sizes}
               priority={priority && k === 0}
-              className={cn('w-full shrink-0 object-cover', imageClassName)}
+              className={cn(
+                'w-full shrink-0',
+                gallery ? 'aspect-square object-contain p-4 md:p-6' : 'object-cover',
+                imageClassName,
+              )}
               pictureClassName="contents"
             />
           ))}
@@ -90,7 +112,7 @@ export function Carousel({
             type="button"
             onClick={() => go(-1)}
             aria-label={labels?.previous}
-            className={`${arrow} left-0`}
+            className={cn(arrow, gallery ? 'left-3' : 'left-0')}
           >
             <Icon name="chevron-left" size={25} />
           </button>
@@ -98,10 +120,37 @@ export function Carousel({
             type="button"
             onClick={() => go(1)}
             aria-label={labels?.next}
-            className={`${arrow} right-0`}
+            className={cn(arrow, gallery ? 'right-3' : 'right-0')}
           >
             <Icon name="chevron-right" size={25} />
           </button>
+          {gallery ? (
+            <ul className="mt-3 flex gap-2 overflow-x-auto pb-1">
+              {slides.map((s, k) => (
+                <li key={s.image.img.src} className="shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setI(k)}
+                    aria-label={labels ? fill(labels.position, { n: k + 1, total: n }) : undefined}
+                    aria-current={k === i ? 'true' : undefined}
+                    className={cn(
+                      'block h-16 w-16 overflow-hidden rounded-[8px] bg-cream p-1 transition-[box-shadow,opacity]',
+                      k === i
+                        ? 'shadow-[inset_0_0_0_2px_var(--color-accent-deep)]'
+                        : 'opacity-70 hover:opacity-100',
+                    )}
+                  >
+                    <Picture
+                      image={s.image}
+                      alt=""
+                      sizes="64px"
+                      className="h-full w-full object-contain"
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
           {labels ? (
             <p className="sr-only">{fill(labels.position, { n: i + 1, total: n })}</p>
           ) : null}
