@@ -5,7 +5,9 @@
 #     SITE_HOSTS_<LOCALE> (e.g. SITE_HOSTS_ES="staging.example.es") overrides a locale's domains to try other hosts
 #     (scripts/build-multi.ts, scripts/lib/host-rules.ts)
 #   - the design system (Storybook): NETLIFY_TARGET=storybook
-# Set those variables per site (Site configuration > Environment variables).
+# Set those variables per site (Site configuration > Environment variables), with the secrets' decryption keys:
+# DOTENV_PRIVATE_KEY_PRODUCTION (production context) and DOTENV_PRIVATE_KEY_DEVELOPMENT (deploy previews, branch
+# deploys); the secrets themselves are committed encrypted in .env.production / .env.development (dotenvx).
 # Deploy Previews: the English site (SITE_LOCALE=en) builds every locale under /en, /es, /ca...
 # (path mode, see src/i18n/routing.ts); the other locale sites skip previews and branch deploys
 # (scripts/netlify-ignore.sh), so a pull request gets one all-languages preview plus Storybook's.

@@ -1,3 +1,4 @@
+import './env.server'
 import { localeHref } from '~/i18n/routing'
 import type { Locale } from '~/i18n/types'
 import { priceCart } from '~/shop/cart'

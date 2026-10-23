@@ -6,6 +6,9 @@ interface ImportMetaEnv {
   readonly LOCALE_ROUTING?: string
   /** Deploy origin of a path build (deployOrigin() in scripts/lib/site-locale.ts), for absolute URLs. */
   readonly PREVIEW_ORIGIN?: string
+  /** Which encrypted env file the server decrypts, and its contents (scripts/lib/secrets.ts, src/server/env.server.ts). */
+  readonly SECRETS_ENV?: string
+  readonly SECRETS?: string
   readonly VITE_GTM_ID?: string
 }
 

@@ -17,6 +17,9 @@ public/robots.txt
 .env
 .env.*
 !.env.example
+# the server's secrets, encrypted with dotenvx (src/server/env.server.ts); their keys stay in .env.keys
+!.env.development
+!.env.production
 *.log
 .DS_Store
 tests/visual/__screenshots__/**/*-actual.png
