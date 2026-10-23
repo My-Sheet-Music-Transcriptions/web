@@ -28,6 +28,22 @@ const lg = {
 }
 
 /**
+ * The columns a list of `count` items really gets: `columns` unless that leaves a last row of one or two items,
+ * in which case the nearest count up to `max` (never above) or down to 2 that fills every row (6 items in 4 columns: 3;
+ * 4 in 3: 4 when `max` allows). A count no column count divides keeps `columns`, and so does a list that fits one
+ * row. So pages never have to pick a count per list.
+ */
+export function balanceColumns(columns: Columns, count: number, max: Columns = columns): Columns {
+  if (count <= columns) return columns
+  const rest = count % columns
+  if (rest === 0 || rest > 2) return columns
+  const candidates: Columns[] = []
+  for (let up = columns + 1; up <= max; up++) candidates.push(up as Columns)
+  for (let down = columns - 1; down >= 2; down--) candidates.push(down as Columns)
+  return candidates.find((c) => count % c === 0) ?? columns
+}
+
+/**
  * The grid classes of a block's `columns`, which always means the columns from desktop (1025px) up. Tablets
  * (768px) show `tablet` columns (never more than desktop) and phones `phone` (one by default).
  */
