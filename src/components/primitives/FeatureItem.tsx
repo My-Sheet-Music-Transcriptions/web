@@ -20,6 +20,8 @@ export interface FeatureItemProps {
   videoPoster?: PictureSource
   /** Extra classes of the picture (Steps hides it where its wide illustration shows). */
   imageClassName?: string
+  /** The step's number before the title, in the accent colour ("1."), when the title opens with one (Steps). */
+  number?: string
 }
 
 const surfaces = {
@@ -52,6 +54,7 @@ export function FeatureItem({
   labels,
   videoPoster,
   imageClassName,
+  number,
 }: FeatureItemProps) {
   const center = align === 'center'
   // wide icons (the formats strip) sit lower than the square ones
@@ -120,6 +123,7 @@ export function FeatureItem({
       {media}
       {item.title ? (
         <h3 className="text-h3 font-bold text-ink">
+          {number ? <span className="text-accent-deep">{number} </span> : null}
           {linked ? (
             <SmartLink href={item.href as string} className="hover:text-accent-deep">
               {item.title}

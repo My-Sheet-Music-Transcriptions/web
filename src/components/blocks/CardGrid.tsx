@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { FeatureItem } from '~/components/primitives/FeatureItem'
 import { RevealItem } from '~/components/primitives/Motion'
 import type { PictureSource } from '~/components/primitives/Picture'
-import { Tabs } from '~/components/primitives/Tabs'
+import { Tabs, useTabs } from '~/components/primitives/Tabs'
 import type { CardItem, MediaLabels } from '~/content/types'
 import { cn } from '~/lib/cn'
 import { balanceColumns, gridCols } from '~/lib/grid'
@@ -46,7 +45,7 @@ export function CardGrid({
   videoPoster,
   ...shell
 }: CardGridProps) {
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useTabs(tabs ? tabs.map((t) => t.label) : [])
   const shown = tabs ? (tabs[tab]?.items ?? []) : items
   // never a last row of one or two cards: 6 in 4 columns become 3, 4 in 3 become 4
   const cols = balanceColumns(columns, shown.length, columns > 4 ? columns : 4)

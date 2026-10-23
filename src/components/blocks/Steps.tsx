@@ -26,11 +26,18 @@ export interface StepsProps extends ShellProps {
   videoPoster?: PictureSource
 }
 
+/** "1. Send us audio" → the number "1." (drawn in the accent colour) and the title after it. */
+function numbered(step: CardItem): { item: CardItem; number?: string } {
+  const m = step.title ? /^(\d+\.)\s+(.+)$/.exec(step.title) : null
+  return m ? { item: { ...step, title: m[2] }, number: m[1] } : { item: step }
+}
+
 /**
  * A process step by step. `timeline`: a numbered vertical list with a glyph or number per step. `bubbles`:
  * a vertical line with each step's illustrated icon on it and its title and text in a speech bubble.
  * `columns`: the steps side by side, each with its picture or video (the homepage adds one wide
- * illustration on desktop).
+ * illustration on desktop). A title that opens with its number ("1. Send us audio") shows the number in the
+ * accent colour.
  */
 export function Steps({
   items,
@@ -63,7 +70,7 @@ export function Steps({
           {items.map((step) => (
             <RevealItem as="li" key={step.title ?? step.body}>
               <FeatureItem
-                item={step}
+                {...numbered(step)}
                 surface="plain"
                 labels={labels}
                 videoPoster={videoPoster}
@@ -115,7 +122,7 @@ export function Steps({
               </div>
               <RevealItem preset="side" className="my-2 min-w-0 flex-1">
                 <FeatureItem
-                  item={{ ...step, icon: undefined, glyph: undefined }}
+                  {...numbered({ ...step, icon: undefined, glyph: undefined })}
                   surface="bubble"
                   labels={labels}
                   videoPoster={videoPoster}
