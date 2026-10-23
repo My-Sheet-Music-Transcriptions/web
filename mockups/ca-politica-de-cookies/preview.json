@@ -2,5 +2,11 @@
   "title": "Política de cookies",
   "path": "/politica-de-cookies",
   "locale": "ca",
-  "url": "https://claude.ai/artifact/WjxqbhfAmt6qS2ez3GK3M5"
+  "url": "https://claude.ai/artifact/WjxqbhfAmt6qS2ez3GK3M5",
+  "source": "ca/pages/politica-de-cookies",
+  "pr": {
+    "number": 80,
+    "url": "https://github.com/My-Sheet-Music-Transcriptions/web/pull/80",
+    "branch": "claude/project-thread-4hrsoa"
+  }
 }

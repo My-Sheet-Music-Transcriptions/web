@@ -2,5 +2,11 @@
   "title": "Política de privacitat",
   "path": "/politica-de-privacitat",
   "locale": "ca",
-  "url": "https://claude.ai/artifact/9VUb9gCnYjsahFm6aDq9QS"
+  "url": "https://claude.ai/artifact/9VUb9gCnYjsahFm6aDq9QS",
+  "source": "ca/pages/politica-de-privacitat",
+  "pr": {
+    "number": 80,
+    "url": "https://github.com/My-Sheet-Music-Transcriptions/web/pull/80",
+    "branch": "claude/project-thread-4hrsoa"
+  }
 }

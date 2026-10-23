@@ -2,5 +2,11 @@
   "title": "Termes i condicions",
   "path": "/termes-i-condicions",
   "locale": "ca",
-  "url": "https://claude.ai/artifact/W6MSaa3Jv2nHVbYe5MFs6P"
+  "url": "https://claude.ai/artifact/W6MSaa3Jv2nHVbYe5MFs6P",
+  "source": "ca/pages/termes-i-condicions",
+  "pr": {
+    "number": 80,
+    "url": "https://github.com/My-Sheet-Music-Transcriptions/web/pull/80",
+    "branch": "claude/project-thread-4hrsoa"
+  }
 }
