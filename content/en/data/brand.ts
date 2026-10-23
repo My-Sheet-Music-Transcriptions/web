@@ -1,7 +1,7 @@
 import heroPhonePicture from '~/assets/images/bands/hero-phone.jpg?w=480;800;1125&as=picture'
 import studioBandPicture from '~/assets/images/bands/included-bg.jpg?w=1000;1600&as=picture'
 import pianoBandPicture from '~/assets/images/bands/stats-bg.jpg?w=900;1282&as=picture'
-import logoFile from '~/assets/images/brand/logo.svg'
+import logoFile from '~/assets/images/brand/logo-en.svg'
 import videoPosterPicture from '~/assets/images/brand/video-poster.jpg?w=560;1000&as=picture'
 import type { BrandLogo } from '~/content/types'
 

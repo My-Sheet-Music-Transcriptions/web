@@ -12,7 +12,7 @@ import designSystem from './vite.ds.config.ts'
  * The CMS admin (/admin, Decap CMS), built after the site into dist/client/admin:
  *   preview.{js,css}   the real-component preview (src/admin/preview.tsx), built like the design-system bundle
  *                      (React 19 inside, router links as plain anchors)
- *   index.html, emails/   from src/admin; logo.svg, the brand lockup (src/assets/images/brand)
+ *   index.html, emails/   from src/admin; logo.svg, the English brand lockup (src/assets/images/brand/logo-en.svg)
  *   config.yml         Decap's configuration, from src/admin/config.ts (JSON, which YAML reads as it is)
  *   decap-cms.js (+ its chunks), netlify-identity-widget.js   copied from node_modules: nothing loads from a CDN
  * and `__CMS_PAGES__` in preview.js: each language's pages (path and title) and link rule, for the link widgets.
@@ -63,7 +63,7 @@ function adminFiles(): Plugin {
         if (/^(\d+\.)?decap-cms\.js$|\.wasm$|LICENSE/.test(file))
           fs.copyFileSync(path.join(DECAP, file), path.join(OUT, file))
       fs.copyFileSync(IDENTITY, path.join(OUT, 'netlify-identity-widget.js'))
-      fs.copyFileSync('src/assets/images/brand/logo.svg', path.join(OUT, 'logo.svg'))
+      fs.copyFileSync('src/assets/images/brand/logo-en.svg', path.join(OUT, 'logo.svg'))
     },
   }
 }
