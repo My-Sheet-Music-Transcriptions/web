@@ -3,7 +3,7 @@ import { readAllEntries } from '../../scripts/lib/content-fs.ts'
 import { cmsBlocks } from '../components/blocks/cms.ts'
 import type { AnyCmsBlock, Field } from '../content/cms-fields.ts'
 import { decapField } from '../content/cms-fields.ts'
-import { metaFields, postFields, serviceFields } from '../content/cms-meta.ts'
+import { metaFields, postFields, productFields, serviceFields } from '../content/cms-meta.ts'
 import { postBody } from '../content/post-template.ts'
 import { CMS_LOCALES, type CmsLocale } from './locales.ts'
 
@@ -51,6 +51,7 @@ const fieldsOf = (meta: Record<string, Field>) => [
 /** Every page's fields: its meta, then its blocks; a service page's own meta fields come after the shared ones. */
 const fields = fieldsOf(metaFields)
 const serviceFormFields = fieldsOf({ ...metaFields, ...serviceFields })
+const productFormFields = fieldsOf({ ...metaFields, ...productFields })
 /**
  * A post's fields: no blocks, its layout is fixed (src/content/post-template.ts). What a writer fills in for every post
  * comes first (title, date, cover, the text in a rich text editor, the card's summary), then the search fields.
@@ -125,9 +126,11 @@ const homeFile = (locale: string) => `content/${locale}/pages/home/page.json`
 const menuFile = (locale: string) => `content/${locale}/data/menu.json`
 /** A language's redirects (src/content/redirects.ts). */
 const redirectsFile = (locale: string) => `content/${locale}/data/redirects.json`
+/** A language's shop settings: order numbers and shipping (src/shop/config.ts). */
+const shopFile = (locale: string) => `content/${locale}/data/shop.json`
 const entries = readAllEntries()
 
-/** The Site entries of a language: its homepage, its menu and its redirects, those it has. */
+/** The Site entries of a language: its homepage, its menu, its redirects and its shop settings, those it has. */
 const siteFiles = ({ code, label }: CmsLocale) => [
   ...(fs.existsSync(homeFile(code))
     ? [{ name: `home-${code}`, label: `${label} · Homepage`, file: homeFile(code), fields }]
@@ -152,6 +155,73 @@ const siteFiles = ({ code, label }: CmsLocale) => [
         },
       ]
     : []),
+  ...(fs.existsSync(shopFile(code))
+    ? [{ name: `shop-${code}`, label: `${label} · Shop`, file: shopFile(code), fields: shopFields }]
+    : []),
+]
+
+/**
+ * The shop settings' form (src/shop/config.ts checks them at build): the order numbers' prefix and the shipping zones,
+ * each a flat fee per order, in the order the cart offers them. Prices of products are on each product (Shop).
+ */
+const shopFields = [
+  {
+    name: 'orderPrefix',
+    label: 'Order number prefix',
+    widget: 'string',
+    hint: 'Capitals, 2 to 6: orders read LMP-1001, LMP-1002…',
+    pattern: ['^[A-Z]{2,6}$', '2 to 6 capital letters'],
+  },
+  {
+    name: 'zones',
+    label: 'Shipping zones',
+    label_singular: 'zone',
+    widget: 'list',
+    collapsed: true,
+    summary: '{{fields.label}}: {{fields.fee}} €',
+    hint: 'One flat fee per order. The order here is the order of the cart’s “Shipping to” menu; the first is picked at first.',
+    fields: [
+      {
+        name: 'id',
+        label: 'Code',
+        widget: 'string',
+        hint: 'Lowercase, never changed once orders use it: es, eu, world.',
+        pattern: ['^[a-z][a-z0-9-]*$', 'lowercase letters, digits and dashes'],
+      },
+      { name: 'label', label: 'Name in the cart', widget: 'string' },
+      {
+        name: 'fee',
+        label: 'Fee (€, VAT included)',
+        widget: 'number',
+        value_type: 'float',
+        step: 0.01,
+        min: 0,
+      },
+      {
+        name: 'freeFrom',
+        label: 'Free shipping from (€ of products)',
+        widget: 'number',
+        value_type: 'float',
+        required: false,
+        hint: 'Empty: never free.',
+      },
+      {
+        name: 'countries',
+        label: 'Countries',
+        widget: 'list',
+        required: false,
+        hint: 'Two-letter codes, separated by commas: ES, PT, FR.',
+      },
+      {
+        name: 'rest',
+        label: 'And every other country',
+        widget: 'boolean',
+        required: false,
+        default: false,
+        hint: 'The rest of the world: every country no other zone lists.',
+      },
+    ],
+  },
 ]
 
 /** The redirects' form: each old address and where it leads (src/content/redirects.ts checks them at build). */
@@ -286,7 +356,7 @@ export const decapConfig = {
     {
       name: 'site',
       label: 'Site',
-      description: 'Each language’s homepage, main menu and redirects.',
+      description: 'Each language’s homepage, main menu, redirects and shop settings.',
       media_folder: '',
       public_folder: '',
       files: CMS_LOCALES.flatMap(siteFiles),
@@ -316,8 +386,8 @@ export const decapConfig = {
       'products',
       'Shop',
       'product',
-      'The shop’s products of every language (the Catalan songbooks), each at /product/<address>, listed on its language’s shop page.',
-      fields,
+      'The shop’s products of every language (the Catalan songbooks), each at /product/<address>, listed on its language’s shop page. Its price and stock are under Sale.',
+      productFormFields,
     ),
   ],
 }

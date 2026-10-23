@@ -4,6 +4,13 @@
   "title": "Grans èxits del pop espanyol - La Meva Partitura Edicions",
   "description": "Grans èxits del pop espanyol: el llibre de partitures per a piano de Sony Music Publishing amb els èxits del pop espanyol dels últims 30 anys.",
   "translationKey": "grandes-exitos-pop-espanol-sony",
+  "shop": {
+    "sku": "grans-exits-pop-espanyol",
+    "name": "Grans èxits del pop espanyol",
+    "availability": "soon",
+    "image": "sony-portada-partituras.png",
+    "order": 4
+  },
   "blocks": [
     {
       "type": "PageHeader",

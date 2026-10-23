@@ -1,0 +1,79 @@
+import type { OrderEmails, ShopLabels } from '~/content/types'
+
+/**
+ * The shop's words: the add-to-cart controls, the cart that stays on screen and the return from the payment
+ * (`shopLabels`), and the emails customers get when they buy and each time their order moves on (`orderEmails`).
+ * Prices, products and shipping fees are not here: each product's folder and data/shop.json hold them.
+ */
+export const shopLabels: ShopLabels = {
+  cart: 'Cistella',
+  openCart: 'Obre la cistella, {count} productes',
+  close: 'Tanca la cistella',
+  add: 'Afegeix a la cistella',
+  added: 'Afegit',
+  quantity: 'Quantitat',
+  decrease: 'Treu-ne un',
+  increase: 'Afegeix-ne un',
+  remove: 'Treu {name}',
+  empty: 'La cistella és buida.',
+  browse: 'Mira els llibres',
+  shipTo: 'Enviament a',
+  subtotal: 'Subtotal',
+  shipping: 'Enviament',
+  free: 'Gratuït',
+  total: 'Total',
+  pay: 'Paga amb targeta',
+  paying: 'Obrint el pagament…',
+  secure: 'Pagament segur amb Stripe. Rebràs la factura per correu electrònic.',
+  demo: 'Pagaments en proves: la comanda es registra sense cobrar res.',
+  failed:
+    'No hem pogut obrir el pagament. Torna-ho a provar o escriu-nos a info@lamevapartitura.cat.',
+  soon: 'Properament',
+  soldOut: 'Esgotat',
+  buyElsewhere: "Compra'l a la botiga de l'autora",
+  offer: 'Oferta',
+  was: 'Abans {price}',
+  thanks: 'Gràcies!',
+  confirmed:
+    "La teva comanda {number} està confirmada. T'hem enviat els detalls per correu electrònic.",
+  confirming: 'Confirmant el pagament…',
+}
+
+export const orderEmails: OrderEmails = {
+  paid: {
+    subject: 'Hem rebut la teva comanda {number}',
+    body: "Hola {name},\n\nGràcies per la teva compra! Hem rebut la comanda {number} i la prepararem aviat. T'escriurem quan surti cap a casa teva.\n\nStripe t'enviarà el rebut i la factura en un correu a part.",
+  },
+  preparing: {
+    subject: 'Estem preparant la comanda {number}',
+    body: 'Hola {name},\n\nJa estem preparant la teva comanda {number}.',
+  },
+  shipped: {
+    subject: 'La comanda {number} ja és en camí',
+    body: 'Hola {name},\n\nLa teva comanda {number} ja ha sortit. A la Península sol arribar en 2-4 dies laborables.',
+  },
+  delivered: {
+    subject: 'La comanda {number} ha arribat',
+    body: "Hola {name},\n\nLa teva comanda {number} ja s'ha lliurat. Que la gaudeixis!",
+  },
+  cancelled: {
+    subject: 'Hem cancel·lat la comanda {number}',
+    body: "Hola {name},\n\nHem cancel·lat la teva comanda {number}. Si ja l'havies pagada, te'n retornarem l'import.",
+  },
+  refunded: {
+    subject: "T'hem retornat l'import de la comanda {number}",
+    body: "Hola {name},\n\nT'hem retornat l'import de la comanda {number}. Pot trigar uns dies a aparèixer al teu compte.",
+  },
+  tracking: 'Segueix el paquet: {tracking}',
+  note: 'Una nota nostra: {note}',
+  summary: {
+    order: 'Comanda',
+    quantity: 'Quantitat',
+    subtotal: 'Subtotal',
+    shipping: 'Enviament',
+    total: 'Total',
+    address: "Adreça d'enviament",
+  },
+  signature:
+    "Si tens qualsevol pregunta, respon aquest correu.\n\nL'equip de La Meva Partitura Edicions\nhttps://lamevapartitura.cat",
+}

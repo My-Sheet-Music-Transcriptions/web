@@ -4,17 +4,22 @@
   "title": "La Oreja de Van Gogh - Cancionero oficial piano, acordes y voz",
   "description": "Cancionero oficial de LODVG que recopila las canciones más icónicas de sus 30 años de historia. Formato partitura para piano, letra y acordes para guitarra.",
   "translationKey": "la-oreja-de-van-gogh-songbook",
+  "shop": {
+    "sku": "lodvg-songbook",
+    "name": "La Oreja de Van Gogh – Songbook (1996-2026)",
+    "price": 30,
+    "compareAt": 35,
+    "availability": "available",
+    "weight": 500,
+    "image": "songbook-cover.jpg",
+    "order": 1
+  },
   "blocks": [
     {
       "type": "PageHeader",
       "variant": "split",
       "title": "La Oreja de Van Gogh – Songbook (1996-2026)",
-      "subtitle": "Oferta: 30,00 € (abans 35,00 €)",
       "lead": "Cancionero oficial de LODVG que recopila las canciones más icónicas de sus 30 años de historia.",
-      "cta": {
-        "label": "Compra",
-        "href": "#comanda"
-      },
       "images": [
         {
           "image": "songbook-cover.jpg",
@@ -70,13 +75,6 @@
       "reveal": true,
       "title": "Ressenyes",
       "items": "songbookReviews"
-    },
-    {
-      "type": "ContactSection",
-      "reveal": true,
-      "form": "orderForm",
-      "id": "comanda",
-      "returnTo": "/product/la-oreja-de-van-gogh-songbook-1996-2026"
     }
   ]
 }

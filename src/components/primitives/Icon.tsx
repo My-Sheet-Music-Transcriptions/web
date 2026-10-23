@@ -40,6 +40,8 @@ export type IconName =
   | 'pen'
   | 'chat'
   | 'gift'
+  | 'bag'
+  | 'trash'
   | 'fa-user-lock'
   | 'fa-user-plus'
   | 'fa-caret-down'
@@ -137,6 +139,10 @@ const paths: Record<IconName, { d: string; fill?: boolean; viewBox?: string }> =
     d: 'M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z',
   },
   plus: { d: 'M12 5v14M5 12h14' },
+  bag: { d: 'M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0' },
+  trash: {
+    d: 'M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6',
+  },
   minus: { d: 'M5 12h14' },
   search: { d: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3M8 11h6M11 8v6' },
   calendar: {

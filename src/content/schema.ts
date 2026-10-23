@@ -135,9 +135,50 @@ export const reviewSchema = baseSchema.extend({
   sourceUrl: z.string().url().optional(),
 })
 
+/**
+ * What the shop sells a product for (src/shop/catalogue.ts): the one place its price lives, read by the shop's grid,
+ * the product page's add-to-cart, the cart and the checkout, which recomputes every total from it on the server.
+ * Prices are euros, VAT included (`30` or `29.9`).
+ */
+export const shopSchema = z
+  .object({
+    /** The product's id in carts and orders; the same book in another language keeps it. */
+    sku: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+    /** The product's name in the cart, the shop's grid, Stripe and the order emails. */
+    name: z.string().min(2).max(80),
+    price: z.number().positive().max(10000).multipleOf(0.01).optional(),
+    /** The price before an offer, shown struck through. */
+    compareAt: z.number().positive().max(10000).multipleOf(0.01).optional(),
+    /** available: in the cart. soon: shown, not sold yet. soldOut: shown, not sold. external: sold elsewhere (`externalUrl`). */
+    availability: z.enum(['available', 'soon', 'soldOut', 'external']).default('available'),
+    externalUrl: z.string().url().optional(),
+    /** Grams, for the record (shipping is a flat fee per zone). */
+    weight: z.number().int().positive().optional(),
+    /** The most of it one order may hold. */
+    maxPerOrder: z.number().int().min(1).max(99).default(10),
+    /** The product's picture in the cart and on the shop's grid: a file of its folder. */
+    image: ogImage.shape.src,
+    /** Its place on the shop's grid: lower first. */
+    order: z.number().int().default(100),
+  })
+  .refine((s) => s.availability !== 'available' || s.price !== undefined, {
+    message: 'a product on sale needs a price',
+    path: ['price'],
+  })
+  .refine((s) => s.availability !== 'external' || s.externalUrl !== undefined, {
+    message: 'a product sold elsewhere needs its externalUrl',
+    path: ['externalUrl'],
+  })
+  .refine((s) => s.compareAt === undefined || (s.price !== undefined && s.compareAt > s.price), {
+    message: 'the price before the offer must be higher than the price',
+    path: ['compareAt'],
+  })
+
 /** A product of the shop (the Catalan site's songbooks), at /product/<slug> as on the WooCommerce site. */
 export const productSchema = baseSchema.extend({
   type: z.literal('product').default('product'),
+  /** Its price and stock: a product without it is shown but not sold (no price, no add-to-cart). */
+  shop: shopSchema.optional(),
 })
 
 export const schemas = {

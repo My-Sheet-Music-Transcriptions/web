@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Logo } from '~/components/layout/Logo'
 import type { Slide } from '~/components/primitives/Carousel'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
@@ -26,6 +27,8 @@ export interface PageHeaderProps {
   cta?: Cta
   /** More buttons beside the `cta`, in its style (photo, split): the Catalan homepage's two ways in. */
   links?: Cta[]
+  /** Controls under the copy (split), before the buttons: a product's price and add-to-cart (`<AddToCart sku=… />`). */
+  actions?: ReactNode
   /** The compact rating card: pass `google` from content/<locale>/data/ratings. */
   rating?: RatingSource
   /** band: light centred title band (default). split: copy beside pictures, on white. photo: the homepage. cover: the title in white over a darkened photo (the blog, a post). */
@@ -231,6 +234,7 @@ function SplitHeader({
   lead,
   cta,
   links,
+  actions,
   rating,
   image,
   alt = '',
@@ -250,6 +254,7 @@ function SplitHeader({
           {lead ? (
             <p className="mt-5 text-[20px] leading-[30px] text-secondary">{inlineMarkdown(lead)}</p>
           ) : null}
+          {actions ? <div className="mt-8">{actions}</div> : null}
           {cta || links?.length ? <Actions cta={cta} links={links} className="mt-8" /> : null}
           {rating ? <CompactRating source={rating} className="entrance mt-8" /> : null}
         </div>

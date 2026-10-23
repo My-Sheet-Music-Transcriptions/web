@@ -10,7 +10,7 @@ import {
   select,
   toggle,
 } from './cms-fields.ts'
-import type { baseSchema, postSchema, serviceSchema } from './schema.ts'
+import type { baseSchema, postSchema, productSchema, serviceSchema } from './schema.ts'
 
 /**
  * The fields every page has in the CMS, whatever its kind: its meta (src/content/schema.ts `baseSchema`), typed by
@@ -122,3 +122,46 @@ export const postFields = {
   }),
   author: line('Author', { hint: 'Empty: My Sheet Music Transcriptions.' }),
 } satisfies CmsFields<Omit<z.input<typeof postSchema>, keyof z.input<typeof baseSchema>>>
+
+const euros = { decap: { value_type: 'float', step: 0.01 } }
+
+/**
+ * What a product adds to the meta fields (src/content/schema.ts `productSchema`): what the shop sells it for, the one
+ * place its price lives (the shop's grid, its page, the cart and the checkout read it).
+ */
+export const productFields = {
+  shop: group(
+    'Sale',
+    {
+      sku: line('Product code', {
+        required: true,
+        hint: 'Lowercase and dashes, never changed once sold: orders name it (lodvg-songbook).',
+        decap: { pattern: ['^[a-z0-9][a-z0-9-]*$', 'lowercase letters, digits and dashes'] },
+      }),
+      name: line('Name in the cart and the emails', { required: true }),
+      price: number('Price (€, VAT included)', { min: 0, max: 10000, ...euros }),
+      compareAt: number('Price before the offer (€), struck through', {
+        min: 0,
+        max: 10000,
+        ...euros,
+      }),
+      availability: select('Availability', ['available', 'soon', 'soldOut', 'external'], {
+        default: 'available',
+        hint: 'available: in the cart. soon: shown as coming soon. soldOut: shown as sold out. external: sold on another shop (the address below).',
+      }),
+      externalUrl: line('Address of the other shop (external)'),
+      weight: number('Weight (g)', { min: 1, max: 50000 }),
+      maxPerOrder: number('Most per order', { min: 1, max: 99, hint: '10 when empty.' }),
+      image: pictureFile('Picture in the cart and the shop', {
+        required: true,
+        hint: 'A picture of the product folder, ideally the cover.',
+      }),
+      order: number('Place on the shop page', {
+        min: 0,
+        max: 1000,
+        hint: 'Lower comes first; 100 when empty.',
+      }),
+    },
+    { hint: 'Leave empty for a product that is shown but not sold.' },
+  ),
+} satisfies CmsFields<Omit<z.input<typeof productSchema>, keyof z.input<typeof baseSchema>>>

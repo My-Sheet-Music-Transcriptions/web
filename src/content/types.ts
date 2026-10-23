@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { IconName } from '~/components/primitives/Icon'
 import type { PictureSource } from '~/components/primitives/Picture'
 import type { Video } from '~/components/primitives/VideoEmbed'
@@ -160,6 +161,8 @@ export interface PictureItem {
   caption?: string
   /** Where the item leads (its page, their store). */
   href?: string
+  /** Controls under the item, outside its link: a product's price and add button (`<AddToCart variant="compact" />`). */
+  action?: ReactNode
 }
 
 /** A blog post as its card in a list (PostList): made from the post's meta (src/content/posts.ts). */
@@ -309,4 +312,104 @@ export interface ContactFormErrors {
   message: string
   fileSize: string
   fileType: string
+}
+
+/**
+ * The shop's words (content/<locale>/data/shop.ts `shopLabels`): the add-to-cart controls, the cart and the return
+ * from the payment. `{count}`, `{name}`, `{price}` and `{number}` are filled in.
+ */
+export interface ShopLabels {
+  /** The cart's heading and the name of its panel ("Cart") */
+  cart: string
+  /** The always-visible cart button: "Open the cart, {count} items" */
+  openCart: string
+  /** "Close the cart" */
+  close: string
+  /** "Add to cart" */
+  add: string
+  /** The added state of the button, a moment after a click ("Added") */
+  added: string
+  /** "Quantity" */
+  quantity: string
+  /** "One less" */
+  decrease: string
+  /** "One more" */
+  increase: string
+  /** "Remove {name}" */
+  remove: string
+  /** "Your cart is empty." */
+  empty: string
+  /** The link from an empty cart to the shop ("See the books") */
+  browse: string
+  /** "Shipping to" */
+  shipTo: string
+  /** "Subtotal" */
+  subtotal: string
+  /** "Shipping" */
+  shipping: string
+  /** "Free" (the shipping, above a zone's threshold) */
+  free: string
+  /** "Total" */
+  total: string
+  /** "Pay by card" */
+  pay: string
+  /** "Opening the payment…" */
+  paying: string
+  /** The line under the button: "Secure payment with Stripe. The invoice arrives by email." */
+  secure: string
+  /** The line when payments are not set up and checkout makes a demo order instead. */
+  demo: string
+  /** "The payment could not be opened. Try again or write to …" */
+  failed: string
+  /** "Coming soon" */
+  soon: string
+  /** "Sold out" */
+  soldOut: string
+  /** The link of a product sold on another shop ("Buy on the author's shop") */
+  buyElsewhere: string
+  /** The badge of a product on offer ("Offer") */
+  offer: string
+  /** For screen readers, before the struck price: "Before {price}" */
+  was: string
+  /** After the payment: "Thank you!" */
+  thanks: string
+  /** "Your order {number} is confirmed. We have emailed you the details." */
+  confirmed: string
+  /** While the order is being recorded: "Confirming your payment…" */
+  confirming: string
+}
+
+/** One email the shop sends a customer (src/server/shop-emails.ts): `{number}`, `{name}`, `{tracking}`, `{note}` filled in. */
+export interface ShopEmail {
+  subject: string
+  /** Paragraphs, blank-line separated. */
+  body: string
+}
+
+/**
+ * The emails the shop sends its customers, in their language (content/<locale>/data/shop.ts `orderEmails`): one when
+ * an order is paid and one per status change, plus the words of the order summary in them.
+ */
+export interface OrderEmails {
+  paid: ShopEmail
+  preparing: ShopEmail
+  shipped: ShopEmail
+  delivered: ShopEmail
+  cancelled: ShopEmail
+  refunded: ShopEmail
+  /** The line with the tracking link: "Follow the parcel: {tracking}" */
+  tracking: string
+  /** The line with a note from us: "A note from us: {note}" */
+  note: string
+  /** The summary's words */
+  summary: {
+    order: string
+    quantity: string
+    subtotal: string
+    shipping: string
+    total: string
+    address: string
+  }
+  /** The closing line and signature. */
+  signature: string
 }

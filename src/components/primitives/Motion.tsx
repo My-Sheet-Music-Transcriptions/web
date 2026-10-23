@@ -133,6 +133,32 @@ export const toast: Variants = {
   open: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
 }
 
+/**
+ * A product's picture flying into the cart when it is added (the shop's one playful move): from where the picture sits
+ * (`custom.dx`, `custom.dy`: the cart's centre less the picture's, in px) along an arc that lifts 80px, shrinking to
+ * `custom.scale` and spinning a little, then fading as it lands, 0.7 s. Under reduced motion only the fade is left.
+ */
+export const flyToCart: Variants = {
+  start: { x: 0, y: 0, scale: 1, rotate: 0, opacity: 1 },
+  land: ({ dx, dy, scale }: { dx: number; dy: number; scale: number }) => ({
+    x: [0, dx * 0.45, dx],
+    y: [0, Math.min(dy, 0) * 0.45 - 80, dy],
+    scale: [1, (1 + scale) / 2, scale],
+    rotate: [0, -8, 6],
+    opacity: [1, 1, 0.4],
+    transition: { duration: 0.7, ease: [0.45, 0, 0.55, 1], times: [0, 0.45, 1] },
+  }),
+}
+
+/** The cart answering a landed picture: it swells 18% and settles back with a slight overshoot, 0.35 s. */
+export const cartBump: Variants = {
+  rest: { scale: 1 },
+  bump: {
+    scale: [1, 1.18, 0.96, 1],
+    transition: { duration: 0.35, ease: 'easeOut', times: [0, 0.4, 0.75, 1] },
+  },
+}
+
 const tags = { div: m.div, li: m.li, p: m.p }
 
 /** How a piece comes in: rising (default), popping, sliding in from the left, or drawn downwards (a line). */

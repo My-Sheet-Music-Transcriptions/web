@@ -15,6 +15,7 @@ import { localeSwitchHref } from '~/i18n/switch'
 import type { SiteConfig } from '~/i18n/types'
 import { fill } from '~/lib/strings'
 import { useSite } from '~/site'
+import { SiteCart } from './SiteCart'
 
 /**
  * The app's side of the site chrome: it reads the locale's config (src/i18n/sites/<locale>.ts), its data
@@ -119,14 +120,14 @@ export function SiteConsent() {
   )
 }
 
-/** Site chrome around every page: skip link, top bar, sticky header, footer, consent banner. */
+/** Site chrome around every page: skip link, top bar, sticky header, footer, consent banner, and the shop's cart. */
 export function SiteShell({ children }: { children: ReactNode }) {
   const site = useSite()
   const home = useRouterState({
     select: (s) => stripLocale(s.location.publicHref.split(/[?#]/)[0] ?? '/').path === '/',
   })
   return (
-    <>
+    <SiteCart>
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-pill focus:bg-primary focus:px-5 focus:py-3 focus:text-white focus:font-bold"
@@ -138,6 +139,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
       {children}
       <SiteFooter />
       <SiteConsent />
-    </>
+    </SiteCart>
   )
 }

@@ -9,7 +9,7 @@ import type { PageHeaderProps } from '../../src/components/blocks/PageHeader'
 import type { TableProps } from '../../src/components/blocks/Table'
 import { BlockPage } from '../../src/content/BlockPage'
 import { type CmsBlock, line, prose, select } from '../../src/content/cms-fields'
-import { metaFields, postFields, serviceFields } from '../../src/content/cms-meta'
+import { metaFields, postFields, productFields, serviceFields } from '../../src/content/cms-meta'
 import { fillWords, resolveBlock, splitDataPage } from '../../src/content/data-page'
 import { postParts } from '../../src/content/post-template'
 import { LOCALES } from '../../src/i18n/types'
@@ -305,31 +305,40 @@ describe('Decap configuration', () => {
       expect(c?.fields?.find((f) => f.name === 'collection')?.default).toBe(name)
     }
   })
-  it('lists in Site the homepage, the menu and the redirects of each language that has them', () => {
+  it('lists in Site the homepage, the menu, the redirects and the shop settings of each language that has them', () => {
     const site = collections.find((c) => c.name === 'site')
     expect(site?.files?.map((f) => f.name)).toEqual(
       LOCALES.flatMap((l) => [
         ...(fs.existsSync(`content/${l}/pages/home/page.json`) ? [`home-${l}`] : []),
         ...(fs.existsSync(`content/${l}/data/menu.json`) ? [`menu-${l}`] : []),
         ...(fs.existsSync(`content/${l}/data/redirects.json`) ? [`redirects-${l}`] : []),
+        ...(fs.existsSync(`content/${l}/data/shop.json`) ? [`shop-${l}`] : []),
       ]),
     )
     expect(site?.files?.map((f) => f.name)).toEqual(
       expect.arrayContaining(['home-en', 'menu-en', 'home-es', 'menu-es']),
     )
     for (const f of site?.files ?? [])
-      expect(f.file).toMatch(/^content\/\w+\/(pages\/home\/page|data\/(menu|redirects))\.json$/)
+      expect(f.file).toMatch(
+        /^content\/\w+\/(pages\/home\/page|data\/(menu|redirects|shop))\.json$/,
+      )
   })
   it('opens every page with its language, the meta fields (then a service’s own), then its blocks', () => {
     for (const c of collections)
       for (const [name, fields] of c.fields
         ? [[c.name, c.fields] as const]
         : (c.files ?? []).map((f) => [f.name, f.fields] as const))
-        if (!name.startsWith('menu-') && !name.startsWith('redirects-') && name !== 'posts')
+        if (
+          !name.startsWith('menu-') &&
+          !name.startsWith('redirects-') &&
+          !name.startsWith('shop-') &&
+          name !== 'posts'
+        )
           expect(fields.map((f) => f.name)).toEqual([
             ...(c.fields ? ['language', 'collection'] : []),
             ...Object.keys(metaFields),
             ...(name === 'services' ? Object.keys(serviceFields) : []),
+            ...(name === 'products' ? Object.keys(productFields) : []),
             'blocks',
           ])
   })
