@@ -1,59 +1,48 @@
 # Catalan site inventory: lamevapartitura.cat
 
-Part of the migration plan ([`../PLAN.md`](../PLAN.md)); machine-readable copy: [`ca.json`](./ca.json). Catalan is a
-**launch, not a port**: the live domain runs a WordPress site that was started in 2023 and never finished. Its title
-is still "My WordPress", it appears in no other site's hreflang tags, and its homepage mixes Catalan and Spanish copy.
-It has a menu (Home, Serveis, Reviews, Sobre nosaltres, Preus, Contacte, "Demana pressupost"), the English service list
-in English, and logos and photos under `wp-content/uploads/2023/`. Its 2023 `wp-sitemap.xml` lists the URLs below; none
-of the inner pages was ever archived.
+Part of the migration plan ([`../PLAN.md`](../PLAN.md)); machine-readable copy: [`ca.json`](./ca.json). Sources: the
+live Yoast sitemaps (`page`, `product`, `product_cat`, `team`, `service`, `faq`), fetched 2026-10-19. The live site is
+La Meva Partitura Edicions: a Catalan Elementor site (home, editions, My Music Book, about, contact) with a small
+WooCommerce shop of songbooks. Every page below is ported as a data page (CMS-editable) on its live path; the old URLs
+end with a slash and the new site 301s the slashed form (plan W1.3).
 
-Sources: `wp-sitemap-posts-page-1.xml` (Internet Archive, 2023-07), the homepage (Internet Archive, 2025-07).
+## Pages (ported)
 
-## Existing URLs
-
-| Path | Found in | What it is | Action | Notes | PR |
-|---|---|---|---|---|---|
-| [`/`](https://lamevapartitura.cat/) | sitemap, archive | draft Elementor homepage, Catalan with Spanish fragments | replace | becomes the new Catalan home (`translationKey: home`) | |
-| [`/sobre-nosaltres`](https://lamevapartitura.cat/sobre-nosaltres/) | sitemap | draft page, never archived | replace | keep this slug for the about page | |
-| [`/contacte`](https://lamevapartitura.cat/contacte/) | sitemap | draft page, never archived | replace | keep this slug for the contact page | |
-| [`/la-meva-partitura`](https://lamevapartitura.cat/la-meva-partitura/) | sitemap | draft page, never archived | redirect | → `/` | |
-| [`/contacte-2`](https://lamevapartitura.cat/contacte-2/) | sitemap | duplicate draft | redirect | → `/contacte` | |
-| [`/descartes`](https://lamevapartitura.cat/descartes/) | sitemap | "discards" page (parking for removed sections) | drop | let it 404 | |
-| [`/sample-page`](https://lamevapartitura.cat/sample-page/) | sitemap | WordPress default page | drop | let it 404 | |
-
-The old URLs end with a slash (WordPress default on this install); the new site serves them without one and 301s the
-slashed form (plan W1.3), so the two pages that keep their slug keep working.
-
-## Pages to create for launch (wave C1)
-
-Mirror of the core set that every other locale has, translated from English with the Spanish page as a reference.
-The slugs below are decided here so C1 can run unattended; nothing indexes them yet, so a Catalan speaker can still
-rename any of them at C2's go/no-go at no cost. The services list follows what the Spanish and French sites offer
-today; extend it later through the `page` skill.
-
-| Proposed path | Collection | translationKey (= EN page) | Spanish reference | PR |
+| Path | Collection | translationKey | Notes | PR |
 |---|---|---|---|---|
-| `/` | pages | `home` (`/`) | `/` | |
-| `/preus` | pages | `/pricing` | `/precios` | |
-| `/contacte` | pages | `/contact` | `/contacto` | |
-| `/sobre-nosaltres` | pages | `/about-us` | `/sobre-nosotros` | |
-| `/opinions` | pages | `/customer-reviews` | `/opiniones` | |
-| `/preguntes-frequents` | pages | `/frequent-asked-questions` | `/preguntas-frecuentes` | |
-| `/serveis-musicals` | pages | `/services-samples` | `/servicios-musicales` | |
-| `/targeta-regal` | pages | `/gift-card` | — | |
-| `/avis-legal` | pages | `/legal-notice` | `/aviso-legal` | |
-| `/politica-de-cookies` | pages | `/cookies` | `/politica-de-cookies` | |
-| `/politica-de-privacitat` | pages | `/gdpr` | `/politica-de-privacidad` | |
-| `/condicions-d-us` | pages | `/terms-of-use` | `/terminos-de-uso` | |
-| `/piano` | services | `/piano` | `/piano` | |
-| `/piano-i-veu` | services | `/piano-vocal` | `/piano-vocal` | |
-| `/piano-jazz-solo` | services | `/jazz-piano-solo-transcriptions` | `/jazz-piano-solo` | |
-| `/guitarra` | services | `/guitar-tab` | `/guitarra` | |
-| `/baix` | services | `/bass-tab-transcription-service` | `/bajo` | |
-| `/bateria` | services | `/drums-transcription-service` | — (fr `/transcriptions-de-batterie`) | |
-| `/conjunts-vocals` | services | `/vocal-ensemble-transcription-service` | — (fr `/transcriptions-ensembles-vocaux`) | |
-| `/arranjaments` | services | `/music-arrangement-service` | `/arreglos` | |
-| `/orquestracions` | services | `/orchestration-service` | `/orquestraciones` | |
-| `/bandes` | services | `/concert-brass-band-transcriptions` | `/bandas` | |
+| [`/`](https://lamevapartitura.cat/) | pages | `home` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/gracies`](https://lamevapartitura.cat/gracies/) | pages | `thank-you` | noindex (thank-you page after the form) | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/contacte`](https://lamevapartitura.cat/contacte/) | pages | `contact` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/sobre-nosaltres`](https://lamevapartitura.cat/sobre-nosaltres/) | pages | `about-us` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/shop`](https://lamevapartitura.cat/shop/) | pages | `shop` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/edicions`](https://lamevapartitura.cat/edicions/) | pages | `editions` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/my-musicbook`](https://lamevapartitura.cat/my-musicbook/) | pages | `my-musicbook` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/product/grans-exits-del-pop-espanyol`](https://lamevapartitura.cat/product/grans-exits-del-pop-espanyol/) | products | `grandes-exitos-pop-espanol-sony` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/product/canconer-de-nadal-2026`](https://lamevapartitura.cat/product/canconer-de-nadal-2026/) | products | `canconer-de-nadal-2026` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/product/colleccio-laura-andres`](https://lamevapartitura.cat/product/colleccio-laura-andres/) | products | `colleccio-laura-andres` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
+| [`/product/la-oreja-de-van-gogh-songbook-1996-2026`](https://lamevapartitura.cat/product/la-oreja-de-van-gogh-songbook-1996-2026/) | products | `la-oreja-de-van-gogh-songbook` |  | [#79](https://github.com/My-Sheet-Music-Transcriptions/web/pull/79) |
 
-Later (not needed for launch): `/blog` with posts, the rest of the English services.
+The shop takes no payments on the static site: each product's "Compra" opens an order form (`orderForm`) that the
+team answers by email; the Laura Andrés collection keeps its link to laurandres.com as on live.
+
+## Redirected (301, `content/ca/data/redirects.json`)
+
+| Old path | Kind | Leads to | Why |
+|---|---|---|---|
+| `/sample-page` | page | `/` | WordPress draft, duplicate or WooCommerce page |
+| `/descartes` | page | `/` | WordPress draft, duplicate or WooCommerce page |
+| `/contacte-2` | page | `/contacte` | WordPress draft, duplicate or WooCommerce page |
+| `/redisseny-home` | page | `/` | WordPress draft, duplicate or WooCommerce page |
+| `/el-meu-compte` | page | `/shop` | WordPress draft, duplicate or WooCommerce page |
+| `/cistella` | page | `/shop` | WordPress draft, duplicate or WooCommerce page |
+| `/pagament` | page | `/shop` | WordPress draft, duplicate or WooCommerce page |
+| `/categoria-product/*` (1 URL) | product_cat | `/shop` | WooCommerce category |
+| `/team/*` (31 URLs) | team | `/sobre-nosaltres` | English team cards, linked from nowhere |
+| `/service/*` (42 URLs) | service | `/` | English service cards, linked from nowhere |
+| `/faq/*` (102 URLs) | faq | `/` | English FAQ entries, linked from nowhere |
+
+## Later (not part of the port)
+
+The core set every other locale has (pricing, reviews, FAQ, service pages, legal pages in Catalan, a blog) does not
+exist on the live Catalan site; create it through the `page` skill when wanted (each new page starts as a mockup).
+Until then the footer's legal links lead to the English pages.

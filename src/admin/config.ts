@@ -12,8 +12,8 @@ import { CMS_LOCALES, type CmsLocale } from './locales.ts'
  * CMS. It edits data pages, content/<locale>/<collection>/<slug>/page.json (src/content/data-page.ts), never the
  * hand-built pages (index.tsx + meta.ts), which it does not list. The blocks it offers and their forms are made from
  * src/components/blocks/cms.ts, the same list every page.json is checked against and rendered with.
- * The sidebar: `Site` (every language's homepage, main menu and redirects, one entry each), `Pages`, `Services` and
- * `Blog` (every
+ * The sidebar: `Site` (every language's homepage, main menu and redirects, one entry each), `Pages`, `Services`,
+ * `Blog` and `Shop` (every
  * language's, filed in one collection each: the writer filters or groups the list by language, and a new page says
  * which language it is in, which puts it in that language's folder). Each page.json opens with `language` and
  * `collection` for this (src/content/data-page.ts checks them against the folder).
@@ -311,6 +311,13 @@ export const decapConfig = {
       'post',
       'The blog posts of every language: each lists itself on its language’s blog, newest first, with its cover, summary and date.',
       postFormFields,
+    ),
+    kind(
+      'products',
+      'Shop',
+      'product',
+      'The shop’s products of every language (the Catalan songbooks), each at /product/<address>, listed on its language’s shop page.',
+      fields,
     ),
   ],
 }

@@ -39,8 +39,9 @@ import type { BlockName, blocks } from './index.tsx'
  * recordings of the page folder, and the lists that live once in content/<locale>/data (prices, reviews, ratings,
  * shared questions, the forms, the brand photos) picked by name with `fromData`. A preset (`preset`) is a second
  * entry for a block, with its own name in the menu and props set for the writer (a services grid is a PictureGrid
- * of the services). What a page cannot set stays out: `jsonLd`; `videoPoster` is the locale's brand poster
- * (content/<locale>/data/brand.ts), which every block with media words gets (src/content/BlockPage.tsx).
+ * of the services). What a page cannot set stays out: `jsonLd`; `videoPoster` and `mobileImage` are the locale's brand pictures
+ * (content/<locale>/data/brand.ts), which every block with media words and every PageHeader get
+ * (src/content/BlockPage.tsx).
  *
  * Imported by Node directly (the admin build's config): relative imports with extensions and type imports only.
  */
@@ -156,8 +157,36 @@ const card = {
   icon: picture('Icon', { hint: 'An illustrated icon (square or wide).' }),
   image: picture('Picture', { hint: 'Instead of an icon.' }),
   imageWidth: number('Picture width in px', { min: 40, max: 600 }),
+  glyph: select(
+    'Glyph in a disc',
+    [
+      'mail',
+      'phone',
+      'dollar',
+      'pen',
+      'music',
+      'chat',
+      'gift',
+      'send',
+      'check',
+      'question',
+      'star',
+      'instagram',
+      'facebook',
+      'youtube',
+    ],
+    { hint: 'Instead of a picture; in a timeline step, in its disc.' },
+  ),
   video: video,
   emphasis: line('Bold line under the text'),
+  more: group(
+    'Words that unfold under the text',
+    {
+      label: line('What is clicked', { required: true, hint: '"Avantatges"' }),
+      body: prose('The words that unfold', { required: true, hint: markdownHint }),
+    },
+    { hint: 'Leave both empty for none.' },
+  ),
   href: link('Link', { hint: 'The title links there; with button words, a button does.' }),
   linkLabel: line('Button words'),
 }
@@ -254,23 +283,29 @@ export const cmsBlocks = {
         decap: { pattern: ['^\\d{4}-\\d{2}-\\d{2}$', 'YYYY-MM-DD'] },
       }),
       cta: button(),
+      links: listOf('More buttons beside it (photo, split)', button('Button', ' ')),
+      ctaVariant: select('Buttons’ colour (photo)', ['primary', 'accent'], {
+        hint: 'primary: teal-blue (the default). accent: orange.',
+      }),
       image: picture('Picture', {
         hint: 'Beside the words (split), the service’s icon under the band, or the photo behind (cover).',
         widths: '480;960;1600',
       }),
       alt: line('Picture description (alt text)'),
       images: slides('Photos', '1000;1600;2000', 'Several rotate behind the title (photo style).'),
-      mobileImages: slides(
-        'Photos on phones',
-        '480;800',
-        'Above the title on phones; the photos when empty.',
-      ),
+      frame: select('Carousel frame (split)', ['wide', 'square'], {
+        hint: 'wide: 3:2, cropped (the default). square: each picture whole (a product’s gallery).',
+      }),
       rating: fromData('Rating card', {
         google: 'ratings',
         trustpilot: 'ratings',
         facebook: 'ratings',
       }),
-      logo: fromData('Logo above the title', { logo: 'brand' }),
+      logo: fromData('Logo above the title (photo), or in its place (band, cover)', {
+        logo: 'brand',
+        edicionsLogo: 'brand',
+        musicBookLogo: 'brand',
+      }),
       id: anchor,
     },
   },
@@ -372,6 +407,7 @@ export const cmsBlocks = {
         hint: 'rows: the recording beside the score. columns: side by side (a pricing chart).',
       }),
       items: samples('Samples'),
+      columns: number<2 | 3>('Samples per row (columns: 2 or 3)', { min: 2, max: 3 }),
       zoom: toggle('Scores open larger when clicked'),
       tabs: list(
         'Sets of samples (one per currency)',
@@ -418,10 +454,10 @@ export const cmsBlocks = {
         },
         { summary: '{{fields.label}}', hint: 'Instead of the cards above: one list per set.' },
       ),
-      variant: select('Style', ['card', 'tile', 'plain'], {
-        hint: 'card: white cards. tile: peach tiles. plain: no surface.',
+      variant: select('Style', ['card', 'tile', 'plain', 'overlay'], {
+        hint: 'card: white cards. tile: peach tiles. plain: no surface. overlay: the words over the card’s picture.',
       }),
-      columns: number<2 | 3 | 4 | 5>('Cards per row (2–5)', { min: 2, max: 5 }),
+      columns: number<1 | 2 | 3 | 4 | 5>('Cards per row (1–5)', { min: 1, max: 5 }),
       image: fromData('Photo behind the cards', { studioBand: 'brand' }),
       tone,
       cta: button(),
@@ -436,10 +472,10 @@ export const cmsBlocks = {
     fields: {
       ...heading,
       items: list('Cards', card, { required: true, summary: '{{fields.title}}' }),
-      variant: select('Style', ['card', 'tile', 'plain'], {
-        hint: 'card: white cards. tile: peach tiles. plain: no surface.',
+      variant: select('Style', ['card', 'tile', 'plain', 'overlay'], {
+        hint: 'card: white cards. tile: peach tiles. plain: no surface. overlay: the words over the card’s picture.',
       }),
-      columns: number<2 | 3 | 4 | 5>('Cards per row (2–5)', { min: 2, max: 5 }),
+      columns: number<1 | 2 | 3 | 4 | 5>('Cards per row (1–5)', { min: 1, max: 5 }),
       image: fromData('Photo behind the cards', { studioBand: 'brand' }),
       tone,
       cta: button(),
@@ -522,17 +558,6 @@ export const cmsBlocks = {
         'Steps',
         {
           ...card,
-          glyph: select('Glyph in the disc (timeline)', [
-            'dollar',
-            'pen',
-            'music',
-            'chat',
-            'gift',
-            'send',
-            'check',
-            'question',
-            'star',
-          ]),
         },
         { required: true, summary: '{{fields.title}}' },
       ),
@@ -630,7 +655,11 @@ export const cmsBlocks = {
         { homeRatings: 'ratings', platforms: 'ratings' },
         { required: true },
       ),
-      image: fromData('Photo behind', { pianoBand: 'brand' }, { required: true }),
+      image: fromData(
+        'Photo behind',
+        { pianoBand: 'brand', sheetMusicBand: 'brand' },
+        { required: true },
+      ),
       reveal,
     },
   },
@@ -646,7 +675,12 @@ export const cmsBlocks = {
       id: anchor,
       items: fromData(
         'Reviews',
-        { homeReviews: 'reviews', educatorReviews: 'reviews', allReviews: 'reviews' },
+        {
+          homeReviews: 'reviews',
+          educatorReviews: 'reviews',
+          allReviews: 'reviews',
+          songbookReviews: 'reviews',
+        },
         { required: true },
       ),
       cta: button(),
@@ -672,7 +706,13 @@ export const cmsBlocks = {
     fields: {
       form: fromData(
         'Form',
-        { quoteForm: 'forms', giftCardForm: 'forms', reservationForm: 'forms' },
+        {
+          quoteForm: 'forms',
+          giftCardForm: 'forms',
+          reservationForm: 'forms',
+          editorialForm: 'forms',
+          orderForm: 'forms',
+        },
         { required: true },
       ),
       variant: select('Kind', ['quote', 'gift-card', 'reservation'], {

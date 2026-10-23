@@ -83,7 +83,7 @@ describe('block catalogue', () => {
   it('catches a wrong usage snippet', () => {
     expect(usageProblems('CardGrid', '<CardGrid title="…" variant="tiles" item={x} />')).toEqual([
       'CardGrid has no prop "item"',
-      'CardGrid.variant is "tiles": use one of card, tile, plain',
+      'CardGrid.variant is "tiles": use one of card, tile, plain, overlay',
     ])
     expect(
       usageProblems('Steps', '<Steps items={[{ glyph: "nope", body: "…" }]} />').join(),

@@ -27,7 +27,7 @@ export interface MobileNavProps {
   nav: NavItem[]
   cta: Link
   labels: MenuLabels
-  account: { login: Link; signup: Link }
+  account?: { login: Link; signup: Link }
 }
 
 /** Full-screen mobile menu (dialog) with collapsible service groups; it slides in from the right over a fading backdrop. */
@@ -173,22 +173,24 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
                     {cta.label}
                   </SmartLink>
                 </Button>
-                <div className="flex justify-center gap-6 text-small">
-                  <a
-                    href={account.login.href}
-                    className="inline-flex items-center gap-1.5 text-ink"
-                  >
-                    <Icon name="users" size={16} className="text-primary" />
-                    {account.login.label}
-                  </a>
-                  <a
-                    href={account.signup.href}
-                    className="inline-flex items-center gap-1.5 text-ink"
-                  >
-                    <Icon name="user-plus" size={16} className="text-primary" />
-                    {account.signup.label}
-                  </a>
-                </div>
+                {account ? (
+                  <div className="flex justify-center gap-6 text-small">
+                    <a
+                      href={account.login.href}
+                      className="inline-flex items-center gap-1.5 text-ink"
+                    >
+                      <Icon name="users" size={16} className="text-primary" />
+                      {account.login.label}
+                    </a>
+                    <a
+                      href={account.signup.href}
+                      className="inline-flex items-center gap-1.5 text-ink"
+                    >
+                      <Icon name="user-plus" size={16} className="text-primary" />
+                      {account.signup.label}
+                    </a>
+                  </div>
+                ) : null}
               </div>
             </nav>
           </m.div>

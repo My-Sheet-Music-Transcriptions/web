@@ -131,7 +131,7 @@ export function checkSlugs(all = readAllEntries()): string[] {
       seen.set(e.path, e.file)
       if (
         RESERVED_SLUGS.includes(e.slug) &&
-        !(e.collection === 'faqs' || e.collection === 'reviews')
+        !(e.collection === 'faqs' || e.collection === 'reviews' || e.collection === 'products')
       )
         problems.push(`${locale}: slug "${e.slug}" in ${e.file} is reserved`)
       if (e.collection === 'pages' && e.slug === 'home' && e.meta.translationKey !== 'home')

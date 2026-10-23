@@ -1,0 +1,230 @@
+{
+  "language": "ca",
+  "collection": "pages",
+  "title": "Sobre nosaltres - La Meva Partitura Edicions",
+  "description": "Som un equip de més de 100 músics professionals, amb oficines a Terrassa: coneix l’equip que transcriu les teves partitures nota a nota.",
+  "translationKey": "about-us",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "title": "Sobre La Meva Partitura"
+    },
+    {
+      "type": "Article",
+      "reveal": true,
+      "label": "Qui som",
+      "items": [
+        {
+          "body": "Som un equip de **més de 100 músics professionals** amb anys d’experiència com a arranjadors, compositors, transcriptors i també amb una àmplia trajectòria en escenaris com a intèrprets. Tot i treballar en remot amb freqüència, tenim les nostres oficines principals a **Terrassa, Barcelona**.\n\nL’any 2011, l’Oriol, el fundador, va detectar la necessitat que existís **un servei fiable de transcripció de partitures al qual recórrer quan no trobes enlloc la partitura que necessites**. L’Oriol va transcriure centenars de partitures durant els primers anys per a clients que es frustraven de no poder disposar de partitures aparentment fàcils de trobar. La solució era, doncs, transcriure-les des de zero per a ells.\n\n[**My Sheet Music Transcriptions**](https://www.mysheetmusictranscriptions.com/) és la versió en anglès, que va començar a caminar per donar servei a clients anglòfons d’arreu del món. Més tard, van néixer **Mis Transcripciones Musicales** (castellà), **Ma Partition Sur Mesure** (francès), **My Sheet Music Transcriptions Japan** (japonès) i **Meine Musik Transkription** (alemany) per donar servei en diferents idiomes, sempre amb la nostra base a Catalunya.",
+          "image": "team.jpg",
+          "alt": "L'equip de La Meva Partitura"
+        },
+        {
+          "body": "La nostra plantilla de transcriptors és d’uns **80 professionals amb una dilatada carrera musical i centenars de transcripcions a la seva esquena**. Molts treballen amb nosaltres i hi compaginen la seva activitat d’intèrpret, ja que són grans músics de renom en el panorama musical, amb projectes propis actius. A més de tot això, hi ha altres departaments importants, com el disseny web, l’atenció al client o el departament tècnic, tots engranats i remant en la mateixa adreça: **arribar a més músics cada dia**!\n\nEn tenir un equip potent i variat de professionals, sempre disposem del transcriptor ideal llest per a treballar en el teu projecte i efectuar lliuraments ràpids si cal. Ens assegurem que només pianistes de jazz experts treballin en les transcripcions de jazz per a piano, que només guitarristes experts s’encarreguin de les tablatures per a guitarra, o que només un orquestrador i director amb experiència s’encarregui de formacions simfòniques. I així, amb tots els altres instruments i casos.\n\nFem servir **Sibelius**, **Finale**, **Musescore**, **Guitar Pro**, **Dorico** i els programes de notació habituals de la indústria, però **no usem programes de transcripció musical automàtica** perquè no aconsegueixen els resultats que busquem. Creiem que la música ha de ser transcrita per músics, amb paciència, minuciosament, i parant esment a cada detall, com un artesà. Per a fer adaptacions 100% idiomàtiques a l’instrument o conjunt instrumental per al qual escrivim, és necessari enfocar cada obra des de zero **amb la cura que tindria un compositor en escriure una nova peça**. Després de més de 70.000 transcripcions lliurades, aquesta manera de treballar ens avala i demostra que és l’únic mode d’obtenir resultats excel·lents i a l’altura del que s’espera.\n\nEl nostre objectiu és **proporcionar partitures de la més alta qualitat** a músics de tot el món. No entenem un món sense que tota la música que sona pugui quedar escrita en partitura per a ser interpretada milers de vegades més. Esperem que t’agradi el que hem construït tant com a nosaltres ens agrada posar-nos a transcriure."
+        }
+      ]
+    },
+    {
+      "type": "PictureGrid",
+      "reveal": true,
+      "title": "El nostre equip",
+      "shape": "portrait",
+      "columns": 5,
+      "items": [
+        {
+          "image": "team-oriol.jpg",
+          "name": "Oriol",
+          "caption": "Fundador i CEO"
+        },
+        {
+          "image": "team-roc.jpg",
+          "name": "Roc",
+          "caption": "Editor Musical Principal i Responsable d’Operacions"
+        },
+        {
+          "image": "team-arnau.png",
+          "name": "Arnau",
+          "caption": "Director Tècnic"
+        },
+        {
+          "image": "team-maja.jpg",
+          "name": "Maja",
+          "caption": "Coordinadora d’Equip i Especialista Musical"
+        },
+        {
+          "image": "team-brett.jpg",
+          "name": "Brett",
+          "caption": "Cap d’Atenció al Client i Especialista Musical"
+        },
+        {
+          "image": "team-mauricio.jpg",
+          "name": "Mauricio",
+          "caption": "Responsable de Productes Especials i Desenvolupament de Negoci"
+        },
+        {
+          "image": "team-colome.jpg",
+          "name": "Colomé",
+          "caption": "Cap d’Investigació i Creixement"
+        },
+        {
+          "image": "team-quim.jpg",
+          "name": "Quim",
+          "caption": "Cap de Desenvolupament de Negoci"
+        },
+        {
+          "image": "team-cristina.jpg",
+          "name": "Cristina",
+          "caption": "Assistent de Desenvolupament de Negoci i Relacions Públiques"
+        },
+        {
+          "image": "team-anandi.jpg",
+          "name": "Anandi",
+          "caption": "Especialista Musical i Atenció al Client"
+        },
+        {
+          "image": "team-mike.jpg",
+          "name": "Mike",
+          "caption": "Especialista Musical i Atenció al Client"
+        },
+        {
+          "image": "team-stephano.jpg",
+          "name": "Stephano",
+          "caption": "Especialista Musical i Atenció al Client"
+        },
+        {
+          "image": "team-osvaldo.jpg",
+          "name": "Osvaldo",
+          "caption": "Especialista Musical i Atenció al Client"
+        },
+        {
+          "image": "team-facu.jpg",
+          "name": "Facu",
+          "caption": "Especialista Musical i Atenció al Client"
+        },
+        {
+          "image": "team-santi.jpg",
+          "name": "Santi",
+          "caption": "Especialista Musical i Atenció al Client"
+        },
+        {
+          "image": "team-ona.jpg",
+          "name": "Ona",
+          "caption": "Assistent de l’Editor Musical Principal i Suport al Client"
+        },
+        {
+          "image": "marina.jpg",
+          "name": "Marina",
+          "caption": "Especialista en Música i Contingut"
+        },
+        {
+          "image": "team-ottavio.jpg",
+          "name": "Ottavio",
+          "caption": "Musicòleg i Investigador"
+        },
+        {
+          "image": "team-carla.jpg",
+          "name": "Carla",
+          "caption": "Catalogadora"
+        },
+        {
+          "image": "team-piero.jpg",
+          "name": "Piero",
+          "caption": "Transcriptor i Editor Musical"
+        },
+        {
+          "image": "team-josep-forcada.jpg",
+          "name": "Josep Forcada",
+          "caption": "Assistent de Projectes i Administració"
+        },
+        {
+          "image": "team-david.jpg",
+          "name": "David",
+          "caption": "Assistent d’Edició Musical i Transcriptor"
+        },
+        {
+          "image": "team-marc.jpg",
+          "name": "Marc",
+          "caption": "Transcriptor Principal de Piano Jazz i Blues"
+        },
+        {
+          "image": "team-eric.jpg",
+          "name": "Eric",
+          "caption": "Transcriptor Principal de Piano i Conjunts Musicals"
+        },
+        {
+          "image": "team-michael.jpg",
+          "name": "Michael",
+          "caption": "Transcriptor Principal de Piano i Veu"
+        },
+        {
+          "image": "team-victor.jpg",
+          "name": "Víctor",
+          "caption": "Transcriptor Principal de Guitarra"
+        },
+        {
+          "image": "team-carla-2.jpg",
+          "name": "Carla",
+          "caption": "Transcriptora i Digitalitzadora"
+        },
+        {
+          "image": "team-queralt.jpg",
+          "name": "Queralt",
+          "caption": "Assistent Executiva i Financera"
+        },
+        {
+          "image": "team-maragda.jpg",
+          "name": "Maragda",
+          "caption": "Creadora de Contingut i Xarxes Socials"
+        },
+        {
+          "image": "team-josep-jaume.jpg",
+          "name": "Josep Jaume",
+          "caption": "Consultor Tècnic"
+        },
+        {
+          "image": "team-emma.jpg",
+          "name": "Emma",
+          "caption": "Desenvolupadora Full-Stack"
+        }
+      ]
+    },
+    {
+      "type": "PictureGrid",
+      "reveal": true,
+      "title": "Visita les nostres oficines!",
+      "variant": "marquee",
+      "shape": "photo",
+      "items": [
+        {
+          "image": "office-equip-sencer.jpg",
+          "alt": "L'equip a l'aire lliure, amb Montserrat al fons"
+        },
+        {
+          "image": "office-5.jpg",
+          "alt": "Transcriptors amb auriculars treballant a les oficines"
+        },
+        {
+          "image": "office-4.jpg",
+          "alt": "L'equip treballant a les oficines, sota els rellotges"
+        },
+        {
+          "image": "office-3-1.jpg",
+          "alt": "Dos transcriptors treballant a les oficines"
+        },
+        {
+          "image": "office-1.jpg",
+          "alt": "El web de La Meva Partitura a la pantalla d'un ordinador"
+        },
+        {
+          "image": "office-2.jpg",
+          "alt": "Un transcriptor amb auriculars davant de l'ordinador"
+        }
+      ]
+    },
+    {
+      "type": "ContactSection",
+      "reveal": true,
+      "form": "quoteForm"
+    }
+  ]
+}

@@ -288,10 +288,16 @@ describe('Decap configuration', () => {
     expect(cta?.fields?.every((f) => !f.required)).toBe(true)
   })
   it('has four entries in the sidebar: Site, Pages, Services and Blog', () => {
-    expect(collections.map((c) => c.name)).toEqual(['site', 'pages', 'services', 'posts'])
+    expect(collections.map((c) => c.name)).toEqual([
+      'site',
+      'pages',
+      'services',
+      'posts',
+      'products',
+    ])
   })
   it('files every language’s pages of a kind in one collection, by their language', () => {
-    for (const name of ['pages', 'services', 'posts']) {
+    for (const name of ['pages', 'services', 'posts', 'products']) {
       const c = collections.find((x) => x.name === name)
       expect(c?.folder).toBe('content')
       expect(c?.path).toBe(`{{language}}/${name}/{{slug}}/page`)

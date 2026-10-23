@@ -47,6 +47,8 @@
   --color-google: #4285f4;
   --color-facebook: #1877f2;
   --color-trustpilot: #00b67a;
+  --color-youtube: #cd201f; /* the YouTube glyph's disc (a card's glyph, white mark on it) */
+  --color-instagram: #8f1db0; /* the Instagram glyph's disc (a card's glyph, white mark on it) */
 
   /* Type scale (desktop); mobile sizes are set per utility */
   --text-display: 40px;

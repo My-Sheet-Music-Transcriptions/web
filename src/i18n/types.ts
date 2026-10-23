@@ -93,7 +93,8 @@ export interface SiteConfig {
   }
   /** Paths that must not be prerendered (served by a function). */
   ssrOnlyPaths: string[]
-  hub: { login: string; signup: string }
+  /** The hub's login and sign-up links (top bar, phone menu); a site without accounts leaves it out and has no top bar. */
+  hub?: { login: string; signup: string }
   /** Order, labels and names of the cross-domain language switcher (the footer lists them by name). */
   languageSwitcher: { locale: Locale; label: string; name: string }[]
   /** Every word the components show that is not content: typed, so a locale cannot miss one. */

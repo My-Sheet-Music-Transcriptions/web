@@ -1,0 +1,236 @@
+{
+  "language": "ca",
+  "collection": "pages",
+  "title": "La meva partitura - La Meva Partitura Edicions",
+  "description": "El teu servei núm. 1 de transcripció de partitures online: la teva partitura transcrita nota a nota per professionals, amb la màxima qualitat i precisió.",
+  "translationKey": "home",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "photo",
+      "title": "El teu servei núm. 1 de transcripció de partitures online",
+      "highlight": "núm. 1",
+      "lead": "Demana la teva partitura transcrita nota a nota per professionals, amb la màxima qualitat i precisió.",
+      "cta": {
+        "label": "Edicions",
+        "href": "/edicions"
+      },
+      "links": [
+        {
+          "label": "My Music Book",
+          "href": "/my-musicbook"
+        }
+      ],
+      "ctaVariant": "accent",
+      "images": [
+        {
+          "image": "hero.jpg"
+        }
+      ],
+      "logo": "logo"
+    },
+    {
+      "type": "Cards",
+      "reveal": true,
+      "id": "mes",
+      "title": "Descobreix els nostres serveis",
+      "columns": 2,
+      "variant": "overlay",
+      "items": [
+        {
+          "title": "Segells i editorials",
+          "body": "Ajudem a les discogràfiques i editorials a rendibilitzar el seu catàleg a través de la partitura",
+          "image": "labels.jpg",
+          "href": "https://www.mysheetmusictranscriptions.com/music-transcription-service-for-publishers",
+          "linkLabel": "Contacta'ns"
+        },
+        {
+          "title": "Institucions musicals",
+          "body": "Som un dels principals proveïdors de partitures per a conservatoris, corals, orquestres i bandes",
+          "image": "institutions.jpg",
+          "href": "https://www.mysheetmusictranscriptions.com/music-educators",
+          "linkLabel": "Saber-ne més"
+        },
+        {
+          "title": "Apps de musical learning",
+          "body": "Desenvolupem partitures digitals per a aplicacions d’aprenentatge musical",
+          "image": "learning-apps.png",
+          "href": "https://www.mysheetmusictranscriptions.com/b2b-deck",
+          "linkLabel": "Més informació"
+        },
+        {
+          "title": "Artistes",
+          "body": "Centra’t en la part creativa i deixa que nosaltres ens encarreguem de la partitura",
+          "image": "artists.jpg",
+          "href": "/my-musicbook",
+          "linkLabel": "Veure exemples"
+        }
+      ]
+    },
+    {
+      "type": "PictureGrid",
+      "reveal": true,
+      "title": "Artistes que confien en nosaltres",
+      "shape": "photo",
+      "columns": 3,
+      "items": [
+        {
+          "image": "artist-laura-andres.jpg",
+          "name": "Laura Andrés"
+        },
+        {
+          "image": "artist-la-oreja-de-van-gogh.jpg",
+          "name": "La Oreja de Van Gogh"
+        },
+        {
+          "image": "artist-eduard-freixa.webp",
+          "name": "Eduard Freixa"
+        }
+      ]
+    },
+    {
+      "type": "Samples",
+      "reveal": true,
+      "id": "exemples",
+      "title": "Exemples i serveis",
+      "variant": "columns",
+      "columns": 2,
+      "zoom": true,
+      "items": [
+        {
+          "title": "Transcripció de cor a 3 veus",
+          "video": {
+            "youtube": "h7SHhVq3-wE",
+            "title": "Celebrem, transcripció de cor a 3 veus"
+          },
+          "image": "sample-celebrem.png",
+          "alt": "Partitura de Celebrem per a cor a 3 veus, primera pàgina"
+        },
+        {
+          "title": "Arranjament per a piano sol",
+          "video": {
+            "youtube": "5xv3jCmuqtU",
+            "title": "Tu Fas, arranjament per a piano sol"
+          },
+          "image": "sample-tu-fas.png",
+          "alt": "Partitura de Tu Fas de Doctor Prats per a piano sol, primera pàgina"
+        },
+        {
+          "title": "Transcripció de violí sol",
+          "video": {
+            "youtube": "HW4BDpE1Bnk",
+            "title": "Chandelier, transcripció de violí sol"
+          },
+          "image": "sample-chandelier.png",
+          "alt": "Partitura de Chandelier per a violí, tal com la toca Eduard Freixa, primera pàgina"
+        },
+        {
+          "title": "Transcripció de piano virtuós",
+          "video": {
+            "youtube": "9nht4JfTHIM",
+            "title": "White Christmas, transcripció de piano virtuós"
+          },
+          "image": "sample-white-christmas.png",
+          "alt": "Partitura de White Christmas per a piano, primera pàgina"
+        }
+      ]
+    },
+    {
+      "type": "Steps",
+      "reveal": true,
+      "title": "Com ho fem?",
+      "variant": "columns",
+      "illustration": "how-it-works.jpg",
+      "illustrationAlt": "Tres passos: envia'ns l'àudio, nosaltres el transcrivim, imprimeix i gaudeix",
+      "items": [
+        {
+          "title": "1. Envia'ns l'àudio o enllaç",
+          "body": "Et farem arribar pressupost i termini d’entrega.",
+          "image": "step-1-send-audio.png",
+          "imageWidth": 177
+        },
+        {
+          "title": "2. Nosaltres el transcrivim",
+          "body": "El nostre equip prepara la partitura exactament segons les teves necessitats.",
+          "image": "step-2-transcribe.png",
+          "imageWidth": 188
+        },
+        {
+          "title": "3. Imprimeix i gaudeix!",
+          "body": "Rep la teva partitura en PDF i altres formats. Revisions i arranjaments inclosos!",
+          "image": "step-3-print-play.jpg",
+          "imageWidth": 112
+        }
+      ]
+    },
+    {
+      "type": "MediaText",
+      "reveal": true,
+      "title": "Tan propi com les teves cançons.",
+      "image": "my-music-book.png",
+      "alt": "My Music Book: tan personal com les teves cançons",
+      "imageSide": "left",
+      "body": "Demana el teu cançoner, i personalitza’l com vulguis.",
+      "cta": {
+        "label": "Descobreix My Music Book",
+        "href": "/my-musicbook"
+      }
+    },
+    {
+      "type": "PictureGrid",
+      "reveal": true,
+      "title": "Clients que confien en nosaltres",
+      "lead": "Treballem per a músics i empreses de tot el món. Però enlloc com a casa.",
+      "shape": "logo",
+      "columns": 6,
+      "items": [
+        {
+          "image": "client-we-color-music.webp",
+          "alt": "We Color Music"
+        },
+        {
+          "image": "client-fever.png",
+          "alt": "Fever"
+        },
+        {
+          "image": "client-musicnotes.png",
+          "alt": "Musicnotes"
+        },
+        {
+          "image": "client-lauditori.png",
+          "alt": "L'Auditori"
+        },
+        {
+          "image": "client-odisei.png",
+          "alt": "Odisei"
+        },
+        {
+          "image": "client-sony-music-publishing.png",
+          "alt": "Sony Music Publishing"
+        }
+      ]
+    },
+    {
+      "type": "RatingBanner",
+      "reveal": true,
+      "title": "El servei de transcripció de partitures millor valorat",
+      "sources": "homeRatings",
+      "image": "sheetMusicBand"
+    },
+    {
+      "type": "MediaText",
+      "reveal": true,
+      "title": "Sobre nosaltres",
+      "align": "center",
+      "imageSide": "left",
+      "image": "team.jpg",
+      "alt": "L'equip de La Meva Partitura",
+      "body": "Som un equip de **més de 100 músics professionals** amb molts anys d’experiència com a arranjadors, compositors, transcriptors i també amb una àmplia trajectòria en escenaris com a intèrprets. Tot i treballar en remot amb freqüència, tenim les nostres oficines principals a **Terrassa, Barcelona**.\n\nL’any 2011, l’Oriol, el fundador, va detectar la necessitat que existís **un servei fiable de transcripció de partitures al qual recórrer quan no trobes enlloc la partitura que necessites**. L’Oriol va transcriure centenars de partitures durant els primers anys per a clients que es frustraven de no poder disposar de partitures aparentment fàcils de trobar. La solució era, doncs, transcriure-les des de zero per a ells.\n\n[**My Sheet Music Transcriptions**](https://www.mysheetmusictranscriptions.com/) és la versió en anglès, que dona servei a clients anglòfons d’arreu del món. Més tard, van néixer **Mis Transcripciones Musicales** (castellà), **Ma Partition Sur Mesure** (francès), **My Sheet Music Transcriptions Japan** (japonès) i **Meine Musik Transkription** (alemany) per donar servei en diferents idiomes, sempre amb la nostra base a Catalunya."
+    },
+    {
+      "type": "ContactSection",
+      "reveal": true,
+      "form": "quoteForm"
+    }
+  ]
+}

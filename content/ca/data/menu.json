@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "label": "Inici",
+      "page": "/"
+    },
+    {
+      "label": "Edicions",
+      "page": "/edicions"
+    },
+    {
+      "label": "Shop",
+      "page": "/shop"
+    },
+    {
+      "label": "My Music Book",
+      "page": "/my-musicbook"
+    },
+    {
+      "label": "Sobre nosaltres",
+      "page": "/sobre-nosaltres"
+    },
+    {
+      "label": "Contacte",
+      "page": "/contacte"
+    }
+  ]
+}

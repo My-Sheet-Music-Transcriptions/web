@@ -1,0 +1,64 @@
+{
+  "rules": [
+    {
+      "from": "/redisseny-home",
+      "to": "/",
+      "note": "Esborrany del redisseny de la portada"
+    },
+    {
+      "from": "/descartes",
+      "to": "/",
+      "note": "Pàgina de seccions descartades"
+    },
+    {
+      "from": "/contacte-2",
+      "to": "/contacte",
+      "note": "Esborrany duplicat de Contacte"
+    },
+    {
+      "from": "/sample-page",
+      "to": "/",
+      "note": "Pàgina d’exemple de WordPress"
+    },
+    {
+      "from": "/la-meva-partitura",
+      "to": "/",
+      "note": "Esborrany de 2023"
+    },
+    {
+      "from": "/el-meu-compte",
+      "to": "/shop",
+      "note": "Compte de WooCommerce"
+    },
+    {
+      "from": "/cistella",
+      "to": "/shop",
+      "note": "Cistella de WooCommerce"
+    },
+    {
+      "from": "/pagament",
+      "to": "/shop",
+      "note": "Pagament de WooCommerce"
+    },
+    {
+      "from": "/categoria-product/*",
+      "to": "/shop",
+      "note": "Categories de producte de WooCommerce"
+    },
+    {
+      "from": "/team/*",
+      "to": "/sobre-nosaltres",
+      "note": "Fitxes de l’equip (en anglès, sense enllaços)"
+    },
+    {
+      "from": "/service/*",
+      "to": "/",
+      "note": "Fitxes de servei en anglès (sense enllaços)"
+    },
+    {
+      "from": "/faq/*",
+      "to": "/",
+      "note": "Preguntes freqüents en anglès (sense enllaços)"
+    }
+  ]
+}

@@ -24,20 +24,20 @@ type BodyComponent = ComponentType
 // Root-absolute patterns: Vite resolves them against the project root.
 const metas = {
   ...import.meta.glob<unknown>(
-    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/meta.ts',
+    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews,products}/*/meta.ts',
     { eager: true, import: 'default' },
   ),
   ...import.meta.glob<unknown>(
-    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/page.json',
+    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews,products}/*/page.json',
     { eager: true, import: 'default', query: '?meta' },
   ),
 }
 const bodies = {
   ...import.meta.glob<{ default: BodyComponent }>(
-    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/index.tsx',
+    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews,products}/*/index.tsx',
   ),
   ...import.meta.glob<{ default: BodyComponent }>(
-    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews}/*/page.json',
+    '/content/*/{pages,services,posts,faqs,artists,musicians,partners,reviews,products}/*/page.json',
     { query: '?page' },
   ),
 }

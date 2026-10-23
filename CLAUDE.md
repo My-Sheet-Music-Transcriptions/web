@@ -37,7 +37,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `content/<locale>/<collection>/<slug>/` – every page is a **folder**: `index.tsx` (the page component, a
   fragment of blocks), `meta.ts` (`export default { title, description, translationKey, … } satisfies
   PageMetaInput`) and every image the page uses, side by side (co-location). Collections: pages, services, posts,
-  faqs, artists, musicians, partners, reviews. The folder name is the URL slug (`pages/home/` is `/`, `faqs/x/` is
+  faqs, artists, musicians, partners, reviews, products (the shop, at `/product/<slug>`). The folder name is the URL slug (`pages/home/` is `/`, `faqs/x/` is
   `/faqs/x`). `meta.ts` is plain data: read statically by `scripts/lib/ts-literal.ts` (never run in Node) and
   validated by `src/content/schema.ts` (zod) at build and in unit tests.
 - **CMS pages (`page.json`, pilot; "data pages" in the code).** A page folder may instead hold one `page.json`:
@@ -135,7 +135,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 
 ## Rules that CI enforces
 
-- Slugs are flat and unique per locale across collections; reserved: api, assets, og, faqs, review, 404, storybook, admin.
+- Slugs are flat and unique per locale across collections; reserved: api, assets, og, faqs, review, product, 404, storybook, admin.
 - Every page: exactly one `<h1>`, `<title>` 30–65 chars, description 50–160, canonical, og:title/description,
   exactly one og:image (404 included) that exists in dist at its declared 1200×630, twitter card, `<html lang>`,
   valid JSON-LD, images with alt/width/height, no broken internal links, listed once in its collection's sitemap

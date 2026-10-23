@@ -24,6 +24,10 @@ export interface PageHeaderProps {
   lead?: string
   /** The page's main action, under the copy. */
   cta?: Cta
+  /** More buttons beside the `cta`, in its style (photo, split): the Catalan homepage's two ways in. */
+  links?: Cta[]
+  /** The colour of the photo header's buttons: primary (teal-blue, the default) or accent (orange, the Catalan homepage). */
+  ctaVariant?: 'primary' | 'accent'
   /** The compact rating card: pass `google` from content/<locale>/data/ratings. */
   rating?: RatingSource
   /** band: light centred title band (default). split: copy beside pictures, on white. photo: the homepage. cover: the title in white over a darkened photo (the blog, a post). */
@@ -36,11 +40,15 @@ export interface PageHeaderProps {
   alt?: string
   /** Several pictures: a carousel beside the copy (split), the plain photos rotating behind it (photo). */
   images?: Slide[]
-  /** The photos above the copy on phones (photo); `images` when left out. */
-  mobileImages?: Slide[]
-  /** A part of the title set in orange from desktop up (photo): "#1". */
+  /** The carousel's frame (split): `wide`, 3:2 and cropped (default), or `square`, each picture whole (a shop
+   * product's gallery). */
+  frame?: 'wide' | 'square'
+  /** The photo faded behind the copy on phones (photo): the locale's `heroPhone` (content/<locale>/data/brand.ts),
+   * never chosen per page; the first of `images` when left out. */
+  mobileImage?: PictureSource
+  /** A part of the title set in orange (photo): "#1". */
   highlight?: string
-  /** The brand lockup above the title (photo): `~/assets/images/brand/logo.svg` with its words. */
+  /** The brand lockup above the title (photo), or in its place (band, cover: the h1 is then for screen readers only): `~/assets/images/brand/logo.svg` with its words. */
   logo?: BrandLogo
   /** The words of the carousel arrows: `media` from content/<locale>/data/labels (with `images`). */
   labels?: MediaLabels
@@ -78,6 +86,7 @@ function BandHeader({
   rating,
   image,
   alt = '',
+  logo,
   id,
 }: PageHeaderProps) {
   return (
@@ -92,7 +101,21 @@ function BandHeader({
         )}
       >
         {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-deep')}>{eyebrow}</p> : null}
-        <h1 className="mx-auto max-w-[900px] text-[36px] leading-tight font-bold text-ink">
+        {logo ? (
+          <img
+            src={logo.image}
+            alt={logo.alt}
+            width={900}
+            height={364}
+            className="mx-auto h-auto w-[min(900px,100%)]"
+          />
+        ) : null}
+        <h1
+          className={cn(
+            'mx-auto max-w-[900px] text-[36px] leading-tight font-bold text-ink',
+            logo && 'sr-only',
+          )}
+        >
           {title}
         </h1>
         {subtitle ? (
@@ -100,7 +123,9 @@ function BandHeader({
             {subtitle}
           </p>
         ) : null}
-        <span aria-hidden="true" className="mx-auto mt-5 block h-px w-[180px] bg-accent" />
+        {logo ? null : (
+          <span aria-hidden="true" className="mx-auto mt-5 block h-px w-[180px] bg-accent" />
+        )}
         {lead ? (
           <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-relaxed text-ink">
             {inlineMarkdown(lead)}
@@ -129,12 +154,27 @@ function BandHeader({
   )
 }
 
-function CoverHeader({ title, eyebrow, lead, date, cta, image, alt = '', id }: PageHeaderProps) {
+function CoverHeader({
+  title,
+  eyebrow,
+  lead,
+  date,
+  cta,
+  image,
+  alt = '',
+  logo,
+  id,
+}: PageHeaderProps) {
   const locale = useLocale()
   return (
     <header
       id={id}
-      className="relative isolate flex min-h-[280px] items-center overflow-hidden bg-footer px-4 py-20 text-center text-white md:min-h-[340px]"
+      className={cn(
+        'relative isolate flex items-center overflow-hidden bg-footer px-4 py-20 text-center text-white',
+        logo
+          ? 'min-h-[360px] md:min-h-[clamp(480px,57vw,820px)]'
+          : 'min-h-[280px] md:min-h-[340px]',
+      )}
     >
       {image ? (
         <Picture
@@ -146,11 +186,30 @@ function CoverHeader({ title, eyebrow, lead, date, cta, image, alt = '', id }: P
           pictureClassName="contents"
         />
       ) : null}
-      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-footer/65" />
+      <span
+        aria-hidden="true"
+        className={cn('absolute inset-0 -z-10', logo ? 'bg-footer/35' : 'bg-footer/65')}
+      />
       <div className="mx-auto flex max-w-[900px] flex-col items-center gap-4">
         {eyebrow ? <p className={cn(eyebrowClass, 'text-accent-light')}>{eyebrow}</p> : null}
-        <h1 className="text-[32px] leading-tight font-bold text-white md:text-[40px]">{title}</h1>
-        <span aria-hidden="true" className="block h-px w-[120px] bg-accent" />
+        {logo ? (
+          <img
+            src={logo.image}
+            alt={logo.alt}
+            width={664}
+            height={268}
+            className="h-auto w-[min(664px,80vw)]"
+          />
+        ) : null}
+        <h1
+          className={cn(
+            'text-[32px] leading-tight font-bold text-white md:text-[40px]',
+            logo && 'sr-only',
+          )}
+        >
+          {title}
+        </h1>
+        {logo ? null : <span aria-hidden="true" className="block h-px w-[120px] bg-accent" />}
         {date ? (
           <p className="flex items-center gap-2 text-small">
             <Icon name="calendar" size={16} aria-hidden="true" className="text-accent-light" />
@@ -173,10 +232,12 @@ function SplitHeader({
   eyebrow,
   lead,
   cta,
+  links,
   rating,
   image,
   alt = '',
   images,
+  frame = 'wide',
   labels,
   id,
 }: PageHeaderProps) {
@@ -191,7 +252,7 @@ function SplitHeader({
           {lead ? (
             <p className="mt-5 text-[20px] leading-[30px] text-secondary">{inlineMarkdown(lead)}</p>
           ) : null}
-          {cta ? <CtaLink cta={cta} className="mt-8" /> : null}
+          {cta || links?.length ? <Actions cta={cta} links={links} className="mt-8" /> : null}
           {rating ? <CompactRating source={rating} className="entrance mt-8" /> : null}
         </div>
         <Media
@@ -202,7 +263,13 @@ function SplitHeader({
           label={title}
           priority
           sizes="(min-width: 1025px) 560px, 100vw"
-          imageClassName={several ? 'aspect-[3/2]' : 'rounded-card object-cover'}
+          imageClassName={
+            several
+              ? frame === 'square'
+                ? 'aspect-square bg-white object-contain'
+                : 'aspect-[3/2]'
+              : 'rounded-card object-cover'
+          }
         />
       </div>
     </header>
@@ -225,20 +292,33 @@ function PhotoHeader({
   lead,
   subtitle,
   cta,
+  links,
+  ctaVariant = 'primary',
   images = [],
-  mobileImages,
+  mobileImage,
   rating,
   logo,
   id,
 }: PageHeaderProps) {
+  const backdrop = mobileImage ?? images[0]?.image
   const [before, after] =
     highlight && title.includes(highlight) ? title.split(highlight) : [title, null]
   const photos = images.map((s) => s.image)
   return (
     <header id={id} className="relative">
-      {/* Phones: the photos above the copy */}
-      <div className="relative aspect-[390/261] overflow-hidden md:hidden">
-        <Slideshow slides={mobileImages?.map((s) => s.image) ?? photos} sizes="100vw" />
+      {/* Phones: one photo faded behind the lockup, the copy and the buttons, a wave under it */}
+      <div className="absolute inset-0 overflow-hidden md:hidden">
+        {backdrop ? (
+          <Picture
+            image={backdrop}
+            alt=""
+            sizes="100vw"
+            priority
+            className="h-full w-full object-cover opacity-10"
+            pictureClassName="absolute inset-0"
+          />
+        ) : null}
+        <WaveDivider position="bottom" height={25} />
       </div>
       {/* From tablets up: the photos fill the whole header, cut by the curve that leaves the copy on white. The
           curve stays put and the photos lag behind it as the page scrolls.
@@ -254,18 +334,23 @@ function PhotoHeader({
         </div>
       </div>
       <div className="relative">
-        <div className="mx-auto flex max-w-[1440px] flex-col px-[14px] pt-[132px] pb-[77px] md:min-h-[clamp(520px,53.2vw,765px)] md:justify-center md:px-[clamp(24px,6.05vw,86px)] md:py-10">
+        <div
+          className={cn(
+            'mx-auto flex max-w-[1440px] flex-col px-[14px] md:min-h-[clamp(520px,53.2vw,765px)] md:justify-center md:px-[clamp(24px,6.05vw,86px)] md:py-10',
+            'min-h-[100svh] justify-center px-5 pt-[120px] pb-[140px] md:pt-10 md:pb-10',
+          )}
+        >
           <div className="max-w-[459px] md:max-w-[clamp(300px,32vw,459px)]">
             {logo ? (
               <Logo
                 logo={logo}
                 width={340}
-                className="hidden md:inline-flex md:w-[clamp(220px,23.7vw,340px)] md:[&>img]:h-auto md:[&>img]:w-full"
+                className="inline-flex w-full max-w-[340px] md:w-[clamp(220px,23.7vw,340px)] [&>img]:h-auto [&>img]:w-full"
               />
             ) : null}
-            <h1 className="text-[28px] font-bold leading-[1.4] text-ink md:mt-5 md:text-[clamp(28px,2.8vw,40px)] md:leading-[1.15]">
+            <h1 className="mt-8 text-[28px] font-bold leading-[1.4] text-ink md:mt-5 md:text-[clamp(28px,2.8vw,40px)] md:leading-[1.15]">
               {before}
-              {after !== null && <span className="md:text-orange">{highlight}</span>}
+              {after !== null && <span className="text-orange">{highlight}</span>}
               {after}
             </h1>
             {lead ? (
@@ -278,10 +363,13 @@ function PhotoHeader({
                 {subtitle}
               </p>
             ) : null}
-            {cta ? (
-              <div className="mt-[34px] hidden md:block">
-                <CtaLink cta={cta} variant="primary" />
-              </div>
+            {cta || links?.length ? (
+              <Actions
+                cta={cta}
+                links={links}
+                variant={ctaVariant}
+                className="mt-[34px] flex-col items-start md:flex-row md:items-center"
+              />
             ) : null}
           </div>
         </div>
@@ -292,6 +380,26 @@ function PhotoHeader({
         ) : null}
       </div>
     </header>
+  )
+}
+
+/** The header's buttons: the `cta`, then the `links` beside it, all in one style. */
+function Actions({
+  cta,
+  links = [],
+  variant,
+  className,
+}: Pick<PageHeaderProps, 'cta' | 'links'> & {
+  variant?: 'primary' | 'accent'
+  className?: string
+}) {
+  return (
+    <div className={cn('flex flex-wrap gap-4', className)}>
+      {cta ? <CtaLink cta={cta} variant={variant} /> : null}
+      {links.map((l) => (
+        <CtaLink key={l.href} cta={l} variant={variant} />
+      ))}
+    </div>
   )
 }
 

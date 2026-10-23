@@ -35,23 +35,6 @@
           "image": "hero-slide-5.webp"
         }
       ],
-      "mobileImages": [
-        {
-          "image": "hero-slide-mobile-1.webp"
-        },
-        {
-          "image": "office-piano-transcribers.webp"
-        },
-        {
-          "image": "hero-slide-mobile-3.webp"
-        },
-        {
-          "image": "hero-slide-mobile-4.webp"
-        },
-        {
-          "image": "hero-slide-mobile-5.webp"
-        }
-      ],
       "rating": "google",
       "logo": "logo"
     },

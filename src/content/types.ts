@@ -1,3 +1,4 @@
+import type { IconName } from '~/components/primitives/Icon'
 import type { PictureSource } from '~/components/primitives/Picture'
 import type { Video } from '~/components/primitives/VideoEmbed'
 
@@ -84,7 +85,8 @@ export interface Review {
   /** YYYY-MM */
   date?: string
   rating: number
-  source: 'google' | 'trustpilot' | 'facebook' | 'email'
+  /** Where it was left: a review site, an email, or the shop's own product page (`shop`). */
+  source: 'google' | 'trustpilot' | 'facebook' | 'email' | 'shop'
   sourceUrl?: string
   quote: string
 }
@@ -190,8 +192,12 @@ export interface CardItem {
   image?: PictureSource
   /** Width of the picture in px (plain items; it fills a card's width otherwise). */
   imageWidth?: number
+  /** A glyph in a coloured disc instead of a picture ("mail", "phone"); in a timeline step, in its disc. */
+  glyph?: IconName
   /** A video instead of a picture. */
   video?: Video
+  /** More words that unfold under the body when their title is clicked ("Avantatges" and its list). */
+  more?: { label: string; body: string }
   /** A line in bold under the body. */
   emphasis?: string
   /** Where the card leads: the title links there, and `linkLabel` adds a button. */

@@ -1,0 +1,82 @@
+{
+  "language": "ca",
+  "collection": "products",
+  "title": "La Oreja de Van Gogh - Cancionero oficial piano, acordes y voz",
+  "description": "Cancionero oficial de LODVG que recopila las canciones más icónicas de sus 30 años de historia. Formato partitura para piano, letra y acordes para guitarra.",
+  "translationKey": "la-oreja-de-van-gogh-songbook",
+  "blocks": [
+    {
+      "type": "PageHeader",
+      "variant": "split",
+      "title": "La Oreja de Van Gogh – Songbook (1996-2026)",
+      "subtitle": "Oferta: 30,00 € (abans 35,00 €)",
+      "lead": "Cancionero oficial de LODVG que recopila las canciones más icónicas de sus 30 años de historia.",
+      "cta": {
+        "label": "Compra",
+        "href": "#comanda"
+      },
+      "images": [
+        {
+          "image": "songbook-cover.jpg",
+          "alt": "La portada del cançoner de La Oreja de Van Gogh"
+        },
+        {
+          "image": "songbook-9.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh al faristol d'un piano"
+        },
+        {
+          "image": "songbook-8.jpg",
+          "alt": "Una partitura del cançoner de La Oreja de Van Gogh"
+        },
+        {
+          "image": "songbook-5.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh obert sobre el faristol d'un piano"
+        },
+        {
+          "image": "songbook-7.jpg",
+          "alt": "Pàgines del cançoner de La Oreja de Van Gogh"
+        },
+        {
+          "image": "songbook-4.jpg",
+          "alt": "Pàgines del cançoner de La Oreja de Van Gogh"
+        },
+        {
+          "image": "songbook-3.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh obert"
+        },
+        {
+          "image": "songbook-2.jpg",
+          "alt": "Pàgines del cançoner de La Oreja de Van Gogh"
+        },
+        {
+          "image": "songbook-1.jpg",
+          "alt": "El cançoner de La Oreja de Van Gogh sobre un piano"
+        }
+      ],
+      "frame": "square"
+    },
+    {
+      "type": "Article",
+      "reveal": true,
+      "title": "Descripció",
+      "items": [
+        {
+          "body": "### Descripción\n\nCancionero oficial de LODVG que recopila las canciones más icónicas de sus 30 años de historia.\n\nFormato partitura para piano, letra y acordes para guitarra.\n\nIncluye material exclusivo como fotos, entradas a conciertos, artículos de prensa e incluso el borrador de uno de los temas más queridos.\n\nNuestra música ahora también es tuya para siempre. Tócala cuando y con quien quieras.\n\n115 páginas. Formato DIN A4.\n\n### Canciones incluidas\n\nCuéntame al oído · Cuídate · París · La playa · Pop · Puedes contar conmigo · 20 de enero · Rosas · Deseos de cosas imposibles · Vestido azul · Muñeca de trapo · Dulce locura · El último vals · Jueves\n\n**Envío a Península en 2-4 días laborables.**\n\n(no somos Amazon Prime, todavía!)\n\n### Ficha del producto\n\nFormato: DIN A4\n\nContenido musical: Piano nivel intermedio + letra y acordes\n\nIncluye: partituras, letras y material gráfico\n\nNúmero de páginas: 115\n\nEditorial: La Meva Partitura Edicions\n\nLicencia: Sony Music Publishing\n\n**ISBN**: 9791399247909\n\n### Informació addicional\n\n**Pes:** 0,5 kg\n\n**Dimensions:** 0,3 × 0,2 × 0,05 cm"
+        }
+      ]
+    },
+    {
+      "type": "Testimonials",
+      "reveal": true,
+      "title": "Ressenyes",
+      "items": "songbookReviews"
+    },
+    {
+      "type": "ContactSection",
+      "reveal": true,
+      "form": "orderForm",
+      "id": "comanda",
+      "returnTo": "/product/la-oreja-de-van-gogh-songbook-1996-2026"
+    }
+  ]
+}

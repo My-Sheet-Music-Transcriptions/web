@@ -225,6 +225,7 @@ if (decap.CMS && decap.createClass && decap.h) {
     ['pages'],
     ['services'],
     ['posts'],
+    ['products'],
     ...CMS_LOCALES.flatMap(({ code }) => [
       [`home-${code}`, code] as const,
       [`menu-${code}`, code] as const,
