@@ -27,10 +27,13 @@ const FONT_DIR = path.resolve('node_modules/@fontsource/montserrat/files')
 const TEMPLATE = path.resolve('src/seo/og/template.tsx')
 const BRAND_DIR = path.resolve('src/assets/images/brand')
 
-/** The locale's lockup, as src/assets/brand.ts picks it for the header: logo-<name>.svg, else the shared logo.svg. */
+/** The locale's lockup, as src/assets/brand.ts picks it for the header: logo-<name>.svg or .png, else the English one. */
 function logoFile(name: string): string {
-  const own = path.join(BRAND_DIR, `logo-${name}.svg`)
-  return fs.existsSync(own) ? own : path.join(BRAND_DIR, 'logo.svg')
+  for (const ext of ['svg', 'png']) {
+    const own = path.join(BRAND_DIR, `logo-${name}.${ext}`)
+    if (fs.existsSync(own)) return own
+  }
+  return path.join(BRAND_DIR, 'logo-en.svg')
 }
 
 function fonts() {
@@ -91,8 +94,10 @@ export async function buildOgImages(
 
   fs.rmSync(path.join(publicDir, 'og', site.locale), { recursive: true, force: true })
   fs.mkdirSync(cacheDir, { recursive: true })
-  const logo = fs.readFileSync(logoFile(site.logo), 'utf8')
-  const logoData = `data:image/svg+xml;base64,${Buffer.from(logo).toString('base64')}`
+  const logoPath = logoFile(site.logo)
+  const logo = fs.readFileSync(logoPath).toString('base64')
+  const logoType = logoPath.endsWith('.png') ? 'image/png' : 'image/svg+xml'
+  const logoData = `data:${logoType};base64,${logo}`
   const design = fs.readFileSync(TEMPLATE, 'utf8') + logo
   let loadedFonts: ReturnType<typeof fonts> | undefined
   let made = 0
