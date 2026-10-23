@@ -2,6 +2,8 @@ import type { ComponentType } from 'react'
 import { blocks } from '~/components/blocks'
 import { cmsBlocks, isCmsBlock } from '~/components/blocks/cms'
 import type { PictureSource } from '~/components/primitives/Picture'
+import { AddToCart } from '~/components/shop/AddToCart'
+import { useCart } from '~/components/shop/CartProvider'
 import type { MediaLabels, PostCard, PostLabels, ReviewLabels, ShareLabels } from '~/content/types'
 import { lightMarkdown } from '~/lib/light-markdown'
 import type { AnyCmsBlock } from './cms-fields'
@@ -36,13 +38,25 @@ export function BlockPage({
   words,
   brand = {},
   posts = [],
+  product,
 }: {
   blocks: DataBlock[]
   words: BlockWords
   brand?: BlockBrand
   /** The blog posts of the page's language, for the blocks that list them (`feed: 'posts'`). */
   posts?: PostCard[]
+  /** A product page's product code (`shop.sku`): its PageHeader gets the price and the add-to-cart button. */
+  product?: string
 }) {
+  // the shop's products as cards, for the blocks that list them (`feed: 'products'`): none outside the app's cart
+  const products =
+    useCart()?.products.map((p) => ({
+      image: p.image,
+      name: p.name,
+      href: p.path,
+      action: <AddToCart sku={p.sku} variant="compact" />,
+    })) ?? []
+  const buyIn = product ? list.findIndex((b) => b.type === 'PageHeader') : -1
   return (
     <>
       {list.map(({ type, body, ...props }, i) => {
@@ -58,6 +72,8 @@ export function BlockPage({
           ...(poster && { videoPoster: poster }),
           ...(type === 'PageHeader' && brand.heroPhone && { mobileImage: brand.heroPhone }),
           ...(entry.feed === 'posts' && { items: posts }),
+          ...(entry.feed === 'products' && { items: products }),
+          ...(i === buyIn && { actions: <AddToCart sku={product as string} /> }),
         }
         return (
           // biome-ignore lint/suspicious/noArrayIndexKey: the stored order is the page's order

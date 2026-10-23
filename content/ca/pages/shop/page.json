@@ -10,35 +10,10 @@
       "title": "Botiga"
     },
     {
-      "type": "PictureGrid",
+      "type": "ProductGrid",
       "reveal": true,
       "label": "Els nostres llibres",
-      "shape": "photo",
-      "columns": 3,
-      "items": [
-        {
-          "image": "songbook-cover.jpg",
-          "name": "La Oreja de Van Gogh – Songbook (1996-2026)",
-          "caption": "Oferta: 30,00 € (abans 35,00 €)",
-          "href": "/product/la-oreja-de-van-gogh-songbook-1996-2026"
-        },
-        {
-          "image": "book-8.jpg",
-          "name": "Col·lecció Laura Andrés",
-          "caption": "80,00 €",
-          "href": "/product/colleccio-laura-andres"
-        },
-        {
-          "image": "canconer-nadal-2.png",
-          "name": "Cançoner de Nadal 2026",
-          "href": "/product/canconer-de-nadal-2026"
-        },
-        {
-          "image": "sony-portada-partituras.png",
-          "name": "Grans èxits del pop espanyol",
-          "href": "/product/grans-exits-del-pop-espanyol"
-        }
-      ]
+      "columns": 3
     }
   ]
 }

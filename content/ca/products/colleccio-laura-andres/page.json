@@ -4,17 +4,22 @@
   "title": "Col·lecció Laura Andrés - La Meva Partitura Edicions",
   "description": "Pack dels 4 llibres de partitures de Laura Andrés transcrits per La Meva Partitura Edicions",
   "translationKey": "colleccio-laura-andres",
+  "shop": {
+    "sku": "laura-andres-collection",
+    "name": "Col·lecció Laura Andrés",
+    "price": 80,
+    "availability": "external",
+    "externalUrl": "https://laurandres.com/products/pack-de-libros-de-partituras",
+    "weight": 1000,
+    "image": "book-8.jpg",
+    "order": 2
+  },
   "blocks": [
     {
       "type": "PageHeader",
       "variant": "split",
       "title": "Col·lecció Laura Andrés",
-      "subtitle": "80,00 €",
       "lead": "Pack dels 4 llibres de partitures de Laura Andrés transcrits per La Meva Partitura Edicions",
-      "cta": {
-        "label": "Compra",
-        "href": "https://laurandres.com/products/pack-de-libros-de-partituras"
-      },
       "images": [
         {
           "image": "book-8.jpg",

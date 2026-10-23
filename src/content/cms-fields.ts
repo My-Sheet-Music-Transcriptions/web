@@ -251,8 +251,11 @@ export interface CmsBlock<P = unknown> {
   words?: 'mediaLabels' | 'reviewLabels' | 'shareLabels'
   /** The srcset widths its pictures are built at (vite-imagetools `w=`), as on hand-built pages. */
   pictureWidths: string
-  /** A list the block gets as `items` without a field for it: `posts`, the page's language's blog posts. */
-  feed?: 'posts'
+  /**
+   * A list the block gets as `items` without a field for it: `posts`, the page's language's blog posts; `products`,
+   * its shop's products as cards with their price and add button (src/content/BlockPage.tsx).
+   */
+  feed?: 'posts' | 'products'
   fields: CmsFields<P>
 }
 

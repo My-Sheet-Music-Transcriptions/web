@@ -4,6 +4,13 @@
   "title": "Cançoner de Nadal 2026 - La Meva Partitura Edicions",
   "description": "El Cançoner de Nadal 2026 de La Meva Partitura Edicions: les cançons de Nadal en un llibre de partitures. Arriba properament.",
   "translationKey": "canconer-de-nadal-2026",
+  "shop": {
+    "sku": "canconer-nadal-2026",
+    "name": "Cançoner de Nadal 2026",
+    "availability": "soon",
+    "image": "canconer-nadal-2.png",
+    "order": 3
+  },
   "blocks": [
     {
       "type": "PageHeader",

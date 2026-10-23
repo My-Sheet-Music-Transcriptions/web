@@ -525,6 +525,21 @@ export const cmsBlocks = {
       reveal,
     },
   }),
+  ProductGrid: preset('PictureGrid', {
+    label: 'Shop products',
+    summary: '{{fields.title}}{{fields.label}}',
+    pictureWidths: '160;320;480',
+    feed: 'products',
+    props: { shape: 'photo' },
+    fields: {
+      ...heading,
+      label: line('What the products are (for screen readers, without a heading)'),
+      columns: number<2 | 3 | 4>('Products per row (2–4)', { min: 2, max: 4 }),
+      tone,
+      cta: button(),
+      reveal,
+    },
+  }),
   PictureStrip: preset('PictureGrid', {
     label: 'Moving picture strip',
     summary: '{{fields.label}}',

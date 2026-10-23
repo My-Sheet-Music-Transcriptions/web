@@ -19,7 +19,8 @@ const REQUEST = new RegExp(`/${DATA_PAGE_FILE.replace('.', '\\.')}\\?(meta|page)
  * as an index.tsx would be: each picture imported through vite-imagetools at its field's or its block's widths, each
  * recording as its URL, each data field's export imported from content/<locale>/data, the blocks rendered by
  * BlockPage with the locale's block words (content/<locale>/data/labels.ts) and brand (its video poster, brand.ts),
- * and, when a block lists the blog (`feed: 'posts'`), the locale's posts (src/content/posts.ts).
+ * when a block lists the blog (`feed: 'posts'`), the locale's posts (src/content/posts.ts), and on a product page its
+ * code (`shop.sku`), for its add-to-cart.
  */
 export function dataPages(): Plugin {
   let root = process.cwd()
@@ -90,6 +91,9 @@ export function dataPages(): Plugin {
       const feedsPosts = blocks.some(
         (b) => isCmsBlock(b.type) && (cmsBlocks[b.type] as { feed?: string }).feed === 'posts',
       )
+      // a product on sale gets its price and add-to-cart in its header (src/content/BlockPage.tsx)
+      const sku = (meta as { shop?: { sku?: string } }).shop?.sku
+      const extra = sku ? `, product: ${JSON.stringify(sku)}` : ''
       const data = JSON.stringify(resolved, null, 2).replace(
         /"__((?:picture|file)\d+|data\d+\.\w+|words\.\w+\.\w+)__"/g,
         '$1',
@@ -109,8 +113,8 @@ export function dataPages(): Plugin {
         `const blocks = ${data}`,
         'export default function DataPage() {',
         feedsPosts
-          ? '  return createElement(BlockPage, { blocks, words, brand, posts: usePostCards() })'
-          : '  return createElement(BlockPage, { blocks, words, brand })',
+          ? `  return createElement(BlockPage, { blocks, words, brand, posts: usePostCards()${extra} })`
+          : `  return createElement(BlockPage, { blocks, words, brand${extra} })`,
         '}',
         '',
       ].join('\n')

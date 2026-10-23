@@ -1,0 +1,59 @@
+{
+  "orderPrefix": "LMP",
+  "zones": [
+    {
+      "id": "es",
+      "label": "Espanya",
+      "fee": 4.9,
+      "countries": ["ES"]
+    },
+    {
+      "id": "eu",
+      "label": "Europa",
+      "fee": 12,
+      "countries": [
+        "AD",
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "EE",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MC",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK",
+        "SM",
+        "VA"
+      ]
+    },
+    {
+      "id": "world",
+      "label": "Resta del món",
+      "fee": 20,
+      "rest": true
+    }
+  ]
+}

@@ -9,8 +9,8 @@ import { balanceColumns, gridCols } from '~/lib/grid'
 import { fill } from '~/lib/strings'
 
 export interface PictureGridProps extends ShellProps {
-  /** The pictures: a list from content/<locale>/data (allServices) or written in the page. */
-  items: PictureItem[]
+  /** The pictures: a list from content/<locale>/data (allServices), written in the page, or the shop's products (ProductGrid). */
+  items?: PictureItem[]
   /** icon: illustrated icons (services). logo: wide marks in a box. portrait: round photos. photo: square photos. */
   shape?: 'icon' | 'logo' | 'portrait' | 'photo'
   /** grid (default), or marquee: a strip that scrolls by on its own: icons with their names (the services), or tall photos (hidden on phones). */
@@ -51,7 +51,7 @@ const pictures = {
  * pictures open larger when clicked (a gallery).
  */
 export function PictureGrid({
-  items,
+  items = [],
   shape = 'icon',
   variant = 'grid',
   columns = 4,
@@ -191,6 +191,7 @@ export function PictureGrid({
               ) : (
                 content
               )}
+              {item.action}
             </RevealItem>
           )
         })}

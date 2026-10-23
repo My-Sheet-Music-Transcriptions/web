@@ -113,6 +113,26 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `mockups/<slug>/sections.html` (+ `img/`, `sections.<variant>.html` for design options, `preview.json` with title,
   path, locale, preview URL, canvas URL and PR) – the approved mockup of a page, the single source every preview
   surface and the build start from; `tests/unit/mockups.test.ts` keeps every mockup valid.
+- **Shop (cart + Stripe Checkout).** A product page (`content/<locale>/products/<slug>/page.json`) is on sale when its
+  meta has `shop` (`shopSchema` in `src/content/schema.ts`, `productFields` in `cms-meta.ts`: sku, name, price and
+  `compareAt` in euros, `availability` available/soon/soldOut/external, picture, order); its `PageHeader` gets the
+  add-to-cart button and the `ProductGrid` preset lists every one. `content/<locale>/data/shop.json` (`Site` →
+  `<Language> · Shop`: order prefix, flat shipping zones by country, one `rest` zone) turns the cart on for that
+  site, and `data/shop.ts` holds its words (`shopLabels`) and the customer emails per status (`orderEmails`).
+  `src/shop/` prices the cart (cents, the same code on the client and the server), `src/components/shop/` is the cart
+  (`CartProvider` in localStorage, `CartDock`: the docked button, the picture flying to it, the side panel), mounted by
+  `src/app/SiteCart.tsx`. The server side is one route, `src/routes/api/shop/$action.ts` (`checkout`,
+  `stripe-webhook`, `order`, `orders`) over `src/server/shop.server.ts`: Stripe's hosted Checkout through its REST API
+  (`stripe.server.ts`, no SDK; invoices, address and the zone's fee collected there), orders in Netlify Blobs
+  (`orders.server.ts`, store `shop-orders`, in memory off Netlify) and plain-text emails with Resend
+  (`shop-emails.server.ts`, logged without `RESEND_API_KEY`). The orders panel is `/admin/orders` (`src/admin/orders`,
+  built by `vite.orders.config.ts`; Netlify Identity users with the `shop` or `admin` role, or `SHOP_ADMIN_EMAILS`):
+  each status change can email the customer. Every customer email links their order page, `/?order=<number>.<secret>`
+  (the order's random `key`, no account): the cart's panel opens on it with the status, the carrier's tracking link
+  and Stripe's invoice and receipt (`OrderDetails`, `GET /api/shop/order?ref=`). Env: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (webhook
+  `https://<site>/api/shop/stripe-webhook`, event `checkout.session.completed`), `SHOP_ORDERS_EMAIL`,
+  `SHOP_FROM_EMAIL`, `SHOP_ADMIN_EMAILS`; without `STRIPE_SECRET_KEY` checkout runs in demo mode (an order without
+  payment, `SHOP_DEMO=off` refuses instead).
 - `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `alternates.ts` (hreflang, shared with the
   sitemaps), `jsonld.ts`, `og/template.tsx` (Satori), `og/paths.ts` (every og:image URL; see "Share images" below).
 - `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG images via `lib/og.ts`), `postbuild.ts`

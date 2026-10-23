@@ -17,6 +17,8 @@ const config: KnipConfig = {
     // vite.admin.config.ts: the CMS preview bundle's lib entry; scripts/lib/vite-data-pages.ts writes the import of
     // BlockPage into every data page's module.
     'src/admin/preview.tsx',
+    // vite.orders.config.ts: the orders panel, built from its index.html (/admin/orders).
+    'src/admin/orders/main.tsx',
     'src/content/BlockPage.tsx',
     // and of usePostCards into the data pages that list the blog's posts.
     'src/content/posts.ts',
