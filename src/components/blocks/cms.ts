@@ -284,9 +284,6 @@ export const cmsBlocks = {
       }),
       cta: button(),
       links: listOf('More buttons beside it (photo, split)', button('Button', ' ')),
-      ctaVariant: select('Buttons’ colour (photo)', ['primary', 'accent'], {
-        hint: 'primary: teal-blue (the default). accent: orange.',
-      }),
       image: picture('Picture', {
         hint: 'Beside the words (split), the service’s icon under the band, or the photo behind (cover).',
         widths: '480;960;1600',
