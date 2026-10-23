@@ -26,8 +26,6 @@ export interface PageHeaderProps {
   cta?: Cta
   /** More buttons beside the `cta`, in its style (photo, split): the Catalan homepage's two ways in. */
   links?: Cta[]
-  /** The colour of the photo header's buttons: primary (teal-blue, the default) or accent (orange, the Catalan homepage). */
-  ctaVariant?: 'primary' | 'accent'
   /** The compact rating card: pass `google` from content/<locale>/data/ratings. */
   rating?: RatingSource
   /** band: light centred title band (default). split: copy beside pictures, on white. photo: the homepage. cover: the title in white over a darkened photo (the blog, a post). */
@@ -48,7 +46,7 @@ export interface PageHeaderProps {
   mobileImage?: PictureSource
   /** A part of the title set in orange (photo): "#1". */
   highlight?: string
-  /** The brand lockup above the title (photo), or in its place (band, cover: the h1 is then for screen readers only): `~/assets/images/brand/logo.svg` with its words. */
+  /** The brand lockup above the title (photo), or in its place (band, cover: the h1 is then for screen readers only): `~/assets/images/brand/logo-en.svg` with its words. */
   logo?: BrandLogo
   /** The words of the carousel arrows: `media` from content/<locale>/data/labels (with `images`). */
   labels?: MediaLabels
@@ -293,7 +291,6 @@ function PhotoHeader({
   subtitle,
   cta,
   links,
-  ctaVariant = 'primary',
   images = [],
   mobileImage,
   rating,
@@ -367,7 +364,6 @@ function PhotoHeader({
               <Actions
                 cta={cta}
                 links={links}
-                variant={ctaVariant}
                 className="mt-[34px] flex-col items-start md:flex-row md:items-center"
               />
             ) : null}
@@ -383,21 +379,17 @@ function PhotoHeader({
   )
 }
 
-/** The header's buttons: the `cta`, then the `links` beside it, all in one style. */
+/** The header's buttons: the `cta`, then the `links` beside it, all orange (one colour for every header, in every language). */
 function Actions({
   cta,
   links = [],
-  variant,
   className,
-}: Pick<PageHeaderProps, 'cta' | 'links'> & {
-  variant?: 'primary' | 'accent'
-  className?: string
-}) {
+}: Pick<PageHeaderProps, 'cta' | 'links'> & { className?: string }) {
   return (
     <div className={cn('flex flex-wrap gap-4', className)}>
-      {cta ? <CtaLink cta={cta} variant={variant} /> : null}
+      {cta ? <CtaLink cta={cta} variant="accent" /> : null}
       {links.map((l) => (
-        <CtaLink key={l.href} cta={l} variant={variant} />
+        <CtaLink key={l.href} cta={l} variant="accent" />
       ))}
     </div>
   )

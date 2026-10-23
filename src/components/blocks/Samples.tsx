@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { Audio } from '~/components/primitives/AudioPlayer'
 import { BlockShell, type ShellProps } from '~/components/primitives/BlockShell'
 import { Card } from '~/components/primitives/Card'
@@ -9,7 +8,7 @@ import { Media } from '~/components/primitives/Media'
 import { RevealGroup, RevealItem } from '~/components/primitives/Motion'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { PriceTag } from '~/components/primitives/PriceTag'
-import { Tabs } from '~/components/primitives/Tabs'
+import { Tabs, useTabs } from '~/components/primitives/Tabs'
 import type { Video } from '~/components/primitives/VideoEmbed'
 import type { MediaLabels, Price, PriceTone } from '~/content/types'
 import { gridCols } from '~/lib/grid'
@@ -110,7 +109,7 @@ export function Samples({
   columns = 3,
   ...shell
 }: SamplesProps) {
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useTabs(tabs ? tabs.map((t) => t.label) : [])
   const shown = tabs ? (tabs[tab]?.items ?? []) : items
   if (variant === 'columns')
     return (

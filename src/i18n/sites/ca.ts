@@ -30,8 +30,11 @@ export const ca: SiteConfig = {
   },
   // the live footer offers only the Spanish and English sites
   languageSwitcher: [
-    { locale: 'es', label: 'ES', name: 'castellà' },
     { locale: 'en', label: 'EN', name: 'anglès' },
+    { locale: 'es', label: 'ES', name: 'castellà' },
+    { locale: 'fr', label: 'FR', name: 'francès' },
+    { locale: 'de', label: 'DE', name: 'alemany' },
+    { locale: 'ja', label: 'JP', name: 'japonès' },
     { locale: 'ca', label: 'CAT', name: 'català' },
   ],
   strings: {

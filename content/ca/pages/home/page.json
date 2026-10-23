@@ -21,7 +21,6 @@
           "href": "/my-musicbook"
         }
       ],
-      "ctaVariant": "accent",
       "images": [
         {
           "image": "hero.jpg"
@@ -182,7 +181,7 @@
       "title": "Clients que confien en nosaltres",
       "lead": "Treballem per a músics i empreses de tot el món. Però enlloc com a casa.",
       "shape": "logo",
-      "columns": 6,
+      "columns": 4,
       "items": [
         {
           "image": "client-we-color-music.webp",
@@ -207,6 +206,14 @@
         {
           "image": "client-sony-music-publishing.png",
           "alt": "Sony Music Publishing"
+        },
+        {
+          "image": "client-warner-chappell-music.png",
+          "alt": "Warner Chappell Music"
+        },
+        {
+          "image": "client-stage-entertainment.png",
+          "alt": "Stage Entertainment"
         }
       ]
     },

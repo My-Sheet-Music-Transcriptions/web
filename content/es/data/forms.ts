@@ -10,7 +10,7 @@ export const quoteForm: ContactFormCopy = {
   title: 'Contacto',
   lead: 'Solicita tu partitura o un servicio musical',
   label: 'Solicita tu partitura',
-  responseTime: 'Tiempo medio de respuesta: 1-4 horas',
+  responseTime: 'Tiempo medio de respuesta: 1-4 horas\nFines de semana y festivos: 24 horas',
   sentTitle: '¡Gracias! Tu solicitud está en camino.',
   sentBody:
     'Normalmente respondemos en 1-4 horas con un presupuesto y una estimación del tiempo de entrega.',

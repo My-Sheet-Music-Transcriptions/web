@@ -162,6 +162,11 @@ const literals = (type: string): string[] | undefined => {
 /** Problems of `value` against `type` (empty when it fits, or when the type is not checkable here). */
 function check(where: string, value: unknown, type: string, types: BlockProps['types']): string[] {
   const t = type.trim()
+  // one thing or a list of them (`Counter | Counter[]`): whichever alternative fits
+  if (t.includes('|') && !t.startsWith('{') && !literals(t)) {
+    const results = t.split('|').map((alt) => check(where, value, alt, types))
+    return results.some((r) => r.length === 0) ? [] : (results[0] ?? [])
+  }
   if (t.endsWith('[]')) {
     if (!Array.isArray(value)) return [`${where} must be a list`]
     return value.flatMap((v, i) => check(`${where}[${i}]`, v, t.slice(0, -2), types))

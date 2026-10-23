@@ -86,7 +86,7 @@ export function assetGroupSpecs(): Record<string, AssetGroupSpec> {
       readme:
         '# Brand\n\nThe lockup `logo.svg` (orange "my" + ink wordmark) is the only logo; keep its proportions and never recolour it. Minimum width 160px on light backgrounds; the footer uses the same file on `footer` because the wordmark carries enough contrast there. `favicon.svg` is the orange mark alone; `apple-touch-icon.png` the same on white.\n',
       files: [
-        'src/assets/images/brand/logo.svg',
+        'src/assets/images/brand/logo-en.svg',
         'src/assets/images/brand/favicon.svg',
         'src/assets/images/brand/apple-touch-icon.png',
       ],

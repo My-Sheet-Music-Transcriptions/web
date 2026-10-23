@@ -11,12 +11,13 @@
     },
     {
       "type": "RatingBanner",
-      "title": "Por motivos de transparencia, todas las reseñas están escritas por clientes reales verificados en plataformas independientes.",
+      "title": "Valoraciones en plataformas independientes",
       "lead": "Haz clic en cada reseña o plataforma para leer la fuente original.",
-      "counter": "counter",
+      "counter": "counters",
       "sources": "platforms",
       "image": "pianoBand",
-      "reveal": true
+      "reveal": true,
+      "note": "Por motivos de transparencia, todas las reseñas están escritas por clientes reales verificados en plataformas independientes."
     },
     {
       "type": "Testimonials",

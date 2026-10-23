@@ -1,0 +1,12 @@
+{
+  "title": "Avís legal",
+  "path": "/avis-legal",
+  "locale": "ca",
+  "url": "https://claude.ai/artifact/1U865mHnj6ZTLKA7HGgaq3",
+  "source": "ca/pages/avis-legal",
+  "pr": {
+    "number": 80,
+    "url": "https://github.com/My-Sheet-Music-Transcriptions/web/pull/80",
+    "branch": "claude/project-thread-4hrsoa"
+  }
+}

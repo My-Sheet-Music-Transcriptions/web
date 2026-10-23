@@ -5,7 +5,7 @@ import { Picture } from '~/components/primitives/Picture'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import type { MediaLabels, PictureItem } from '~/content/types'
 import { cn } from '~/lib/cn'
-import { gridCols } from '~/lib/grid'
+import { balanceColumns, gridCols } from '~/lib/grid'
 import { fill } from '~/lib/strings'
 
 export interface PictureGridProps extends ShellProps {
@@ -134,11 +134,13 @@ export function PictureGrid({
     )
   }
   const p = pictures[shape]
+  // never a last row of one or two pictures: 8 logos in 6 columns become 4, 4 in 3 become 4
+  const cols = balanceColumns(columns, shown.length, 6)
   return (
     <BlockShell {...shell} label={label} cascade>
       <ul
         className={cn(
-          gridCols(columns, { tablet: Math.min(columns, 4) as 4, phone: 2 }),
+          gridCols(cols, { tablet: Math.min(cols, 4) as 4, phone: 2 }),
           'items-start gap-x-6 gap-y-8',
         )}
       >

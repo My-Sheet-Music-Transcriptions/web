@@ -12,9 +12,47 @@
     {
       "type": "ContactSection",
       "form": "quoteForm",
-      "title": "Solicita tu partitura o un servicio musical",
       "returnTo": "/contacto",
       "reveal": true
+    },
+    {
+      "type": "Cards",
+      "reveal": true,
+      "title": "Síguenos",
+      "variant": "tile",
+      "columns": 3,
+      "items": [
+        {
+          "title": "Blog",
+          "body": "Artículos sobre música y partituras",
+          "href": "/blog"
+        },
+        {
+          "title": "Opiniones",
+          "body": "Lee las reseñas de nuestros clientes",
+          "href": "/opiniones"
+        },
+        {
+          "title": "Instagram",
+          "body": "Mira nuestro mundo",
+          "href": "https://www.instagram.com/mysheetmusictranscriptions/"
+        },
+        {
+          "title": "Facebook",
+          "body": "Mira lo que hacemos",
+          "href": "https://www.facebook.com/mysheetmusictranscriptions/"
+        },
+        {
+          "title": "Youtube",
+          "body": "Nuestro canal de tutoriales de piano",
+          "href": "https://www.youtube.com/mysheetmusictranscriptions"
+        },
+        {
+          "title": "Discord",
+          "body": "¡Únete a nuestra comunidad de partituras!",
+          "href": "https://discord.gg/9tPYzbybFb"
+        }
+      ]
     },
     {
       "type": "Section",

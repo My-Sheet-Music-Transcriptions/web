@@ -18,4 +18,18 @@ export const songbookReviews: Review[] = [
     quote:
       'Llego todo genial y perfecto y el contenido ademas de las partituras esta chulo y trae muchos recuerdos',
   },
+  {
+    name: 'AndreaT',
+    date: '2026-10',
+    rating: 5,
+    source: 'shop',
+    quote: 'buen libro de merch del grupo',
+  },
+  {
+    name: 'Celia',
+    date: '2026-10',
+    rating: 5,
+    source: 'shop',
+    quote: 'Se lo he regalado a mi hermana que es super fan de la oreja y le ha encantado!!',
+  },
 ]

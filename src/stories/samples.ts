@@ -1,7 +1,7 @@
 import type { PictureSource } from '~/components/primitives/Picture'
 import audio from './audio/piano-easy.mp3'
 import flag from './images/es.png?w=46;92&as=picture'
-import logo from './images/logo.svg'
+import logo from './images/logo-en.svg'
 import mark from './images/musescore.png?w=58;116;192&as=picture'
 import photo from './images/office-transcriber.jpg?w=480;960&as=picture'
 import icon from './images/piano.png?w=150;300&as=picture'

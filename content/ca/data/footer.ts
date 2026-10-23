@@ -9,8 +9,8 @@ import sibeliusLogo from '~/assets/images/logos/sibelius.png?w=58;116&as=picture
 import type { FooterData } from '~/content/types'
 
 /**
- * The footer as the live Catalan site has it: its sitemap is the main menu, and its legal links go to the English
- * site's pages (the Catalan site has none of its own).
+ * The footer as the live Catalan site has it: its sitemap is the main menu. The legal links go to the Catalan legal
+ * pages (the live site linked the English ones).
  */
 export const footer: FooterData = {
   sitemap: [
@@ -24,13 +24,10 @@ export const footer: FooterData = {
   audiences: [],
   services: [],
   legal: [
-    {
-      label: 'Termes i condicions',
-      href: 'https://www.mysheetmusictranscriptions.com/terms-of-use',
-    },
-    { label: 'Avís legal', href: 'https://www.mysheetmusictranscriptions.com/legal-notice' },
-    { label: 'Política de privacitat', href: 'https://www.mysheetmusictranscriptions.com/gdpr' },
-    { label: 'Política de cookies', href: 'https://www.mysheetmusictranscriptions.com/cookies' },
+    { label: 'Termes i condicions', href: '/termes-i-condicions' },
+    { label: 'Avís legal', href: '/avis-legal' },
+    { label: 'Política de privacitat', href: '/politica-de-privacitat' },
+    { label: 'Política de cookies', href: '/politica-de-cookies' },
   ],
   about: [],
   compatible: [
