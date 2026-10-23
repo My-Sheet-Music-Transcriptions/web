@@ -253,9 +253,10 @@ describe('orders', () => {
   }
   it('numbers orders from 1001 up and makes one order of a payment delivered twice', async () => {
     const store = memoryStore()
-    const first = await createOrder(store, 'LMP', 'cs_1', base)
-    const again = await createOrder(store, 'LMP', 'cs_1', base)
-    const second = await createOrder(store, 'LMP', 'cs_2', base)
+    const { order: first, created } = await createOrder(store, 'LMP', 'cs_1', base)
+    const { order: again, created: createdAgain } = await createOrder(store, 'LMP', 'cs_1', base)
+    const { order: second } = await createOrder(store, 'LMP', 'cs_2', base)
+    expect([created, createdAgain]).toEqual([true, false])
     expect([first.number, again.number, second.number]).toEqual([
       'LMP-1001',
       'LMP-1001',
@@ -267,10 +268,28 @@ describe('orders', () => {
     expect(again.key).toBe(first.key)
     expect(second.key).not.toBe(first.key)
   })
+  it('makes one order of a payment the webhook and the return deliver at the same moment', async () => {
+    const store = memoryStore()
+    const wait = () => new Promise<void>((r) => setTimeout(r, 1))
+    const [a, b] = await Promise.all([
+      createOrder(store, 'LMP', 'cs_1', base, wait),
+      createOrder(store, 'LMP', 'cs_1', base, wait),
+    ])
+    expect([a.created, b.created].sort()).toEqual([false, true])
+    expect(b.order.number).toBe(a.order.number)
+    expect(await store.keys('orders/')).toHaveLength(1)
+  })
+  it('takes over a claim whose delivery never filed its order', async () => {
+    const store = memoryStore()
+    await store.set('sessions/cs_1', { claimedAt: Date.now() - 60_000 })
+    const { order, created } = await createOrder(store, 'LMP', 'cs_1', base)
+    expect(created).toBe(true)
+    expect(await numberOfSession(store, 'cs_1')).toBe(order.number)
+  })
   it("opens a customer's order only with its own secret", async () => {
     const store = memoryStore()
-    const order = await createOrder(store, 'LMP', 'cs_1', base)
-    const other = await createOrder(store, 'LMP', 'cs_2', base)
+    const { order } = await createOrder(store, 'LMP', 'cs_1', base)
+    const { order: other } = await createOrder(store, 'LMP', 'cs_2', base)
     expect((await orderOfRef(store, orderRef(order)))?.number).toBe('LMP-1001')
     expect(await orderOfRef(store, `${order.number}.${other.key}`)).toBeNull()
     expect(await orderOfRef(store, `${order.number}.${order.key.slice(0, -1)}`)).toBeNull()

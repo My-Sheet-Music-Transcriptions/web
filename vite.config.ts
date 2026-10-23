@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 import { imagetools } from 'vite-imagetools'
 import { assetFileNames } from './scripts/lib/asset-names.ts'
 import { listPrerenderPages } from './scripts/lib/content-fs.ts'
+import { secretsEnv, secretsFile } from './scripts/lib/secrets.ts'
 import { deployOrigin, resolveLocaleRouting } from './scripts/lib/site-locale.ts'
 import { dataPages } from './scripts/lib/vite-data-pages.ts'
 import { getSiteConfig } from './src/i18n/sites/index.ts'
@@ -15,12 +16,16 @@ import { getSiteConfig } from './src/i18n/sites/index.ts'
 const { mode, locale, locales } = resolveLocaleRouting(process.env.SITE_LOCALE)
 const site = getSiteConfig(locale)
 const pages = listPrerenderPages(locales, mode)
+// The encrypted secrets of this deploy, decrypted by the server at runtime (src/server/env.server.ts).
+const secrets = secretsEnv()
 
 export default defineConfig({
   define: {
     'import.meta.env.SITE_LOCALE': JSON.stringify(locale),
     'import.meta.env.LOCALE_ROUTING': JSON.stringify(mode),
     'import.meta.env.PREVIEW_ORIGIN': JSON.stringify(mode === 'path' ? deployOrigin() : ''),
+    'import.meta.env.SECRETS_ENV': JSON.stringify(secrets),
+    'import.meta.env.SECRETS': JSON.stringify(secretsFile(secrets)),
   },
   resolve: { tsconfigPaths: true },
   server: { port: 3000 },

@@ -129,10 +129,20 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   built by `vite.orders.config.ts`; Netlify Identity users with the `shop` or `admin` role, or `SHOP_ADMIN_EMAILS`):
   each status change can email the customer. Every customer email links their order page, `/?order=<number>.<secret>`
   (the order's random `key`, no account): the cart's panel opens on it with the status, the carrier's tracking link
-  and Stripe's invoice and receipt (`OrderDetails`, `GET /api/shop/order?ref=`). Env: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (webhook
+  and Stripe's invoice and receipt (`OrderDetails`, `GET /api/shop/order?ref=`). Secrets (see below): `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (webhook
   `https://<site>/api/shop/stripe-webhook`, event `checkout.session.completed`), `SHOP_ORDERS_EMAIL`,
   `SHOP_FROM_EMAIL`, `SHOP_ADMIN_EMAILS`; without `STRIPE_SECRET_KEY` checkout runs in demo mode (an order without
   payment, `SHOP_DEMO=off` refuses instead).
+- **Secrets (dotenvx).** The server's secrets (Stripe keys, `RESEND_API_KEY`, the shop's addresses) are committed
+  encrypted: `.env.development` (Stripe's sandbox; `pnpm dev`, deploy previews, branch deploys) and `.env.production`
+  (production deploys). Add or change one with `pnpm exec dotenvx set NAME value -f .env.production` (never a plain
+  value: `tests/unit/secrets.test.ts`); its private key stays in the ignored `.env.keys` (`pnpm exec dotenvx keypair`
+  prints it). The build inlines the file of its deploy (`scripts/lib/secrets.ts`: Netlify's `CONTEXT`, or
+  `SECRETS_ENV` to force one) and `src/server/env.server.ts` decrypts it at runtime with `DOTENV_PRIVATE_KEY_PRODUCTION`
+  / `DOTENV_PRIVATE_KEY_DEVELOPMENT`, the only secrets set in Netlify; a variable Netlify sets itself wins. `pnpm dev`
+  decrypts `.env.development` (and an optional local `.env`, first) with `dotenvx run`, then `scripts/dev.ts` starts Vite
+  and, with the Stripe CLI installed, `stripe listen` forwarding the sandbox's webhooks to it with the CLI's own
+  signing secret (so `.env.development` needs no `STRIPE_WEBHOOK_SECRET`).
 - `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `alternates.ts` (hreflang, shared with the
   sitemaps), `jsonld.ts`, `og/template.tsx` (Satori), `og/paths.ts` (every og:image URL; see "Share images" below).
 - `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG images via `lib/og.ts`), `postbuild.ts`

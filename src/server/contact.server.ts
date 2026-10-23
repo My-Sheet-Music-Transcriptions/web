@@ -1,3 +1,4 @@
+import './env.server'
 import {
   ALLOWED_UPLOAD_TYPES,
   type ContactInput,

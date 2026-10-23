@@ -5,7 +5,7 @@ import { type NewOrder, ORDER_REF, type Order, type OrderEvent, type OrderUpdate
  * Where orders are kept: Netlify Blobs (store `shop-orders`, strongly consistent) on Netlify, a store in memory
  * anywhere else (local dev, tests), so the shop can be tried end to end without an account. Keys:
  *   orders/<number>      the order (src/server/shop.ts `Order`)
- *   sessions/<session>   the order number of a checkout session: a webhook delivered twice makes one order
+ *   sessions/<session>   the order number of a checkout session (a claim while it is being filed): one order a payment
  */
 export interface OrderStore {
   get<T>(key: string): Promise<T | null>
@@ -75,21 +75,33 @@ function newKey(): string {
 
 const NUMBER = /^orders\/([A-Z]+)-(\d+)$/
 
+/** How long a delivery may take to file the order it claimed before another one takes over (it crashed). */
+const CLAIM_MS = 30_000
+
 /**
- * Files a new order under the next free number of its prefix (<prefix>-1001 first), recording its checkout session
- * first so a second delivery of the same payment gets the first order back instead of a new one.
+ * Files a new order under the next free number of its prefix (<prefix>-1001 first). Its checkout session is claimed
+ * first, so a payment that arrives twice (the webhook delivered again, or the webhook and the buyer's return at the
+ * same moment) makes one order: the later arrival waits for the first and gets its order back, `created: false`.
  */
 export async function createOrder(
   store: OrderStore,
   prefix: string,
   session: string,
   order: NewOrder,
-): Promise<Order> {
+  wait = (ms: number) => new Promise((r) => setTimeout(r, ms)),
+): Promise<{ order: Order; created: boolean }> {
   const sessionKey = `sessions/${session}`
-  const known = await store.get<{ number?: string }>(sessionKey)
-  if (known?.number) {
-    const existing = await store.get<Order>(`orders/${known.number}`)
-    if (existing) return existing
+  while (!(await store.set(sessionKey, { claimedAt: Date.now() }, { onlyIfNew: true }))) {
+    const known = await store.get<{ number?: string; claimedAt?: number }>(sessionKey)
+    if (known?.number) {
+      const existing = await store.get<Order>(`orders/${known.number}`)
+      if (existing) return { order: existing, created: false }
+    }
+    if (Date.now() - (known?.claimedAt ?? 0) > CLAIM_MS) {
+      await store.set(sessionKey, { claimedAt: Date.now() })
+      break
+    }
+    await wait(250)
   }
   const key = newKey()
   for (let attempt = 0; attempt < 8; attempt++) {
@@ -101,7 +113,7 @@ export async function createOrder(
     const full: Order = { number, ...order, key }
     if (await store.set(`orders/${number}`, full, { onlyIfNew: true })) {
       await store.set(sessionKey, { number })
-      return full
+      return { order: full, created: true }
     }
   }
   throw new Error(`No free order number for ${prefix} after 8 tries`)
