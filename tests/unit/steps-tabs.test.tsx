@@ -36,6 +36,6 @@ describe('useTabs', () => {
       </>,
     )
     expect(seen.map(([i]) => i)).toEqual([0, 0, 0])
-    expect(seen[0][1]).toBeDefined()
+    expect(seen[0]?.[1]).toBeDefined()
   })
 })
