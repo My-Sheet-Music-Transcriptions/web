@@ -140,7 +140,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   prints it). The build inlines the file of its deploy (`scripts/lib/secrets.ts`: Netlify's `CONTEXT`, or
   `SECRETS_ENV` to force one) and `src/server/env.server.ts` decrypts it at runtime with `DOTENV_PRIVATE_KEY_PRODUCTION`
   / `DOTENV_PRIVATE_KEY_DEVELOPMENT`, the only secrets set in Netlify; a variable Netlify sets itself wins. `pnpm dev`
-  decrypts `.env.development` (and an optional local `.env`, first) with `dotenvx run`.
+  decrypts `.env.development` (and an optional local `.env`, first) with `dotenvx run`, then `scripts/dev.ts` starts Vite
+  and, with the Stripe CLI installed, `stripe listen` forwarding the sandbox's webhooks to it with the CLI's own
+  signing secret (so `.env.development` needs no `STRIPE_WEBHOOK_SECRET`).
 - `src/seo` – `head.ts` (title/description/canonical/OG/hreflang), `alternates.ts` (hreflang, shared with the
   sitemaps), `jsonld.ts`, `og/template.tsx` (Satori), `og/paths.ts` (every og:image URL; see "Share images" below).
 - `scripts/` – `prebuild.ts` (slug check, hreflang map, robots.txt, OG images via `lib/og.ts`), `postbuild.ts`

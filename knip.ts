@@ -29,6 +29,8 @@ const config: KnipConfig = {
     'lighthouserc.cjs',
   ],
   ignoreExportsUsedInFile: true,
+  // scripts/dev.ts runs the Stripe CLI when a developer has it installed (it is not an npm package).
+  ignoreBinaries: ['stripe'],
   ignoreDependencies: [
     // scripts/lib/og.ts reads its static font files by path (Satori needs TTF/WOFF, not the variable font).
     '@fontsource/montserrat',
