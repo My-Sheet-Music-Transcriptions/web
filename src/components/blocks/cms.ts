@@ -292,7 +292,7 @@ export const cmsBlocks = {
       alt: line('Picture description (alt text)'),
       images: slides('Photos', '1000;1600;2000', 'Several rotate behind the title (photo style).'),
       frame: select('Carousel frame (split)', ['wide', 'square'], {
-        hint: 'wide: 3:2, cropped (the default). square: each picture whole (a product’s gallery).',
+        hint: 'wide: 3:2, cropped (the default). square: a gallery, each picture whole on a cream card with thumbnails (a product).',
       }),
       rating: fromData('Rating card', {
         google: 'ratings',
@@ -344,7 +344,7 @@ export const cmsBlocks = {
         },
         { summary: '{{fields.alt}}' },
       ),
-      layout: select('Several pictures as', ['carousel', 'pair']),
+      layout: select('Several pictures as', ['carousel', 'gallery', 'pair']),
       zoom: toggle('The picture opens larger when clicked'),
       video: video,
       clip,

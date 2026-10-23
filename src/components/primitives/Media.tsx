@@ -18,8 +18,8 @@ export interface MediaContent {
   caption?: string
   /** Several pictures instead of one: a carousel, or a pair side by side (before and after). */
   images?: Slide[]
-  /** How several pictures show: carousel (default) or pair. */
-  layout?: 'carousel' | 'pair'
+  /** How several pictures show: carousel (default), gallery (each whole, with thumbnails: a product) or pair. */
+  layout?: 'carousel' | 'gallery' | 'pair'
   /** A video instead of a picture. */
   video?: Video
   /** A recording instead of a picture: an audio player. */
@@ -119,6 +119,7 @@ export function Media({
         labels={labels}
         sizes={sizes}
         priority={priority}
+        variant={layout === 'gallery' ? 'gallery' : 'photo'}
         frameClassName={frameClassName}
         imageClassName={imageClassName}
       />

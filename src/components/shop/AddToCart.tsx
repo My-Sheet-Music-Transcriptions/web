@@ -131,7 +131,7 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
           variant="accent"
           size={compact ? 'sm' : 'md'}
           disabled={room < 1}
-          className={cn(fit)}
+          className={cn(fit, !compact && 'max-md:grow')}
           aria-label={compact ? `${labels.add}: ${product.name}` : undefined}
           onClick={(e) => {
             cart.add(sku, compact ? 1 : Math.min(quantity, room), pictureNear(e.currentTarget))

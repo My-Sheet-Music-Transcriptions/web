@@ -41,8 +41,8 @@ export interface PageHeaderProps {
   alt?: string
   /** Several pictures: a carousel beside the copy (split), the plain photos rotating behind it (photo). */
   images?: Slide[]
-  /** The carousel's frame (split): `wide`, 3:2 and cropped (default), or `square`, each picture whole (a shop
-   * product's gallery). */
+  /** The carousel's frame (split): `wide`, 3:2 and cropped (default), or `square`, a gallery: each picture whole
+   * on a cream card, with thumbnails (a shop product). */
   frame?: 'wide' | 'square'
   /** The photo faded behind the copy on phones (photo): the locale's `heroPhone` (content/<locale>/data/brand.ts),
    * never chosen per page; the first of `images` when left out. */
@@ -262,6 +262,7 @@ function SplitHeader({
           image={image}
           alt={alt}
           images={images}
+          layout={frame === 'square' ? 'gallery' : 'carousel'}
           labels={labels}
           label={title}
           priority
@@ -269,7 +270,7 @@ function SplitHeader({
           imageClassName={
             several
               ? frame === 'square'
-                ? 'aspect-square bg-white object-contain'
+                ? undefined
                 : 'aspect-[3/2]'
               : 'rounded-card object-cover'
           }

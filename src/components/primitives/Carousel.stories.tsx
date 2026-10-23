@@ -24,3 +24,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+/** A product's pictures: each whole on a cream card, arrows on discs, thumbnails to pick from; no auto-advance. */
+export const Gallery: Story = {
+  args: { variant: 'gallery', imageClassName: undefined, label: 'Product pictures' },
+}
