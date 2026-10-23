@@ -3,7 +3,7 @@ import { type ChildProcess, execFileSync, spawn } from 'node:child_process'
 /**
  * `pnpm dev`, after `dotenvx run` has decrypted .env.development: Vite's dev server, and with the Stripe CLI
  * installed and a sandbox key, `stripe listen` forwarding the sandbox's checkout webhooks to the local server, signed
- * with the CLI's own secret (passed to Vite as STRIPE_WEBHOOK_SECRET, so the sandbox endpoint's secret is never
+ * with the CLI's own secret (passed to Vite as STRIPE_WEBHOOK_SECRET, replacing the sandbox endpoint's, which is never
  * needed locally). Without the CLI or a key, Vite alone; checkout then runs in demo mode or never records a payment.
  */
 const PORT = 3000
@@ -22,7 +22,7 @@ function stripeSecret(apiKey: string): string | null {
   }
 }
 
-if (key?.startsWith('sk_test_') && !process.env.STRIPE_WEBHOOK_SECRET) {
+if (key?.startsWith('sk_test_')) {
   const secret = stripeSecret(key)
   if (secret) {
     env.STRIPE_WEBHOOK_SECRET = secret
