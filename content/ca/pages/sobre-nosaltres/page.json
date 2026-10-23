@@ -29,7 +29,7 @@
       "reveal": true,
       "title": "El nostre equip",
       "shape": "portrait",
-      "columns": 5,
+      "columns": 6,
       "items": [
         {
           "image": "team-oriol.jpg",
