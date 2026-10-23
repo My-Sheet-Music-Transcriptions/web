@@ -141,7 +141,7 @@ export function ContactSection({
           className="mx-[-10px] flex items-center justify-center gap-x-0 rounded-[25px] bg-[linear-gradient(266deg,#2ec4b6_0%,#2e97c4_100%)] pt-1.5 pr-2.5 pb-3 pl-2.5 text-body leading-8 font-bold text-white md:mx-auto md:w-[430px] md:pt-0.5 md:pr-10 md:pb-2 md:pl-[42px]"
         >
           <Icon name="fa-paper-plane" size={25} className="mt-2 hidden shrink-0 md:block" />
-          <span className="mt-2 flex-1 text-center">{copy.responseTime}</span>
+          <span className="mt-2 flex-1 text-center whitespace-pre-line">{copy.responseTime}</span>
         </RevealItem>
       ) : null}
 
@@ -269,7 +269,7 @@ export function ContactSection({
                       {...field('file')}
                       type="file"
                       accept="audio/*,video/*,.pdf,image/*,.zip"
-                      className="block h-[30px] w-full bg-white text-body text-ink file:mr-1 file:rounded-[2px] file:border file:border-[#767676] file:bg-[#efefef] file:px-1.5 file:py-px"
+                      className="block w-full rounded-[25px] bg-white py-1 pr-4 pl-1 text-body text-ink file:mr-3 file:rounded-[25px] file:border-0 file:bg-primary file:px-4 file:py-1.5 file:text-small file:font-bold file:text-white file:uppercase"
                     />
                     <Err name="file" />
                   </div>

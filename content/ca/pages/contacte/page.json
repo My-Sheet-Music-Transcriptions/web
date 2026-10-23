@@ -34,6 +34,45 @@
           "body": "[+34 930 03 80 39](tel:+34930038039)\n\nTelèfon per Catalunya / Espanya"
         }
       ]
+    },
+    {
+      "type": "Cards",
+      "reveal": true,
+      "title": "Segueix-nos",
+      "variant": "tile",
+      "columns": 3,
+      "items": [
+        {
+          "title": "Instagram",
+          "body": "Mira el nostre món",
+          "href": "https://www.instagram.com/mysheetmusictranscriptions/"
+        },
+        {
+          "title": "Facebook",
+          "body": "Mira què fem",
+          "href": "https://www.facebook.com/mysheetmusictranscriptions/"
+        },
+        {
+          "title": "Youtube",
+          "body": "El nostre canal de tutorials de piano",
+          "href": "https://www.youtube.com/mysheetmusictranscriptions"
+        },
+        {
+          "title": "Linkedin",
+          "body": "Segueix-nos com a empresa",
+          "href": "https://www.linkedin.com/company/my-sheet-music-transcriptions/"
+        },
+        {
+          "title": "Discord",
+          "body": "Uneix-te a la nostra comunitat de partitures!",
+          "href": "https://discord.gg/9tPYzbybFb"
+        },
+        {
+          "title": "Correu",
+          "body": "Escriu-nos a info@lamevapartitura.cat",
+          "href": "mailto:info@lamevapartitura.cat"
+        }
+      ]
     }
   ]
 }
