@@ -16,12 +16,14 @@ export function ProductPrice({
   labels,
   size = 'lg',
   placeholder,
+  className,
 }: {
   product: Product
   labels: ShopLabels
   size?: 'lg' | 'sm'
-  /** An empty line where a product without a price would show one (a card keeps its rows). */
+  /** An empty cell where a product without a price would show one (a card keeps its rows); it takes no room. */
   placeholder?: boolean
+  className?: string
 }) {
   const locale = useLocale()
   if (product.price === undefined) return placeholder ? <p aria-hidden="true" /> : null
@@ -30,6 +32,7 @@ export function ProductPrice({
       className={cn(
         'flex flex-wrap items-center gap-x-3 gap-y-1',
         size === 'sm' && 'justify-center',
+        className,
       )}
     >
       <span className={cn('font-bold text-ink', size === 'lg' ? 'text-[24px]' : 'text-h3')}>
@@ -92,16 +95,25 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
   const inCart = cart.lines.find((l) => l.sku === sku)?.quantity ?? 0
   const room = product.maxPerOrder - inCart
 
-  // on a card every action is the same full-width pill, its words wrapping onto a second line when long (and
-  // without its icon on phones, where the column is narrow)
-  const fit = compact && 'h-14 w-full px-4 py-2 leading-tight text-balance'
+  // on a card every action is the same full-width pill with the button's own padding, its words wrapping in
+  // balanced lines when long (without its icon on phones, where the column is narrow); the card's grid row
+  // makes every pill of a row as tall as the tallest
+  const fit = compact && 'mt-4 mb-14 w-full px-5 py-3 leading-tight text-balance'
   let action: ReactNode
   if (product.availability === 'external' && product.externalUrl)
     action = (
       <Button asChild variant="primary" className={cn(fit)}>
         <a href={product.externalUrl} rel="noopener">
-          {labels.buyElsewhere}
-          <Icon name="external" size={18} className={cn(compact && 'max-md:hidden')} />
+          {/* the icon stays glued to the last word (a non-breaking space), so wrapped words centre as a block */}
+          <span>
+            {labels.buyElsewhere}
+            {'\u00a0'}
+            <Icon
+              name="external"
+              size={compact ? 15 : 18}
+              className="-mt-0.5 inline-block align-middle"
+            />
+          </span>
         </a>
       </Button>
     )
@@ -111,60 +123,65 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
         className={cn(
           'rounded-pill bg-cream font-bold uppercase tracking-wide text-ink',
           compact
-            ? 'flex h-14 w-full items-center justify-center px-4 py-2 text-small leading-tight'
+            ? 'mt-4 mb-14 flex min-h-12 w-full items-center justify-center px-5 py-3 text-small leading-tight'
             : 'inline-block px-4 py-2 text-small',
         )}
       >
         {product.availability === 'soldOut' ? labels.soldOut : labels.soon}
       </span>
     )
-  else
-    action = (
-      <div className={cn('flex flex-wrap items-center gap-3', compact && 'w-full')}>
-        {compact ? null : (
-          <QuantityStepper
-            value={Math.min(quantity, Math.max(room, 1))}
-            max={Math.max(room, 1)}
-            onChange={setQuantity}
-            labels={labels}
-            name={product.name}
-          />
-        )}
-        <Button
-          variant="accent"
-          disabled={room < 1}
-          className={cn(fit, !compact && 'max-md:grow')}
-          aria-label={compact ? `${labels.add}: ${product.name}` : undefined}
-          onClick={(e) => {
-            cart.add(sku, compact ? 1 : Math.min(quantity, room), pictureNear(e.currentTarget))
-            setAdded(true)
-            setQuantity(1)
-          }}
-        >
-          <Icon
-            name={added ? 'check' : 'bag'}
-            size={18}
-            className={cn(compact && 'max-md:hidden')}
-          />
-          <span aria-live="polite">{added ? labels.added : labels.add}</span>
-        </Button>
+  else {
+    const button = (
+      <Button
+        variant="accent"
+        disabled={room < 1}
+        className={cn(fit, !compact && 'max-md:grow')}
+        aria-label={compact ? `${labels.add}: ${product.name}` : undefined}
+        onClick={(e) => {
+          cart.add(sku, compact ? 1 : Math.min(quantity, room), pictureNear(e.currentTarget))
+          setAdded(true)
+          setQuantity(1)
+        }}
+      >
+        <Icon name={added ? 'check' : 'bag'} size={18} className={cn(compact && 'max-md:hidden')} />
+        <span aria-live="polite">{added ? labels.added : labels.add}</span>
+      </Button>
+    )
+    // the card's button is its grid cell on its own; a product page puts the quantity beside it
+    action = compact ? (
+      button
+    ) : (
+      <div className="flex flex-wrap items-center gap-3">
+        <QuantityStepper
+          value={Math.min(quantity, Math.max(room, 1))}
+          max={Math.max(room, 1)}
+          onChange={setQuantity}
+          labels={labels}
+          name={product.name}
+        />
+        {button}
       </div>
     )
+  }
 
-  // on a card the price line keeps its height even when there is none, so the buttons of a row line up
+  // on a card the price and the action are two rows of the card's grid (PictureGrid shares them across the
+  // row: a row with no price has no price line), the price's cell there even when empty
+  if (compact)
+    return (
+      <>
+        <ProductPrice
+          product={product}
+          labels={labels}
+          size="sm"
+          placeholder
+          className="mt-4 self-end"
+        />
+        {action}
+      </>
+    )
   return (
-    <div
-      className={cn(
-        'flex flex-col',
-        compact ? 'items-stretch gap-4 [&>p]:min-h-7 [&>p]:items-end' : 'items-start gap-4',
-        className,
-      )}
-    >
-      {compact ? (
-        <ProductPrice product={product} labels={labels} size="sm" placeholder />
-      ) : (
-        <ProductPrice product={product} labels={labels} />
-      )}
+    <div className={cn('flex flex-col items-start gap-4', className)}>
+      <ProductPrice product={product} labels={labels} />
       {action}
     </div>
   )

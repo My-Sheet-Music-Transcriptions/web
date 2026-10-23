@@ -141,15 +141,19 @@ export function PictureGrid({
   const p = pictures[shape]
   // never a last row of one or two pictures: 8 logos in 6 columns become 4, 4 in 3 become 4
   const cols = balanceColumns(columns, shown.length, 6)
-  // cards with an action (the shop's add-to-cart: a price and a button) are columns as tall as their row, the
-  // price and the button pinned to the bottom (buttons equally tall), with more room around them
+  // cards with an action (the shop's add-to-cart: a price and a button) span three rows of the grid as a subgrid
+  // (picture and name, price, button), so a row's prices start at one height, its buttons too and all as tall as
+  // the tallest, and a row with no price has no price line. Spacing is the cells' own margins (the action cell's
+  // bottom margin keeps the rows apart): a grid row gap would be kept inside the subgrid, as an empty line
   const actions = shown.some((item) => item.action)
   return (
     <BlockShell {...shell} label={label} cascade>
       <ul
         className={cn(
           gridCols(cols, { tablet: actions ? 2 : (Math.min(cols, 4) as 4), phone: 2 }),
-          actions ? 'items-stretch gap-x-8 gap-y-14 md:gap-x-10' : 'items-start gap-x-6 gap-y-8',
+          actions
+            ? '-mb-14 items-stretch gap-x-8 gap-y-0 md:gap-x-10'
+            : 'items-start gap-x-6 gap-y-8',
         )}
       >
         {shown.map((item) => {
@@ -199,7 +203,7 @@ export function PictureGrid({
             <RevealItem
               as="li"
               key={keyOf(item)}
-              className={cn('text-center', actions && 'flex flex-col')}
+              className={cn('text-center', actions && 'row-span-3 grid grid-rows-subgrid gap-y-0')}
             >
               {item.href ? (
                 <SmartLink href={item.href} className="group block">
@@ -208,7 +212,7 @@ export function PictureGrid({
               ) : (
                 content
               )}
-              {item.action ? <div className="mt-auto pt-5">{item.action}</div> : null}
+              {item.action}
             </RevealItem>
           )
         })}
