@@ -63,7 +63,7 @@ function pictureNear(button: HTMLElement | null): HTMLImageElement | null {
 export interface AddToCartProps {
   /** The product's code (`shop.sku` in its page.json). */
   sku: string
-  /** full: the price, a quantity and the add button (a product page). compact: the price and a small add button (a card). */
+  /** full: the price, a quantity and the add button (a product page). compact: the price and a small add button, two cells of a card's grid (PictureGrid). */
   variant?: 'full' | 'compact'
   className?: string
 }
@@ -91,7 +91,7 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
 
   // on a card every action is the same full-width pill, its words wrapping onto a second line when long (and
   // without its icon on phones, where the column is narrow)
-  const fit = compact && 'w-full min-h-11 py-2 leading-tight text-balance'
+  const fit = compact && 'h-full w-full min-h-11 py-2 leading-tight text-balance'
   let action: ReactNode
   if (product.availability === 'external' && product.externalUrl)
     action = (
@@ -108,7 +108,7 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
         className={cn(
           'rounded-pill bg-cream font-bold uppercase tracking-wide text-ink',
           compact
-            ? 'flex min-h-11 w-full items-center justify-center px-4 py-2 text-[13px] leading-tight'
+            ? 'flex h-full min-h-11 w-full items-center justify-center px-4 py-2 text-[13px] leading-tight'
             : 'inline-block px-4 py-2 text-small',
         )}
       >
@@ -149,15 +149,20 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
       </div>
     )
 
+  // on a card the price and the action are two cells of the card's grid (PictureGrid lines them up across the
+  // row), the price's there even when empty
+  if (compact)
+    return (
+      <>
+        <div className={cn('self-end', className)}>
+          <ProductPrice product={product} labels={labels} size="sm" />
+        </div>
+        {action}
+      </>
+    )
   return (
-    <div
-      className={cn(
-        'flex flex-col gap-4',
-        compact ? 'items-stretch gap-3' : 'items-start',
-        className,
-      )}
-    >
-      <ProductPrice product={product} labels={labels} size={compact ? 'sm' : 'lg'} />
+    <div className={cn('flex flex-col items-start gap-4', className)}>
+      <ProductPrice product={product} labels={labels} />
       {action}
     </div>
   )

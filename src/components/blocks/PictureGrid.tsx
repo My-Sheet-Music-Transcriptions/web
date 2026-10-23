@@ -141,7 +141,8 @@ export function PictureGrid({
   const p = pictures[shape]
   // never a last row of one or two pictures: 8 logos in 6 columns become 4, 4 in 3 become 4
   const cols = balanceColumns(columns, shown.length, 6)
-  // cards with an action (the shop's add-to-cart) line their actions up along the bottom of the row
+  // cards with an action (the shop's add-to-cart: a price and a button) share three rows with their neighbours
+  // (subgrid): picture and name, price, button; so the prices and buttons of a row line up, buttons equally tall
   const actions = shown.some((item) => item.action)
   return (
     <BlockShell {...shell} label={label} cascade>
@@ -194,16 +195,18 @@ export function PictureGrid({
             <RevealItem
               as="li"
               key={keyOf(item)}
-              className={cn('text-center', actions && 'flex flex-col')}
+              className={cn('text-center', actions && 'row-span-3 grid grid-rows-subgrid gap-y-3')}
             >
               {item.href ? (
                 <SmartLink href={item.href} className="group block">
                   {content}
                 </SmartLink>
+              ) : actions ? (
+                <div>{content}</div>
               ) : (
                 content
               )}
-              {item.action ? <div className="mt-auto pt-4">{item.action}</div> : null}
+              {item.action}
             </RevealItem>
           )
         })}
