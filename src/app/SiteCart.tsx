@@ -5,13 +5,14 @@ import { CartProvider, type CheckoutResult } from '~/components/shop/CartProvide
 import { entries } from '~/content'
 import { stripLocale } from '~/i18n/routing'
 import type { Locale } from '~/i18n/types'
+import type { OrderView } from '~/server/shop'
 import type { CartLine } from '~/shop/cart'
 import { catalogue } from '~/shop/catalogue'
 import { shippingZones, shopConfig } from '~/shop/config'
 import { shopWords } from '~/shop/words'
 import { useSite } from '~/site'
 
-/** Asks the server to open a Stripe payment for the cart (src/routes/api/shop/checkout.ts); back here afterwards. */
+/** Asks the server to open a Stripe payment for the cart (src/server/shop.server.ts); back here afterwards. */
 async function startCheckout(
   locale: Locale,
   lines: CartLine[],
@@ -25,11 +26,18 @@ async function startCheckout(
   return (await res.json()) as CheckoutResult
 }
 
-/** The order number of a paid checkout session, once the payment is recorded (src/routes/api/shop/order.ts). */
-async function confirmOrder(session: string): Promise<string | null> {
+/** The order a paid checkout session became (number and customer link), once the payment is recorded. */
+async function confirmOrder(session: string): Promise<{ number: string; ref: string } | null> {
   const res = await fetch(`/api/shop/order?session=${encodeURIComponent(session)}`)
   if (!res.ok) return null
-  return ((await res.json()) as { number?: string }).number ?? null
+  return (await res.json()) as { number: string; ref: string }
+}
+
+/** The order of a customer's link, for their order page in the cart's panel. */
+async function customerOrder(ref: string): Promise<OrderView | null> {
+  const res = await fetch(`/api/shop/order?ref=${encodeURIComponent(ref)}`)
+  if (!res.ok) return null
+  return ((await res.json()) as { order: OrderView }).order
 }
 
 /**
@@ -61,7 +69,7 @@ export function SiteCart({ children }: { children: ReactNode }) {
       onCheckout={(lines, zone) => startCheckout(locale, lines, zone)}
     >
       {children}
-      <CartDock pinned={pinned} onConfirm={confirmOrder} />
+      <CartDock pinned={pinned} onConfirm={confirmOrder} onOrder={customerOrder} />
     </CartProvider>
   )
 }

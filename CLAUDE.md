@@ -127,7 +127,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   (`orders.server.ts`, store `shop-orders`, in memory off Netlify) and plain-text emails with Resend
   (`shop-emails.server.ts`, logged without `RESEND_API_KEY`). The orders panel is `/admin/orders` (`src/admin/orders`,
   built by `vite.orders.config.ts`; Netlify Identity users with the `shop` or `admin` role, or `SHOP_ADMIN_EMAILS`):
-  each status change can email the customer. Env: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (webhook
+  each status change can email the customer. Every customer email links their order page, `/?order=<number>.<secret>`
+  (the order's random `key`, no account): the cart's panel opens on it with the status, the carrier's tracking link
+  and Stripe's invoice and receipt (`OrderDetails`, `GET /api/shop/order?ref=`). Env: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (webhook
   `https://<site>/api/shop/stripe-webhook`, event `checkout.session.completed`), `SHOP_ORDERS_EMAIL`,
   `SHOP_FROM_EMAIL`, `SHOP_ADMIN_EMAILS`; without `STRIPE_SECRET_KEY` checkout runs in demo mode (an order without
   payment, `SHOP_DEMO=off` refuses instead).

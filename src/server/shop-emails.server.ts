@@ -45,10 +45,14 @@ function summary(order: Order, words: OrderEmails['summary'], locale: string): s
   ].join('\n')
 }
 
-/** What the customer is told about their order reaching `status` (the event's note and tracking link included). */
+/**
+ * What the customer is told about their order reaching `status` (the event's note and tracking link included), with
+ * the link to their order page (`link`: its status, the parcel's tracking, the invoice and receipt).
+ */
 export function customerEmail(
   order: Order,
   status: OrderStatus,
+  link: string,
   extra: { note?: string; tracking?: string } = {},
 ): Email {
   const words = shopWords(order.locale as Locale)?.orderEmails
@@ -67,6 +71,7 @@ export function customerEmail(
       fill(message.body, vars),
       ...(tracking ? [fill(words.tracking, { tracking })] : []),
       ...(extra.note ? [fill(words.note, { note: extra.note })] : []),
+      fill(words.link, { link }),
       summary(order, words.summary, order.locale),
       words.signature,
     ].join('\n\n'),

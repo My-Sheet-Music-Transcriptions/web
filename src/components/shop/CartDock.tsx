@@ -5,58 +5,80 @@ import { Icon } from '~/components/primitives/Icon'
 import { cartBump, fade, flyToCart, slideIn } from '~/components/primitives/Motion'
 import { cn } from '~/lib/cn'
 import { fill } from '~/lib/strings'
+import type { OrderView } from '~/server/shop'
 import { formatPrice } from '~/shop/cart'
 import { useLocale } from '~/site'
 import { CartContents } from './CartContents'
 import { useCart } from './CartProvider'
+import { OrderDetails } from './OrderDetails'
 
-/** Where a visitor stands after Stripe's page: the order being recorded, then its number. */
-type Confirmation = { number?: string; demo: boolean }
+/** A paid checkout session as Stripe sends the buyer back with it; anything else in `?order=` is a customer's link. */
+const SESSION = /^(cs_(test|live)_|demo-)/
+
+/**
+ * What the panel shows instead of the cart: the thanks after Stripe's page (the order being recorded, then its
+ * number) or a customer's order link, and the order itself once it is loaded (null: no order matches the link).
+ */
+type Shown = { thanks: boolean; demo: boolean; number?: string; order?: OrderView | null }
 
 export interface CartDockProps {
   /** Shows the cart button even while the cart is empty (the shop and its products); elsewhere only once it holds something. */
   pinned?: boolean
-  /** The order number of a paid checkout session, or null while the payment is still being recorded. */
-  onConfirm: (session: string) => Promise<string | null>
+  /** The order a paid checkout session became (its number and customer link), or null while it is being recorded. */
+  onConfirm: (session: string) => Promise<{ number: string; ref: string } | null>
+  /** The order of a customer's link (`?order=<ref>`, in every email they get), or null when none matches. */
+  onOrder: (ref: string) => Promise<OrderView | null>
 }
 
 /**
  * The cart that stays on screen: a tab on the right edge from desktop up (the count and the total) and a round button
  * at the bottom right on phones, which product pictures fly into and which swells as each lands. It opens the cart
  * as a side panel. Back from Stripe's page (`?order=<session>` on the address) it empties the cart and thanks the
- * buyer in the panel with the order's number; back from a cancelled payment (`?checkout=cancelled`) it reopens the cart.
+ * buyer in the panel with their order; back from a cancelled payment (`?checkout=cancelled`) it reopens the cart. A
+ * customer's order link (`?order=<number>.<secret>`) opens the panel on that order: where it is, tracking, invoice.
  */
-export function CartDock({ pinned = false, onConfirm }: CartDockProps) {
+export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) {
   const cart = useCart()
   const locale = useLocale()
   const panel = useRef<HTMLDivElement>(null)
-  const [confirmation, setConfirmation] = useState<Confirmation | null>(null)
+  const [confirmation, setConfirmation] = useState<Shown | null>(null)
   const open = cart?.open ?? false
   const setOpen = cart?.setOpen
   const clear = cart?.clear
 
-  // back from Stripe: once, on the first render in the browser
+  // back from Stripe, or a customer's order link: once, on the first render in the browser
   useEffect(() => {
     const url = new URL(window.location.href)
-    const session = url.searchParams.get('order')
+    const order = url.searchParams.get('order')
     const cancelled = url.searchParams.get('checkout') === 'cancelled'
-    if (!session && !cancelled) return
+    if (!order && !cancelled) return
     url.searchParams.delete('order')
     url.searchParams.delete('checkout')
     window.history.replaceState(window.history.state, '', url)
     setOpen?.(true)
-    if (!session) return
-    clear?.()
-    setConfirmation({ demo: session.startsWith('demo-') })
+    if (!order) return
     // no cancelling on cleanup: the address is cleaned up above, so a second run (StrictMode) finds nothing to do
+    const load = (ref: string) =>
+      onOrder(ref)
+        .catch(() => null)
+        .then((view) => setConfirmation((c) => c && { ...c, order: view }))
+    if (!SESSION.test(order)) {
+      setConfirmation({ thanks: false, demo: false })
+      void load(order)
+      return
+    }
+    clear?.()
+    setConfirmation({ thanks: true, demo: order.startsWith('demo-') })
     let tries = 0
     const ask = async () => {
-      const number = await onConfirm(session).catch(() => null)
-      if (number) setConfirmation((c) => c && { ...c, number })
-      else if (++tries < 12) window.setTimeout(ask, 1500)
+      const found = await onConfirm(order).catch(() => null)
+      if (found) {
+        setConfirmation((c) => c && { ...c, number: found.number })
+        void load(found.ref)
+      } else if (++tries < 12) window.setTimeout(ask, 1500)
     }
     void ask()
-  }, [onConfirm, setOpen, clear])
+  }, [onConfirm, onOrder, setOpen, clear])
 
   useEffect(() => {
     if (!open) return
@@ -177,22 +199,31 @@ export function CartDock({ pinned = false, onConfirm }: CartDockProps) {
                 </button>
               </div>
               {confirmation ? (
-                <div
-                  aria-live="polite"
-                  className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center"
-                >
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-teal text-white">
-                    <Icon name="check" size={32} />
-                  </span>
-                  <p className="text-h3 font-bold text-ink">{labels.thanks}</p>
-                  <p className="text-body text-ink">
-                    {confirmation.number
-                      ? fill(labels.confirmed, { number: confirmation.number })
-                      : labels.confirming}
-                  </p>
-                  {confirmation.demo ? (
-                    <p className="text-small text-muted">{labels.demo}</p>
+                <div aria-live="polite" className="flex-1 overflow-y-auto">
+                  {confirmation.thanks ? (
+                    <div className="flex flex-col items-center gap-4 border-b border-line px-8 py-8 text-center">
+                      <span className="flex h-16 w-16 items-center justify-center rounded-full bg-teal text-white">
+                        <Icon name="check" size={32} />
+                      </span>
+                      <p className="text-h3 font-bold text-ink">{labels.thanks}</p>
+                      <p className="text-body text-ink">
+                        {confirmation.number
+                          ? fill(labels.confirmed, { number: confirmation.number })
+                          : labels.confirming}
+                      </p>
+                    </div>
                   ) : null}
+                  {confirmation.order ? (
+                    <OrderDetails order={confirmation.order} labels={labels} />
+                  ) : confirmation.order === null ? (
+                    <p className="px-8 py-12 text-center text-body text-ink">
+                      {labels.orderNotFound}
+                    </p>
+                  ) : confirmation.thanks ? null : (
+                    <p className="px-8 py-12 text-center text-body text-muted">
+                      {labels.loadingOrder}
+                    </p>
+                  )}
                 </div>
               ) : (
                 <CartContents cart={cart} onNavigate={close} />

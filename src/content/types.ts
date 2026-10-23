@@ -377,6 +377,35 @@ export interface ShopLabels {
   confirmed: string
   /** While the order is being recorded: "Confirming your payment…" */
   confirming: string
+  /** The customer's order page (the link in their emails), in the cart's panel: its heading, "Order {number}" */
+  order: string
+  /** "Placed on {date}" */
+  placed: string
+  /** While it loads: "Looking up your order…" */
+  loadingOrder: string
+  /** A link that matches no order: "We could not find this order. Check the link in your email." */
+  orderNotFound: string
+  /** The order's progress, as the customer reads each status */
+  statuses: {
+    paid: string
+    preparing: string
+    shipped: string
+    delivered: string
+    cancelled: string
+    refunded: string
+  }
+  /** The heading of the progress list ("Progress") */
+  progress: string
+  /** The link to the carrier's tracking page: "Track the parcel on {carrier}" */
+  track: string
+  /** The link to Stripe's invoice ("Invoice") */
+  invoice: string
+  /** The link to Stripe's receipt ("Payment receipt") */
+  receipt: string
+  /** The heading of the parcel's address ("Shipping address") */
+  deliverTo: string
+  /** Under the order: "This link is yours alone: please do not share it." */
+  privateLink: string
 }
 
 /** One email the shop sends a customer (src/server/shop-emails.ts): `{number}`, `{name}`, `{tracking}`, `{note}` filled in. */
@@ -401,6 +430,8 @@ export interface OrderEmails {
   tracking: string
   /** The line with a note from us: "A note from us: {note}" */
   note: string
+  /** The line with the link to their order page: "Your order, its tracking and the invoice: {link}" */
+  link: string
   /** The summary's words */
   summary: {
     order: string

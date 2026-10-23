@@ -37,12 +37,30 @@ export const shopLabels: ShopLabels = {
   confirmed:
     "La teva comanda {number} està confirmada. T'hem enviat els detalls per correu electrònic.",
   confirming: 'Confirmant el pagament…',
+  order: 'Comanda {number}',
+  placed: 'Feta el {date}',
+  loadingOrder: 'Buscant la teva comanda…',
+  orderNotFound: "No hem trobat aquesta comanda. Revisa l'enllaç del correu electrònic.",
+  statuses: {
+    paid: 'Pagada',
+    preparing: 'En preparació',
+    shipped: 'Enviada',
+    delivered: 'Lliurada',
+    cancelled: 'Cancel·lada',
+    refunded: 'Import retornat',
+  },
+  progress: 'Seguiment',
+  track: 'Segueix el paquet a {carrier}',
+  invoice: 'Factura',
+  receipt: 'Rebut del pagament',
+  deliverTo: "Adreça d'enviament",
+  privateLink: 'Aquest enllaç és només per a tu: no el comparteixis.',
 }
 
 export const orderEmails: OrderEmails = {
   paid: {
     subject: 'Hem rebut la teva comanda {number}',
-    body: "Hola {name},\n\nGràcies per la teva compra! Hem rebut la comanda {number} i la prepararem aviat. T'escriurem quan surti cap a casa teva.\n\nStripe t'enviarà el rebut i la factura en un correu a part.",
+    body: "Hola {name},\n\nGràcies per la teva compra! Hem rebut la comanda {number} i la prepararem aviat. T'escriurem quan surti cap a casa teva.\n\nStripe t'enviarà el rebut i la factura en un correu a part; també els trobaràs a l'enllaç de sota.",
   },
   preparing: {
     subject: 'Estem preparant la comanda {number}',
@@ -66,6 +84,7 @@ export const orderEmails: OrderEmails = {
   },
   tracking: 'Segueix el paquet: {tracking}',
   note: 'Una nota nostra: {note}',
+  link: "L'estat de la comanda, el seguiment del paquet i la factura, sempre aquí: {link}",
   summary: {
     order: 'Comanda',
     quantity: 'Quantitat',

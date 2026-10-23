@@ -1,4 +1,5 @@
-import type { Order, OrderEvent, OrderUpdate } from './shop'
+import { timingSafeEqual } from 'node:crypto'
+import { type NewOrder, ORDER_REF, type Order, type OrderEvent, type OrderUpdate } from './shop'
 
 /**
  * Where orders are kept: Netlify Blobs (store `shop-orders`, strongly consistent) on Netlify, a store in memory
@@ -66,6 +67,12 @@ export async function orderStore(): Promise<OrderStore> {
   }
 }
 
+/** A fresh order page secret: 18 random bytes, URL-safe (24 characters). */
+function newKey(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(18))
+  return Buffer.from(bytes).toString('base64url')
+}
+
 const NUMBER = /^orders\/([A-Z]+)-(\d+)$/
 
 /**
@@ -76,7 +83,7 @@ export async function createOrder(
   store: OrderStore,
   prefix: string,
   session: string,
-  order: Omit<Order, 'number'>,
+  order: NewOrder,
 ): Promise<Order> {
   const sessionKey = `sessions/${session}`
   const known = await store.get<{ number?: string }>(sessionKey)
@@ -84,13 +91,14 @@ export async function createOrder(
     const existing = await store.get<Order>(`orders/${known.number}`)
     if (existing) return existing
   }
+  const key = newKey()
   for (let attempt = 0; attempt < 8; attempt++) {
     const used = (await store.keys(`orders/${prefix}-`))
       .map((k) => NUMBER.exec(k))
       .filter((m) => m?.[1] === prefix)
       .map((m) => Number(m?.[2]))
     const number = `${prefix}-${Math.max(1000, ...used) + 1 + attempt}`
-    const full: Order = { number, ...order }
+    const full: Order = { number, ...order, key }
     if (await store.set(`orders/${number}`, full, { onlyIfNew: true })) {
       await store.set(sessionKey, { number })
       return full
@@ -105,6 +113,17 @@ export async function numberOfSession(store: OrderStore, session: string) {
 }
 
 export const getOrder = (store: OrderStore, number: string) => store.get<Order>(`orders/${number}`)
+
+/** The order of a customer's link (`orderRef`), or null when the number or its secret does not match. */
+export async function orderOfRef(store: OrderStore, ref: string): Promise<Order | null> {
+  const [, number, key] = ORDER_REF.exec(ref) ?? []
+  if (!number || !key) return null
+  const order = await getOrder(store, number)
+  if (!order?.key) return null
+  const a = Buffer.from(order.key)
+  const b = Buffer.from(key)
+  return a.length === b.length && timingSafeEqual(a, b) ? order : null
+}
 
 /** Every order, newest first. */
 export async function listOrders(store: OrderStore): Promise<Order[]> {

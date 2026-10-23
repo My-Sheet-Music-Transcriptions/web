@@ -92,6 +92,41 @@ export interface Order {
   /** The parcel's tracking link, once shipped. */
   tracking?: string
   history: OrderEvent[]
+  /** The secret of the customer's own order page: its link (`orderRef`) is in every email they get. */
+  key: string
+}
+
+/** An order before it is filed: its number and key are given then. */
+export type NewOrder = Omit<Order, 'number' | 'key'>
+
+/** What the customer's order link carries (`?order=<ref>` on any page of the site): its number and secret. */
+export const orderRef = (o: Pick<Order, 'number' | 'key'>) => `${o.number}.${o.key}`
+
+/** A customer's order link, as parsed: anything else is refused before the store is asked. */
+export const ORDER_REF = /^([A-Z]{2,6}-\d+)\.([\w-]{20,64})$/
+
+/**
+ * What the customer's order page shows (the panel that the link in their emails opens): the order without our side
+ * of it (who changed what, notes we did not email, Stripe ids), and the invoice and receipt Stripe made for it.
+ */
+export interface OrderView {
+  number: string
+  createdAt: string
+  status: OrderStatus
+  demo: boolean
+  lines: OrderLine[]
+  subtotal: number
+  shipping: number
+  total: number
+  zone: string
+  shipTo: string
+  address: OrderAddress
+  tracking?: string
+  history: { status: OrderStatus; at: string; note?: string; tracking?: string }[]
+  /** Stripe's invoice page and its PDF. */
+  invoice?: { url: string; pdf?: string }
+  /** Stripe's receipt of the payment. */
+  receipt?: string
 }
 
 /** An order's line in the panel's list. */

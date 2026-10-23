@@ -110,6 +110,7 @@ function Status({ status }: { status: OrderStatus }) {
 
 function OrderView({ number, onChanged }: { number: string; onChanged: () => void }) {
   const [order, setOrder] = useState<Order | null>(null)
+  const [link, setLink] = useState('')
   const [error, setError] = useState('')
   const [status, setStatus] = useState<OrderStatus>('preparing')
   const [note, setNote] = useState('')
@@ -121,9 +122,10 @@ function OrderView({ number, onChanged }: { number: string; onChanged: () => voi
   useEffect(() => {
     setOrder(null)
     setMessage('')
-    api<{ order: Order }>(`/api/shop/orders?number=${encodeURIComponent(number)}`)
-      .then(({ order }) => {
+    api<{ order: Order; link: string }>(`/api/shop/orders?number=${encodeURIComponent(number)}`)
+      .then(({ order, link }) => {
         setOrder(order)
+        setLink(link)
         const next = ORDER_STATUSES[ORDER_STATUSES.indexOf(order.status) + 1]
         setStatus(next && next !== 'cancelled' ? next : order.status)
         setTracking(order.tracking ?? '')
@@ -201,6 +203,17 @@ function OrderView({ number, onChanged }: { number: string; onChanged: () => voi
               </a>
             </p>
           ) : null}
+          <p className="mt-3 text-small">
+            <a
+              className="text-primary underline"
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Their order page
+            </a>{' '}
+            <span className="text-muted">(the link in every email we send them)</span>
+          </p>
         </div>
         <div className="rounded-card bg-white p-5 shadow-card">
           <div className="mb-2 flex items-center justify-between">

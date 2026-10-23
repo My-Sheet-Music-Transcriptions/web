@@ -1,21 +1,26 @@
+import { localeHref } from '~/i18n/routing'
 import type { Locale } from '~/i18n/types'
 import { priceCart } from '~/shop/cart'
 import { catalogue } from '~/shop/catalogue'
 import { shippingZones, shopConfig } from '~/shop/config'
-import { SITE_LOCALES } from '~/site'
+import { LOCALE_ROUTING, SITE_LOCALES } from '~/site'
 import {
   applyUpdate,
   createOrder,
   getOrder,
   listOrders,
   numberOfSession,
+  orderOfRef,
   orderStore,
 } from './orders.server'
 import {
   type CheckoutInput,
   checkoutSchema,
+  type NewOrder,
   type Order,
   type OrderLine,
+  type OrderView,
+  orderRef,
   orderUpdateSchema,
   summarize,
 } from './shop'
@@ -42,6 +47,10 @@ const json = (body: Json, status = 200) => Response.json(body, { status })
 
 /** Where the cart's page is: the request's own site (a preview's origin, the domain in production). */
 const originOf = (request: Request) => new URL(request.url).origin
+
+/** The customer's order page: `?order=<ref>` on the homepage of the order's site, where the cart's panel shows it. */
+const orderLink = (order: Order, origin: string) =>
+  localeHref(LOCALE_ROUTING, order.locale as Locale, `/?order=${orderRef(order)}`, origin)
 
 function siteShop(locale: string) {
   const loc = locale as Locale
@@ -169,7 +178,7 @@ export async function startCheckout(request: Request): Promise<Response> {
 async function recordOrder(
   prefix: string,
   session: string,
-  order: Omit<Order, 'number'>,
+  order: NewOrder,
   origin: string,
 ): Promise<Order> {
   const store = await orderStore()
@@ -178,7 +187,7 @@ async function recordOrder(
   if (known) return saved
   const results = await Promise.allSettled([
     sendEmail(teamEmail(saved, `${origin}/admin/orders/`)),
-    sendEmail(customerEmail(saved, 'paid')),
+    sendEmail(customerEmail(saved, 'paid', orderLink(saved, origin))),
   ])
   for (const r of results)
     if (r.status === 'rejected') console.error('[shop] email failed', r.reason)
@@ -191,7 +200,7 @@ export function orderFromSession(
   items: StripeLineItem[],
   zoneLabel: string,
   now = new Date(),
-): Omit<Order, 'number'> {
+): NewOrder {
   const skus = (session.metadata?.lines ?? '').split(',').map((l) => l.split(':')[0] ?? '')
   const details = session.customer_details ?? {}
   const shipping = session.collected_information?.shipping_details ?? session.shipping_details
@@ -274,12 +283,89 @@ export async function stripeWebhook(request: Request): Promise<Response> {
   return json({ received: true, number: order.number })
 }
 
-/** GET /api/shop/order?session=…: the order number a payment became, for the cart's thank-you; 404 until recorded. */
-export async function orderNumber(request: Request): Promise<Response> {
-  const session = new URL(request.url).searchParams.get('session') ?? ''
+/** The invoice and receipt Stripe made for an order, when Stripe is set up and has them. */
+async function stripeDocuments(order: Order): Promise<Pick<OrderView, 'invoice' | 'receipt'>> {
+  const key = process.env.STRIPE_SECRET_KEY
+  const ids = order.stripe
+  if (!key || !ids) return {}
+  const [invoice, intent] = await Promise.all([
+    ids.invoice
+      ? stripe<{ hosted_invoice_url?: string | null; invoice_pdf?: string | null }>(
+          key,
+          'GET',
+          `invoices/${ids.invoice}`,
+        ).catch(() => null)
+      : null,
+    ids.paymentIntent
+      ? stripe<{ latest_charge?: { receipt_url?: string | null } | string | null }>(
+          key,
+          'GET',
+          `payment_intents/${ids.paymentIntent}`,
+          { expand: ['latest_charge'] },
+        ).catch(() => null)
+      : null,
+  ])
+  const charge = typeof intent?.latest_charge === 'object' ? intent.latest_charge : null
+  return {
+    ...(invoice?.hosted_invoice_url && {
+      invoice: {
+        url: invoice.hosted_invoice_url,
+        ...(invoice.invoice_pdf && { pdf: invoice.invoice_pdf }),
+      },
+    }),
+    ...(charge?.receipt_url && { receipt: charge.receipt_url }),
+  }
+}
+
+/** What the customer's order page shows of an order: our notes only when they were emailed to them. */
+export function viewOf(
+  order: Order,
+  documents: Pick<OrderView, 'invoice' | 'receipt'> = {},
+): OrderView {
+  return {
+    number: order.number,
+    createdAt: order.createdAt,
+    status: order.status,
+    demo: order.demo,
+    lines: order.lines,
+    subtotal: order.subtotal,
+    shipping: order.shipping,
+    total: order.total,
+    zone: order.zone.label,
+    shipTo: order.shipTo ?? order.customer.name,
+    address: order.address,
+    ...(order.tracking && { tracking: order.tracking }),
+    history: order.history.map((e) => ({
+      status: e.status,
+      at: e.at,
+      ...(e.emailed && e.note && { note: e.note }),
+      ...(e.tracking && { tracking: e.tracking }),
+    })),
+    ...documents,
+  }
+}
+
+/**
+ * GET /api/shop/order, the customer's side: `?session=` the order a payment became (its number and link, for the
+ * cart's thank-you; 404 until recorded), `?ref=` the order of a customer's link, for their order page.
+ */
+export async function customerOrder(request: Request): Promise<Response> {
+  const params = new URL(request.url).searchParams
+  const store = await orderStore()
+  const ref = params.get('ref')
+  if (ref !== null) {
+    const order = await orderOfRef(store, ref)
+    return order
+      ? json({ order: viewOf(order, await stripeDocuments(order)) })
+      : json({ error: 'no such order' }, 404)
+  }
+  const session = params.get('session') ?? ''
   if (!/^(cs_(test|live)_|demo-)[\w-]+$/.test(session)) return json({ error: 'bad session' }, 400)
-  const number = await numberOfSession(await orderStore(), session)
-  return number ? json({ number }) : json({ error: 'not yet' }, 404)
+  const number = await numberOfSession(store, session)
+  const order = number ? await getOrder(store, number) : null
+  return order
+    ? json({ number: order.number, ref: orderRef(order) })
+    : json({ error: 'not yet' }, 404)
 }
 
 /**
@@ -318,7 +404,9 @@ export async function ordersApi(request: Request): Promise<Response> {
     const number = new URL(request.url).searchParams.get('number')
     if (number) {
       const order = await getOrder(store, number)
-      return order ? json({ order }) : json({ error: 'no such order' }, 404)
+      return order
+        ? json({ order, link: orderLink(order, originOf(request)) })
+        : json({ error: 'no such order' }, 404)
     }
     return json({ orders: (await listOrders(store)).map(summarize) })
   }
@@ -331,7 +419,9 @@ export async function ordersApi(request: Request): Promise<Response> {
   await store.set(`orders/${order.number}`, changed)
   if (update.email)
     try {
-      await sendEmail(customerEmail(changed, update.status, update))
+      await sendEmail(
+        customerEmail(changed, update.status, orderLink(changed, originOf(request)), update),
+      )
     } catch (err) {
       console.error('[shop] status email failed', err)
       return json({ order: changed, warning: 'saved, but the email could not be sent' })

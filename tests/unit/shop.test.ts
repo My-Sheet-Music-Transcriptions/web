@@ -3,9 +3,15 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
 import { parseMeta } from '../../src/content/schema'
-import { createOrder, memoryStore, numberOfSession } from '../../src/server/orders.server'
-import type { Order } from '../../src/server/shop'
-import { orderFromSession, priceCheckout } from '../../src/server/shop.server'
+import {
+  applyUpdate,
+  createOrder,
+  memoryStore,
+  numberOfSession,
+  orderOfRef,
+} from '../../src/server/orders.server'
+import { type NewOrder, type Order, orderRef } from '../../src/server/shop'
+import { orderFromSession, priceCheckout, viewOf } from '../../src/server/shop.server'
 import { customerEmail, teamEmail } from '../../src/server/shop-emails.server'
 import { formEncode, verifyStripeSignature } from '../../src/server/stripe.server'
 import { formatPrice, priceCart } from '../../src/shop/cart'
@@ -230,7 +236,7 @@ describe('Stripe', () => {
 })
 
 describe('orders', () => {
-  const base: Omit<Order, 'number'> = {
+  const base: NewOrder = {
     createdAt: '2026-10-23T10:00:00.000Z',
     locale: 'ca',
     demo: false,
@@ -257,19 +263,61 @@ describe('orders', () => {
     ])
     expect(await numberOfSession(store, 'cs_2')).toBe('LMP-1002')
     expect(await store.keys('orders/')).toHaveLength(2)
+    expect(first.key).toMatch(/^[\w-]{24}$/)
+    expect(again.key).toBe(first.key)
+    expect(second.key).not.toBe(first.key)
+  })
+  it("opens a customer's order only with its own secret", async () => {
+    const store = memoryStore()
+    const order = await createOrder(store, 'LMP', 'cs_1', base)
+    const other = await createOrder(store, 'LMP', 'cs_2', base)
+    expect((await orderOfRef(store, orderRef(order)))?.number).toBe('LMP-1001')
+    expect(await orderOfRef(store, `${order.number}.${other.key}`)).toBeNull()
+    expect(await orderOfRef(store, `${order.number}.${order.key.slice(0, -1)}`)).toBeNull()
+    expect(await orderOfRef(store, order.number)).toBeNull()
+    expect(await orderOfRef(store, `LMP-9999.${order.key}`)).toBeNull()
+  })
+  it('shows the customer their order without our side of it', () => {
+    const order: Order = { ...base, number: 'LMP-1001', key: 'k'.repeat(24) }
+    const shipped = applyUpdate(
+      applyUpdate(
+        order,
+        { number: order.number, status: 'preparing', note: 'internal', email: false },
+        'staff@x',
+      ),
+      {
+        number: order.number,
+        status: 'shipped',
+        tracking: 'https://correos.es/t/1',
+        note: 'Bon viatge',
+        email: true,
+      },
+      'staff@x',
+    )
+    const view = viewOf(shipped, { receipt: 'https://pay.stripe.com/receipts/1' })
+    expect(view.tracking).toBe('https://correos.es/t/1')
+    expect(view.history.map((e) => e.note)).toEqual([undefined, 'Bon viatge'])
+    expect(JSON.stringify(view)).not.toMatch(/staff@x|anna@example.com|kkkk/)
+    expect(view.receipt).toBe('https://pay.stripe.com/receipts/1')
   })
   it('emails the customer in their language, with the tracking link and our note', () => {
-    const order: Order = { ...base, number: 'LMP-1001' }
-    const email = customerEmail(order, 'shipped', {
-      tracking: 'https://t.example/1',
-      note: 'Gràcies!',
-    })
+    const order: Order = { ...base, number: 'LMP-1001', key: 'k'.repeat(24) }
+    const email = customerEmail(
+      order,
+      'shipped',
+      'https://lamevapartitura.cat/?order=LMP-1001.kkk',
+      {
+        tracking: 'https://t.example/1',
+        note: 'Gràcies!',
+      },
+    )
     expect(email.to).toBe('anna@example.com')
     expect(email.subject).toBe('La comanda LMP-1001 ja és en camí')
     expect(email.text).toContain('Hola Anna,')
     expect(email.text).toContain('https://t.example/1')
     expect(email.text).toContain('Gràcies!')
     expect(email.text).toContain('34,90')
+    expect(email.text).toContain('https://lamevapartitura.cat/?order=LMP-1001.kkk')
     expect(teamEmail(order, 'https://x/admin/orders/').text).toContain('https://x/admin/orders/')
   })
 })
