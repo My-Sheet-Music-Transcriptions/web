@@ -24,7 +24,8 @@
   --container-*: initial;
 
   /* Colour: one value for each job. Text is ink or muted; teal is the link and the outline; orange is the mark
-     (accent) and the filled button (accent-deep); cream and peach are the only tinted backgrounds. */
+     (accent, and accent-deep as text) and the filled button (button, the brand orange); cream and peach are the
+     only tinted backgrounds. */
   --color-white: #ffffff; /* the page, cards */
   --color-black: #000000; /* veils (bg-black/40) */
   --color-ink: #333333; /* all text: headings and body (12.6:1 on white) */
@@ -34,9 +35,10 @@
   --color-primary-deep: #15687b; /* hover of primary; primary on cream and peach (tones.ts) */
   --color-sky: #219ebc; /* the light teal-blue: stars of a review, a price header (large white text, 3.1:1) */
   --color-navy: #023047; /* a price header, dark panels, the cart button */
-  --color-accent: #f49946; /* orange marks: the heading rule, decorations (never text) */
-  --color-accent-deep: #b8571c; /* filled buttons and orange text on white (4.75:1) */
-  --color-accent-hover: #a34c17; /* hover of the filled button; accent-deep on cream and peach (tones.ts) */
+  --color-accent: #f49946; /* orange marks: the heading rule, decorations; as text only the active menu item and the current language (data-live-colour) */
+  --color-accent-deep: #b8571c; /* orange text on white (4.75:1): eyebrows, prices' numbers, the highlight */
+  --color-accent-hover: #a34c17; /* accent-deep on cream and peach (tones.ts) */
+  --color-button: #e2864d; /* the brand orange of the filled button, white text (2.7:1: kept by decision, marked data-live-colour); sky on hover */
   --color-cream: #f7eee7; /* a tinted block, a price card's body, the gallery's card */
   --color-peach: #fdebdc; /* the request form's block, the audience cards' block */
   --color-star: #ffb703; /* rating stars */

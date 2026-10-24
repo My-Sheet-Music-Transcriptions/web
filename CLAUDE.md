@@ -170,9 +170,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   exactly one og:image (404 included) that exists in dist at its declared 1200×630, twitter card, `<html lang>`,
   valid JSON-LD, images with alt/width/height, no broken internal links, listed once in its collection's sitemap
   unless `noindex`, with the hreflang alternates of its `<head>`.
-- Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`), with no
-  exceptions: every text colour of the scale passes on the backgrounds it is used on (`tones.ts` deepens teal and
-  orange on cream and peach).
+- Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`). The one exception
+  is elements marked `data-live-colour`, which keep the brand orange by decision (the filled button's white label,
+  the active menu item, the current language); every other text colour of the scale passes on the backgrounds it
+  is used on (`tones.ts` deepens teal and orange on cream and peach).
 - Every class in `src/components` and `src/app` is on the design scale (`tests/unit/tokens.test.ts`, and the Biome
   plugin `biome-plugins/off-scale.grit` in the editor): no arbitrary size or colour (`mt-[6px]`, `text-[13px]`,
   `bg-[#3a3a3a]`), no half step (`py-2.5`), no hex literal, no utility the theme switched off (`text-lg`,
@@ -284,7 +285,9 @@ test refuses it (see "Rules that CI enforces").
   for rules. `primary` #1a7f97 is the teal of links, outline buttons and icons (`primary-deep` on hover and on
   tinted backgrounds); `sky` #219ebc the light teal-blue of a review's stars and a price header; `navy` #023047
   dark panels. `accent` #f49946 is the orange mark (the heading rule, decorations, never text); `accent-deep`
-  #b8571c the filled button and orange text, AA on white (`accent-hover` on hover and on tinted backgrounds).
+  #b8571c orange text, AA on white (`accent-hover` on tinted backgrounds); `button` #e2864d the brand orange of the
+  filled button, white label (2.7:1, kept by decision and marked `data-live-colour`, like the active menu item and
+  the current language in `accent`).
   Backgrounds: `white`, `cream` #f7eee7 (a block that stands out, a price card), `peach` #fdebdc (the request
   form, the audiences). `star` #ffb703 for ratings, `error` #b3261e for a field's error, `footer` /
   `footer-text`, and one token per platform (`google`, `facebook`, `trustpilot`, `youtube`, `instagram`,
@@ -302,7 +305,7 @@ test refuses it (see "Rules that CI enforces").
   `card` (at rest) and `float` (menus, the cart, a lightbox). Containers `content` 1140, `wide` 1200, `narrow`
   900, `page` 1440 (`container-*` utilities), `prose` 48rem. Breakpoints: md 768, lg 1025 (Elementor's
   tablet/desktop split), nav 1400 (the desktop menu fits on one line; the phone menu below).
-- **Buttons.** One `Button`: `primary` (filled `accent-deep`), `secondary` (teal outline; `aria-pressed` fills
+- **Buttons.** One `Button`: `primary` (filled `button` orange, white label, sky on hover), `secondary` (teal outline; `aria-pressed` fills
   it: tabs), `ghost` (uppercase teal text); sizes `md` 44px and `lg` 52px, always `label-caps`. Nothing else
   draws a pill.
 

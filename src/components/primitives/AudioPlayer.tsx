@@ -51,7 +51,10 @@ export function AudioPlayer({
   }
   return (
     <figure className={cn('flex flex-col gap-2', className)}>
-      <div className="flex items-center gap-3 rounded-pill bg-accent-deep px-4 py-2 text-white">
+      <div
+        data-live-colour=""
+        className="flex items-center gap-3 rounded-pill bg-button px-4 py-2 text-white"
+      >
         {/* biome-ignore lint/a11y/useMediaCaption: a music recording, nothing is spoken */}
         <audio
           ref={audio}

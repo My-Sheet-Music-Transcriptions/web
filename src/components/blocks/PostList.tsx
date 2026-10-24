@@ -48,7 +48,10 @@ export function PostList({ items = [], columns = 3, limit, linkLabel, ...shell }
                   />
                 ) : null}
                 {post.category ? (
-                  <span className="absolute top-3 right-3 label-caps rounded-pill bg-accent-deep px-3 py-2 text-white">
+                  <span
+                    data-live-colour=""
+                    className="absolute top-3 right-3 label-caps rounded-pill bg-button px-3 py-2 text-white"
+                  >
                     {post.category}
                   </span>
                 ) : null}

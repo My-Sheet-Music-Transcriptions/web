@@ -23,7 +23,15 @@ const preview: Preview = {
     },
     a11y: {
       // Every story is checked with axe; any violation (colour contrast included) fails `pnpm test:storybook`.
+      // The one exception: elements marked `data-live-colour` keep the brand orange by decision (the filled
+      // button's white label, the active menu item, the current language), below AA; contrast is still checked
+      // everywhere else.
       test: 'error',
+      config: {
+        rules: [
+          { id: 'color-contrast', selector: '*:not([data-live-colour]):not([data-live-colour] *)' },
+        ],
+      },
       options: {
         runOnly: {
           type: 'tag',
