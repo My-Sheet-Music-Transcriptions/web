@@ -118,6 +118,12 @@ export const fade: Variants = {
   closed: { opacity: 0, transition: closing },
 }
 
+/** A group of a menu folding open under its row, pushing the rows below down, and folding shut (the phone menu's groups). */
+export const collapse: Variants = {
+  open: { height: 'auto', opacity: 1, transition: { duration: 0.25, ease: [0.33, 1, 0.68, 1] } },
+  closed: { height: 0, opacity: 0, transition: { duration: 0.2, ease: 'easeIn' } },
+}
+
 /** A side panel (the phone menu) sliding in from the right edge, and out. */
 export const slideIn: Variants = {
   open: { x: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },

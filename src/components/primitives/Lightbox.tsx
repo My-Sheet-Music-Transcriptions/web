@@ -19,8 +19,8 @@ export interface LightboxProps {
 
 /**
  * A picture that opens larger over the page when clicked (a score, a photo of a gallery): a native `<dialog>`, so
- * Escape, the focus trap and the backdrop come from the browser. A click anywhere on it, or on the close button,
- * closes it. Without JavaScript the picture simply stays as it is.
+ * Escape, the focus trap and the backdrop come from the browser, growing in and fading out (`pop-up`, theme.css).
+ * A click anywhere on it, or on the close button, closes it. Without JavaScript the picture simply stays as it is.
  */
 export function Lightbox({
   image,
@@ -55,7 +55,7 @@ export function Lightbox({
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') dialog.current?.close()
         }}
-        className="m-auto max-h-dvh max-w-dvw cursor-zoom-out overflow-visible bg-transparent p-0 backdrop:bg-navy/85"
+        className="pop-up m-auto max-h-dvh max-w-dvw cursor-zoom-out overflow-visible bg-transparent p-0 backdrop:bg-navy/85"
       >
         <Picture
           image={image}
