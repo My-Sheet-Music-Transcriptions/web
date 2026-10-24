@@ -68,34 +68,47 @@ export function CheckoutPayment({
         clientSecret: payment.clientSecret,
         elementsOptions: { appearance: appearanceFromTheme() },
       })
-      // the buyer's address is the card's too: the element then asks for the card alone
+      // the buyer's name and address are the card's too: the element asks for the card alone (a phone only when a
+      // payment method needs one)
       element = checkout.createPaymentElement({
         layout: 'tabs',
-        fields: { billingDetails: 'never' },
+        fields: {
+          billingDetails: { name: 'never', email: 'never', address: 'never', phone: 'auto' },
+        },
+        // Link would ask for a phone and an account of its own; Apple Pay and Google Pay stay
+        wallets: { link: 'never' },
       })
-      element.on('loaderror', () => setState({ kind: 'unavailable' }))
+      element.on('loaderror', (e) => {
+        console.error('[shop] payment element', e.error)
+        setState({ kind: 'unavailable' })
+      })
       if (mount.current) element.mount(mount.current)
       const loaded = await checkout.loadActions()
       if (gone) return
       if (loaded.type === 'error') {
+        console.error('[shop] checkout actions', loaded.error)
         setState({ kind: 'unavailable' })
         return
       }
       const { actions } = loaded
+      // the email is on the session already (customer_email); the rest is set here so Link and wallets see it
       const address = toStripe(customer)
-      await Promise.all([
-        actions.updateEmail(customer.email),
-        actions.updateShippingAddress(address),
-        actions.updateBillingAddress(address),
-        customer.phone ? actions.updatePhoneNumber(customer.phone) : null,
-      ]).catch(() => undefined)
+      const updates: Promise<unknown>[] = []
+      try {
+        updates.push(actions.updateShippingAddress(address), actions.updateBillingAddress(address))
+        if (customer.phone) updates.push(actions.updatePhoneNumber(customer.phone))
+      } catch (err) {
+        console.error('[shop] customer details', err)
+      }
+      await Promise.allSettled(updates)
       if (gone) return
       checkout.on('change', (session) =>
         setState((s) => (s.kind === 'ready' || s.kind === 'paying' ? { ...s, session } : s)),
       )
       setState({ kind: 'ready', actions, session: actions.getSession() })
     }
-    start().catch(() => {
+    start().catch((err: unknown) => {
+      console.error('[shop] payment step', err)
       if (!gone) setState({ kind: 'unavailable' })
     })
     return () => {
@@ -112,7 +125,6 @@ export function CheckoutPayment({
     const result = await actions
       .confirm({
         redirect: 'if_required',
-        email: customer.email,
         ...(customer.phone && { phoneNumber: customer.phone }),
         shippingAddress: address,
         billingAddress: address,
@@ -121,7 +133,7 @@ export function CheckoutPayment({
         type: 'error' as const,
         error: { message: err instanceof Error ? err.message : '' },
       }))
-    if (result.type === 'success') onPaid(result.success.id || session.id)
+    if (result.type === 'success') onPaid(session.id)
     else
       setState({
         kind: 'ready',

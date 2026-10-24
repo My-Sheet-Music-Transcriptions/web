@@ -6,7 +6,8 @@
  * picked for it (`stripeLocale`), and its colours come from the theme's tokens (`appearanceFromTheme`).
  */
 
-const STRIPE_JS = 'https://js.stripe.com/v3/'
+/** A versioned release (https://docs.stripe.com/sdks/stripejs-versioning): Checkout Elements need basil or later. */
+const STRIPE_JS = 'https://js.stripe.com/endive/stripe.js'
 
 export interface StripeAddress {
   name: string
@@ -30,7 +31,7 @@ export interface CheckoutSessionView {
 }
 
 export type ConfirmResult =
-  | { type: 'success'; success: CheckoutSessionView }
+  | { type: 'success'; success?: unknown }
   | { type: 'error'; error: { message: string } }
 
 export interface CheckoutActions {
@@ -48,6 +49,8 @@ export interface CheckoutActions {
   }): Promise<ConfirmResult>
 }
 
+type Collect = 'never' | 'auto' | 'always'
+
 export interface PaymentElement {
   mount(target: HTMLElement): void
   unmount(): void
@@ -61,7 +64,13 @@ export interface CheckoutSdk {
   >
   createPaymentElement(options?: {
     layout?: 'tabs' | 'accordion'
-    fields?: { billingDetails?: 'never' | 'auto' }
+    wallets?: { applePay?: 'auto' | 'never'; googlePay?: 'auto' | 'never'; link?: 'auto' | 'never' }
+    fields?: {
+      billingDetails?:
+        | 'never'
+        | 'auto'
+        | { name?: Collect; email?: Collect; phone?: Collect; address?: Collect | 'if_required' }
+    }
   }): PaymentElement
   on(event: 'change', handler: (session: CheckoutSessionView) => void): void
 }

@@ -338,12 +338,20 @@ async function stripeDocuments(order: Order): Promise<Pick<OrderView, 'invoice' 
   const key = process.env.STRIPE_SECRET_KEY
   const ids = order.stripe
   if (!key || !ids) return {}
+  // an order filed the moment the panel confirmed the payment may predate its invoice: ask the session for it
+  const invoiceId =
+    ids.invoice ??
+    (
+      await stripe<CheckoutSession>(key, 'GET', `checkout/sessions/${ids.session}`).catch(
+        () => null,
+      )
+    )?.invoice
   const [invoice, intent] = await Promise.all([
-    ids.invoice
+    invoiceId
       ? stripe<{ hosted_invoice_url?: string | null; invoice_pdf?: string | null }>(
           key,
           'GET',
-          `invoices/${ids.invoice}`,
+          `invoices/${invoiceId}`,
         ).catch(() => null)
       : null,
     ids.paymentIntent
