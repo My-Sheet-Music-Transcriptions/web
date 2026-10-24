@@ -359,6 +359,46 @@ export interface ShopLabels {
   demo: string
   /** "The payment could not be opened. Try again or write to …" */
   failed: string
+  /** The heading of the checkout's first step, the buyer's details ("Your details") */
+  checkoutDetails: string
+  /** The heading of its second step ("Payment") */
+  checkoutPayment: string
+  /** The link from the details back to the cart ("Back to the cart") */
+  back: string
+  /** The link from the payment back to the details ("Change your details") */
+  edit: string
+  /** The details form's button ("Continue to payment") */
+  continue: string
+  /** The fields of the details form */
+  fields: {
+    name: string
+    email: string
+    phone: string
+    address: string
+    /** The second address line ("Flat, floor, staircase") */
+    address2: string
+    postalCode: string
+    city: string
+    /** "Province or region" */
+    state: string
+    country: string
+  }
+  /** After an optional field's label: "optional" */
+  optional: string
+  /** The error of a required field left empty ("Please fill in this field") */
+  required: string
+  /** The error of an email address that is not one ("Check the email address") */
+  invalidEmail: string
+  /** The pay button once Stripe knows the total: "Pay {amount}" */
+  payAmount: string
+  /** While the payment is confirmed: "Processing the payment…" */
+  processing: string
+  /** While Stripe's form loads: "Loading the secure payment…" */
+  loadingPayment: string
+  /** When Stripe's script cannot load (offline, a content blocker): what to check, who to write to */
+  paymentUnavailable: string
+  /** When a payment fails and Stripe gives no reason: "The payment did not go through. Check the card details and try again." */
+  paymentFailed: string
   /** "Coming soon" */
   soon: string
   /** "Sold out" */

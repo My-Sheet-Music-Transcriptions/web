@@ -1,7 +1,7 @@
 import './env.server'
 import { localeHref } from '~/i18n/routing'
 import type { Locale } from '~/i18n/types'
-import { priceCart } from '~/shop/cart'
+import { type PricedCart, priceCart } from '~/shop/cart'
 import { catalogue } from '~/shop/catalogue'
 import { shippingZones, shopConfig } from '~/shop/config'
 import { LOCALE_ROUTING, SITE_LOCALES } from '~/site'
@@ -15,6 +15,8 @@ import {
   orderStore,
 } from './orders.server'
 import {
+  type CheckoutAnswer,
+  type CheckoutCustomer,
   type CheckoutInput,
   checkoutSchema,
   type NewOrder,
@@ -28,19 +30,22 @@ import {
 import { customerEmail, sendEmail, teamEmail } from './shop-emails.server'
 import {
   type CheckoutSession,
-  checkoutLocale,
   StripeError,
   type StripeLineItem,
   stripe,
+  stripeLocale,
   verifyStripeSignature,
 } from './stripe.server'
 
 /**
  * The shop's server side (the routes under src/routes/api/shop call it): opening a payment for a cart, recording the
  * order when Stripe says it is paid, telling the cart its order number, and the orders panel's list and status
- * changes. Every amount is recomputed here from the catalogue; nothing the browser sends is trusted but codes and
- * quantities. Without STRIPE_SECRET_KEY the shop runs in demo mode: a checkout records its order at once, unpaid and
- * marked demo, so the flow can be tried before the Stripe account is connected.
+ * changes. Every amount is recomputed here from the catalogue; nothing the browser sends is trusted but codes,
+ * quantities and the buyer's own details (checked, and checked again by Stripe). The payment itself happens in the
+ * cart's panel: a Checkout Session made for Stripe Elements (`ui_mode: 'elements'`) whose client secret Stripe.js
+ * confirms in the browser, so the buyer never leaves the site; Stripe still keeps the line items, the shipping fee,
+ * the invoice and the webhook of a hosted Checkout. Without STRIPE_SECRET_KEY the shop runs in demo mode: a checkout
+ * records its order at once, unpaid and marked demo, so the flow can be tried before the Stripe account is connected.
  */
 
 type Json = Record<string, unknown>
@@ -62,19 +67,24 @@ function siteShop(locale: string) {
     : null
 }
 
-/** A cart priced for checkout, or what is wrong with it. */
+/** A cart priced for checkout, or what is wrong with it (the buyer's country must be one the zone ships to). */
 export function priceCheckout(input: CheckoutInput) {
   const shop = siteShop(input.locale)
   if (!shop) return { error: 'no shop on this site' } as const
   const zone = shop.zones.find((z) => z.id === input.zone)
   if (!zone) return { error: `unknown shipping zone ${input.zone}` } as const
+  if (!zone.countries.includes(input.customer.address.country))
+    return { error: `${zone.label} does not ship to ${input.customer.address.country}` } as const
   const priced = priceCart(shop.products, input.lines, zone)
   if (priced.problems.length || !priced.lines.length)
     return { error: priced.problems.join('; ') || 'empty cart' } as const
   return { shop, zone, priced } as const
 }
 
-/** POST /api/shop/checkout: Stripe's payment page for the cart, or (demo mode) the order straight away. */
+/**
+ * POST /api/shop/checkout: a Checkout Session for the cart, to be paid in the cart's panel with Stripe.js (its
+ * client secret), or (demo mode) the order straight away.
+ */
 export async function startCheckout(request: Request): Promise<Response> {
   const parsed = checkoutSchema.safeParse(await request.json().catch(() => null))
   if (!parsed.success) return json({ error: 'invalid cart' }, 400)
@@ -84,6 +94,7 @@ export async function startCheckout(request: Request): Promise<Response> {
   const { shop, zone, priced } = result
   const origin = originOf(request)
   const back = `${origin}${input.returnPath}`
+  const { customer } = input
 
   const key = process.env.STRIPE_SECRET_KEY
   if (!key) {
@@ -92,50 +103,28 @@ export async function startCheckout(request: Request): Promise<Response> {
     const order = await recordOrder(
       shop.config.orderPrefix,
       session,
-      {
-        createdAt: new Date().toISOString(),
-        locale: shop.locale,
-        demo: true,
-        status: 'paid',
-        customer: {
-          name: 'Demo Customer',
-          email: process.env.SHOP_DEMO_EMAIL || 'demo@example.com',
-        },
-        address: {
-          line1: 'Carrer de la Demo 1',
-          postalCode: '08001',
-          city: 'Barcelona',
-          country: zone.countries[0] ?? 'ES',
-        },
-        zone: { id: zone.id, label: zone.label },
-        lines: priced.lines.map(
-          (l): OrderLine => ({
-            sku: l.product.sku,
-            name: l.product.name,
-            unitPrice: l.product.price as number,
-            quantity: l.quantity,
-            total: l.total,
-          }),
-        ),
-        subtotal: priced.subtotal,
-        shipping: priced.shipping,
-        total: priced.total,
-        currency: 'eur',
-        history: [{ status: 'paid', at: new Date().toISOString(), by: 'demo', emailed: true }],
-      },
+      demoOrder(shop.locale, zone, priced, customer),
       origin,
     )
-    return json({
-      url: `${back}?order=${encodeURIComponent(session)}`,
+    const answer: CheckoutAnswer = {
       demo: true,
+      session,
       number: order.number,
-    })
+      ref: orderRef(order),
+    }
+    return json(answer)
+  }
+  const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY
+  if (!publishableKey) {
+    console.error('[shop] STRIPE_SECRET_KEY is set but STRIPE_PUBLISHABLE_KEY is not')
+    return json({ error: 'payments are not set up' }, 503)
   }
 
   try {
-    const session = await stripe<{ id: string; url: string }>(key, 'POST', 'checkout/sessions', {
+    const session = await stripe<CheckoutSession>(key, 'POST', 'checkout/sessions', {
       mode: 'payment',
-      locale: checkoutLocale(shop.locale),
+      ui_mode: 'elements',
+      customer_email: customer.email,
       line_items: priced.lines.map((l) => ({
         quantity: l.quantity,
         price_data: {
@@ -158,20 +147,72 @@ export async function startCheckout(request: Request): Promise<Response> {
           },
         },
       ],
-      phone_number_collection: { enabled: true },
+      ...(customer.phone && { phone_number_collection: { enabled: true } }),
       invoice_creation: { enabled: true },
-      success_url: `${back}?order={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${back}?checkout=cancelled`,
+      // only a payment method that leaves the page comes back this way; a card is confirmed in the panel
+      return_url: `${back}?order={CHECKOUT_SESSION_ID}`,
       metadata: {
         locale: shop.locale,
         zone: zone.id,
         lines: priced.lines.map((l) => `${l.product.sku}:${l.quantity}`).join(','),
       },
     })
-    return json({ url: session.url })
+    if (!session.client_secret) throw new StripeError('the session has no client secret')
+    const answer: CheckoutAnswer = {
+      session: session.id,
+      clientSecret: session.client_secret,
+      publishableKey,
+      locale: stripeLocale(shop.locale),
+    }
+    return json(answer)
   } catch (err) {
     console.error('[shop] checkout failed', err)
     return json({ error: err instanceof StripeError ? err.message : 'checkout failed' }, 502)
+  }
+}
+
+/** The order a demo checkout records: the buyer's details as given, paid by nobody. */
+export function demoOrder(
+  locale: Locale,
+  zone: { id: string; label: string },
+  priced: PricedCart,
+  customer: CheckoutCustomer,
+  now = new Date(),
+): NewOrder {
+  const a = customer.address
+  return {
+    createdAt: now.toISOString(),
+    locale,
+    demo: true,
+    status: 'paid',
+    customer: {
+      name: customer.name,
+      email: customer.email,
+      ...(customer.phone && { phone: customer.phone }),
+    },
+    address: {
+      line1: a.line1,
+      ...(a.line2 && { line2: a.line2 }),
+      postalCode: a.postalCode,
+      city: a.city,
+      ...(a.state && { state: a.state }),
+      country: a.country,
+    },
+    zone: { id: zone.id, label: zone.label },
+    lines: priced.lines.map(
+      (l): OrderLine => ({
+        sku: l.product.sku,
+        name: l.product.name,
+        unitPrice: l.product.price as number,
+        quantity: l.quantity,
+        total: l.total,
+      }),
+    ),
+    subtotal: priced.subtotal,
+    shipping: priced.shipping,
+    total: priced.total,
+    currency: 'eur',
+    history: [{ status: 'paid', at: now.toISOString(), by: 'demo', emailed: true }],
   }
 }
 
@@ -297,12 +338,20 @@ async function stripeDocuments(order: Order): Promise<Pick<OrderView, 'invoice' 
   const key = process.env.STRIPE_SECRET_KEY
   const ids = order.stripe
   if (!key || !ids) return {}
+  // an order filed the moment the panel confirmed the payment may predate its invoice: ask the session for it
+  const invoiceId =
+    ids.invoice ??
+    (
+      await stripe<CheckoutSession>(key, 'GET', `checkout/sessions/${ids.session}`).catch(
+        () => null,
+      )
+    )?.invoice
   const [invoice, intent] = await Promise.all([
-    ids.invoice
+    invoiceId
       ? stripe<{ hosted_invoice_url?: string | null; invoice_pdf?: string | null }>(
           key,
           'GET',
-          `invoices/${ids.invoice}`,
+          `invoices/${invoiceId}`,
         ).catch(() => null)
       : null,
     ids.paymentIntent

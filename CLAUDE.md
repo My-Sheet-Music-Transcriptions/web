@@ -113,26 +113,37 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `mockups/<slug>/sections.html` (+ `img/`, `sections.<variant>.html` for design options, `preview.json` with title,
   path, locale, preview URL, canvas URL and PR) – the approved mockup of a page, the single source every preview
   surface and the build start from; `tests/unit/mockups.test.ts` keeps every mockup valid.
-- **Shop (cart + Stripe Checkout).** A product page (`content/<locale>/products/<slug>/page.json`) is on sale when its
+- **Shop (cart + Stripe, paid in the cart's panel).** A product page (`content/<locale>/products/<slug>/page.json`) is on sale when its
   meta has `shop` (`shopSchema` in `src/content/schema.ts`, `productFields` in `cms-meta.ts`: sku, name, price and
   `compareAt` in euros, `availability` available/soon/soldOut/external, picture, order); its `PageHeader` gets the
   add-to-cart button and the `ProductGrid` preset lists every one. `content/<locale>/data/shop.json` (`Site` →
   `<Language> · Shop`: order prefix, flat shipping zones by country, one `rest` zone) turns the cart on for that
-  site, and `data/shop.ts` holds its words (`shopLabels`) and the customer emails per status (`orderEmails`).
+  site, and `data/shop.ts` holds its words (`shopLabels`: the cart, the checkout's fields and errors) and the customer
+  emails per status (`orderEmails`).
   `src/shop/` prices the cart (cents, the same code on the client and the server), `src/components/shop/` is the cart
-  (`CartProvider` in localStorage, `CartDock`: the docked button, the picture flying to it, the side panel), mounted by
+  (`CartProvider` in localStorage, `CartDock`: the docked button, the picture flying to it, the side panel) and the
+  checkout that happens inside the panel, never leaving the site: `CheckoutDetails` (the buyer and the shipping
+  address, our own fields in the site's language, the country menu limited to the zone's countries) then
+  `CheckoutPayment` (Stripe's Payment Element, card and wallets, under a summary and the pay button); mounted by
   `src/app/SiteCart.tsx`. The server side is one route, `src/routes/api/shop/$action.ts` (`checkout`,
-  `stripe-webhook`, `order`, `orders`) over `src/server/shop.server.ts`: Stripe's hosted Checkout through its REST API
-  (`stripe.server.ts`, no SDK; invoices, address and the zone's fee collected there), orders in Netlify Blobs
-  (`orders.server.ts`, store `shop-orders`, in memory off Netlify) and plain-text emails with Resend
-  (`shop-emails.server.ts`, logged without `RESEND_API_KEY`). The orders panel is `/admin/orders` (`src/admin/orders`,
-  built by `vite.orders.config.ts`; Netlify Identity users with the `shop` or `admin` role, or `SHOP_ADMIN_EMAILS`):
-  each status change can email the customer. Every customer email links their order page, `/?order=<number>.<secret>`
-  (the order's random `key`, no account): the cart's panel opens on it with the status, the carrier's tracking link
-  and Stripe's invoice and receipt (`OrderDetails`, `GET /api/shop/order?ref=`). Secrets (see below): `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (webhook
-  `https://<site>/api/shop/stripe-webhook`, event `checkout.session.completed`), `SHOP_ORDERS_EMAIL`,
-  `SHOP_FROM_EMAIL`, `SHOP_ADMIN_EMAILS`; without `STRIPE_SECRET_KEY` checkout runs in demo mode (an order without
-  payment, `SHOP_DEMO=off` refuses instead).
+  `stripe-webhook`, `order`, `orders`) over `src/server/shop.server.ts`: a Checkout Session for Elements
+  (`ui_mode: 'elements'`, API version `STRIPE_API_VERSION`) through Stripe's REST API (`stripe.server.ts`, no SDK;
+  invoice, the zone's fee and the address collected on the session, so the webhook and the order are those of a
+  hosted Checkout) whose client secret Stripe.js confirms in the browser (`src/components/shop/stripe.ts`: the loader
+  of `js.stripe.com/v3`, the only third-party script the site takes, loaded at the payment step alone because Stripe
+  forbids bundling it, typed for the few calls made; the element's colours are read from the theme's tokens at run
+  time), orders in Netlify Blobs (`orders.server.ts`, store `shop-orders`, in memory off Netlify) and plain-text
+  emails with Resend (`shop-emails.server.ts`, logged without `RESEND_API_KEY`). Stripe.js has no Catalan: a Catalan
+  site gets the element in Spanish (`stripeLocale`), everything around it in Catalan. The orders panel is
+  `/admin/orders` (`src/admin/orders`, built by `vite.orders.config.ts`; Netlify Identity users with the `shop` or
+  `admin` role, or `SHOP_ADMIN_EMAILS`): each status change can email the customer. Every customer email links their
+  order page, `/?order=<number>.<secret>` (the order's random `key`, no account): the cart's panel opens on it with
+  the status, the carrier's tracking link and Stripe's invoice and receipt (`OrderDetails`, `GET /api/shop/order?ref=`).
+  Secrets (see below): `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY` (the pair of the same account, sent to the
+  browser), `STRIPE_WEBHOOK_SECRET` (webhook `https://<site>/api/shop/stripe-webhook`, event
+  `checkout.session.completed`), `SHOP_ORDERS_EMAIL`, `SHOP_FROM_EMAIL`, `SHOP_ADMIN_EMAILS`; without
+  `STRIPE_SECRET_KEY` checkout runs in demo mode (an order without payment, with the details the buyer typed;
+  `SHOP_DEMO=off` refuses instead).
 - **Secrets (dotenvx).** The server's secrets (Stripe keys, `RESEND_API_KEY`, the shop's addresses) are committed
   encrypted: `.env.development` (Stripe's sandbox; `pnpm dev`, deploy previews, branch deploys) and `.env.production`
   (production deploys). Add or change one with `pnpm exec dotenvx set NAME value -f .env.production` (never a plain
@@ -382,7 +393,9 @@ components or layout.
 - **Co-location, no external assets.** Everything a page or component needs sits next to it: a page's images
   in its folder, a block's story and docs beside the block. Nothing on the site or in the artifacts references a
   third-party URL at runtime: no hotlinked images, no CDN scripts, no Google Fonts (Montserrat is self-hosted).
-  Images from the old site are downloaded into the repo, never linked.
+  Images from the old site are downloaded into the repo, never linked. The one exception is Stripe.js
+  (`src/components/shop/stripe.ts`), which Stripe requires to be loaded from `js.stripe.com`: it is loaded only when
+  a buyer reaches the cart's payment step, so no page ships it.
 
 - TypeScript strict, Biome style (single quotes, no semicolons). Components are function components with typed props.
 - Internal links use the router `<Link>` (preloaded on hover); external ones a plain `<a rel="noopener">`.

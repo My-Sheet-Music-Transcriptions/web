@@ -10,13 +10,14 @@ import {
   useSyncExternalStore,
 } from 'react'
 import type { ShopLabels } from '~/content/types'
+import type { CheckoutAnswer, CheckoutCustomer } from '~/server/shop'
 import type { CartLine, PricedCart } from '~/shop/cart'
 import { priceCart } from '~/shop/cart'
 import type { Product } from '~/shop/catalogue'
 import type { ShippingZone } from '~/shop/config'
 
-/** What a checkout answers: Stripe's page to go to, or why it could not open one. */
-export type CheckoutResult = { url: string } | { error: string }
+/** What a checkout answers: the payment to take in the panel (or the demo order), or why it could not open one. */
+export type CheckoutResult = CheckoutAnswer | { error: string }
 
 /**
  * A product picture on its way to the cart: where it starts, as the page lays it out, and the move that lands it on
@@ -62,7 +63,8 @@ export interface CartState {
   bumps: number
   /** The cart button the pictures fly to. */
   target: RefObject<HTMLElement | null>
-  checkout: () => Promise<CheckoutResult>
+  /** Opens a payment for the cart, shipped to `customer` (src/app/SiteCart.tsx posts it to /api/shop/checkout). */
+  checkout: (customer: CheckoutCustomer) => Promise<CheckoutResult>
 }
 
 const CartContext = createContext<CartState | null>(null)
@@ -129,8 +131,12 @@ export interface CartProviderProps {
   /** Where the cart is kept in the browser: one cart per site. */
   storageKey: string
   shopHref: string
-  /** Opens a payment for these lines and zone (src/app/shop.ts posts them to /api/shop/checkout). */
-  onCheckout: (lines: CartLine[], zone: string) => Promise<CheckoutResult>
+  /** Opens a payment for these lines, zone and buyer (src/app/SiteCart.tsx posts them to /api/shop/checkout). */
+  onCheckout: (
+    lines: CartLine[],
+    zone: string,
+    customer: CheckoutCustomer,
+  ) => Promise<CheckoutResult>
   children: ReactNode
 }
 
@@ -223,7 +229,8 @@ export function CartProvider({
     },
     bumps,
     target,
-    checkout: () => (zone ? onCheckout(lines, zone.id) : Promise.resolve({ error: 'zone' })),
+    checkout: (customer) =>
+      zone ? onCheckout(lines, zone.id, customer) : Promise.resolve({ error: 'zone' }),
   }
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }

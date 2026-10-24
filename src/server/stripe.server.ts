@@ -23,6 +23,12 @@ export function formEncode(params: Record<string, Param>): string {
 
 export class StripeError extends Error {}
 
+/**
+ * The API version every call asks for, whatever the account's default: Checkout Sessions for Elements
+ * (`ui_mode: 'elements'`) exist from this one on, and it is where the shapes read below come from.
+ */
+export const STRIPE_API_VERSION = '2026-03-25.dahlia'
+
 /** One call to Stripe with the secret key; throws StripeError with Stripe's message when it refuses. */
 export async function stripe<T>(
   secretKey: string,
@@ -36,6 +42,7 @@ export async function stripe<T>(
     method,
     headers: {
       authorization: `Bearer ${secretKey}`,
+      'stripe-version': STRIPE_API_VERSION,
       'content-type': 'application/x-www-form-urlencoded',
       ...(idempotencyKey && { 'idempotency-key': idempotencyKey }),
     },
@@ -70,18 +77,24 @@ export function verifyStripeSignature(
     })
 }
 
-/** The languages Stripe Checkout speaks (`locale`); the site's language, else Spanish for Catalan, else the browser's. */
-const CHECKOUT_LOCALES = new Set(
-  'bg cs da de el en es et fi fil fr hr hu id it ja ko lt lv ms mt nb nl pl pt ro ru sk sl sv th tr vi zh'.split(
+/**
+ * The languages Stripe.js speaks (https://docs.stripe.com/js/appendix/supported_locales): the Payment Element in the
+ * cart's panel takes the site's language when Stripe has it; Catalan is not among them, so a Catalan site gets the
+ * element in Spanish (the words around it are the site's own); anything else the browser's language.
+ */
+const STRIPE_LOCALES = new Set(
+  'ar bg cs da de el en es et fi fil fr he hr hu id it ja ko lt lv ms mt nb nl pl pt ro ru sk sl sv th tr vi zh'.split(
     ' ',
   ),
 )
-export const checkoutLocale = (locale: string) =>
-  CHECKOUT_LOCALES.has(locale) ? locale : locale === 'ca' ? 'es' : 'auto'
+export const stripeLocale = (locale: string) =>
+  STRIPE_LOCALES.has(locale) ? locale : locale === 'ca' ? 'es' : 'auto'
 
 /** What the shop reads of a Checkout Session (in a webhook event, or fetched). */
 export interface CheckoutSession {
   id: string
+  /** Set on a session made for Elements (`ui_mode: 'elements'`): what Stripe.js takes the payment with. */
+  client_secret?: string | null
   payment_status: 'paid' | 'unpaid' | 'no_payment_required'
   amount_subtotal: number | null
   amount_total: number | null
