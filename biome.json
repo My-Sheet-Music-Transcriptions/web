@@ -80,6 +80,10 @@
           "expand": "always"
         }
       }
+    },
+    {
+      "includes": ["src/components/**", "src/app/**", "!**/*.stories.tsx"],
+      "plugins": ["./biome-plugins/off-scale.grit"]
     }
   ]
 }

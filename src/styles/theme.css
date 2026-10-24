@@ -1,95 +1,113 @@
 /*
- * Design tokens. Values come from the live Elementor kit of mysheetmusictranscriptions.com.
- * This file is the single source of truth: Storybook's Foundations page and the published Design
- * System artifact are generated from it (src/design-system/theme-parse.ts).
+ * Design tokens: the one scale the site is drawn with. This file is the single source of truth: Storybook's
+ * Foundations page and the published Design System artifact are generated from it (src/design-system/theme-parse.ts),
+ * and tests/unit/tokens.test.ts refuses, in src/components and src/app, any class that is not on it (an arbitrary
+ * value, a half step, a hex colour, a utility that compiles to nothing).
  * Keep the inline comment after a token: it becomes the token's usage note.
+ *
+ * Tailwind's own sizes, weights, line-heights, letter-spacings, radii, shadows, containers and colours are switched
+ * off (`initial`): only what is declared here exists. Spacing stays Tailwind's 4px grid (p-4 is 16px, gap-6 24px,
+ * w-18 72px: any whole step), with the named steps below for what a block means (a section's padding, the gap of a
+ * grid); half steps (p-2.5) and arbitrary pixels (mt-[6px]) are refused by the test. Where a value cannot be on the
+ * scale (a curve traced on a photo, a wave), the component says why on the line above: `// off-scale: <reason>`.
  */
 @theme {
   --font-sans: "Montserrat Variable", "Montserrat", ui-sans-serif, system-ui, sans-serif;
 
-  /* Brand palette */
-  /*
-   * Contrast note: the live site uses #219EBC / #E2864D for buttons, which fail WCAG AA with white
-   * 14px text (3.1:1 and 2.7:1). Buttons keep the live colours (`cta`, `sky`) to match the site;
-   * text on white uses the darker variants below (>= 4.5:1).
-   */
-  --color-primary: #1a7f97; /* text links, outlined buttons, primary button fill (4.8:1 on white) */
-  --color-primary-deep: #15687b; /* hover of primary */
-  --color-sky: #219ebc; /* the original teal-blue: review stars, pricing header (large text), icons */
-  --color-secondary: #171717; /* Elementor "Secondary": small labels */
-  --color-ink: #444444; /* Elementor "Text": headings and body on light */
-  --color-charcoal: #333333; /* default body copy */
-  --color-muted: #6b6b6b; /* captions (darkened from source #94a3a3 to pass contrast) */
-  --color-accent: #f49946; /* Elementor "Accent": orange rules and decorative highlights (never text) */
-  --color-accent-deep: #b8571c; /* filled CTA buttons and orange text on white (4.7:1) */
-  --color-accent-hover: #a34c17;
-  --color-cta: #e2864d; /* filled orange buttons, as on the live site (white text 2.7:1: buttons only) */
-  --color-accent-light: #ffb36b; /* orange text on dark backgrounds */
-  --color-orange: #d4780f; /* large-text highlight ("#1" in the hero, 3.2:1) */
-  --color-orange-tint: #ec8a1b1f;
-  --color-navy: #023047; /* pricing "Difficult"/"Melodic" headers, artist hero */
-  --color-teal: #239c90; /* pricing header (white large text, 3.3:1); the original #2EC4B6 stays as teal-light */
-  --color-teal-light: #2ec4b6;
-  --color-blue: #2e97c4; /* pricing "Average"/"Bands" header */
-  --color-sky-tint: #bde3f2; /* the speech bubbles of a timeline step (ink text on it: 8.6:1) */
-  --color-azure: #2786d8;
-  --color-pine: #1f9b90;
-  --color-yellow: #ffb703; /* rating stars */
-  --color-gold: #ffd800; /* the stars of the rating cards (Stars color="gold" in RatingCard) */
-  --color-peach: #fdebdc; /* audience cards, contact section */
-  --color-peach-deep: #fbe0cb;
-  --color-cream: #f7eee7; /* pricing tier card body */
-  --color-sand: #efe7df;
-  --color-staff: #d87b55; /* the staff lines Testimonials draws behind its cards, at 20% (stroke-staff/20) */
-  --color-line: #e5e5e5;
-  --color-footer: #222222;
-  --color-footer-text: #c9c9c9;
+  --color-*: initial;
+  --text-*: initial;
+  --font-weight-*: initial;
+  --leading-*: initial;
+  --tracking-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --container-*: initial;
+
+  /* Colour: one value for each job. Text is ink or muted; teal is the link and the outline; orange is the mark
+     (accent) and the filled button (accent-deep); cream and peach are the only tinted backgrounds. */
+  --color-white: #ffffff; /* the page, cards */
+  --color-black: #000000; /* veils (bg-black/40) */
+  --color-ink: #333333; /* all text: headings and body (12.6:1 on white) */
+  --color-muted: #6b6b6b; /* secondary text: captions, dates, notes (5.3:1 on white, 4.65:1 on cream) */
+  --color-line: #e5e5e5; /* rules and borders */
+  --color-primary: #1a7f97; /* teal: links, outline buttons, icons (4.6:1 on white) */
+  --color-primary-deep: #15687b; /* hover of primary; primary on cream and peach (tones.ts) */
+  --color-sky: #219ebc; /* the light teal-blue: stars of a review, a price header (large white text, 3.1:1) */
+  --color-navy: #023047; /* a price header, dark panels, the cart button */
+  --color-accent: #f49946; /* orange marks: the heading rule, decorations (never text) */
+  --color-accent-deep: #b8571c; /* filled buttons and orange text on white (4.75:1) */
+  --color-accent-hover: #a34c17; /* hover of the filled button; accent-deep on cream and peach (tones.ts) */
+  --color-cream: #f7eee7; /* a tinted block, a price card's body, the gallery's card */
+  --color-peach: #fdebdc; /* the request form's block, the audience cards' block */
+  --color-star: #ffb703; /* rating stars */
+  --color-error: #b3261e; /* a form field's error and its asterisk (5.6:1 on peach) */
+  --color-footer: #222222; /* the footer's background */
+  --color-footer-text: #c9c9c9; /* the footer's links (9.6:1 on footer) */
   --color-google: #4285f4;
   --color-facebook: #1877f2;
   --color-trustpilot: #00b67a;
-  --color-youtube: #cd201f; /* the YouTube glyph's disc (a card's glyph, white mark on it) */
-  --color-instagram: #8f1db0; /* the Instagram glyph's disc (a card's glyph, white mark on it) */
+  --color-youtube: #cd201f;
+  --color-instagram: #e1306c;
+  --color-linkedin: #0a66c2;
+  --color-x: #1d9bf0;
+  --color-discord: #5865f2;
 
-  /* Type scale (desktop); mobile sizes are set per utility */
-  --text-display: 40px;
-  --text-display--line-height: 46px;
-  --text-h2: 32px;
-  --text-h2--line-height: 1;
-  --text-h3: 20px;
-  --text-h3--line-height: 26px;
-  --text-h4: 16px;
-  --text-h4--line-height: 1.2;
-  --text-price: 46px;
-  --text-price--line-height: 1;
-  --text-counter: 64px;
-  --text-counter--line-height: 1;
-  --text-body: 16px;
-  --text-body--line-height: 24px;
-  --text-small: 14px;
-  --text-small--line-height: 20px;
-  --text-caption: 13px;
-  --text-caption--line-height: 26px;
+  /* Type: ten styles. The two large ones scale with the screen (32→44 and 26→32 between 390 and 1440px);
+     the rest are fixed. Line-heights are unitless. Weights: 400 text, 600 interface emphasis, 700 headings and buttons. */
+  --text-display: clamp(32px, 1.5vw + 26.2px, 44px); /* the page's h1 */
+  --text-display--line-height: 1.1;
+  --text-h2: clamp(26px, 0.6vw + 23.7px, 32px); /* section headings */
+  --text-h2--line-height: 1.2;
+  --text-h3: 20px; /* card, step and price titles, FAQ groups */
+  --text-h3--line-height: 1.3;
+  --text-h4: 16px; /* small titles: the cart, a picture grid's names */
+  --text-h4--line-height: 1.4;
+  --text-lead: 18px; /* a header's subtitle, a section's lead, a question, "from" and the unit of a price */
+  --text-lead--line-height: 1.6;
+  --text-body: 16px; /* body copy */
+  --text-body--line-height: 1.6;
+  --text-small: 14px; /* secondary text, buttons, menus, form labels */
+  --text-small--line-height: 1.5;
+  --text-caption: 12px; /* notes, dates, badges, the footer's small print */
+  --text-caption--line-height: 1.4;
+  --text-figure: 48px; /* a price */
+  --text-figure--line-height: 1;
+  --text-figure-lg: 64px; /* the transcriptions counter */
+  --text-figure-lg--line-height: 1;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --tracking-label: 0.04em; /* the only letter-spacing: uppercase labels and buttons (label-caps) */
 
   /* Shape */
-  --radius-card: 12px; /* cards, pricing tiers, review cards, menus */
-  --radius-pill: 28px; /* buttons */
-  --radius-field: 20px; /* form fields */
-  --shadow-card: 0 0 10px 0 rgb(0 0 0 / 0.1); /* cards on light backgrounds */
-  --shadow-float: 0 4px 20px 0 rgb(0 0 0 / 0.12); /* floating card, mega-menu, consent banner */
-  --shadow-band: 0 0 45px 0 rgb(0 0 0 / 0.13); /* white cards over a photo band or on white: rating, feature and pricing cards */
+  --radius-sm: 6px; /* badges, menu items, thumbnails */
+  --radius-card: 12px; /* cards, pictures, menus, form fields */
+  --radius-pill: 9999px; /* buttons and pills */
+  --shadow-card: 0 2px 12px 0 rgb(0 0 0 / 0.08); /* every card, on any background */
+  --shadow-float: 0 8px 32px 0 rgb(0 0 0 / 0.14); /* what floats: menus, the cart, the consent banner, a lightbox */
 
   /* Layout */
   --container-content: 1140px;
   --container-wide: 1200px;
   --container-narrow: 900px;
+  --container-page: 1440px; /* the header and the full-width blocks */
+  --container-prose: 48rem; /* a lead or a line of prose on its own: about 65 characters */
   --breakpoint-sm: 640px; /* large phones; every breakpoint is in px so they sort correctly */
-  --breakpoint-md: 768px; /* Elementor mobile ends at 767 */
-  --breakpoint-lg: 1025px; /* Elementor tablet ends at 1024 */
+  --breakpoint-md: 768px; /* tablets */
+  --breakpoint-lg: 1025px; /* desktop */
   --breakpoint-xl: 1280px; /* wide desktop */
   --breakpoint-nav: 1400px; /* the desktop menu (logo, seven items, the button) needs 1390px on one line: the phone menu below */
   --breakpoint-2xl: 1536px; /* unused, kept in px for ordering */
-  --spacing-section: 50px;
-  --spacing-section-lg: 90px;
+
+  /* Rhythm: what a block means, in steps of the grid. Phones take the smaller value (the base layer below). */
+  --spacing-section: 64px; /* a block's vertical padding (48px on phones) */
+  --spacing-section-lg: 96px; /* a loose block: the request form, a photo band (64px on phones) */
+  --spacing-section-sm: 40px; /* a tight block: prices, share buttons (32px on phones) */
+  --spacing-heading-gap: 40px; /* a block's heading to its content, and its content to its buttons (32px on phones) */
+  --spacing-grid-gap: 24px; /* between the cards of a grid (16px on phones) */
+  --spacing-grid-gap-lg: 32px; /* between wide items: steps in columns, samples (24px on phones) */
+  --spacing-card-pad: 24px; /* inside a card (20px on phones) */
+  --spacing-stack: 16px; /* between the paragraphs and lists of a prose */
 
   /* Motion */
   --animate-marquee: marquee 80s linear infinite; /* homepage photo strip: one photo every 8 s, as live */
@@ -101,6 +119,18 @@
 }
 
 @layer base {
+  /* The rhythm tokens on phones: a step smaller than from tablets up. */
+  @media (width < 768px) {
+    :root {
+      --spacing-section: 48px;
+      --spacing-section-lg: 64px;
+      --spacing-section-sm: 32px;
+      --spacing-heading-gap: 32px;
+      --spacing-grid-gap: 16px;
+      --spacing-grid-gap-lg: 24px;
+      --spacing-card-pad: 20px;
+    }
+  }
   html {
     -webkit-font-smoothing: antialiased;
   }
@@ -108,8 +138,8 @@
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
-    color: var(--color-charcoal);
-    background: #fff;
+    color: var(--color-ink);
+    background: var(--color-white);
   }
   h1,
   h2,
@@ -117,6 +147,7 @@
   h4 {
     color: var(--color-ink);
     font-weight: 700;
+    text-wrap: balance;
   }
   /* Emphasis inside text is plain <strong>/<em> everywhere (pages, blocks, stories): bold in the colour
      of the text around it. */
@@ -185,6 +216,34 @@
   max-width: var(--container-narrow);
   margin-inline: auto;
   padding-inline: 16px;
+}
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 1025px) {
+    padding-inline: 20px;
+  }
+}
+
+/* The site's one uppercase style: eyebrows, step labels, buttons, the small links in a card ("See on Google"). */
+@utility label-caps {
+  font-size: var(--text-small);
+  line-height: 1;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+}
+
+/* The short orange rule under a heading (every section's h2, the page headers' h1): the site's signature mark. */
+@utility heading-rule {
+  display: block;
+  width: 64px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  margin-top: 20px;
 }
 
 /* The PageHeader's rating card rising into place as the page opens, a beat after the rest has painted
