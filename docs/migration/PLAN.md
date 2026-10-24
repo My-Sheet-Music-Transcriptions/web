@@ -146,7 +146,7 @@ recommendation applies and the waves run on it. Record the answer here (and in t
 | D9 | Prune old blog posts (2017–2021 news, covid update, "top albums 2021")? | Port all 126 verbatim first (free with the importer, zero SEO risk); prune afterwards from Search Console data. | W5 |
 | D10 | Media: old `/wp-content/uploads/*` URLs and audio/PDF samples. | Let upload URLs 404 unless Search Console shows image traffic to specific files; commit samples next to their page (MP3 at 128 kbps, PDFs as-is). Measure the total in W0.3; past ~300 MB, decide on Git LFS or a Netlify Blobs-backed `/assets/samples`. | W1, W3 |
 | D11 | RSS: `/feed` exists on every site. | Generate `/feed` (RSS 2.0) from the `posts` collection at build; keeps subscribers and integrations working. | W5 |
-| D12 | Forms: contact, B2B, educators, careers/transcriber application, catalog download, gift card (done). | All post to `/api/*` functions modelled on `src/server/contact.*` (Resend), same recipients as the Elementor forms; confirmation inline (no thank-you pages). Needs the recipients and any webhook the forms feed (hub, CRM). | W2, W4, W7 |
+| D12 | Forms: contact, B2B, educators, careers/transcriber application, catalog download, gift card (done). | All post to `/api/*` functions modelled on `src/server/contact.*` (Mailgun), same recipients as the Elementor forms; confirmation inline (no thank-you pages). Needs the recipients and any webhook the forms feed (hub, CRM). | W2, W4, W7 |
 | D13 | Legacy titles/descriptions that break CI rules. | CI wins; the importer applies a fixed rule (append the brand suffix to short titles, trim long ones at a word boundary, fall back to the first paragraph for missing descriptions, demote a second `<h1>` to `<h2>`) and lists every change in the parity report. | W2+ |
 | D14 | Catalan is new copy, not a port: who writes and checks it? | Generated automatically like the ports: Claude translates each page from English with the Spanish page as reference, slugs as decided in [`inventory/ca.md`](./inventory/ca.md). A Catalan speaker reads the whole site once, at C2's go/no-go (renaming a slug costs nothing then: nothing indexes them yet). | C1 |
 | D15 | Catalan in the other sites: language switcher, hreflang, footer languages. | Add `ca` to every site's `languageSwitcher` the day Catalan launches (hreflang follows from shared `translationKey`s automatically). WordPress sites still live at that point keep linking without Catalan; acceptable until they move. | C1 |
@@ -290,7 +290,7 @@ The critical path to the first port (W1.1–W1.9), then what every cutover needs
       PR adds and has no failure. A batch merges only on a green report; failures go back to the importer rules.
 - [ ] W1.8 **Forms** (D12): generalize `/api/contact` for the other forms; alert on delivery failures.
 - [ ] W1.9 **Consent and analytics** (D7); update the cookie and privacy policies for the new processors (Netlify,
-      Resend, analytics) in the same PR as the consent change.
+      Mailgun, analytics) in the same PR as the consent change.
 - [ ] W1.10 **RSS** `/feed` (D11).
 - [x] W1.10 Sitemaps split like Yoast's (index at `/sitemap.xml`, one per collection, `scripts/lib/sitemap.ts`);
       `/sitemap_index.xml` and the other Yoast and WordPress sitemap URLs → `/sitemap.xml` (`LEGACY_SITEMAPS`).

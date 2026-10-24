@@ -3,12 +3,13 @@ import type { Locale } from '~/i18n/types'
 import { fill } from '~/lib/strings'
 import { formatPrice } from '~/shop/cart'
 import { shopWords } from '~/shop/words'
+import { sendMail } from './mailgun.server'
 import type { Order, OrderStatus } from './shop'
 
 /**
- * The shop's emails, plain text, sent with Resend as the contact form's are: the customer's in the order's language
- * (content/<locale>/data/shop.ts `orderEmails`), ours in English. Without RESEND_API_KEY they are logged instead,
- * so local and preview builds never send mail.
+ * The shop's emails, plain text, sent with Mailgun (mailgun.server.ts) as the contact form's are: the customer's in the order's language
+ * (content/<locale>/data/shop.ts `orderEmails`), ours in English. Without Mailgun's key and domain they are
+ * logged instead, so local and preview builds never send mail.
  */
 
 export interface Email {
@@ -107,20 +108,11 @@ export function teamEmail(order: Order, panelUrl: string): Email {
   }
 }
 
-/** Sends an email, or logs it where there is no RESEND_API_KEY. Throws when Resend refuses it. */
+/** Sends an email from the shop's address, or logs it where Mailgun is not configured. Throws when Mailgun refuses it. */
 export async function sendEmail(email: Email): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
   const from =
     process.env.SHOP_FROM_EMAIL ||
     process.env.CONTACT_FROM_EMAIL ||
     'website@mysheetmusictranscriptions.com'
-  if (!apiKey) {
-    console.info(
-      `[shop] RESEND_API_KEY not set; email logged only:\nTo: ${email.to}\nSubject: ${email.subject}\n\n${email.text}`,
-    )
-    return
-  }
-  const { Resend } = await import('resend')
-  const { error } = await new Resend(apiKey).emails.send({ from, ...email })
-  if (error) throw new Error(`Email delivery failed: ${error.message}`)
+  await sendMail({ from, ...email }, 'shop')
 }
