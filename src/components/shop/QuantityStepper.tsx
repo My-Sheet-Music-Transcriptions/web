@@ -25,7 +25,7 @@ export function QuantityStepper({
   className,
 }: QuantityStepperProps) {
   const button =
-    'inline-flex h-9 w-9 items-center justify-center rounded-full text-ink transition-colors hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-40'
+    'inline-flex size-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-black/5 disabled:opacity-40'
   return (
     // biome-ignore lint/a11y/useSemanticElements: a group of two buttons and a figure, not a form fieldset
     <div

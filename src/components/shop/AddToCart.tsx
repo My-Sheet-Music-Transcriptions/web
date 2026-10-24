@@ -35,7 +35,7 @@ export function ProductPrice({
         className,
       )}
     >
-      <span className={cn('font-bold text-ink', size === 'lg' ? 'text-[24px]' : 'text-h3')}>
+      <span className={cn('font-bold text-ink', size === 'lg' ? 'text-h2' : 'text-h3')}>
         {formatPrice(product.price, locale)}
       </span>
       {product.compareAt ? (
@@ -46,7 +46,7 @@ export function ProductPrice({
             </span>
             <span aria-hidden="true">{formatPrice(product.compareAt, locale)}</span>
           </s>
-          <span className="rounded-pill bg-peach px-2.5 py-0.5 text-[12px] font-bold uppercase tracking-wide text-accent-deep">
+          <span className="rounded-pill bg-peach px-3 py-1 text-caption font-bold tracking-label uppercase text-accent-deep">
             {labels.offer}
           </span>
         </>
@@ -98,21 +98,17 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
   // on a card every action is the same full-width pill with the button's own padding, its words wrapping in
   // balanced lines when long (without its icon on phones, where the column is narrow); the card's grid row
   // makes every pill of a row as tall as the tallest
-  const fit = compact && 'mt-4 mb-14 w-full px-5 py-3 leading-tight text-balance'
+  const fit = compact && 'mt-4 mb-14 w-full text-balance'
   let action: ReactNode
   if (product.availability === 'external' && product.externalUrl)
     action = (
-      <Button asChild variant="primary" className={cn(fit)}>
+      <Button asChild variant="secondary" className={cn(fit)}>
         <a href={product.externalUrl} rel="noopener">
           {/* the icon stays glued to the last word (a non-breaking space), so wrapped words centre as a block */}
           <span>
             {labels.buyElsewhere}
             {'\u00a0'}
-            <Icon
-              name="external"
-              size={compact ? 15 : 18}
-              className="-mt-0.5 inline-block align-middle"
-            />
+            <Icon name="external" size={compact ? 15 : 18} className="inline-block align-middle" />
           </span>
         </a>
       </Button>
@@ -121,10 +117,10 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
     action = (
       <span
         className={cn(
-          'rounded-pill bg-cream font-bold uppercase tracking-wide text-ink',
+          'label-caps rounded-pill bg-cream text-ink',
           compact
-            ? 'mt-4 mb-14 flex min-h-12 w-full items-center justify-center px-5 py-3 text-small leading-tight'
-            : 'inline-block px-4 py-2 text-small',
+            ? 'mt-4 mb-14 flex min-h-11 w-full items-center justify-center px-6 py-3'
+            : 'inline-flex min-h-11 items-center px-6 py-3',
         )}
       >
         {product.availability === 'soldOut' ? labels.soldOut : labels.soon}
@@ -133,7 +129,7 @@ export function AddToCart({ sku, variant = 'full', className }: AddToCartProps) 
   else {
     const button = (
       <Button
-        variant="accent"
+        size={compact ? 'md' : 'lg'}
         disabled={room < 1}
         className={cn(fit, !compact && 'max-md:grow')}
         aria-label={compact ? `${labels.add}: ${product.name}` : undefined}

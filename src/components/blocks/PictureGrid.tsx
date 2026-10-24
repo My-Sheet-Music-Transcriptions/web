@@ -30,13 +30,12 @@ export interface PictureGridProps extends ShellProps {
 const pictures = {
   icon: {
     sizes: '137px',
-    className:
-      'mx-auto h-[137px] w-[137px] transition-transform group-hover:scale-105 md:h-[130px] md:w-[130px]',
+    className: 'mx-auto size-32 transition-transform group-hover:scale-105',
   },
-  logo: { sizes: '240px', className: 'mx-auto h-[90px] w-full max-w-[240px] object-contain' },
+  logo: { sizes: '240px', className: 'mx-auto h-22 w-full max-w-60 object-contain' },
   portrait: {
     sizes: '180px',
-    className: 'mx-auto aspect-square w-full max-w-[180px] rounded-full object-cover',
+    className: 'mx-auto aspect-square w-full max-w-45 rounded-full object-cover',
   },
   photo: {
     sizes: '(min-width: 768px) 240px, 50vw',
@@ -80,24 +79,24 @@ export function PictureGrid({
         {/* As on the live site: one item every 8 s, endless (the list is drawn twice and slides by half its
             width); it stops for reduced-motion visitors and while hovered or focused. */}
         <div
-          className="group mx-[-80px] flex w-max motion-safe:animate-marquee hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]"
+          className="group -mx-20 flex w-max motion-safe:animate-marquee hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]"
           style={{ animationDuration: `${shown.length * 8}s` }}
         >
           {[0, 1].map((copy) => (
             <ul
               key={copy}
-              className={cn('flex', icons ? 'gap-2.5 pr-2.5' : 'gap-5 pr-5')}
+              className={cn('flex', icons ? 'gap-2 pr-2' : 'gap-5 pr-5')}
               aria-hidden={copy === 1 ? 'true' : undefined}
             >
               {shown.map((item) => {
                 if (!icons)
                   return (
-                    <li key={keyOf(item)} className="w-[250px] shrink-0">
+                    <li key={keyOf(item)} className="w-62 shrink-0">
                       <Picture
                         image={item.image}
                         alt={copy === 0 ? (item.alt ?? item.name ?? '') : ''}
                         sizes="250px"
-                        className="h-[374px] w-[250px] rounded-card object-cover"
+                        className="aspect-[2/3] w-62 rounded-card object-cover"
                       />
                     </li>
                   )
@@ -107,7 +106,7 @@ export function PictureGrid({
                       image={item.image}
                       alt={copy === 0 ? (item.alt ?? '') : ''}
                       sizes="100px"
-                      className="mx-auto h-[100px] w-[100px] transition-transform group-hover/item:scale-105"
+                      className="mx-auto size-25 transition-transform group-hover/item:scale-105"
                     />
                     {item.name ? (
                       <span className="mt-3 block text-h4 font-bold text-ink group-hover/item:text-accent-deep">
@@ -117,7 +116,7 @@ export function PictureGrid({
                   </>
                 )
                 return (
-                  <li key={keyOf(item)} className="w-[160px] shrink-0 text-center">
+                  <li key={keyOf(item)} className="w-40 shrink-0 text-center">
                     {item.href ? (
                       <SmartLink
                         href={item.href}
@@ -184,12 +183,12 @@ export function PictureGrid({
                 <span
                   className={cn(
                     'mt-4 block text-h4 font-bold text-ink group-hover:text-accent-deep',
-                    actions && 'mt-5 text-h3 leading-snug',
+                    actions && 'mt-5 text-h3',
                   )}
                 >
                   {item.name}
                   {item.caption ? (
-                    <span className="mt-1 block text-small font-normal text-secondary">
+                    <span className="mt-1 block text-small font-normal text-muted">
                       {item.caption}
                     </span>
                   ) : null}

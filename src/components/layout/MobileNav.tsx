@@ -73,14 +73,14 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
             role="dialog"
             aria-modal="true"
             aria-label={s.menu}
-            className="absolute inset-y-0 right-0 flex w-[min(360px,90vw)] flex-col bg-white shadow-float"
+            className="absolute inset-y-0 right-0 flex w-9/10 max-w-90 flex-col bg-white shadow-float"
             variants={slideIn}
           >
-            <div className="flex h-[57px] items-center justify-between border-b border-line px-4">
-              <span className="text-small font-bold uppercase text-ink">{s.menu}</span>
+            <div className="flex h-14 items-center justify-between border-b border-line px-4">
+              <span className="label-caps text-ink">{s.menu}</span>
               <button
                 type="button"
-                className="inline-flex h-11 w-11 items-center justify-center rounded"
+                className="inline-flex size-11 items-center justify-center rounded-sm"
                 aria-label={s.closeMenu}
                 onClick={onClose}
               >
@@ -95,7 +95,7 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
                       <>
                         <button
                           type="button"
-                          className="flex w-full items-center justify-between px-3 py-3.5 text-left text-body font-semibold text-ink"
+                          className="flex w-full items-center justify-between px-3 py-3 text-left text-body font-semibold text-ink"
                           aria-expanded={expanded === item.label}
                           onClick={() => setExpanded(expanded === item.label ? null : item.label)}
                         >
@@ -125,13 +125,13 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
                                 {g.href && g.href !== '#' ? (
                                   <SmartLink
                                     href={g.href}
-                                    className="block px-3 py-1.5 text-small font-bold text-ink"
+                                    className="block px-3 py-2 text-small font-bold text-ink"
                                     onClick={onClose}
                                   >
                                     {g.title}
                                   </SmartLink>
                                 ) : (
-                                  <p className="px-3 py-1.5 text-small font-bold text-ink">
+                                  <p className="px-3 py-2 text-small font-bold text-ink">
                                     {g.title}
                                   </p>
                                 )}
@@ -141,7 +141,7 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
                                       <li key={l.label}>
                                         <SmartLink
                                           href={l.href}
-                                          className="block px-3 py-1.5 text-small text-[#444]"
+                                          className="block px-3 py-2 text-small text-ink"
                                           onClick={onClose}
                                         >
                                           {l.label}
@@ -158,7 +158,7 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
                     ) : (
                       <SmartLink
                         href={item.href}
-                        className="block px-3 py-3.5 text-body font-semibold text-ink"
+                        className="block px-3 py-3 text-body font-semibold text-ink"
                         onClick={onClose}
                       >
                         {item.label}
@@ -168,7 +168,7 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
                 ))}
               </ul>
               <div className="mt-4 flex flex-col gap-3 px-3">
-                <Button asChild size="block">
+                <Button asChild size="lg" className="w-full">
                   <SmartLink href={cta.href} onClick={onClose}>
                     {cta.label}
                   </SmartLink>
@@ -177,14 +177,14 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
                   <div className="flex justify-center gap-6 text-small">
                     <a
                       href={account.login.href}
-                      className="inline-flex items-center gap-1.5 text-ink"
+                      className="inline-flex items-center gap-2 text-ink"
                     >
                       <Icon name="users" size={16} className="text-primary" />
                       {account.login.label}
                     </a>
                     <a
                       href={account.signup.href}
-                      className="inline-flex items-center gap-1.5 text-ink"
+                      className="inline-flex items-center gap-2 text-ink"
                     >
                       <Icon name="user-plus" size={16} className="text-primary" />
                       {account.signup.label}

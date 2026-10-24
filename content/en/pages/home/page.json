@@ -80,7 +80,8 @@
       "type": "CardGrid",
       "reveal": true,
       "title": "Who do we work for?",
-      "variant": "tile",
+      "variant": "card",
+      "tone": "peach",
       "columns": 4,
       "items": "audiences"
     },

@@ -452,8 +452,8 @@ export const cmsBlocks = {
         },
         { summary: '{{fields.label}}', hint: 'Instead of the cards above: one list per set.' },
       ),
-      variant: select('Style', ['card', 'tile', 'plain', 'overlay'], {
-        hint: 'card: white cards. tile: peach tiles. plain: no surface. overlay: the words over the card’s picture.',
+      variant: select('Style', ['card', 'plain', 'overlay'], {
+        hint: 'card: white cards (peach behind them: Background). plain: no surface. overlay: the words over the card’s picture.',
       }),
       columns: number<1 | 2 | 3 | 4 | 5>('Cards per row (1–5)', { min: 1, max: 5 }),
       image: fromData('Photo behind the cards', { studioBand: 'brand' }),
@@ -470,8 +470,8 @@ export const cmsBlocks = {
     fields: {
       ...heading,
       items: list('Cards', card, { required: true, summary: '{{fields.title}}' }),
-      variant: select('Style', ['card', 'tile', 'plain', 'overlay'], {
-        hint: 'card: white cards. tile: peach tiles. plain: no surface. overlay: the words over the card’s picture.',
+      variant: select('Style', ['card', 'plain', 'overlay'], {
+        hint: 'card: white cards (peach behind them: Background). plain: no surface. overlay: the words over the card’s picture.',
       }),
       columns: number<1 | 2 | 3 | 4 | 5>('Cards per row (1–5)', { min: 1, max: 5 }),
       image: fromData('Photo behind the cards', { studioBand: 'brand' }),
@@ -564,8 +564,8 @@ export const cmsBlocks = {
     pictureWidths: '240;480;1080',
     fields: {
       ...heading,
-      variant: select('Style', ['timeline', 'bubbles', 'columns'], {
-        hint: 'timeline: a numbered list. bubbles: icons on a line, each step in a bubble. columns: side by side.',
+      variant: select('Style', ['timeline', 'columns'], {
+        hint: 'timeline: a list on a line, each step with its number or icon. columns: side by side.',
       }),
       items: list(
         'Steps',

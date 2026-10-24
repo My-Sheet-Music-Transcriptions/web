@@ -193,7 +193,7 @@ export const catalogue = {
       items: included,
     },
     usage:
-      '<CardGrid title="What\'s included?" image={studioBand} items={included} />\n<CardGrid title="Who do we work for?" variant="tile" columns={4} items={audiences} />\n<CardGrid title="Available discounts" variant="plain" columns={5} items={[{ title: "Bulk orders", body: "5-20% discounts for bulk orders", icon: bulkIcon }]} />\n<CardGrid title="Services & Pricing" tabs={[{ label: "$", items: […] }, { label: "€", items: […] }]} />',
+      '<CardGrid title="What\'s included?" image={studioBand} items={included} />\n<CardGrid title="Who do we work for?" tone="peach" columns={4} items={audiences} />\n<CardGrid title="Available discounts" variant="plain" columns={5} items={[{ title: "Bulk orders", body: "5-20% discounts for bulk orders", icon: bulkIcon }]} />\n<CardGrid title="Services & Pricing" tabs={[{ label: "$", items: […] }, { label: "€", items: […] }]} />',
     previewHeight: 700,
     dataSource: 'content/<locale>/data/services.ts (included), home.ts (audiences)',
     guidelines:
@@ -237,7 +237,7 @@ export const catalogue = {
       ],
     },
     usage:
-      '<Steps title="How it works" items={[{ glyph: "dollar", body: "…" }, { glyph: "gift", body: "…" }]} />\n<Steps variant="bubbles" items={[{ title: "1. You request a quote", body: "…", icon: step1 }]} />\n<Steps variant="columns" items={[{ title: "1. Send us audio", body: "…", image: step1 }]} />',
+      '<Steps title="How it works" items={[{ glyph: "dollar", body: "…" }, { glyph: "gift", body: "…" }]} />\n<Steps items={[{ title: "1. You request a quote", body: "…", icon: step1 }]} />\n<Steps variant="columns" items={[{ title: "1. Send us audio", body: "…", image: step1 }]} />',
     dataSource: 'content/<locale>/data/labels.ts (mediaLabels, with videos)',
     previewHeight: 640,
     guidelines:

@@ -117,7 +117,7 @@ export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) 
           className={cn(
             'fixed right-4 bottom-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-navy text-white shadow-float transition-colors hover:bg-primary-deep',
             'focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-primary',
-            'lg:top-1/2 lg:right-0 lg:bottom-auto lg:h-auto lg:w-[88px] lg:-translate-y-1/2 lg:rounded-none lg:rounded-l-card lg:py-4',
+            'lg:top-1/2 lg:right-0 lg:bottom-auto lg:h-auto lg:w-22 lg:-translate-y-1/2 lg:rounded-none lg:rounded-l-card lg:py-4',
           )}
         >
           <m.span
@@ -130,12 +130,12 @@ export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) 
             <span className="relative">
               <Icon name="bag" size={26} />
               {cart.count ? (
-                <span className="absolute -top-2 -right-3 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent-deep px-1 text-[12px] leading-none font-bold">
+                <span className="absolute -top-2 -right-3 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent-deep px-1 text-caption leading-none font-bold">
                   {cart.count}
                 </span>
               ) : null}
             </span>
-            <span aria-hidden="true" className="hidden text-[12px] font-bold lg:block">
+            <span aria-hidden="true" className="hidden text-caption font-bold lg:block">
               {formatPrice(cart.priced.subtotal, locale)}
             </span>
           </m.span>
@@ -180,10 +180,10 @@ export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) 
               role="dialog"
               aria-modal="true"
               aria-label={labels.cart}
-              className="absolute inset-y-0 right-0 flex w-[min(420px,100vw)] flex-col bg-white shadow-float"
+              className="absolute inset-y-0 right-0 flex w-full max-w-105 flex-col bg-white shadow-float"
               variants={slideIn}
             >
-              <div className="flex h-[64px] shrink-0 items-center justify-between border-b border-line px-5">
+              <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
                 <p className="flex items-center gap-2 text-h4 font-bold text-ink">
                   <Icon name="bag" size={22} />
                   {labels.cart}
@@ -191,7 +191,7 @@ export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) 
                 </p>
                 <button
                   type="button"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-black/5"
+                  className="inline-flex size-11 items-center justify-center rounded-full hover:bg-black/5"
                   aria-label={labels.close}
                   onClick={close}
                 >
@@ -202,10 +202,10 @@ export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) 
                 <div aria-live="polite" className="flex-1 overflow-y-auto">
                   {confirmation.thanks ? (
                     <div className="flex flex-col items-center gap-4 border-b border-line px-8 py-8 text-center">
-                      <span className="flex h-16 w-16 items-center justify-center rounded-full bg-teal text-white">
+                      <span className="flex size-16 items-center justify-center rounded-full bg-primary text-white">
                         <Icon name="check" size={32} />
                       </span>
-                      <p className="text-h3 font-bold text-ink">{labels.thanks}</p>
+                      <p className="text-h3 text-ink">{labels.thanks}</p>
                       <p className="text-body text-ink">
                         {confirmation.number
                           ? fill(labels.confirmed, { number: confirmation.number })

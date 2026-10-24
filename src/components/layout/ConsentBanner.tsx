@@ -56,28 +56,21 @@ export function ConsentBanner({ title, body, accept, deny, links }: ConsentBanne
           role="dialog"
           aria-labelledby="consent-title"
           aria-describedby="consent-body"
-          className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-[520px] lg:inset-x-auto lg:right-6 lg:bottom-6 lg:w-[400px] rounded-card bg-white p-5 text-left shadow-float"
+          className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-130 rounded-card bg-white p-card-pad text-left shadow-float lg:inset-x-auto lg:right-6 lg:bottom-6 lg:w-100"
         >
           <h2 id="consent-title" className="text-body font-bold text-ink">
             {title}
           </h2>
-          <p id="consent-body" className="mt-2 text-[13px] leading-5 text-[#444]">
+          <p id="consent-body" className="mt-2 text-small text-ink">
             {body}
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
-            <Button variant="primary" size="sm" onClick={() => decide('granted')}>
-              {accept}
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="border border-line"
-              onClick={() => decide('denied')}
-            >
+            <Button onClick={() => decide('granted')}>{accept}</Button>
+            <Button variant="secondary" onClick={() => decide('denied')}>
               {deny}
             </Button>
           </div>
-          <p className="mt-3 text-caption leading-5">
+          <p className="mt-3 text-caption text-muted">
             {links.map((l, i) => (
               <span key={l.href}>
                 {i > 0 ? <span className="px-2 text-muted">·</span> : null}

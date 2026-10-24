@@ -440,7 +440,8 @@
           "href": "https://discord.gg/9tPYzbybFb"
         }
       ],
-      "variant": "tile",
+      "variant": "card",
+      "tone": "peach",
       "columns": 3,
       "reveal": true
     }

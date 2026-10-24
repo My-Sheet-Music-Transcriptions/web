@@ -30,7 +30,7 @@ export function Testimonials({ items, labels, ...shell }: TestimonialsProps) {
   return (
     <BlockShell {...shell} className="relative isolate overflow-hidden" cascade>
       <StaffLines />
-      <ul className="grid items-start gap-[33px] md:grid-cols-2 md:gap-x-9 md:gap-y-[33px]">
+      <ul className="grid items-start gap-grid-gap-lg md:grid-cols-2">
         {items.map((r) => (
           <RevealItem as="li" key={r.name + r.quote.slice(0, 24)}>
             <ReviewCard review={r} labels={labels} />
@@ -88,7 +88,7 @@ function StaffLines() {
       preserveAspectRatio="xMinYMin slice"
       aria-hidden="true"
       focusable="false"
-      className="pointer-events-none absolute inset-0 -z-10 h-full w-full fill-none stroke-staff/20 stroke-[4.4]"
+      className="pointer-events-none absolute inset-0 -z-10 h-full w-full fill-none stroke-accent/20 stroke-[4.4]"
     >
       {STAFF.map((d, i) => (
         <m.path key={d} d={d} data-reveal="" variants={drawLine} custom={shown[i]} />
@@ -130,37 +130,31 @@ export function ReviewCard({ review, labels }: { review: Review; labels: ReviewL
       ? fill(labels.roleFrom, { role: review.role, country: review.country })
       : (review.role ?? review.country ?? '')
   return (
-    <Card as="article" padding="none" className="pb-10">
-      <div className="p-px md:mx-[14px]">
-        <header className="relative border-b border-[#e1e8ed] px-[15px] pt-[15px] pb-6 text-[#202020]">
-          <Icon
-            name={sourceMark[review.source].icon}
-            size={26}
-            aria-hidden="true"
-            className={cn('absolute top-[18px] right-[15px]', sourceMark[review.source].className)}
-          />
-          <p className="pr-10 text-[20px] leading-[38px] font-semibold">{name}</p>
-          <Stars
-            rating={review.rating}
-            label={fill(labels.stars, { rating: review.rating })}
-            color="primary"
-            size={22}
-            className="h-[30px] gap-[5px]"
-          />
-          {who || review.date ? (
-            <p className="text-body leading-8 md:text-[18px] md:leading-[44px]">
-              {who}
-              {who && review.date ? ' | ' : null}
-              {review.date ? (
-                <strong className="font-bold">{monthLabel(review.date, locale)}</strong>
-              ) : null}
-            </p>
-          ) : null}
-        </header>
-        <blockquote className="px-[15px] pt-6 pb-[29.4px] text-body leading-[30.4px] text-[#202020]">
-          {review.quote}
-        </blockquote>
-      </div>
+    <Card as="article" className="text-ink">
+      <header className="relative border-b border-line pb-4">
+        <Icon
+          name={sourceMark[review.source].icon}
+          size={24}
+          aria-hidden="true"
+          className={cn('absolute top-1 right-0', sourceMark[review.source].className)}
+        />
+        <p className="pr-10 text-lead font-semibold">{name}</p>
+        <Stars
+          rating={review.rating}
+          label={fill(labels.stars, { rating: review.rating })}
+          color="sky"
+          size={20}
+          className="my-2 gap-1"
+        />
+        {who || review.date ? (
+          <p className="text-small text-muted">
+            {who}
+            {who && review.date ? ' | ' : null}
+            {review.date ? <strong>{monthLabel(review.date, locale)}</strong> : null}
+          </p>
+        ) : null}
+      </header>
+      <blockquote className="pt-4 text-body">{review.quote}</blockquote>
     </Card>
   )
 }

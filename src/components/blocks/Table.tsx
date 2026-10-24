@@ -25,9 +25,7 @@ export function Table({ caption, columns, rows, children, ...shell }: TableProps
     <BlockShell {...shell}>
       {children ? <div className="mb-8 flex flex-col gap-4 text-ink">{children}</div> : null}
       <table className="w-full border-collapse text-left text-body text-ink">
-        {caption ? (
-          <caption className="mb-4 text-left text-h3 font-bold text-ink">{caption}</caption>
-        ) : null}
+        {caption ? <caption className="mb-4 text-left text-h3 text-ink">{caption}</caption> : null}
         <thead className="hidden md:table-header-group">
           <tr className="border-b-2 border-accent">
             {columns.map((c, i) =>

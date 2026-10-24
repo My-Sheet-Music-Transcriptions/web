@@ -8,10 +8,9 @@ import { cn } from '~/lib/cn'
 
 type Group = NonNullable<NavItem['groups']>[number]
 
-const trigger =
-  'rounded py-[13px] text-[15px] leading-5 font-semibold text-secondary group-hover:text-[#f2893b]'
+const trigger = 'rounded-sm py-3 text-small font-semibold text-ink group-hover:text-accent-deep'
 const row =
-  'flex w-full items-center gap-4 whitespace-nowrap py-[17px] text-left text-[15px] leading-5 font-semibold text-secondary hover:text-primary'
+  'flex w-full items-center gap-4 whitespace-nowrap py-4 text-left text-small font-semibold text-ink hover:text-primary'
 
 /**
  * The drop-down of a main-menu item with groups ("Services & Samples"), as on the live site: the item links
@@ -70,20 +69,18 @@ export function MegaMenu({ item }: { item: NavItem }) {
       }}
     >
       <SmartLink
-        data-live-colour=""
         href={item.href}
         className={cn(
           trigger,
-          'pr-2 pl-[14px] data-[status=active]:text-[#f2893b]',
-          open && 'text-[#f2893b]',
+          'pr-2 pl-3 data-[status=active]:text-accent-deep',
+          open && 'text-accent-deep',
         )}
       >
         {item.label}
       </SmartLink>
       <button
         type="button"
-        data-live-colour=""
-        className={cn(trigger, 'inline-flex items-center pr-[14px]', open && 'text-[#f2893b]')}
+        className={cn(trigger, 'inline-flex items-center pr-3', open && 'text-accent-deep')}
         aria-label={item.label}
         aria-expanded={open}
         aria-controls={id}
@@ -115,7 +112,7 @@ export function MegaMenu({ item }: { item: NavItem }) {
           link.blur()
         }}
         className={cn(
-          'absolute top-full left-0 z-50 w-max min-w-[290px] rounded-card border border-line bg-white shadow-float',
+          'absolute top-full left-0 z-50 w-max min-w-72 rounded-card border border-line bg-white shadow-float',
           !open && closedPanel,
         )}
       >
@@ -184,7 +181,7 @@ function MenuGroup({
           animate={open ? 'open' : 'closed'}
           variants={dropSide}
           className={cn(
-            'absolute top-0 left-full w-max min-w-[190px] rounded-card border border-line bg-white shadow-float',
+            'absolute top-0 left-full w-max min-w-48 rounded-card border border-line bg-white shadow-float',
             !open && closedPanel,
           )}
         >

@@ -31,20 +31,18 @@ export function RatingBanner({ counter, sources, note, ...shell }: RatingBannerP
   return (
     <BlockShell {...shell} cascade>
       {counters.length ? (
-        <div className={cn('mb-10 grid gap-8', counters.length > 1 && 'md:grid-cols-2')}>
+        <div className={cn('mb-heading-gap grid gap-8', counters.length > 1 && 'md:grid-cols-2')}>
           {counters.map((c) => (
             <RevealItem as="p" key={c.label} className="text-center">
-              <Ticker className="block text-[69px] font-semibold leading-[69px]">
+              <Ticker className="block text-figure-lg font-semibold">
                 {c.value.toLocaleString(locale)}
               </Ticker>
-              <span className="block text-body leading-10 text-white md:text-[19px] md:leading-[47.5px]">
-                {c.label}
-              </span>
+              <span className="mt-3 block text-lead text-white">{c.label}</span>
             </RevealItem>
           ))}
         </div>
       ) : null}
-      <ul className="grid gap-5 md:grid-cols-3">
+      <ul className="grid gap-grid-gap md:grid-cols-3">
         {sources.map((r) => (
           <RevealItem as="li" key={r.id}>
             <RatingCard source={r} />
@@ -54,7 +52,7 @@ export function RatingBanner({ counter, sources, note, ...shell }: RatingBannerP
       {note ? (
         <RevealItem
           as="p"
-          className="mx-auto mt-10 max-w-[760px] text-center text-body leading-8 text-white"
+          className="mx-auto mt-heading-gap max-w-prose text-center text-body text-white"
         >
           {inlineMarkdown(note)}
         </RevealItem>

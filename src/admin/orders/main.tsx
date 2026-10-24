@@ -63,9 +63,9 @@ function useIdentity() {
 
 const STATUS_STYLE: Record<OrderStatus, string> = {
   paid: 'bg-accent-deep text-white',
-  preparing: 'bg-sky-tint text-ink',
+  preparing: 'bg-peach text-ink',
   shipped: 'bg-primary text-white',
-  delivered: 'bg-teal text-white',
+  delivered: 'bg-primary-deep text-white',
   cancelled: 'bg-line text-ink',
   refunded: 'bg-line text-ink',
 }
@@ -101,7 +101,7 @@ async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
 function Status({ status }: { status: OrderStatus }) {
   return (
     <span
-      className={`inline-block rounded-pill px-2.5 py-0.5 text-[12px] font-bold whitespace-nowrap ${STATUS_STYLE[status]}`}
+      className={`inline-block rounded-pill px-3 py-1 text-caption font-bold whitespace-nowrap ${STATUS_STYLE[status]}`}
     >
       {STATUS_LABEL[status]}
     </span>
@@ -180,7 +180,7 @@ function OrderView({ number, onChanged }: { number: string; onChanged: () => voi
         <h2 className="text-h2 font-bold text-ink">{order.number}</h2>
         <Status status={order.status} />
         {order.demo ? (
-          <span className="rounded-pill bg-yellow px-2.5 py-0.5 text-[12px] font-bold">DEMO</span>
+          <span className="rounded-pill bg-star px-3 py-1 text-caption font-bold">DEMO</span>
         ) : null}
         <span className="text-small text-muted">
           {when(order.createdAt)} · {order.locale.toUpperCase()} site
@@ -300,7 +300,7 @@ function OrderView({ number, onChanged }: { number: string; onChanged: () => voi
               value={tracking}
               onChange={(e) => setTracking(e.target.value)}
               placeholder="https://…"
-              className="mt-1 block w-full rounded-field border border-line px-4 py-2"
+              className="mt-1 block w-full rounded-card border border-line px-4 py-2"
             />
           </label>
         ) : null}
@@ -382,7 +382,7 @@ function Orders() {
   if (!ready) return null
   if (!user && !local)
     return (
-      <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
+      <main className="mx-auto flex min-h-screen max-w-narrow flex-col items-center justify-center gap-6 p-6 text-center">
         <h1 className="text-h2 font-bold text-ink">Orders</h1>
         <p className="text-body text-ink">
           Sign in with your content manager account to see the shop’s orders.
@@ -430,23 +430,23 @@ function Orders() {
         </div>
       </header>
       <div className="grid lg:grid-cols-[420px_1fr]">
-        <aside className="border-r border-line bg-white lg:min-h-[calc(100vh-64px)]">
+        <aside className="border-r border-line bg-white lg:min-h-svh">
           <div className="flex flex-col gap-3 border-b border-line p-4">
             <input
               type="search"
               placeholder="Search number, name or email"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="rounded-field border border-line px-4 py-2 text-small"
+              className="rounded-card border border-line px-4 py-2 text-small"
             />
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {(['open', 'all', ...ORDER_STATUSES] as const).map((f) => (
                 <button
                   key={f}
                   type="button"
                   aria-pressed={filter === f}
                   onClick={() => setFilter(f)}
-                  className={`rounded-pill px-3 py-1 text-[12px] font-bold ${filter === f ? 'bg-navy text-white' : 'bg-sand text-ink'}`}
+                  className={`rounded-pill px-3 py-1 text-caption font-bold ${filter === f ? 'bg-navy text-white' : 'bg-cream text-ink'}`}
                 >
                   {f === 'open' ? 'To do' : f === 'all' ? 'All' : STATUS_LABEL[f]}
                 </button>
@@ -464,22 +464,22 @@ function Orders() {
                 <button
                   type="button"
                   onClick={() => pick(o.number)}
-                  className={`flex w-full flex-col gap-1 border-b border-line px-4 py-3 text-left hover:bg-sand/60 ${selected === o.number ? 'bg-sand' : ''}`}
+                  className={`flex w-full flex-col gap-1 border-b border-line px-4 py-3 text-left hover:bg-cream/60 ${selected === o.number ? 'bg-cream' : ''}`}
                 >
                   <span className="flex items-center justify-between gap-2">
                     <span className="text-small font-bold text-ink">
                       {o.number}
-                      {o.demo ? <span className="ml-2 text-[11px] text-muted">DEMO</span> : null}
+                      {o.demo ? <span className="ml-2 text-caption text-muted">DEMO</span> : null}
                     </span>
                     <Status status={o.status} />
                   </span>
-                  <span className="flex justify-between gap-2 text-[13px] text-muted">
+                  <span className="flex justify-between gap-2 text-small text-muted">
                     <span className="truncate">
                       {o.name} · {o.items} item{o.items === 1 ? '' : 's'}
                     </span>
                     <span>{price(o.total)}</span>
                   </span>
-                  <span className="text-[12px] text-muted">{when(o.createdAt)}</span>
+                  <span className="text-caption text-muted">{when(o.createdAt)}</span>
                 </button>
               </li>
             ))}

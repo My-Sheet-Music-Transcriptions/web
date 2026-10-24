@@ -24,7 +24,7 @@ export function CartContents({ cart, onNavigate }: { cart: CartState; onNavigate
       <div className="flex flex-1 flex-col items-center justify-center gap-5 px-6 py-12 text-center">
         <Icon name="bag" size={48} className="text-muted" />
         <p className="text-body text-ink">{labels.empty}</p>
-        <Button asChild variant="outline">
+        <Button asChild variant="secondary">
           <SmartLink href={cart.shopHref} onClick={onNavigate}>
             {labels.browse}
           </SmartLink>
@@ -41,7 +41,7 @@ export function CartContents({ cart, onNavigate }: { cart: CartState; onNavigate
               image={product.image}
               alt=""
               sizes="72px"
-              className="h-[72px] w-[72px] shrink-0 rounded-card bg-cream object-contain"
+              className="size-18 shrink-0 rounded-card bg-cream object-contain"
             />
             <div className="flex min-w-0 flex-1 flex-col gap-2">
               <div className="flex items-start justify-between gap-2">
@@ -81,7 +81,7 @@ export function CartContents({ cart, onNavigate }: { cart: CartState; onNavigate
           <label className="mb-4 flex items-center justify-between gap-3 text-small text-ink">
             <span className="font-bold">{labels.shipTo}</span>
             <select
-              className="rounded-field border border-line bg-white px-4 py-2 text-small text-ink"
+              className="min-h-11 rounded-card border border-line bg-white px-4 py-2 text-small text-ink"
               value={cart.zone?.id}
               onChange={(e) => cart.setZone(e.target.value)}
             >
@@ -93,7 +93,7 @@ export function CartContents({ cart, onNavigate }: { cart: CartState; onNavigate
             </select>
           </label>
         ) : null}
-        <dl className="grid grid-cols-[1fr_auto] gap-y-1.5 text-small text-ink">
+        <dl className="grid grid-cols-[1fr_auto] gap-y-1 text-small text-ink">
           <dt>{labels.subtotal}</dt>
           <dd className="text-right">{price(priced.subtotal)}</dd>
           <dt>
@@ -105,8 +105,8 @@ export function CartContents({ cart, onNavigate }: { cart: CartState; onNavigate
           <dd className="mt-2 text-right text-body font-bold">{price(priced.total)}</dd>
         </dl>
         <Button
-          size="block"
-          className="mt-5"
+          size="lg"
+          className="mt-5 w-full"
           disabled={status === 'paying'}
           onClick={async () => {
             setStatus('paying')
@@ -118,7 +118,7 @@ export function CartContents({ cart, onNavigate }: { cart: CartState; onNavigate
           <Icon name="bag" size={18} />
           {status === 'paying' ? labels.paying : labels.pay}
         </Button>
-        <p aria-live="polite" className="mt-3 text-center text-[13px] text-muted">
+        <p aria-live="polite" className="mt-3 text-center text-small text-muted">
           {status === 'failed' ? (
             <span className="font-bold text-accent-deep">{labels.failed}</span>
           ) : (

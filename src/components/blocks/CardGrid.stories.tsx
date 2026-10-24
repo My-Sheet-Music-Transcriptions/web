@@ -17,11 +17,11 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
-export const Tiles: Story = {
+export const OnPeach: Story = {
   args: {
     title: 'Who do we work for?',
     image: undefined,
-    variant: 'tile',
+    tone: 'peach',
     columns: 4,
     items: withSamples<CardItem[]>(audiences),
   },
@@ -125,7 +125,7 @@ export const PricesInTabs: Story = {
 
 /** `reveal`: the heading, then each card one after another, rise and fade in as the grid scrolls into view. */
 export const Revealed: Story = {
-  args: { ...Tiles.args, reveal: true },
+  args: { ...OnPeach.args, reveal: true },
   play: async ({ canvasElement }) => revealed(canvasElement),
 }
 

@@ -38,7 +38,7 @@ export function OrderDetails({ order, labels }: { order: OrderView; labels: Shop
   return (
     <div className="flex flex-col gap-6 px-5 py-5">
       <div>
-        <p className="text-h3 font-bold text-ink">{fill(labels.order, { number: order.number })}</p>
+        <p className="text-h3 text-ink">{fill(labels.order, { number: order.number })}</p>
         <p className="text-small text-muted">
           {fill(labels.placed, { date: date(order.createdAt) })}
         </p>
@@ -55,25 +55,25 @@ export function OrderDetails({ order, labels }: { order: OrderView; labels: Shop
                   <span
                     aria-hidden="true"
                     className={cn(
-                      'absolute top-7 bottom-0 left-[13px] w-0.5',
-                      i < at ? 'bg-teal' : 'bg-line',
+                      'absolute top-7 bottom-0 left-3 w-px',
+                      i < at ? 'bg-primary' : 'bg-line',
                     )}
                   />
                 ) : null}
                 <span
                   className={cn(
                     'relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2',
-                    done ? 'border-teal bg-teal text-white' : 'border-line bg-white',
+                    done ? 'border-primary bg-primary text-white' : 'border-line bg-white',
                   )}
                 >
                   {done ? <Icon name="check" size={14} /> : null}
                 </span>
-                <span className="flex flex-col pt-0.5">
+                <span className="flex flex-col pt-1">
                   <span className={cn('text-small font-bold', done ? 'text-ink' : 'text-muted')}>
                     {labels.statuses[s]}
                   </span>
                   {done && when ? (
-                    <span className="text-[13px] text-muted">{date(when.at)}</span>
+                    <span className="text-caption text-muted">{date(when.at)}</span>
                   ) : null}
                 </span>
               </li>
@@ -85,7 +85,7 @@ export function OrderDetails({ order, labels }: { order: OrderView; labels: Shop
       {order.tracking || order.invoice || order.receipt ? (
         <div className="flex flex-col gap-2">
           {order.tracking ? (
-            <Button asChild size="block">
+            <Button asChild className="w-full">
               <a href={order.tracking} target="_blank" rel="noopener noreferrer">
                 {fill(labels.track, { carrier: carrierOf(order.tracking) })}
                 <Icon name="external" size={16} />
@@ -93,7 +93,7 @@ export function OrderDetails({ order, labels }: { order: OrderView; labels: Shop
             </Button>
           ) : null}
           {order.invoice ? (
-            <Button asChild variant="outline" size="block">
+            <Button asChild variant="secondary" className="w-full">
               <a
                 href={order.invoice.pdf ?? order.invoice.url}
                 target="_blank"
@@ -105,7 +105,7 @@ export function OrderDetails({ order, labels }: { order: OrderView; labels: Shop
             </Button>
           ) : null}
           {order.receipt ? (
-            <Button asChild variant="outline" size="block">
+            <Button asChild variant="secondary" className="w-full">
               <a href={order.receipt} target="_blank" rel="noopener noreferrer">
                 {labels.receipt}
                 <Icon name="external" size={16} />
@@ -126,7 +126,7 @@ export function OrderDetails({ order, labels }: { order: OrderView; labels: Shop
       ) : null}
 
       <div className="border-t border-line pt-4">
-        <ul className="flex flex-col gap-1.5 text-small text-ink">
+        <ul className="flex flex-col gap-1 text-small text-ink">
           {order.lines.map((l) => (
             <li key={l.sku || l.name} className="flex justify-between gap-3">
               <span>
@@ -157,7 +157,7 @@ export function OrderDetails({ order, labels }: { order: OrderView; labels: Shop
         </p>
       </div>
 
-      <p className="text-[13px] text-muted">{order.demo ? labels.demo : labels.privateLink}</p>
+      <p className="text-caption text-muted">{order.demo ? labels.demo : labels.privateLink}</p>
     </div>
   )
 }

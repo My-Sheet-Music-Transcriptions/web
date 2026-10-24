@@ -10,7 +10,7 @@ describe('Steps', () => {
       { title: '2. We transcribe it', body: 'B' },
       { title: 'Print & Play', body: 'C' },
     ]
-    for (const variant of ['columns', 'bubbles'] as const) {
+    for (const variant of ['columns', 'timeline'] as const) {
       const html = renderToStaticMarkup(<Steps title="How" variant={variant} items={items} />)
       expect(html).toContain('<span class="text-accent-deep">1. </span>Send us audio')
       expect(html).toContain('<span class="text-accent-deep">2. </span>We transcribe it')

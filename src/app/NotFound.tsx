@@ -7,8 +7,8 @@ export function NotFound() {
   const s = site.strings.notFound
   return (
     <main id="main" className="container-content py-24 text-center">
-      <p className="font-bold text-accent-deep text-h3">404</p>
-      <h1 className="text-display mt-2">{s.title}</h1>
+      <p className="text-h3 text-accent-deep">404</p>
+      <h1 className="mt-2 text-display text-ink">{s.title}</h1>
       <p className="mt-4 text-ink">{s.body}</p>
       <div className="mt-8">
         <Button asChild>

@@ -30,7 +30,7 @@ export function ogTemplate({
         padding: 64,
         background: 'linear-gradient(135deg, #ffffff 0%, #fdebdc 100%)',
         fontFamily: 'Montserrat',
-        color: '#444444',
+        color: '#333333',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -41,7 +41,7 @@ export function ogTemplate({
               display: 'flex',
               padding: '10px 22px',
               borderRadius: 28,
-              background: '#e2864d',
+              background: '#b8571c',
               color: '#fff',
               fontSize: 22,
               fontWeight: 700,
@@ -68,7 +68,7 @@ export function ogTemplate({
           {title}
         </div>
         {subtitle ? (
-          <div style={{ display: 'flex', fontSize: 26, lineHeight: 1.4, color: '#5a5a5a' }}>
+          <div style={{ display: 'flex', fontSize: 26, lineHeight: 1.4, color: '#6b6b6b' }}>
             {subtitle.length > 140 ? `${subtitle.slice(0, 137)}…` : subtitle}
           </div>
         ) : null}
@@ -78,7 +78,7 @@ export function ogTemplate({
           display: 'flex',
           justifyContent: 'space-between',
           fontSize: 22,
-          color: '#219ebc',
+          color: '#1a7f97',
           fontWeight: 700,
         }}
       >
