@@ -61,7 +61,7 @@ export interface PageHeaderProps {
 const eyebrowClass = 'label-caps'
 
 /**
- * The opening of every page, its h1 first. `band`: the centred title and orange rule, on white, or on peach
+ * The opening of every page, its h1 first. `band`: the centred title and orange rule, on white, or on cream
  * with the service's icon on its edge, the rating card at the right. `split`: the copy left, a picture or
  * carousel right (landing pages). `photo`: the homepage, rotating photos behind the copy, cut by a curve, the
  * lockup, the orange highlight and the rating card. `cover`: the title and the date or lead in white over a
@@ -93,11 +93,11 @@ function BandHeader({
 }: PageHeaderProps) {
   return (
     <header id={id} className="relative">
-      {/* A service page's band is peach (its icon on the lower edge), every other page's is white */}
+      {/* A service page's band is a light cream (its icon on the lower edge), every other page's is white */}
       <div
         className={cn(
-          'px-4 pt-section-lg text-center',
-          image ? tones.peach : 'bg-white pb-section-lg',
+          'flow-root px-4 pt-section-lg text-center',
+          image ? tones.cream : 'bg-white pb-section-lg',
         )}
       >
         {eyebrow ? <p className={cn(eyebrowClass, 'mb-3 text-accent-deep')}>{eyebrow}</p> : null}
@@ -122,13 +122,16 @@ function BandHeader({
         ) : null}
         {cta ? <CtaLink cta={cta} size="lg" className="mt-8" /> : null}
         {/* The icon straddles the band's lower edge: the band stops 48px above the icon's foot, and the empty
-            div after the band keeps that room */}
+            div after the band keeps that room. The band is a flow root so the negative margin stays inside it
+            (collapsed through the band's edge, it pulled the spacer up instead and the band reached the icon's
+            foot), and it sits on the <picture>, made a block, where it counts */}
         {image ? (
           <Picture
             image={image}
             alt={alt}
             sizes="144px"
-            className="relative mx-auto mt-10 -mb-12 block h-36 w-auto"
+            pictureClassName="relative mx-auto mt-10 -mb-12 block w-fit"
+            className="h-36 w-auto"
           />
         ) : null}
       </div>
@@ -189,8 +192,8 @@ function CoverHeader({
             className="h-auto w-4/5 max-w-166"
           />
         ) : null}
+        {/* No rule over a photo, as on the live site's covers and the photo bands (BlockShell) */}
         <h1 className={cn('text-display text-white', logo && 'sr-only')}>{title}</h1>
-        {logo ? null : <span aria-hidden="true" className="heading-rule mt-0" />}
         {date ? (
           <p className="flex items-center gap-2 text-small">
             <Icon name="calendar" size={16} aria-hidden="true" className="text-accent" />
