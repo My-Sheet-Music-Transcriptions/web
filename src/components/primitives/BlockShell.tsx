@@ -44,9 +44,9 @@ export interface BlockShellProps extends ShellProps {
   links?: Cta[]
   /** A full-bleed photo behind the block: the photo band (grey veil, white wavy edges, white heading). */
   image?: PictureSource
-  /** Vertical padding: tight 32px, normal 50px (default), loose 50px on phones and 90px from tablet up. */
+  /** Vertical padding: tight (`section-sm`, 40px), normal (`section`, 64px, default), loose (`section-lg`, 96px); a step less on phones. */
   spacing?: 'tight' | 'normal' | 'loose'
-  /** The container: narrow 900px, content 1140px (default), wide 1200px, or full (the header's 1440px). */
+  /** The container: narrow 900px, content 1140px (default), wide 1200px, or full (the page's 1440px). */
   width?: 'narrow' | 'content' | 'wide' | 'full'
   /** Heading and buttons centred (default), or at the start of the column. */
   align?: 'center' | 'start'
@@ -72,21 +72,21 @@ export interface BlockShellProps extends ShellProps {
 const viewport = { once: true, margin: '0px 0px -15% 0px' } as const
 
 const spacings = {
-  tight: 'py-8',
-  normal: 'py-[50px]',
-  loose: 'py-[50px] md:py-[90px]',
+  tight: 'py-section-sm',
+  normal: 'py-section',
+  loose: 'py-section-lg',
 }
 const widths = {
   narrow: 'container-narrow',
   content: 'container-content',
   wide: 'container-wide',
-  full: 'mx-auto w-full max-w-[1440px] px-4 lg:px-5',
+  full: 'container-page',
 }
 
 /**
  * The frame of every block: a `<section>` labelled by its heading, the tone, the container, the heading area
  * (eyebrow, h2 with its short rule, lead), the content and the closing buttons (`cta` filled, `links`
- * outline). With an `image` it is the photo band: the photo darkened by a 32% grey veil, white wavy edges
+ * outline). With an `image` it is the photo band: the photo darkened by a 30% veil, white wavy edges
  * and a white heading, the photo lagging behind the band as it scrolls (parallax, theme.css). With `reveal` it comes in as it scrolls into view (Motion): heading, content and
  * buttons rise and fade in one after another. Blocks render their content inside it and never rebuild any of
  * this by hand.
@@ -122,12 +122,7 @@ export function BlockShell({
         className={cn('flex flex-col', center ? 'items-center text-center' : 'items-start')}
       >
         {eyebrow ? (
-          <p
-            className={cn(
-              'mb-2 text-small font-bold uppercase tracking-wide',
-              light ? 'text-accent-light' : 'text-accent-deep',
-            )}
-          >
+          <p className={cn('label-caps mb-3', light ? 'text-accent' : 'text-accent-deep')}>
             {eyebrow}
           </p>
         ) : null}
@@ -139,8 +134,8 @@ export function BlockShell({
         {lead ? (
           <p
             className={cn(
-              'max-w-3xl text-[18px] leading-relaxed',
-              title && !rule && 'mt-4',
+              'max-w-prose text-lead',
+              title && 'mt-4',
               light ? 'text-white' : 'text-ink',
             )}
           >
@@ -152,11 +147,11 @@ export function BlockShell({
   const actions =
     cta || links?.length ? (
       <RevealItem
-        className={cn('flex flex-wrap gap-4', center ? 'justify-center' : 'justify-start')}
+        className={cn('flex flex-wrap gap-3', center ? 'justify-center' : 'justify-start')}
       >
         {cta ? <CtaLink cta={cta} /> : null}
         {links?.map((l) => (
-          <CtaLink key={l.href} cta={l} variant="outline" />
+          <CtaLink key={l.href} cta={l} variant="secondary" />
         ))}
       </RevealItem>
     ) : null
@@ -173,7 +168,7 @@ export function BlockShell({
       className={cn(
         'scroll-mt-20',
         image
-          ? 'parallax-source relative isolate my-[50px] overflow-hidden py-[100px] text-white md:py-[110px]'
+          ? 'parallax-source relative isolate my-section overflow-hidden py-section-lg text-white'
           : [spacings[spacing], tones[tone]],
         className,
       )}
@@ -191,7 +186,7 @@ export function BlockShell({
               pictureClassName="contents"
             />
           </div>
-          <div className="absolute inset-0 -z-10 bg-[#3a3a3a] opacity-[0.32]" aria-hidden="true" />
+          <div className="absolute inset-0 -z-10 bg-black/30" aria-hidden="true" />
           <WaveDivider position="top" width={138} mobileHeight={20} mobileWidth={266} />
           <WaveDivider position="bottom" width={135} mobileHeight={20} mobileWidth={266} />
         </>
@@ -204,14 +199,16 @@ export function BlockShell({
             {heading}
             {children ? (
               cascade ? (
-                <m.div variants={revealGroup} className={cn(heading && 'mt-10')}>
+                <m.div variants={revealGroup} className={cn(heading && 'mt-heading-gap')}>
                   {children}
                 </m.div>
               ) : (
-                <RevealItem className={cn(heading && 'mt-10')}>{children}</RevealItem>
+                <RevealItem className={cn(heading && 'mt-heading-gap')}>{children}</RevealItem>
               )
             ) : null}
-            {actions ? <div className={cn((heading || children) && 'mt-10')}>{actions}</div> : null}
+            {actions ? (
+              <div className={cn((heading || children) && 'mt-heading-gap')}>{actions}</div>
+            ) : null}
           </>
         )}
       </div>

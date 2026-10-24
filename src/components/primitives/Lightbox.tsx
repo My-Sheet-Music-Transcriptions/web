@@ -55,14 +55,15 @@ export function Lightbox({
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') dialog.current?.close()
         }}
-        className="m-auto max-h-[95vh] max-w-[95vw] cursor-zoom-out overflow-visible bg-transparent p-0 backdrop:bg-navy/85"
+        className="m-auto max-h-dvh max-w-dvw cursor-zoom-out overflow-visible bg-transparent p-0 backdrop:bg-navy/85"
       >
         <Picture
           image={image}
           alt={alt}
           sizes="95vw"
           loading="lazy"
-          className="max-h-[90vh] w-auto rounded-card bg-white object-contain shadow-band"
+          // biome-ignore lint/plugin/off-scale: the enlarged picture fills 90% of the screen's height, whatever the screen
+          className="max-h-[90vh] w-auto rounded-card bg-white object-contain shadow-float"
         />
         <button
           type="button"

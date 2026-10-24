@@ -3,63 +3,44 @@ import { cn } from '~/lib/cn'
 import { Icon, type IconName } from './Icon'
 import { Stars } from './Stars'
 
-const sourceIcon: Record<RatingSource['id'], { icon: IconName; className: string; link: string }> =
-  {
-    google: { icon: 'fa-google', className: 'text-blue', link: 'text-sky' },
-    facebook: { icon: 'fa-facebook-f', className: 'text-[#4683f4]', link: 'text-[#4683f4]' },
-    customers: { icon: 'fa-globe-americas', className: 'text-teal-light', link: 'text-sky' },
-    trustpilot: { icon: 'trustpilot', className: 'text-trustpilot', link: 'text-sky' },
-  }
+/** Each platform's mark in its own colour; the customers' globe in the site's sky. */
+const sourceIcon: Record<RatingSource['id'], { icon: IconName; className: string }> = {
+  google: { icon: 'fa-google', className: 'text-google' },
+  facebook: { icon: 'fa-facebook-f', className: 'text-facebook' },
+  customers: { icon: 'fa-globe-americas', className: 'text-sky' },
+  trustpilot: { icon: 'trustpilot', className: 'text-trustpilot' },
+}
 
 /** White card with a platform mark, label, stars and count; `compact` is the floating hero variant. */
 export function RatingCard({ source, compact }: { source: RatingSource; compact?: boolean }) {
-  const { icon, className, link } = sourceIcon[source.id]
+  const { icon, className } = sourceIcon[source.id]
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center rounded-card bg-white text-center',
-        compact
-          ? 'gap-[10px] py-5 shadow-card'
-          : cn(
-              'h-full gap-[3px] shadow-band md:min-h-[267px] md:py-6',
-              source.score ? 'py-[27px]' : 'py-[22px]',
-            ),
+        'flex flex-col items-center justify-center rounded-card bg-white text-center shadow-card',
+        compact ? 'gap-2 px-4 py-5' : 'h-full gap-1 px-4 py-6',
       )}
     >
-      <Icon name={icon} size={50} className={cn('mb-[7px]', className)} />
-      <p className={cn('text-body font-bold text-[#575757]', !source.score && 'mb-[14.4px]')}>
-        {source.label}
-      </p>
+      <Icon name={icon} size={compact ? 40 : 48} className={cn('mb-2', className)} />
+      <p className="text-body font-bold text-ink">{source.label}</p>
       {source.score ? (
         <Stars
           rating={Number(source.score.replace(',', '.'))}
           label={source.starsLabel ?? source.score}
-          color="gold"
-          size={compact ? 19 : 24}
-          className={cn('my-[6px]', compact ? 'gap-[10px]' : 'gap-3')}
+          size={compact ? 20 : 24}
+          className="my-1 gap-2"
         />
       ) : (
-        <p className="mt-[6px] text-h2 leading-8 font-bold text-ink">{source.count}</p>
+        <p className="my-1 text-h2 text-ink">{source.count}</p>
       )}
       {source.countLabel ? (
-        <p
-          className={cn(
-            'text-body text-secondary',
-            source.score ? 'mt-[6px] leading-4' : 'mb-[14.4px] max-w-[160px] text-[#575757]',
-          )}
-        >
-          {source.countLabel}
-        </p>
+        <p className="max-w-40 text-small text-muted">{source.countLabel}</p>
       ) : null}
       {source.href && source.linkLabel ? (
         <a
           href={source.href}
           rel="noopener"
-          data-live-colour=""
-          className={cn(
-            'inline-flex items-center gap-[5px] px-5 py-[14px] text-small leading-[14px] font-bold uppercase hover:underline',
-            link,
-          )}
+          className="label-caps mt-2 inline-flex min-h-11 items-center gap-2 px-4 text-primary hover:text-primary-deep hover:underline"
         >
           {compact && source.moreLabel ? (
             <>

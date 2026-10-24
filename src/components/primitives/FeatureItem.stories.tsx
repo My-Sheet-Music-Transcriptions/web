@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { CardItem } from '~/content/types'
-import { audiences, included } from '~/stories/data'
+import { included } from '~/stories/data'
 import { sample, withSamples } from '~/stories/samples'
 import { FeatureItem } from './FeatureItem'
 
@@ -27,10 +27,6 @@ export const CardWithPicture: Story = {
       linkLabel: 'Contact us',
     },
   },
-}
-/** A peach tile whose title links (who we work for). */
-export const Tile: Story = {
-  args: { surface: 'tile', item: withSamples<CardItem>(audiences[0]) },
 }
 /** No surface: a step with its picture. */
 export const Plain: Story = {

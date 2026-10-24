@@ -27,7 +27,7 @@ export function WaveDivider({
       aria-hidden="true"
       className={cn(
         'pointer-events-none absolute inset-x-0 z-10 h-[var(--wave-hm)] overflow-hidden leading-[0] md:h-[var(--wave-h)]',
-        position === 'top' ? 'top-[-1px]' : 'bottom-[-1px] rotate-180',
+        position === 'top' ? '-top-px' : '-bottom-px rotate-180',
         className,
       )}
       style={

@@ -35,7 +35,7 @@ export function VideoEmbed({
 }: VideoEmbedProps) {
   const [playing, setPlaying] = useState(false)
   return (
-    <figure className={cn('flex flex-col gap-2.5', className)}>
+    <figure className={cn('flex flex-col gap-2', className)}>
       <div className="relative aspect-video overflow-hidden rounded-card bg-footer">
         {playing ? (
           <iframe
@@ -60,7 +60,7 @@ export function VideoEmbed({
                 pictureClassName="contents"
               />
             ) : null}
-            <span className="absolute top-1/2 left-1/2 inline-flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-pill bg-[#cc0000] text-white shadow-float transition-transform group-hover:scale-110">
+            <span className="absolute top-1/2 left-1/2 inline-flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-pill bg-youtube text-white shadow-float transition-transform group-hover:scale-110">
               <Icon name="play" size={28} />
             </span>
             <span className="sr-only">{playLabel ?? title}</span>

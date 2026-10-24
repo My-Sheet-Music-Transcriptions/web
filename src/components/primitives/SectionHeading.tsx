@@ -3,10 +3,7 @@ import { cn } from '~/lib/cn'
 
 export interface SectionHeadingProps {
   children: ReactNode
-  /**
-   * The short orange rule under the heading, as on every live section: 50% of the heading's width on
-   * phones, 20% from tablet up, 35px below the heading and 15px above what follows.
-   */
+  /** The short orange rule under the heading (`heading-rule`, theme.css): on every section but photo bands. */
   rule?: boolean
   /** Centred (default) or at the start of the column. */
   align?: 'center' | 'start'
@@ -33,21 +30,10 @@ export function SectionHeading({
         className,
       )}
     >
-      <h2
-        id={id}
-        className={cn(
-          'text-[28px] leading-8 md:text-h2 md:leading-8',
-          tone === 'light' ? 'font-bold text-white' : 'text-ink',
-        )}
-      >
+      <h2 id={id} className={cn('text-h2', tone === 'light' ? 'text-white' : 'text-ink')}>
         {children}
       </h2>
-      {rule ? (
-        <span
-          aria-hidden="true"
-          className="mt-[35px] mb-[15px] block h-px w-1/2 bg-accent md:w-1/5"
-        />
-      ) : null}
+      {rule ? <span aria-hidden="true" className="heading-rule" /> : null}
     </div>
   )
 }

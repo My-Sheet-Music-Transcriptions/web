@@ -30,7 +30,7 @@ export function ClipPlayer({ src, title, caption, className }: ClipPlayerProps) 
     })
   }, [])
   return (
-    <figure className={cn('flex flex-col gap-2.5', className)}>
+    <figure className={cn('flex flex-col gap-2', className)}>
       <video
         ref={video}
         src={src}
@@ -42,9 +42,7 @@ export function ClipPlayer({ src, title, caption, className }: ClipPlayerProps) 
         preload="metadata"
         className="block aspect-video h-auto w-full rounded-card bg-white object-contain shadow-card"
       />
-      {caption ? (
-        <figcaption className="text-[13px] italic leading-[1.5] text-muted">{caption}</figcaption>
-      ) : null}
+      {caption ? <figcaption className="text-small text-muted italic">{caption}</figcaption> : null}
     </figure>
   )
 }

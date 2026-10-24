@@ -1,5 +1,6 @@
 import { useCallback, useSyncExternalStore } from 'react'
 import { cn } from '~/lib/cn'
+import { Button } from './Button'
 import { RevealItem } from './Motion'
 
 /**
@@ -50,20 +51,17 @@ export interface TabsProps {
  */
 export function Tabs({ tabs, active, onChange, className }: TabsProps) {
   return (
-    <RevealItem className={cn('mb-8 flex flex-wrap justify-center gap-3', className)}>
+    <RevealItem className={cn('mb-heading-gap flex flex-wrap justify-center gap-3', className)}>
       {tabs.map((label, i) => (
-        <button
+        <Button
           key={label}
-          type="button"
+          variant="secondary"
           aria-pressed={i === active}
           onClick={() => onChange(i)}
-          className={cn(
-            'min-w-14 rounded-pill border-2 border-primary px-5 py-2 font-bold transition-colors',
-            i === active ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-primary/10',
-          )}
+          className="min-w-14"
         >
           {label}
-        </button>
+        </Button>
       ))}
     </RevealItem>
   )

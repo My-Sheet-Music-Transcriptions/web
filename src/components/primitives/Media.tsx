@@ -104,9 +104,7 @@ export function Media({
               priority={priority}
               className="w-full rounded-card shadow-card"
             />
-            {s.caption ? (
-              <figcaption className="text-h3 font-bold text-ink">{s.caption}</figcaption>
-            ) : null}
+            {s.caption ? <figcaption className="text-h3 text-ink">{s.caption}</figcaption> : null}
           </figure>
         ))}
       </div>
@@ -136,7 +134,7 @@ export function Media({
     />
   )
   return (
-    <figure className={cn('flex flex-col gap-2.5', className)}>
+    <figure className={cn('flex flex-col gap-2', className)}>
       {zoom && labels?.enlarge && labels.close ? (
         <Lightbox
           image={one.image}
@@ -150,9 +148,7 @@ export function Media({
         picture
       )}
       {one.caption ? (
-        <figcaption className="text-[13px] italic leading-[1.5] text-muted">
-          {one.caption}
-        </figcaption>
+        <figcaption className="text-small text-muted italic">{one.caption}</figcaption>
       ) : null}
     </figure>
   )

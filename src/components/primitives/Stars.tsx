@@ -6,8 +6,8 @@ export interface StarsProps {
   /** Filled stars; a score with decimals fills the star it reaches (4.9 shows five). */
   rating?: number
   max?: number
-  /** gold: the platform rating cards. yellow: rating stars elsewhere. primary: customer review cards. */
-  color?: 'gold' | 'yellow' | 'primary' | 'trustpilot'
+  /** star: the rating's gold (default). sky: the teal-blue of a customer review's card. trustpilot: its green. */
+  color?: 'star' | 'sky' | 'trustpilot'
   /** Height of each star in px. */
   size?: number
   className?: string
@@ -17,9 +17,8 @@ export interface StarsProps {
 
 const STAR_IDS = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 const colors = {
-  gold: 'text-gold',
-  yellow: 'text-yellow',
-  primary: 'text-sky',
+  star: 'text-star',
+  sky: 'text-sky',
   trustpilot: 'text-trustpilot',
 }
 /** The live site's rounded star (one star of its five-star rating graphic). */
@@ -35,7 +34,7 @@ const BOX = { x: 636.6, y: 402.6, w: 85.6, h: 79.4 }
 export function Stars({
   rating = 5,
   max = 5,
-  color = 'yellow',
+  color = 'star',
   size = 20,
   className,
   label,
