@@ -14,6 +14,8 @@ export default defineConfig({
         test: {
           name: 'unit',
           environment: 'node',
+          // the emails read the theme's tokens from theme.css?raw, which vitest empties unless included
+          css: { include: /theme\.css/ },
           include: ['tests/unit/**/*.test.{ts,tsx}', 'src/**/*.test.ts'],
         },
       },

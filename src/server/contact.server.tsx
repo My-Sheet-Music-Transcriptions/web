@@ -1,4 +1,5 @@
 import './env.server'
+import { NoticeEmail } from '~/components/email/NoticeEmail'
 import {
   ALLOWED_UPLOAD_TYPES,
   type ContactInput,
@@ -6,7 +7,7 @@ import {
   formDataToObject,
   MAX_UPLOAD_BYTES,
 } from './contact'
-import { sendMail } from './mailgun.server'
+import { renderEmail, sendMail } from './mailgun.server'
 
 export type ContactResult = { ok: true } | { ok: false; errors: Record<string, string> }
 
@@ -69,29 +70,41 @@ export async function deliverContact(
 
   const gift = input.kind === 'gift-card'
   const reservation = input.kind === 'reservation'
-  const lines = reservation
-    ? [`Email: ${input.email}`, `Reserved from: ${input.returnTo}`]
+  const fields: [string, string][] = reservation
+    ? [
+        ['Email', input.email],
+        ['Reserved from', input.returnTo],
+      ]
     : gift
       ? [
-          `Name: ${input.name}`,
-          `Email: ${input.email}`,
-          `Amount: ${input.amount} ${input.currency}`,
-          '',
-          input.message || '(no details given)',
+          ['Name', input.name],
+          ['Email', input.email],
+          ['Amount', `${input.amount} ${input.currency}`],
         ]
       : [
-          `Name: ${input.name}`,
-          `Email: ${input.email}`,
-          `Phone: ${[input.prefix, input.phone].filter(Boolean).join(' ') || '—'}`,
-          `Where to listen: ${input.link || '—'}`,
-          `Instruments: ${input.instruments || '—'}`,
-          `Purpose: ${input.purpose || '—'}`,
-          '',
-          input.message,
-          '',
-          attachmentNote,
+          ['Name', input.name],
+          ['Email', input.email],
+          ['Phone', [input.prefix, input.phone].filter(Boolean).join(' ') || '—'],
+          ['Where to listen', input.link || '—'],
+          ['Instruments', input.instruments || '—'],
+          ['Purpose', input.purpose || '—'],
         ]
-  const text = lines.join('\n')
+  const message = reservation
+    ? undefined
+    : gift
+      ? input.message || '(no details given)'
+      : input.message
+  const note = reservation || gift ? undefined : attachmentNote
+  const subject = reservation
+    ? `New reservation on ${input.returnTo} from ${input.email}`
+    : gift
+      ? `New gift card request from ${input.name}`
+      : `New transcription request from ${input.name}`
+  const text = [
+    ...fields.map(([label, value]) => `${label}: ${value}`),
+    ...(message ? ['', message] : []),
+    ...(note ? ['', note] : []),
+  ].join('\n')
   const to = process.env.CONTACT_TO_EMAIL ?? 'info@mysheetmusictranscriptions.com'
   const from = process.env.CONTACT_FROM_EMAIL ?? 'website@mysheetmusictranscriptions.com'
   await sendMail(
@@ -99,12 +112,17 @@ export async function deliverContact(
       from,
       to,
       replyTo: input.email,
-      subject: reservation
-        ? `New reservation on ${input.returnTo} from ${input.email}`
-        : gift
-          ? `New gift card request from ${input.name}`
-          : `New transcription request from ${input.name}`,
+      subject,
       text,
+      html: await renderEmail(
+        <NoticeEmail
+          lang="en"
+          title={subject}
+          rows={fields.map(([label, value]) => ({ label, value }))}
+          message={message}
+          note={note}
+        />,
+      ),
       attachments:
         attachment && attachment.bytes.byteLength <= 10 * 1024 * 1024
           ? [{ filename: attachment.name, content: attachment.bytes, type: attachment.type }]

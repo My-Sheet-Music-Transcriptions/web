@@ -112,6 +112,7 @@ export const orderEmails: OrderEmails = {
   tracking: 'Segueix el paquet: {tracking}',
   note: 'Una nota nostra: {note}',
   link: "L'estat de la comanda, el seguiment del paquet i la factura, sempre aquí: {link}",
+  buttons: { order: 'Mira la comanda', tracking: 'Segueix el paquet' },
   summary: {
     order: 'Comanda',
     quantity: 'Quantitat',

@@ -1,8 +1,10 @@
 import { createHmac } from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
+import type { ReactElement } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { parseMeta } from '../../src/content/schema'
+import { renderEmail } from '../../src/server/mailgun.server'
 import {
   applyUpdate,
   createOrder,
@@ -367,5 +369,22 @@ describe('orders', () => {
     expect(email.text).toContain('34,90')
     expect(email.text).toContain('https://lamevapartitura.cat/?order=LMP-1001.kkk')
     expect(teamEmail(order, 'https://x/admin/orders/').text).toContain('https://x/admin/orders/')
+  })
+  it('renders the same email as HTML: the lockup, the buttons and the order', async () => {
+    const order: Order = { ...base, number: 'LMP-1001', key: 'k'.repeat(24) }
+    const link = 'https://lamevapartitura.cat/?order=LMP-1001.kkk'
+    const { react } = customerEmail(order, 'shipped', link, { tracking: 'https://t.example/1' })
+    const html = await renderEmail(react as ReactElement)
+    expect(html).toMatch(/^<!DOCTYPE html/)
+    expect(html).toContain('lang="ca"')
+    expect(html).toContain('src="https://lamevapartitura.cat/og/ca/email-logo.png"')
+    expect(html).toContain(`href="${link}"`)
+    expect(html).toContain('Mira la comanda')
+    expect(html).toContain('href="https://t.example/1"')
+    expect(html).toContain('34,90')
+    const team = await renderEmail(
+      teamEmail(order, 'https://x/admin/orders/').react as ReactElement,
+    )
+    expect(team).toContain('href="https://x/admin/orders/"')
   })
 })

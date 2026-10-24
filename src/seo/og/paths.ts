@@ -20,3 +20,14 @@ export function entryOgImage(e: OgEntry): string {
 export function siteOgImage(locale: string): string {
   return `/og/${locale}/site.png`
 }
+
+/** The width the emails show the lockup at; the file is twice as wide, for sharp screens. */
+export const EMAIL_LOGO_WIDTH = 183
+
+/**
+ * The locale's lockup for emails: a PNG (mail clients show no SVG) that prebuild writes beside the share images
+ * (scripts/lib/og.ts `buildEmailLogo`), so it is served on every deploy at a path no locale prefixes.
+ */
+export function emailLogoImage(locale: string): string {
+  return `/og/${locale}/email-logo.png`
+}

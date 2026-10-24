@@ -92,6 +92,9 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
 - `src/components/typography` – `Text`, `Heading`, `List`/`ListItem`, `Quote`, `TextLink`, `Divider`: the prose
   inside pages and blocks, styled with Tailwind once. Plain `<strong>` / `<em>` are the exceptions, styled in the
   base layer of `theme.css`. Pages never write raw `<p>`, `<h2>`, `<ul>`, `<a>` (`tests/unit/content.test.ts`).
+- `src/components/email` – the emails the site sends, in React Email (`react-email`): `EmailLayout` and its pieces,
+  `OrderEmail` (a customer's order status), `NoticeEmail` (ours: a new order, a form request); words and the logo by
+  props, styles inline from the tokens (`theme.ts`). The server renders them (`renderEmail` in `mailgun.server.ts`).
 - `src/components/layout` – TopBar, Header (+MegaMenu, MobileNav), Footer, ConsentBanner, LangSwitcher, Logo: props
   only, with `children`/slots where composition helps (the top bar's and header's language switcher).
 - `src/app` – the app's side: `SiteShell` (reads the locale's site config, `content/<locale>/data/{menu.json,footer.ts}` and
@@ -133,8 +136,10 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   of `js.stripe.com/v3`, the only third-party script the site takes, loaded at the payment step alone because Stripe
   forbids bundling it, typed for the few calls made; the element's colours are read from the theme's tokens at run
   time), orders in Netlify Blobs (`orders.server.ts`, store `shop-orders`, in memory off Netlify) and plain-text
-  emails with Mailgun (`shop-emails.server.ts` over `mailgun.server.ts`, the forms' mailer too, no SDK; logged without
-  `MAILGUN_API_KEY` and `MAILGUN_DOMAIN`). Stripe.js has no Catalan: a Catalan
+  emails with Mailgun (`shop-emails.server.tsx` over `mailgun.server.ts`, the forms' mailer too, no SDK; logged without
+  `MAILGUN_API_KEY` and `MAILGUN_DOMAIN`), each as text and as HTML from React Email (`src/components/email`: the
+  layout, `OrderEmail`, `NoticeEmail`, inline styles from `theme.css`'s tokens, the lockup as the PNG prebuild writes
+  to `/og/<locale>/email-logo.png`; Storybook `Emails/Emails`). Stripe.js has no Catalan: a Catalan
   site gets the element in Spanish (`stripeLocale`), everything around it in Catalan. The orders panel is
   `/admin/orders` (`src/admin/orders`, built by `vite.orders.config.ts`; Netlify Identity users with the `shop` or
   `admin` role, or `SHOP_ADMIN_EMAILS`): each status change can email the customer. Every customer email links their
