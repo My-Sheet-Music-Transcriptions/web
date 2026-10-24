@@ -19,7 +19,8 @@
       "type": "Cards",
       "reveal": true,
       "title": "Síguenos",
-      "variant": "tile",
+      "variant": "card",
+      "tone": "peach",
       "columns": 3,
       "items": [
         {

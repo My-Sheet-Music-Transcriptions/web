@@ -17,8 +17,8 @@ export function Stats({ items, ...shell }: StatsProps) {
             key={`${s.value} ${s.label}`}
             className="flex flex-col-reverse items-center justify-end gap-3"
           >
-            <dt className="max-w-[300px] text-body text-ink">{s.label}</dt>
-            <dd className="text-[46px] font-bold leading-none text-primary">{s.value}</dd>
+            <dt className="max-w-75 text-body text-ink">{s.label}</dt>
+            <dd className="text-figure font-bold text-primary">{s.value}</dd>
           </RevealItem>
         ))}
       </dl>

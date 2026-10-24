@@ -58,7 +58,7 @@ export function Article({
     p.caption && (p.video || p.clip || p.audio) ? { ...p, caption: undefined } : p
   return (
     <BlockShell {...shell} width={width} align="start" label={label}>
-      <div className="flex flex-col gap-4 text-charcoal [overflow-wrap:break-word] [&>h2]:mt-6 [&>h3]:mt-4 [&>figure]:my-4">
+      <div className="flex flex-col gap-stack text-ink [overflow-wrap:break-word] [&>h2]:mt-6 [&>h3]:mt-4 [&>figure]:my-4">
         {items.map((p, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: the stored order is the article's order
           <Fragment key={i}>

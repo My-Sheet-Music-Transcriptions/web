@@ -29,7 +29,7 @@ export function PostList({ items = [], columns = 3, limit, linkLabel, ...shell }
   const shown = limit ? items.slice(0, limit) : items
   return (
     <BlockShell {...shell} cascade>
-      <ul className={cn(gridCols(columns, { tablet: 2 }), 'gap-8')}>
+      <ul className={cn(gridCols(columns, { tablet: 2 }), 'gap-grid-gap')}>
         {shown.map((post) => (
           <RevealItem as="li" key={post.href} className="flex">
             <Card
@@ -48,31 +48,34 @@ export function PostList({ items = [], columns = 3, limit, linkLabel, ...shell }
                   />
                 ) : null}
                 {post.category ? (
-                  <span className="absolute top-3 right-3 rounded-pill bg-accent-deep px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+                  <span
+                    data-live-colour=""
+                    className="absolute top-3 right-3 label-caps rounded-pill bg-button px-3 py-2 text-white"
+                  >
                     {post.category}
                   </span>
                 ) : null}
               </div>
-              <div className="flex flex-1 flex-col gap-3 p-6">
+              <div className="flex flex-1 flex-col gap-3 p-card-pad">
                 <h3 className="text-h4 font-bold text-ink">
                   <SmartLink href={post.href} className="hover:text-accent-deep">
                     {post.title}
                   </SmartLink>
                 </h3>
                 {post.excerpt ? (
-                  <p className="line-clamp-5 text-small text-secondary">{post.excerpt}</p>
+                  <p className="line-clamp-5 text-small text-muted">{post.excerpt}</p>
                 ) : null}
                 {linkLabel ? (
                   <SmartLink
                     href={post.href}
-                    className="text-small font-bold uppercase tracking-wide text-accent-deep hover:underline"
+                    className="label-caps text-primary hover:text-primary-deep hover:underline"
                     aria-label={`${linkLabel}: ${post.title}`}
                   >
                     {linkLabel} »
                   </SmartLink>
                 ) : null}
               </div>
-              <p className="border-line border-t px-6 py-3 text-small text-secondary">
+              <p className="border-line border-t px-card-pad py-3 text-small text-muted">
                 <time dateTime={post.date}>{shortDate(post.date, locale)}</time>
               </p>
             </Card>

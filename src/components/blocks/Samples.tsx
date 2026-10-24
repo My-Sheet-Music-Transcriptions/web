@@ -115,20 +115,20 @@ export function Samples({
     return (
       <BlockShell {...shell} cascade>
         {tabs ? <Tabs tabs={tabs.map((t) => t.label)} active={tab} onChange={setTab} /> : null}
-        <ul className={`${gridCols(columns, { tablet: columns })} gap-x-8 gap-y-14`}>
+        <ul className={`${gridCols(columns, { tablet: columns })} gap-x-grid-gap-lg gap-y-14`}>
           {shown.map((s) => (
             <RevealGroup as="li" key={s.title} className="flex flex-col items-center gap-5">
               <RevealItem className="w-full">
                 {s.price ? (
                   <PriceTag title={s.title} tone={s.tone} price={s.price} surface="cream" />
                 ) : (
-                  <h3 className="text-center text-h3 font-bold text-ink">{s.title}</h3>
+                  <h3 className="text-center text-h3 text-ink">{s.title}</h3>
                 )}
               </RevealItem>
               <RevealItem className="w-full">
-                <Card padding="sm" shadow="band">
+                <Card>
                   {s.icon || s.name ? (
-                    <p className="mb-3 flex items-center gap-3 px-1 text-[13px] font-bold uppercase tracking-wide text-ink lg:text-[15px]">
+                    <p className="label-caps mb-3 flex items-center gap-3 px-1 text-ink">
                       {s.icon ? (
                         <Picture
                           image={s.icon}
@@ -153,7 +153,7 @@ export function Samples({
                 <Icon name="arrow-down" size={32} className="text-ink" aria-hidden="true" />
               </RevealItem>
               <RevealItem className="w-full">
-                <Card padding="none" shadow="band" className="overflow-hidden">
+                <Card padding="none" className="overflow-hidden">
                   <Score
                     sample={s}
                     sizes="(min-width: 1025px) 360px, 100vw"
@@ -183,7 +183,7 @@ export function Samples({
               {s.price ? (
                 <PriceTag title={s.title} tone={s.tone} price={s.price} surface="cream" />
               ) : (
-                <h3 className="text-center text-h3 font-bold text-ink md:text-left">{s.title}</h3>
+                <h3 className="text-center text-h3 text-ink md:text-left">{s.title}</h3>
               )}
               <Media
                 video={s.video}
@@ -198,7 +198,7 @@ export function Samples({
                 </div>
               ) : null}
             </div>
-            <div className="mx-auto w-full max-w-[360px]">
+            <div className="mx-auto w-full max-w-90">
               <Score
                 sample={s}
                 sizes="(min-width: 768px) 420px, 100vw"

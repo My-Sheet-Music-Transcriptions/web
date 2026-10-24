@@ -67,11 +67,11 @@ export function MediaText({
               {...media}
               label={label}
               sizes="(min-width: 1025px) 654px, 100vw"
-              frameClassName={imageSide === 'left' ? 'lg:ml-[-124px]' : 'lg:mr-[-124px]'}
+              frameClassName={imageSide === 'left' ? 'lg:-ml-31' : 'lg:-mr-31'}
               imageClassName="aspect-[654/437]"
             />
           </RevealItem>
-          <RevealItem className="flex flex-col gap-[14.4px] text-secondary">{children}</RevealItem>
+          <RevealItem className="flex flex-col gap-stack text-ink">{children}</RevealItem>
         </div>
       </BlockShell>
     )
@@ -91,7 +91,7 @@ export function MediaText({
           >
             <Media {...media} label={label} sizes={`(min-width: 768px) ${imageWidth}px, 100vw`} />
           </RevealItem>
-          <div className="flex min-w-0 flex-1 basis-[420px] flex-col gap-4">
+          <div className="flex min-w-0 flex-1 basis-105 flex-col gap-4">
             {heading}
             <RevealItem className="flex flex-col gap-4 text-ink">{children}</RevealItem>
             {actions ? <div className="mt-4">{actions}</div> : null}

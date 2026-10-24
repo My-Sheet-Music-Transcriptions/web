@@ -82,9 +82,7 @@ export function Carousel({
         <div
           className={cn(
             'flex ease-in-out motion-reduce:transition-none',
-            gallery
-              ? 'transition-transform duration-500'
-              : 'transition-transform duration-[2000ms]',
+            gallery ? 'transition-transform duration-500' : 'transition-transform duration-2000',
           )}
           style={{ transform: `translateX(-${i * 100}%)` }}
         >
@@ -134,9 +132,9 @@ export function Carousel({
                     aria-label={labels ? fill(labels.position, { n: k + 1, total: n }) : undefined}
                     aria-current={k === i ? 'true' : undefined}
                     className={cn(
-                      'block h-16 w-16 overflow-hidden rounded-[8px] bg-cream p-1 transition-[box-shadow,opacity]',
+                      'block size-16 overflow-hidden rounded-sm bg-cream p-1 transition-[box-shadow,opacity]',
                       k === i
-                        ? 'shadow-[inset_0_0_0_2px_var(--color-accent-deep)]'
+                        ? 'ring-2 ring-accent-deep ring-inset'
                         : 'opacity-70 hover:opacity-100',
                     )}
                   >

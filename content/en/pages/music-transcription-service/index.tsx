@@ -92,7 +92,7 @@ export default function MusicTranscriptionServicePage() {
       <Steps
         reveal
         title="How does it work?"
-        variant="bubbles"
+        variant="timeline"
         items={[
           {
             title: '1. You request a quote',

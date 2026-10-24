@@ -7,7 +7,6 @@ import type { FaqGroup } from '~/content/types'
 export const servicesFaq: FaqGroup = {
   title: 'Servicios',
   id: 'servicios',
-  tone: 'orange',
   items: [
     {
       question: '¿Qué canciones se pueden transcribir?',
@@ -30,7 +29,6 @@ export const servicesFaq: FaqGroup = {
 export const orderingFaq: FaqGroup = {
   title: 'Proceso de solicitud',
   id: 'proceso-de-solicitud',
-  tone: 'teal',
   items: [
     {
       question: 'En general, ¿cómo funciona?',
@@ -109,7 +107,6 @@ export const orderingFaq: FaqGroup = {
 export const technicalFaq: FaqGroup = {
   title: 'Preguntas técnicas',
   id: 'preguntas-tecnicas',
-  tone: 'blue',
   items: [
     {
       question: '¿Cómo me enviaréis la transcripción?',
@@ -147,7 +144,6 @@ export const technicalFaq: FaqGroup = {
 export const aboutFaq: FaqGroup = {
   title: 'Sobre nosotros',
   id: 'sobre-nosotros',
-  tone: 'navy',
   items: [
     {
       question: '¿Quiénes somos?',

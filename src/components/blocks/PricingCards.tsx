@@ -6,7 +6,6 @@ import { RevealItem } from '~/components/primitives/Motion'
 import { Picture } from '~/components/primitives/Picture'
 import { PriceTag } from '~/components/primitives/PriceTag'
 import type { PricingTier } from '~/content/types'
-import { cn } from '~/lib/cn'
 
 export interface PricingCardsProps extends HeadingProps {
   title: string
@@ -28,9 +27,7 @@ export function PricingCards({ tiers, children, ...shell }: PricingCardsProps) {
   return (
     <BlockShell {...shell} spacing="tight" cascade>
       {children ? (
-        <RevealItem className="flex flex-col gap-[14.4px] text-ink md:px-[45px]">
-          {children}
-        </RevealItem>
+        <RevealItem className="flex flex-col gap-stack text-ink md:px-10">{children}</RevealItem>
       ) : null}
       {single ? (
         <RevealItem>
@@ -45,39 +42,32 @@ export function PricingCards({ tiers, children, ...shell }: PricingCardsProps) {
 
 function Tiers({ tiers }: { tiers: PricingTier[] }) {
   return (
-    <ul className="mt-[92px] grid gap-y-[121px] md:mt-[122px] md:grid-cols-3 md:gap-x-5">
+    <ul className="mt-24 grid gap-y-28 md:mt-28 md:grid-cols-3 md:gap-x-grid-gap">
       {tiers.map((t) => {
         const img = t.icon
         return (
           <RevealItem as="li" key={t.id ?? t.title} className="flex">
-            <Card
-              padding="none"
-              shadow="band"
-              className={cn(
-                'relative flex w-full flex-col md:min-h-[435px]',
-                t.note ? 'min-h-[435px]' : 'min-h-[368px]',
-              )}
-            >
+            <Card padding="none" className="relative flex w-full flex-col">
               {img ? (
                 <Picture
                   image={img}
                   alt=""
                   sizes="107px"
-                  className="absolute left-1/2 top-[-83px] h-[104px] w-[105px] -translate-x-1/2 md:h-[106px] md:w-[107px]"
+                  className="absolute -top-20 left-1/2 h-26 w-auto -translate-x-1/2"
                 />
               ) : null}
               <PriceTag title={t.title} tone={t.tone} price={t} />
               <div className="flex flex-1 flex-col text-center text-ink">
                 {t.factorsLabel ? (
-                  <p className="mt-5 text-body font-bold leading-8">{t.factorsLabel}</p>
+                  <p className="mt-4 text-body font-bold">{t.factorsLabel}</p>
                 ) : null}
-                <ul className="mx-[26px] mt-[5px] list-disc pl-10 text-left text-body">
+                <ul className="mx-card-pad mt-2 list-disc pl-6 text-left text-body">
                   {t.factors.map((f) => (
                     <li key={f}>{f}</li>
                   ))}
                 </ul>
                 {t.note ? (
-                  <p className="mt-auto pt-9 pr-[26px] pb-[26px] text-right text-small leading-[21px] italic">
+                  <p className="mt-auto px-card-pad pt-8 pb-card-pad text-right text-small text-muted italic">
                     {t.note}
                   </p>
                 ) : (
@@ -96,20 +86,19 @@ function SingleTier({ tier }: { tier: PricingTier }) {
   return (
     <Card
       padding="none"
-      shadow="band"
-      className="mx-auto mt-12 grid max-w-[900px] overflow-hidden md:grid-cols-2"
+      className="mx-auto mt-heading-gap grid max-w-narrow overflow-hidden md:grid-cols-2"
     >
-      <div className="flex flex-col items-center justify-center gap-1 bg-cream px-8 py-10 text-center text-ink">
-        {tier.title ? <h3 className="mb-2 text-h3 font-bold">{tier.title}</h3> : null}
-        {tier.fromLabel ? <p className="text-[18px] leading-9">{tier.fromLabel}</p> : null}
-        <p className="text-price font-bold leading-[46px] text-ink">{tier.from}</p>
-        <p className="text-[18px] font-bold leading-9">{tier.unit}</p>
-        {tier.note ? <p className="mt-4 max-w-[320px] text-small italic">{tier.note}</p> : null}
+      <div className="flex flex-col items-center justify-center bg-cream px-8 py-10 text-center text-ink">
+        {tier.title ? <h3 className="mb-2 text-h3">{tier.title}</h3> : null}
+        {tier.fromLabel ? <p className="text-lead">{tier.fromLabel}</p> : null}
+        <p className="my-2 text-figure font-bold text-ink">{tier.from}</p>
+        <p className="text-lead font-bold">{tier.unit}</p>
+        {tier.note ? (
+          <p className="mt-4 max-w-80 text-small text-muted italic">{tier.note}</p>
+        ) : null}
       </div>
       <div className="flex flex-col justify-center px-8 py-10 text-ink">
-        {tier.factorsLabel ? (
-          <p className="text-[18px] font-bold leading-8">{tier.factorsLabel}</p>
-        ) : null}
+        {tier.factorsLabel ? <p className="text-lead font-bold">{tier.factorsLabel}</p> : null}
         <ol className="mt-3 flex flex-col gap-2 text-body">
           {tier.factors.map((f, i) => (
             <li key={f}>

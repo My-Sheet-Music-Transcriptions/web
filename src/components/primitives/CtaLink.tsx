@@ -10,13 +10,14 @@ export interface Cta {
 export interface CtaLinkProps {
   cta: Cta
   variant?: ButtonProps['variant']
+  size?: ButtonProps['size']
   className?: string
 }
 
 /** The button every block ends with: a filled pill that links (router link for internal paths). */
-export function CtaLink({ cta, variant, className }: CtaLinkProps) {
+export function CtaLink({ cta, variant, size, className }: CtaLinkProps) {
   return (
-    <Button asChild variant={variant} className={className}>
+    <Button asChild variant={variant} size={size} className={className}>
       <SmartLink href={cta.href}>{cta.label}</SmartLink>
     </Button>
   )

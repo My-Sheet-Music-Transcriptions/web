@@ -44,24 +44,21 @@ export function Header({ logo, nav, cta, labels, account, languages, home = fals
 
   return (
     <header
-      className={cn(
-        'sticky top-0 z-50 bg-white transition-shadow',
-        scrolled && 'shadow-[0_2px_12px_rgba(0,0,0,0.08)]',
-      )}
+      className={cn('sticky top-0 z-50 bg-white transition-shadow', scrolled && 'shadow-card')}
     >
-      <div className="mx-auto flex h-[57px] max-w-[1440px] items-center justify-between gap-4 px-4 nav:h-[71px] nav:px-5">
+      <div className="container-page flex h-14 items-center justify-between gap-4 nav:h-18">
         <Logo
           logo={logo}
           width={183}
           priority
           className={cn(
-            'w-[150px] min-w-[110px] shrink transition-opacity duration-300 nav:ml-[10px] nav:shrink-0 nav:w-[183px] [&_img]:h-auto [&_img]:w-full',
+            'w-38 min-w-28 shrink transition-opacity duration-300 nav:w-46 nav:shrink-0 [&_img]:h-auto [&_img]:w-full',
             home && !scrolled && 'md:pointer-events-none md:opacity-0',
           )}
         />
 
         <nav aria-label={labels.main} className="hidden nav:block">
-          <ul className="flex items-center gap-[5px]">
+          <ul className="flex items-center gap-1">
             {nav.map((item) =>
               item.groups ? (
                 <li key={item.label} className="relative">
@@ -72,7 +69,7 @@ export function Header({ logo, nav, cta, labels, account, languages, home = fals
                   <SmartLink
                     data-live-colour=""
                     href={item.href}
-                    className="block rounded px-[14px] py-[13px] text-[15px] leading-5 font-semibold text-secondary hover:text-[#f2893b] data-[status=active]:text-[#f2893b]"
+                    className="block rounded-sm px-3 py-3 text-small font-semibold text-ink hover:text-accent data-[status=active]:text-accent"
                     activeOptions={{ exact: item.href === '/' }}
                   >
                     <Arrowed label={item.label} />
@@ -93,7 +90,7 @@ export function Header({ logo, nav, cta, labels, account, languages, home = fals
           {languages}
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded text-ink"
+            className="inline-flex size-11 items-center justify-center rounded-sm text-ink"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={labels.menu}

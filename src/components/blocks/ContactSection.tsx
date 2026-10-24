@@ -110,7 +110,7 @@ export function ContactSection({
   })
   const Err = ({ name }: { name: string }) =>
     errors[name] ? (
-      <p id={`${uid}-${name}-err`} className="mt-1 text-[13px] font-semibold text-[#b3261e]">
+      <p id={`${uid}-${name}-err`} className="mt-1 text-small font-semibold text-error">
         {errors[name]}
       </p>
     ) : null
@@ -129,7 +129,7 @@ export function ContactSection({
       tone="peach"
       width="narrow"
       spacing="loose"
-      className="relative pt-[110px] md:pt-[110px]"
+      className="relative pt-32 md:pt-40"
       reveal={reveal}
       cascade
     >
@@ -137,17 +137,16 @@ export function ContactSection({
       {copy.responseTime ? (
         <RevealItem
           as="p"
-          data-live-colour=""
-          className="mx-[-10px] flex items-center justify-center gap-x-0 rounded-[25px] bg-[linear-gradient(266deg,#2ec4b6_0%,#2e97c4_100%)] pt-1.5 pr-2.5 pb-3 pl-2.5 text-body leading-8 font-bold text-white md:mx-auto md:w-[430px] md:pt-0.5 md:pr-10 md:pb-2 md:pl-[42px]"
+          className="mx-auto flex max-w-prose items-center justify-center gap-3 rounded-pill bg-primary px-6 py-3 text-body font-bold text-white md:w-fit"
         >
-          <Icon name="fa-paper-plane" size={25} className="mt-2 hidden shrink-0 md:block" />
-          <span className="mt-2 flex-1 text-center whitespace-pre-line">{copy.responseTime}</span>
+          <Icon name="fa-paper-plane" size={24} className="hidden shrink-0 md:block" />
+          <span className="flex-1 text-center whitespace-pre-line">{copy.responseTime}</span>
         </RevealItem>
       ) : null}
 
       <RevealItem>
         {status === 'sent' ? (
-          <Card padding="lg" className="mt-10 text-center text-ink">
+          <Card className="mt-heading-gap text-center text-ink">
             <output className="block" aria-live="polite">
               <p className="text-h3">{copy.sentTitle}</p>
               <p className="mt-2 text-small">{copy.sentBody}</p>
@@ -156,7 +155,7 @@ export function ContactSection({
         ) : (
           <form
             ref={formRef}
-            className="mt-6 md:mt-[35px]"
+            className="mt-heading-gap"
             aria-label={copy.label}
             method="post"
             action="/api/contact"
@@ -164,7 +163,7 @@ export function ContactSection({
             noValidate
             onSubmit={onSubmit}
           >
-            <div className={cn('grid gap-x-[10px] gap-y-[6px]', !reservation && 'md:grid-cols-2')}>
+            <div className={cn('grid gap-4', !reservation && 'md:grid-cols-2')}>
               {reservation ? null : (
                 <div>
                   {label('name', copy.name, true)}
@@ -192,7 +191,7 @@ export function ContactSection({
             </div>
             {reservation ? null : gift ? (
               <>
-                <div className="mt-[6px] grid gap-x-[10px] gap-y-[6px] md:grid-cols-[1fr_200px]">
+                <div className="mt-4 grid gap-4 md:grid-cols-[1fr_auto]">
                   {copy.amount ? (
                     <div>
                       {label('amount', copy.amount, true)}
@@ -209,7 +208,7 @@ export function ContactSection({
                     </div>
                   ) : null}
                   {copy.currency ? (
-                    <div>
+                    <div className="md:w-50">
                       {label('currency', copy.currency)}
                       <select {...field('currency')} className={inputClass} defaultValue="EUR">
                         {copy.currency.options.map((o) => (
@@ -221,7 +220,7 @@ export function ContactSection({
                     </div>
                   ) : null}
                 </div>
-                <div className="mt-[6px]">
+                <div className="mt-4">
                   {label('message', copy.message)}
                   <Textarea {...field('message')} rows={6} placeholder={copy.message.placeholder} />
                   <Err name="message" />
@@ -230,72 +229,62 @@ export function ContactSection({
             ) : (
               <>
                 {copy.link ? (
-                  <div className="mt-[6px]">
+                  <div className="mt-4">
                     {label('link', copy.link)}
-                    <Textarea
-                      {...field('link')}
-                      rows={2}
-                      className="h-[55px]"
-                      placeholder={copy.link.placeholder}
-                    />
+                    <Textarea {...field('link')} rows={2} placeholder={copy.link.placeholder} />
                   </div>
                 ) : null}
                 {copy.instruments ? (
-                  <div className="mt-[6px]">
+                  <div className="mt-4">
                     {label('instruments', copy.instruments)}
                     <Textarea
                       {...field('instruments')}
                       rows={2}
-                      className="h-[55px]"
                       placeholder={copy.instruments.placeholder}
                     />
                   </div>
                 ) : null}
                 {copy.purpose ? (
-                  <div className="mt-[6px]">
+                  <div className="mt-4">
                     {label('purpose', copy.purpose)}
                     <Textarea
                       {...field('purpose')}
                       rows={3}
-                      className="h-[75px]"
                       placeholder={copy.purpose.placeholder}
                     />
                   </div>
                 ) : null}
                 {copy.file ? (
-                  <div className="mt-[6px]">
+                  <div className="mt-4">
                     {label('file', copy.file)}
                     <input
                       {...field('file')}
                       type="file"
                       accept="audio/*,video/*,.pdf,image/*,.zip"
-                      className="block w-full rounded-[25px] bg-white py-1 pr-4 pl-1 text-body text-ink file:mr-3 file:rounded-[25px] file:border-0 file:bg-primary file:px-4 file:py-1.5 file:text-small file:font-bold file:text-white file:uppercase"
+                      className="block min-h-12 w-full rounded-card bg-white py-2 pr-4 pl-2 text-body text-ink file:label-caps file:mr-3 file:rounded-pill file:border-0 file:bg-primary file:px-4 file:py-2 file:text-white"
                     />
                     <Err name="file" />
                   </div>
                 ) : null}
-                <div className="mt-[6px]">
+                <div className="mt-4">
                   {label('message', copy.message, true)}
                   <Textarea
                     {...field('message')}
                     rows={8}
-                    className="h-[256px]"
                     required
                     placeholder={copy.message.placeholder}
                   />
                   <Err name="message" />
                 </div>
                 {copy.prefix || copy.phone ? (
-                  <div className="mt-[6px] grid gap-x-[10px] gap-y-[6px] md:grid-cols-[213px_1fr]">
+                  <div className="mt-4 grid gap-4 md:grid-cols-[auto_1fr]">
                     {copy.prefix ? (
-                      <div>
+                      <div className="md:w-52">
                         {label('prefix', copy.prefix)}
                         <select
                           {...field('prefix')}
-                          className={cn(
-                            inputClass,
-                            'appearance-none bg-[url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2018%2016%27%3E%3Cpath%20d=%27M0%200h18L9%2016z%27%20fill=%27%23aaa%27/%3E%3C/svg%3E")] bg-[length:18px_16px] bg-[position:right_16px_center] bg-no-repeat',
-                          )}
+                          className={cn(inputClass, 'appearance-none bg-no-repeat')}
+                          style={selectArrow}
                           defaultValue=""
                         >
                           <option value="" />
@@ -336,7 +325,7 @@ export function ContactSection({
               />
             </div>
             <input type="hidden" name="startedAt" value={startedAt.current} />
-            <p className="mt-[6px] text-[15px] leading-[22.5px] text-ink">
+            <p className="mt-4 text-small text-ink">
               {fillNodes(copy.consent, {
                 privacy: (
                   <SmartLink href={copy.privacy.href} className="font-bold text-ink underline">
@@ -346,16 +335,11 @@ export function ContactSection({
               })}
             </p>
             {status === 'failed' ? (
-              <p role="alert" className="mt-3 text-small font-semibold text-[#b3261e]">
+              <p role="alert" className="mt-3 text-small font-semibold text-error">
                 {copy.failed}
               </p>
             ) : null}
-            <Button
-              type="submit"
-              size="block"
-              className="mt-[6px] rounded-[25px] py-[15px] leading-4"
-              disabled={status === 'sending'}
-            >
+            <Button type="submit" size="lg" className="mt-4 w-full" disabled={status === 'sending'}>
               {status === 'sending' ? copy.sending : copy.send}
             </Button>
           </form>
@@ -365,8 +349,17 @@ export function ContactSection({
   )
 }
 
+/** The grey triangle at the right of a `<select>` (the browser's own is hidden by `appearance-none`). */
+const selectArrow = {
+  backgroundImage:
+    'url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2018%2016%27%3E%3Cpath%20d=%27M0%200h18L9%2016z%27%20fill=%27%23aaa%27/%3E%3C/svg%3E")',
+  backgroundSize: '18px 16px',
+  backgroundPosition: 'right 16px center',
+}
+
+/** A field: 48px high, the card's radius, white, a teal border when focused and a red one when invalid. */
 const inputClass =
-  'block h-10 w-full rounded-[25px] border border-transparent bg-white px-4 py-2 text-body leading-[22.4px] text-ink placeholder:text-[#767676] focus:border-primary aria-[invalid]:border-[#b3261e]'
+  'block h-12 w-full rounded-card border border-transparent bg-white px-4 py-2 text-body text-ink placeholder:text-muted focus:border-primary aria-[invalid]:border-error'
 
 function Label({
   htmlFor,
@@ -380,17 +373,14 @@ function Label({
   hint?: string
 }) {
   return (
-    <label
-      htmlFor={htmlFor}
-      className="block pb-0.5 text-body leading-[48px] font-semibold text-secondary"
-    >
+    <label htmlFor={htmlFor} className="block pt-2 pb-1 text-small font-semibold text-ink">
       {children}
       {required ? (
-        <span className="ml-2 text-[#b3261e]" aria-hidden="true">
+        <span className="ml-1 text-error" aria-hidden="true">
           *
         </span>
       ) : null}
-      {hint ? <span className="ml-1 text-[11px] font-semibold">{hint}</span> : null}
+      {hint ? <span className="ml-1 text-caption font-semibold text-muted">{hint}</span> : null}
     </label>
   )
 }
@@ -398,10 +388,5 @@ function Input(props: React.ComponentPropsWithoutRef<'input'>) {
   return <input {...props} className={cn(inputClass, props.className)} />
 }
 function Textarea(props: React.ComponentPropsWithoutRef<'textarea'>) {
-  return (
-    <textarea
-      {...props}
-      className={cn(inputClass, 'resize-y px-[14px] py-[5px]', props.className)}
-    />
-  )
+  return <textarea {...props} className={cn(inputClass, 'h-auto resize-y py-3', props.className)} />
 }

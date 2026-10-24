@@ -171,8 +171,15 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   valid JSON-LD, images with alt/width/height, no broken internal links, listed once in its collection's sitemap
   unless `noindex`, with the hreflang alternates of its `<head>`.
 - Every story passes axe WCAG 2.1 AA including colour contrast (`parameters.a11y.test = 'error'`). The one exception
-  is elements marked `data-live-colour`, which keep the live site's colours by decision (filled buttons, pricing headers,
-  the active nav item, the current language, the response-time pill); contrast is checked everywhere else.
+  is elements marked `data-live-colour`, which keep the brand orange by decision (the filled button's white label,
+  the active menu item, the current language); every other text colour of the scale passes on the backgrounds it
+  is used on (`tones.ts` deepens teal and orange on cream and peach).
+- Every class in `src/components` and `src/app` is on the design scale (`tests/unit/tokens.test.ts`, and the Biome
+  plugin `biome-plugins/off-scale.grit` in the editor): no arbitrary size or colour (`mt-[6px]`, `text-[13px]`,
+  `bg-[#3a3a3a]`), no half step (`py-2.5`), no hex literal, no utility the theme switched off (`text-lg`,
+  `rounded-lg`, `font-medium`). Geometry that cannot be on the scale (the homepage curve, a lightbox) says why on
+  the line above, `// off-scale: <reason>`, and the test counts those lines against `OFF_SCALE_BUDGET`, which may
+  only go down.
 - Lighthouse: performance ≥ 0.90, accessibility ≥ 0.95, best practices ≥ 0.95, SEO = 1.0; JS budget 150 KB.
 - Biome formats and lints everything; `tsc --noEmit` must pass (pages are type-checked against the block props).
 - No dead code (`pnpm knip`, config in `knip.ts`): every file is reachable from an entry point, every export is
@@ -269,12 +276,41 @@ suite (one og:image per page, in dist, at its declared size) keep it so.
 
 ## Design tokens
 
-Defined once in `src/styles/theme.css` (`@theme`, every token with a usage comment; `app.css` only imports).
-Text uses the contrast-safe `primary` #1a7f97 and `accent-deep` #b8571c; filled buttons keep the live site's `cta` #E2864D
-and `sky` #219EBC (marked `data-live-colour`), and #F49946 stays the decorative `accent`. Navy #023047, teal #239c90, ink #444. Font: Montserrat (variable). Radii:
-card 12px, pill 28px, field 20px. Containers 1140 / 1200 / 900 px. Breakpoints: md 768, lg 1025 (Elementor's
-tablet/desktop split), nav 1400 (the desktop menu fits on one line; the phone menu below). Use utilities, never ad-hoc hex values in components. `tests/unit/theme-tokens.test.ts`
-checks names, usage notes and contrast.
+Defined once in `src/styles/theme.css` (`@theme`, every token with a usage comment; `app.css` only imports), and
+the only values components may use: Tailwind's own colours, sizes, weights, line-heights, radii, shadows and
+containers are switched off (`--color-*: initial`…), so a class off the scale compiles to nothing and the tokens
+test refuses it (see "Rules that CI enforces").
+
+- **Colour (22).** Text is `ink` #333 (headings and body) or `muted` #6b6b6b (captions, notes); `line` #e5e5e5
+  for rules. `primary` #1a7f97 is the teal of links, outline buttons and icons (`primary-deep` on hover and on
+  tinted backgrounds); `sky` #219ebc the light teal-blue of a review's stars and a price header; `navy` #023047
+  dark panels. `accent` #f49946 is the orange mark (the heading rule, decorations, never text); `accent-deep`
+  #b8571c orange text, AA on white (`accent-hover` on tinted backgrounds); `button` #e2864d the brand orange of the
+  filled button, white label (2.7:1, kept by decision and marked `data-live-colour`, like the active menu item and
+  the current language in `accent`).
+  Backgrounds: `white`, `cream` #f7eee7 (a block that stands out, a price card), `peach` #fdebdc (the request
+  form, the audiences). `star` #ffb703 for ratings, `error` #b3261e for a field's error, `footer` /
+  `footer-text`, and one token per platform (`google`, `facebook`, `trustpilot`, `youtube`, `instagram`,
+  `linkedin`, `x`, `discord`).
+- **Type (10 styles).** `text-display` (the h1, 32→44px fluid), `text-h2` (26→32 fluid), `text-h3` 20, `text-h4`
+  16, `text-lead` 18, `text-body` 16/1.6, `text-small` 14, `text-caption` 12, `text-figure` 48 (a price),
+  `text-figure-lg` 64 (a counter); each carries its line-height. Weights `normal` 400, `semibold` 600, `bold` 700.
+  `label-caps` is the one uppercase style (buttons, eyebrows, step labels); `heading-rule` the orange rule under
+  a heading. Montserrat (variable), self-hosted.
+- **Rhythm.** Tailwind's 4px grid (whole steps only) plus named steps for what a block means, a step smaller on
+  phones: `section` 64/48 (a block's padding), `section-lg` 96/64, `section-sm` 40/32, `heading-gap` 40/32
+  (heading to content, content to buttons), `grid-gap` 24/16, `grid-gap-lg` 32/24, `card-pad` 24/20, `stack` 16
+  (`py-section`, `gap-grid-gap`, `p-card-pad`…).
+- **Shape.** Radii `sm` 6px (badges, menu items), `card` 12px (cards, pictures, form fields), `pill`. Shadows
+  `card` (at rest) and `float` (menus, the cart, a lightbox). Containers `content` 1140, `wide` 1200, `narrow`
+  900, `page` 1440 (`container-*` utilities), `prose` 48rem. Breakpoints: md 768, lg 1025 (Elementor's
+  tablet/desktop split), nav 1400 (the desktop menu fits on one line; the phone menu below).
+- **Buttons.** One `Button`: `primary` (filled `button` orange, white label, sky on hover), `secondary` (teal outline; `aria-pressed` fills
+  it: tabs), `ghost` (uppercase teal text); sizes `md` 44px and `lg` 52px, always `label-caps`. Nothing else
+  draws a pill.
+
+`tests/unit/theme-tokens.test.ts` checks names, usage notes and contrast; `tests/unit/tokens.test.ts` that
+components use nothing else.
 
 ## Design System artifact and the page workflow
 

@@ -34,8 +34,8 @@ export function Section({
       {children ? (
         <div
           className={cn(
-            'flex flex-col gap-4 text-charcoal',
-            align === 'center' && 'mx-auto max-w-3xl items-center text-center',
+            'flex flex-col gap-stack text-ink',
+            align === 'center' && 'mx-auto max-w-prose items-center text-center',
           )}
         >
           {children}

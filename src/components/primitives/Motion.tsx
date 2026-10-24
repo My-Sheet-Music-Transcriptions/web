@@ -176,7 +176,7 @@ export interface RevealItemProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  /** Data attributes pass through (`data-live-colour`). */
+  /** Data attributes pass through (`data-live-colour`, `data-consent-banner`). */
   [data: `data-${string}`]: string | undefined
 }
 

@@ -51,7 +51,7 @@ export function ShareLinks({ labels, ...shell }: ShareLinksProps) {
                 target={n.key === 'email' ? undefined : '_blank'}
                 rel="noopener noreferrer"
                 aria-label={labels ? fill(labels.shareOn, { network: name }) : undefined}
-                className="flex items-center gap-2 rounded-card bg-navy px-4 py-2.5 text-small font-semibold text-white transition-colors hover:bg-primary focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="flex items-center gap-2 min-h-11 rounded-card bg-navy px-4 py-2 text-small font-semibold text-white transition-colors hover:bg-primary"
               >
                 <Icon name={n.icon} size={16} />
                 {name}

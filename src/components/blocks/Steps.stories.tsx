@@ -15,11 +15,11 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
-/** A line of illustrated icons, each step in a speech bubble. */
-export const Bubbles: Story = {
+/** A timeline whose steps carry their illustrated icons instead of numbers. */
+export const WithIcons: Story = {
   args: {
     title: 'How does it work?',
-    variant: 'bubbles',
+    variant: 'timeline',
     stepLabel: undefined,
     items: [
       {
@@ -68,9 +68,9 @@ export const Columns: Story = {
     ],
   },
 }
-/** `reveal`: the line draws itself down to each icon, which pops in, then its bubble slides in. */
-export const BubblesRevealed: Story = {
-  args: { ...Bubbles.args, reveal: true },
+/** `reveal`: the steps and their icons rise in one after another. */
+export const WithIconsRevealed: Story = {
+  args: { ...WithIcons.args, reveal: true },
   play: ({ canvasElement }) => revealed(canvasElement),
 }
 export const NumberedReasons: Story = {

@@ -30,23 +30,18 @@ describe('theme tokens', () => {
       'google',
       'facebook',
       'trustpilot',
-      'accent-hover',
-      'orange-tint',
-      'teal-light',
-      'azure',
-      'pine',
-      'peach-deep',
-      'sand',
-      'line',
-      'footer',
-      'footer-text',
+      'youtube',
+      'instagram',
+      'linkedin',
+      'x',
+      'discord',
     ])
     expect(silent.filter((n) => !allowed.has(n))).toEqual([])
   })
   it('pairs every text size with a line-height and a weight', () => {
-    expect(theme.type.styles.length).toBeGreaterThanOrEqual(9)
+    expect(theme.type.styles.length).toBe(10)
     for (const s of theme.type.styles) {
-      expect(s.fontSize, s.name).toMatch(/px$/)
+      expect(s.fontSize, s.name).toMatch(/px\)?$/)
       expect(s.lineHeight, s.name).not.toBe('')
       expect(s.fontWeight).toBeGreaterThan(0)
     }

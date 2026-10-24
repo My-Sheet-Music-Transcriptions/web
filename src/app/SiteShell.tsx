@@ -54,7 +54,7 @@ export function SiteTopBar() {
       login={{ label: s.login, href: site.hub.login }}
       signup={{ label: s.signup, href: site.hub.signup }}
     >
-      <LangSwitcher label={s.language} items={languageLinks(site)} className="ml-6 min-w-[166px]" />
+      <LangSwitcher label={s.language} items={languageLinks(site)} className="ml-6 min-w-42" />
     </TopBar>
   )
 }
@@ -75,7 +75,7 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
         }
       }
       languages={
-        <LangSwitcher label={s.language} items={languageLinks(site)} className="text-[13px]" />
+        <LangSwitcher label={s.language} items={languageLinks(site)} className="text-small" />
       }
       home={home}
     />

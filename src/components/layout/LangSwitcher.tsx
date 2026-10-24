@@ -23,7 +23,8 @@ export interface LangSwitcherProps {
 }
 
 /**
- * "EN | ES | FR | DE | JP" switcher; the current language is highlighted in orange. Plain <a>: changing
+ * "EN | ES | FR | DE | JP" switcher; the current language is highlighted in the brand orange (`accent`, below AA by
+ * decision: `data-live-colour`). Plain <a>: changing
  * language is a full document change (<html lang>, strings), not a client-side navigation.
  */
 export function LangSwitcher({ label, items, className, tone = 'dark' }: LangSwitcherProps) {
@@ -31,7 +32,7 @@ export function LangSwitcher({ label, items, className, tone = 'dark' }: LangSwi
     <nav
       aria-label={label}
       className={cn(
-        'flex items-center text-small leading-[21px]',
+        'flex items-center text-small',
         tone === 'light' ? 'text-white' : 'text-ink',
         className,
       )}
@@ -51,8 +52,8 @@ export function LangSwitcher({ label, items, className, tone = 'dark' }: LangSwi
             data-live-colour={item.current ? '' : undefined}
             aria-label={item.title}
             className={cn(
-              'rounded hover:underline',
-              item.current ? 'text-accent' : tone === 'light' ? '' : 'text-[#575757]',
+              'rounded-sm hover:underline',
+              item.current ? 'font-bold text-accent' : tone === 'light' ? '' : 'text-muted',
             )}
           >
             {item.label}

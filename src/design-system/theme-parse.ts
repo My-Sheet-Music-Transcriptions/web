@@ -34,15 +34,22 @@ export interface ThemeTokens {
 
 /** Weights and usage for the type scale; sizes and line-heights come from the CSS. */
 export const TYPE_META: Record<string, { weight: number; usage: string }> = {
-  display: { weight: 700, usage: 'Page h1' },
+  display: { weight: 700, usage: 'The page h1 (every header variant)' },
   h2: { weight: 700, usage: 'Section headings' },
-  h3: { weight: 800, usage: 'Card and step titles (700 on cards, 800 on steps)' },
-  h4: { weight: 700, usage: 'Service grid labels' },
-  price: { weight: 700, usage: 'Pricing tier amount' },
-  counter: { weight: 700, usage: 'Stats banner number' },
+  h3: { weight: 700, usage: 'Card, step and price titles, FAQ groups' },
+  h4: { weight: 700, usage: 'Small titles: the cart, picture names' },
+  lead: {
+    weight: 400,
+    usage: 'Header subtitles, section leads, questions, "from" and the unit of a price',
+  },
   body: { weight: 400, usage: 'Body copy' },
-  small: { weight: 400, usage: 'Buttons (700, uppercase), card copy, navigation' },
-  caption: { weight: 400, usage: 'Footer links, footnotes' },
+  small: {
+    weight: 400,
+    usage: 'Secondary text, buttons (700, uppercase), menus, form labels (600)',
+  },
+  caption: { weight: 400, usage: 'Notes, dates, badges, the footer' },
+  figure: { weight: 700, usage: 'A price' },
+  'figure-lg': { weight: 700, usage: 'The transcriptions counter' },
 }
 
 /** Font files shipped with the artifact (copied from @fontsource-variable/montserrat). */

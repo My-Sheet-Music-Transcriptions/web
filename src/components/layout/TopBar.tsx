@@ -14,13 +14,13 @@ export interface TopBarProps {
 /** Thin white utility bar above the header: hub login/signup + language switcher. With the desktop menu only. */
 export function TopBar({ login, signup, children }: TopBarProps) {
   return (
-    <div className="hidden bg-white text-small text-[#242424] nav:block">
-      <div className="mx-auto flex h-[35px] max-w-[1440px] items-center justify-end gap-4 pt-1 pr-[10px]">
-        <a href={login.href} className="inline-flex items-center gap-1.5 hover:underline">
+    <div className="hidden bg-white text-small text-ink nav:block">
+      <div className="container-page flex h-9 items-center justify-end gap-4">
+        <a href={login.href} className="inline-flex items-center gap-2 hover:underline">
           <Icon name="fa-user-lock" size={18} className="text-sky" />
           {login.label}
         </a>
-        <a href={signup.href} className="inline-flex items-center gap-1.5 hover:underline">
+        <a href={signup.href} className="inline-flex items-center gap-2 hover:underline">
           <Icon name="fa-user-plus" size={18} className="text-sky" />
           {signup.label}
         </a>

@@ -14,15 +14,15 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
-/** Several groups with a row of colour-coded jump pills, each group's plus in its colour. */
+/** Several groups with a row of outlined jump links. */
 export const JumpPills: Story = {
   args: {
     jumpLinks: true,
     groups: [
-      { ...faqGroup, title: 'Services', id: 'services', tone: 'orange' },
-      { ...faqGroup, title: 'Ordering process', id: 'ordering', tone: 'teal' },
-      { ...faqGroup, title: 'Technical questions', id: 'technical', tone: 'blue' },
-      { ...faqGroup, title: 'About us', id: 'about', tone: 'navy' },
+      { ...faqGroup, title: 'Services', id: 'services' },
+      { ...faqGroup, title: 'Ordering process', id: 'ordering' },
+      { ...faqGroup, title: 'Technical questions', id: 'technical' },
+      { ...faqGroup, title: 'About us', id: 'about' },
     ],
   },
 }

@@ -218,8 +218,6 @@ export interface FaqItem {
 export interface FaqGroup {
   title?: string
   id?: string
-  /** The colour of the group's jump pill and of the plus before its questions (FaqList with `jumpLinks`). */
-  tone?: 'orange' | 'teal' | 'blue' | 'navy'
   items: FaqItem[]
 }
 

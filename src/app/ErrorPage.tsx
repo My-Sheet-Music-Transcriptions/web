@@ -15,10 +15,10 @@ export function ErrorPage({ error }: ErrorComponentProps) {
   console.error(error)
   return (
     <main id="main" className="container-content py-24 text-center">
-      <h1 className="text-display">{s.title}</h1>
+      <h1 className="text-display text-ink">{s.title}</h1>
       <p className="mt-4 text-ink">{s.body}</p>
       <div className="mt-8 flex justify-center gap-3">
-        <Button variant="outline" onClick={() => router.invalidate()}>
+        <Button variant="secondary" onClick={() => router.invalidate()}>
           {s.retry}
         </Button>
         {isRoot ? (

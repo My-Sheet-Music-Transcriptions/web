@@ -13,8 +13,9 @@ export interface PriceTagProps {
   className?: string
 }
 
+/** The header's colours: teal is the site's primary, blue its lighter sky, navy the dark one. */
 const headers: Record<PriceTone, string> = {
-  teal: 'bg-teal-light',
+  teal: 'bg-primary',
   blue: 'bg-sky',
   navy: 'bg-navy',
 }
@@ -35,26 +36,22 @@ export function PriceTag({
     <div className={cn('flex flex-col text-center text-ink', className)}>
       {title ? (
         <h3
-          data-live-colour=""
-          className={cn(
-            'rounded-t-card py-[22px] text-center text-[26px] font-bold leading-[26px] text-white',
-            headers[tone],
-          )}
+          className={cn('rounded-t-card px-4 py-4 text-center text-h3 text-white', headers[tone])}
         >
           {title}
         </h3>
       ) : null}
       <div
         className={cn(
-          'flex flex-col pt-[5px]',
+          'flex flex-col pt-4',
           surface === 'cream' && 'rounded-b-card bg-cream px-4 pb-4',
         )}
       >
-        {price.fromLabel ? <p className="text-[18px] leading-9">{price.fromLabel}</p> : null}
-        <p className="mt-1 text-price font-bold leading-[46px]">{price.from}</p>
-        <p className="-mt-0.5 text-[18px] leading-9">{price.unit}</p>
+        {price.fromLabel ? <p className="text-lead">{price.fromLabel}</p> : null}
+        <p className="mt-2 text-figure font-bold">{price.from}</p>
+        <p className="mt-2 text-lead">{price.unit}</p>
         {price.note && surface === 'cream' ? (
-          <p className="mt-1 text-small italic">{price.note}</p>
+          <p className="mt-2 text-small text-muted italic">{price.note}</p>
         ) : null}
       </div>
     </div>

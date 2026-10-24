@@ -3,35 +3,20 @@ import { CtaLink } from '~/components/primitives/CtaLink'
 import { Icon } from '~/components/primitives/Icon'
 import { RevealGroup, RevealItem } from '~/components/primitives/Motion'
 import type { FaqGroup } from '~/content/types'
-import { cn } from '~/lib/cn'
 import { lightMarkdown, plainMarkdown } from '~/lib/light-markdown'
 
 export interface FaqListProps extends ShellProps {
   /** The questions, in titled groups: a page's own group plus shared ones from content/<locale>/data/faqs. */
   groups: FaqGroup[]
-  /** Buttons under the title that jump to each group (groups need an `id`); filled in each group's `tone` when it has one. */
+  /** Outline buttons under the title that jump to each group (groups need an `id`). */
   jumpLinks?: boolean
   /** Publish the questions as FAQPage structured data (one FAQ list per page should). */
   jsonLd?: boolean
 }
 
-/** The jump pill of a group with a `tone` (filled, as the live site's) and the plus before its questions. */
-const pills: Record<NonNullable<FaqGroup['tone']>, string> = {
-  orange: 'bg-cta hover:bg-accent-hover',
-  teal: 'bg-teal hover:bg-pine',
-  blue: 'bg-blue hover:bg-primary',
-  navy: 'bg-navy hover:bg-primary',
-}
-const pluses: Record<NonNullable<FaqGroup['tone']>, string> = {
-  orange: 'text-accent-deep',
-  teal: 'text-teal',
-  blue: 'text-blue',
-  navy: 'text-navy',
-}
-
 /**
  * Questions whose answers unfold when clicked (native `<details>`, animated in CSS, no script), in titled groups
- * with optional jump links (outline buttons, or a row of filled pills when the groups have a `tone`) and a button,
+ * with optional jump links (outline buttons) and a button,
  * with the FAQPage structured data search engines read.
  */
 export function FaqList({ groups, jumpLinks = false, jsonLd = true, ...shell }: FaqListProps) {
@@ -46,26 +31,14 @@ export function FaqList({ groups, jumpLinks = false, jsonLd = true, ...shell }: 
       })),
     ),
   }
-  const toned = groups.some((g) => g.tone)
   return (
     <BlockShell {...shell} width="narrow" cascade>
       {jumpLinks ? (
-        <RevealGroup
-          className={cn(
-            'mb-10',
-            toned
-              ? 'grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4'
-              : 'flex flex-wrap justify-center gap-3',
-          )}
-        >
+        <RevealGroup className="mb-heading-gap flex flex-wrap justify-center gap-3">
           {groups.map((g) =>
             g.id && g.title ? (
-              <RevealItem key={g.id} preset="pop" className={cn(toned && 'flex')}>
-                <CtaLink
-                  cta={{ label: g.title, href: `#${g.id}` }}
-                  variant={g.tone ? 'accent' : 'outline'}
-                  className={cn(g.tone && pills[g.tone], toned && 'w-full px-3 text-[13px]')}
-                />
+              <RevealItem key={g.id} preset="pop">
+                <CtaLink cta={{ label: g.title, href: `#${g.id}` }} variant="secondary" />
               </RevealItem>
             ) : null,
           )}
@@ -78,22 +51,19 @@ export function FaqList({ groups, jumpLinks = false, jsonLd = true, ...shell }: 
             id={g.id}
             className="scroll-mt-24"
           >
-            {g.title ? <h3 className="mb-4 text-h3 font-bold text-ink">{g.title}</h3> : null}
+            {g.title ? <h3 className="mb-4 text-h3 text-ink">{g.title}</h3> : null}
             <div className="divide-y divide-line border-y border-line">
               {g.items.map((q) => (
                 <details key={q.question} className="group unfold">
-                  <summary className="flex cursor-pointer list-none items-start gap-3 py-4 text-[18px] font-semibold leading-7 text-ink [&::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer list-none items-start gap-3 py-4 text-lead font-semibold text-ink [&::-webkit-details-marker]:hidden">
                     <Icon
                       name="plus"
                       size={20}
-                      className={cn(
-                        'mt-1 shrink-0 transition-transform group-open:rotate-45',
-                        g.tone ? pluses[g.tone] : 'text-accent-deep',
-                      )}
+                      className="mt-1 shrink-0 text-accent-deep transition-transform group-open:rotate-45"
                     />
                     {q.question}
                   </summary>
-                  <div className="flex flex-col gap-3 pb-5 pl-8 text-ink">
+                  <div className="flex flex-col gap-3 pb-5 pl-8 text-body text-ink">
                     {lightMarkdown(q.answer)}
                   </div>
                 </details>

@@ -23,9 +23,9 @@ const preview: Preview = {
     },
     a11y: {
       // Every story is checked with axe; any violation (colour contrast included) fails `pnpm test:storybook`.
-      // The one exception: elements marked `data-live-colour` keep the live site's colours by decision
-      // (orange/teal buttons, pricing headers, the active nav item…), which are below AA; contrast is still
-      // checked everywhere else.
+      // The one exception: elements marked `data-live-colour` keep the brand orange by decision (the filled
+      // button's white label, the active menu item, the current language), below AA; contrast is still checked
+      // everywhere else.
       test: 'error',
       config: {
         rules: [

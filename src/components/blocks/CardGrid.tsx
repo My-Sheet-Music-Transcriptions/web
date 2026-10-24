@@ -20,8 +20,8 @@ export interface CardGridProps extends ShellProps {
   tabs?: CardTab[]
   /** Cards per row from desktop up (two on tablets, one on phones; five fit plain items only; one, wide cards one under another). */
   columns?: 1 | 2 | 3 | 4 | 5
-  /** card: white cards with a soft shadow (default). tile: peach rounded tiles. plain: no surface. overlay: each card's picture fills it, darkened, the words in white over it (the Catalan homepage). */
-  variant?: 'card' | 'tile' | 'plain' | 'overlay'
+  /** card: white cards with a soft shadow (default; on a peach block, the audiences). plain: no surface. overlay: each card's picture fills it, darkened, the words in white over it (the Catalan homepage). */
+  variant?: 'card' | 'plain' | 'overlay'
   /** A full-bleed photo behind the cards: the photo band, its cards centred (`~/assets/images/bands/included-bg.jpg`). */
   image?: PictureSource
   /** The words of the play button: `media` from content/<locale>/data/labels (cards with a video). */
@@ -32,7 +32,7 @@ export interface CardGridProps extends ShellProps {
 
 /**
  * A grid of cards, each an icon or picture with a title, a short text and an optional button. `variant`:
- * card (white), tile (peach, the audiences), plain or overlay (the words over the card's picture). With an `image`, white cards over that photo band.
+ * card (white; `tone="peach"` behind them for the audiences), plain or overlay (the words over the card's picture). With an `image`, white cards over that photo band.
  * `tabs`: the same cards in sets (currencies). A card can show a video instead of its picture.
  */
 export function CardGrid({
@@ -50,18 +50,12 @@ export function CardGrid({
   // never a last row of one or two cards: 6 in 4 columns become 3, 4 in 3 become 4
   const cols = balanceColumns(columns, shown.length, columns > 4 ? columns : 4)
   return (
-    <BlockShell
-      {...shell}
-      image={image}
-      spacing={variant === 'tile' ? 'loose' : 'normal'}
-      width={variant === 'tile' ? 'full' : 'content'}
-      cascade
-    >
+    <BlockShell {...shell} image={image} cascade>
       {tabs ? <Tabs tabs={tabs.map((t) => t.label)} active={tab} onChange={setTab} /> : null}
       <ul
         className={cn(
           gridCols(cols, { tablet: cols === 5 ? 3 : cols === 1 ? 1 : 2 }),
-          variant === 'tile' ? 'gap-[30px]' : variant === 'overlay' ? 'gap-5' : 'gap-6',
+          'gap-grid-gap',
         )}
       >
         {shown.map((item) => (

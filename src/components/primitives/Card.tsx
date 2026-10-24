@@ -7,13 +7,14 @@ export interface CardProps extends ComponentPropsWithoutRef<'div'> {
   as?: 'div' | 'article'
   /** The surface: white (default), cream or peach, the same tones as a block's background. */
   tone?: Tone
-  padding?: 'none' | 'sm' | 'md' | 'lg'
-  /** `card`: soft shadow on light backgrounds. `band`: the wide shadow of white cards (over a photo, on white). */
-  shadow?: 'card' | 'band' | 'none'
+  /** The card's padding (`card-pad`, 24px, 20px on phones), or none when the content frames itself. */
+  padding?: 'none' | 'card'
+  /** `card`: the soft shadow of a card at rest. `float`: what floats over the page (a menu, a lightbox). */
+  shadow?: 'card' | 'float' | 'none'
 }
 
-const shadows = { card: 'shadow-card', band: 'shadow-band', none: '' }
-const paddings = { none: '', sm: 'p-4', md: 'p-6', lg: 'p-8' }
+const shadows = { card: 'shadow-card', float: 'shadow-float', none: '' }
+const paddings = { none: '', card: 'p-card-pad' }
 
 /**
  * The rounded 12px surface of every card: rating cards, feature cards, pricing tiers, reviews, the sent
@@ -22,7 +23,7 @@ const paddings = { none: '', sm: 'p-4', md: 'p-6', lg: 'p-8' }
 export function Card({
   as: Tag = 'div',
   tone = 'white',
-  padding = 'md',
+  padding = 'card',
   shadow = 'card',
   className,
   ...props
