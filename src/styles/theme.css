@@ -238,12 +238,12 @@
   letter-spacing: var(--tracking-label);
 }
 
-/* The short orange rule under a heading (every section's h2, the page headers' h1): the site's signature mark. */
+/* The thin orange rule under a heading (every section's h2, the page headers' h1), as on the live site: the site's signature mark. */
 @utility heading-rule {
   display: block;
-  width: 64px;
-  height: 3px;
-  border-radius: 2px;
+  width: 180px;
+  max-width: 100%;
+  height: 1px;
   background: var(--color-accent);
   margin-top: 20px;
 }
