@@ -3,7 +3,7 @@ import * as m from 'motion/react-m'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '~/components/primitives/Button'
 import { Icon } from '~/components/primitives/Icon'
-import { fade, slideIn } from '~/components/primitives/Motion'
+import { collapse, fade, slideIn } from '~/components/primitives/Motion'
 import { SmartLink } from '~/components/primitives/SmartLink'
 import type { Link } from '~/content/types'
 import type { NavItem } from '~/i18n/types'
@@ -109,51 +109,62 @@ export function MobileNav({ open, onClose, nav, cta, labels: s, account }: Mobil
                             )}
                           />
                         </button>
-                        {expanded === item.label && (
-                          <ul className="pb-3 pl-3">
-                            <li>
-                              <SmartLink
-                                href={item.href}
-                                className="block px-3 py-2 text-small font-bold text-primary"
-                                onClick={onClose}
-                              >
-                                {s.allServices}
-                              </SmartLink>
-                            </li>
-                            {item.groups.map((g) => (
-                              <li key={g.title} className="mt-1">
-                                {g.href && g.href !== '#' ? (
+                        <AnimatePresence initial={false}>
+                          {expanded === item.label && (
+                            <m.div
+                              key="group"
+                              className="overflow-hidden"
+                              variants={collapse}
+                              initial="closed"
+                              animate="open"
+                              exit="closed"
+                            >
+                              <ul className="pb-3 pl-3">
+                                <li>
                                   <SmartLink
-                                    href={g.href}
-                                    className="block px-3 py-2 text-small font-bold text-ink"
+                                    href={item.href}
+                                    className="block px-3 py-2 text-small font-bold text-primary"
                                     onClick={onClose}
                                   >
-                                    {g.title}
+                                    {s.allServices}
                                   </SmartLink>
-                                ) : (
-                                  <p className="px-3 py-2 text-small font-bold text-ink">
-                                    {g.title}
-                                  </p>
-                                )}
-                                {g.links.length > 0 && (
-                                  <ul className="pl-3">
-                                    {g.links.map((l) => (
-                                      <li key={l.label}>
-                                        <SmartLink
-                                          href={l.href}
-                                          className="block px-3 py-2 text-small text-ink"
-                                          onClick={onClose}
-                                        >
-                                          {l.label}
-                                        </SmartLink>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                )}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
+                                </li>
+                                {item.groups.map((g) => (
+                                  <li key={g.title} className="mt-1">
+                                    {g.href && g.href !== '#' ? (
+                                      <SmartLink
+                                        href={g.href}
+                                        className="block px-3 py-2 text-small font-bold text-ink"
+                                        onClick={onClose}
+                                      >
+                                        {g.title}
+                                      </SmartLink>
+                                    ) : (
+                                      <p className="px-3 py-2 text-small font-bold text-ink">
+                                        {g.title}
+                                      </p>
+                                    )}
+                                    {g.links.length > 0 && (
+                                      <ul className="pl-3">
+                                        {g.links.map((l) => (
+                                          <li key={l.label}>
+                                            <SmartLink
+                                              href={l.href}
+                                              className="block px-3 py-2 text-small text-ink"
+                                              onClick={onClose}
+                                            >
+                                              {l.label}
+                                            </SmartLink>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    )}
+                                  </li>
+                                ))}
+                              </ul>
+                            </m.div>
+                          )}
+                        </AnimatePresence>
                       </>
                     ) : (
                       <SmartLink

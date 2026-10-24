@@ -6,6 +6,7 @@ import { inlineMarkdown } from '~/lib/light-markdown'
 import { useTitleId } from '~/lib/use-title-id'
 import { type Cta, CtaLink } from './CtaLink'
 import { RevealItem, revealGroup } from './Motion'
+import { Parallax } from './Parallax'
 import { Picture, type PictureSource } from './Picture'
 import { SectionHeading } from './SectionHeading'
 import { type Tone, tones } from './tones'
@@ -168,7 +169,7 @@ export function BlockShell({
       className={cn(
         'scroll-mt-20',
         image
-          ? 'parallax-source relative isolate my-section overflow-hidden py-section-lg text-white'
+          ? 'relative isolate my-section overflow-hidden py-section-lg text-white'
           : [spacings[spacing], tones[tone]],
         className,
       )}
@@ -177,7 +178,7 @@ export function BlockShell({
     >
       {image ? (
         <>
-          <div className="parallax-band absolute inset-x-0 -z-20" aria-hidden="true">
+          <Parallax range="band" className="absolute inset-0 -z-20" aria-hidden="true">
             <Picture
               image={image}
               alt=""
@@ -185,7 +186,7 @@ export function BlockShell({
               className="absolute inset-0 h-full w-full object-cover"
               pictureClassName="contents"
             />
-          </div>
+          </Parallax>
           <div className="absolute inset-0 -z-10 bg-black/30" aria-hidden="true" />
           <WaveDivider position="top" width={138} mobileHeight={20} mobileWidth={266} />
           <WaveDivider position="bottom" width={135} mobileHeight={20} mobileWidth={266} />
