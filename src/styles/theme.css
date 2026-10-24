@@ -246,9 +246,9 @@
   margin-top: 20px;
 }
 
-/* The PageHeader's rating card rising into place as the page opens, a beat after the rest has painted
-   (`entrance`): the header's text and pictures stand still. CSS rather than Motion, so the card does not wait
-   for the JavaScript; opacity and transforms only. Still under reduced motion and on paper. */
+/* The PageHeader's rating card, and a cover header's copy over its photo, rising into place as the page opens, a
+   beat after the rest has painted (`entrance`): the header's pictures stand still. CSS rather than Motion, so it
+   does not wait for the JavaScript; opacity and transforms only. Still under reduced motion and on paper. */
 @utility entrance {
   @media screen and (prefers-reduced-motion: no-preference) {
     animation: rise-in 1s cubic-bezier(0.33, 1, 0.68, 1) 0.35s both;
@@ -258,6 +258,52 @@
   from {
     opacity: 0;
     transform: translateY(40px);
+  }
+}
+
+/* A dialog opening over the page and closing (`pop-up`, on a native `<dialog>`: the Lightbox): it grows from 94%
+   and fades in while its backdrop darkens, and shrinks back out a little faster. CSS transitions on the native
+   element (`@starting-style` for the way in, `display` and `overlay` kept for the way out), no JavaScript; where
+   browsers lack them it opens and closes at once. Under reduced motion it only fades; instant on paper. */
+@utility pop-up {
+  @media screen {
+    opacity: 0;
+    transition:
+      opacity 0.15s ease-in,
+      scale 0.15s ease-in,
+      display 0.15s allow-discrete,
+      overlay 0.15s allow-discrete;
+    &[open] {
+      opacity: 1;
+      transition-duration: 0.25s;
+      transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+      @starting-style {
+        opacity: 0;
+      }
+    }
+    &::backdrop {
+      opacity: 0;
+      transition:
+        opacity 0.15s ease-in,
+        display 0.15s allow-discrete,
+        overlay 0.15s allow-discrete;
+    }
+    &[open]::backdrop {
+      opacity: 1;
+      transition-duration: 0.25s;
+      @starting-style {
+        opacity: 0;
+      }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      scale: 0.94;
+      &[open] {
+        scale: 1;
+        @starting-style {
+          scale: 0.94;
+        }
+      }
+    }
   }
 }
 
@@ -293,11 +339,12 @@
   }
 }
 
-/* The photo header's photos lagging behind their curve as the page scrolls (parallax): over the first screen
-   of scrolling they move down 45vh, so they scroll at 55% of the page's speed; the strip this exposes above
-   them is always smaller than what the page has already scrolled off, so it never shows. A scroll-driven animation (no
-   JavaScript, run by the compositor) on a layer of its own around the sliding one; where browsers lack scroll
-   timelines the photos simply scroll with the page. Still under reduced motion. */
+/* A header's picture lagging behind the header as the page scrolls (`parallax`, the Parallax primitive's `top`
+   range: the homepage's photos behind their curve, the cover headers' photo): over the first screen of scrolling
+   it moves down 45vh, so it scrolls at 55% of the page's speed; the strip this exposes above it is always smaller
+   than what the page has already scrolled off, so it never shows. A scroll-driven animation (no JavaScript, run
+   by the compositor) on a layer of its own; where browsers lack scroll timelines the picture simply scrolls with
+   the page. Still under reduced motion. */
 @utility parallax {
   @supports (animation-timeline: scroll()) {
     @media screen and (prefers-reduced-motion: no-preference) {
@@ -313,12 +360,13 @@
   }
 }
 
-/* A photo band's picture lagging behind the band as it crosses the screen (parallax, mid-page): the band is the
-   view timeline (`parallax-source`) and its picture (`parallax-band`), drawn 30% taller than the band above and
-   below, slides from 30% of the band's height down to 30% up between the band entering at the foot of the screen
-   and leaving at the top, so it always covers the band and lags behind the page. Compositor-run, no JavaScript;
-   where browsers lack view timelines the picture simply fills the band. Still under reduced motion. */
-@utility parallax-source {
+/* A photo band's picture lagging behind the band as it crosses the screen (the Parallax primitive's `band`
+   range): the frame is the view timeline (`parallax-frame`) and its picture's layer (`parallax-band`), drawn 30%
+   taller than the frame above and below, slides from 30% of the frame's height down to 30% up between the frame
+   entering at the foot of the screen and leaving at the top, so it always covers the frame and lags behind the
+   page. Compositor-run, no JavaScript; where browsers lack view timelines the picture simply fills the frame.
+   Still under reduced motion. */
+@utility parallax-frame {
   view-timeline: --parallax-band block;
 }
 @utility parallax-band {
