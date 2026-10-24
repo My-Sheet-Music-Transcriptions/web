@@ -8,7 +8,7 @@ import { cn } from '~/lib/cn'
 
 type Group = NonNullable<NavItem['groups']>[number]
 
-const trigger = 'rounded-sm py-3 text-small font-semibold text-ink group-hover:text-accent-deep'
+const trigger = 'rounded-sm py-3 text-small font-semibold text-ink group-hover:text-accent'
 const row =
   'flex w-full items-center gap-4 whitespace-nowrap py-4 text-left text-small font-semibold text-ink hover:text-primary'
 
@@ -69,18 +69,16 @@ export function MegaMenu({ item }: { item: NavItem }) {
       }}
     >
       <SmartLink
+        data-live-colour=""
         href={item.href}
-        className={cn(
-          trigger,
-          'pr-2 pl-3 data-[status=active]:text-accent-deep',
-          open && 'text-accent-deep',
-        )}
+        className={cn(trigger, 'pr-2 pl-3 data-[status=active]:text-accent', open && 'text-accent')}
       >
         {item.label}
       </SmartLink>
       <button
         type="button"
-        className={cn(trigger, 'inline-flex items-center pr-3', open && 'text-accent-deep')}
+        data-live-colour=""
+        className={cn(trigger, 'inline-flex items-center pr-3', open && 'text-accent')}
         aria-label={item.label}
         aria-expanded={open}
         aria-controls={id}

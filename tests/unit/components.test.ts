@@ -80,6 +80,7 @@ const TECHNICAL = new Set([
   'value',
   'defaultValue',
   'tabIndex',
+  'data-live-colour',
   'backgroundSize',
   'backgroundPosition',
   'timeZone',

@@ -67,8 +67,9 @@ export function Header({ logo, nav, cta, labels, account, languages, home = fals
               ) : (
                 <li key={item.label}>
                   <SmartLink
+                    data-live-colour=""
                     href={item.href}
-                    className="block rounded-sm px-3 py-3 text-small font-semibold text-ink hover:text-accent-deep data-[status=active]:text-accent-deep"
+                    className="block rounded-sm px-3 py-3 text-small font-semibold text-ink hover:text-accent data-[status=active]:text-accent"
                     activeOptions={{ exact: item.href === '/' }}
                   >
                     <Arrowed label={item.label} />

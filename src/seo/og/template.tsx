@@ -41,7 +41,7 @@ export function ogTemplate({
               display: 'flex',
               padding: '10px 22px',
               borderRadius: 28,
-              background: '#b8571c',
+              background: '#e2864d',
               color: '#fff',
               fontSize: 22,
               fontWeight: 700,
