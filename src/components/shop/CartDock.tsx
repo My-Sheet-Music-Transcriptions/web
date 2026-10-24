@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'motion/react'
 import * as m from 'motion/react-m'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Icon } from '~/components/primitives/Icon'
 import { cartBump, fade, flyToCart, slideIn } from '~/components/primitives/Motion'
 import { cn } from '~/lib/cn'
@@ -12,12 +12,12 @@ import { CartContents } from './CartContents'
 import { useCart } from './CartProvider'
 import { OrderDetails } from './OrderDetails'
 
-/** A paid checkout session as Stripe sends the buyer back with it; anything else in `?order=` is a customer's link. */
+/** A paid checkout session (confirmed in the panel, or come back to with `?order=`); anything else is a customer's link. */
 const SESSION = /^(cs_(test|live)_|demo-)/
 
 /**
- * What the panel shows instead of the cart: the thanks after Stripe's page (the order being recorded, then its
- * number) or a customer's order link, and the order itself once it is loaded (null: no order matches the link).
+ * What the panel shows instead of the cart: the thanks after a payment (the order being recorded, then its number) or
+ * a customer's order link, and the order itself once it is loaded (null: no order matches the link).
  */
 type Shown = { thanks: boolean; demo: boolean; number?: string; order?: OrderView | null }
 
@@ -33,9 +33,10 @@ export interface CartDockProps {
 /**
  * The cart that stays on screen: a tab on the right edge from desktop up (the count and the total) and a round button
  * at the bottom right on phones, which product pictures fly into and which swells as each lands. It opens the cart
- * as a side panel. Back from Stripe's page (`?order=<session>` on the address) it empties the cart and thanks the
- * buyer in the panel with their order; back from a cancelled payment (`?checkout=cancelled`) it reopens the cart. A
- * customer's order link (`?order=<number>.<secret>`) opens the panel on that order: where it is, tracking, invoice.
+ * as a side panel, where the whole checkout happens. Once a payment is confirmed there (or the buyer comes back from
+ * a payment method's own page with `?order=<session>` on the address) it empties the cart and thanks the buyer in
+ * the panel with their order. A customer's order link (`?order=<number>.<secret>`) opens the panel on that order:
+ * where it is, tracking, invoice.
  */
 export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) {
   const cart = useCart()
@@ -46,39 +47,43 @@ export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) 
   const setOpen = cart?.setOpen
   const clear = cart?.clear
 
-  // back from Stripe, or a customer's order link: once, on the first render in the browser
+  /** A session is paid: empty the cart, thank the buyer and show the order as soon as the server has filed it. */
+  const paid = useCallback(
+    (session: string) => {
+      clear?.()
+      setConfirmation({ thanks: true, demo: session.startsWith('demo-') })
+      let tries = 0
+      const ask = async () => {
+        const found = await onConfirm(session).catch(() => null)
+        if (found) {
+          setConfirmation((c) => c && { ...c, number: found.number })
+          void onOrder(found.ref)
+            .catch(() => null)
+            .then((view) => setConfirmation((c) => c && { ...c, order: view }))
+        } else if (++tries < 12) window.setTimeout(ask, 1500)
+      }
+      void ask()
+    },
+    [onConfirm, onOrder, clear],
+  )
+
+  // back from a payment method's page, or a customer's order link: once, on the first render in the browser
   useEffect(() => {
     const url = new URL(window.location.href)
     const order = url.searchParams.get('order')
-    const cancelled = url.searchParams.get('checkout') === 'cancelled'
-    if (!order && !cancelled) return
+    if (!order) return
     url.searchParams.delete('order')
-    url.searchParams.delete('checkout')
     window.history.replaceState(window.history.state, '', url)
     setOpen?.(true)
-    if (!order) return
     // no cancelling on cleanup: the address is cleaned up above, so a second run (StrictMode) finds nothing to do
-    const load = (ref: string) =>
-      onOrder(ref)
+    if (SESSION.test(order)) paid(order)
+    else {
+      setConfirmation({ thanks: false, demo: false })
+      void onOrder(order)
         .catch(() => null)
         .then((view) => setConfirmation((c) => c && { ...c, order: view }))
-    if (!SESSION.test(order)) {
-      setConfirmation({ thanks: false, demo: false })
-      void load(order)
-      return
     }
-    clear?.()
-    setConfirmation({ thanks: true, demo: order.startsWith('demo-') })
-    let tries = 0
-    const ask = async () => {
-      const found = await onConfirm(order).catch(() => null)
-      if (found) {
-        setConfirmation((c) => c && { ...c, number: found.number })
-        void load(found.ref)
-      } else if (++tries < 12) window.setTimeout(ask, 1500)
-    }
-    void ask()
-  }, [onConfirm, onOrder, setOpen, clear])
+  }, [onOrder, setOpen, paid])
 
   useEffect(() => {
     if (!open) return
@@ -226,7 +231,7 @@ export function CartDock({ pinned = false, onConfirm, onOrder }: CartDockProps) 
                   )}
                 </div>
               ) : (
-                <CartContents cart={cart} onNavigate={close} />
+                <CartContents cart={cart} onNavigate={close} onPaid={paid} />
               )}
             </m.div>
           </m.div>

@@ -11,7 +11,7 @@ import {
   orderOfRef,
 } from '../../src/server/orders.server'
 import { type NewOrder, type Order, orderRef } from '../../src/server/shop'
-import { orderFromSession, priceCheckout, viewOf } from '../../src/server/shop.server'
+import { demoOrder, orderFromSession, priceCheckout, viewOf } from '../../src/server/shop.server'
 import { customerEmail, teamEmail } from '../../src/server/shop-emails.server'
 import { formEncode, verifyStripeSignature } from '../../src/server/stripe.server'
 import { formatPrice, priceCart } from '../../src/shop/cart'
@@ -152,16 +152,45 @@ describe('pricing a cart', () => {
     expect(formatPrice(3000, 'ca').replace(/\s/g, ' ')).toBe('30,00 €')
     expect(formatPrice(490, 'en')).toBe('€4.90')
   })
-  it('refuses a checkout with a product not on sale, an unknown zone or too many', () => {
+  const buyer = (country = 'ES') => ({
+    name: 'Anna Puig',
+    email: 'anna@example.com',
+    address: { line1: 'Carrer Gran 1', postalCode: '08001', city: 'Barcelona', country },
+  })
+  it('refuses a checkout with a product not on sale, an unknown zone, too many, or a country the zone does not ship to', () => {
     const lines = (sku: string, quantity = 1) => [{ sku, quantity }]
-    const ask = (l: { sku: string; quantity: number }[], zone = 'es') =>
-      priceCheckout({ locale: 'ca', lines: l, zone, returnPath: '/shop' })
+    const ask = (l: { sku: string; quantity: number }[], zone = 'es', country = 'ES') =>
+      priceCheckout({ locale: 'ca', lines: l, zone, returnPath: '/shop', customer: buyer(country) })
     expect('error' in ask(lines('canconer-nadal-2026'))).toBe(true)
     expect('error' in ask(lines('lodvg-songbook'), 'mars')).toBe(true)
     expect('error' in ask(lines('lodvg-songbook', 99))).toBe(true)
-    const ok = ask(lines('lodvg-songbook', 2), 'eu')
+    expect(ask(lines('lodvg-songbook'), 'es', 'FR')).toMatchObject({ error: /FR/ })
+    const ok = ask(lines('lodvg-songbook', 2), 'eu', 'FR')
     expect(ok).not.toHaveProperty('error')
     if (!('error' in ok)) expect(ok.priced.total).toBe(2 * 3000 + 1200)
+  })
+  it('files a demo order with the buyer’s own details, paid by nobody', () => {
+    const priced = priceCart([product('a')], [{ sku: 'a', quantity: 2 }], spain)
+    const order = demoOrder(
+      'ca',
+      spain,
+      priced,
+      { ...buyer(), phone: '600 000 000' },
+      new Date('2026-10-24T10:00:00Z'),
+    )
+    expect(order).toMatchObject({
+      demo: true,
+      status: 'paid',
+      locale: 'ca',
+      customer: { name: 'Anna Puig', email: 'anna@example.com', phone: '600 000 000' },
+      address: { line1: 'Carrer Gran 1', postalCode: '08001', city: 'Barcelona', country: 'ES' },
+      lines: [{ sku: 'a', quantity: 2, total: 6000 }],
+      subtotal: 6000,
+      shipping: 490,
+      total: 6490,
+      history: [{ status: 'paid', by: 'demo', emailed: true }],
+    })
+    expect(order.address).not.toHaveProperty('line2')
   })
 })
 

@@ -18,10 +18,38 @@ export const checkoutSchema = z.object({
     .min(1)
     .max(30),
   zone: z.string().regex(/^[a-z][a-z0-9-]*$/),
-  /** The page the payment started on (locale prefix included in previews): Stripe sends the buyer back there. */
+  /**
+   * The page the payment started on (locale prefix included in previews): a payment method that leaves the page
+   * (a bank's app, a wallet's site) sends the buyer back there.
+   */
   returnPath: z.string().regex(/^\/[a-z0-9/_-]*$/i),
+  /** Who buys and where it ships, as the cart's own form (in the site's language) collected them. */
+  customer: z.object({
+    name: z.string().trim().min(2).max(120),
+    email: z.string().trim().email().max(200),
+    phone: z.string().trim().max(40).optional(),
+    address: z.object({
+      line1: z.string().trim().min(2).max(200),
+      line2: z.string().trim().max(200).optional(),
+      postalCode: z.string().trim().min(2).max(20),
+      city: z.string().trim().min(1).max(100),
+      state: z.string().trim().max(100).optional(),
+      /** ISO 3166-1 alpha-2, one of the chosen zone's. */
+      country: z.string().regex(/^[A-Z]{2}$/),
+    }),
+  }),
 })
 export type CheckoutInput = z.infer<typeof checkoutSchema>
+export type CheckoutCustomer = CheckoutInput['customer']
+
+/**
+ * What a checkout answers the cart. Live: the Checkout Session's client secret, for Stripe.js to take the payment in
+ * the cart's own panel (Elements with the Checkout Sessions API), with the publishable key and the language Stripe.js
+ * speaks. Demo (no STRIPE_SECRET_KEY): the order, recorded at once without payment.
+ */
+export type CheckoutAnswer =
+  | { session: string; clientSecret: string; publishableKey: string; locale: string }
+  | { demo: true; session: string; number: string; ref: string }
 
 /** Where an order stands. Paid is set by the payment; every other status by us, in the orders panel. */
 export const ORDER_STATUSES = [

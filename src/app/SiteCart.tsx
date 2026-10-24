@@ -5,23 +5,24 @@ import { CartProvider, type CheckoutResult } from '~/components/shop/CartProvide
 import { entries } from '~/content'
 import { stripLocale } from '~/i18n/routing'
 import type { Locale } from '~/i18n/types'
-import type { OrderView } from '~/server/shop'
+import type { CheckoutCustomer, OrderView } from '~/server/shop'
 import type { CartLine } from '~/shop/cart'
 import { catalogue } from '~/shop/catalogue'
 import { shippingZones, shopConfig } from '~/shop/config'
 import { shopWords } from '~/shop/words'
 import { useSite } from '~/site'
 
-/** Asks the server to open a Stripe payment for the cart (src/server/shop.server.ts); back here afterwards. */
+/** Asks the server for a payment to take in the cart's panel (src/server/shop.server.ts), or the demo order. */
 async function startCheckout(
   locale: Locale,
   lines: CartLine[],
   zone: string,
+  customer: CheckoutCustomer,
 ): Promise<CheckoutResult> {
   const res = await fetch('/api/shop/checkout', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ locale, lines, zone, returnPath: window.location.pathname }),
+    body: JSON.stringify({ locale, lines, zone, customer, returnPath: window.location.pathname }),
   })
   return (await res.json()) as CheckoutResult
 }
@@ -66,7 +67,7 @@ export function SiteCart({ children }: { children: ReactNode }) {
       labels={words.shopLabels}
       storageKey={`msmt-cart-${locale}`}
       shopHref={shopHref}
-      onCheckout={(lines, zone) => startCheckout(locale, lines, zone)}
+      onCheckout={(lines, zone, customer) => startCheckout(locale, lines, zone, customer)}
     >
       {children}
       <CartDock pinned={pinned} onConfirm={confirmOrder} onOrder={customerOrder} />
