@@ -4,6 +4,7 @@ import type { Slide } from '~/components/primitives/Carousel'
 import { type Cta, CtaLink } from '~/components/primitives/CtaLink'
 import { Icon } from '~/components/primitives/Icon'
 import { Media } from '~/components/primitives/Media'
+import { Parallax } from '~/components/primitives/Parallax'
 import { Picture, type PictureSource } from '~/components/primitives/Picture'
 import { RatingCard } from '~/components/primitives/RatingCard'
 import { Slideshow } from '~/components/primitives/Slideshow'
@@ -64,14 +65,14 @@ const eyebrowClass = 'label-caps'
  * The opening of every page, its h1 first. `band`: the centred title and orange rule, on white, or on peach
  * with the service's icon on its edge, the rating card at the right. `split`: the copy left, a picture or
  * carousel right (landing pages). `photo`: the homepage, rotating photos behind the copy, cut by a curve, the
- * lockup, the orange highlight and the rating card. `cover`: the title and the date or lead in white over a
- * darkened photo (the blog, a post).
+ * lockup, the orange highlight and the rating card. `cover`: the title and the date or lead in white, rising in
+ * over a darkened photo that lags on scroll (the blog, a post).
  */
 export function PageHeader(props: PageHeaderProps) {
-  // The text and pictures stand still; as the page opens only the rating card rises into place, a beat later,
-  // and the homepage's photos lag behind their curve as the page scrolls. CSS (`entrance` and
-  // `parallax` in theme.css), never `reveal`, which would hide the header, the page's largest paint, until
-  // the JavaScript loads.
+  // The pictures stand still as the page opens; only the rating card, and a cover's copy over its photo, rise
+  // into place a beat later. The homepage's photos and a cover's photo lag behind the header as the page
+  // scrolls (Parallax). CSS (`entrance` and `parallax` in theme.css), never `reveal`, which would hide the
+  // header, the page's largest paint, until the JavaScript loads.
   const { variant = 'band' } = props
   if (variant === 'photo') return <PhotoHeader {...props} />
   if (variant === 'split') return <SplitHeader {...props} />
@@ -165,20 +166,22 @@ function CoverHeader({
       )}
     >
       {image ? (
-        <Picture
-          image={image}
-          alt={alt}
-          sizes="100vw"
-          priority
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
-          pictureClassName="contents"
-        />
+        <Parallax className="absolute inset-0 -z-10">
+          <Picture
+            image={image}
+            alt={alt}
+            sizes="100vw"
+            priority
+            className="absolute inset-0 h-full w-full object-cover"
+            pictureClassName="contents"
+          />
+        </Parallax>
       ) : null}
       <span
         aria-hidden="true"
         className={cn('absolute inset-0 -z-10', logo ? 'bg-footer/35' : 'bg-footer/65')}
       />
-      <div className="mx-auto flex max-w-narrow flex-col items-center gap-4">
+      <div className="entrance mx-auto flex max-w-narrow flex-col items-center gap-4">
         {eyebrow ? <p className={cn(eyebrowClass, 'text-accent')}>{eyebrow}</p> : null}
         {logo ? (
           <img
@@ -308,9 +311,9 @@ function PhotoHeader({
         className="absolute inset-0 hidden overflow-hidden mask-cover mask-left mask-no-repeat md:block"
         style={{ maskImage: photoCut, WebkitMaskImage: photoCut }}
       >
-        <div className="parallax absolute inset-0">
+        <Parallax className="absolute inset-0">
           <Slideshow slides={photos} sizes="100vw" />
-        </div>
+        </Parallax>
       </div>
       <div className="relative">
         <div

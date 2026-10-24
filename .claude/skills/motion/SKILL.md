@@ -26,7 +26,7 @@ shell or to a primitive, never to one page.
   `primitives/motion-features.ts`, in their own chunk. `domMax` (layout animations, drag) is not loaded. Ask
   before adding it, because it costs another ~10 KB on every page.
 - Do not use the imperative `animate()`, `useAnimate` or `motion/mini`. Use one style: variants on `m`
-  components. The PageHeader's CSS entrance and parallax (section 4) are the one exception.
+  components. The PageHeader's CSS entrance, the parallax (section 4) and the Lightbox's `pop-up` are the exceptions.
 
 ## 2. Presets, not numbers
 
@@ -37,14 +37,17 @@ an ease or a distance:
 |---|---|
 | `revealGroup`, `revealPiece` | A revealed block: pieces 0.08 s apart, each rising 24px and fading in over 0.6 s. |
 | `dropDown`, `dropSide` | A menu panel under its button (`y`) or a submenu beside its row (`x`): 0.2 s in, 0.15 s out. |
-| `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu). |
+| `fade`, `slideIn` | A backdrop, and a side panel from the right (the phone menu, the cart). |
+| `collapse` | A group of the phone menu folding open under its row (height to `auto`, 0.25 s) and shut (0.2 s), under `AnimatePresence`. Height, like `unfold`, because it follows the reader's tap. |
+| `pop-up` (theme.css) | A native `<dialog>` (the Lightbox) growing from 94% and fading in over 0.25 s while its backdrop darkens, and shrinking back out over 0.15 s: CSS transitions with `@starting-style`, `display` and `overlay` kept for the way out. Fades only under reduced motion; opens at once where browsers lack it. Every dialog animates in and out: a new one uses this or Motion's `AnimatePresence`, never a bare toggle. |
 | `toast` | A small panel that pops up and goes away (the consent banner): it rises 16px and fades in over 0.3 s, and sinks back out over 0.15 s, under `AnimatePresence`. |
 | `tickerGroup`, `tickerDigit` | A figure of a revealed block (`Ticker`) rolling up like an odometer: each digit's column from 0 to it over 1.8 s, 0.12 s after the one before. |
 | `starsGroup`, `pop` | The stars of a rating in a revealed block: 0.08 s apart, each growing from half size with a slight overshoot over 0.4 s. `pop` is also an icon popping in (`RevealItem preset="pop"`). |
 | `revealSide`, `drawDown` | A piece sliding in 16px from the left (a step's speech bubble, `preset="side"`), and a line drawing itself from its top over 0.4 s (the timeline, `preset="draw"`). |
 | `drawGroup`, `drawLine` | The staff lines behind Testimonials painting themselves, start to end, 0.12 s apart, over 1.8 s each (`pathLength` on `m.path`: only the dashes change, never the layout). |
 | `unfold` (theme.css) | A FaqList answer opening and closing: the native `<details>` content growing from 0 to its height (`::details-content`, `interpolate-size`) while the answer fades in and drops 8px, 0.3 s. CSS, no script; height because it follows the reader's click (no layout shift); only the fade where `::details-content` is missing. |
-| `entrance`, `parallax` (theme.css) | The PageHeader: its rating card rising 40px into place a beat after the page opens; the homepage's photos lagging behind their curve on scroll (see 4). |
+| `entrance` (theme.css) | The PageHeader: its rating card, and a cover header's copy, rising 40px into place a beat after the page opens (see 4). |
+| `Parallax` (primitive; `parallax`, `parallax-frame`, `parallax-band` in theme.css) | Every picture that lags behind the page on scroll: the homepage's photos, a cover header's photo (`range="top"`), a photo band's picture (`range="band"`). Never write the classes by hand (see 4). |
 
 A new preset stays subtle:
 - 0.15–0.3 s for controls and 0.6–0.7 s for scroll reveals;
@@ -65,20 +68,22 @@ slideshow's `useAutoAdvance`) stops on its own and is fine as it is.
   and so does `ContactSection`. Do not reveal a block that already moves (the marquee strip).
 - **The PageHeader** never takes `reveal`: it holds the page's largest paint, and a Motion reveal would
   prerender it hidden until the JavaScript and the features chunk have loaded. Its text and pictures stand
-  still. As the page opens only its rating card rises into place, a beat later (`entrance`, CSS in
-  theme.css, so it does not wait for the JavaScript), and the homepage's photos lag behind their curve as the
-  page scrolls (`parallax`: a scroll-driven animation, 55% of the page's speed over the first screen,
-  compositor-run, nothing where browsers lack scroll timelines). The photos centre under their curve.
+  still. As the page opens only its rating card, and a cover header's copy over its photo, rise into place,
+  a beat later (`entrance`, CSS in theme.css, so it does not wait for the JavaScript), and the homepage's
+  photos and a cover's photo lag behind the header as the page scrolls (`<Parallax>`: a scroll-driven
+  animation, 55% of the page's speed over the first screen, compositor-run, nothing where browsers lack
+  scroll timelines). The photos centre under their curve.
   - **Keep the header's text and pictures still.** Chrome never counts an element first painted at opacity 0
     as the LCP, not even once it shows, and records a picture's LCP size as first painted: a fading h1 or a
     growing icon handed the LCP to the consent banner after hydration (piano at 4x CPU, 330 to 1090 ms). The
-    rating card is never the largest paint, so it may fade from 0.
+    rating card is never the largest paint, so it may fade from 0; nor is a cover's copy (its photo, which
+    never fades, is).
   - It runs on screen only for visitors who did not ask for reduced motion. A story that shows it waits in
     `play: ({ canvasElement }) => entered(canvasElement)` (src/stories/play.ts) before axe runs; `entered`
     skips the animations the scroll drives.
 - **Photo bands** (a `BlockShell` with `image`: the RatingBanner, a CardGrid over a photo) get a parallax of
-  their own in CSS: the band is a view timeline (`parallax-source`) and its picture (`parallax-band`), drawn
-  30% taller than the band above and below, slides from +30% to −30% of the band's height while the band
+  their own (`<Parallax range="band">`): its frame is a view timeline (`parallax-frame`) and its picture's layer
+  (`parallax-band`), drawn 30% taller than the band above and below, slides from +30% to −30% of the band's height while the band
   crosses the screen. Compositor-run, nothing where view timelines are missing, still under reduced motion
   (so the visual baselines, which run reduced, see the plain picture).
 - **How it is driven:** the shell watches itself with `useInView` and switches `animate` from `hidden` to
