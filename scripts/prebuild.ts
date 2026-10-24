@@ -1,10 +1,10 @@
 import fs from 'node:fs'
 import { sites } from '../src/i18n/sites'
 import { checkSlugs, entriesFor, writeHreflangMap, writePortedPaths } from './lib/content-fs'
-import { buildOgImages } from './lib/og'
+import { buildEmailLogo, buildOgImages } from './lib/og'
 import { deployOrigin, LOCAL_ORIGIN, resolveLocaleRouting } from './lib/site-locale'
 
-/** Runs before `vite build`: validates content, writes the hreflang map, robots.txt and OG images. */
+/** Runs before `vite build`: validates content, writes the hreflang map, robots.txt, OG images and the emails' lockup. */
 const { mode, locale, locales } = resolveLocaleRouting(process.env.SITE_LOCALE)
 const site = sites[locale]
 
@@ -31,5 +31,6 @@ fs.rmSync('public/_redirects', { force: true })
 for (const l of locales) {
   const entries = entriesFor(l)
   const made = await buildOgImages(entries, sites[l])
+  await buildEmailLogo(sites[l])
   console.log(`[prebuild] ${l} (${mode}): ${entries.length} entries, ${made} OG images rendered`)
 }

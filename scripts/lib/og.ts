@@ -5,7 +5,13 @@ import path from 'node:path'
 import { Resvg } from '@resvg/resvg-js'
 import sharp from 'sharp'
 import type { SiteConfig } from '../../src/i18n/types'
-import { entryOgImage, OG_SIZE, siteOgImage } from '../../src/seo/og/paths'
+import {
+  EMAIL_LOGO_WIDTH,
+  emailLogoImage,
+  entryOgImage,
+  OG_SIZE,
+  siteOgImage,
+} from '../../src/seo/og/paths'
 import { ogTemplate } from '../../src/seo/og/template'
 import { CONTENT_DIR, type FsEntry } from './content-fs'
 
@@ -127,6 +133,16 @@ export async function buildOgImages(
     fs.copyFileSync(cached, out)
   }
   return made
+}
+
+/** The locale's lockup as the PNG every email shows (src/seo/og/paths.ts `emailLogoImage`), after buildOgImages. */
+export async function buildEmailLogo(site: SiteConfig, { publicDir = 'public' }: OgDirs = {}) {
+  const out = path.join(publicDir, emailLogoImage(site.locale))
+  fs.mkdirSync(path.dirname(out), { recursive: true })
+  await sharp(logoFile(site.logo), { density: 300 })
+    .resize({ width: EMAIL_LOGO_WIDTH * 2 })
+    .png()
+    .toFile(out)
 }
 
 /** A page's own picture as a 1200x630 JPEG (centre crop); refuses one smaller than that rather than blow it up. */

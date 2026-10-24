@@ -470,6 +470,8 @@ export interface OrderEmails {
   note: string
   /** The line with the link to their order page: "Your order, its tracking and the invoice: {link}" */
   link: string
+  /** The HTML email's buttons: to their order page ("See your order") and to the carrier's tracking. */
+  buttons: { order: string; tracking: string }
   /** The summary's words */
   summary: {
     order: string
