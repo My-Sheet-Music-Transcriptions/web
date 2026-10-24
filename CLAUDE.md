@@ -133,7 +133,8 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   of `js.stripe.com/v3`, the only third-party script the site takes, loaded at the payment step alone because Stripe
   forbids bundling it, typed for the few calls made; the element's colours are read from the theme's tokens at run
   time), orders in Netlify Blobs (`orders.server.ts`, store `shop-orders`, in memory off Netlify) and plain-text
-  emails with Resend (`shop-emails.server.ts`, logged without `RESEND_API_KEY`). Stripe.js has no Catalan: a Catalan
+  emails with Mailgun (`shop-emails.server.ts` over `mailgun.server.ts`, the forms' mailer too, no SDK; logged without
+  `MAILGUN_API_KEY` and `MAILGUN_DOMAIN`). Stripe.js has no Catalan: a Catalan
   site gets the element in Spanish (`stripeLocale`), everything around it in Catalan. The orders panel is
   `/admin/orders` (`src/admin/orders`, built by `vite.orders.config.ts`; Netlify Identity users with the `shop` or
   `admin` role, or `SHOP_ADMIN_EMAILS`): each status change can email the customer. Every customer email links their
@@ -144,7 +145,7 @@ NETLIFY_TARGET=storybook pnpm build:netlify   # what the design-system Netlify s
   `checkout.session.completed`), `SHOP_ORDERS_EMAIL`, `SHOP_FROM_EMAIL`, `SHOP_ADMIN_EMAILS`; without
   `STRIPE_SECRET_KEY` checkout runs in demo mode (an order without payment, with the details the buyer typed;
   `SHOP_DEMO=off` refuses instead).
-- **Secrets (dotenvx).** The server's secrets (Stripe keys, `RESEND_API_KEY`, the shop's addresses) are committed
+- **Secrets (dotenvx).** The server's secrets (Stripe keys, `MAILGUN_API_KEY` / `MAILGUN_DOMAIN` / `MAILGUN_REGION`, the shop's addresses) are committed
   encrypted: `.env.development` (Stripe's sandbox; `pnpm dev`, deploy previews, branch deploys) and `.env.production`
   (production deploys). Add or change one with `pnpm exec dotenvx set NAME value -f .env.production` (never a plain
   value: `tests/unit/secrets.test.ts`); its private key stays in the ignored `.env.keys` (`pnpm exec dotenvx keypair`

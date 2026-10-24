@@ -6,6 +6,7 @@ import {
   formDataToObject,
   MAX_UPLOAD_BYTES,
 } from './contact'
+import { sendMail } from './mailgun.server'
 
 export type ContactResult = { ok: true } | { ok: false; errors: Record<string, string> }
 
@@ -42,7 +43,8 @@ export async function processContact(fd: FormData): Promise<ContactResult> {
 
 /**
  * Delivery: stores the attachment in Netlify Blobs (when running on Netlify) and emails the team with
- * Resend. Without RESEND_API_KEY the submission is logged, so local and preview builds never send mail.
+ * Mailgun (mailgun.server.ts). Without Mailgun's key and domain the submission is logged, so local and preview builds
+ * never send mail.
  */
 export async function deliverContact(
   input: ContactInput,
@@ -90,29 +92,24 @@ export async function deliverContact(
           attachmentNote,
         ]
   const text = lines.join('\n')
-  const apiKey = process.env.RESEND_API_KEY
   const to = process.env.CONTACT_TO_EMAIL ?? 'info@mysheetmusictranscriptions.com'
   const from = process.env.CONTACT_FROM_EMAIL ?? 'website@mysheetmusictranscriptions.com'
-  if (!apiKey) {
-    console.info('[contact] RESEND_API_KEY not set; submission logged only:\n', text)
-    return
-  }
-  const { Resend } = await import('resend')
-  const resend = new Resend(apiKey)
-  const { error } = await resend.emails.send({
-    from,
-    to,
-    replyTo: input.email,
-    subject: reservation
-      ? `New reservation on ${input.returnTo} from ${input.email}`
-      : gift
-        ? `New gift card request from ${input.name}`
-        : `New transcription request from ${input.name}`,
-    text,
-    attachments:
-      attachment && attachment.bytes.byteLength <= 10 * 1024 * 1024
-        ? [{ filename: attachment.name, content: Buffer.from(attachment.bytes) }]
-        : undefined,
-  })
-  if (error) throw new Error(`Email delivery failed: ${error.message}`)
+  await sendMail(
+    {
+      from,
+      to,
+      replyTo: input.email,
+      subject: reservation
+        ? `New reservation on ${input.returnTo} from ${input.email}`
+        : gift
+          ? `New gift card request from ${input.name}`
+          : `New transcription request from ${input.name}`,
+      text,
+      attachments:
+        attachment && attachment.bytes.byteLength <= 10 * 1024 * 1024
+          ? [{ filename: attachment.name, content: attachment.bytes, type: attachment.type }]
+          : undefined,
+    },
+    'contact',
+  )
 }

@@ -1,7 +1,7 @@
 import { parse } from '@dotenvx/dotenvx'
 
 /**
- * The server's secrets (Stripe, Resend, the shop's addresses) are kept in the repo encrypted with dotenvx:
+ * The server's secrets (Stripe, Mailgun, the shop's addresses) are kept in the repo encrypted with dotenvx:
  * `.env.development` (Stripe's sandbox: `pnpm dev`, deploy previews, branch deploys) and `.env.production`
  * (production deploys). The build inlines the file of its deploy (scripts/lib/secrets.ts), and here, the first time a
  * server module needs a secret, it is decrypted with that file's private key, DOTENV_PRIVATE_KEY_DEVELOPMENT or

@@ -32,12 +32,12 @@ describe('secrets', () => {
     const env: Record<string, string | undefined> = {
       DOTENV_PRIVATE_KEY_DEVELOPMENT: privateKey,
       SHOP_FROM_EMAIL: 'netlify@example.com',
-      RESEND_API_KEY: 'encrypted:undecryptable',
+      MAILGUN_API_KEY: 'encrypted:undecryptable',
     }
     loadSecrets('development', src, env)
     expect(env.STRIPE_SECRET_KEY).toBe('sk_test_123')
     expect(env.SHOP_FROM_EMAIL).toBe('netlify@example.com')
-    expect(env.RESEND_API_KEY).toBeUndefined()
+    expect(env.MAILGUN_API_KEY).toBeUndefined()
     expect(Object.keys(env).some((k) => k.startsWith('DOTENV_PUBLIC_KEY'))).toBe(false)
 
     const keyless: Record<string, string | undefined> = {}
