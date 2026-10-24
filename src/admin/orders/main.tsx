@@ -79,6 +79,20 @@ const STATUS_LABEL: Record<OrderStatus, string> = {
 }
 
 const price = (cents: number) => formatPrice(cents, 'en-GB')
+/** The order's day in the panel's time zone, as a date input writes it (YYYY-MM-DD). */
+const localDay = (iso: string) => {
+  const d = new Date(iso)
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
+/** Whether an order placed at `iso` falls in the day range `from`..`to` (either end empty = open). */
+const inRange = (iso: string, from: string, to: string) => {
+  if (!from && !to) return true
+  const day = localDay(iso)
+  return (!from || day >= from) && (!to || day <= to)
+}
+
 const when = (iso: string) =>
   new Date(iso).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })
 
@@ -355,6 +369,9 @@ function Orders() {
   const [error, setError] = useState('')
   const [filter, setFilter] = useState<OrderStatus | 'all' | 'open'>('open')
   const [search, setSearch] = useState('')
+  // the range of order dates shown, as the date inputs hold them (YYYY-MM-DD, local days; empty = no bound)
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
   const [selected, setSelected] = useState<string | null>(() =>
     new URLSearchParams(window.location.search).get('order'),
   )
@@ -404,7 +421,8 @@ function Orders() {
         (filter === 'open'
           ? o.status === 'paid' || o.status === 'preparing'
           : o.status === filter)) &&
-      (!q || `${o.number} ${o.name} ${o.email}`.toLowerCase().includes(q)),
+      (!q || `${o.number} ${o.name} ${o.email}`.toLowerCase().includes(q)) &&
+      inRange(o.createdAt, from, to),
   )
   const count = (s: OrderStatus) => (orders ?? []).filter((o) => o.status === s).length
 
@@ -439,6 +457,28 @@ function Orders() {
               onChange={(e) => setSearch(e.target.value)}
               className="rounded-card border border-line px-4 py-2 text-small"
             />
+            <div className="grid grid-cols-2 gap-2">
+              <label className="flex flex-col gap-1 text-caption font-bold text-muted">
+                From
+                <input
+                  type="date"
+                  value={from}
+                  max={to || undefined}
+                  onChange={(e) => setFrom(e.target.value)}
+                  className="rounded-card border border-line px-3 py-2 text-small font-normal text-ink"
+                />
+              </label>
+              <label className="flex flex-col gap-1 text-caption font-bold text-muted">
+                To
+                <input
+                  type="date"
+                  value={to}
+                  min={from || undefined}
+                  onChange={(e) => setTo(e.target.value)}
+                  className="rounded-card border border-line px-3 py-2 text-small font-normal text-ink"
+                />
+              </label>
+            </div>
             <div className="flex flex-wrap gap-2">
               {(['open', 'all', ...ORDER_STATUSES] as const).map((f) => (
                 <button
